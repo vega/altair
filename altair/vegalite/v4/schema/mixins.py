@@ -8,47 +8,117 @@ from altair.utils.schemapi import Undefined
 class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
-    def mark_area(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_arc(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                 cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
+                 discreteBandSize=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
+                 href=Undefined, innerRadius=Undefined, interpolate=Undefined, invalid=Undefined,
+                 limit=Undefined, line=Undefined, lineBreak=Undefined, lineHeight=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
+                 padAngle=Undefined, point=Undefined, radius=Undefined, radius2=Undefined,
+                 radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined, size=Undefined,
+                 smooth=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
+                 theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
+                 timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                 xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                 **kwds):
+        """Set the chart's mark to 'arc'
+    
+        For information on additional arguments, see :class:`MarkDef`
+        """
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
+                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
+                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.MarkDef(type="arc", **kwds)
+        else:
+            copy.mark = "arc"
+        return copy
+
+    def mark_area(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
@@ -56,47 +126,58 @@ class MarkMethodMixin(object):
             copy.mark = "area"
         return copy
 
-    def mark_bar(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                 binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                 cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                 cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                 dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                 interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                 lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+    def mark_bar(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                 cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
+                 discreteBandSize=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
+                 href=Undefined, innerRadius=Undefined, interpolate=Undefined, invalid=Undefined,
+                 limit=Undefined, line=Undefined, lineBreak=Undefined, lineHeight=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
+                 padAngle=Undefined, point=Undefined, radius=Undefined, radius2=Undefined,
+                 radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined, size=Undefined,
+                 smooth=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
+                 theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
+                 timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
                  **kwds):
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
@@ -104,95 +185,58 @@ class MarkMethodMixin(object):
             copy.mark = "bar"
         return copy
 
-    def mark_line(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
-        """Set the chart's mark to 'line'
-    
-        For information on additional arguments, see :class:`MarkDef`
-        """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
-                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
-                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
-        copy = self.copy(deep=False)
-        if any(val is not Undefined for val in kwds.values()):
-            copy.mark = core.MarkDef(type="line", **kwds)
-        else:
-            copy.mark = "line"
-        return copy
-
-    def mark_image(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                   fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_image(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                   **kwds):
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds):
         """Set the chart's mark to 'image'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="image", **kwds)
@@ -200,95 +244,117 @@ class MarkMethodMixin(object):
             copy.mark = "image"
         return copy
 
-    def mark_trail(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                   fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                   **kwds):
-        """Set the chart's mark to 'trail'
+    def mark_line(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
+        """Set the chart's mark to 'line'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
-            copy.mark = core.MarkDef(type="trail", **kwds)
+            copy.mark = core.MarkDef(type="line", **kwds)
         else:
-            copy.mark = "trail"
+            copy.mark = "line"
         return copy
 
-    def mark_point(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                   fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_point(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                   **kwds):
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
@@ -296,143 +362,58 @@ class MarkMethodMixin(object):
             copy.mark = "point"
         return copy
 
-    def mark_text(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_rect(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
-        """Set the chart's mark to 'text'
-    
-        For information on additional arguments, see :class:`MarkDef`
-        """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
-                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
-                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
-        copy = self.copy(deep=False)
-        if any(val is not Undefined for val in kwds.values()):
-            copy.mark = core.MarkDef(type="text", **kwds)
-        else:
-            copy.mark = "text"
-        return copy
-
-    def mark_tick(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
-        """Set the chart's mark to 'tick'
-    
-        For information on additional arguments, see :class:`MarkDef`
-        """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
-                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
-                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
-        copy = self.copy(deep=False)
-        if any(val is not Undefined for val in kwds.values()):
-            copy.mark = core.MarkDef(type="tick", **kwds)
-        else:
-            copy.mark = "tick"
-        return copy
-
-    def mark_rect(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
@@ -440,47 +421,58 @@ class MarkMethodMixin(object):
             copy.mark = "rect"
         return copy
 
-    def mark_rule(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                  interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                  lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_rule(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                  **kwds):
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
@@ -488,47 +480,235 @@ class MarkMethodMixin(object):
             copy.mark = "rule"
         return copy
 
-    def mark_circle(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                    binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                    fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_text(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
+        """Set the chart's mark to 'text'
+    
+        For information on additional arguments, see :class:`MarkDef`
+        """
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
+                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
+                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.MarkDef(type="text", **kwds)
+        else:
+            copy.mark = "text"
+        return copy
+
+    def mark_tick(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                  dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                  invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                  lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                  radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                  size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                  strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
+        """Set the chart's mark to 'tick'
+    
+        For information on additional arguments, see :class:`MarkDef`
+        """
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
+                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
+                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.MarkDef(type="tick", **kwds)
+        else:
+            copy.mark = "tick"
+        return copy
+
+    def mark_trail(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds):
+        """Set the chart's mark to 'trail'
+    
+        For information on additional arguments, see :class:`MarkDef`
+        """
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
+                    cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
+                    cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.MarkDef(type="trail", **kwds)
+        else:
+            copy.mark = "trail"
+        return copy
+
+    def mark_circle(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                    tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                    xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                    **kwds):
+                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                    y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
@@ -536,47 +716,58 @@ class MarkMethodMixin(object):
             copy.mark = "circle"
         return copy
 
-    def mark_square(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                    binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                    fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+    def mark_square(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                    tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                    xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                    **kwds):
+                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                    y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
@@ -584,47 +775,59 @@ class MarkMethodMixin(object):
             copy.mark = "square"
         return copy
 
-    def mark_geoshape(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                      binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
-                      cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                      cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                      cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                      dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
-                      fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                      fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                      interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                      lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                      orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                      size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                      strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                      strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                      thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
-                      tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+    def mark_geoshape(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                      ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                      baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                      color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                      cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                      cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                      cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                      dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                      ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                      font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                      height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                      invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                      lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                      outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                      radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
+                      shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
+                      strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                      strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                      strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
+                      tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
+                      theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
+                      timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                      url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                       xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                       yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see :class:`MarkDef`
         """
-        kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
+        kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
+                    ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
+                    baseline=baseline, binSpacing=binSpacing, blend=blend, clip=clip, color=color,
+                    continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                     cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
-                    cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                    fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
-                    fontStyle=fontStyle, fontWeight=fontWeight, height=height, href=href,
-                    interpolate=interpolate, invalid=invalid, limit=limit, line=line,
-                    lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
-                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
+                    cursor=cursor, description=description, dir=dir, discreteBandSize=discreteBandSize,
+                    dx=dx, dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                    font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                    height=height, href=href, innerRadius=innerRadius, interpolate=interpolate,
+                    invalid=invalid, limit=limit, line=line, lineBreak=lineBreak, lineHeight=lineHeight,
+                    opacity=opacity, order=order, orient=orient, outerRadius=outerRadius,
+                    padAngle=padAngle, point=point, radius=radius, radius2=radius2,
+                    radius2Offset=radius2Offset, radiusOffset=radiusOffset, shape=shape, size=size,
+                    smooth=smooth, stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                    strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
-                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
-                    **kwds)
+                    text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
+                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
+                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
+                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)
@@ -649,13 +852,14 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_errorbar(self, clip=Undefined, color=Undefined, extent=Undefined, opacity=Undefined,
-                      orient=Undefined, rule=Undefined, ticks=Undefined, **kwds):
+                      orient=Undefined, rule=Undefined, size=Undefined, thickness=Undefined,
+                      ticks=Undefined, **kwds):
         """Set the chart's mark to 'errorbar'
     
         For information on additional arguments, see :class:`ErrorBarDef`
         """
         kwds = dict(clip=clip, color=color, extent=extent, opacity=opacity, orient=orient, rule=rule,
-                    ticks=ticks, **kwds)
+                    size=size, thickness=thickness, ticks=ticks, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.ErrorBarDef(type="errorbar", **kwds)
@@ -687,6 +891,14 @@ class ConfigMethodMixin(object):
     def configure(self, *args, **kwargs):
         copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
+        return copy
+
+    @use_signature(core.RectConfig)
+    def configure_arc(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["arc"] = core.RectConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AreaConfig)

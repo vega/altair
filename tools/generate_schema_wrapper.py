@@ -27,7 +27,8 @@ import generate_api_docs  # noqa: E402
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
     "vega": {"v5": "v5.10.0"},
-    "vega-lite": {"v3": "v3.4.0", "v4": "v4.8.1"},
+    "vega-lite": {"v4": "v4.17.0"}
+    # "vega-lite": {"v3": "v3.4.0", "v4": "v4.8.1"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
@@ -157,6 +158,23 @@ class ValueChannelMixin(object):
         return super(ValueChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
                                                       context=context)
+
+
+class DatumChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        datum = getattr(self, 'datum', Undefined)
+        copy = self  # don't copy unless we need to
+        if datum is not Undefined:
+            if isinstance(datum, core.SchemaBase):
+                pass
+            elif 'field' in datum and 'type' not in datum:
+                kwds = parse_shorthand(datum['field'], context.get('data', None))
+                copy = self.copy(deep=['datum'])
+                copy.datum.update(kwds)
+        return super(DatumChannelMixin, copy).to_dict(validate=validate,
+                                                      ignore=ignore,
+                                                      context=context)  
 """
 
 
@@ -181,6 +199,18 @@ class ValueSchemaGenerator(SchemaGenerator):
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
 
+        {init_code}
+    '''
+    )
+
+
+class DatumSchemaGenerator(SchemaGenerator):
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}(DatumChannelMixin, core.{basename}):
+        """{docstring}"""
+        _class_is_valid_at_instantiation = False
+        _encoding_name = "{encodingname}"
         {init_code}
     '''
     )
@@ -238,6 +268,36 @@ def copy_schemapi_util():
         with open(destination_path, "w", encoding="utf8") as dest:
             dest.write(HEADER)
             dest.writelines(source.readlines())
+
+
+def recursive_dict_update(schema, root, def_dict):
+    if "$ref" in schema:
+        next_schema = resolve_references(schema, root)
+        if "properties" in next_schema:
+            definition = schema["$ref"]
+            properties = next_schema["properties"]
+            for k in def_dict.keys():
+                if k in properties:
+                    def_dict[k] = definition
+        else:
+            recursive_dict_update(next_schema, root, def_dict)
+    elif "anyOf" in schema:
+        for sub_schema in schema["anyOf"]:
+            recursive_dict_update(sub_schema, root, def_dict)
+
+
+def get_field_datum_value_defs(propschema, root):
+    def_dict = {k: None for k in ("field", "datum", "value")}
+    schema = propschema.schema
+    if propschema.is_reference() and "properties" in schema:
+        if "field" in schema["properties"]:
+            def_dict["field"] = propschema.ref
+        else:
+            raise ValueError("Unexpected schema structure")
+    else:
+        recursive_dict_update(schema, root, def_dict)
+
+    return {i: j for i, j in def_dict.items() if j}
 
 
 def toposort(graph):
@@ -390,22 +450,16 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
     for prop, propschema in encoding.properties.items():
-        if propschema.is_reference():
-            definitions = [propschema.ref]
-        elif propschema.is_anyOf():
-            definitions = [s.ref for s in propschema.anyOf if s.is_reference()]
-        else:
-            raise ValueError("either $ref or anyOf expected")
-        for definition in definitions:
-            defschema = {"$ref": definition}
-            basename = definition.split("/")[-1]
-            classname = prop[0].upper() + prop[1:]
+        classname = prop[0].upper() + prop[1:]
+        def_dict = get_field_datum_value_defs(propschema, schema)
 
-            if "Value" in basename:
-                Generator = ValueSchemaGenerator
-                classname += "Value"
-                nodefault = ["value"]
-            else:
+        for encoding_spec, definition in def_dict.items():
+            basename = definition.split("/")[-1]
+            basename = get_valid_identifier(basename)
+
+            defschema = {"$ref": definition}
+
+            if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
                 defschema = copy.deepcopy(resolve_references(defschema, schema))
@@ -417,6 +471,16 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
                     "description": "shorthand for field, aggregate, and type",
                 }
                 defschema["required"] = ["shorthand"]
+
+            elif encoding_spec == "datum":
+                Generator = DatumSchemaGenerator
+                classname += "Datum"
+                nodefault = ["datum"]
+
+            elif encoding_spec == "value":
+                Generator = ValueSchemaGenerator
+                classname += "Value"
+                nodefault = ["value"]
 
             gen = Generator(
                 classname=classname,
@@ -458,7 +522,10 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
     ]
 
     for mark_enum, mark_def in markdefs.items():
-        marks = schema["definitions"][mark_enum]["enum"]
+        if "enum" in schema["definitions"][mark_enum]:
+            marks = schema["definitions"][mark_enum]["enum"]
+        else:
+            marks = [schema["definitions"][mark_enum]["const"]]
         info = SchemaInfo({"$ref": "#/definitions/" + mark_def}, rootschema=schema)
 
         # adapted from SchemaInfo.init_code

@@ -34,65 +34,101 @@ Encoding Channels
    :toctree: generated/channels/
    :nosignatures:
 
+   Angle
+   AngleDatum
+   AngleDatumValue
    Color
-   ColorValue
+   ColorDatum
+   ColorDatumValue
    Column
+   Description
+   DescriptionValue
    Detail
    Facet
    Fill
+   FillDatum
+   FillDatumValue
    FillOpacity
-   FillOpacityValue
-   FillValue
+   FillOpacityDatum
+   FillOpacityDatumValue
    Href
    HrefValue
    Key
    Latitude
    Latitude2
-   Latitude2Value
-   LatitudeValue
+   Latitude2Datum
+   Latitude2DatumValue
+   LatitudeDatum
+   LatitudeDatumValue
    Longitude
    Longitude2
-   Longitude2Value
-   LongitudeValue
+   Longitude2Datum
+   Longitude2DatumValue
+   LongitudeDatum
+   LongitudeDatumValue
    Opacity
-   OpacityValue
+   OpacityDatum
+   OpacityDatumValue
    Order
    OrderValue
+   Radius
+   Radius2
+   Radius2Datum
+   Radius2DatumValue
+   RadiusDatum
+   RadiusDatumValue
    Row
    Shape
-   ShapeValue
+   ShapeDatum
+   ShapeDatumValue
    Size
-   SizeValue
+   SizeDatum
+   SizeDatumValue
    Stroke
    StrokeDash
-   StrokeDashValue
+   StrokeDashDatum
+   StrokeDashDatumValue
+   StrokeDatum
+   StrokeDatumValue
    StrokeOpacity
-   StrokeOpacityValue
-   StrokeValue
+   StrokeOpacityDatum
+   StrokeOpacityDatumValue
    StrokeWidth
-   StrokeWidthValue
+   StrokeWidthDatum
+   StrokeWidthDatumValue
    Text
-   TextValue
+   TextDatum
+   TextDatumValue
+   Theta
+   Theta2
+   Theta2Datum
+   Theta2DatumValue
+   ThetaDatum
+   ThetaDatumValue
    Tooltip
    TooltipValue
    Url
    UrlValue
    X
    X2
-   X2Value
+   X2Datum
+   X2DatumValue
+   XDatum
+   XDatumValue
    XError
    XError2
    XError2Value
    XErrorValue
-   XValue
    Y
    Y2
-   Y2Value
+   Y2Datum
+   Y2DatumValue
+   YDatum
+   YDatumValue
    YError
    YError2
    YError2Value
    YErrorValue
-   YValue
 
 API Functions
 -------------
@@ -166,8 +202,7 @@ Low-Level Schema Wrappers
    CalculateTransform
    Categorical
    Color
-   ColorGradientFieldDefWithCondition
-   ColorGradientValueWithCondition
+   ColorDef
    ColorName
    ColorScheme
    CompositeMark
@@ -189,39 +224,39 @@ Low-Level Schema Wrappers
    ConditionalAxisPropertynumbernull
    ConditionalAxisPropertystringnull
    ConditionalAxisString
-   ConditionalMarkPropFieldDef
-   ConditionalMarkPropFieldDefTypeForShape
-   ConditionalNumberValueDef
-   ConditionalPredicateMarkPropFieldDef
-   ConditionalPredicateMarkPropFieldDefTypeForShape
-   ConditionalPredicateNumberValueDef
+   ConditionalMarkPropFieldOrDatumDef
+   ConditionalMarkPropFieldOrDatumDefTypeForShape
+   ConditionalPredicateMarkPropFieldOrDatumDef
+   ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape
    ConditionalPredicateStringFieldDef
-   ConditionalPredicateStringValueDef
-   ConditionalPredicateValueDefAlignnull
-   ConditionalPredicateValueDefColornull
-   ConditionalPredicateValueDefFontStylenull
-   ConditionalPredicateValueDefFontWeightnull
-   ConditionalPredicateValueDefGradientstringnull
-   ConditionalPredicateValueDefText
-   ConditionalPredicateValueDefTextBaselinenull
+   ConditionalPredicateValueDefAlignnullExprRef
+   ConditionalPredicateValueDefColornullExprRef
+   ConditionalPredicateValueDefFontStylenullExprRef
+   ConditionalPredicateValueDefFontWeightnullExprRef
+   ConditionalPredicateValueDefGradientstringnullExprRef
+   ConditionalPredicateValueDefTextBaselinenullExprRef
+   ConditionalPredicateValueDefTextExprRef
    ConditionalPredicateValueDefnumber
-   ConditionalPredicateValueDefnumbernull
-   ConditionalPredicateValueDefstring
-   ConditionalSelectionMarkPropFieldDef
-   ConditionalSelectionMarkPropFieldDefTypeForShape
-   ConditionalSelectionNumberValueDef
+   ConditionalPredicateValueDefnumberExprRef
+   ConditionalPredicateValueDefnumbernullExprRef
+   ConditionalPredicateValueDefstringExprRef
+   ConditionalPredicateValueDefstringnullExprRef
+   ConditionalSelectionMarkPropFieldOrDatumDef
+   ConditionalSelectionMarkPropFieldOrDatumDefTypeForShape
    ConditionalSelectionStringFieldDef
-   ConditionalSelectionStringValueDef
-   ConditionalSelectionValueDefGradientstringnull
-   ConditionalSelectionValueDefText
+   ConditionalSelectionValueDefGradientstringnullExprRef
+   ConditionalSelectionValueDefTextExprRef
    ConditionalSelectionValueDefnumber
-   ConditionalSelectionValueDefstring
+   ConditionalSelectionValueDefnumberExprRef
+   ConditionalSelectionValueDefstringExprRef
+   ConditionalSelectionValueDefstringnullExprRef
    ConditionalStringFieldDef
-   ConditionalStringValueDef
-   ConditionalValueDefGradientstringnull
-   ConditionalValueDefText
+   ConditionalValueDefGradientstringnullExprRef
+   ConditionalValueDefTextExprRef
    ConditionalValueDefnumber
-   ConditionalValueDefstring
+   ConditionalValueDefnumberExprRef
+   ConditionalValueDefstringExprRef
+   ConditionalValueDefstringnullExprRef
    Config
    CsvDataFormat
    Cursor
@@ -231,12 +266,14 @@ Low-Level Schema Wrappers
    DataSource
    Datasets
    DateTime
+   DatumDef
    Day
    DensityTransform
    DerivedStream
    DictInlineDataset
    DictSelectionInit
    DictSelectionInitInterval
+   Dictunknown
    Diverging
    DomainUnionWith
    DsvDataFormat
@@ -254,6 +291,8 @@ Low-Level Schema Wrappers
    EventStream
    EventType
    Expr
+   ExprOrSignalRef
+   ExprRef
    FacetEncodingFieldDef
    FacetFieldDef
    FacetFieldDefFieldName
@@ -263,11 +302,6 @@ Low-Level Schema Wrappers
    FacetedEncoding
    FacetedUnitSpec
    Field
-   FieldDefWithConditionMarkPropFieldDefGradientstringnull
-   FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull
-   FieldDefWithConditionMarkPropFieldDefnumber
-   FieldDefWithConditionStringFieldDefText
-   FieldDefWithConditionStringFieldDefstring
    FieldDefWithoutScale
    FieldEqualPredicate
    FieldGTEPredicate
@@ -276,6 +310,15 @@ Low-Level Schema Wrappers
    FieldLTPredicate
    FieldName
    FieldOneOfPredicate
+   FieldOrDatumDefWithConditionDatumDefGradientstringnull
+   FieldOrDatumDefWithConditionDatumDefnumber
+   FieldOrDatumDefWithConditionDatumDefstringnull
+   FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
+   FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
+   FieldOrDatumDefWithConditionMarkPropFieldDefnumber
+   FieldOrDatumDefWithConditionStringDatumDefText
+   FieldOrDatumDefWithConditionStringFieldDefText
+   FieldOrDatumDefWithConditionStringFieldDefstring
    FieldRangePredicate
    FieldValidPredicate
    FilterTransform
@@ -309,7 +352,10 @@ Low-Level Schema Wrappers
    JoinAggregateTransform
    JsonDataFormat
    LabelOverlap
+   LatLongDef
    LatLongFieldDef
+   LayerRepeatMapping
+   LayerRepeatSpec
    LayerSpec
    LayoutAlign
    Legend
@@ -331,7 +377,11 @@ Low-Level Schema Wrappers
    LookupTransform
    Mark
    MarkConfig
+   MarkConfigExprOrSignalRef
    MarkDef
+   MarkPropDefGradientstringnull
+   MarkPropDefnumber
+   MarkPropDefstringnullTypeForShape
    MarkType
    MergedStream
    Month
@@ -340,27 +390,36 @@ Low-Level Schema Wrappers
    MultiTimeUnit
    NamedData
    NonArgAggregateOp
+   NonLayerRepeatSpec
    NormalizedConcatSpecGenericSpec
    NormalizedFacetSpec
    NormalizedHConcatSpecGenericSpec
    NormalizedSpec
    NormalizedVConcatSpecGenericSpec
-   NumberValueDef
-   NumericArrayFieldDefWithCondition
-   NumericArrayValueDefWithCondition
-   NumericFieldDefWithCondition
-   NumericValueWithCondition
+   NumericArrayMarkPropDef
+   NumericMarkPropDef
+   NumericValueDef
    OrderFieldDef
+   OrderValueDef
    Orient
    Orientation
    OverlayMarkDef
    Padding
+   Parameter
    Parse
    ParseValue
    PivotTransform
+   PolarDef
+   Position2Def
+   PositionDatumDef
+   PositionDatumDefBase
+   PositionDef
    PositionFieldDef
+   PositionFieldDefBase
+   PositionValueDef
    Predicate
    PredicateComposition
+   PrimitiveValue
    Projection
    ProjectionConfig
    ProjectionType
@@ -412,8 +471,8 @@ Low-Level Schema Wrappers
    SequenceParams
    SequentialMultiHue
    SequentialSingleHue
-   ShapeFieldDefWithCondition
-   ShapeValueWithCondition
+   ShapeDef
+   SharedEncoding
    SingleDefUnitChannel
    SingleSelection
    SingleSelectionConfig
@@ -434,15 +493,15 @@ Low-Level Schema Wrappers
    Stream
    StringFieldDef
    StringFieldDefWithCondition
-   StringValueWithCondition
-   StringValueWithConditionTypeForShape
+   StringValueDefWithCondition
+   StrokeCap
+   StrokeJoin
    StyleConfigIndex
    SymbolShape
    Text
    TextBaseline
+   TextDef
    TextDirection
-   TextFieldDefWithCondition
-   TextValueWithCondition
    TickConfig
    TickCount
    TimeInterval
@@ -466,30 +525,24 @@ Low-Level Schema Wrappers
    TopLevelUnitSpec
    TopoDataFormat
    Transform
+   Type
    TypeForShape
    TypedFieldDef
+   URI
    UnitSpec
    UnitSpecWithFrame
    UrlData
    UtcMultiTimeUnit
    UtcSingleTimeUnit
    VConcatSpecGenericSpec
-   Value
-   ValueConditionGradientstringnull
-   ValueConditionText
-   ValueConditionnumber
-   ValueConditionstring
-   ValueConditionstringnull
-   ValueDefWithConditionMarkPropFieldDefGradientstringnull
-   ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull
-   ValueDefWithConditionMarkPropFieldDefnumber
-   ValueDefWithConditionMarkPropFieldDefstringnull
+   ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull
+   ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull
+   ValueDefWithConditionMarkPropFieldOrDatumDefnumber
+   ValueDefWithConditionMarkPropFieldOrDatumDefstringnull
    ValueDefWithConditionStringFieldDefText
-   ValueWithConditionMarkPropFieldDefGradientstringnull
-   ValueWithConditionMarkPropFieldDefTypeForShapestringnull
-   ValueWithConditionMarkPropFieldDefnumber
-   ValueWithConditionMarkPropFieldDefstringnull
-   ValueWithConditionStringFieldDefText
+   ValueDefnumber
+   ValueDefnumberExprRef
+   ValueDefnumberwidthheightExprRef
    Vector2DateTime
    Vector2Vector2number
    Vector2boolean
@@ -503,5 +556,3 @@ Low-Level Schema Wrappers
    WindowFieldDef
    WindowOnlyOp
    WindowTransform
-   XValueDef
-   YValueDef
