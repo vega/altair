@@ -633,7 +633,12 @@ def infer_encoding_types(args, kwargs, channels):
     name_to_channel = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
-        key = "value" if chan.__name__.endswith("Value") else "field"
+        if chan.__name__.endswith("Datum"):
+            key = "datum"
+        elif chan.__name__.endswith("Value"):
+            key = "value"
+        else:
+            key = "field"
         chans[key] = chan
 
     # First use the mapping to convert args to kwargs based on their types.
