@@ -70,3 +70,4 @@ Untitled*.ipynb
 
 # VSCode
 .vscode
+altair/utils/sample.py

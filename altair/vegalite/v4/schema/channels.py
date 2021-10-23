@@ -419,8 +419,8 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         super(AngleDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class AngleDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """AngleDatumValue schema wrapper
+class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """AngleValue schema wrapper
 
     Mapping(required=[])
 
@@ -439,7 +439,7 @@ class AngleDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _encoding_name = "angle"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(AngleDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
@@ -766,8 +766,8 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
         super(ColorDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class ColorDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
-    """ColorDatumValue schema wrapper
+class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
+    """ColorValue schema wrapper
 
     Mapping(required=[])
 
@@ -787,7 +787,7 @@ class ColorDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _encoding_name = "color"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(ColorDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
@@ -1970,8 +1970,8 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
         super(FillDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class FillDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
-    """FillDatumValue schema wrapper
+class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
+    """FillValue schema wrapper
 
     Mapping(required=[])
 
@@ -1991,7 +1991,7 @@ class FillDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldO
     _encoding_name = "fill"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(FillDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -2319,8 +2319,8 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
                                                **kwds)
 
 
-class FillOpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """FillOpacityDatumValue schema wrapper
+class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """FillOpacityValue schema wrapper
 
     Mapping(required=[])
 
@@ -2339,7 +2339,7 @@ class FillOpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPro
     _encoding_name = "fillOpacity"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(FillOpacityDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
@@ -2986,8 +2986,8 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         super(LatitudeDatum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class LatitudeDatumValue(ValueChannelMixin, core.NumericValueDef):
-    """LatitudeDatumValue schema wrapper
+class LatitudeValue(ValueChannelMixin, core.NumericValueDef):
+    """LatitudeValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -3005,7 +3005,7 @@ class LatitudeDatumValue(ValueChannelMixin, core.NumericValueDef):
     _encoding_name = "latitude"
 
     def __init__(self, value, **kwds):
-        super(LatitudeDatumValue, self).__init__(value=value, **kwds)
+        super(LatitudeValue, self).__init__(value=value, **kwds)
 
 
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3200,8 +3200,8 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         super(Latitude2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class Latitude2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """Latitude2DatumValue schema wrapper
+class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
+    """Latitude2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -3219,7 +3219,7 @@ class Latitude2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "latitude2"
 
     def __init__(self, value, **kwds):
-        super(Latitude2DatumValue, self).__init__(value=value, **kwds)
+        super(Latitude2Value, self).__init__(value=value, **kwds)
 
 
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
@@ -3469,8 +3469,8 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         super(LongitudeDatum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class LongitudeDatumValue(ValueChannelMixin, core.NumericValueDef):
-    """LongitudeDatumValue schema wrapper
+class LongitudeValue(ValueChannelMixin, core.NumericValueDef):
+    """LongitudeValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -3488,7 +3488,7 @@ class LongitudeDatumValue(ValueChannelMixin, core.NumericValueDef):
     _encoding_name = "longitude"
 
     def __init__(self, value, **kwds):
-        super(LongitudeDatumValue, self).__init__(value=value, **kwds)
+        super(LongitudeValue, self).__init__(value=value, **kwds)
 
 
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3683,8 +3683,8 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         super(Longitude2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class Longitude2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """Longitude2DatumValue schema wrapper
+class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
+    """Longitude2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -3702,7 +3702,7 @@ class Longitude2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "longitude2"
 
     def __init__(self, value, **kwds):
-        super(Longitude2DatumValue, self).__init__(value=value, **kwds)
+        super(Longitude2Value, self).__init__(value=value, **kwds)
 
 
 class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -4030,8 +4030,8 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
                                            **kwds)
 
 
-class OpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """OpacityDatumValue schema wrapper
+class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """OpacityValue schema wrapper
 
     Mapping(required=[])
 
@@ -4050,7 +4050,7 @@ class OpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFie
     _encoding_name = "opacity"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(OpacityDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Order(FieldChannelMixin, core.OrderFieldDef):
@@ -4605,8 +4605,8 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                                           **kwds)
 
 
-class RadiusDatumValue(ValueChannelMixin, core.PositionValueDef):
-    """RadiusDatumValue schema wrapper
+class RadiusValue(ValueChannelMixin, core.PositionValueDef):
+    """RadiusValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -4624,7 +4624,7 @@ class RadiusDatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "radius"
 
     def __init__(self, value, **kwds):
-        super(RadiusDatumValue, self).__init__(value=value, **kwds)
+        super(RadiusValue, self).__init__(value=value, **kwds)
 
 
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -4819,8 +4819,8 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         super(Radius2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class Radius2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """Radius2DatumValue schema wrapper
+class Radius2Value(ValueChannelMixin, core.PositionValueDef):
+    """Radius2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -4838,7 +4838,7 @@ class Radius2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "radius2"
 
     def __init__(self, value, **kwds):
-        super(Radius2DatumValue, self).__init__(value=value, **kwds)
+        super(Radius2Value, self).__init__(value=value, **kwds)
 
 
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
@@ -5376,8 +5376,8 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
         super(ShapeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class ShapeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
-    """ShapeDatumValue schema wrapper
+class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
+    """ShapeValue schema wrapper
 
     Mapping(required=[])
 
@@ -5397,7 +5397,7 @@ class ShapeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _encoding_name = "shape"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(ShapeDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -5724,8 +5724,8 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         super(SizeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class SizeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """SizeDatumValue schema wrapper
+class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """SizeValue schema wrapper
 
     Mapping(required=[])
 
@@ -5744,7 +5744,7 @@ class SizeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldO
     _encoding_name = "size"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(SizeDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
@@ -6071,8 +6071,8 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
         super(StrokeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
 
 
-class StrokeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
-    """StrokeDatumValue schema wrapper
+class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
+    """StrokeValue schema wrapper
 
     Mapping(required=[])
 
@@ -6092,7 +6092,7 @@ class StrokeDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _encoding_name = "stroke"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(StrokeDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -6420,8 +6420,8 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
                                               **kwds)
 
 
-class StrokeDashDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """StrokeDashDatumValue schema wrapper
+class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """StrokeDashValue schema wrapper
 
     Mapping(required=[])
 
@@ -6440,7 +6440,7 @@ class StrokeDashDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkProp
     _encoding_name = "strokeDash"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(StrokeDashDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -6769,8 +6769,8 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
                                                  **kwds)
 
 
-class StrokeOpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """StrokeOpacityDatumValue schema wrapper
+class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """StrokeOpacityValue schema wrapper
 
     Mapping(required=[])
 
@@ -6789,7 +6789,7 @@ class StrokeOpacityDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkP
     _encoding_name = "strokeOpacity"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(StrokeOpacityDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
@@ -7117,8 +7117,8 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
                                                **kwds)
 
 
-class StrokeWidthDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
-    """StrokeWidthDatumValue schema wrapper
+class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+    """StrokeWidthValue schema wrapper
 
     Mapping(required=[])
 
@@ -7137,7 +7137,7 @@ class StrokeWidthDatumValue(ValueChannelMixin, core.ValueDefWithConditionMarkPro
     _encoding_name = "strokeWidth"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(StrokeWidthDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
@@ -7486,8 +7486,8 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
                                         formatType=formatType, labelExpr=labelExpr, type=type, **kwds)
 
 
-class TextDatumValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
-    """TextDatumValue schema wrapper
+class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
+    """TextValue schema wrapper
 
     Mapping(required=[])
 
@@ -7506,7 +7506,7 @@ class TextDatumValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDef
     _encoding_name = "text"
 
     def __init__(self, value, condition=Undefined, **kwds):
-        super(TextDatumValue, self).__init__(value=value, condition=condition, **kwds)
+        super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
@@ -7868,8 +7868,8 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                                          **kwds)
 
 
-class ThetaDatumValue(ValueChannelMixin, core.PositionValueDef):
-    """ThetaDatumValue schema wrapper
+class ThetaValue(ValueChannelMixin, core.PositionValueDef):
+    """ThetaValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -7887,7 +7887,7 @@ class ThetaDatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "theta"
 
     def __init__(self, value, **kwds):
-        super(ThetaDatumValue, self).__init__(value=value, **kwds)
+        super(ThetaValue, self).__init__(value=value, **kwds)
 
 
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -8082,8 +8082,8 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         super(Theta2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class Theta2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """Theta2DatumValue schema wrapper
+class Theta2Value(ValueChannelMixin, core.PositionValueDef):
+    """Theta2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -8101,7 +8101,7 @@ class Theta2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "theta2"
 
     def __init__(self, value, **kwds):
-        super(Theta2DatumValue, self).__init__(value=value, **kwds)
+        super(Theta2Value, self).__init__(value=value, **kwds)
 
 
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
@@ -8968,8 +8968,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                                      stack=stack, type=type, **kwds)
 
 
-class XDatumValue(ValueChannelMixin, core.PositionValueDef):
-    """XDatumValue schema wrapper
+class XValue(ValueChannelMixin, core.PositionValueDef):
+    """XValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -8987,7 +8987,7 @@ class XDatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "x"
 
     def __init__(self, value, **kwds):
-        super(XDatumValue, self).__init__(value=value, **kwds)
+        super(XValue, self).__init__(value=value, **kwds)
 
 
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -9182,8 +9182,8 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         super(X2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class X2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """X2DatumValue schema wrapper
+class X2Value(ValueChannelMixin, core.PositionValueDef):
+    """X2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -9201,7 +9201,7 @@ class X2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "x2"
 
     def __init__(self, value, **kwds):
-        super(X2DatumValue, self).__init__(value=value, **kwds)
+        super(X2Value, self).__init__(value=value, **kwds)
 
 
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
@@ -9854,8 +9854,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                                      stack=stack, type=type, **kwds)
 
 
-class YDatumValue(ValueChannelMixin, core.PositionValueDef):
-    """YDatumValue schema wrapper
+class YValue(ValueChannelMixin, core.PositionValueDef):
+    """YValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -9873,7 +9873,7 @@ class YDatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "y"
 
     def __init__(self, value, **kwds):
-        super(YDatumValue, self).__init__(value=value, **kwds)
+        super(YValue, self).__init__(value=value, **kwds)
 
 
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -10068,8 +10068,8 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         super(Y2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
 
 
-class Y2DatumValue(ValueChannelMixin, core.PositionValueDef):
-    """Y2DatumValue schema wrapper
+class Y2Value(ValueChannelMixin, core.PositionValueDef):
+    """Y2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value (primitive value or gradient definition) of an
@@ -10087,7 +10087,7 @@ class Y2DatumValue(ValueChannelMixin, core.PositionValueDef):
     _encoding_name = "y2"
 
     def __init__(self, value, **kwds):
-        super(Y2DatumValue, self).__init__(value=value, **kwds)
+        super(Y2Value, self).__init__(value=value, **kwds)
 
 
 class YError(FieldChannelMixin, core.SecondaryFieldDef):

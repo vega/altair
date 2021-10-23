@@ -450,10 +450,10 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
     for prop, propschema in encoding.properties.items():
-        classname = prop[0].upper() + prop[1:]
         def_dict = get_field_datum_value_defs(propschema, schema)
 
         for encoding_spec, definition in def_dict.items():
+            classname = prop[0].upper() + prop[1:]
             basename = definition.split("/")[-1]
             basename = get_valid_identifier(basename)
 
