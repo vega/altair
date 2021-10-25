@@ -65,6 +65,9 @@ def get_valid_identifier(
     if url_decode:
         prop = urllib.parse.unquote(prop)
 
+    # Deal with []
+    prop = prop.replace("[]", "Array")
+
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
     valid = re.sub(r"\W", replacement_character, prop, flags=flags)

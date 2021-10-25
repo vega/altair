@@ -6091,7 +6091,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
-class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
+class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray):
     """StrokeDash schema wrapper
 
     Mapping(required=[shorthand])
@@ -6143,8 +6143,8 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
+    List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -6319,7 +6319,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
                                          sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
+class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumberArray):
     """StrokeDashDatum schema wrapper
 
     Mapping(required=[])
@@ -6340,8 +6340,8 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
         For other marks, relative position on a band of a stacked, binned, time unit or band
         scale. If set to ``0``, the marks will be positioned at the beginning of the band.
         If set to ``0.5``, the marks will be positioned in the middle of the band.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
+    List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -6416,7 +6416,7 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
                                               **kwds)
 
 
-class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
+class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray):
     """StrokeDashValue schema wrapper
 
     Mapping(required=[])
@@ -6425,7 +6425,8 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    :class:`ConditionalValueDefnumberArrayExprRef`,
+    List(:class:`ConditionalValueDefnumberArrayExprRef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(List(float), :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient

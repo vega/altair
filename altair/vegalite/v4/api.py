@@ -1768,7 +1768,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             connected to a browser.
         """
         try:
-            import altair_viewer
+            import altair_viewer  # type: ignore
         except ImportError:
             raise ValueError(
                 "show() method requires the altair_viewer package. "
