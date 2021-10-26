@@ -221,6 +221,7 @@ Low-Level Schema Wrappers
    ConditionalAxisPropertyFontStylenull
    ConditionalAxisPropertyFontWeightnull
    ConditionalAxisPropertyTextBaselinenull
+   ConditionalAxisPropertynumberArraynull
    ConditionalAxisPropertynumbernull
    ConditionalAxisPropertystringnull
    ConditionalAxisString
@@ -237,6 +238,8 @@ Low-Level Schema Wrappers
    ConditionalPredicateValueDefTextBaselinenullExprRef
    ConditionalPredicateValueDefTextExprRef
    ConditionalPredicateValueDefnumber
+   ConditionalPredicateValueDefnumberArrayExprRef
+   ConditionalPredicateValueDefnumberArraynullExprRef
    ConditionalPredicateValueDefnumberExprRef
    ConditionalPredicateValueDefnumbernullExprRef
    ConditionalPredicateValueDefstringExprRef
@@ -247,6 +250,7 @@ Low-Level Schema Wrappers
    ConditionalSelectionValueDefGradientstringnullExprRef
    ConditionalSelectionValueDefTextExprRef
    ConditionalSelectionValueDefnumber
+   ConditionalSelectionValueDefnumberArrayExprRef
    ConditionalSelectionValueDefnumberExprRef
    ConditionalSelectionValueDefstringExprRef
    ConditionalSelectionValueDefstringnullExprRef
@@ -254,6 +258,7 @@ Low-Level Schema Wrappers
    ConditionalValueDefGradientstringnullExprRef
    ConditionalValueDefTextExprRef
    ConditionalValueDefnumber
+   ConditionalValueDefnumberArrayExprRef
    ConditionalValueDefnumberExprRef
    ConditionalValueDefstringExprRef
    ConditionalValueDefstringnullExprRef
@@ -312,10 +317,12 @@ Low-Level Schema Wrappers
    FieldOneOfPredicate
    FieldOrDatumDefWithConditionDatumDefGradientstringnull
    FieldOrDatumDefWithConditionDatumDefnumber
+   FieldOrDatumDefWithConditionDatumDefnumberArray
    FieldOrDatumDefWithConditionDatumDefstringnull
    FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
    FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
    FieldOrDatumDefWithConditionMarkPropFieldDefnumber
+   FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
    FieldOrDatumDefWithConditionStringDatumDefText
    FieldOrDatumDefWithConditionStringFieldDefText
    FieldOrDatumDefWithConditionStringFieldDefstring
@@ -381,6 +388,7 @@ Low-Level Schema Wrappers
    MarkDef
    MarkPropDefGradientstringnull
    MarkPropDefnumber
+   MarkPropDefnumberArray
    MarkPropDefstringnullTypeForShape
    MarkType
    MergedStream
@@ -538,6 +546,7 @@ Low-Level Schema Wrappers
    ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull
    ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull
    ValueDefWithConditionMarkPropFieldOrDatumDefnumber
+   ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray
    ValueDefWithConditionMarkPropFieldOrDatumDefstringnull
    ValueDefWithConditionStringFieldDefText
    ValueDefnumber
