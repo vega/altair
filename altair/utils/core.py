@@ -124,6 +124,7 @@ TIMEUNITS = [
     "year",
     "quarter",
     "month",
+    "week",
     "day",
     "date",
     "hours",
