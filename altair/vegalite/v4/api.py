@@ -511,6 +511,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat=Undefined,
         row=Undefined,
         column=Undefined,
+        layer=Undefined,
         columns=Undefined,
         **kwargs,
     ):
@@ -523,11 +524,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         repeat : list
             a list of data column names to be repeated. This cannot be
-            used along with the ``row`` or ``column`` argument.
+            used along with the ``row``, ``column`` or ``layer`` argument.
         row : list
             a list of data column names to be mapped to the row facet
         column : list
             a list of data column names to be mapped to the column facet
+        layer : list
+            a list of data column names to be layered. This cannot be
+            used along with the ``row``, ``column`` or ``repeat`` argument.
         columns : int
             the maximum number of columns before wrapping. Only referenced
             if ``repeat`` is specified.
@@ -541,14 +545,23 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         repeat_specified = repeat is not Undefined
         rowcol_specified = row is not Undefined or column is not Undefined
+        layer_specified = layer is not Undefined
 
         if repeat_specified and rowcol_specified:
             raise ValueError(
                 "repeat argument cannot be combined with row/column argument."
             )
+        elif repeat_specified and layer_specified:
+            raise ValueError("repeat argument cannot be combined with layer argument.")
+        elif layer_specified and rowcol_specified:
+            raise ValueError(
+                "layer argument cannot be combined with row/column argument."
+            )
 
         if repeat_specified:
             repeat = repeat
+        elif layer_specified:
+            repeat = core.LayerRepeatMapping(layer=layer)
         else:
             repeat = core.RepeatMapping(row=row, column=column)
 
@@ -2133,15 +2146,15 @@ def repeat(repeater="repeat"):
 
     Parameters
     ----------
-    repeater : {'row'|'column'|'repeat'}
+    repeater : {'row'|'column'|'repeat'|'layer'}
         The repeater to tie the field to. Default is 'repeat'.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    if repeater not in ["row", "column", "repeat"]:
-        raise ValueError("repeater must be one of ['row', 'column', 'repeat']")
+    if repeater not in ["row", "column", "repeat", "layer"]:
+        raise ValueError("repeater must be one of ['row', 'column', 'repeat', 'layer']")
     return core.RepeatRef(repeat=repeater)
 
 
