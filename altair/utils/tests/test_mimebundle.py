@@ -183,5 +183,9 @@ def test_spec_to_vega_mimebundle(vega_spec):
 
 
 def test_spec_to_json_mimebundle():
-    bundle = spec_to_mimebundle(spec=vegalite_spec, mode="vega-lite", format="json",)
+    bundle = spec_to_mimebundle(
+        spec=vegalite_spec,
+        mode="vega-lite",
+        format="json",
+    )
     assert bundle == {"application/json": vegalite_spec}
