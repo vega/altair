@@ -27,7 +27,7 @@ import generate_api_docs  # noqa: E402
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
     "vega": {"v5": "v5.10.0"},
-    "vega-lite": {"v4": "v4.17.0"}
+    "vega-lite": {"v3": "v3.4.0", "v4": "v4.17.0"}
     # "vega-lite": {"v3": "v3.4.0", "v4": "v4.8.1"},
 }
 
@@ -605,6 +605,29 @@ def vegalite_main(skip_download=False):
             schemapath=schemapath,
             skip_download=skip_download,
         )
+
+        # Put TopLevelRepeatSpec into a more consistent format with the rest of the schema
+        # TODO: Find a more elegant way of dealing with this.
+        if (library == "vega-lite") and (SCHEMA_VERSION[library][version] == "v4.17.0"):
+            with open(schemafile, encoding="utf8") as f:
+                rootschema = json.load(f)
+
+            repeat_schema = rootschema["definitions"]["TopLevelRepeatSpec"]["anyOf"][0]
+            repeat_description = repeat_schema["properties"]["repeat"]["description"]
+            repeat_options = [
+                {"items": {"type": "string"}, "type": "array"},
+                {"$ref": "#/definitions/RepeatMapping"},
+                {"$ref": "#/definitions/LayerRepeatMapping"},
+            ]
+            repeat_schema["properties"]["repeat"] = {
+                "anyOf": repeat_options,
+                "description": repeat_description,
+            }
+
+            rootschema["definitions"]["TopLevelRepeatSpec"] = repeat_schema
+
+            with open(schemafile, "w", encoding="utf-8") as f:
+                json.dump(rootschema, f, ensure_ascii=False, indent=2)
 
         # Generate __init__.py file
         outfile = join(schemapath, "__init__.py")

@@ -38,15 +38,7 @@ def _make_chart_type(chart_type):
             "color": list("AAAABBBB"),
         }
     )
-    base = (
-        alt.Chart(data)
-        .mark_point()
-        .encode(
-            x="x",
-            y="y",
-            color="color",
-        )
-    )
+    base = alt.Chart(data).mark_point().encode(x="x", y="y", color="color",)
 
     if chart_type in ["layer", "hconcat", "vconcat", "concat"]:
         func = getattr(alt, chart_type)
@@ -301,10 +293,7 @@ def test_facet_basic():
     chart1 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(
-            x="x:Q",
-            y="y:Q",
-        )
+        .encode(x="x:Q", y="y:Q",)
         .facet("category:N", columns=2)
     )
 
@@ -318,10 +307,7 @@ def test_facet_basic():
     chart2 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(
-            x="x:Q",
-            y="y:Q",
-        )
+        .encode(x="x:Q", y="y:Q",)
         .facet(row="category1:Q", column="category2:Q")
     )
 
@@ -746,10 +732,7 @@ def test_repeat():
     chart1 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(
-            x=alt.X(alt.repeat(), type="quantitative"),
-            y="y:Q",
-        )
+        .encode(x=alt.X(alt.repeat(), type="quantitative"), y="y:Q",)
         .repeat(["A", "B", "C", "D"], columns=2)
     )
 
@@ -876,9 +859,7 @@ def test_layer_errors():
 def test_resolve(chart_type):
     chart = _make_chart_type(chart_type)
     chart = (
-        chart.resolve_scale(
-            x="independent",
-        )
+        chart.resolve_scale(x="independent",)
         .resolve_legend(color="independent")
         .resolve_axis(y="independent")
     )

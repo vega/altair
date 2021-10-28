@@ -552,9 +552,7 @@ class _FromDict(object):
                     continue
                 else:
                     return self.from_dict(
-                        dct,
-                        schema=possible_schema,
-                        rootschema=rootschema,
+                        dct, schema=possible_schema, rootschema=rootschema,
                     )
 
         if isinstance(dct, dict):

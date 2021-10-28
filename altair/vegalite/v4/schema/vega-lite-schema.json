@@ -4314,8 +4314,7 @@
           "type": "string"
         },
         "options": {
-          "items": {
-          },
+          "items": {},
           "type": "array"
         },
         "type": {
@@ -7978,8 +7977,7 @@
       "type": "object"
     },
     "Dict<unknown>": {
-      "additionalProperties": {
-      },
+      "additionalProperties": {},
       "type": "object"
     },
     "Diverging": {
@@ -11445,10 +11443,8 @@
       ],
       "type": "object"
     },
-    "GeoJsonFeature": {
-    },
-    "GeoJsonFeatureCollection": {
-    },
+    "GeoJsonFeature": {},
+    "GeoJsonFeatureCollection": {},
     "Gradient": {
       "anyOf": [
         {
@@ -12158,8 +12154,7 @@
         "keyvals": {
           "anyOf": [
             {
-              "items": {
-              },
+              "items": {},
               "type": "array"
             },
             {
@@ -12240,8 +12235,7 @@
         "keyvals": {
           "anyOf": [
             {
-              "items": {
-              },
+              "items": {},
               "type": "array"
             },
             {
@@ -29954,347 +29948,178 @@
       "type": "object"
     },
     "TopLevelRepeatSpec": {
-      "anyOf": [
-        {
-          "additionalProperties": false,
-          "properties": {
-            "$schema": {
-              "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v4.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
-              "format": "uri",
-              "type": "string"
-            },
-            "align": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/LayoutAlign"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<LayoutAlign>"
-                }
-              ],
-              "description": "The alignment to apply to grid rows and columns. The supported string values are `\"all\"`, `\"each\"`, and `\"none\"`.\n\n- For `\"none\"`, a flow layout will be used, in which adjacent subviews are simply placed one after the other. - For `\"each\"`, subviews will be aligned into a clean grid structure, but each row or column may be of variable size. - For `\"all\"`, subviews will be aligned and each row or column will be sized identically based on the maximum observed size. String values for this property will be applied to both grid rows and columns.\n\nAlternatively, an object value of the form `{\"row\": string, \"column\": string}` can be used to supply different alignments for rows and columns.\n\n__Default value:__ `\"all\"`."
-            },
-            "autosize": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/AutosizeType"
-                },
-                {
-                  "$ref": "#/definitions/AutoSizeParams"
-                }
-              ],
-              "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`. Object values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
-            },
-            "background": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Color"
-                },
-                {
-                  "$ref": "#/definitions/ExprRef"
-                }
-              ],
-              "description": "CSS color property to use as the background of the entire view.\n\n__Default value:__ `\"white\"`"
-            },
-            "bounds": {
-              "description": "The bounds calculation method to use for determining the extent of a sub-plot. One of `full` (the default) or `flush`.\n\n- If set to `full`, the entire calculated bounds (including axes, title, and legend) will be used. - If set to `flush`, only the specified width and height values for the sub-view will be used. The `flush` setting can be useful when attempting to place sub-plots without axes or legends into a uniform grid structure.\n\n__Default value:__ `\"full\"`",
-              "enum": [
-                "full",
-                "flush"
-              ],
-              "type": "string"
-            },
-            "center": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<boolean>"
-                }
-              ],
-              "description": "Boolean flag indicating if subviews should be centered relative to their respective rows or columns.\n\nAn object value of the form `{\"row\": boolean, \"column\": boolean}` can be used to supply different centering values for rows and columns.\n\n__Default value:__ `false`"
-            },
-            "columns": {
-              "description": "The number of columns to include in the view composition layout.\n\n__Default value__: `undefined` -- An infinite number of columns (a single row) will be assumed. This is equivalent to `hconcat` (for `concat`) and to using the `column` channel (for `facet` and `repeat`).\n\n__Note__:\n\n1) This property is only for: - the general (wrappable) `concat` operator (not `hconcat`/`vconcat`) - the `facet` and `repeat` operator with one field/repetition definition (without row/column nesting)\n\n2) Setting the `columns` to `1` is equivalent to `vconcat` (for `concat`) and to using the `row` channel (for `facet` and `repeat`).",
-              "type": "number"
-            },
-            "config": {
-              "$ref": "#/definitions/Config",
-              "description": "Vega-Lite configuration object. This property can only be defined at the top-level of a specification."
-            },
-            "data": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Data"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "An object describing the data source. Set to `null` to ignore the parent's data source. If no data is set, it is derived from the parent."
-            },
-            "datasets": {
-              "$ref": "#/definitions/Datasets",
-              "description": "A global data store for named datasets. This is a mapping from names to inline datasets. This can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
-            },
-            "description": {
-              "description": "Description of this mark for commenting purpose.",
-              "type": "string"
-            },
-            "name": {
-              "description": "Name of the visualization for later reference.",
-              "type": "string"
-            },
-            "padding": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Padding"
-                },
-                {
-                  "$ref": "#/definitions/ExprRef"
-                }
-              ],
-              "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle. If a number, specifies padding for all sides. If an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
-            },
-            "params": {
-              "description": "Dynamic variables that parameterize a visualization.",
-              "items": {
-                "$ref": "#/definitions/Parameter"
-              },
-              "type": "array"
-            },
-            "repeat": {
-              "anyOf": [
-                {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                },
-                {
-                  "$ref": "#/definitions/RepeatMapping"
-                }
-              ],
-              "description": "Definition for fields to be repeated. One of: 1) An array of fields to be repeated. If `\"repeat\"` is an array, the field can be referred to as `{\"repeat\": \"repeat\"}`. The repeated views are laid out in a wrapped row. You can set the number of columns to control the wrapping. 2) An object that maps `\"row\"` and/or `\"column\"` to the listed fields to be repeated along the particular orientations. The objects `{\"repeat\": \"row\"}` and `{\"repeat\": \"column\"}` can be used to refer to the repeated field respectively."
-            },
-            "resolve": {
-              "$ref": "#/definitions/Resolve",
-              "description": "Scale, axis, and legend resolutions for view composition specifications."
-            },
-            "spacing": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<number>"
-                }
-              ],
-              "description": "The spacing in pixels between sub-views of the composition operator. An object of the form `{\"row\": number, \"column\": number}` can be used to set different spacing values for rows and columns.\n\n__Default value__: Depends on `\"spacing\"` property of [the view composition configuration](https://vega.github.io/vega-lite/docs/config.html#view-config) (`20` by default)"
-            },
-            "spec": {
-              "$ref": "#/definitions/Spec",
-              "description": "A specification of the view that gets repeated."
-            },
-            "title": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Text"
-                },
-                {
-                  "$ref": "#/definitions/TitleParams"
-                }
-              ],
-              "description": "Title for the plot."
-            },
-            "transform": {
-              "description": "An array of data transformations such as filter and new field calculation.",
-              "items": {
-                "$ref": "#/definitions/Transform"
-              },
-              "type": "array"
-            },
-            "usermeta": {
-              "$ref": "#/definitions/Dict<unknown>",
-              "description": "Optional metadata that will be passed to Vega. This object is completely ignored by Vega and Vega-Lite and can be used for custom metadata."
-            }
-          },
-          "required": [
-            "repeat",
-            "spec"
-          ],
-          "type": "object"
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v4.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
+          "format": "uri",
+          "type": "string"
         },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "$schema": {
-              "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v4.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
-              "format": "uri",
-              "type": "string"
+        "align": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LayoutAlign"
             },
-            "align": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/LayoutAlign"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<LayoutAlign>"
-                }
-              ],
-              "description": "The alignment to apply to grid rows and columns. The supported string values are `\"all\"`, `\"each\"`, and `\"none\"`.\n\n- For `\"none\"`, a flow layout will be used, in which adjacent subviews are simply placed one after the other. - For `\"each\"`, subviews will be aligned into a clean grid structure, but each row or column may be of variable size. - For `\"all\"`, subviews will be aligned and each row or column will be sized identically based on the maximum observed size. String values for this property will be applied to both grid rows and columns.\n\nAlternatively, an object value of the form `{\"row\": string, \"column\": string}` can be used to supply different alignments for rows and columns.\n\n__Default value:__ `\"all\"`."
+            {
+              "$ref": "#/definitions/RowCol<LayoutAlign>"
+            }
+          ],
+          "description": "The alignment to apply to grid rows and columns. The supported string values are `\"all\"`, `\"each\"`, and `\"none\"`.\n\n- For `\"none\"`, a flow layout will be used, in which adjacent subviews are simply placed one after the other. - For `\"each\"`, subviews will be aligned into a clean grid structure, but each row or column may be of variable size. - For `\"all\"`, subviews will be aligned and each row or column will be sized identically based on the maximum observed size. String values for this property will be applied to both grid rows and columns.\n\nAlternatively, an object value of the form `{\"row\": string, \"column\": string}` can be used to supply different alignments for rows and columns.\n\n__Default value:__ `\"all\"`."
+        },
+        "autosize": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AutosizeType"
             },
-            "autosize": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/AutosizeType"
-                },
-                {
-                  "$ref": "#/definitions/AutoSizeParams"
-                }
-              ],
-              "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`. Object values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+            {
+              "$ref": "#/definitions/AutoSizeParams"
+            }
+          ],
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`. Object values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+        },
+        "background": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Color"
             },
-            "background": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Color"
-                },
-                {
-                  "$ref": "#/definitions/ExprRef"
-                }
-              ],
-              "description": "CSS color property to use as the background of the entire view.\n\n__Default value:__ `\"white\"`"
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "CSS color property to use as the background of the entire view.\n\n__Default value:__ `\"white\"`"
+        },
+        "bounds": {
+          "description": "The bounds calculation method to use for determining the extent of a sub-plot. One of `full` (the default) or `flush`.\n\n- If set to `full`, the entire calculated bounds (including axes, title, and legend) will be used. - If set to `flush`, only the specified width and height values for the sub-view will be used. The `flush` setting can be useful when attempting to place sub-plots without axes or legends into a uniform grid structure.\n\n__Default value:__ `\"full\"`",
+          "enum": [
+            "full",
+            "flush"
+          ],
+          "type": "string"
+        },
+        "center": {
+          "anyOf": [
+            {
+              "type": "boolean"
             },
-            "bounds": {
-              "description": "The bounds calculation method to use for determining the extent of a sub-plot. One of `full` (the default) or `flush`.\n\n- If set to `full`, the entire calculated bounds (including axes, title, and legend) will be used. - If set to `flush`, only the specified width and height values for the sub-view will be used. The `flush` setting can be useful when attempting to place sub-plots without axes or legends into a uniform grid structure.\n\n__Default value:__ `\"full\"`",
-              "enum": [
-                "full",
-                "flush"
-              ],
-              "type": "string"
+            {
+              "$ref": "#/definitions/RowCol<boolean>"
+            }
+          ],
+          "description": "Boolean flag indicating if subviews should be centered relative to their respective rows or columns.\n\nAn object value of the form `{\"row\": boolean, \"column\": boolean}` can be used to supply different centering values for rows and columns.\n\n__Default value:__ `false`"
+        },
+        "columns": {
+          "description": "The number of columns to include in the view composition layout.\n\n__Default value__: `undefined` -- An infinite number of columns (a single row) will be assumed. This is equivalent to `hconcat` (for `concat`) and to using the `column` channel (for `facet` and `repeat`).\n\n__Note__:\n\n1) This property is only for: - the general (wrappable) `concat` operator (not `hconcat`/`vconcat`) - the `facet` and `repeat` operator with one field/repetition definition (without row/column nesting)\n\n2) Setting the `columns` to `1` is equivalent to `vconcat` (for `concat`) and to using the `row` channel (for `facet` and `repeat`).",
+          "type": "number"
+        },
+        "config": {
+          "$ref": "#/definitions/Config",
+          "description": "Vega-Lite configuration object. This property can only be defined at the top-level of a specification."
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Data"
             },
-            "center": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<boolean>"
-                }
-              ],
-              "description": "Boolean flag indicating if subviews should be centered relative to their respective rows or columns.\n\nAn object value of the form `{\"row\": boolean, \"column\": boolean}` can be used to supply different centering values for rows and columns.\n\n__Default value:__ `false`"
+            {
+              "type": "null"
+            }
+          ],
+          "description": "An object describing the data source. Set to `null` to ignore the parent's data source. If no data is set, it is derived from the parent."
+        },
+        "datasets": {
+          "$ref": "#/definitions/Datasets",
+          "description": "A global data store for named datasets. This is a mapping from names to inline datasets. This can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
+        },
+        "description": {
+          "description": "Description of this mark for commenting purpose.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the visualization for later reference.",
+          "type": "string"
+        },
+        "padding": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Padding"
             },
-            "columns": {
-              "description": "The number of columns to include in the view composition layout.\n\n__Default value__: `undefined` -- An infinite number of columns (a single row) will be assumed. This is equivalent to `hconcat` (for `concat`) and to using the `column` channel (for `facet` and `repeat`).\n\n__Note__:\n\n1) This property is only for: - the general (wrappable) `concat` operator (not `hconcat`/`vconcat`) - the `facet` and `repeat` operator with one field/repetition definition (without row/column nesting)\n\n2) Setting the `columns` to `1` is equivalent to `vconcat` (for `concat`) and to using the `row` channel (for `facet` and `repeat`).",
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle. If a number, specifies padding for all sides. If an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
+        },
+        "params": {
+          "description": "Dynamic variables that parameterize a visualization.",
+          "items": {
+            "$ref": "#/definitions/Parameter"
+          },
+          "type": "array"
+        },
+        "repeat": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "$ref": "#/definitions/RepeatMapping"
+            },
+            {
+              "$ref": "#/definitions/LayerRepeatMapping"
+            }
+          ],
+          "description": "Definition for fields to be repeated. One of: 1) An array of fields to be repeated. If `\"repeat\"` is an array, the field can be referred to as `{\"repeat\": \"repeat\"}`. The repeated views are laid out in a wrapped row. You can set the number of columns to control the wrapping. 2) An object that maps `\"row\"` and/or `\"column\"` to the listed fields to be repeated along the particular orientations. The objects `{\"repeat\": \"row\"}` and `{\"repeat\": \"column\"}` can be used to refer to the repeated field respectively."
+        },
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale, axis, and legend resolutions for view composition specifications."
+        },
+        "spacing": {
+          "anyOf": [
+            {
               "type": "number"
             },
-            "config": {
-              "$ref": "#/definitions/Config",
-              "description": "Vega-Lite configuration object. This property can only be defined at the top-level of a specification."
-            },
-            "data": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Data"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "An object describing the data source. Set to `null` to ignore the parent's data source. If no data is set, it is derived from the parent."
-            },
-            "datasets": {
-              "$ref": "#/definitions/Datasets",
-              "description": "A global data store for named datasets. This is a mapping from names to inline datasets. This can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
-            },
-            "description": {
-              "description": "Description of this mark for commenting purpose.",
-              "type": "string"
-            },
-            "name": {
-              "description": "Name of the visualization for later reference.",
-              "type": "string"
-            },
-            "padding": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Padding"
-                },
-                {
-                  "$ref": "#/definitions/ExprRef"
-                }
-              ],
-              "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle. If a number, specifies padding for all sides. If an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
-            },
-            "params": {
-              "description": "Dynamic variables that parameterize a visualization.",
-              "items": {
-                "$ref": "#/definitions/Parameter"
-              },
-              "type": "array"
-            },
-            "repeat": {
-              "$ref": "#/definitions/LayerRepeatMapping",
-              "description": "Definition for fields to be repeated. One of: 1) An array of fields to be repeated. If `\"repeat\"` is an array, the field can be referred to as `{\"repeat\": \"repeat\"}`. The repeated views are laid out in a wrapped row. You can set the number of columns to control the wrapping. 2) An object that maps `\"row\"` and/or `\"column\"` to the listed fields to be repeated along the particular orientations. The objects `{\"repeat\": \"row\"}` and `{\"repeat\": \"column\"}` can be used to refer to the repeated field respectively."
-            },
-            "resolve": {
-              "$ref": "#/definitions/Resolve",
-              "description": "Scale, axis, and legend resolutions for view composition specifications."
-            },
-            "spacing": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "$ref": "#/definitions/RowCol<number>"
-                }
-              ],
-              "description": "The spacing in pixels between sub-views of the composition operator. An object of the form `{\"row\": number, \"column\": number}` can be used to set different spacing values for rows and columns.\n\n__Default value__: Depends on `\"spacing\"` property of [the view composition configuration](https://vega.github.io/vega-lite/docs/config.html#view-config) (`20` by default)"
-            },
-            "spec": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/LayerSpec"
-                },
-                {
-                  "$ref": "#/definitions/UnitSpec"
-                }
-              ],
-              "description": "A specification of the view that gets repeated."
-            },
-            "title": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Text"
-                },
-                {
-                  "$ref": "#/definitions/TitleParams"
-                }
-              ],
-              "description": "Title for the plot."
-            },
-            "transform": {
-              "description": "An array of data transformations such as filter and new field calculation.",
-              "items": {
-                "$ref": "#/definitions/Transform"
-              },
-              "type": "array"
-            },
-            "usermeta": {
-              "$ref": "#/definitions/Dict<unknown>",
-              "description": "Optional metadata that will be passed to Vega. This object is completely ignored by Vega and Vega-Lite and can be used for custom metadata."
+            {
+              "$ref": "#/definitions/RowCol<number>"
             }
-          },
-          "required": [
-            "repeat",
-            "spec"
           ],
-          "type": "object"
+          "description": "The spacing in pixels between sub-views of the composition operator. An object of the form `{\"row\": number, \"column\": number}` can be used to set different spacing values for rows and columns.\n\n__Default value__: Depends on `\"spacing\"` property of [the view composition configuration](https://vega.github.io/vega-lite/docs/config.html#view-config) (`20` by default)"
+        },
+        "spec": {
+          "$ref": "#/definitions/Spec",
+          "description": "A specification of the view that gets repeated."
+        },
+        "title": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Text"
+            },
+            {
+              "$ref": "#/definitions/TitleParams"
+            }
+          ],
+          "description": "Title for the plot."
+        },
+        "transform": {
+          "description": "An array of data transformations such as filter and new field calculation.",
+          "items": {
+            "$ref": "#/definitions/Transform"
+          },
+          "type": "array"
+        },
+        "usermeta": {
+          "$ref": "#/definitions/Dict<unknown>",
+          "description": "Optional metadata that will be passed to Vega. This object is completely ignored by Vega and Vega-Lite and can be used for custom metadata."
         }
-      ]
+      },
+      "required": [
+        "repeat",
+        "spec"
+      ],
+      "type": "object"
     },
     "TopLevelFacetSpec": {
       "additionalProperties": false,
