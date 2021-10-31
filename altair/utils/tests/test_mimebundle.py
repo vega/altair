@@ -44,6 +44,7 @@ def vega_spec():
         "$schema": "https://vega.github.io/schema/vega/v5.json",
         "axes": [
             {
+                "aria": False,
                 "domain": False,
                 "grid": True,
                 "gridScale": "x",
@@ -61,7 +62,6 @@ def vega_spec():
                 "labelAlign": "right",
                 "labelAngle": 270,
                 "labelBaseline": "middle",
-                "labelOverlap": True,
                 "orient": "bottom",
                 "scale": "x",
                 "title": "a",
@@ -110,8 +110,12 @@ def vega_spec():
             {
                 "encode": {
                     "update": {
+                        "ariaRoleDescription": {"value": "bar"},
+                        "description": {
+                            "signal": '"a: " + (isValid(datum["a"]) ? datum["a"] : ""+datum["a"]) + "; b: " + (format(datum["b"], ""))'
+                        },
                         "fill": {"value": "#4c78a8"},
-                        "width": {"band": True, "scale": "x"},
+                        "width": {"band": 1, "scale": "x"},
                         "x": {"field": "a", "scale": "x"},
                         "y": {"field": "b", "scale": "y"},
                         "y2": {"scale": "y", "value": 0},
@@ -154,6 +158,14 @@ def vega_spec():
 
 
 def test_vegalite_to_vega_mimebundle(require_altair_saver, vegalite_spec, vega_spec):
+    # temporay fix for https://github.com/vega/vega-lite/issues/7776
+    def delete_none(axes):
+        for axis in axes:
+            for key, value in list(axis.items()):
+                if value is None:
+                    del axis[key]
+        return axes
+
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
@@ -161,6 +173,10 @@ def test_vegalite_to_vega_mimebundle(require_altair_saver, vegalite_spec, vega_s
         vega_version=alt.VEGA_VERSION,
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
+    )
+
+    bundle["application/vnd.vega.v5+json"]["axes"] = delete_none(
+        bundle["application/vnd.vega.v5+json"]["axes"]
     )
     assert bundle == {"application/vnd.vega.v5+json": vega_spec}
 
