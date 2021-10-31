@@ -607,7 +607,7 @@ def vegalite_main(skip_download=False):
         )
 
         # Put TopLevelRepeatSpec into a more consistent format with the rest of the schema
-        # TODO: Find a more elegant way of dealing with this.
+        # TODO: Find a more elegant way of dealing with this. https://github.com/vega/vega-lite/issues/7775
         if (library == "vega-lite") and (SCHEMA_VERSION[library][version] == "v4.17.0"):
             with open(schemafile, encoding="utf8") as f:
                 rootschema = json.load(f)
