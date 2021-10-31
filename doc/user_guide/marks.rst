@@ -15,6 +15,7 @@ Altair provides a number of basic mark properties:
 ==========  ============================  ===================================================  ====================================
 Mark Name   Method                        Description                                          Example
 ==========  ============================  ===================================================  ====================================
+arc         :meth:`~Chart.mark_arc`       A pie chart.                                         :ref:`gallery_pie_chart`
 area        :meth:`~Chart.mark_area`      A filled area plot.                                  :ref:`gallery_simple_stacked_area_chart`
 bar         :meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`
 circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`

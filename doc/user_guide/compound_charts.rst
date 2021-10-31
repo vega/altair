@@ -270,8 +270,24 @@ The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
 encodings for the row and/or column which can be referred to in the chart's
 encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
-Currently ``repeat`` can only be specified for rows and column (not, e.g., for
-layers) and the target can only be encodings (not, e.g., data transforms)
+Another option to use the ``repeat`` method is for layering. Here below the
+columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
+using ``alt.repeat('layer')``: 
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.movies()
+
+    alt.Chart(source).mark_line().encode(
+        x=alt.X("IMDB_Rating", bin=True),
+        y=alt.Y(alt.repeat('layer'), aggregate='mean', title="Mean of US and Worldwide Gross"),
+        color=alt.ColorDatum(alt.repeat('layer'))
+    ).repeat(layer=["US_Gross", "Worldwide_Gross"])
+
+Currently ``repeat`` can only be encodings (not, e.g., data transforms)
 but there is discussion within the Vega-Lite community about making this pattern
 more general in the future.
 
