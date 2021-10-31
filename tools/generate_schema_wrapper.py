@@ -606,8 +606,6 @@ def vegalite_main(skip_download=False):
             skip_download=skip_download,
         )
 
-<<<<<<< HEAD
-=======
         # Put TopLevelRepeatSpec into a more consistent format with the rest of the schema
         # TODO: Find a more elegant way of dealing with this.
         # See for more info: https://github.com/vega/vega-lite/issues/7775
@@ -632,7 +630,6 @@ def vegalite_main(skip_download=False):
             with open(schemafile, "w", encoding="utf-8") as f:
                 json.dump(rootschema, f, ensure_ascii=False, indent=2)
 
->>>>>>> sample417
         # Generate __init__.py file
         outfile = join(schemapath, "__init__.py")
         print("Writing {}".format(outfile))
