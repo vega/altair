@@ -57,6 +57,8 @@ xError      :class:`XError`      The x-axis error value             N/A
 yError      :class:`YError`      The y-axis error value             N/A
 xError2     :class:`XError2`     The second x-axis error value      N/A
 yError2     :class:`YError2`     The second y-axis error value      N/A
+theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
+theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
@@ -68,6 +70,7 @@ color          :class:`Color`          The color of the mark           :ref:`gal
 fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
 fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
 opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
+radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
 shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
 size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
 stroke         :class:`Stroke`         The stroke of the mark          N/A
