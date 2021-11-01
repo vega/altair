@@ -18123,7 +18123,7 @@ class TopLevelRepeatSpec(TopLevelSpec):
         ``"column"`` to the listed fields to be repeated along the particular orientations.
         The objects ``{"repeat": "row"}`` and ``{"repeat": "column"}`` can be used to refer
         to the repeated field respectively.
-    spec : :class:`Spec`
+    spec : anyOf(:class:`Spec`, :class:`LayerSpec`, :class:`UnitSpec`)
         A specification of the view that gets repeated.
     align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
         The alignment to apply to grid rows and columns. The supported string values are

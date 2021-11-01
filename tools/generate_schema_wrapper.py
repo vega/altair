@@ -608,6 +608,7 @@ def vegalite_main(skip_download=False):
 
         # Put TopLevelRepeatSpec into a more consistent format with the rest of the schema
         # TODO: Find a more elegant way of dealing with this.
+        # This should really be two separate schemas: a layered version and a nonlayered version.
         # See for more info: https://github.com/vega/vega-lite/issues/7775
         if (library == "vega-lite") and (SCHEMA_VERSION[library][version] == "v4.17.0"):
             with open(schemafile, encoding="utf8") as f:
@@ -623,6 +624,17 @@ def vegalite_main(skip_download=False):
             repeat_schema["properties"]["repeat"] = {
                 "anyOf": repeat_options,
                 "description": repeat_description,
+            }
+
+            spec_description = repeat_schema["properties"]["spec"]["description"]
+            spec_options = [
+                {'$ref': '#/definitions/Spec'},
+                {'$ref': '#/definitions/LayerSpec'},
+                {'$ref': '#/definitions/UnitSpec'},
+            ]
+            repeat_schema["properties"]["spec"] = {
+                "anyOf": spec_options,
+                "description": spec_description,
             }
 
             rootschema["definitions"]["TopLevelRepeatSpec"] = repeat_schema
