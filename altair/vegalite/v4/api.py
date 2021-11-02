@@ -2098,13 +2098,28 @@ def _check_if_can_be_layered(spec):
         raise ValueError("Concatenated charts cannot be layered.")
 
 
-@utils.use_signature(core.TopLevelRepeatSpec)
-class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
+class RepeatChart(TopLevelMixin, core.VegaLiteSchema):
     """A chart repeated across rows and columns with small changes"""
 
-    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
+    _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
+
+    # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
+    # we set the arguments explicitly here.  
+    # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, autosize=Undefined,
+                 background=Undefined, bounds=Undefined, center=Undefined, columns=Undefined,
+                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, params=Undefined, resolve=Undefined,
+                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
         _check_if_valid_subspec(spec, "RepeatChart")
-        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(repeat=repeat, spec=spec, align=align,
+                                                 autosize=autosize, background=background,
+                                                 bounds=bounds, center=center, columns=columns,
+                                                 config=config, data=data, datasets=datasets,
+                                                 description=description, name=name, padding=padding,
+                                                 params=params, resolve=resolve, spacing=spacing,
+                                                 title=title, transform=transform, usermeta=usermeta,
+                                                 **kwds)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
