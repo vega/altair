@@ -170,7 +170,7 @@ class DatumChannelMixin(object):
                 pass
         return super(DatumChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
-                                                      context=context)  
+                                                      context=context)
 """
 
 
