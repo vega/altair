@@ -465,6 +465,10 @@ class SchemaBase(object):
         return list(self._kwds.keys())
 
 
+def _passthrough(*args, **kwds):
+    return args[0] if args else kwds
+
+
 class _FromDict(object):
     """Class used to construct SchemaBase class hierarchies from a dict
 
@@ -520,7 +524,7 @@ class _FromDict(object):
             return hash(_freeze(schema))
 
     def from_dict(
-        self, dct, cls=None, schema=None, rootschema=None, default_class=None
+        self, dct, cls=None, schema=None, rootschema=None, default_class=_passthrough
     ):
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
@@ -529,9 +533,6 @@ class _FromDict(object):
             schema = schema or cls._schema
             rootschema = rootschema or cls._rootschema
         rootschema = rootschema or schema
-
-        def _passthrough(*args, **kwds):
-            return args[0] if args else kwds
 
         if isinstance(dct, SchemaBase):
             return dct
@@ -543,11 +544,9 @@ class _FromDict(object):
             matches = self.class_dict[self.hash_schema(schema)]
             if matches:
                 cls = matches[0]
-            elif default_class:
-                cls = default_class
             else:
-                cls = _passthrough
-            default_class = None
+                cls = default_class
+            default_class = _passthrough
         else:
             default_class = cls
         schema = _resolve_references(schema, rootschema)
