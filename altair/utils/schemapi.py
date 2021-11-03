@@ -521,7 +521,9 @@ class _FromDict(object):
 
             return hash(_freeze(schema))
 
-    def from_dict(self, dct, cls=None, schema=None, rootschema=None):
+    def from_dict(
+        self, dct, cls=None, schema=None, rootschema=None, default_class=None
+    ):
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
             raise ValueError("Must provide either cls or schema, but not both.")
@@ -541,7 +543,15 @@ class _FromDict(object):
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[0] if matches else _passthrough
+            if matches:
+                cls = matches[0]
+            elif default_class:
+                cls = default_class
+            else:
+                cls = _passthrough
+            default_class = None
+        else:
+            default_class = cls
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:
@@ -557,6 +567,7 @@ class _FromDict(object):
                         dct,
                         schema=possible_schema,
                         rootschema=rootschema,
+                        default_class=default_class,
                     )
 
         if isinstance(dct, dict):
