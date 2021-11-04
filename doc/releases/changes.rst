@@ -15,7 +15,7 @@ Enhancements
 - Support for the ``datum`` encoding specifications from Vega-Lite; see 
   `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
   (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
-- ``angle`` encoding can now be used to control point styles (Example: :ref:`wind_vector_map`)  
+- ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)  
 
 Bug Fixes
 ~~~~~~~~~
