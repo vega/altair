@@ -10,11 +10,12 @@ Version 4.2.0 (unreleased)
 
 Enhancements
 ~~~~~~~~~~~~
-- Pie charts are now supported through the use of ``mark_arc``. (Examples:
+- Pie charts are now supported through the use of ``mark_arc``. (Examples: eg.
   :ref:`gallery_pie_chart` and :ref:`gallery_radial_chart`.)
 - Support for the ``datum`` encoding specifications from Vega-Lite; see 
   `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
   (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
+- ``angle`` encoding can now be used to control point styles (Example: :ref:`wind_vector_map`)  
 
 Bug Fixes
 ~~~~~~~~~
