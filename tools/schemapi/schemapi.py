@@ -546,9 +546,6 @@ class _FromDict(object):
                 cls = matches[0]
             else:
                 cls = default_class
-            default_class = _passthrough
-        else:
-            default_class = cls
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:
@@ -564,7 +561,7 @@ class _FromDict(object):
                         dct,
                         schema=possible_schema,
                         rootschema=rootschema,
-                        default_class=default_class,
+                        default_class=cls,
                     )
 
         if isinstance(dct, dict):
