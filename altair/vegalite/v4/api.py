@@ -48,7 +48,7 @@ def _consolidate_data(data, context):
     if isinstance(data, core.InlineData):
         if data.name is Undefined and data.values is not Undefined:
             if isinstance(data.values, core.InlineDataset):
-                values = data.values.to_dict()
+                values = data.to_dict()["values"]
             else:
                 values = data.values
             kwds = {"format": data.format}
