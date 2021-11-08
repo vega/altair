@@ -5,9 +5,17 @@ Altair Change Log
 
 Version 4.2.0 (unreleased)
 --------------------------
+- Update Vega-Lite from version 4.8.1 to version 4.17.0;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
+- Pie charts are now supported through the use of ``mark_arc``. (Examples: eg.
+  :ref:`gallery_pie_chart` and :ref:`gallery_radial_chart`.)
+- Support for the ``datum`` encoding specifications from Vega-Lite; see 
+  `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
+  (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
+- ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)  
 
 Bug Fixes
 ~~~~~~~~~

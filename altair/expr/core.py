@@ -15,6 +15,10 @@ class DatumType(object):
     def __getitem__(self, attr):
         return GetItemExpression("datum", attr)
 
+    def __call__(self, datum, **kwargs):
+        """Specify a datum for use in an encoding"""
+        return dict(datum=datum, **kwargs)
+
 
 datum = DatumType()
 

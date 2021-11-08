@@ -265,6 +265,7 @@ def main(app):
             "Bar Charts": [],
             "Line Charts": [],
             "Area Charts": [],
+            "Circular Plots": [],
             "Scatter Plots": [],
             "Histograms": [],
             "Maps": [],

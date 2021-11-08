@@ -47,7 +47,10 @@ def _consolidate_data(data, context):
 
     if isinstance(data, core.InlineData):
         if data.name is Undefined and data.values is not Undefined:
-            values = data.values
+            if isinstance(data.values, core.InlineDataset):
+                values = data.to_dict()["values"]
+            else:
+                values = data.values
             kwds = {"format": data.format}
 
     elif isinstance(data, dict):
@@ -511,6 +514,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat=Undefined,
         row=Undefined,
         column=Undefined,
+        layer=Undefined,
         columns=Undefined,
         **kwargs,
     ):
@@ -523,11 +527,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         repeat : list
             a list of data column names to be repeated. This cannot be
-            used along with the ``row`` or ``column`` argument.
+            used along with the ``row``, ``column`` or ``layer`` argument.
         row : list
             a list of data column names to be mapped to the row facet
         column : list
             a list of data column names to be mapped to the column facet
+        layer : list
+            a list of data column names to be layered. This cannot be
+            used along with the ``row``, ``column`` or ``repeat`` argument.
         columns : int
             the maximum number of columns before wrapping. Only referenced
             if ``repeat`` is specified.
@@ -541,14 +548,23 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         repeat_specified = repeat is not Undefined
         rowcol_specified = row is not Undefined or column is not Undefined
+        layer_specified = layer is not Undefined
 
         if repeat_specified and rowcol_specified:
             raise ValueError(
                 "repeat argument cannot be combined with row/column argument."
             )
+        elif repeat_specified and layer_specified:
+            raise ValueError("repeat argument cannot be combined with layer argument.")
+        elif layer_specified and rowcol_specified:
+            raise ValueError(
+                "layer argument cannot be combined with row/column argument."
+            )
 
         if repeat_specified:
             repeat = repeat
+        elif layer_specified:
+            repeat = core.LayerRepeatMapping(layer=layer)
         else:
             repeat = core.RepeatMapping(row=row, column=column)
 
@@ -1768,7 +1784,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             connected to a browser.
         """
         try:
-            import altair_viewer
+            import altair_viewer  # type: ignore
         except ImportError:
             raise ValueError(
                 "show() method requires the altair_viewer package. "
@@ -2089,9 +2105,57 @@ def _check_if_can_be_layered(spec):
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
 
-    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
+    # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
+    # we set the arguments explicitly here.
+    # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    def __init__(
+        self,
+        repeat=Undefined,
+        spec=Undefined,
+        align=Undefined,
+        autosize=Undefined,
+        background=Undefined,
+        bounds=Undefined,
+        center=Undefined,
+        columns=Undefined,
+        config=Undefined,
+        data=Undefined,
+        datasets=Undefined,
+        description=Undefined,
+        name=Undefined,
+        padding=Undefined,
+        params=Undefined,
+        resolve=Undefined,
+        spacing=Undefined,
+        title=Undefined,
+        transform=Undefined,
+        usermeta=Undefined,
+        **kwds,
+    ):
         _check_if_valid_subspec(spec, "RepeatChart")
-        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(
+            repeat=repeat,
+            spec=spec,
+            align=align,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds,
+        )
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -2133,15 +2197,15 @@ def repeat(repeater="repeat"):
 
     Parameters
     ----------
-    repeater : {'row'|'column'|'repeat'}
+    repeater : {'row'|'column'|'repeat'|'layer'}
         The repeater to tie the field to. Default is 'repeat'.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    if repeater not in ["row", "column", "repeat"]:
-        raise ValueError("repeater must be one of ['row', 'column', 'repeat']")
+    if repeater not in ["row", "column", "repeat", "layer"]:
+        raise ValueError("repeater must be one of ['row', 'column', 'repeat', 'layer']")
     return core.RepeatRef(repeat=repeater)
 
 

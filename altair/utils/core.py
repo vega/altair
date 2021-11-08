@@ -96,35 +96,14 @@ WINDOW_AGGREGATES = [
     "nth_value",
 ]
 
-# timeUnits from vega-lite version 4.6.0
+# timeUnits from vega-lite version 4.17.0
 TIMEUNITS = [
-    "utcyear",
-    "utcquarter",
-    "utcmonth",
-    "utcday",
-    "utcdate",
-    "utchours",
-    "utcminutes",
-    "utcseconds",
-    "utcmilliseconds",
-    "utcyearquarter",
-    "utcyearquartermonth",
-    "utcyearmonth",
-    "utcyearmonthdate",
-    "utcyearmonthdatehours",
-    "utcyearmonthdatehoursminutes",
-    "utcyearmonthdatehoursminutesseconds",
-    "utcquartermonth",
-    "utcmonthdate",
-    "utcmonthdatehours",
-    "utchoursminutes",
-    "utchoursminutesseconds",
-    "utcminutesseconds",
-    "utcsecondsmilliseconds",
     "year",
     "quarter",
     "month",
+    "week",
     "day",
+    "dayofyear",
     "date",
     "hours",
     "minutes",
@@ -137,13 +116,68 @@ TIMEUNITS = [
     "yearmonthdatehours",
     "yearmonthdatehoursminutes",
     "yearmonthdatehoursminutesseconds",
+    "yearweek",
+    "yearweekday",
+    "yearweekdayhours",
+    "yearweekdayhoursminutes",
+    "yearweekdayhoursminutesseconds",
+    "yeardayofyear",
     "quartermonth",
     "monthdate",
     "monthdatehours",
+    "monthdatehoursminutes",
+    "monthdatehoursminutesseconds",
+    "weekday",
+    "weeksdayhours",
+    "weekdayhoursminutes",
+    "weekdayhoursminutesseconds",
+    "dayhours",
+    "dayhoursminutes",
+    "dayhoursminutesseconds",
     "hoursminutes",
     "hoursminutesseconds",
     "minutesseconds",
     "secondsmilliseconds",
+    "utcyear",
+    "utcquarter",
+    "utcmonth",
+    "utcweek",
+    "utcday",
+    "utcdayofyear",
+    "utcdate",
+    "utchours",
+    "utcminutes",
+    "utcseconds",
+    "utcmilliseconds",
+    "utcyearquarter",
+    "utcyearquartermonth",
+    "utcyearmonth",
+    "utcyearmonthdate",
+    "utcyearmonthdatehours",
+    "utcyearmonthdatehoursminutes",
+    "utcyearmonthdatehoursminutesseconds",
+    "utcyearweek",
+    "utcyearweekday",
+    "utcyearweekdayhours",
+    "utcyearweekdayhoursminutes",
+    "utcyearweekdayhoursminutesseconds",
+    "utcyeardayofyear",
+    "utcquartermonth",
+    "utcmonthdate",
+    "utcmonthdatehours",
+    "utcmonthdatehoursminutes",
+    "utcmonthdatehoursminutesseconds",
+    "utcweekday",
+    "utcweeksdayhours",
+    "utcweekdayhoursminutes",
+    "utcweekdayhoursminutesseconds",
+    "utcdayhours",
+    "utcdayhoursminutes",
+    "utcdayhoursminutesseconds",
+    "utchoursminutes",
+    "utchoursminutesseconds",
+    "utcminutesseconds",
+    "utcsecondsmilliseconds",
 ]
 
 
@@ -633,7 +667,12 @@ def infer_encoding_types(args, kwargs, channels):
     name_to_channel = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
-        key = "value" if chan.__name__.endswith("Value") else "field"
+        if chan.__name__.endswith("Datum"):
+            key = "datum"
+        elif chan.__name__.endswith("Value"):
+            key = "value"
+        else:
+            key = "field"
         chans[key] = chan
 
     # First use the mapping to convert args to kwargs based on their types.

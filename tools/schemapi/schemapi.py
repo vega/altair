@@ -465,6 +465,10 @@ class SchemaBase(object):
         return list(self._kwds.keys())
 
 
+def _passthrough(*args, **kwds):
+    return args[0] if args else kwds
+
+
 class _FromDict(object):
     """Class used to construct SchemaBase class hierarchies from a dict
 
@@ -519,7 +523,9 @@ class _FromDict(object):
 
             return hash(_freeze(schema))
 
-    def from_dict(self, dct, cls=None, schema=None, rootschema=None):
+    def from_dict(
+        self, dct, cls=None, schema=None, rootschema=None, default_class=_passthrough
+    ):
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
             raise ValueError("Must provide either cls or schema, but not both.")
@@ -527,9 +533,6 @@ class _FromDict(object):
             schema = schema or cls._schema
             rootschema = rootschema or cls._rootschema
         rootschema = rootschema or schema
-
-        def _passthrough(*args, **kwds):
-            return args[0] if args else kwds
 
         if isinstance(dct, SchemaBase):
             return dct
@@ -539,7 +542,10 @@ class _FromDict(object):
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[0] if matches else _passthrough
+            if matches:
+                cls = matches[0]
+            else:
+                cls = default_class
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:
@@ -555,6 +561,7 @@ class _FromDict(object):
                         dct,
                         schema=possible_schema,
                         rootschema=rootschema,
+                        default_class=cls,
                     )
 
         if isinstance(dct, dict):

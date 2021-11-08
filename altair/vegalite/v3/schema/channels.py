@@ -78,6 +78,19 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
+class DatumChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        datum = getattr(self, 'datum', Undefined)
+        copy = self  # don't copy unless we need to
+        if datum is not Undefined:
+            if isinstance(datum, core.SchemaBase):
+                pass
+        return super(DatumChannelMixin, copy).to_dict(validate=validate,
+                                                      ignore=ignore,
+                                                      context=context)
+
+
 class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Color schema wrapper
 

@@ -57,6 +57,8 @@ xError      :class:`XError`      The x-axis error value             N/A
 yError      :class:`YError`      The y-axis error value             N/A
 xError2     :class:`XError2`     The second x-axis error value      N/A
 yError2     :class:`YError2`     The second y-axis error value      N/A
+theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
+theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
@@ -64,10 +66,12 @@ Mark Property Channels:
 =============  ======================  ==============================  =========================================
 Channel        Altair Class            Description                     Example
 =============  ======================  ==============================  =========================================
+angle          :class:`Angle`          The angle of the mark           :ref:`gallery_wind_vector_map`
 color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
 fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
 fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
 opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
+radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
 shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
 size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
 stroke         :class:`Stroke`         The stroke of the mark          N/A
@@ -255,24 +259,32 @@ The :class:`X` and :class:`Y` encodings accept the following options:
 
 The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
 
-.. altair-object-table:: altair.StringFieldDefWithCondition
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
 
 The :class:`Shape` encoding accepts the following options:
 
-.. altair-object-table:: altair.ShapeFieldDefWithCondition
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
 
-The :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
+The :class:`Angle`, :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
 and :class:`StrokeWidth` encodings accept the following options:
 
-.. altair-object-table:: altair.NumericFieldDefWithCondition
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 
-The :class:`Row`, :class:`Column`, and :class:`Facet` encodings accept the following options:
+The :class:`Row` and :class:`Column`, and :class:`Facet` encodings accept the following options:
 
-.. altair-object-table:: altair.FacetFieldDef
+.. altair-object-table:: altair.RowColumnEncodingFieldDef
 
-The :class:`Text` and :class:`Tooltip` encodings accept the following options:
+The :class:`Facet` encoding accepts the following options:
 
-.. altair-object-table:: altair.TextFieldDefWithCondition
+.. altair-object-table:: altair.FacetEncodingFieldDef
+
+The :class:`Text` encoding accepts the following options:
+
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionStringFieldDefText
+
+The :class:`Description`, :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
+
+.. altair-object-table:: altair.StringFieldDefWithCondition
 
 The :class:`Detail` and :class:`Key` encodings accept the following options:
 
@@ -282,19 +294,22 @@ The :class:`Latitude` and :class:`Longitude` encodings accept the following opti
 
 .. altair-object-table:: altair.LatLongFieldDef
 
-The :class:`Latitude2`, :class:`Longitude2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`,
+The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`,
 :class:`XError2`, and :class:`YError2` encodings accept the following options:
 
 .. altair-object-table:: altair.SecondaryFieldDef
-
-The :class:`Href` encoding accepts the following options:
-
-.. altair-object-table:: altair.TextFieldDefWithCondition
 
 The :class:`Order` encoding accepts the following options:
 
 .. altair-object-table:: altair.OrderFieldDef
 
+The :class:`Radius` and :class:`Theta` encodings accept the following options:
+
+.. altair-object-table:: altair.PositionFieldDefBase
+
+The :class:`StrokeDash` encoding accepts the following options:
+
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
 
 .. _encoding-aggregates:
 
