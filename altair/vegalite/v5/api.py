@@ -162,11 +162,35 @@ class Selection(object):
         cls._counter += 1
         return "selector{:03d}".format(cls._counter)
 
-    def __init__(self, name, selection):
+    def __init__(self, name, type, **kwds):
         if name is None:
             name = self._get_name()
+
+        # Deal with the change of schema
+        param_kwds = {}
+
+        if "bind" in kwds:
+            param_kwds["bind"] = kwds.pop("bind")
+            
+        if "init" in kwds:
+            param_kwds["value"] = kwds.pop("init")
+
+        # Provides a way of moving the empty value to transform_filter
+        if kwds.pop("empty","all") == "none":
+            self.empty = False
+        else:
+            self.empty = True
+
+        if type in ["single", "multi", "point"]:
+            select = core.PointSelectionConfig(type="point", **kwds)
+        elif type == "interval":
+            select = core.IntervalSelectionConfig(type="interval", **kwds)
+        else:
+            raise ValueError("'type' must be one of 'point', 'interval', 'single', 'multi'.")
+        
         self.name = name
-        self.selection = selection
+        #TODO: Are we missing any possible keywords?
+        self.selection = core.SelectionParameter(name, select = select, **param_kwds)
 
     def __repr__(self):
         return "Selection({0!r}, {1})".format(self.name, self.selection)
@@ -176,25 +200,23 @@ class Selection(object):
 
     def to_dict(self):
         return {
-            "selection": self.name.to_dict()
+            "param": self.name.to_dict()
             if hasattr(self.name, "to_dict")
             else self.name
         }
 
     def __invert__(self):
-        return Selection(core.SelectionNot(**{"not": self.name}), self.selection)
-
+        return core.PredicateComposition({"not":{"param":self.name}})
+ 
     def __and__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return Selection(
-            core.SelectionAnd(**{"and": [self.name, other]}), self.selection
-        )
+        return core.PredicateComposition({"and": [self.name, other]})
 
     def __or__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
+        return core.PredicateComposition({"or": [self.name, other]})
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
@@ -223,7 +245,7 @@ def selection(name=None, type=Undefined, **kwds):
         The name of the selection. If not specified, a unique name will be
         created.
     type : string
-        The type of the selection: one of ["interval", "single", or "multi"]
+        The type of the selection: one of ["point", "interval", "single", or "multi"]
     **kwds :
         additional keywords will be used to construct a SelectionDef instance
         that controls the selection.
@@ -233,22 +255,22 @@ def selection(name=None, type=Undefined, **kwds):
     selection: Selection
         The selection object that can be used in chart creation.
     """
-    return Selection(name, core.SelectionDef(type=type, **kwds))
+    return Selection(name, type, **kwds)
 
 
-@utils.use_signature(core.IntervalSelection)
+@utils.use_signature(core.IntervalSelectionConfig)
 def selection_interval(**kwargs):
     """Create a selection with type='interval'"""
     return selection(type="interval", **kwargs)
 
 
-@utils.use_signature(core.MultiSelection)
+@utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
     """Create a selection with type='multi'"""
     return selection(type="multi", **kwargs)
 
 
-@utils.use_signature(core.SingleSelection)
+@utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
     """Create a selection with type='single'"""
     return selection(type="single", **kwargs)
@@ -307,9 +329,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     if isinstance(predicate, Selection):
-        condition = {"selection": predicate.name}
-    elif isinstance(predicate, core.SelectionComposition):
-        condition = {"selection": predicate}
+        condition = {"param": predicate.name}
     elif isinstance(predicate, test_predicates):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
@@ -1125,9 +1145,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         """
         if isinstance(filter, Selection):
-            filter = {"selection": filter.name}
-        elif isinstance(filter, core.SelectionComposition):
-            filter = {"selection": filter}
+            filter = {"param": filter.name, "empty": filter.empty}
+        elif isinstance(filter, core.PredicateComposition):
+            filter = {"test": filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(self, flatten, as_=Undefined):
@@ -2010,12 +2030,12 @@ class Chart(
         """Add one or more selections to the chart."""
         if not selections:
             return self
-        copy = self.copy(deep=["selection"])
-        if copy.selection is Undefined:
-            copy.selection = {}
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
 
         for s in selections:
-            copy.selection[s.name] = s.selection
+            copy.params.append(s.selection)
         return copy
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
@@ -2209,8 +2229,8 @@ def repeat(repeater="repeat"):
     return core.RepeatRef(repeat=repeater)
 
 
-@utils.use_signature(core.TopLevelNormalizedConcatSpecGenericSpec)
-class ConcatChart(TopLevelMixin, core.TopLevelNormalizedConcatSpecGenericSpec):
+@utils.use_signature(core.TopLevelConcatSpec)
+class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
@@ -2247,8 +2267,8 @@ def concat(*charts, **kwargs):
     return ConcatChart(concat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelNormalizedHConcatSpecGenericSpec)
-class HConcatChart(TopLevelMixin, core.TopLevelNormalizedHConcatSpecGenericSpec):
+@utils.use_signature(core.TopLevelHConcatSpec)
+class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
@@ -2283,8 +2303,8 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelNormalizedVConcatSpecGenericSpec)
-class VConcatChart(TopLevelMixin, core.TopLevelNormalizedVConcatSpecGenericSpec):
+@utils.use_signature(core.TopLevelVConcatSpec)
+class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
 
     def __init__(self, data=Undefined, vconcat=(), **kwargs):

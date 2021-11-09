@@ -28,7 +28,7 @@ class MarkMethodMixin(object):
                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
                  theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
-                 timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
                  **kwds):
@@ -56,10 +56,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="arc", **kwds)
@@ -87,7 +87,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -115,10 +115,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
@@ -146,7 +146,7 @@ class MarkMethodMixin(object):
                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
                  theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
-                 timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
                  **kwds):
@@ -174,10 +174,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
@@ -205,7 +205,7 @@ class MarkMethodMixin(object):
                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
@@ -233,10 +233,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="image", **kwds)
@@ -264,7 +264,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -292,10 +292,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
@@ -323,7 +323,7 @@ class MarkMethodMixin(object):
                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
@@ -351,10 +351,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
@@ -382,7 +382,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -410,10 +410,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
@@ -441,7 +441,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -469,10 +469,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
@@ -500,7 +500,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -528,10 +528,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
@@ -559,7 +559,7 @@ class MarkMethodMixin(object):
                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
@@ -587,10 +587,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
@@ -618,7 +618,7 @@ class MarkMethodMixin(object):
                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
@@ -646,10 +646,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
@@ -677,7 +677,7 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                     strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                     theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                    thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
                     y2Offset=Undefined, yOffset=Undefined, **kwds):
@@ -705,10 +705,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
@@ -736,7 +736,7 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
                     strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
                     theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                    thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
                     y2Offset=Undefined, yOffset=Undefined, **kwds):
@@ -764,10 +764,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
@@ -796,7 +796,7 @@ class MarkMethodMixin(object):
                       strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
                       tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
                       theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
-                      timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
+                      timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                       url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                       xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                       yOffset=Undefined, **kwds):
@@ -824,10 +824,10 @@ class MarkMethodMixin(object):
                     strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, theta2=theta2, theta2Offset=theta2Offset,
-                    thetaOffset=thetaOffset, thickness=thickness, timeUnitBand=timeUnitBand,
-                    timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, url=url, width=width,
-                    x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    thetaOffset=thetaOffset, thickness=thickness,
+                    timeUnitBandPosition=timeUnitBandPosition, timeUnitBandSize=timeUnitBandSize,
+                    tooltip=tooltip, url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                    xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)

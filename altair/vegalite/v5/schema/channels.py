@@ -95,8 +95,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Angle schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -111,17 +111,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -145,7 +138,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -194,25 +187,30 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -246,7 +244,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -266,44 +264,56 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -311,38 +321,32 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Angle, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                    condition=condition, field=field, legend=legend, scale=scale,
-                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Angle, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                    bin=bin, condition=condition, field=field, legend=legend,
+                                    scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                    **kwds)
 
 
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """AngleDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -367,52 +371,65 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(AngleDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(AngleDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                         type=type, **kwds)
 
 
 class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -425,7 +442,7 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -442,8 +459,8 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Color schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -458,17 +475,10 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -492,7 +502,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         documentation.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -541,25 +551,30 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -593,7 +608,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -613,44 +628,56 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -658,38 +685,32 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Color, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                    condition=condition, field=field, legend=legend, scale=scale,
-                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Color, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                    bin=bin, condition=condition, field=field, legend=legend,
+                                    scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                    **kwds)
 
 
 class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """ColorDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -714,52 +735,65 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(ColorDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(ColorDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                         type=type, **kwds)
 
 
 class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -773,7 +807,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -810,24 +844,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
-          placed one after the other. - For ``"each"``, subviews will be aligned into a
-          clean grid structure, but each row or column may be of variable size. - For
-          ``"all"``, subviews will be aligned and each row or column will be sized
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
           identically based on the maximum observed size. String values for this property
           will be applied to both grid rows and columns.
 
         **Default value:** ``"all"``.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -869,7 +897,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : :class:`Header`
+    header : anyOf(:class:`Header`, None)
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
         Sort order for the encoded field.
@@ -877,18 +905,22 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -924,7 +956,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -944,44 +976,56 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -989,20 +1033,22 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined, band=Undefined,
-                 bin=Undefined, center=Undefined, field=Undefined, header=Undefined, sort=Undefined,
-                 spacing=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Column, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align, band=band,
-                                     bin=bin, center=center, field=field, header=header, sort=sort,
-                                     spacing=spacing, timeUnit=timeUnit, title=title, type=type, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
+                 bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
+                 header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
+                 title=Undefined, type=Undefined, **kwds):
+        super(Column, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align,
+                                     bandPosition=bandPosition, bin=bin, center=center, field=field,
+                                     header=header, sort=sort, spacing=spacing, timeUnit=timeUnit,
+                                     title=title, type=type, **kwds)
 
 
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -1017,17 +1063,10 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1051,7 +1090,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         documentation.
     condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
     List(:class:`ConditionalValueDefstringExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -1072,14 +1111,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -1100,15 +1139,12 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1134,7 +1170,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -1154,44 +1190,56 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1199,13 +1247,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 labelExpr=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Description, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                          condition=condition, field=field, format=format,
-                                          formatType=formatType, labelExpr=labelExpr, timeUnit=timeUnit,
-                                          title=title, type=type, **kwds)
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Description, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                          bandPosition=bandPosition, bin=bin, condition=condition,
+                                          field=field, format=format, formatType=formatType,
+                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
@@ -1219,7 +1267,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -1251,17 +1299,10 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1323,7 +1364,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -1343,44 +1384,56 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1388,10 +1441,11 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     field=field, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, field=field, timeUnit=timeUnit,
+                                     title=title, type=type, **kwds)
 
 
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
@@ -1418,9 +1472,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
-          placed one after the other. - For ``"each"``, subviews will be aligned into a
-          clean grid structure, but each row or column may be of variable size. - For
-          ``"all"``, subviews will be aligned and each row or column will be sized
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
           identically based on the maximum observed size. String values for this property
           will be applied to both grid rows and columns.
 
@@ -1428,17 +1483,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         be used to supply different alignments for rows and columns.
 
         **Default value:** ``"all"``.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1466,10 +1514,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
 
         * If set to ``full``, the entire calculated bounds (including axes, title, and
-          legend) will be used. - If set to ``flush``, only the specified width and height
-          values for the sub-view will be used. The ``flush`` setting can be useful when
-          attempting to place sub-plots without axes or legends into a uniform grid
-          structure.
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
     center : anyOf(boolean, :class:`RowColboolean`)
@@ -1489,9 +1537,12 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **Note** :
 
-        1) This property is only for: - the general (wrappable) ``concat`` operator (not
-        ``hconcat`` / ``vconcat`` ) - the ``facet`` and ``repeat`` operator with one
-        field/repetition definition (without row/column nesting)
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
@@ -1510,7 +1561,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : :class:`Header`
+    header : anyOf(:class:`Header`, None)
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
         Sort order for the encoded field.
@@ -1518,18 +1569,22 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -1567,7 +1622,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -1587,44 +1642,56 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1632,22 +1699,22 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined, band=Undefined,
-                 bin=Undefined, bounds=Undefined, center=Undefined, columns=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(Facet, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align, band=band,
-                                    bin=bin, bounds=bounds, center=center, columns=columns, field=field,
-                                    header=header, sort=sort, spacing=spacing, timeUnit=timeUnit,
-                                    title=title, type=type, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
+                 bandPosition=Undefined, bin=Undefined, bounds=Undefined, center=Undefined,
+                 columns=Undefined, field=Undefined, header=Undefined, sort=Undefined,
+                 spacing=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Facet, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align,
+                                    bandPosition=bandPosition, bin=bin, bounds=bounds, center=center,
+                                    columns=columns, field=field, header=header, sort=sort,
+                                    spacing=spacing, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Fill schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -1662,17 +1729,10 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1696,7 +1756,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         documentation.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -1745,25 +1805,30 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -1797,7 +1862,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -1817,44 +1882,56 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1862,38 +1939,32 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Fill, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                   condition=condition, field=field, legend=legend, scale=scale,
-                                   sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Fill, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                   bin=bin, condition=condition, field=field, legend=legend,
+                                   scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
 class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """FillDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -1918,52 +1989,65 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(FillDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(FillDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                        type=type, **kwds)
 
 
 class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -1977,7 +2061,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -1994,8 +2078,8 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """FillOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -2010,17 +2094,10 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2044,7 +2121,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -2093,25 +2170,30 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -2145,7 +2227,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -2165,44 +2247,56 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2210,38 +2304,32 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(FillOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                          condition=condition, field=field, legend=legend, scale=scale,
-                                          sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(FillOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                          bandPosition=bandPosition, bin=bin, condition=condition,
+                                          field=field, legend=legend, scale=scale, sort=sort,
+                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """FillOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -2266,53 +2354,65 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(FillOpacityDatum, self).__init__(datum=datum, band=band, condition=condition, type=type,
-                                               **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(FillOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
+                                               condition=condition, type=type, **kwds)
 
 
 class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -2325,7 +2425,7 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -2342,8 +2442,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -2358,17 +2458,10 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2392,7 +2485,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         documentation.
     condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
     List(:class:`ConditionalValueDefstringExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -2413,14 +2506,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -2441,15 +2534,12 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -2475,7 +2565,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -2495,44 +2585,56 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2540,13 +2642,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 labelExpr=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Href, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                   condition=condition, field=field, format=format,
-                                   formatType=formatType, labelExpr=labelExpr, timeUnit=timeUnit,
-                                   title=title, type=type, **kwds)
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Href, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                   bin=bin, condition=condition, field=field, format=format,
+                                   formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
@@ -2560,7 +2662,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -2592,17 +2694,10 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2664,7 +2759,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -2684,44 +2779,56 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2729,10 +2836,11 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                  field=field, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                  bin=bin, field=field, timeUnit=timeUnit, title=title, type=type,
+                                  **kwds)
 
 
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
@@ -2753,17 +2861,10 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2825,7 +2926,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -2845,44 +2946,56 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2890,10 +3003,11 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                       field=field, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                       bandPosition=bandPosition, bin=bin, field=field,
+                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
@@ -2904,17 +3018,10 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -2934,74 +3041,64 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(LatitudeDatum, self).__init__(datum=datum, band=band, type=type, **kwds)
-
-
-class LatitudeValue(ValueChannelMixin, core.NumericValueDef):
-    """LatitudeValue schema wrapper
-
-    Mapping(required=[value])
-    Definition object for a constant value (primitive value or gradient definition) of an
-    encoding channel.
-
-    Attributes
-    ----------
-
-    value : anyOf(float, :class:`ExprRef`)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _class_is_valid_at_instantiation = False
-    _encoding_name = "latitude"
-
-    def __init__(self, value, **kwds):
-        super(LatitudeValue, self).__init__(value=value, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3024,17 +3121,10 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3096,7 +3186,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -3104,10 +3194,11 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                        field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                        bandPosition=bandPosition, bin=bin, field=field,
+                                        timeUnit=timeUnit, title=title, **kwds)
 
 
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
@@ -3118,17 +3209,10 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -3148,52 +3232,64 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(Latitude2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
@@ -3236,17 +3332,10 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3308,7 +3397,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -3328,44 +3417,56 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -3373,10 +3474,11 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                        field=field, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                        bandPosition=bandPosition, bin=bin, field=field,
+                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
@@ -3387,17 +3489,10 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -3417,74 +3512,64 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(LongitudeDatum, self).__init__(datum=datum, band=band, type=type, **kwds)
-
-
-class LongitudeValue(ValueChannelMixin, core.NumericValueDef):
-    """LongitudeValue schema wrapper
-
-    Mapping(required=[value])
-    Definition object for a constant value (primitive value or gradient definition) of an
-    encoding channel.
-
-    Attributes
-    ----------
-
-    value : anyOf(float, :class:`ExprRef`)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _class_is_valid_at_instantiation = False
-    _encoding_name = "longitude"
-
-    def __init__(self, value, **kwds):
-        super(LongitudeValue, self).__init__(value=value, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3507,17 +3592,10 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3579,7 +3657,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -3587,10 +3665,11 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                         field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                         bandPosition=bandPosition, bin=bin, field=field,
+                                         timeUnit=timeUnit, title=title, **kwds)
 
 
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
@@ -3601,17 +3680,10 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -3631,52 +3703,64 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(Longitude2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
@@ -3705,8 +3789,8 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     """Opacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -3721,17 +3805,10 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3755,7 +3832,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -3804,25 +3881,30 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -3856,7 +3938,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -3876,44 +3958,56 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -3921,38 +4015,32 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Opacity, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                      condition=condition, field=field, legend=legend, scale=scale,
-                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Opacity, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, condition=condition,
+                                      field=field, legend=legend, scale=scale, sort=sort,
+                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """OpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -3977,53 +4065,65 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(OpacityDatum, self).__init__(datum=datum, band=band, condition=condition, type=type,
-                                           **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(OpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                           type=type, **kwds)
 
 
 class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -4036,7 +4136,7 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -4067,17 +4167,10 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4141,7 +4234,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -4161,44 +4254,56 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -4206,12 +4311,12 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
                  **kwds):
-        super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                    field=field, sort=sort, timeUnit=timeUnit, title=title, type=type,
-                                    **kwds)
+        super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                    bin=bin, field=field, sort=sort, timeUnit=timeUnit, title=title,
+                                    type=type, **kwds)
 
 
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
@@ -4228,7 +4333,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         values between ``0`` to ``1`` for opacity).
     condition : anyOf(:class:`ConditionalValueDefnumber`,
     List(:class:`ConditionalValueDefnumber`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -4260,17 +4365,10 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4326,25 +4424,30 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -4359,17 +4462,22 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -4403,7 +4511,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -4423,44 +4531,56 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -4468,12 +4588,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
-        super(Radius, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     field=field, scale=scale, sort=sort, stack=stack,
-                                     timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Radius, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, field=field, scale=scale,
+                                     sort=sort, stack=stack, timeUnit=timeUnit, title=title, type=type,
+                                     **kwds)
 
 
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
@@ -4484,17 +4605,10 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -4517,17 +4631,22 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -4552,53 +4671,66 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
-    def __init__(self, datum, band=Undefined, scale=Undefined, stack=Undefined, type=Undefined, **kwds):
-        super(RadiusDatum, self).__init__(datum=datum, band=band, scale=scale, stack=stack, type=type,
-                                          **kwds)
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, type=Undefined,
+                 **kwds):
+        super(RadiusDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
+                                          stack=stack, type=type, **kwds)
 
 
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
@@ -4643,17 +4775,10 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4715,7 +4840,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -4723,10 +4848,11 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(Radius2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                      field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(Radius2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, field=field,
+                                      timeUnit=timeUnit, title=title, **kwds)
 
 
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
@@ -4737,17 +4863,10 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -4767,52 +4886,64 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(Radius2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
@@ -4861,24 +4992,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
-          placed one after the other. - For ``"each"``, subviews will be aligned into a
-          clean grid structure, but each row or column may be of variable size. - For
-          ``"all"``, subviews will be aligned and each row or column will be sized
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
           identically based on the maximum observed size. String values for this property
           will be applied to both grid rows and columns.
 
         **Default value:** ``"all"``.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4920,7 +5045,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : :class:`Header`
+    header : anyOf(:class:`Header`, None)
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
         Sort order for the encoded field.
@@ -4928,18 +5053,22 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -4975,7 +5104,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -4995,44 +5124,56 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5040,20 +5181,22 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined, band=Undefined,
-                 bin=Undefined, center=Undefined, field=Undefined, header=Undefined, sort=Undefined,
-                 spacing=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Row, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align, band=band,
-                                  bin=bin, center=center, field=field, header=header, sort=sort,
-                                  spacing=spacing, timeUnit=timeUnit, title=title, type=type, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
+                 bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
+                 header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
+                 title=Undefined, type=Undefined, **kwds):
+        super(Row, self).__init__(shorthand=shorthand, aggregate=aggregate, align=align,
+                                  bandPosition=bandPosition, bin=bin, center=center, field=field,
+                                  header=header, sort=sort, spacing=spacing, timeUnit=timeUnit,
+                                  title=title, type=type, **kwds)
 
 
 class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull):
     """Shape schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -5068,17 +5211,10 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5102,7 +5238,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         documentation.
     condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -5151,25 +5287,30 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -5203,7 +5344,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -5223,44 +5364,56 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5268,38 +5421,32 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Shape, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                    condition=condition, field=field, legend=legend, scale=scale,
-                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Shape, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                    bin=bin, condition=condition, field=field, legend=legend,
+                                    scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                    **kwds)
 
 
 class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstringnull):
     """ShapeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -5324,52 +5471,65 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(ShapeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(ShapeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                         type=type, **kwds)
 
 
 class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
@@ -5383,7 +5543,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`,
     :class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -5400,8 +5560,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     """Size schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -5416,17 +5576,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5450,7 +5603,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -5499,25 +5652,30 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -5551,7 +5709,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -5571,44 +5729,56 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5616,38 +5786,32 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Size, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                   condition=condition, field=field, legend=legend, scale=scale,
-                                   sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Size, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                   bin=bin, condition=condition, field=field, legend=legend,
+                                   scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """SizeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -5672,52 +5836,65 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(SizeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(SizeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                        type=type, **kwds)
 
 
 class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -5730,7 +5907,7 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -5747,8 +5924,8 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     """Stroke schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -5763,17 +5940,10 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5797,7 +5967,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         documentation.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -5846,25 +6016,30 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -5898,7 +6073,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -5918,44 +6093,56 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5963,38 +6150,32 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Stroke, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     condition=condition, field=field, legend=legend, scale=scale,
-                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Stroke, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, condition=condition,
+                                     field=field, legend=legend, scale=scale, sort=sort,
+                                     timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """StrokeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6019,52 +6200,65 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(StrokeDatum, self).__init__(datum=datum, band=band, condition=condition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(StrokeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                          type=type, **kwds)
 
 
 class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -6078,7 +6272,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefGradientstringnullExprRef`,
     List(:class:`ConditionalValueDefGradientstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -6095,8 +6289,8 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     """StrokeDash schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -6111,17 +6305,10 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -6145,7 +6332,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
     List(:class:`ConditionalValueDefnumberArrayExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6194,25 +6381,30 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -6246,7 +6438,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -6266,44 +6458,56 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -6311,38 +6515,32 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(StrokeDash, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                         condition=condition, field=field, legend=legend, scale=scale,
-                                         sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(StrokeDash, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                         bandPosition=bandPosition, bin=bin, condition=condition,
+                                         field=field, legend=legend, scale=scale, sort=sort,
+                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumberArray):
     """StrokeDashDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
     List(:class:`ConditionalValueDefnumberArrayExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6367,53 +6565,65 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(StrokeDashDatum, self).__init__(datum=datum, band=band, condition=condition, type=type,
-                                              **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(StrokeDashDatum, self).__init__(datum=datum, bandPosition=bandPosition,
+                                              condition=condition, type=type, **kwds)
 
 
 class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray):
@@ -6427,7 +6637,7 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberArrayExprRef`,
     List(:class:`ConditionalValueDefnumberArrayExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(List(float), :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -6444,8 +6654,8 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     """StrokeOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -6460,17 +6670,10 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -6494,7 +6697,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6543,25 +6746,30 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -6595,7 +6803,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -6615,44 +6823,56 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -6660,39 +6880,32 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(StrokeOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band,
-                                            bin=bin, condition=condition, field=field, legend=legend,
-                                            scale=scale, sort=sort, timeUnit=timeUnit, title=title,
-                                            type=type, **kwds)
+        super(StrokeOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                            bandPosition=bandPosition, bin=bin, condition=condition,
+                                            field=field, legend=legend, scale=scale, sort=sort,
+                                            timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6717,53 +6930,65 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(StrokeOpacityDatum, self).__init__(datum=datum, band=band, condition=condition, type=type,
-                                                 **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(StrokeOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
+                                                 condition=condition, type=type, **kwds)
 
 
 class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -6776,7 +7001,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -6793,8 +7018,8 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """StrokeWidth schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -6809,17 +7034,10 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -6843,7 +7061,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         documentation.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -6892,25 +7110,30 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -6944,7 +7167,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -6964,44 +7187,56 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -7009,38 +7244,32 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(StrokeWidth, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                          condition=condition, field=field, legend=legend, scale=scale,
-                                          sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(StrokeWidth, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                          bandPosition=bandPosition, bin=bin, condition=condition,
+                                          field=field, legend=legend, scale=scale, sort=sort,
+                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeWidthDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
     List(:class:`ConditionalValueDefnumberExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -7065,53 +7294,65 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
-    def __init__(self, datum, band=Undefined, condition=Undefined, type=Undefined, **kwds):
-        super(StrokeWidthDatum, self).__init__(datum=datum, band=band, condition=condition, type=type,
-                                               **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+        super(StrokeWidthDatum, self).__init__(datum=datum, bandPosition=bandPosition,
+                                               condition=condition, type=type, **kwds)
 
 
 class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -7124,7 +7365,7 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -7141,8 +7382,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     """Text schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -7157,17 +7398,10 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -7191,7 +7425,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         documentation.
     condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
     List(:class:`ConditionalValueDefTextExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -7212,14 +7446,14 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -7240,15 +7474,12 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -7274,7 +7505,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -7294,44 +7525,56 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -7339,39 +7582,32 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 labelExpr=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                   condition=condition, field=field, format=format,
-                                   formatType=formatType, labelExpr=labelExpr, timeUnit=timeUnit,
-                                   title=title, type=type, **kwds)
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                   bin=bin, condition=condition, field=field, format=format,
+                                   formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
     """TextDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
     List(:class:`ConditionalValueDefTextExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -7380,14 +7616,14 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -7408,15 +7644,12 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -7433,54 +7666,66 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
-    def __init__(self, datum, band=Undefined, condition=Undefined, format=Undefined,
-                 formatType=Undefined, labelExpr=Undefined, type=Undefined, **kwds):
-        super(TextDatum, self).__init__(datum=datum, band=band, condition=condition, format=format,
-                                        formatType=formatType, labelExpr=labelExpr, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, format=Undefined,
+                 formatType=Undefined, type=Undefined, **kwds):
+        super(TextDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
+                                        format=format, formatType=formatType, type=type, **kwds)
 
 
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
@@ -7493,7 +7738,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
 
     condition : anyOf(:class:`ConditionalStringFieldDef`,
     :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Text`, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -7524,17 +7769,10 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -7590,25 +7828,30 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -7623,17 +7866,22 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -7667,7 +7915,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -7687,44 +7935,56 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -7732,12 +7992,12 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
-        super(Theta, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                    field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
-                                    title=title, type=type, **kwds)
+        super(Theta, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                    bin=bin, field=field, scale=scale, sort=sort, stack=stack,
+                                    timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
@@ -7748,17 +8008,10 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -7781,17 +8034,22 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -7816,53 +8074,66 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
-    def __init__(self, datum, band=Undefined, scale=Undefined, stack=Undefined, type=Undefined, **kwds):
-        super(ThetaDatum, self).__init__(datum=datum, band=band, scale=scale, stack=stack, type=type,
-                                         **kwds)
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, type=Undefined,
+                 **kwds):
+        super(ThetaDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
+                                         stack=stack, type=type, **kwds)
 
 
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
@@ -7907,17 +8178,10 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -7979,7 +8243,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -7987,10 +8251,11 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(Theta2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(Theta2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, field=field, timeUnit=timeUnit,
+                                     title=title, **kwds)
 
 
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
@@ -8001,17 +8266,10 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -8031,52 +8289,64 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(Theta2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
@@ -8105,8 +8375,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -8121,17 +8391,10 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -8155,7 +8418,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         documentation.
     condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
     List(:class:`ConditionalValueDefstringExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -8176,14 +8439,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -8204,15 +8467,12 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -8238,7 +8498,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -8258,44 +8518,56 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8303,13 +8575,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 labelExpr=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Tooltip, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                      condition=condition, field=field, format=format,
-                                      formatType=formatType, labelExpr=labelExpr, timeUnit=timeUnit,
-                                      title=title, type=type, **kwds)
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Tooltip, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, condition=condition,
+                                      field=field, format=format, formatType=formatType,
+                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
@@ -8323,7 +8595,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -8340,8 +8612,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {    condition: {value: ...},    field:
-    ...,    ... }
+    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
+    ... }
 
     Attributes
     ----------
@@ -8356,17 +8628,10 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -8390,7 +8655,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         documentation.
     condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
     List(:class:`ConditionalValueDefstringExprRef`))
-        One or more value definition(s) with `a selection or a test predicate
+        One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
@@ -8411,14 +8676,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dictunknown`)
+    format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__. - If
-          the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
           format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
@@ -8439,15 +8704,12 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
 
-        **Default value:** - ``"time"`` for temporal fields and ordinal and nominal fields
-        with ``timeUnit``. - ``"number"`` for quantitative fields as well as ordinal and
-        nominal fields without ``timeUnit``.
-    labelExpr : string
-        `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
-        labels text.
+        **Default value:**
 
-        **Note:** The label text and value can be assessed via the ``label`` and ``value``
-        properties of the axis's backing ``datum`` object.
+
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
+          ``timeUnit``.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -8473,7 +8735,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -8493,44 +8755,56 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8538,13 +8812,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 labelExpr=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Url, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                  condition=condition, field=field, format=format,
-                                  formatType=formatType, labelExpr=labelExpr, timeUnit=timeUnit,
-                                  title=title, type=type, **kwds)
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Url, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                  bin=bin, condition=condition, field=field, format=format,
+                                  formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                  **kwds)
 
 
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
@@ -8558,7 +8832,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
     :class:`ConditionalValueDefstringnullExprRef`,
     List(:class:`ConditionalValueDefstringnullExprRef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+        A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -8598,17 +8872,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -8672,25 +8939,30 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -8705,17 +8977,22 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -8749,7 +9026,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -8769,44 +9046,56 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8814,12 +9103,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, band=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(X, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, band=band, bin=bin,
-                                field=field, impute=impute, scale=scale, sort=sort, stack=stack,
-                                timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(X, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis,
+                                bandPosition=bandPosition, bin=bin, field=field, impute=impute,
+                                scale=scale, sort=sort, stack=stack, timeUnit=timeUnit, title=title,
+                                type=type, **kwds)
 
 
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
@@ -8839,17 +9129,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -8880,17 +9163,22 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -8915,54 +9203,66 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
-    def __init__(self, datum, axis=Undefined, band=Undefined, impute=Undefined, scale=Undefined,
+    def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, type=Undefined, **kwds):
-        super(XDatum, self).__init__(datum=datum, axis=axis, band=band, impute=impute, scale=scale,
-                                     stack=stack, type=type, **kwds)
+        super(XDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
+                                     scale=scale, stack=stack, type=type, **kwds)
 
 
 class XValue(ValueChannelMixin, core.PositionValueDef):
@@ -9007,17 +9307,10 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9079,7 +9372,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -9087,10 +9380,10 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                 field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                 bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
 class X2Datum(DatumChannelMixin, core.DatumDef):
@@ -9101,17 +9394,10 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -9131,52 +9417,64 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(X2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class X2Value(ValueChannelMixin, core.PositionValueDef):
@@ -9221,17 +9519,10 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9293,7 +9584,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -9301,10 +9592,11 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, field=field, timeUnit=timeUnit,
+                                     title=title, **kwds)
 
 
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
@@ -9349,17 +9641,10 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9421,7 +9706,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -9429,10 +9714,11 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                      field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, field=field,
+                                      timeUnit=timeUnit, title=title, **kwds)
 
 
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
@@ -9484,17 +9770,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9558,25 +9837,30 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         For continuous fields (quantitative or temporal), ``sort`` can be either
         ``"ascending"`` or ``"descending"``.
 
-        For discrete fields, ``sort`` can be one of the following: - ``"ascending"`` or
-        ``"descending"`` -- for sorting by the values' natural order in JavaScript. - `A
-        string indicating an encoding channel name to sort by
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g., ``"x"``
-        or ``"y"`` ) with an optional minus prefix for descending sort (e.g., ``"-x"`` to
-        sort by x-field, descending). This channel string is short-form of `a
-        sort-by-encoding definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For example,
-        ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
-        "descending"}``. - `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-        another field. - `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order. For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`__. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). - ``null``
-        indicating no sort.
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
 
@@ -9591,17 +9875,22 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -9635,7 +9924,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -9655,44 +9944,56 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -9700,12 +10001,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, band=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(Y, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, band=band, bin=bin,
-                                field=field, impute=impute, scale=scale, sort=sort, stack=stack,
-                                timeUnit=timeUnit, title=title, type=type, **kwds)
+        super(Y, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis,
+                                bandPosition=bandPosition, bin=bin, field=field, impute=impute,
+                                scale=scale, sort=sort, stack=stack, timeUnit=timeUnit, title=title,
+                                type=type, **kwds)
 
 
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
@@ -9725,17 +10027,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -9766,17 +10061,22 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
         chart.
 
-        ``stack`` can be one of the following values: - ``"zero"`` or `true`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart). - ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-        :raw-html:`<br/>` - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ). - ``null`` or
-        ``false`` - No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
-        chart.
+        ``stack`` can be one of the following values:
+
+
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
+          :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
+          chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
         (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
@@ -9801,54 +10101,66 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
-    def __init__(self, datum, axis=Undefined, band=Undefined, impute=Undefined, scale=Undefined,
+    def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, type=Undefined, **kwds):
-        super(YDatum, self).__init__(datum=datum, axis=axis, band=band, impute=impute, scale=scale,
-                                     stack=stack, type=type, **kwds)
+        super(YDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
+                                     scale=scale, stack=stack, type=type, **kwds)
 
 
 class YValue(ValueChannelMixin, core.PositionValueDef):
@@ -9893,17 +10205,10 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9965,7 +10270,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -9973,10 +10278,10 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                 field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
+                                 bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
 class Y2Datum(DatumChannelMixin, core.DatumDef):
@@ -9987,17 +10292,10 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     Attributes
     ----------
 
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
@@ -10017,52 +10315,64 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
-        ``timeUnit`` that satisfies the following criteria: - ``"quantitative"`` is the
-        default type if (1) the encoded field contains ``bin`` or ``aggregate`` except
-        ``"argmin"`` and ``"argmax"``, (2) the encoding channel is ``latitude`` or
-        ``longitude`` channel or (3) if the specified scale type is `a quantitative scale
-        <https://vega.github.io/vega-lite/docs/scale.html#type>`__. - ``"temporal"`` is the
-        default type if (1) the encoded field contains ``timeUnit`` or (2) the specified
-        scale type is a time or utc scale - ``ordinal""`` is the default type if (1) the
-        encoded field contains a `custom sort order
-        <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
-        (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
-        channel is ``order``.
+        ``timeUnit`` that satisfies the following criteria:
 
-        2) For a constant value in data domain ( ``datum`` ): - ``"quantitative"`` if the
-        datum is a number - ``"nominal"`` if the datum is a string - ``"temporal"`` if the
-        datum is `a date time object
-        <https://vega.github.io/vega-lite/docs/datetime.html>`__
 
-        **Note:** - Data ``type`` describes the semantics of the data rather than the
-        primitive data types (number, string, etc.). The same primitive data type can have
-        different types of measurement. For example, numeric data can represent
-        quantitative, ordinal, or nominal data. - Data values for a temporal field can be
-        either a date-time string (e.g., ``"2015-03-07 12:32:17"``, ``"17:01"``,
-        ``"2015-03-16"``. ``"2015"`` ) or a timestamp number (e.g., ``1552199579097`` ). -
-        When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
-        ``type`` property can be either ``"quantitative"`` (for using a linear bin scale) or
-        `"ordinal" (for using an ordinal bin scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type``
-        property can be either ``"temporal"`` (default, for using a temporal scale) or
-        `"ordinal" (for using an ordinal scale)
-        <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__. - When using with
-        `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type``
-        property refers to the post-aggregation data type. For example, we can calculate
-        count ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate":
-        "distinct", "field": "cat"}``. The ``"type"`` of the aggregate output is
-        ``"quantitative"``. - Secondary channels (e.g., ``x2``, ``y2``, ``xError``,
-        ``yError`` ) do not have ``type`` as they must have exactly the same type as their
-        primary channels (e.g., ``x``, ``y`` ).
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
-    def __init__(self, datum, band=Undefined, type=Undefined, **kwds):
-        super(Y2Datum, self).__init__(datum=datum, band=band, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
+        super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
 
 
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
@@ -10107,17 +10417,10 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -10179,7 +10482,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -10187,10 +10490,11 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                     field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                     bandPosition=bandPosition, bin=bin, field=field, timeUnit=timeUnit,
+                                     title=title, **kwds)
 
 
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
@@ -10235,17 +10539,10 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    band : float
-        For rect-based marks ( ``rect``, ``bar``, and ``image`` ), mark size relative to
-        bandwidth of `band scales
-        <https://vega.github.io/vega-lite/docs/scale.html#band>`__, bins or time units. If
-        set to ``1``, the mark size is set to the bandwidth, the bin interval, or the time
-        unit interval. If set to ``0.5``, the mark size is half of the bandwidth or the time
-        unit interval.
-
-        For other marks, relative position on a band of a stacked, binned, time unit or band
-        scale. If set to ``0``, the marks will be positioned at the beginning of the band.
-        If set to ``0.5``, the marks will be positioned in the middle of the band.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -10307,7 +10604,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
         the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
         function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
@@ -10315,10 +10612,11 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
-    def __init__(self, shorthand=Undefined, aggregate=Undefined, band=Undefined, bin=Undefined,
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
-        super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate, band=band, bin=bin,
-                                      field=field, timeUnit=timeUnit, title=title, **kwds)
+        super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, field=field,
+                                      timeUnit=timeUnit, title=title, **kwds)
 
 
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
