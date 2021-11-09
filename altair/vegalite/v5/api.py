@@ -166,8 +166,20 @@ class Selection(object):
         if name is None:
             name = self._get_name()
 
-        #TODO: Should we warn if empty is a keyword?
-        kwds.pop("empty",None)
+        # Deal with the change of schema
+        param_kwds = {}
+
+        if "bind" in kwds:
+            param_kwds["bind"] = kwds.pop("bind")
+            
+        if "init" in kwds:
+            param_kwds["value"] = kwds.pop("init")
+
+        # Provides a way of moving the empty value to transform_filter
+        if kwds.pop("empty","all") == "none":
+            self.empty = False
+        else:
+            self.empty = True
 
         if type in ["single", "multi", "point"]:
             select = core.PointSelectionConfig(type="point", **kwds)
@@ -177,8 +189,8 @@ class Selection(object):
             raise ValueError("'type' must be one of 'point', 'interval', 'single', 'multi'.")
         
         self.name = name
-        #TODO: should there be **kwds in the SelectionParameter constructor?
-        self.selection = core.SelectionParameter(name, select = select)
+        #TODO: Are we missing any possible keywords?
+        self.selection = core.SelectionParameter(name, select = select, **param_kwds)
 
     def __repr__(self):
         return "Selection({0!r}, {1})".format(self.name, self.selection)
@@ -188,25 +200,23 @@ class Selection(object):
 
     def to_dict(self):
         return {
-            "selection": self.name.to_dict()
+            "param": self.name.to_dict()
             if hasattr(self.name, "to_dict")
             else self.name
         }
 
     def __invert__(self):
-        return Selection(core.SelectionNot(**{"not": self.name}), self.selection)
-
+        return core.PredicateComposition({"not":{"param":self.name}})
+ 
     def __and__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return Selection(
-            core.SelectionAnd(**{"and": [self.name, other]}), self.selection
-        )
+        return core.PredicateComposition({"and": [self.name, other]})
 
     def __or__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
+        return core.PredicateComposition({"or": [self.name, other]})
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
@@ -320,9 +330,6 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     if isinstance(predicate, Selection):
         condition = {"param": predicate.name}
-    #TODO: What should the following be replaced with?
-    # elif isinstance(predicate, core.SelectionComposition):
-    #     condition = {"selection": predicate}
     elif isinstance(predicate, test_predicates):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
@@ -1138,10 +1145,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         """
         if isinstance(filter, Selection):
-            filter = {"param": filter.name}
-        # TODO: What to replace the next with?
-        # elif isinstance(filter, core.SelectionComposition):
-        #     filter = {"selection": filter}
+            filter = {"param": filter.name, "empty": filter.empty}
+        elif isinstance(filter, core.PredicateComposition):
+            filter = {"test": filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(self, flatten, as_=Undefined):
@@ -2032,33 +2038,33 @@ class Chart(
             copy.params.append(s.selection)
         return copy
 
-    # def interactive(self, name=None, bind_x=True, bind_y=True):
-    #     """Make chart axes scales interactive
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
 
-    #     Parameters
-    #     ----------
-    #     name : string
-    #         The selection name to use for the axes scales. This name should be
-    #         unique among all selections within the chart.
-    #     bind_x : boolean, default True
-    #         If true, then bind the interactive scales to the x-axis
-    #     bind_y : boolean, default True
-    #         If true, then bind the interactive scales to the y-axis
+        Parameters
+        ----------
+        name : string
+            The selection name to use for the axes scales. This name should be
+            unique among all selections within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
 
-    #     Returns
-    #     -------
-    #     chart :
-    #         copy of self, with interactive axes added
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
 
-    #     """
-    #     encodings = []
-    #     if bind_x:
-    #         encodings.append("x")
-    #     if bind_y:
-    #         encodings.append("y")
-    #     return self.add_selection(
-    #         selection_interval(bind="scales", encodings=encodings)
-    #     )
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_selection(
+            selection_interval(bind="scales", encodings=encodings)
+        )
 
 
 def _check_if_valid_subspec(spec, classname):
