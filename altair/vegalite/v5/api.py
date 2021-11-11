@@ -1146,8 +1146,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if isinstance(filter, Selection):
             filter = {"param": filter.name, "empty": filter.empty}
-        elif isinstance(filter, core.PredicateComposition):
-            filter = {"test": filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(self, flatten, as_=Undefined):
@@ -2519,7 +2517,7 @@ def _remove_bad_props(chart, subcharts, bad_props):
 
     if not subcharts:
         # No subcharts = nothing to do.
-        return output_dict
+        return output_dict, subcharts
 
     for prop in bad_props:
         if chart[prop] is Undefined:
