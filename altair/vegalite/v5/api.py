@@ -167,13 +167,19 @@ class Selection(object):
             name = self._get_name()
 
         # Deal with the change of schema
+        # We need to separate out the keywords for select from the keywords for the parameter
+        # Is there a better way to do this using tools/schemapi/codegen._get_args or something else?
         param_kwds = {}
+
+        # The initial value used to be specified by "init", but the schema wants "value"
+        if "init" in kwds and "value" in kwds:
+            raise ValueError("Cannot set both 'init' and 'value'.  Use 'value'.")
+            
+        if "init" in kwds or "value" in kwds:
+            param_kwds["value"] = kwds.pop("value", None) or kwds.pop("init", None)
 
         if "bind" in kwds:
             param_kwds["bind"] = kwds.pop("bind")
-            
-        if "init" in kwds:
-            param_kwds["value"] = kwds.pop("init")
 
         # Provides a way of moving the empty value to transform_filter
         if kwds.pop("empty","all") == "none":
@@ -191,6 +197,7 @@ class Selection(object):
         self.name = name
         #TODO: Are we missing any possible keywords?
         self.selection = core.SelectionParameter(name, select = select, **param_kwds)
+        self.param = self.selection
 
     def __repr__(self):
         return "Selection({0!r}, {1})".format(self.name, self.selection)
@@ -227,6 +234,65 @@ class Selection(object):
         return expr.core.GetItemExpression(self.name, field_name)
 
 
+# -------------------------------------------------------------------------
+# This class is modeled after Selection
+class Variable(object):
+    """A Selection object"""
+
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "variable{:03d}".format(cls._counter)
+
+    def __init__(self, name, **kwds):
+        if name is None:
+            name = self._get_name()
+
+        # Deal with the change of schema
+        param_kwds = {}
+
+        # Allow "init" to match the selection terminology
+        if "init" in kwds and "value" in kwds:
+            raise ValueError("Cannot set both 'init' and 'value'.  Use 'value'.")
+            
+        if "init" in kwds or "value" in kwds:
+            param_kwds["value"] = kwds.pop("value", None) or kwds.pop("init", None)
+
+        for prop in ["bind","expr"]:
+            if prop in kwds:
+                param_kwds[prop] = kwds.pop(prop)
+
+        self.name = name
+        #TODO: Are we missing any possible keywords?
+        self.variable = core.VariableParameter(name, **param_kwds)
+        self.param = self.variable
+
+    def __repr__(self):
+        return "Variable({0!r}, {1})".format(self.name, self.variable)
+
+    def ref(self):
+        return self.to_dict()
+
+    # This is a little different from selection, where we specify "param".
+    # Should they be identical?
+    def to_dict(self):
+        return {
+            "expr": self.name.to_dict()
+            if hasattr(self.name, "to_dict")
+            else self.name
+        }
+
+    def __getattr__(self, field_name):
+        if field_name.startswith("__") and field_name.endswith("__"):
+            raise AttributeError(field_name)
+        return expr.core.GetAttrExpression(self.name, field_name)
+
+    def __getitem__(self, field_name):
+        return expr.core.GetItemExpression(self.name, field_name)
+
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
@@ -235,6 +301,23 @@ def value(value, **kwargs):
     """Specify a value for use in an encoding"""
     return dict(value=value, **kwargs)
 
+def variable(name=None, **kwds):
+    """Create a named variable.
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the variable. If not specified, a unique name will be
+        created.
+    **kwds :
+        additional keywords will be used to construct a VariableParameter instance.
+
+    Returns
+    -------
+    selection: Variable
+        The variable object that can be used in chart creation.
+    """
+    return Variable(name, **kwds)
 
 def selection(name=None, type=Undefined, **kwds):
     """Create a named selection.
@@ -247,7 +330,7 @@ def selection(name=None, type=Undefined, **kwds):
     type : string
         The type of the selection: one of ["point", "interval", "single", or "multi"]
     **kwds :
-        additional keywords will be used to construct a SelectionDef instance
+        additional keywords will be used to construct a SelectionParameter instance
         that controls the selection.
 
     Returns
@@ -2024,17 +2107,25 @@ class Chart(
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
         copy = self.copy(deep=["params"])
         if copy.params is Undefined:
             copy.params = []
 
-        for s in selections:
-            copy.params.append(s.selection)
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
