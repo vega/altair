@@ -2351,6 +2351,14 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        
+        # Some properties are not allowed within layer; we'll move to parent.
+        bad_props = ("height", "width", "view")
+        combined_dict, self.layer = _remove_bad_props(self, self.layer, bad_props)
+
+        for prop in combined_dict:
+            self[prop] = combined_dict[prop]
+
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, "LayerChart")
@@ -2499,6 +2507,41 @@ def _combine_subchart_data(data, subcharts):
             subcharts = [remove_data(c) for c in subcharts]
 
     return data, subcharts
+
+def _remove_bad_props(chart, subcharts, bad_props):
+    def remove_prop(subchart,prop):
+        if subchart[prop] is not Undefined:
+            subchart = subchart.copy()
+            subchart[prop] = Undefined
+        return subchart
+
+    output_dict = {}
+
+    if not subcharts:
+        # No subcharts = nothing to do.
+        return output_dict
+
+    for prop in bad_props:
+        if chart[prop] is Undefined:
+            # Top level does not have this prop.
+            # Check for consistent props within the subcharts.
+            values = [c[prop] for c in subcharts if c[prop] is not Undefined]
+            if len(values) == 0:
+                pass
+            elif all(v is values[0] for v in values[1:]):
+                output_dict[prop] = values[0]
+            else:
+                raise ValueError(f"There are inconsistent values {values} for {prop}")
+        else:
+            # Top level has this prop; subchart props must be either
+            # Undefined or identical to proceed.
+            if all(c[prop] is Undefined or c[prop] is chart[prop] for c in subcharts):
+                output_dict[prop] = chart[prop]
+            else:
+                raise ValueError(f"There are inconsistent values {values} for {prop}")
+        subcharts = [remove_prop(c, prop) for c in subcharts]
+
+    return output_dict, subcharts
 
 
 @utils.use_signature(core.SequenceParams)
