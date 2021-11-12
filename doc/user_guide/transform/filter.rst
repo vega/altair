@@ -189,7 +189,7 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
     ).properties(
         width=600, height=200
     ).transform_filter(
-        {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
+        {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     )
 
 Transform Options

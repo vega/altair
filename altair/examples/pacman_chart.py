@@ -10,9 +10,7 @@ This could also be made using
 import numpy as np
 import altair as alt
 
-no_source = alt.Data(values=[{}])
-
-alt.Chart(no_source).mark_arc(color="gold").encode(
+alt.Chart().mark_arc(color="gold").encode(
     theta=alt.datum((5 / 8) * np.pi, scale=None),
     theta2=alt.datum((19 / 8) * np.pi),
     radius=alt.datum(100, scale=None),

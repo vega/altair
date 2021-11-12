@@ -16,7 +16,7 @@ base = alt.Chart(source)
 xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))
 
-area_args = {'opacity': .3, 'interpolate': 'step'}
+bar_args = {'opacity': .3, 'binSpacing': 0}
 
 points = base.mark_circle().encode(
     alt.X('sepalLength', scale=xscale),
@@ -24,7 +24,7 @@ points = base.mark_circle().encode(
     color='species',
 )
 
-top_hist = base.mark_area(**area_args).encode(
+top_hist = base.mark_bar(**bar_args).encode(
     alt.X('sepalLength:Q',
           # when using bins, the axis scale is set through
           # the bin extent, so we do not specify the scale here
@@ -37,7 +37,7 @@ top_hist = base.mark_area(**area_args).encode(
     alt.Color('species:N'),
 ).properties(height=60)
 
-right_hist = base.mark_area(**area_args).encode(
+right_hist = base.mark_bar(**bar_args).encode(
     alt.Y('sepalWidth:Q',
           bin=alt.Bin(maxbins=20, extent=yscale.domain),
           stack=None,
