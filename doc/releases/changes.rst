@@ -15,10 +15,16 @@ Enhancements
 - Support for the ``datum`` encoding specifications from Vega-Lite; see 
   `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
   (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
-- ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)  
+- ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)
+- Support for serialising pandas nullable data types for float data (#2399).
+- Automatically create an empty data object when ``Chart`` is called without a data parameter (#2515).
+- Allow the use of pathlib Paths when saving charts (#2355).
+- Support deepcopy for charts (#2403).
 
 Bug Fixes
 ~~~~~~~~~
+- Fix ``to_dict()`` for nested selections (#2120).
+- Fix item access for expressions (#2099).
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
