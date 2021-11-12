@@ -19,9 +19,9 @@ source = pd.DataFrame({
 alt.Chart(source).transform_fold(
     ['Trial A', 'Trial B', 'Trial C'],
     as_=['Experiment', 'Measurement']
-).mark_area(
+).mark_bar(
     opacity=0.3,
-    interpolate='step'
+    binSpacing=0
 ).encode(
     alt.X('Measurement:Q', bin=alt.Bin(maxbins=100)),
     alt.Y('count()', stack=None),
