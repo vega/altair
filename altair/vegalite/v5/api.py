@@ -174,7 +174,7 @@ class Selection(object):
         # The initial value used to be specified by "init", but the schema wants "value"
         if "init" in kwds and "value" in kwds:
             raise ValueError("Cannot set both 'init' and 'value'.  Use 'value'.")
-            
+
         if "init" in kwds or "value" in kwds:
             param_kwds["value"] = kwds.pop("value", None) or kwds.pop("init", None)
 
@@ -182,7 +182,7 @@ class Selection(object):
             param_kwds["bind"] = kwds.pop("bind")
 
         # Provides a way of moving the empty value to transform_filter
-        if kwds.pop("empty","all") == "none":
+        if kwds.pop("empty", "all") == "none":
             self.empty = False
         else:
             self.empty = True
@@ -192,11 +192,13 @@ class Selection(object):
         elif type == "interval":
             select = core.IntervalSelectionConfig(type="interval", **kwds)
         else:
-            raise ValueError("'type' must be one of 'point', 'interval', 'single', 'multi'.")
-        
+            raise ValueError(
+                "'type' must be one of 'point', 'interval', 'single', 'multi'."
+            )
+
         self.name = name
-        #TODO: Are we missing any possible keywords?
-        self.selection = core.SelectionParameter(name, select = select, **param_kwds)
+        # TODO: Are we missing any possible keywords?
+        self.selection = core.SelectionParameter(name, select=select, **param_kwds)
         self.param = self.selection
 
     def __repr__(self):
@@ -207,14 +209,12 @@ class Selection(object):
 
     def to_dict(self):
         return {
-            "param": self.name.to_dict()
-            if hasattr(self.name, "to_dict")
-            else self.name
+            "param": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
         }
 
     def __invert__(self):
-        return core.PredicateComposition({"not":{"param":self.name}})
- 
+        return core.PredicateComposition({"not": {"param": self.name}})
+
     def __and__(self, other):
         if isinstance(other, Selection):
             other = other.name
@@ -256,16 +256,16 @@ class Variable(object):
         # Allow "init" to match the selection terminology
         if "init" in kwds and "value" in kwds:
             raise ValueError("Cannot set both 'init' and 'value'.  Use 'value'.")
-            
+
         if "init" in kwds or "value" in kwds:
             param_kwds["value"] = kwds.pop("value", None) or kwds.pop("init", None)
 
-        for prop in ["bind","expr"]:
+        for prop in ["bind", "expr"]:
             if prop in kwds:
                 param_kwds[prop] = kwds.pop(prop)
 
         self.name = name
-        #TODO: Are we missing any possible keywords?
+        # TODO: Are we missing any possible keywords?
         self.variable = core.VariableParameter(name, **param_kwds)
         self.param = self.variable
 
@@ -279,9 +279,7 @@ class Variable(object):
     # Should they be identical?
     def to_dict(self):
         return {
-            "expr": self.name.to_dict()
-            if hasattr(self.name, "to_dict")
-            else self.name
+            "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
         }
 
     def __getattr__(self, field_name):
@@ -301,6 +299,7 @@ def value(value, **kwargs):
     """Specify a value for use in an encoding"""
     return dict(value=value, **kwargs)
 
+
 def variable(name=None, **kwds):
     """Create a named variable.
 
@@ -318,6 +317,7 @@ def variable(name=None, **kwds):
         The variable object that can be used in chart creation.
     """
     return Variable(name, **kwds)
+
 
 def selection(name=None, type=Undefined, **kwds):
     """Create a named selection.
@@ -2440,14 +2440,13 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
-        
+
         # Some properties are not allowed within layer; we'll move to parent.
         bad_props = ("height", "width", "view")
         combined_dict, self.layer = _remove_bad_props(self, self.layer, bad_props)
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
-
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, "LayerChart")
@@ -2597,8 +2596,9 @@ def _combine_subchart_data(data, subcharts):
 
     return data, subcharts
 
+
 def _remove_bad_props(chart, subcharts, bad_props):
-    def remove_prop(subchart,prop):
+    def remove_prop(subchart, prop):
         if subchart[prop] is not Undefined:
             subchart = subchart.copy()
             subchart[prop] = Undefined
