@@ -35,6 +35,19 @@ def _js_repr(val):
         return repr(val)
 
 
+def _check_as_ref(x):
+    try:
+        if getattr(x, "_as_ref") is True:
+            return True
+    except AttributeError:
+        pass
+    return False
+
+
+def _check_args_as_ref(*args):
+    return any(_check_as_ref(arg) for arg in args)
+
+
 class Expression(SchemaBase):
     """Expression
 
@@ -45,8 +58,13 @@ class Expression(SchemaBase):
 
     _schema = {"type": "string"}
 
+    _as_ref = False
+
     def to_dict(self, *args, **kwargs):
-        return repr(self)
+        if self._as_ref:
+            return {"expr": repr(self)}
+        else:
+            return repr(self)
 
     def __setattr__(self, attr, val):
         # We don't need the setattr magic defined in SchemaBase
@@ -148,6 +166,7 @@ class Expression(SchemaBase):
 class UnaryExpression(Expression):
     def __init__(self, op, val):
         super(UnaryExpression, self).__init__(op=op, val=val)
+        self._as_ref = _check_args_as_ref(op, val)
 
     def __repr__(self):
         return "({op}{val})".format(op=self.op, val=_js_repr(self.val))
@@ -156,6 +175,7 @@ class UnaryExpression(Expression):
 class BinaryExpression(Expression):
     def __init__(self, op, lhs, rhs):
         super(BinaryExpression, self).__init__(op=op, lhs=lhs, rhs=rhs)
+        self._as_ref = _check_args_as_ref(op, lhs, rhs)
 
     def __repr__(self):
         return "({lhs} {op} {rhs})".format(
@@ -166,6 +186,7 @@ class BinaryExpression(Expression):
 class FunctionExpression(Expression):
     def __init__(self, name, args):
         super(FunctionExpression, self).__init__(name=name, args=args)
+        self._as_ref = _check_args_as_ref(name, *args)
 
     def __repr__(self):
         args = ",".join(_js_repr(arg) for arg in self.args)

@@ -236,10 +236,12 @@ class Selection(object):
 
 # -------------------------------------------------------------------------
 # This class is modeled after Selection
-class Variable(object):
+class Variable(expr.core.Expression, object):
     """A Selection object"""
 
     _counter = 0
+
+    _as_ref = True
 
     @classmethod
     def _get_name(cls):
@@ -270,17 +272,18 @@ class Variable(object):
         self.param = self.variable
 
     def __repr__(self):
-        return "Variable({0!r}, {1})".format(self.name, self.variable)
+        return self.name
+        # return "Variable({0!r}, {1})".format(self.name, self.variable)
 
     def ref(self):
         return self.to_dict()
 
     # This is a little different from selection, where we specify "param".
     # Should they be identical?
-    def to_dict(self):
-        return {
-            "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
-        }
+    # def to_dict(self):
+    #     return {
+    #         "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
+    #     }
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
@@ -409,10 +412,12 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    test_predicates = (str, expr.Expression, core.PredicateComposition)
+    test_predicates = (str, core.PredicateComposition)
 
     if isinstance(predicate, Selection):
         condition = {"param": predicate.name}
+    elif isinstance(predicate, expr.Expression):
+        condition = {"test": repr(predicate)}
     elif isinstance(predicate, test_predicates):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
