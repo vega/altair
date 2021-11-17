@@ -32,6 +32,8 @@ def _dataset_name(values):
     """
     if isinstance(values, core.InlineDataset):
         values = values.to_dict()
+    if values == [{}]:
+        return "empty"
     values_json = json.dumps(values, sort_keys=True)
     hsh = hashlib.md5(values_json.encode()).hexdigest()
     return "data-" + hsh
@@ -109,7 +111,7 @@ Bin = core.BinParams
 @utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
-        """Convert the chart to a dictionary suitable for JSON export"""
+        """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
         return super(LookupData, copy).to_dict(*args, **kwargs)
@@ -2111,6 +2113,17 @@ class Chart(
 
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
+
+    def to_dict(self, *args, **kwargs):
+        """Convert the chart to a dictionary suitable for JSON export."""
+        context = kwargs.get("context", {})
+        if self.data is Undefined and "data" not in context:
+            # No data specified here or in parent: inject empty data
+            # for easier specification of datum encodings.
+            copy = self.copy(deep=False)
+            copy.data = core.InlineData(values=[{}])
+            return super(Chart, copy).to_dict(*args, **kwargs)
+        return super().to_dict(*args, **kwargs)
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
