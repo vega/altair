@@ -245,6 +245,8 @@ class Variable(expr.core.Expression, object):
 
     _as_ref = True
 
+    _is_variable = True
+
     @classmethod
     def _get_name(cls):
         cls._counter += 1
@@ -274,18 +276,16 @@ class Variable(expr.core.Expression, object):
         self.param = self.variable
 
     def __repr__(self):
-        return self.name
-        # return "Variable({0!r}, {1})".format(self.name, self.variable)
+        return "Variable({0!r}, {1})".format(self.name, self.variable)
+        # return self.name
 
     def ref(self):
         return self.to_dict()
 
-    # This is a little different from selection, where we specify "param".
-    # Should they be identical?
-    # def to_dict(self):
-    #     return {
-    #         "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
-    #     }
+    def to_dict(self):
+        return {
+            "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
+        }
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):

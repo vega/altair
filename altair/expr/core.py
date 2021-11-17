@@ -31,6 +31,8 @@ def _js_repr(val):
         return "false"
     elif val is None:
         return "null"
+    elif hasattr(val, "_is_variable") and val._is_variable:
+        return val.name
     else:
         return repr(val)
 
