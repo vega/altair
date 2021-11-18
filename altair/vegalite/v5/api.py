@@ -282,7 +282,8 @@ class Variable(expr.core.Expression, object):
     def ref(self):
         return self.to_dict()
 
-    def to_dict(self):
+    # What's the best way to ignore validate keyword?
+    def to_dict(self, *args, **kwargs):
         return {
             "expr": self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
         }
