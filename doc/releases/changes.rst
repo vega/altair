@@ -26,9 +26,6 @@ Bug Fixes
 - Fix ``to_dict()`` for nested selections (#2120).
 - Fix item access for expressions (#2099).
 
-Backward-Incompatible Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Version 4.1.0 (released April 1, 2020)
 --------------------------------------
 - Minimum Python version is now 3.6
