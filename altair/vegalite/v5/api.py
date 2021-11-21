@@ -159,6 +159,8 @@ class Selection(object):
 
     _counter = 0
 
+    _as_ref = True
+
     @classmethod
     def _get_name(cls):
         cls._counter += 1
@@ -183,7 +185,7 @@ class Selection(object):
         if "bind" in kwds:
             param_kwds["bind"] = kwds.pop("bind")
 
-        # Provides a way of moving the empty value to transform_filter
+        # Provides a way of moving the empty value to transform_filter and condition
         if kwds.pop("empty", "all") == "none":
             self.empty = False
         else:
@@ -230,10 +232,24 @@ class Selection(object):
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
-        return expr.core.GetAttrExpression(self.name, field_name)
+        _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
+        if check_fields_and_encodings(self, field_name):
+            _attrexpr._as_ref = True
+        return _attrexpr
 
     def __getitem__(self, field_name):
         return expr.core.GetItemExpression(self.name, field_name)
+
+
+def check_fields_and_encodings(selector, field_name):
+    for prop in ["fields", "encodings"]:
+        try:
+            if field_name in getattr(selector.selection.select, prop):
+                return True
+        except:
+            pass
+
+    return False
 
 
 # -------------------------------------------------------------------------
@@ -354,6 +370,12 @@ def selection_interval(**kwargs):
 
 
 @utils.use_signature(core.PointSelectionConfig)
+def selection_point(**kwargs):
+    """Create a selection with type='single'"""
+    return selection(type="point", **kwargs)
+
+
+@utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
     """Create a selection with type='multi'"""
     return selection(type="multi", **kwargs)
@@ -417,8 +439,19 @@ def condition(predicate, if_true, if_false, **kwargs):
     """
     test_predicates = (str, core.PredicateComposition)
 
-    if isinstance(predicate, Selection):
+    if isinstance(predicate, (Selection, Variable)):
         condition = {"param": predicate.name}
+        if "empty" in kwargs:
+            # To not conflict with the version 4 terminology
+            if kwargs["empty"] == "none":
+                condition["empty"] = False
+            elif kwargs["empty"] == "all":
+                condition["empty"] = True
+            else:
+                condition["empty"] = kwargs["empty"]
+        elif predicate.empty is False:
+            condition["empty"] = False
+
     elif isinstance(predicate, expr.Expression):
         condition = {"test": repr(predicate)}
     elif isinstance(predicate, test_predicates):
@@ -2308,13 +2341,33 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections or self.spec is Undefined:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_selection(*selections)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to the chart."""
+    #     if not selections or self.spec is Undefined:
+    #         return self
+    #     copy = self.copy()
+    #     copy.spec = copy.spec.add_selection(*selections)
+    #     return copy
 
 
 def repeat(repeater="repeat"):
@@ -2361,13 +2414,33 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.concat:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.concat = [chart.add_selection(*selections) for chart in copy.concat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to all subcharts."""
+    #     if not selections or not self.concat:
+    #         return self
+    #     copy = self.copy()
+    #     copy.concat = [chart.add_selection(*selections) for chart in copy.concat]
+    #     return copy
 
 
 def concat(*charts, **kwargs):
@@ -2397,13 +2470,33 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.hconcat:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.hconcat = [chart.add_selection(*selections) for chart in copy.hconcat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to all subcharts."""
+    #     if not selections or not self.hconcat:
+    #         return self
+    #     copy = self.copy()
+    #     copy.hconcat = [chart.add_selection(*selections) for chart in copy.hconcat]
+    #     return copy
 
 
 def hconcat(*charts, **kwargs):
@@ -2433,13 +2526,33 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.vconcat:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.vconcat = [chart.add_selection(*selections) for chart in copy.vconcat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to all subcharts."""
+    #     if not selections or not self.vconcat:
+    #         return self
+    #     copy = self.copy()
+    #     copy.vconcat = [chart.add_selection(*selections) for chart in copy.vconcat]
+    #     return copy
 
 
 def vconcat(*charts, **kwargs):
@@ -2514,13 +2627,33 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         )
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.layer:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.layer[0] = copy.layer[0].add_selection(*selections)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to all subcharts."""
+    #     if not selections or not self.layer:
+    #         return self
+    #     copy = self.copy()
+    #     copy.layer[0] = copy.layer[0].add_selection(*selections)
+    #     return copy
 
 
 def layer(*charts, **kwargs):
@@ -2559,13 +2692,33 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections or self.spec is Undefined:
+    def add_parameter(self, *params):
+        """Add one or more parameters to the chart."""
+        if not params:
             return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_selection(*selections)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selection parameters to the chart."""
+        return self.add_parameter(*selections)
+
+    def add_variable(self, *variables):
+        """Add one or more variable parameters to the chart."""
+        return self.add_parameter(*variables)
+
+    # def add_selection(self, *selections):
+    #     """Add one or more selections to the chart."""
+    #     if not selections or self.spec is Undefined:
+    #         return self
+    #     copy = self.copy()
+    #     copy.spec = copy.spec.add_selection(*selections)
+    #     return copy
 
 
 def topo_feature(url, feature, **kwargs):
