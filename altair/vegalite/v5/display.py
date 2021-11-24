@@ -15,21 +15,21 @@ VEGAEMBED_VERSION = "6"
 
 
 # ==============================================================================
-# VegaLite v4 renderer logic
+# VegaLite v5 renderer logic
 # ==============================================================================
 
 
-# The MIME type for Vega-Lite 4.x releases.
-VEGALITE_MIME_TYPE = "application/vnd.vegalite.v4+json"  # type: str
+# The MIME type for Vega-Lite 5.x releases.
+VEGALITE_MIME_TYPE = "application/vnd.vegalite.v5+json"  # type: str
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v4.renderer"  # type: str
+ENTRY_POINT_GROUP = "altair.vegalite.v5.renderer"  # type: str
 
 # The display message when rendering fails
 DEFAULT_DISPLAY = """\
-<VegaLite 4 object>
+<VegaLite 5 object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
@@ -96,23 +96,23 @@ renderers.enable("default")
 
 
 class VegaLite(Displayable):
-    """An IPython/Jupyter display class for rendering VegaLite 4."""
+    """An IPython/Jupyter display class for rendering VegaLite 5."""
 
     renderers = renderers
     schema_path = (__name__, "schema/vega-lite-schema.json")
 
 
 def vegalite(spec, validate=True):
-    """Render and optionally validate a VegaLite 4 spec.
+    """Render and optionally validate a VegaLite 5 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
     ==========
     spec: dict
-        A fully compliant VegaLite 4 spec, with the data portion fully processed.
+        A fully compliant VegaLite 5 spec, with the data portion fully processed.
     validate: bool
-        Should the spec be validated against the VegaLite 4 schema?
+        Should the spec be validated against the VegaLite 5 schema?
     """
     from IPython.display import display
 

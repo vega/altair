@@ -355,6 +355,26 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -427,9 +447,10 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(AngleDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                         type=type, **kwds)
+                                         title=title, type=type, **kwds)
 
 
 class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -719,6 +740,26 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -791,9 +832,10 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(ColorDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                         type=type, **kwds)
+                                         title=title, type=type, **kwds)
 
 
 class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -1973,6 +2015,26 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -2045,9 +2107,10 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FillDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                        type=type, **kwds)
+                                        title=title, type=type, **kwds)
 
 
 class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -2338,6 +2401,26 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -2410,9 +2493,10 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FillOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
-                                               condition=condition, type=type, **kwds)
+                                               condition=condition, title=title, type=type, **kwds)
 
 
 class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -3025,6 +3109,26 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -3097,8 +3201,9 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                            type=type, **kwds)
 
 
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3216,6 +3321,26 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -3288,8 +3413,9 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                             type=type, **kwds)
 
 
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
@@ -3496,6 +3622,26 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -3568,8 +3714,9 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                             type=type, **kwds)
 
 
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
@@ -3687,6 +3834,26 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -3759,8 +3926,9 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                              type=type, **kwds)
 
 
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
@@ -4049,6 +4217,26 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -4121,9 +4309,10 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(OpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                           type=type, **kwds)
+                                           title=title, type=type, **kwds)
 
 
 class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -4655,6 +4844,26 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -4727,10 +4936,10 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
-    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(RadiusDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
-                                          stack=stack, type=type, **kwds)
+                                          stack=stack, title=title, type=type, **kwds)
 
 
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
@@ -4870,6 +5079,26 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -4942,8 +5171,9 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                           type=type, **kwds)
 
 
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
@@ -5455,6 +5685,26 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -5527,9 +5777,10 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(ShapeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                         type=type, **kwds)
+                                         title=title, type=type, **kwds)
 
 
 class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
@@ -5820,6 +6071,26 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -5892,9 +6163,10 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(SizeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                        type=type, **kwds)
+                                        title=title, type=type, **kwds)
 
 
 class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -6184,6 +6456,26 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -6256,9 +6548,10 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(StrokeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                          type=type, **kwds)
+                                          title=title, type=type, **kwds)
 
 
 class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
@@ -6549,6 +6842,26 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -6621,9 +6934,10 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(StrokeDashDatum, self).__init__(datum=datum, bandPosition=bandPosition,
-                                              condition=condition, type=type, **kwds)
+                                              condition=condition, title=title, type=type, **kwds)
 
 
 class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray):
@@ -6914,6 +7228,26 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -6986,9 +7320,10 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(StrokeOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
-                                                 condition=condition, type=type, **kwds)
+                                                 condition=condition, title=title, type=type, **kwds)
 
 
 class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -7278,6 +7613,26 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -7350,9 +7705,10 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
-    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, type=Undefined, **kwds):
+    def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(StrokeWidthDatum, self).__init__(datum=datum, bandPosition=bandPosition,
-                                               condition=condition, type=type, **kwds)
+                                               condition=condition, title=title, type=type, **kwds)
 
 
 class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
@@ -7650,6 +8006,26 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -7723,9 +8099,10 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, format=Undefined,
-                 formatType=Undefined, type=Undefined, **kwds):
+                 formatType=Undefined, title=Undefined, type=Undefined, **kwds):
         super(TextDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
-                                        format=format, formatType=formatType, type=type, **kwds)
+                                        format=format, formatType=formatType, title=title, type=type,
+                                        **kwds)
 
 
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
@@ -8058,6 +8435,26 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -8130,10 +8527,10 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
-    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(ThetaDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
-                                         stack=stack, type=type, **kwds)
+                                         stack=stack, title=title, type=type, **kwds)
 
 
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
@@ -8273,6 +8670,26 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -8345,8 +8762,9 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
+                                          type=type, **kwds)
 
 
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
@@ -9187,6 +9605,26 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -9260,9 +9698,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
-                 stack=Undefined, type=Undefined, **kwds):
+                 stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(XDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
-                                     scale=scale, stack=stack, type=type, **kwds)
+                                     scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
 class XValue(ValueChannelMixin, core.PositionValueDef):
@@ -9401,6 +9839,26 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -9473,8 +9931,9 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
+                                      **kwds)
 
 
 class X2Value(ValueChannelMixin, core.PositionValueDef):
@@ -9741,6 +10200,373 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
 
     def __init__(self, value, **kwds):
         super(XError2Value, self).__init__(value=value, **kwds)
+
+
+class XOffset(FieldChannelMixin, core.ScaleFieldDef):
+    """XOffset schema wrapper
+
+    Mapping(required=[shorthand])
+
+    Attributes
+    ----------
+
+    shorthand : string
+        shorthand for field, aggregate, and type
+    aggregate : :class:`Aggregate`
+        Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
+        ``"min"``, ``"max"``, ``"count"`` ).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    bin : anyOf(boolean, :class:`BinParams`, None)
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
+        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
+        ``"binned"`` ).
+
+
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    field : :class:`Field`
+        **Required.** A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
+        if ``aggregate`` is ``count``.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : :class:`Sort`
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        field. or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "xOffset"
+
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
+        super(XOffset, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, field=field, scale=scale,
+                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
+    """XOffsetDatum schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
+    :class:`RepeatRef`)
+        A constant value in data domain.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`Type`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "xOffset"
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
+        super(XOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
+                                           title=title, type=type, **kwds)
+
+
+class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
+    """XOffsetValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value (primitive value or gradient definition) of an
+    encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "xOffset"
+
+    def __init__(self, value, **kwds):
+        super(XOffsetValue, self).__init__(value=value, **kwds)
 
 
 class Y(FieldChannelMixin, core.PositionFieldDef):
@@ -10085,6 +10911,26 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -10158,9 +11004,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
-                 stack=Undefined, type=Undefined, **kwds):
+                 stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(YDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
-                                     scale=scale, stack=stack, type=type, **kwds)
+                                     scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
 class YValue(ValueChannelMixin, core.PositionValueDef):
@@ -10299,6 +11145,26 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -10371,8 +11237,9 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
-    def __init__(self, datum, bandPosition=Undefined, type=Undefined, **kwds):
-        super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, type=type, **kwds)
+    def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
+                                      **kwds)
 
 
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
@@ -10639,3 +11506,370 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
 
     def __init__(self, value, **kwds):
         super(YError2Value, self).__init__(value=value, **kwds)
+
+
+class YOffset(FieldChannelMixin, core.ScaleFieldDef):
+    """YOffset schema wrapper
+
+    Mapping(required=[shorthand])
+
+    Attributes
+    ----------
+
+    shorthand : string
+        shorthand for field, aggregate, and type
+    aggregate : :class:`Aggregate`
+        Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
+        ``"min"``, ``"max"``, ``"count"`` ).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    bin : anyOf(boolean, :class:`BinParams`, None)
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
+        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
+        ``"binned"`` ).
+
+
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    field : :class:`Field`
+        **Required.** A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
+        if ``aggregate`` is ``count``.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : :class:`Sort`
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        field. or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "yOffset"
+
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
+        super(YOffset, self).__init__(shorthand=shorthand, aggregate=aggregate,
+                                      bandPosition=bandPosition, bin=bin, field=field, scale=scale,
+                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
+    """YOffsetDatum schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
+    :class:`RepeatRef`)
+        A constant value in data domain.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`Type`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "yOffset"
+    def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
+        super(YOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
+                                           title=title, type=type, **kwds)
+
+
+class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
+    """YOffsetValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value (primitive value or gradient definition) of an
+    encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "yOffset"
+
+    def __init__(self, value, **kwds):
+        super(YOffsetValue, self).__init__(value=value, **kwds)

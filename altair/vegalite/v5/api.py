@@ -246,7 +246,7 @@ def check_fields_and_encodings(selector, field_name):
         try:
             if field_name in getattr(selector.selection.select, prop):
                 return True
-        except:
+        except AttributeError:
             pass
 
     return False

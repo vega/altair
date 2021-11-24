@@ -141,6 +141,7 @@ API Functions
    binding_radio
    binding_range
    binding_select
+   check_fields_and_encodings
    concat
    condition
    graticule
@@ -150,11 +151,13 @@ API Functions
    selection
    selection_interval
    selection_multi
+   selection_point
    selection_single
    sequence
    sphere
    topo_feature
    value
+   variable
    vconcat
 
 Low-Level Schema Wrappers

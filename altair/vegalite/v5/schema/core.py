@@ -220,6 +220,8 @@ class AreaConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -270,6 +272,8 @@ class AreaConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
@@ -292,8 +296,12 @@ class AreaConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -1399,6 +1407,8 @@ class BarConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -1438,6 +1448,8 @@ class BarConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     radius : anyOf(float, :class:`ExprRef`)
@@ -1445,8 +1457,12 @@ class BarConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -4131,6 +4147,8 @@ class Encoding(VegaLiteSchema):
     xError2 : anyOf(:class:`SecondaryFieldDef`, :class:`ValueDefnumber`)
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
+    xOffset : :class:`OffsetDef`
+        Offset of x-position of the marks
     y : :class:`PositionDef`
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
@@ -4147,6 +4165,8 @@ class Encoding(VegaLiteSchema):
     yError2 : anyOf(:class:`SecondaryFieldDef`, :class:`ValueDefnumber`)
         Secondary error value of y coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
+    yOffset : :class:`OffsetDef`
+        Offset of y-position of the marks
     """
     _schema = {'$ref': '#/definitions/Encoding'}
 
@@ -4157,8 +4177,8 @@ class Encoding(VegaLiteSchema):
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
                  strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined, theta=Undefined,
                  theta2=Undefined, tooltip=Undefined, url=Undefined, x=Undefined, x2=Undefined,
-                 xError=Undefined, xError2=Undefined, y=Undefined, y2=Undefined, yError=Undefined,
-                 yError2=Undefined, **kwds):
+                 xError=Undefined, xError2=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                 yError=Undefined, yError2=Undefined, yOffset=Undefined, **kwds):
         super(Encoding, self).__init__(angle=angle, color=color, description=description, detail=detail,
                                        fill=fill, fillOpacity=fillOpacity, href=href, key=key,
                                        latitude=latitude, latitude2=latitude2, longitude=longitude,
@@ -4167,8 +4187,8 @@ class Encoding(VegaLiteSchema):
                                        stroke=stroke, strokeDash=strokeDash,
                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, text=text,
                                        theta=theta, theta2=theta2, tooltip=tooltip, url=url, x=x, x2=x2,
-                                       xError=xError, xError2=xError2, y=y, y2=y2, yError=yError,
-                                       yError2=yError2, **kwds)
+                                       xError=xError, xError2=xError2, xOffset=xOffset, y=y, y2=y2,
+                                       yError=yError, yError2=yError2, yOffset=yOffset, **kwds)
 
 
 class ErrorBand(CompositeMark):
@@ -5134,6 +5154,8 @@ class FacetedEncoding(VegaLiteSchema):
     xError2 : anyOf(:class:`SecondaryFieldDef`, :class:`ValueDefnumber`)
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
+    xOffset : :class:`OffsetDef`
+        Offset of x-position of the marks
     y : :class:`PositionDef`
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
@@ -5150,6 +5172,8 @@ class FacetedEncoding(VegaLiteSchema):
     yError2 : anyOf(:class:`SecondaryFieldDef`, :class:`ValueDefnumber`)
         Secondary error value of y coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
+    yOffset : :class:`OffsetDef`
+        Offset of y-position of the marks
     """
     _schema = {'$ref': '#/definitions/FacetedEncoding'}
 
@@ -5160,8 +5184,9 @@ class FacetedEncoding(VegaLiteSchema):
                  radius=Undefined, radius2=Undefined, row=Undefined, shape=Undefined, size=Undefined,
                  stroke=Undefined, strokeDash=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                  text=Undefined, theta=Undefined, theta2=Undefined, tooltip=Undefined, url=Undefined,
-                 x=Undefined, x2=Undefined, xError=Undefined, xError2=Undefined, y=Undefined,
-                 y2=Undefined, yError=Undefined, yError2=Undefined, **kwds):
+                 x=Undefined, x2=Undefined, xError=Undefined, xError2=Undefined, xOffset=Undefined,
+                 y=Undefined, y2=Undefined, yError=Undefined, yError2=Undefined, yOffset=Undefined,
+                 **kwds):
         super(FacetedEncoding, self).__init__(angle=angle, color=color, column=column,
                                               description=description, detail=detail, facet=facet,
                                               fill=fill, fillOpacity=fillOpacity, href=href, key=key,
@@ -5172,8 +5197,9 @@ class FacetedEncoding(VegaLiteSchema):
                                               stroke=stroke, strokeDash=strokeDash,
                                               strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                               text=text, theta=theta, theta2=theta2, tooltip=tooltip,
-                                              url=url, x=x, x2=x2, xError=xError, xError2=xError2, y=y,
-                                              y2=y2, yError=yError, yError2=yError2, **kwds)
+                                              url=url, x=x, x2=x2, xError=xError, xError2=xError2,
+                                              xOffset=xOffset, y=y, y2=y2, yError=yError,
+                                              yError2=yError2, yOffset=yOffset, **kwds)
 
 
 class Field(VegaLiteSchema):
@@ -5577,6 +5603,23 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
                                                                                timeUnit=timeUnit,
                                                                                title=title, type=type,
                                                                                **kwds)
+
+
+class FieldRange(VegaLiteSchema):
+    """FieldRange schema wrapper
+
+    Mapping(required=[field])
+
+    Attributes
+    ----------
+
+    field : string
+
+    """
+    _schema = {'$ref': '#/definitions/FieldRange'}
+
+    def __init__(self, field=Undefined, **kwds):
+        super(FieldRange, self).__init__(field=field, **kwds)
 
 
 class Fit(VegaLiteSchema):
@@ -6316,13 +6359,6 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    fields : List(:class:`FieldName`)
-        An array of field names whose values must match for a data tuple to fall within the
-        selection.
-
-        **See also:** The `projection with encodings and fields section
-        <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
-        documentation.
     mark : :class:`BrushConfig`
         An interval selection also adds a rectangle mark to depict the extents of the
         interval. The ``mark`` property can be used to customize the appearance of the mark.
@@ -6387,11 +6423,10 @@ class IntervalSelectionConfig(VegaLiteSchema):
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
 
-    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, fields=Undefined,
-                 mark=Undefined, on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined,
-                 **kwds):
+    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, mark=Undefined,
+                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
         super(IntervalSelectionConfig, self).__init__(type=type, clear=clear, encodings=encodings,
-                                                      fields=fields, mark=mark, on=on, resolve=resolve,
+                                                      mark=mark, on=on, resolve=resolve,
                                                       translate=translate, zoom=zoom, **kwds)
 
 
@@ -6416,13 +6451,6 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
-
-        **See also:** The `projection with encodings and fields section
-        <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
-        documentation.
-    fields : List(:class:`FieldName`)
-        An array of field names whose values must match for a data tuple to fall within the
-        selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
@@ -6491,12 +6519,11 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfigWithoutType'}
 
-    def __init__(self, clear=Undefined, encodings=Undefined, fields=Undefined, mark=Undefined,
-                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
+    def __init__(self, clear=Undefined, encodings=Undefined, mark=Undefined, on=Undefined,
+                 resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
         super(IntervalSelectionConfigWithoutType, self).__init__(clear=clear, encodings=encodings,
-                                                                 fields=fields, mark=mark, on=on,
-                                                                 resolve=resolve, translate=translate,
-                                                                 zoom=zoom, **kwds)
+                                                                 mark=mark, on=on, resolve=resolve,
+                                                                 translate=translate, zoom=zoom, **kwds)
 
 
 class JoinAggregateFieldDef(VegaLiteSchema):
@@ -7507,6 +7534,8 @@ class LineConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -7546,6 +7575,8 @@ class LineConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
@@ -7568,8 +7599,12 @@ class LineConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -7946,6 +7981,8 @@ class MarkConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -7985,6 +8022,8 @@ class MarkConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     radius : anyOf(float, :class:`ExprRef`)
@@ -7992,8 +8031,12 @@ class MarkConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -8287,6 +8330,8 @@ class MarkDef(AnyMark):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -8337,6 +8382,8 @@ class MarkDef(AnyMark):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
@@ -8359,8 +8406,12 @@ class MarkDef(AnyMark):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     radius2Offset : anyOf(float, :class:`ExprRef`)
         Offset for radius2.
     radiusOffset : anyOf(float, :class:`ExprRef`)
@@ -8604,6 +8655,26 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -8676,11 +8747,12 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
     """
     _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,(Gradient|string|null)>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FieldOrDatumDefWithConditionDatumDefGradientstringnull, self).__init__(bandPosition=bandPosition,
                                                                                      condition=condition,
                                                                                      datum=datum,
+                                                                                     title=title,
                                                                                      type=type, **kwds)
 
 
@@ -9109,6 +9181,26 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -9181,12 +9273,12 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
     """
     _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,number[]>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FieldOrDatumDefWithConditionDatumDefnumberArray, self).__init__(bandPosition=bandPosition,
                                                                               condition=condition,
-                                                                              datum=datum, type=type,
-                                                                              **kwds)
+                                                                              datum=datum, title=title,
+                                                                              type=type, **kwds)
 
 
 class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberArray, NumericArrayMarkPropDef):
@@ -9470,6 +9562,26 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -9542,11 +9654,12 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
     """
     _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,number>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FieldOrDatumDefWithConditionDatumDefnumber, self).__init__(bandPosition=bandPosition,
                                                                          condition=condition,
-                                                                         datum=datum, type=type, **kwds)
+                                                                         datum=datum, title=title,
+                                                                         type=type, **kwds)
 
 
 class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, NumericMarkPropDef):
@@ -9789,6 +9902,17 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
                                                                                  timeUnit=timeUnit,
                                                                                  title=title, type=type,
                                                                                  **kwds)
+
+
+class OffsetDef(VegaLiteSchema):
+    """OffsetDef schema wrapper
+
+    anyOf(:class:`ScaleFieldDef`, :class:`ScaleDatumDef`, :class:`ValueDefnumber`)
+    """
+    _schema = {'$ref': '#/definitions/OffsetDef'}
+
+    def __init__(self, *args, **kwds):
+        super(OffsetDef, self).__init__(*args, **kwds)
 
 
 class OrderFieldDef(VegaLiteSchema):
@@ -10113,6 +10237,8 @@ class OverlayMarkDef(VegaLiteSchema):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -10152,6 +10278,8 @@ class OverlayMarkDef(VegaLiteSchema):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     radius : anyOf(float, :class:`ExprRef`)
@@ -10159,8 +10287,12 @@ class OverlayMarkDef(VegaLiteSchema):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     radius2Offset : anyOf(float, :class:`ExprRef`)
         Offset for radius2.
     radiusOffset : anyOf(float, :class:`ExprRef`)
@@ -10662,6 +10794,26 @@ class DatumDef(LatLongDef, Position2Def):
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -10734,8 +10886,9 @@ class DatumDef(LatLongDef, Position2Def):
     """
     _schema = {'$ref': '#/definitions/DatumDef'}
 
-    def __init__(self, bandPosition=Undefined, datum=Undefined, type=Undefined, **kwds):
-        super(DatumDef, self).__init__(bandPosition=bandPosition, datum=datum, type=type, **kwds)
+    def __init__(self, bandPosition=Undefined, datum=Undefined, title=Undefined, type=Undefined, **kwds):
+        super(DatumDef, self).__init__(bandPosition=bandPosition, datum=datum, title=title, type=type,
+                                       **kwds)
 
 
 class PositionDatumDefBase(PolarDef):
@@ -10796,6 +10949,26 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -10869,9 +11042,9 @@ class PositionDatumDefBase(PolarDef):
     _schema = {'$ref': '#/definitions/PositionDatumDefBase'}
 
     def __init__(self, bandPosition=Undefined, datum=Undefined, scale=Undefined, stack=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(PositionDatumDefBase, self).__init__(bandPosition=bandPosition, datum=datum, scale=scale,
-                                                   stack=stack, type=type, **kwds)
+                                                   stack=stack, title=title, type=type, **kwds)
 
 
 class PositionDef(VegaLiteSchema):
@@ -10960,6 +11133,26 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -11033,10 +11226,10 @@ class PositionDatumDef(PositionDef):
     _schema = {'$ref': '#/definitions/PositionDatumDef'}
 
     def __init__(self, axis=Undefined, bandPosition=Undefined, datum=Undefined, impute=Undefined,
-                 scale=Undefined, stack=Undefined, type=Undefined, **kwds):
+                 scale=Undefined, stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(PositionDatumDef, self).__init__(axis=axis, bandPosition=bandPosition, datum=datum,
-                                               impute=impute, scale=scale, stack=stack, type=type,
-                                               **kwds)
+                                               impute=impute, scale=scale, stack=stack, title=title,
+                                               type=type, **kwds)
 
 
 class PositionFieldDef(PositionDef):
@@ -12273,6 +12466,8 @@ class RectConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -12312,6 +12507,8 @@ class RectConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     radius : anyOf(float, :class:`ExprRef`)
@@ -12319,8 +12516,12 @@ class RectConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -12976,7 +13177,8 @@ class Scale(VegaLiteSchema):
         a desired number of interval steps. Here, the domain would snap to quarter (Jan,
         Apr, Jul, Oct) boundaries.
 
-        **Default value:** ``true`` for unbinned *quantitative* fields; ``false`` otherwise.
+        **Default value:** ``true`` for unbinned *quantitative* fields without explicit
+        domain bounds; ``false`` otherwise.
     padding : anyOf(float, :class:`ExprRef`)
         For * `continuous <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ *
         scales, expands the scale domain to accommodate the specified number of pixels on
@@ -13015,7 +13217,7 @@ class Scale(VegaLiteSchema):
         for band scales and ``pointPadding`` for point scales. By default, Vega-Lite sets
         outer padding such that *width/height = number of unique values * step*.
     range : anyOf(:class:`RangeEnum`, List(anyOf(float, string, List(float), :class:`ExprRef`)),
-    Mapping(required=[field]))
+    :class:`FieldRange`)
         The range of the scale. One of:
 
 
@@ -13171,18 +13373,29 @@ class ScaleConfig(VegaLiteSchema):
     ----------
 
     bandPaddingInner : anyOf(float, :class:`ExprRef`)
-        Default inner padding for ``x`` and ``y`` band-ordinal scales.
+        Default inner padding for ``x`` and ``y`` band scales.
 
         **Default value:**
 
 
+        * ``nestedOffsetPaddingInner`` for x/y scales with nested x/y offset scales.
         * ``barBandPaddingInner`` for bar marks ( ``0.1`` by default)
         * ``rectBandPaddingInner`` for rect and other marks ( ``0`` by default)
     bandPaddingOuter : anyOf(float, :class:`ExprRef`)
-        Default outer padding for ``x`` and ``y`` band-ordinal scales.
+        Default outer padding for ``x`` and ``y`` band scales.
 
         **Default value:** ``paddingInner/2`` (which makes *width/height = number of unique
         values * step* )
+    bandWithNestedOffsetPaddingInner : anyOf(float, :class:`ExprRef`)
+        Default inner padding for ``x`` and ``y`` band scales with nested ``xOffset`` and
+        ``yOffset`` encoding.
+
+        **Default value:** ``0.2``
+    bandWithNestedOffsetPaddingOuter : anyOf(float, :class:`ExprRef`)
+        Default outer padding for ``x`` and ``y`` band scales with nested ``xOffset`` and
+        ``yOffset`` encoding.
+
+        **Default value:** ``0.2``
     barBandPaddingInner : anyOf(float, :class:`ExprRef`)
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"bar"`` marks.
 
@@ -13191,10 +13404,10 @@ class ScaleConfig(VegaLiteSchema):
         If true, values that exceed the data domain are clamped to either the minimum or
         maximum range value
     continuousPadding : anyOf(float, :class:`ExprRef`)
-        Default padding for continuous scales.
+        Default padding for continuous x/y scales.
 
-        **Default:** ``5`` for continuous x-scale of a vertical bar and continuous y-scale
-        of a horizontal bar.; ``0`` otherwise.
+        **Default:** The bar width for continuous x-scale of a vertical bar and continuous
+        y-scale of a horizontal bar.; ``0`` otherwise.
     maxBandSize : float
         The default max value for mapping quantitative fields to bar's size/bandSize.
 
@@ -13237,6 +13450,14 @@ class ScaleConfig(VegaLiteSchema):
         of size for trail marks with zero=false.
 
         **Default value:** ``1``
+    offsetBandPaddingInner : anyOf(float, :class:`ExprRef`)
+        Default padding inner for xOffset/yOffset's band scales.
+
+        **Default Value:** ``0``
+    offsetBandPaddingOuter : anyOf(float, :class:`ExprRef`)
+        Default padding outer for xOffset/yOffset's band scales.
+
+        **Default Value:** ``0``
     pointPadding : anyOf(float, :class:`ExprRef`)
         Default outer padding for ``x`` and ``y`` point-ordinal scales.
 
@@ -13278,26 +13499,375 @@ class ScaleConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/ScaleConfig'}
 
     def __init__(self, bandPaddingInner=Undefined, bandPaddingOuter=Undefined,
+                 bandWithNestedOffsetPaddingInner=Undefined, bandWithNestedOffsetPaddingOuter=Undefined,
                  barBandPaddingInner=Undefined, clamp=Undefined, continuousPadding=Undefined,
                  maxBandSize=Undefined, maxFontSize=Undefined, maxOpacity=Undefined, maxSize=Undefined,
                  maxStrokeWidth=Undefined, minBandSize=Undefined, minFontSize=Undefined,
                  minOpacity=Undefined, minSize=Undefined, minStrokeWidth=Undefined,
+                 offsetBandPaddingInner=Undefined, offsetBandPaddingOuter=Undefined,
                  pointPadding=Undefined, quantileCount=Undefined, quantizeCount=Undefined,
                  rectBandPaddingInner=Undefined, round=Undefined, useUnaggregatedDomain=Undefined,
                  xReverse=Undefined, **kwds):
         super(ScaleConfig, self).__init__(bandPaddingInner=bandPaddingInner,
                                           bandPaddingOuter=bandPaddingOuter,
+                                          bandWithNestedOffsetPaddingInner=bandWithNestedOffsetPaddingInner,
+                                          bandWithNestedOffsetPaddingOuter=bandWithNestedOffsetPaddingOuter,
                                           barBandPaddingInner=barBandPaddingInner, clamp=clamp,
                                           continuousPadding=continuousPadding, maxBandSize=maxBandSize,
                                           maxFontSize=maxFontSize, maxOpacity=maxOpacity,
                                           maxSize=maxSize, maxStrokeWidth=maxStrokeWidth,
                                           minBandSize=minBandSize, minFontSize=minFontSize,
                                           minOpacity=minOpacity, minSize=minSize,
-                                          minStrokeWidth=minStrokeWidth, pointPadding=pointPadding,
-                                          quantileCount=quantileCount, quantizeCount=quantizeCount,
+                                          minStrokeWidth=minStrokeWidth,
+                                          offsetBandPaddingInner=offsetBandPaddingInner,
+                                          offsetBandPaddingOuter=offsetBandPaddingOuter,
+                                          pointPadding=pointPadding, quantileCount=quantileCount,
+                                          quantizeCount=quantizeCount,
                                           rectBandPaddingInner=rectBandPaddingInner, round=round,
                                           useUnaggregatedDomain=useUnaggregatedDomain,
                                           xReverse=xReverse, **kwds)
+
+
+class ScaleDatumDef(OffsetDef):
+    """ScaleDatumDef schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
+    :class:`RepeatRef`)
+        A constant value in data domain.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`Type`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _schema = {'$ref': '#/definitions/ScaleDatumDef'}
+
+    def __init__(self, bandPosition=Undefined, datum=Undefined, scale=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
+        super(ScaleDatumDef, self).__init__(bandPosition=bandPosition, datum=datum, scale=scale,
+                                            title=title, type=type, **kwds)
+
+
+class ScaleFieldDef(OffsetDef):
+    """ScaleFieldDef schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    aggregate : :class:`Aggregate`
+        Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
+        ``"min"``, ``"max"``, ``"count"`` ).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    bin : anyOf(boolean, :class:`BinParams`, None)
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
+        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
+        ``"binned"`` ).
+
+
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    field : :class:`Field`
+        **Required.** A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
+        if ``aggregate`` is ``count``.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : :class:`Sort`
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        field. or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`
+        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
+        be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain ( ``datum`` ):
+
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _schema = {'$ref': '#/definitions/ScaleFieldDef'}
+
+    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
+                 scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
+        super(ScaleFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
+                                            field=field, scale=scale, sort=sort, timeUnit=timeUnit,
+                                            title=title, type=type, **kwds)
 
 
 class ScaleInterpolateEnum(VegaLiteSchema):
@@ -13366,7 +13936,11 @@ class ScaleResolveMap(VegaLiteSchema):
 
     x : :class:`ResolveMode`
 
+    xOffset : :class:`ResolveMode`
+
     y : :class:`ResolveMode`
+
+    yOffset : :class:`ResolveMode`
 
     """
     _schema = {'$ref': '#/definitions/ScaleResolveMap'}
@@ -13374,12 +13948,13 @@ class ScaleResolveMap(VegaLiteSchema):
     def __init__(self, angle=Undefined, color=Undefined, fill=Undefined, fillOpacity=Undefined,
                  opacity=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                  strokeDash=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined, theta=Undefined,
-                 x=Undefined, y=Undefined, **kwds):
+                 x=Undefined, xOffset=Undefined, y=Undefined, yOffset=Undefined, **kwds):
         super(ScaleResolveMap, self).__init__(angle=angle, color=color, fill=fill,
                                               fillOpacity=fillOpacity, opacity=opacity, radius=radius,
                                               shape=shape, size=size, stroke=stroke,
                                               strokeDash=strokeDash, strokeOpacity=strokeOpacity,
-                                              strokeWidth=strokeWidth, theta=theta, x=x, y=y, **kwds)
+                                              strokeWidth=strokeWidth, theta=theta, x=x,
+                                              xOffset=xOffset, y=y, yOffset=yOffset, **kwds)
 
 
 class ScaleType(VegaLiteSchema):
@@ -13876,6 +14451,26 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
     :class:`RepeatRef`)
         A constant value in data domain.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -13948,12 +14543,12 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
     """
     _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,(string|null)>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, type=Undefined,
-                 **kwds):
+    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
+                 type=Undefined, **kwds):
         super(FieldOrDatumDefWithConditionDatumDefstringnull, self).__init__(bandPosition=bandPosition,
                                                                              condition=condition,
-                                                                             datum=datum, type=type,
-                                                                             **kwds)
+                                                                             datum=datum, title=title,
+                                                                             type=type, **kwds)
 
 
 class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPropDefstringnullTypeForShape, ShapeDef):
@@ -14290,6 +14885,8 @@ class SharedEncoding(VegaLiteSchema):
 
     xError2 : Mapping(required=[])
 
+    xOffset : Mapping(required=[])
+
     y : Mapping(required=[])
 
     y2 : Mapping(required=[])
@@ -14297,6 +14894,8 @@ class SharedEncoding(VegaLiteSchema):
     yError : Mapping(required=[])
 
     yError2 : Mapping(required=[])
+
+    yOffset : Mapping(required=[])
 
     """
     _schema = {'$ref': '#/definitions/SharedEncoding'}
@@ -14308,8 +14907,8 @@ class SharedEncoding(VegaLiteSchema):
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
                  strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined, theta=Undefined,
                  theta2=Undefined, tooltip=Undefined, url=Undefined, x=Undefined, x2=Undefined,
-                 xError=Undefined, xError2=Undefined, y=Undefined, y2=Undefined, yError=Undefined,
-                 yError2=Undefined, **kwds):
+                 xError=Undefined, xError2=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                 yError=Undefined, yError2=Undefined, yOffset=Undefined, **kwds):
         super(SharedEncoding, self).__init__(angle=angle, color=color, description=description,
                                              detail=detail, fill=fill, fillOpacity=fillOpacity,
                                              href=href, key=key, latitude=latitude, latitude2=latitude2,
@@ -14319,17 +14918,18 @@ class SharedEncoding(VegaLiteSchema):
                                              strokeDash=strokeDash, strokeOpacity=strokeOpacity,
                                              strokeWidth=strokeWidth, text=text, theta=theta,
                                              theta2=theta2, tooltip=tooltip, url=url, x=x, x2=x2,
-                                             xError=xError, xError2=xError2, y=y, y2=y2, yError=yError,
-                                             yError2=yError2, **kwds)
+                                             xError=xError, xError2=xError2, xOffset=xOffset, y=y,
+                                             y2=y2, yError=yError, yError2=yError2, yOffset=yOffset,
+                                             **kwds)
 
 
 class SingleDefUnitChannel(VegaLiteSchema):
     """SingleDefUnitChannel schema wrapper
 
-    enum('x', 'y', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta',
-    'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity',
-    'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text',
-    'href', 'url', 'description')
+    enum('x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2',
+    'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity',
+    'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape',
+    'key', 'text', 'href', 'url', 'description')
     """
     _schema = {'$ref': '#/definitions/SingleDefUnitChannel'}
 
@@ -15274,11 +15874,25 @@ class Step(VegaLiteSchema):
 
     step : float
         The size (width/height) per discrete step.
+    for : :class:`StepFor`
+        Whether to apply the step to position scale or offset scale when there are both
+        ``x`` and ``xOffset`` or both ``y`` and ``yOffset`` encodings.
     """
     _schema = {'$ref': '#/definitions/Step'}
 
     def __init__(self, step=Undefined, **kwds):
         super(Step, self).__init__(step=step, **kwds)
+
+
+class StepFor(VegaLiteSchema):
+    """StepFor schema wrapper
+
+    enum('position', 'offset')
+    """
+    _schema = {'$ref': '#/definitions/StepFor'}
+
+    def __init__(self, *args):
+        super(StepFor, self).__init__(*args)
 
 
 class Stream(VegaLiteSchema):
@@ -16002,6 +16616,26 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : :class:`Type`
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
@@ -16075,12 +16709,13 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
     _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<StringDatumDef,Text>'}
 
     def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, format=Undefined,
-                 formatType=Undefined, type=Undefined, **kwds):
+                 formatType=Undefined, title=Undefined, type=Undefined, **kwds):
         super(FieldOrDatumDefWithConditionStringDatumDefText, self).__init__(bandPosition=bandPosition,
                                                                              condition=condition,
                                                                              datum=datum, format=format,
                                                                              formatType=formatType,
-                                                                             type=type, **kwds)
+                                                                             title=title, type=type,
+                                                                             **kwds)
 
 
 class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
@@ -16419,6 +17054,8 @@ class TickConfig(AnyMarkConfig):
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
+
+        **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
 
     invalid : enum('filter', None)
@@ -16458,6 +17095,8 @@ class TickConfig(AnyMarkConfig):
           value will be ignored.
     outerRadius : anyOf(float, :class:`ExprRef`)
         The outer radius in pixels of arc marks. ``outerRadius`` is an alias for ``radius``.
+
+        **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
 
     radius : anyOf(float, :class:`ExprRef`)
@@ -16465,8 +17104,12 @@ class TickConfig(AnyMarkConfig):
 
         For text marks, polar coordinate radial offset, in pixels, of the text from the
         origin determined by the ``x`` and ``y`` properties.
+
+        **Default value:** ``min(plot_width, plot_height)/2``
     radius2 : anyOf(float, :class:`ExprRef`)
         The secondary (inner) radius in pixels of arc marks.
+
+        **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
 
     size : anyOf(float, :class:`ExprRef`)
@@ -19093,7 +19736,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
                                                                       **kwds)
 
 
-class ValueDefnumber(VegaLiteSchema):
+class ValueDefnumber(OffsetDef):
     """ValueDefnumber schema wrapper
 
     Mapping(required=[value])
