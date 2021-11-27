@@ -151,9 +151,10 @@ def _get_channels_mapping():
             mapping[cls] = attr.replace("Value", "").lower()
     return mapping
 
+
 # -------------------------------------------------------------------------
 # Tools for working with parameters
-class Parameter(object):
+class Parameter(expr.core.OperatorMixin, object):
     """A Parameter object"""
 
     _counter = 0
@@ -170,8 +171,13 @@ class Parameter(object):
 
     def to_dict(self):
         if self.param_type == "variable":
+            if self.param.expr is Undefined:
+                return {"expr": self.name}
+            else:
+                return {"expr": repr(self.param.expr)}
+        elif self.param_type == "selection":
             return {
-                "expr": self.name.to_dict()
+                "param": self.name.to_dict()
                 if hasattr(self.name, "to_dict")
                 else self.name
             }
@@ -179,8 +185,61 @@ class Parameter(object):
     def __repr__(self):
         return "Parameter({0!r}, {1})".format(self.name, self.param)
 
+    def _to_expr(self):
+        if self.param.expr is Undefined:
+            return self.name
+        else:
+            return self.param.expr
 
-def parameter(name=None, **kwds):
+    def _from_expr(self, expr):
+        return parameter(expr=expr)
+
+    def __getattr__(self, field_name):
+        if field_name.startswith("__") and field_name.endswith("__"):
+            raise AttributeError(field_name)
+        _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
+        # If self is a SelectionParameter and field_name is in its
+        # fields or encodings list, then we want to return an expression.
+        if check_fields_and_encodings(self, field_name):
+            return SelectionExpression(_attrexpr)
+        return expr.core.GetAttrExpression(self.name, field_name)
+
+
+class SelectionExpression(expr.core.OperatorMixin, object):
+    def __init__(self, expr):
+        self.expr = expr
+
+    def to_dict(self):
+        return {"expr": repr(self.expr)}
+
+    def _to_expr(self):
+        return repr(self.expr)
+
+    def _from_expr(self, expr):
+        return SelectionExpression(expr=expr)
+
+
+def check_fields_and_encodings(parameter, field_name):
+    for prop in ["fields", "encodings"]:
+        try:
+            if field_name in getattr(parameter.param.select, prop):
+                return True
+        except (AttributeError, TypeError):
+            pass
+
+    return False
+
+
+# ------------------------------------------------------------------------
+# Top-Level Functions
+
+
+def value(value, **kwargs):
+    """Specify a value for use in an encoding"""
+    return dict(value=value, **kwargs)
+
+
+def parameter(name=None, select=None, **kwds):
     """Create a named parameter.
 
     Parameters
@@ -201,118 +260,87 @@ def parameter(name=None, **kwds):
 
     parameter = Parameter(name)
 
-    if "select" in kwds:
-        parameter.param_type = "selection"
-        pass
-    else:
+    if select is None:
         parameter.param = core.VariableParameter(name=parameter.name, **kwds)
         parameter.param_type = "variable"
+    else:
+        parameter.param = core.SelectionParameter(
+            name=parameter.name, select=select, **kwds
+        )
+        parameter.param_type = "selection"
 
     return parameter
 
 
-# -------------------------------------------------------------------------
-# Tools for working with selections
-class Selection(object):
-    """A Selection object"""
-
-    _counter = 0
-
-    @classmethod
-    def _get_name(cls):
-        cls._counter += 1
-        return "selector{:03d}".format(cls._counter)
-
-    def __init__(self, name, selection):
-        if name is None:
-            name = self._get_name()
-        self.name = name
-        self.selection = selection
-
-    def __repr__(self):
-        return "Selection({0!r}, {1})".format(self.name, self.selection)
-
-    def ref(self):
-        return self.to_dict()
-
-    def to_dict(self):
-        return {
-            "selection": self.name.to_dict()
-            if hasattr(self.name, "to_dict")
-            else self.name
-        }
-
-    def __invert__(self):
-        return Selection(core.SelectionNot(**{"not": self.name}), self.selection)
-
-    def __and__(self, other):
-        if isinstance(other, Selection):
-            other = other.name
-        return Selection(
-            core.SelectionAnd(**{"and": [self.name, other]}), self.selection
-        )
-
-    def __or__(self, other):
-        if isinstance(other, Selection):
-            other = other.name
-        return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
-
-    def __getattr__(self, field_name):
-        if field_name.startswith("__") and field_name.endswith("__"):
-            raise AttributeError(field_name)
-        return expr.core.GetAttrExpression(self.name, field_name)
-
-    def __getitem__(self, field_name):
-        return expr.core.GetItemExpression(self.name, field_name)
-
-
-# ------------------------------------------------------------------------
-# Top-Level Functions
-
-
-def value(value, **kwargs):
-    """Specify a value for use in an encoding"""
-    return dict(value=value, **kwargs)
-
-#TODO: Update the docstring
-def selection(name=None, type=Undefined, **kwds):
-    """Create a named selection.
+# TODO: Update the docstring
+def selection(type=Undefined, **kwds):
+    """Create a selection.
 
     Parameters
     ----------
-    name : string (optional)
-        The name of the selection. If not specified, a unique name will be
-        created.
     type : string
-        The type of the selection: one of ["interval", "single", or "multi"]
+        The type of the selection: either "interval" or "point"]
     **kwds :
-        additional keywords will be used to construct a SelectionDef instance
-        that controls the selection.
+        additional keywords to control the selection.
 
     Returns
     -------
-    selection: Selection
-        The selection object that can be used in chart creation.
+    Parameter
+        The Parameter object that can be used in chart creation.
     """
-    return Selection(name, core.SelectionDef(type=type, **kwds))
+
+    # We separate out the parameter keywords from the selection keywords
+    param_kwds = {}
+
+    for kwd in {"name", "value", "bind"}:
+        if kwd in kwds:
+            param_kwds[kwd] = kwds.pop(kwd)
+
+    if type == "interval":
+        select = core.IntervalSelectionConfig(type=type, **kwds)
+    elif type == "point":
+        select = core.PointSelectionConfig(type=type, **kwds)
+    elif type in ["single", "multi"]:
+        select = core.PointSelectionConfig(type="point", **kwds)
+        warnings.warn(
+            """The types 'single' and 'multi' are now
+        combined and should be specified using "type='point'".""",
+            DeprecationWarning,
+        )
+    else:
+        raise ValueError("""'type' must be 'point' or 'interval'""")
+
+    return parameter(select=select, **param_kwds)
 
 
 @utils.use_signature(core.IntervalSelectionConfig)
 def selection_interval(**kwargs):
-    """Create a selection with type='interval'"""
+    """Create a selection parameter with type='interval'"""
     return selection(type="interval", **kwargs)
 
 
 @utils.use_signature(core.PointSelectionConfig)
+def selection_point(**kwargs):
+    """Create a selection with type='point'"""
+    return selection(type="point", **kwargs)
+
+
+@utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
-    """Create a selection with type='multi'"""
-    return selection(type="multi", **kwargs)
+    warnings.warn(
+        """'selection_multi' is deprecated.  Use 'selection_point'""",
+        DeprecationWarning,
+    )
+    return selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
-    """Create a selection with type='single'"""
-    return selection(type="single", **kwargs)
+    warnings.warn(
+        """'selection_single' is deprecated.  Use 'selection_point'""",
+        DeprecationWarning,
+    )
+    return selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
@@ -345,6 +373,7 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
+# TODO: update the docstring
 def condition(predicate, if_true, if_false, **kwargs):
     """A conditional attribute or encoding
 
@@ -367,10 +396,13 @@ def condition(predicate, if_true, if_false, **kwargs):
     """
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
-    if isinstance(predicate, Selection):
-        condition = {"selection": predicate.name}
-    elif isinstance(predicate, core.SelectionComposition):
-        condition = {"selection": predicate}
+    if isinstance(predicate, Parameter):
+        if predicate.param_type == "selection" or predicate.param.expr is Undefined:
+            condition = {"param": predicate.name}
+            if "empty" in kwargs:
+                condition["empty"] = kwargs.pop("empty")
+        else:
+            condition = {"test": predicate.param.expr}
     elif isinstance(predicate, test_predicates):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
@@ -638,7 +670,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         copy = self.copy(deep=False)
         for key, val in kwargs.items():
-            if key == "selection" and isinstance(val, Selection):
+            if key == "selection" and isinstance(val, Parameter):
+                # TODO: Can this be removed
                 # For backward compatibility with old selection interface.
                 setattr(copy, key, {val.name: val.selection})
             else:
@@ -1161,6 +1194,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
+    # TODO: Update docstring
     def transform_filter(self, filter, **kwargs):
         """
         Add a FilterTransform to the schema.
@@ -1185,10 +1219,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.FilterTransform : underlying transform object
 
         """
-        if isinstance(filter, Selection):
-            filter = {"selection": filter.name}
-        elif isinstance(filter, core.SelectionComposition):
-            filter = {"selection": filter}
+        if isinstance(filter, Parameter):
+            filter = {"param": filter.name}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(self, flatten, as_=Undefined):
