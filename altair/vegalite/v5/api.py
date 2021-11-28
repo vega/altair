@@ -182,7 +182,6 @@ class Parameter(expr.core.OperatorMixin, object):
                 else self.name
             }
 
-    
     def __invert__(self):
         if self.param_type == "selection":
             return core.PredicateComposition({"not": {"param": self.name}})
@@ -287,14 +286,14 @@ def parameter(name=None, select=None, **kwds):
         parameter.empty = kwds.pop("empty")
         if parameter.empty == "none":
             warnings.warn(
-            """The value of 'empty' should be True or False.""",
-            DeprecationWarning,
+                """The value of 'empty' should be True or False.""",
+                DeprecationWarning,
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
-            """The value of 'empty' should be True or False.""",
-            DeprecationWarning,
+                """The value of 'empty' should be True or False.""",
+                DeprecationWarning,
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -306,7 +305,7 @@ def parameter(name=None, select=None, **kwds):
         warnings.warn(
             """Use 'value' instead of 'init'.""",
             DeprecationWarning,
-            )
+        )
         if "value" not in kwds:
             kwds["value"] = kwds.pop("init")
         else:
@@ -454,7 +453,7 @@ def condition(predicate, if_true, if_false, **kwargs):
             condition = {"param": predicate.name}
             if "empty" in kwargs:
                 condition["empty"] = kwargs.pop("empty")
-            elif isinstance(predicate.empty,bool):
+            elif isinstance(predicate.empty, bool):
                 condition["empty"] = predicate.empty
         else:
             condition = {"test": predicate.param.expr}
@@ -1278,7 +1277,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             new_filter = {"param": filter.name}
             if "empty" in kwargs:
                 new_filter["empty"] = kwargs.pop("empty")
-            elif isinstance(filter.empty,bool):
+            elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
