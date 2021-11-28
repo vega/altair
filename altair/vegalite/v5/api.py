@@ -182,11 +182,34 @@ class Parameter(expr.core.OperatorMixin, object):
                 else self.name
             }
 
+    
+    def __invert__(self):
+        if self.param_type == "selection":
+            return core.PredicateComposition({"not": {"param": self.name}})
+        else:
+            return expr.core.OperatorMixin.__invert__(self)
+
+    def __and__(self, other):
+        if self.param_type == "selection":
+            if isinstance(other, Parameter):
+                other = other.name
+            return core.PredicateComposition({"and": [self.name, other]})
+        else:
+            return expr.core.OperatorMixin.__and__(self, other)
+
+    def __or__(self, other):
+        if self.param_type == "selection":
+            if isinstance(other, Parameter):
+                other = other.name
+            return core.PredicateComposition({"or": [self.name, other]})
+        else:
+            return expr.core.OperatorMixin.__or__(self, other)
+
     def __repr__(self):
         return "Parameter({0!r}, {1})".format(self.name, self.param)
 
     def _to_expr(self):
-        if self.param.expr is Undefined:
+        if not hasattr(self.param, "expr") or self.param.expr is Undefined:
             return self.name
         else:
             return self.param.expr
@@ -260,6 +283,36 @@ def parameter(name=None, select=None, **kwds):
 
     parameter = Parameter(name)
 
+    if "empty" in kwds:
+        parameter.empty = kwds.pop("empty")
+        if parameter.empty == "none":
+            warnings.warn(
+            """The value of 'empty' should be True or False.""",
+            DeprecationWarning,
+            )
+            parameter.empty = False
+        elif parameter.empty == "all":
+            warnings.warn(
+            """The value of 'empty' should be True or False.""",
+            DeprecationWarning,
+            )
+            parameter.empty = True
+        elif (parameter.empty is False) or (parameter.empty is True):
+            pass
+        else:
+            raise ValueError("The value of 'empty' should be True or False.")
+
+    if "init" in kwds:
+        warnings.warn(
+            """Use 'value' instead of 'init'.""",
+            DeprecationWarning,
+            )
+        if "value" not in kwds:
+            kwds["value"] = kwds.pop("init")
+        else:
+            # If both 'value' and 'init' are set, we ignore 'init'.
+            kwds.pop("init")
+
     if select is None:
         parameter.param = core.VariableParameter(name=parameter.name, **kwds)
         parameter.param_type = "variable"
@@ -292,7 +345,7 @@ def selection(type=Undefined, **kwds):
     # We separate out the parameter keywords from the selection keywords
     param_kwds = {}
 
-    for kwd in {"name", "value", "bind"}:
+    for kwd in {"name", "value", "bind", "empty", "init"}:
         if kwd in kwds:
             param_kwds[kwd] = kwds.pop(kwd)
 
@@ -401,6 +454,8 @@ def condition(predicate, if_true, if_false, **kwargs):
             condition = {"param": predicate.name}
             if "empty" in kwargs:
                 condition["empty"] = kwargs.pop("empty")
+            elif isinstance(predicate.empty,bool):
+                condition["empty"] = predicate.empty
         else:
             condition = {"test": predicate.param.expr}
     elif isinstance(predicate, test_predicates):
@@ -1220,9 +1275,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         """
         if isinstance(filter, Parameter):
-            filter = {"param": filter.name}
+            new_filter = {"param": filter.name}
             if "empty" in kwargs:
-                filter["empty"] = kwargs.pop("empty")
+                new_filter["empty"] = kwargs.pop("empty")
+            elif isinstance(filter.empty,bool):
+                new_filter["empty"] = filter.empty
+            filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(self, flatten, as_=Undefined):
@@ -2684,7 +2742,7 @@ def _remove_bad_props(chart, subcharts, bad_props):
 
     if not subcharts:
         # No subcharts = nothing to do.
-        return output_dict
+        return output_dict, subcharts
 
     for prop in bad_props:
         if chart[prop] is Undefined:
