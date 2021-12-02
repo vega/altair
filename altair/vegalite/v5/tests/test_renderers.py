@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-import altair.vegalite.v4 as alt
+import altair.vegalite.v5 as alt
 
 
 @pytest.fixture

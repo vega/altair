@@ -191,16 +191,16 @@ class Parameter(expr.core.OperatorMixin, object):
     def __and__(self, other):
         if self.param_type == "selection":
             if isinstance(other, Parameter):
-                other = other.name
-            return core.PredicateComposition({"and": [self.name, other]})
+                other = {"param": other.name}
+            return core.PredicateComposition({"and": [{"param": self.name}, other]})
         else:
             return expr.core.OperatorMixin.__and__(self, other)
 
     def __or__(self, other):
         if self.param_type == "selection":
             if isinstance(other, Parameter):
-                other = other.name
-            return core.PredicateComposition({"or": [self.name, other]})
+                other = {"param": other.name}
+            return core.PredicateComposition({"or": [{"param": self.name}, other]})
         else:
             return expr.core.OperatorMixin.__or__(self, other)
 
@@ -2194,8 +2194,8 @@ class Chart(
         Parameters
         ----------
         name : string
-            The selection name to use for the axes scales. This name should be
-            unique among all selections within the chart.
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
         bind_x : boolean, default True
             If true, then bind the interactive scales to the x-axis
         bind_y : boolean, default True
@@ -2333,8 +2333,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         Parameters
         ----------
         name : string
-            The selection name to use for the axes scales. This name should be
-            unique among all selections within the chart.
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
         bind_x : boolean, default True
             If true, then bind the interactive scales to the x-axis
         bind_y : boolean, default True
@@ -2551,8 +2551,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
 
         # Some properties are not allowed within layer; we'll move to parent.
-        bad_props = ("height", "width", "view")
-        combined_dict, self.layer = _remove_bad_props(self, self.layer, bad_props)
+        layer_props = ("height", "width", "view")
+        combined_dict, self.layer = _remove_layer_props(self, self.layer, layer_props)
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
@@ -2581,8 +2581,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         Parameters
         ----------
         name : string
-            The selection name to use for the axes scales. This name should be
-            unique among all selections within the chart.
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
         bind_x : boolean, default True
             If true, then bind the interactive scales to the x-axis
         bind_y : boolean, default True
@@ -2644,8 +2644,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         Parameters
         ----------
         name : string
-            The selection name to use for the axes scales. This name should be
-            unique among all selections within the chart.
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
         bind_x : boolean, default True
             If true, then bind the interactive scales to the x-axis
         bind_y : boolean, default True
@@ -2730,7 +2730,7 @@ def _combine_subchart_data(data, subcharts):
     return data, subcharts
 
 
-def _remove_bad_props(chart, subcharts, bad_props):
+def _remove_layer_props(chart, subcharts, layer_props):
     def remove_prop(subchart, prop):
         if subchart[prop] is not Undefined:
             subchart = subchart.copy()
@@ -2743,7 +2743,7 @@ def _remove_bad_props(chart, subcharts, bad_props):
         # No subcharts = nothing to do.
         return output_dict, subcharts
 
-    for prop in bad_props:
+    for prop in layer_props:
         if chart[prop] is Undefined:
             # Top level does not have this prop.
             # Check for consistent props within the subcharts.

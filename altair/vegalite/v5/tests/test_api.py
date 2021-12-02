@@ -11,7 +11,7 @@ import jsonschema
 import pytest
 import pandas as pd
 
-import altair.vegalite.v4 as alt
+import altair.vegalite.v5 as alt
 
 try:
     import altair_saver  # noqa: F401

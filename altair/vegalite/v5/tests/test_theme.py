@@ -1,7 +1,7 @@
 import pytest
 
-import altair.vegalite.v4 as alt
-from altair.vegalite.v4.theme import VEGA_THEMES
+import altair.vegalite.v5 as alt
+from altair.vegalite.v5.theme import VEGA_THEMES
 
 
 @pytest.fixture
