@@ -15,7 +15,7 @@ def require_altair_saver():
 @pytest.fixture
 def vegalite_spec():
     return {
-        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "description": "A simple bar chart with embedded data.",
         "data": {
             "values": [
@@ -188,7 +188,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
         format="vega-lite",
         vegalite_version=alt.VEGALITE_VERSION,
     )
-    assert bundle == {"application/vnd.vegalite.v4+json": vegalite_spec}
+    assert bundle == {"application/vnd.vegalite.v5+json": vegalite_spec}
 
 
 def test_spec_to_vega_mimebundle(vega_spec):

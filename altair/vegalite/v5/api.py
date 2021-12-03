@@ -2732,9 +2732,13 @@ def _combine_subchart_data(data, subcharts):
 
 def _remove_layer_props(chart, subcharts, layer_props):
     def remove_prop(subchart, prop):
-        if subchart[prop] is not Undefined:
-            subchart = subchart.copy()
-            subchart[prop] = Undefined
+        # If subchart is a UnitSpec, then subchart["height"] raises a KeyError
+        try:
+            if subchart[prop] is not Undefined:
+                subchart = subchart.copy()
+                subchart[prop] = Undefined
+        except KeyError:
+            pass
         return subchart
 
     output_dict = {}
@@ -2747,7 +2751,15 @@ def _remove_layer_props(chart, subcharts, layer_props):
         if chart[prop] is Undefined:
             # Top level does not have this prop.
             # Check for consistent props within the subcharts.
-            values = [c[prop] for c in subcharts if c[prop] is not Undefined]
+            values = []
+            for c in subcharts:
+                # If c is a UnitSpec, then c["height"] raises a KeyError.
+                try:
+                    val = c[prop]
+                    if val is not Undefined:
+                        values.append(val)
+                except KeyError:
+                    pass
             if len(values) == 0:
                 pass
             elif all(v is values[0] for v in values[1:]):
