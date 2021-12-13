@@ -512,10 +512,6 @@ Here is an example of setting the step width for a discrete scale:
 
 The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``width=alt.Step(100)``
 
-.. note::
-
-   If both ``width`` and ``rangeStep`` are specified, then ``rangeStep`` will be ignored.
-
 
 .. _customization-chart-size:
 
