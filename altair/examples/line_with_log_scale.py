@@ -1,7 +1,7 @@
 """
 Line Chart with Logarithmic Scale
 ---------------------------------
-How to make a line chart on a `<Logarithmic scale> https://en.wikipedia.org/wiki/Logarithmic_scale`_.
+How to make a line chart on a `Logarithmic scale <https://en.wikipedia.org/wiki/Logarithmic_scale>`_.
 """
 # category: line charts
 import altair as alt

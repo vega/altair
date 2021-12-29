@@ -85,6 +85,7 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     """
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
     if (outputDiv.id !== "{{ output_div }}") {
@@ -97,15 +98,21 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
       "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
     };
 
-    function loadScript(lib) {
-      return new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = paths[lib];
-        s.async = true;
-        s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-        document.getElementsByTagName("head")[0].appendChild(s);
-      });
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
     }
 
     function showError(err) {
@@ -121,12 +128,10 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
       require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else if (typeof vegaEmbed === "function") {
-      displayChart(vegaEmbed);
     } else {
-      loadScript("vega")
-        .then(() => loadScript("vega-lite"))
-        .then(() => loadScript("vega-embed"))
+      maybeLoadScript("vega", "{{vega_version}}")
+        .then(() => maybeLoadScript("vega-lite", "{{vegalite_version}}"))
+        .then(() => maybeLoadScript("vega-embed", "{{vegaembed_version}}"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }

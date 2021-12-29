@@ -3,8 +3,8 @@
 Altair Change Log
 =================
 
-Version 4.2.0 (unreleased)
---------------------------
+Version 4.2.0 (released Dec 29, 2021)
+-------------------------------------
 - Update Vega-Lite from version 4.8.1 to version 4.17.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
