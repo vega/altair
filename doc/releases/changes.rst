@@ -3,8 +3,18 @@
 Altair Change Log
 =================
 
-Version 4.2.0 (unreleased)
+Version 4.3.0 (unreleased)
 --------------------------
+
+Enhancements
+~~~~~~~~~~~~
+Bug Fixes
+~~~~~~~~~
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Version 4.2.0 (released Dec 29, 2021)
+-------------------------------------
 - Update Vega-Lite from version 4.8.1 to version 4.17.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
@@ -25,9 +35,6 @@ Bug Fixes
 ~~~~~~~~~
 - Fix ``to_dict()`` for nested selections (#2120).
 - Fix item access for expressions (#2099).
-
-Backward-Incompatible Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Version 4.1.0 (released April 1, 2020)
 --------------------------------------
