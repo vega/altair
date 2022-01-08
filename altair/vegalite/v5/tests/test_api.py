@@ -534,34 +534,34 @@ def test_filter_transform_selection_predicates():
     base = alt.Chart("data.txt").mark_point()
 
     chart = base.transform_filter(selector1)
-    assert chart.to_dict()["transform"] == [{'filter': {'param': 's1'}}]
+    assert chart.to_dict()["transform"] == [{"filter": {"param": "s1"}}]
 
     chart = base.transform_filter(~selector1)
-    assert chart.to_dict()["transform"] == [{'filter': {'not': {'param': 's1'}}}]
+    assert chart.to_dict()["transform"] == [{"filter": {"not": {"param": "s1"}}}]
 
     chart = base.transform_filter(selector1 & selector2)
     assert chart.to_dict()["transform"] == [
-        {'filter': {'and': [{'param': 's1'}, {'param': 's2'}]}}
+        {"filter": {"and": [{"param": "s1"}, {"param": "s2"}]}}
     ]
 
     chart = base.transform_filter(selector1 | selector2)
     assert chart.to_dict()["transform"] == [
-        {'filter': {'or': [{'param': 's1'}, {'param': 's2'}]}}
+        {"filter": {"or": [{"param": "s1"}, {"param": "s2"}]}}
     ]
 
     chart = base.transform_filter(selector1 | ~selector2)
     assert chart.to_dict()["transform"] == [
-        {'filter': {'or': [{'param': 's1'}, {'not': {'param': 's2'}}]}}
+        {"filter": {"or": [{"param": "s1"}, {"not": {"param": "s2"}}]}}
     ]
 
     chart = base.transform_filter(~selector1 | ~selector2)
     assert chart.to_dict()["transform"] == [
-        {'filter': {'or': [{'not': {'param': 's1'}}, {'not': {'param': 's2'}}]}}
+        {"filter": {"or": [{"not": {"param": "s1"}}, {"not": {"param": "s2"}}]}}
     ]
 
     chart = base.transform_filter(~(selector1 & selector2))
     assert chart.to_dict()["transform"] == [
-        {'filter': {'not': {'and': [{'param': 's1'}, {'param': 's2'}]}}}
+        {"filter": {"not": {"and": [{"param": "s1"}, {"param": "s2"}]}}}
     ]
 
 
@@ -599,8 +599,8 @@ def test_add_selection():
         .add_selection(selections[0])
         .add_selection(selections[1], selections[2])
     )
-    expected = {s.name: s.selection for s in selections}
-    assert chart.selection == expected
+    expected = [s.param for s in selections]
+    assert chart.params == expected
 
 
 def test_repeat_add_selections():
