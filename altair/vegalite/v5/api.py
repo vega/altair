@@ -226,6 +226,11 @@ class Parameter(expr.core.OperatorMixin, object):
             return SelectionExpression(_attrexpr)
         return expr.core.GetAttrExpression(self.name, field_name)
 
+    # TODO: Are there any special cases to consider for __getitem__?
+    # This was copied from v4.
+    def __getitem__(self, field_name):
+        return expr.core.GetItemExpression(self.name, field_name)
+
 
 # Enables use of ~, &, | with compositions of selection objects.
 class SelectionPredicateComposition(core.PredicateComposition):
