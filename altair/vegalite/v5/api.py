@@ -184,7 +184,7 @@ class Parameter(expr.core.OperatorMixin, object):
 
     def __invert__(self):
         if self.param_type == "selection":
-            return core.PredicateComposition({"not": {"param": self.name}})
+            return SelectionPredicateComposition({"not": {"param": self.name}})
         else:
             return expr.core.OperatorMixin.__invert__(self)
 
@@ -192,7 +192,7 @@ class Parameter(expr.core.OperatorMixin, object):
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return core.PredicateComposition({"and": [{"param": self.name}, other]})
+            return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
         else:
             return expr.core.OperatorMixin.__and__(self, other)
 
@@ -200,7 +200,7 @@ class Parameter(expr.core.OperatorMixin, object):
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return core.PredicateComposition({"or": [{"param": self.name}, other]})
+            return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
         else:
             return expr.core.OperatorMixin.__or__(self, other)
 
@@ -225,6 +225,18 @@ class Parameter(expr.core.OperatorMixin, object):
         if check_fields_and_encodings(self, field_name):
             return SelectionExpression(_attrexpr)
         return expr.core.GetAttrExpression(self.name, field_name)
+
+
+# Enables use of ~, &, | with compositions of selection objects.
+class SelectionPredicateComposition(core.PredicateComposition):
+    def __invert__(self):
+        return SelectionPredicateComposition({"not": self.to_dict()})
+
+    def __and__(self, other):
+        return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
+
+    def __or__(self, other):
+        return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
 class SelectionExpression(expr.core.OperatorMixin, object):
