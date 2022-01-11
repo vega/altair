@@ -382,29 +382,29 @@ def test_facet_parse_data():
 def test_selection():
     # test instantiation of selections
     interval = alt.selection_interval(name="selec_1")
-    assert interval.selection.type == "interval"
+    assert interval.param.select.type == "interval"
     assert interval.name == "selec_1"
 
     single = alt.selection_single(name="selec_2")
-    assert single.selection.type == "single"
+    assert single.param.select.type == "point"
     assert single.name == "selec_2"
 
     multi = alt.selection_multi(name="selec_3")
-    assert multi.selection.type == "multi"
+    assert multi.param.select.type == "point"
     assert multi.name == "selec_3"
 
     # test adding to chart
     chart = alt.Chart().add_selection(single)
     chart = chart.add_selection(multi, interval)
-    assert set(chart.selection.keys()) == {"selec_1", "selec_2", "selec_3"}
+    assert set(x.name for x in chart.params) == {"selec_1", "selec_2", "selec_3"}
 
     # test logical operations
-    assert isinstance(single & multi, alt.Selection)
-    assert isinstance(single | multi, alt.Selection)
-    assert isinstance(~single, alt.Selection)
-    assert isinstance((single & multi)[0].group, alt.SelectionAnd)
-    assert isinstance((single | multi)[0].group, alt.SelectionOr)
-    assert isinstance((~single)[0].group, alt.SelectionNot)
+    assert isinstance(single & multi, alt.SelectionPredicateComposition)
+    assert isinstance(single | multi, alt.SelectionPredicateComposition)
+    assert isinstance(~single, alt.SelectionPredicateComposition)
+    assert "and" in (single & multi).to_dict().keys()
+    assert "or" in (single | multi).to_dict().keys()
+    assert "not" in (~single).to_dict().keys()
 
     # test that default names increment (regression for #1454)
     sel1 = alt.selection_single()
@@ -478,7 +478,7 @@ def test_transforms():
     assert chart.transform == [alt.LookupTransform(**kwds)]
 
     # lookup transform (selection)
-    lookup_selection = alt.LookupSelection(key="key", selection="sel")
+    lookup_selection = alt.LookupSelection(key="key", param="sel")
     chart = alt.Chart().transform_lookup(
         "a", from_=lookup_selection, as_="a", default="b"
     )
