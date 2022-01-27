@@ -37,6 +37,7 @@ The directives have the following options::
         :alt: text  # Alternate text when plot cannot be rendered
         :links: editor source export  # specify one or more of these options
         :chart-var-name: chart  # name of variable in namespace containing output
+        :strict: # if set, then code with errors will raise instead of being skipped
 
 
 Additionally, this extension introduces a global configuration
@@ -142,6 +143,7 @@ class AltairPlotDirective(Directive):
         "alt": unchanged,
         "links": validate_links,
         "chart-var-name": unchanged,
+        "strict": flag,
     }
 
     def run(self):
@@ -150,6 +152,7 @@ class AltairPlotDirective(Directive):
 
         show_code = "hide-code" not in self.options
         code_below = "code-below" in self.options
+        strict = "strict" in self.options
 
         if not hasattr(env, "_altair_namespaces"):
             env._altair_namespaces = {}
@@ -191,6 +194,7 @@ class AltairPlotDirective(Directive):
         )
         plot_node["output"] = self.options.get("output", "plot")
         plot_node["chart-var-name"] = self.options.get("chart-var-name", None)
+        plot_node["strict"] = strict
 
         if "alt" in self.options:
             plot_node["alt"] = self.options["alt"]
@@ -216,13 +220,16 @@ def html_visit_altair_plot(self, node):
             chart = eval_block(node["code"], namespace)
         stdout = f.getvalue()
     except Exception as e:
-        warnings.warn(
+        message = (
             "altair-plot: {}:{} Code Execution failed:"
-            "{}: {}".format(
-                node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
-            )
-        )
-        raise nodes.SkipNode
+                "{}: {}".format(
+                    node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
+                ))
+        if node["strict"]:
+            raise ValueError(message)
+        else:
+            warnings.warn(message)
+            raise nodes.SkipNode
 
     chart_name = node["chart-var-name"]
     if chart_name is not None:
