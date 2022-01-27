@@ -220,11 +220,9 @@ def html_visit_altair_plot(self, node):
             chart = eval_block(node["code"], namespace)
         stdout = f.getvalue()
     except Exception as e:
-        message = (
-            "altair-plot: {}:{} Code Execution failed:"
-                "{}: {}".format(
-                    node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
-                ))
+        message = "altair-plot: {}:{} Code Execution failed:" "{}: {}".format(
+            node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
+        )
         if node["strict"]:
             raise ValueError(message)
         else:
