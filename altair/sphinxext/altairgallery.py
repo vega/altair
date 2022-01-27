@@ -102,6 +102,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 .. altair-plot::
     {% if code_below %}:code-below:{% endif %}
+    {% if strict %}:strict:{% endif %}
 
     {{ code | indent(4) }}
 
@@ -253,7 +254,7 @@ def main(app):
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
-    examples = populate_examples(gallery_ref=gallery_ref, code_below=True)
+    examples = populate_examples(gallery_ref=gallery_ref, code_below=True, strict=False)
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
