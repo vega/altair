@@ -224,7 +224,7 @@ def html_visit_altair_plot(self, node):
             node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
         )
         if node["strict"]:
-            raise ValueError(message)
+            raise ValueError(message) from e
         else:
             warnings.warn(message)
             raise nodes.SkipNode
