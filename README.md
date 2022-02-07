@@ -13,7 +13,7 @@
 **Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
-simplicity produces beautiful and effective visualizations with a minimal amount of code. *Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+simplicity produces beautiful and effective visualizations with a minimal amount of code. *Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
 Interactive Data Lab](https://idl.cs.washington.edu/).*
 

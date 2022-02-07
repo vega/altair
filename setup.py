@@ -61,7 +61,7 @@ setup(
     description="Altair: A declarative statistical visualization library for Python.",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    author="Brian E. Granger / Jake VanderPlas",
+    author="Altair Developers",
     author_email="jakevdp@gmail.com",
     url="http://altair-viz.github.io",
     download_url="http://github.com/altair-viz/altair/",
