@@ -2229,7 +2229,7 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_selection(
+        return self.add_parameter(
             selection_interval(bind="scales", encodings=encodings)
         )
 
@@ -2369,23 +2369,18 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or self.spec is Undefined:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.spec = copy.spec.add_parameter(*params)
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections or self.spec is Undefined:
-            return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_selection(*selections)
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def repeat(repeater="repeat"):
@@ -2434,23 +2429,18 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.concat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.concat = [chart.add_parameter(*params) for chart in copy.concat]
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.concat:
-            return self
-        copy = self.copy()
-        copy.concat = [chart.add_selection(*selections) for chart in copy.concat]
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def concat(*charts, **kwargs):
@@ -2482,23 +2472,18 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.hconcat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.hconcat = [chart.add_parameter(*params) for chart in copy.hconcat]
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.hconcat:
-            return self
-        copy = self.copy()
-        copy.hconcat = [chart.add_selection(*selections) for chart in copy.hconcat]
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def hconcat(*charts, **kwargs):
@@ -2530,23 +2515,18 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.vconcat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.vconcat = [chart.add_parameter(*params) for chart in copy.vconcat]
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.vconcat:
-            return self
-        copy = self.copy()
-        copy.vconcat = [chart.add_selection(*selections) for chart in copy.vconcat]
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def vconcat(*charts, **kwargs):
@@ -2623,23 +2603,18 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.layer:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.layer[0] = copy.layer[0].add_parameter(*params)
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to all subcharts."""
-        if not selections or not self.layer:
-            return self
-        copy = self.copy()
-        copy.layer[0] = copy.layer[0].add_selection(*selections)
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def layer(*charts, **kwargs):
@@ -2680,23 +2655,18 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
     def add_parameter(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or self.spec is Undefined:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.spec = copy.spec.add_parameter(*params)
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections or self.spec is Undefined:
-            return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_selection(*selections)
-        return copy
+        warnings.warn(
+            """'add_selection' is deprecated.  Use 'add_parameter'""",
+            DeprecationWarning,
+        )
+        return self.add_parameter(*selections)
 
 
 def topo_feature(url, feature, **kwargs):
