@@ -15,10 +15,10 @@ This transform supports parametric models for the following functional forms:
 
 - linear (``linear``): *y = a + b * x*
 - logarithmic (``log``): *y = a + b * log(x)*
-- exponential (``exp``): *y = a + eb * x*
-- power (``pow``): *y = a * xb*
-- quadratic (``quad``): *y = a + b * x + c * x2*
-- polynomial (``poly``): *y = a + b * x + … + k * xorder*
+- exponential (``exp``): * y = a * e^(b * x)*
+- power (``pow``): *y = a * x^b*
+- quadratic (``quad``): *y = a + b * x + c * x^2*
+- polynomial (``poly``): *y = a + b * x + … + k * x^(order)*
 
 All models are fit using ordinary least squares.
 For non-parametric locally weighted regression, see the
