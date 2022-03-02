@@ -31,7 +31,7 @@ We can create a variable parameter with a default value of 0.1 as follows:
 
     op_var = alt.parameter(value=0.1)
 
-In order to use this variable in the chart specification, we explicitly add it to the chart using the :func:`add_parameter` function, and we can then reference the variable within the chart specification.  Here we set the opacity using ``op_var``.
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :func:`Chart.add_parameter` method, and we can then reference the variable within the chart specification.  Here we set the opacity using ``op_var``.
 
 .. altair-plot::
 
@@ -67,7 +67,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we `bind` the parameter to a slider widget.
+The benefit of using :func:`alt.parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we `bind` the parameter to a slider widget.
 
 .. altair-plot::
 
@@ -87,9 +87,9 @@ The benefit of using :func:`parameter` doesn't become apparent until we incorpor
         op_var
     )
 
-Notice that the effects on the chart are produced entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart that no longer needs a running Python environment.
+Now we can dynamically change the opacity of the points in our chart, using the slider.  A noteworthy aspect of this chart is that these effects are controlled entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart, and that interactivity no longer requires a running Python environment.
 
-The above example shows some of the common components used to produce interactivity in Altair:
+The above example includes some of the common aspects of interactive charts produced in Altair:
 
 - Creating a variable parameter using ``alt.parameter``.
 - Attaching the parameter to a chart using ``add_parameter``.
@@ -98,8 +98,8 @@ The above example shows some of the common components used to produce interactiv
 Some further aspects that we will see below include:
 
 - Creating a *selection* parameter.
-- Using a parameter within a `condition`.
-- Using a parameter within a `transform_filter`.
+- Using a parameter within a ``condition``.
+- Using a parameter within a ``transform_filter``.
 
 Using selection parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -59,13 +59,11 @@ Encoding Channels
    Latitude2Datum
    Latitude2Value
    LatitudeDatum
-   LatitudeValue
    Longitude
    Longitude2
    Longitude2Datum
    Longitude2Value
    LongitudeDatum
-   LongitudeValue
    Opacity
    OpacityDatum
    OpacityValue
@@ -244,16 +242,6 @@ Low-Level Schema Wrappers
    ConditionalPredicateValueDefnumbernullExprRef
    ConditionalPredicateValueDefstringExprRef
    ConditionalPredicateValueDefstringnullExprRef
-   ConditionalSelectionMarkPropFieldOrDatumDef
-   ConditionalSelectionMarkPropFieldOrDatumDefTypeForShape
-   ConditionalSelectionStringFieldDef
-   ConditionalSelectionValueDefGradientstringnullExprRef
-   ConditionalSelectionValueDefTextExprRef
-   ConditionalSelectionValueDefnumber
-   ConditionalSelectionValueDefnumberArrayExprRef
-   ConditionalSelectionValueDefnumberExprRef
-   ConditionalSelectionValueDefstringExprRef
-   ConditionalSelectionValueDefstringnullExprRef
    ConditionalStringFieldDef
    ConditionalValueDefGradientstringnullExprRef
    ConditionalValueDefTextExprRef
@@ -278,14 +266,12 @@ Low-Level Schema Wrappers
    DictInlineDataset
    DictSelectionInit
    DictSelectionInitInterval
-   Dictunknown
    Diverging
    DomainUnionWith
    DsvDataFormat
    Element
    Encoding
    EncodingSortField
-   EncodingSortFieldFieldName
    ErrorBand
    ErrorBandConfig
    ErrorBandDef
@@ -296,13 +282,10 @@ Low-Level Schema Wrappers
    EventStream
    EventType
    Expr
-   ExprOrSignalRef
    ExprRef
    FacetEncodingFieldDef
    FacetFieldDef
-   FacetFieldDefFieldName
    FacetMapping
-   FacetMappingFieldName
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
@@ -351,9 +334,7 @@ Low-Level Schema Wrappers
    ImputeTransform
    InlineData
    InlineDataset
-   InputBinding
    Interpolate
-   IntervalSelection
    IntervalSelectionConfig
    JoinAggregateFieldDef
    JoinAggregateTransform
@@ -384,7 +365,6 @@ Low-Level Schema Wrappers
    LookupTransform
    Mark
    MarkConfig
-   MarkConfigExprOrSignalRef
    MarkDef
    MarkPropDefGradientstringnull
    MarkPropDefnumber
@@ -393,20 +373,12 @@ Low-Level Schema Wrappers
    MarkType
    MergedStream
    Month
-   MultiSelection
-   MultiSelectionConfig
    MultiTimeUnit
    NamedData
    NonArgAggregateOp
    NonLayerRepeatSpec
-   NormalizedConcatSpecGenericSpec
-   NormalizedFacetSpec
-   NormalizedHConcatSpecGenericSpec
-   NormalizedSpec
-   NormalizedVConcatSpecGenericSpec
    NumericArrayMarkPropDef
    NumericMarkPropDef
-   NumericValueDef
    OrderFieldDef
    OrderValueDef
    Orient
@@ -462,18 +434,11 @@ Low-Level Schema Wrappers
    SchemaBase
    SchemeParams
    SecondaryFieldDef
-   SelectionAnd
-   SelectionComposition
    SelectionConfig
-   SelectionDef
-   SelectionExtent
    SelectionInit
    SelectionInitInterval
    SelectionInitIntervalMapping
    SelectionInitMapping
-   SelectionNot
-   SelectionOr
-   SelectionPredicate
    SelectionResolution
    SequenceGenerator
    SequenceParams
@@ -482,8 +447,6 @@ Low-Level Schema Wrappers
    ShapeDef
    SharedEncoding
    SingleDefUnitChannel
-   SingleSelection
-   SingleSelectionConfig
    SingleTimeUnit
    Sort
    SortArray
@@ -525,9 +488,6 @@ Low-Level Schema Wrappers
    TooltipContent
    TopLevelFacetSpec
    TopLevelLayerSpec
-   TopLevelNormalizedConcatSpecGenericSpec
-   TopLevelNormalizedHConcatSpecGenericSpec
-   TopLevelNormalizedVConcatSpecGenericSpec
    TopLevelRepeatSpec
    TopLevelSpec
    TopLevelUnitSpec
@@ -550,7 +510,6 @@ Low-Level Schema Wrappers
    ValueDefWithConditionMarkPropFieldOrDatumDefstringnull
    ValueDefWithConditionStringFieldDefText
    ValueDefnumber
-   ValueDefnumberExprRef
    ValueDefnumberwidthheightExprRef
    Vector2DateTime
    Vector2Vector2number
