@@ -7,6 +7,12 @@ Parameters: Variables and Selections
 
 Interactivity in Altair is built around *parameters*, of which there are two types: variables and selections.  We introduce these concepts through a series examples.
 
+.. note::
+
+   This material was changed considerably with the release of Altair 5.  In particular, Altair 4 had selections but not variables, and the term ``parameter`` first appeared in Altair 5.
+
+.. _basic variable:
+
 Basic Example: Using a variable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -25,13 +31,14 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
         color='Origin:N'
     )
 
-We can create a variable parameter with a default value of 0.1 as follows:
+We can create a variable parameter using :func:`parameter`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
 
 .. altair-plot::
+    :output: none
 
     op_var = alt.parameter(value=0.1)
 
-In order to use this variable in the chart specification, we explicitly add it to the chart using the :func:`Chart.add_parameter` method, and we can then reference the variable within the chart specification.  Here we set the opacity using ``op_var``.
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`Chart.add_parameter` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
 
 .. altair-plot::
 
@@ -50,7 +57,7 @@ In order to use this variable in the chart specification, we explicitly add it t
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.parameter` and :func:`add_parameter`.
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.parameter` and ``add_parameter``.
 
 .. altair-plot::
 
@@ -67,7 +74,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`alt.parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we `bind` the parameter to a slider widget.
+The benefit of using :func:`alt.parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
 
 .. altair-plot::
 
@@ -87,24 +94,24 @@ The benefit of using :func:`alt.parameter` doesn't become apparent until we inco
         op_var
     )
 
-Now we can dynamically change the opacity of the points in our chart, using the slider.  A noteworthy aspect of this chart is that these effects are controlled entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart, and that interactivity no longer requires a running Python environment.
+Now we can dynamically change the opacity of the points in our chart using the slider.  A noteworthy aspect of this chart is that these effects are controlled entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart, and that interactivity no longer requires a running Python environment.
 
-The above example includes some of the common aspects of interactive charts produced in Altair:
+The above example includes some aspects which occur frequently when creating interactive charts in Altair:
 
-- Creating a variable parameter using ``alt.parameter``.
-- Attaching the parameter to a chart using ``add_parameter``.
-- Binding the parameter to an input widget using ``bind``.  (In the above example, the input widget is a slider widget.)
+- Creating a variable parameter using :func:`parameter`.
+- Attaching the parameter to a chart using the :meth:`Chart.add_parameter` method.
+- Binding the parameter to an input widget using the parameter's ``bind`` property.  (In the above example, the input widget is a slider widget.)
 
 Some further aspects that we will see below include:
 
 - Creating a *selection* parameter.
-- Using a parameter within a ``condition``.
-- Using a parameter within a ``transform_filter``.
+- Using a parameter within a :func:`condition`.
+- Using a parameter within a :meth:`Chart.transform_filter`.
 
 Using selection parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The basic syntax for adding a selection parameter to a chart is similar to the syntax for a variable parameter.  Instead of creating the parameter using ``alt.parameter``, we will typically use ``alt.selection_interval`` or ``alt.selection_point``.
+The basic syntax for adding a selection parameter to a chart is similar to the syntax for a variable parameter.  Instead of creating the parameter using ``alt.parameter``, we will typically use ``alt.selection_interval`` or ``alt.selection_point``.  Here is a basic example, again using the ``cars`` dataset:
 
 .. altair-plot::
 
@@ -123,7 +130,12 @@ The basic syntax for adding a selection parameter to a chart is similar to the s
         brush
     )
 
-If you click and drag on the above chart, you will see that the corresponding region gets highlighted.  We have done two things so far: created a selection parameter using ``brush = alt.selection_interval()``, and attached that parameter to the chart, using ``add_parameter``.
+    
+If you click and drag on the above chart, you will see that the corresponding region gets highlighted.
+
+So far this example is very similar to what we did in the :ref:`variable example <basic variable>`.  Here we have done two things: we created a selection parameter using ``brush = alt.selection_interval()``, and we attached that parameter to the chart using ``add_parameter``.
+
+The line ``brush = alt.selection_interval()`` is equivalent to ``brush = alt.parameter(select="interval")``; we will typically use the ``selection_interval`` version, because it is shorter and because it matches the syntax that was used in Altair 4.
 
 Typically selection parameters will be used in conjunction with ``condition`` or with ``transform_filter``.  Here are some possibilities.
 
@@ -188,29 +200,20 @@ Some possible use cases for the above interactivity are not currently supported 
 2.  It is not possible to use an encoding such as ``y=column_variable`` to then dynamically display different charts based on different column choices.  Similar functionality could be created using for example ``ipywidgets``, but the resulting interactivity would be controlled by Python, and would not work for example as a stand-alone web page.  The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_.  A first approximation of a workaround is given in the following example.
 
 .. altair-plot::
+    import pandas as pd
     import altair as alt
-    from vega_datasets import data
 
-    iris = data.iris()
-    iris_long = iris.melt(id_vars=['sepalLength','species'],var_name='column')
+    df = pd.DataFrame({'col0':range(4), 'col1':list('ABAA'), 'col2':list('CDDC')})
+    df_long = df.melt(id_vars=['col0'], var_name='column')
 
-    col_dropdown = alt.binding_select(options=list(set(iris_long['column'])))
-    col_select = alt.parameter(bind=col_dropdown, name="Column", value='sepalWidth')
+    col_dropdown = alt.binding_select(options=df_long['column'].unique())
+    col_param = alt.parameter(bind=col_dropdown, name="ColumnParam", value='col1')
 
-    c = alt.Chart(iris_long).mark_circle().encode(
-        x = alt.X("sepalLength:Q", scale=alt.Scale(zero=False)),
-        y = alt.Y("value:Q",scale=alt.Scale(domain=[0,8]), title=None),
-        color = "species:N",
+    alt.Chart(df_long).mark_bar().encode(
+        x = "value:N",
+        y = "count()",
     ).transform_filter(
-        "datum.column == Column"
-    )
-
-    label = alt.Chart(iris_long).mark_text().encode(
-        x = alt.value(60),
-        y = alt.value(20),
-        text = alt.value("y-axis = " + col_select)
-    )
-
-    (c+label).add_parameter(
-        col_select
+        "datum.column == ColumnParam"
+    ).add_parameter(
+        col_param
     )

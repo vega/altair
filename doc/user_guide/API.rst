@@ -146,6 +146,7 @@ API Functions
    graticule
    hconcat
    layer
+   parameter
    repeat
    selection
    selection_interval
