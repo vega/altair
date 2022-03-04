@@ -57,6 +57,8 @@ xError      :class:`XError`      The x-axis error value             N/A
 yError      :class:`YError`      The y-axis error value             N/A
 xError2     :class:`XError2`     The second x-axis error value      N/A
 yError2     :class:`YError2`     The second y-axis error value      N/A
+xOffset     :class:`XOffset`     Offset to the x position           :ref:`gallery_grouped_bar_chart2`
+yOffset     :class:`YOffset`     Offset to the y position           :ref:`gallery_jitter_chart`
 theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
 theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
 ==========  ===================  =================================  ===================================
