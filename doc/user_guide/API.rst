@@ -116,6 +116,9 @@ Encoding Channels
    XError2
    XError2Value
    XErrorValue
+   XOffset
+   XOffsetDatum
+   XOffsetValue
    XValue
    Y
    Y2
@@ -126,6 +129,9 @@ Encoding Channels
    YError2
    YError2Value
    YErrorValue
+   YOffset
+   YOffsetDatum
+   YOffsetValue
    YValue
 
 API Functions
@@ -190,6 +196,8 @@ Low-Level Schema Wrappers
    BinParams
    BinTransform
    BindCheckbox
+   BindDirect
+   BindInput
    BindRadioSelect
    BindRange
    Binding
@@ -226,6 +234,16 @@ Low-Level Schema Wrappers
    ConditionalAxisString
    ConditionalMarkPropFieldOrDatumDef
    ConditionalMarkPropFieldOrDatumDefTypeForShape
+   ConditionalParameterMarkPropFieldOrDatumDef
+   ConditionalParameterMarkPropFieldOrDatumDefTypeForShape
+   ConditionalParameterStringFieldDef
+   ConditionalParameterValueDefGradientstringnullExprRef
+   ConditionalParameterValueDefTextExprRef
+   ConditionalParameterValueDefnumber
+   ConditionalParameterValueDefnumberArrayExprRef
+   ConditionalParameterValueDefnumberExprRef
+   ConditionalParameterValueDefstringExprRef
+   ConditionalParameterValueDefstringnullExprRef
    ConditionalPredicateMarkPropFieldOrDatumDef
    ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape
    ConditionalPredicateStringFieldDef
@@ -319,6 +337,7 @@ Low-Level Schema Wrappers
    FontStyle
    FontWeight
    Generator
+   GenericUnitSpecEncodingAnyMark
    GeoJsonFeature
    GeoJsonFeatureCollection
    Gradient
@@ -337,6 +356,7 @@ Low-Level Schema Wrappers
    InlineDataset
    Interpolate
    IntervalSelectionConfig
+   IntervalSelectionConfigWithoutType
    JoinAggregateFieldDef
    JoinAggregateTransform
    JsonDataFormat
@@ -357,6 +377,7 @@ Low-Level Schema Wrappers
    LinearGradient
    LocalMultiTimeUnit
    LocalSingleTimeUnit
+   Locale
    LoessTransform
    LogicalAndPredicate
    LogicalNotPredicate
@@ -378,8 +399,11 @@ Low-Level Schema Wrappers
    NamedData
    NonArgAggregateOp
    NonLayerRepeatSpec
+   NonNormalizedSpec
+   NumberLocale
    NumericArrayMarkPropDef
    NumericMarkPropDef
+   OffsetDef
    OrderFieldDef
    OrderValueDef
    Orient
@@ -387,9 +411,14 @@ Low-Level Schema Wrappers
    OverlayMarkDef
    Padding
    Parameter
+   ParameterExtent
+   ParameterName
+   ParameterPredicate
    Parse
    ParseValue
    PivotTransform
+   PointSelectionConfig
+   PointSelectionConfigWithoutType
    PolarDef
    Position2Def
    PositionDatumDef
@@ -413,6 +442,7 @@ Low-Level Schema Wrappers
    RangeScheme
    RectConfig
    RegressionTransform
+   RelativeBandSize
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -428,6 +458,8 @@ Low-Level Schema Wrappers
    ScaleBinParams
    ScaleBins
    ScaleConfig
+   ScaleDatumDef
+   ScaleFieldDef
    ScaleInterpolateEnum
    ScaleInterpolateParams
    ScaleResolveMap
@@ -440,7 +472,9 @@ Low-Level Schema Wrappers
    SelectionInitInterval
    SelectionInitIntervalMapping
    SelectionInitMapping
+   SelectionParameter
    SelectionResolution
+   SelectionType
    SequenceGenerator
    SequenceParams
    SequentialMultiHue
@@ -462,6 +496,7 @@ Low-Level Schema Wrappers
    StackTransform
    StandardType
    Step
+   StepFor
    Stream
    StringFieldDef
    StringFieldDefWithCondition
@@ -478,6 +513,7 @@ Low-Level Schema Wrappers
    TickCount
    TimeInterval
    TimeIntervalStep
+   TimeLocale
    TimeUnit
    TimeUnitParams
    TimeUnitTransform
@@ -487,11 +523,15 @@ Low-Level Schema Wrappers
    TitleOrient
    TitleParams
    TooltipContent
+   TopLevelConcatSpec
    TopLevelFacetSpec
+   TopLevelHConcatSpec
    TopLevelLayerSpec
    TopLevelRepeatSpec
+   TopLevelSelectionParameter
    TopLevelSpec
    TopLevelUnitSpec
+   TopLevelVConcatSpec
    TopoDataFormat
    Transform
    Type
@@ -512,12 +552,16 @@ Low-Level Schema Wrappers
    ValueDefWithConditionStringFieldDefText
    ValueDefnumber
    ValueDefnumberwidthheightExprRef
+   VariableParameter
+   Vector10string
+   Vector12string
    Vector2DateTime
    Vector2Vector2number
    Vector2boolean
    Vector2number
    Vector2string
    Vector3number
+   Vector7string
    VegaLiteSchema
    ViewBackground
    ViewConfig
