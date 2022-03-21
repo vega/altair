@@ -73,7 +73,7 @@ author = "Brian Granger and Jake VanderPlas"
 # built documents.
 #
 # The short X.Y version.
-version = "4.3.0.dev0"
+version = "5.0.0"
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -127,7 +127,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
