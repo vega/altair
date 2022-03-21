@@ -38,6 +38,7 @@ extensions = [
     "altair.sphinxext.altairplot",
     "altair.sphinxext.altairgallery",
     "altair.sphinxext.schematable",
+    "sphinxext.rediraffe",
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}
@@ -170,6 +171,9 @@ html_sidebars = {
     "gallery/index": ["sidebar-logo", "search-field", "sidebar-ethical-ads"]
 }
 
+rediraffe_redirects = {
+    'case_studies/exploring-weather.rst': 'user_guide/case_studies/exploring-weather.rst'
+}
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
 # and
 # https://github.com/rtfd/sphinx_rtd_theme/issues/117
