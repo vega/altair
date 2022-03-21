@@ -24,3 +24,42 @@ table.docutils td li {
   line-height: 18px;
 
 }
+
+/* Everything below this comment is for the pydata sphinx theme*/
+
+/* Blue topbar */
+.navbar-light {
+    background-color: #16A7F0 !important;
+}
+/* White text in topbar */
+.navbar-light a {
+    color: #fff !important;
+}
+/* White bold project title in topbar */
+.navbar-light p.title {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin-left: 180%;
+}
+
+/* Version number in the same darkblue color as other text */
+div.navbar-brand-box p#site-version.site-version {
+    color: #130654 !important;
+}
+/* The box that contains the logo and the version number */
+div.navbar-brand-box a {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: column !important;
+}
+/* The logo */
+div.navbar-brand-box img {
+    display: block !important;
+    height: auto !important;
+    width: auto !important;
+    max-height: 18vh !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    margin-top: -40px !important;
+}

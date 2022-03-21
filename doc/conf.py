@@ -159,6 +159,17 @@ html_favicon = "_static/favicon.ico"
 html_static_path = ["_static", "_images"]
 
 
+html_theme_options = {
+"navbar_start": ["navbar-project"],
+"navbar_center": ["navbar-nav"],
+"navbar_end": ["navbar-icon-links"],
+}
+
+html_sidebars = {
+    "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
+    "gallery/index": ["sidebar-logo", "search-field", "sidebar-ethical-ads"]
+}
+
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
 # and
 # https://github.com/rtfd/sphinx_rtd_theme/issues/117
