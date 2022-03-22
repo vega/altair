@@ -34,7 +34,7 @@ it can be helpful to also browse the `Vega-Lite documentation <https://vega.gith
    Getting Started <getting_started/overview>
    User Guide <user_guide/data>
    Examples <gallery/index>
-   API <user_guide/API>
+   Reference <user_guide/API>
    user_guide/ecosystem
    releases/changes
    Help <user_guide/getting_help>
