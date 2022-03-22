@@ -9,8 +9,7 @@ Altair: Declarative Visualization in Python
    :size: 15
 
 Altair is a declarative statistical visualization library for Python, based on
-Vega_ and Vega-Lite_, and the source is available on
-`GitHub <http://github.com/altair-viz/altair>`_.
+Vega_ and Vega-Lite_.
 
 With Altair, you can spend more time understanding your data and its meaning.
 Altair's API is simple, friendly and consistent and built on top of the
@@ -19,9 +18,14 @@ beautiful and effective visualizations with a minimal amount of code.
 
 Altair is BSD-licensed and the source is available on `GitHub`_,
 where you can also report `bugs and feature requests`_.
-For general questions, please use `StackOverflow`_.
+For general questions, please ask on `StackOverflow`_
+using the `altair` tag.
 
-You can browse this documentation via the link in the top navigation panel or by viewing the full site :ref:`genindex`.
+You can browse this documentation
+via the links in the top navigation panel
+or by viewing the full site :ref:`genindex`.
+In addition to reading this documentation page,
+it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
 .. toctree::
    :maxdepth: 1
@@ -29,10 +33,11 @@ You can browse this documentation via the link in the top navigation panel or by
 
    Getting Started <getting_started/overview>
    User Guide <user_guide/data>
-   gallery/index
-   user_guide/API
+   Examples <gallery/index>
+   API <user_guide/API>
    user_guide/ecosystem
    releases/changes
+   Help <user_guide/getting_help>
 
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues

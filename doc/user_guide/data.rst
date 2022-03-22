@@ -448,9 +448,10 @@ data before usage in Altair using GeoPandas for example as such:
    configuration
    compound_charts
    scale_resolve
-   saving_charts
-   customization
    times_and_dates
+   customization
+   configuration
+   saving_charts
 
 
 .. toctree::
@@ -463,20 +464,3 @@ data before usage in Altair using GeoPandas for example as such:
    display_frontends
    custom_renderers
    data_transformers
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Case Studies
-   :hidden:
-
-   case_studies/exploring-weather
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Help
-   :hidden:
-
-   faq
-   troubleshooting

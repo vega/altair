@@ -2,8 +2,8 @@
 
 .. _user-guide-interactions:
 
-Bindings, Selections, Conditions: Making Charts Interactive
-===========================================================
+Interactive Charts: Bindings, Selections, Conditions
+====================================================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*. There are three
