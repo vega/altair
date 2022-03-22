@@ -38,7 +38,7 @@ extensions = [
     "altair.sphinxext.altairplot",
     "altair.sphinxext.altairgallery",
     "altair.sphinxext.schematable",
-    "sphinxext.rediraffe",
+    # "sphinxext.rediraffe",
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}
@@ -133,7 +133,11 @@ html_theme = "pydata_sphinx_theme"
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
+html_theme_options = {
+"navbar_start": ["navbar-project"],
+"navbar_center": ["navbar-nav"],
+"navbar_end": ["navbar-icon-links"],
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -159,20 +163,6 @@ html_favicon = "_static/favicon.ico"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static", "_images"]
 
-
-html_theme_options = {
-"navbar_start": ["navbar-project"],
-"navbar_center": ["navbar-nav"],
-"navbar_end": ["navbar-icon-links"],
-}
-
-html_sidebars = {
-    "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
-}
-
-rediraffe_redirects = {
-    'case_studies/exploring-weather.rst': 'user_guide/case_studies/exploring-weather.rst'
-}
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
 # and
 # https://github.com/rtfd/sphinx_rtd_theme/issues/117
@@ -195,7 +185,15 @@ def setup(app):
 # html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-# html_sidebars = {}
+html_sidebars = {
+    "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
+}
+
+# Redirection of old page locations via the rediraffe sphinx-extension
+# It seems like only pages can be redirected, not headings within pages
+# rediraffe_redirects = {
+#     'case_studies/exploring-weather.rst': 'user_guide/case_studies/exploring-weather.rst'
+# }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
