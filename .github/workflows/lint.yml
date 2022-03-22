@@ -15,6 +15,7 @@ jobs:
     - name: Check formatting with black
       run: |
         pip install black
+        black --diff --color .
         black --check .
     - name: Lint with flake8
       run: |
