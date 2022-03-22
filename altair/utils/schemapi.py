@@ -15,6 +15,8 @@ import pandas as pd
 
 from altair import vegalite
 
+
+JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
 # larger specs, but leads to much more useful tracebacks for the user.
@@ -145,14 +147,39 @@ class SchemaValidationError(jsonschema.ValidationError):
             for val in schema_path[:-1]
             if val not in ("properties", "additionalProperties", "patternProperties")
         )
-        return """Invalid specification
+        if hasattr(vegalite, schema_path.split(".")[-1]):
+            vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
+            param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
+            param_names = (
+                "Existing parameter names are: "
+                + str([name for name in param_dict_keys if name != "kwds"])[1:-1]
+            )
+            altair_class = "altair." + schema_path.split(".")[-1]
+            return """Invalid specification
 
-        {}, validating {!r}
+            {}, validating {!r}
 
-        {}
-        """.format(
-            schema_path, self.validator, self.message
-        )
+            {} has no parameter named {!r}
+
+            {}
+
+            See the help for {} to read the full description of these parameters
+            """.format(
+                schema_path,
+                self.validator,
+                altair_class,
+                list(self.instance.keys())[0],
+                textwrap.fill(param_names, subsequent_indent=" " * 12, width=80),
+                altair_class,
+            )
+        # Fall back on the less informative error message
+        else:
+            return """Invalid specification
+            {}, validating {!r}
+            {}
+            """.format(
+                schema_path, self.validator, self.message
+            )
 
 
 class UndefinedType(object):
