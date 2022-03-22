@@ -134,9 +134,9 @@ html_theme = "pydata_sphinx_theme"
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-"navbar_start": ["navbar-project"],
-"navbar_center": ["navbar-nav"],
-"navbar_end": ["navbar-icon-links"],
+    "navbar_start": ["navbar-project"],
+    "navbar_center": ["navbar-nav"],
+    "navbar_end": ["navbar-icon-links"],
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -163,12 +163,14 @@ html_favicon = "_static/favicon.ico"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static", "_images"]
 
+
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
 # and
 # https://github.com/rtfd/sphinx_rtd_theme/issues/117
 def setup(app):
     app.add_css_file("theme_overrides.css")
     app.add_css_file("custom.css")
+
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
