@@ -105,9 +105,6 @@ EXAMPLE_TEMPLATE = jinja2.Template(
     {% if strict %}:strict:{% endif %}
 
     {{ code | indent(4) }}
-
-.. toctree::
-   :hidden:
 """
 )
 
