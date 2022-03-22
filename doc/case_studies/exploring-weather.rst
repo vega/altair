@@ -1,7 +1,7 @@
 .. _exploring-weather:
 
 Exploring Seattle Weather
-=========================
+-------------------------
 
 (This tutorial is adapted from `Vega-Lite's documentation
 <http://vega.github.io/vega-lite/tutorials/explore.html>`_)
@@ -266,3 +266,10 @@ If you want to further customize your charts, you can refer to Altair's
 :ref:`API`.
 
 .. _Pandas: http://pandas.pydata.org/
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   self

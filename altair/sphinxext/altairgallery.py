@@ -67,13 +67,16 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
    <div style='clear:both;'></div>
 
-.. toctree::
-  :hidden:
-{% for example in group %}
-  {{ example.name }}
-{%- endfor %}
-
 {% endfor %}
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples
+   :hidden:
+
+   Gallery <self>
+   Tutorials <../case_studies/exploring-weather>
 """
 )
 

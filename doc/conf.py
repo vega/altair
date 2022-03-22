@@ -168,7 +168,6 @@ html_theme_options = {
 
 html_sidebars = {
     "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
-    "gallery/index": ["sidebar-logo", "search-field", "sidebar-ethical-ads"]
 }
 
 rediraffe_redirects = {
