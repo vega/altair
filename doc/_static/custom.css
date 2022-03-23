@@ -40,7 +40,27 @@ table.docutils td li {
     font-size: 26px !important;
     font-weight: 800 !important;
     color: #fff !important;
-    margin-left: 180%;
+    text-align: center;
+    width: 100%;
+}
+/* There is a small jump in the title positionin when the navbar transitions full */
+/* title to the collapse button. 27% width here makes that jump as discrete as possible */
+div#navbar-start {
+    width: 27%;
+    margin-left: 0px !important;
+}
+/* Adjust the title position for narrow screens, such as mobile phones. */
+/* This also prevents that the collapse button stacks under the title, */
+/* which would cover a bit of the logo. 719px makes the title */
+/* switch to narrow screen layout at the same time as the rest of the page. */
+@media only screen and (max-width: 719px) {
+    div#navbar-start {
+        width: 60%;
+        margin-left: 0px !important;
+    }
+    .navbar-light p.title {
+        text-align: right;
+    }
 }
 
 /* Version number in the same darkblue color as other text */
