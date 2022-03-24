@@ -40,6 +40,7 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/marks
    user_guide/transform/index
    user_guide/interactions
+   user_guide/interactions2
    user_guide/configuration
    user_guide/compound_charts
    user_guide/scale_resolve

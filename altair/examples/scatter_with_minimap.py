@@ -35,11 +35,11 @@ detail = (
     .mark_point()
     .encode(
         x=alt.X(
-            "date:T", scale=alt.Scale(domain={"selection": zoom.name, "encoding": "x"})
+            "date:T", scale=alt.Scale(domain={"param": zoom.name, "encoding": "x"})
         ),
         y=alt.Y(
             "temp_max:Q",
-            scale=alt.Scale(domain={"selection": zoom.name, "encoding": "y"}),
+            scale=alt.Scale(domain={"param": zoom.name, "encoding": "y"}),
         ),
         color="weather",
     )

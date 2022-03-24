@@ -5,13 +5,26 @@ Altair Change Log
 
 Version 4.3.0 (unreleased)
 --------------------------
+- Update Vega-Lite from version 4.17.0 to version 5.2.0;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
+- As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters.  There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters.
+
+Grammar Changes
+~~~~~~~~~~~~~~~
+- ``selection_single`` and ``selection_multi`` are now deprecated; use ``selection_point`` instead.  Similarly, ``type=point`` should be used instead of ``type=single`` and ``type=multi``.
+- ``add_selection`` is deprecated; use ``add_parameter`` instead.
+- The ``selection`` keyword argument must in many cases be replaced by ``param`` (e.g., when specifying a filter transform).
+- The ``empty`` keyword argument for a selection parameter should be specified as ``True`` or ``False`` instead of ``all`` or ``none``, respectively.
+- The ``init`` keyword argument for a parameter is deprecated; use ``value`` instead.
+
 Bug Fixes
 ~~~~~~~~~
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------

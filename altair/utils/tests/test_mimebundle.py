@@ -15,7 +15,7 @@ def require_altair_saver():
 @pytest.fixture
 def vegalite_spec():
     return {
-        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "description": "A simple bar chart with embedded data.",
         "data": {
             "values": [
@@ -98,9 +98,17 @@ def vega_spec():
                 "source": "source_0",
                 "transform": [
                     {
+                        "as": ["b_start", "b_end"],
+                        "field": "b",
+                        "groupby": ["a"],
+                        "offset": "zero",
+                        "sort": {"field": [], "order": []},
+                        "type": "stack",
+                    },
+                    {
                         "expr": 'isValid(datum["b"]) && isFinite(+datum["b"])',
                         "type": "filter",
-                    }
+                    },
                 ],
             },
         ],
@@ -117,8 +125,8 @@ def vega_spec():
                         "fill": {"value": "#4c78a8"},
                         "width": {"band": 1, "scale": "x"},
                         "x": {"field": "a", "scale": "x"},
-                        "y": {"field": "b", "scale": "y"},
-                        "y2": {"scale": "y", "value": 0},
+                        "y": {"field": "b_end", "scale": "y"},
+                        "y2": {"field": "b_start", "scale": "y"},
                     }
                 },
                 "from": {"data": "data_0"},
@@ -138,7 +146,7 @@ def vega_spec():
                 "type": "band",
             },
             {
-                "domain": {"data": "data_0", "field": "b"},
+                "domain": {"data": "data_0", "fields": ["b_start", "b_end"]},
                 "name": "y",
                 "nice": True,
                 "range": [{"signal": "height"}, 0],
@@ -188,7 +196,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
         format="vega-lite",
         vegalite_version=alt.VEGALITE_VERSION,
     )
-    assert bundle == {"application/vnd.vegalite.v4+json": vegalite_spec}
+    assert bundle == {"application/vnd.vegalite.v5+json": vegalite_spec}
 
 
 def test_spec_to_vega_mimebundle(vega_spec):
