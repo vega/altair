@@ -614,10 +614,14 @@ With interval selections, the ``bind`` property can be set to the value of ``"sc
     ).add_parameter(
         selection
     )
-    
 
-Selection Values in Expressions
+
+Parameter Values in Expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Selection Parameters
+^^^^^^^^^^^^^^^^^^^^
+
 Selection values can be accessed directly and used in expressions that affect the
 chart. For example, here we create a slider to choose a cutoff value, and color
 points based on whether they are smaller or larger than the value:
@@ -635,15 +639,16 @@ points based on whether they are smaller or larger than the value:
        'yval': rand.randn(100).cumsum()
    })
 
-   slider = alt.binding_range(min=0, max=100, step=1, name='cutoff:')
+   slider = alt.binding_range(min=0, max=100, step=1, name='Cutoff ')
    selector = alt.selection_point(name="SelectorName", fields=['cutoff'],
                                    bind=slider, value=[{'cutoff': 50}])
- 
+
    alt.Chart(df).mark_point().encode(
        x='xval',
        y='yval',
        color=alt.condition(
            alt.datum.xval < selector.cutoff,
+           # 'datum.xval < SelectorName.cutoff',  # An equivalent alternative
            alt.value('red'), alt.value('blue')
        )
    ).add_parameter(
@@ -653,6 +658,34 @@ points based on whether they are smaller or larger than the value:
 Selector values can be similarly used anywhere that expressions are valid, for
 example, in a :ref:`user-guide-calculate-transform` or a
 :ref:`user-guide-filter-transform`.
+
+Variable Parameters
+^^^^^^^^^^^^^^^^^^^
+
+While it is useful to know
+how to access selection parameter values
+in expression strings,
+the variable parameters introduced in Altair 5
+often provides a more convenient syntax
+for simple interactions like this one
+since they can also be accessed in expression strings:
+
+.. altair-plot::
+
+    slider = alt.binding_range(min=0, max=100, step=1, name='Cutoff ')
+    selector = alt.parameter(name='SelectorName', value=50, bind=slider)
+
+    alt.Chart(df).mark_point().encode(
+       x='xval',
+       y='yval',
+       color=alt.condition(
+           alt.datum.xval < selector,
+           # 'datum.xval < SelectorName',  # An equivalent alternative
+           alt.value('red'), alt.value('blue')
+       )
+    ).add_parameter(
+       selector
+    )
 
 
 Further Examples
