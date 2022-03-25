@@ -56,7 +56,7 @@ $ git switch -c <branch-name>
 With this branch checked-out, make the desired changes to the package.
 
 Note that Altair code uses the [black](https://black.readthedocs.io/)
-and [flake8](https://flake8.pycqa.org/en/latest/) code formatters
+code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter
 which you can apply to your modifications by running:
 ```
 $ black --diff .  # View changes
