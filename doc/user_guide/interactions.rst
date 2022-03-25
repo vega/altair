@@ -60,7 +60,7 @@ property:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color='Origin:N'
-    ).add_selection(
+    ).add_parameter(
         brush
     )
 
@@ -83,7 +83,7 @@ for points outside the selection:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-    ).add_selection(
+    ).add_parameter(
         brush
     )
 
@@ -105,7 +105,7 @@ tied to ``"Miles_per_Gallon"``
     ).properties(
         width=250,
         height=250
-    ).add_selection(
+    ).add_parameter(
         brush
     )
 
@@ -131,14 +131,14 @@ We can modify the brush definition, and leave the rest of the code unchanged:
     ).properties(
         width=250,
         height=250
-    ).add_selection(
+    ).add_parameter(
         brush
     )
 
     chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
 
-Selection Types: Interval, Single, Multi
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Selection Types: Interval and Point
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 With this interesting example under our belt, let's take a more systematic
 look at some of the types of selections available in Altair.
@@ -161,7 +161,7 @@ selection:
         ).properties(
             width=300,
             height=180
-        ).add_selection(
+        ).add_parameter(
             selector
         )
 
@@ -200,7 +200,7 @@ chart scales; this is how Altair plots can be made interactive:
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'
-    ).add_selection(
+    ).add_parameter(
         scales
     )
 
@@ -208,15 +208,15 @@ Because this is such a common pattern, Altair provides the :meth:`Chart.interact
 method which creates such a selection more concisely.
 
 
-Single Selections
-^^^^^^^^^^^^^^^^^
-A *single* selection allows you to select a single chart element at a time using
-mouse actions. By default, points are selected on click:
+Point Selections
+^^^^^^^^^^^^^^^^
+A *point* selection allows you to select chart elements one at a time
+via mouse actions. By default, points are selected on click:
 
 .. altair-plot::
 
-    single = alt.selection_single()
-    make_example(single)
+    point = alt.selection_point()
+    make_example(point)
 
 By changing some arguments, we can select points on mouseover rather than on
 click. We can also set the ``nearest`` flag to ``True`` so that the nearest
@@ -224,32 +224,24 @@ point is highlighted:
 
 .. altair-plot::
 
-    single_nearest = alt.selection_single(on='mouseover', nearest=True)
-    make_example(single_nearest)
+    point_nearest = alt.selection_point(on='mouseover', nearest=True)
+    make_example(point_nearest)
 
-Multiple Selections
-^^^^^^^^^^^^^^^^^^^
-A *multi* selection is similar to a *single* selection, but it allows for
-multiple chart objects to be selected at once.
+Point selections also allow for multiple chart objects to be selected.
 By default, chart elements can be added to and removed from the selection
 by clicking on them while holding the *shift* key:
 
-.. altair-plot::
-
-    multi = alt.selection_multi()
-    make_example(multi)
-
-In addition to the options seen in :func:`selection_single`, the multi selection
-accepts the ``toggle`` parameter, which controls whether points can be removed
-from the selection once they are added.
-
-For example, here is a plot where you can "paint" the chart objects by hovering
-over them with your mouse:
+The point selection accepts the ``toggle`` parameter,
+which controls whether points can be removed from the selection
+once they are added.
+For example,
+here is a plot where you can "paint" the chart objects
+by hovering over them with your mouse:
 
 .. altair-plot::
 
-    multi_mouseover = alt.selection_multi(on='mouseover', toggle=False, empty='none')
-    make_example(multi_mouseover)
+    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty='none')
+    make_example(point_mouseover)
 
 Composing Multiple Selections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -283,7 +275,7 @@ selection.
         x='Cylinders:O',
         y='Origin:O',
         color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
-    ).add_selection(
+    ).add_parameter(
         alex, morgan
     ).properties(
         width=300,
@@ -313,7 +305,7 @@ with a matching ``Origin``.
 
 .. altair-plot::
 
-    selection = alt.selection_multi(fields=['Origin'])
+    selection = alt.selection_point(fields=['Origin'])
     color = alt.condition(selection,
                           alt.Color('Origin:N', legend=None),
                           alt.value('lightgray'))
@@ -328,7 +320,7 @@ with a matching ``Origin``.
     legend = alt.Chart(cars).mark_point().encode(
         y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
         color=color
-    ).add_selection(
+    ).add_parameter(
         selection
     )
 
@@ -346,7 +338,7 @@ cylinders:
 
 .. altair-plot::
    
-    selection = alt.selection_multi(fields=['Origin', 'Cylinders'])
+    selection = alt.selection_point(fields=['Origin', 'Cylinders'])
     color = alt.condition(selection,
                           alt.Color('Origin:N', legend=None),
                           alt.value('lightgray'))
@@ -362,7 +354,7 @@ cylinders:
         y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
         x='Cylinders:O',
         color=color
-    ).add_selection(
+    ).add_parameter(
         selection
     )
 
@@ -375,19 +367,19 @@ Binding: Adding Data Driven Inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the ``bind`` option. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
 
-1. Single selections can be bound directly to an input element, *for example, a radio button.*
+1. Point selections can be bound directly to an input element, *for example, a radio button.*
 2. Interval selections which can be bound to scale, *for example, zooming in on a map.*
 
 Input Element Binding
 ^^^^^^^^^^^^^^^^^^^^^
-With single selections, an input element can be added to the chart to establish a binding between the input and the selection. 
+With point selections, an input element can be added to the chart to establish a binding between the input and the selection.
 
 For instance, using our example from above a dropdown can be used to highlight cars from a specific ``origin`` :
 
 .. altair-plot::
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Country')
-    selection = alt.selection_single(fields=['Origin'], bind=input_dropdown)
+    selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     color = alt.condition(selection,
                         alt.Color('Origin:N', legend=None),
                         alt.value('lightgray'))
@@ -397,7 +389,7 @@ For instance, using our example from above a dropdown can be used to highlight c
         y='Miles_per_Gallon:Q',
         color=color,
         tooltip='Name:N'
-    ).add_selection(
+    ).add_parameter(
         selection
     )
 
@@ -424,14 +416,14 @@ Bindings and input elements can also be used to filter data on the client side. 
 .. altair-plot::
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Country')
-    selection = alt.selection_single(fields=['Origin'], bind=input_dropdown)
+    selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N',
         tooltip='Name:N'
-    ).add_selection(
+    ).add_parameter(
         selection
     ).transform_filter(
         selection
@@ -451,7 +443,7 @@ With interval selections, the ``bind`` property can be set to the value of ``"sc
         y='Miles_per_Gallon:Q',
         color='Origin:N',
         tooltip='Name:N'
-    ).add_selection(
+    ).add_parameter(
         selection
     )
     
@@ -476,8 +468,8 @@ points based on whether they are smaller or larger than the value:
    })
 
    slider = alt.binding_range(min=0, max=100, step=1, name='cutoff:')
-   selector = alt.selection_single(name="SelectorName", fields=['cutoff'],
-                                   bind=slider, init={'cutoff': 50})
+   selector = alt.selection_point(name="SelectorName", fields=['cutoff'],
+                                   bind=slider, value=[{'cutoff': 50}])
  
    alt.Chart(df).mark_point().encode(
        x='xval',
@@ -486,7 +478,7 @@ points based on whether they are smaller or larger than the value:
            alt.datum.xval < selector.cutoff,
            alt.value('red'), alt.value('blue')
        )
-   ).add_selection(
+   ).add_parameter(
        selector
    )
 
