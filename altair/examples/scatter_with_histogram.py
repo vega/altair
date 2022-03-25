@@ -46,7 +46,7 @@ mag = alt.Chart().mark_bar().encode(
 ).properties(
     width=300,
     height=300
-).add_selection(pts)
+).add_parameter(pts)
 
 # build the chart:
 alt.hconcat(
