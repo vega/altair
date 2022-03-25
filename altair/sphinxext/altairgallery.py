@@ -45,7 +45,7 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
 .. code-block:: none
 
-   $ pip install vega_datasets
+   python -m pip install vega_datasets
 
 {% for grouper, group in examples %}
 
