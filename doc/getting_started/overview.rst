@@ -31,5 +31,13 @@ handled automatically. Building on this declarative plotting idea, a surprising 
 of simple to sophisticated plots and visualizations can be created using a relatively
 concise grammar.
 
+For a more detailed overview of the Altair's visualization grammar, see the following
+
+.. raw:: html
+
+  <div class="youtube-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/U7w1XumKK60?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite

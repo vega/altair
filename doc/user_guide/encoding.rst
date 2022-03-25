@@ -179,6 +179,15 @@ or more.
 Specifying the correct type for your data is important, as it affects the
 way Altair represents your encoding in the resulting plot.
 
+The following video is a brief overview of Altair's data types. 
+
+.. raw:: html
+
+  <div class="youtube-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/LSEPyCqjoAg?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+
 .. _type-legend-scale:
 
 Effect of Data Type on Color Scales

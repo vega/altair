@@ -18,6 +18,14 @@ That's it. In order to take those specifications and turn them into actual
 visualizations requires a frontend that is correctly set up, but strictly
 speaking that rendering is generally not controlled by the Altair package.
 
+Below is a short explaination about Altair and the software stack it is built on for more context. 
+
+.. raw:: html
+
+  <div class="youtube-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/AAuPPorsmJc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
 Altair chart to Vega-Lite Spec
 ------------------------------
 Since Altair is fundamentally about constructing chart specifications, the central
