@@ -2,33 +2,146 @@
 
 .. _user-guide-interactions:
 
-Interactive Charts: Bindings, Selections, Conditions
+Interactive Charts: Parameters, Conditions, Bindings
 ====================================================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
-declarative grammar of not just visualization, but *interaction*. There are three
-core concepts of this grammar:
+declarative grammar of not just visualization, but *interaction*.
+This is both convenient and powerful,
+as we will see in this section.
+There are three core concepts of this grammar:
 
-- the :func:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like mouse clicks or drags. Inputs can also be elements like a drop-down, radio button or slider. Selections can be used alone but if you want to change any element of your chart you will need to connect them to a *condition*. 
-- the :func:`condition` function takes the selection input and changes an element of the chart based on that input. 
-- the ``bind`` property of a selection which establishes a two-way binding between the selection and an input element of your chart. 
+- Parameters are the basic building blocks in the grammar of interaction.
+  They can either be a simple variable or the more complex :func:`selection`
+  that map user input (e.g., mouse clicks and drags) to data queries.
+- The :func:`condition` function takes the selection input
+  and changes an element of the chart based on that input.
+- The ``bind`` property of selections establishes a two-way binding
+  between the selection and an input element of your chart,
+  such as a drop-down, radio button or slider.
 
 Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data. 
 
 
-Selections: Building Blocks of Interactions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parameters: Building Blocks of Interaction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Interactivity in Altair is built around *parameters*, of which there are two types: variables and selections.  We introduce these concepts through a series examples.
+
+.. note::
+
+   This material was changed considerably with the release of Altair 5.  In particular, Altair 4 had selections but not variables, and the term ``parameter`` first appeared in Altair 5.
+
+.. _basic variable:
+
+Variables: Storing and Reusing Values
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Variables are the simplest forms of parameters can take.
+Variable parameters allow for a value to be defined once
+and then reused throughout the rest of the chart.
+Here is a simple scatter-plot created from the ``cars`` dataset:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+
+    alt.Chart(cars).mark_circle().encode(
+        x='Miles_per_Gallon:Q',
+        y='Horsepower:Q',
+        color='Origin:N'
+    )
+
+We can create a variable parameter using :func:`parameter`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
+
+.. altair-plot::
+    :output: none
+
+    op_var = alt.parameter(value=0.1)
+
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`Chart.add_parameter` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+
+    op_var = alt.parameter(value=0.1)
+
+    alt.Chart(cars).mark_circle(opacity=op_var).encode(
+        x='Miles_per_Gallon:Q',
+        y='Horsepower:Q',
+        color='Origin:N'
+    ).add_parameter(
+        op_var
+    )
+
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.parameter` and ``add_parameter``.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+
+    op_var2 = 0.1
+
+    alt.Chart(cars).mark_circle(opacity=op_var2).encode(
+        x='Miles_per_Gallon:Q',
+        y='Horsepower:Q',
+        color='Origin:N'
+    )
+
+The benefit of using :func:`alt.parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+
+    slider = alt.binding_range(min=0, max=1, step=0.05, name='opacity:')
+    op_var = alt.parameter(value=0.1, bind=slider)
+
+    alt.Chart(cars).mark_circle(opacity=op_var).encode(
+        x='Miles_per_Gallon:Q',
+        y='Horsepower:Q',
+        color='Origin:N'
+    ).add_parameter(
+        op_var
+    )
+
+Now we can dynamically change the opacity of the points in our chart using the slider.  A noteworthy aspect of this chart is that these effects are controlled entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart, and that interactivity no longer requires a running Python environment.
+
+The above example includes some aspects which occur frequently when creating interactive charts in Altair:
+
+1. Creating a variable parameter using :func:`parameter`.
+2. Attaching the parameter to a chart using the :meth:`Chart.add_parameter` method.
+3. Binding the parameter to an input widget (such as the slider above) using the parameter's ``bind`` property.
 
 
-Selections in Altair come in a few flavors, and they can be *bound* to
+Selections: Capturing Inputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Selections parameters capture inputs such as mouse clicks and they can be *bound* to
 particular charts or sub-charts in your visualization, then referenced
 in other parts of the visualization.
+There are two types of selections:
+:func:`selection_interval` and :func:`selection_point`.
 
-Example: Linked-Brush Scatter-Plot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Here we will create a simple chart and then add an selection interval to it.
+We could create a selection interval via ``alt.parameter(select="interval")``,
+but it is more convenient to use the shorter ``alt.selection_interval``
+(and this also matches the syntax that was used in Altair 4).
 
-As a motivation, let's create a simple chart and then add some selections
-to it. Here is a simple scatter-plot created from the ``cars`` dataset:
+Here is a simple scatter-plot created from the ``cars`` dataset:
 
 .. altair-plot::
 
@@ -67,10 +180,14 @@ property:
 The result above is a chart that allows you to click and drag to create
 a selection region, and to move this region once the region is created.
 
-Conditions: Making the chart respond
+So far this example is very similar to what we did in the :ref:`variable example <basic variable>`:
+we created a selection parameter using ``brush = alt.selection_interval()``,
+and we attached that parameter to the chart using ``add_parameter``.
+
+Conditions: Making the Chart Respond
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is neat, but the selection doesn't actually *do* anything yet.
+The example above is neat, but the selection doesn't actually *do* anything yet.
 To use this selection, we need to reference it in some way within
 the chart. Here, we will use the :func:`condition` function to create
 a conditional color encoding: we'll tie the color to the ``"Origin"``
@@ -89,6 +206,15 @@ for points outside the selection:
 
 As you can see, with this simple change, the color of the points responds
 to the selection.
+In the sample above,
+we are using the selection parameter ``brush`` as a *predicate*
+(something that evaluates as `True` or `False`).
+This is controlled by the line ``color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))``.
+Data points which fall within the selection evaluate as ``True``,
+and data points which fall outside the selection evaluate to ``False``.
+The ``'Origin:N'`` specifies how to color the points which fall within the selection,
+and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value;
+you can remember this as ``alt.condition(<condition>, <if_true>, <if_false>)``.
 
 This approach becomes even more powerful when the selection behavior is
 tied across multiple views of the data within a compound chart.
@@ -140,8 +266,8 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 Selection Types: Interval and Point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With this interesting example under our belt, let's take a more systematic
-look at some of the types of selections available in Altair.
+Now that we have seen the basics of how we can use a selection to interact with a chart,
+let's take a more systematic look at some of the types of selection parameters available in Altair.
 For simplicity, we'll use a common chart in all the following examples; a
 simple heat-map based on the ``cars`` dataset.
 For convenience, let's write a quick Python function that will take a selection
@@ -363,6 +489,48 @@ cylinders:
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
 
+
+Filtering Data with Selections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using a selection parameter to filter data works in much the same way
+as using it within ``alt.condition``,
+For example, in ``transform_filter(brush)``,
+we are again using the selection parameter ``brush`` as a predicate.
+Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
+and data points which evaluate to ``False`` are filtered out.
+
+It is not possible to both select and filter in the same chart,
+so typically this functionality will be used when at least two sub-charts are present.
+In the following example,
+we attach the selection parameter to the upper chart,
+and then filter data in the lower chart based selection in the upper chart.
+You can explore how the counts changes in the bar chart
+depending on the size and position of the selection in the scatter plot.
+
+.. altair-plot::
+
+    brush = alt.selection_interval()
+
+    points = alt.Chart(cars).mark_circle().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).add_parameter(
+        brush
+    )
+
+    bars = alt.Chart(cars).mark_bar().encode(
+        x='count()',
+        y='Origin:N',
+        color='Origin:N'
+    ).transform_filter(
+        brush
+    )
+
+    points & bars
+
+
 Binding: Adding Data Driven Inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the ``bind`` option. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
@@ -378,7 +546,7 @@ For instance, using our example from above a dropdown can be used to highlight c
 
 .. altair-plot::
 
-    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Country')
+    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     color = alt.condition(selection,
                         alt.Color('Origin:N', legend=None),
@@ -415,7 +583,7 @@ Bindings and input elements can also be used to filter data on the client side. 
 
 .. altair-plot::
 
-    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Country')
+    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     
     alt.Chart(cars).mark_point().encode(
@@ -496,3 +664,32 @@ for ideas about how they can be applied to more interesting charts.
 For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
+
+Limitations
+~~~~~~~~~~~
+
+Some possible use cases for the above interactivity are not currently supported by Vega-Lite, and hence are not currently supported by Altair.  Here are some examples.
+
+1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python.  This is not currently possible (and as of December 2021 it does not seem likely to become possible any time soon), so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
+2. It is not possible to use an encoding such as ``y=column_variable`` to then dynamically display different charts based on different column choices.  Similar functionality could be created using for example ``ipywidgets`` or ``panel``, but the resulting interactivity would be controlled by Python, and would not work for example as a stand-alone web page.  The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365. In the meantime you can workaround this by transforming the data into long form using either `melt` in pandas or :meth:`transform_fold` in Altair.
+
+.. altair-plot::
+    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower'])
+    dropdown_options = source['variable'].drop_duplicates().tolist()
+
+    dropdown = alt.binding_select(options=dropdown_options, name='X-axis column ')
+    selection = alt.selection_point(
+        fields=['variable'],
+        value=[{'variable': dropdown_options[0]}],
+        bind=dropdown
+    )
+
+    alt.Chart(source).mark_circle().encode(
+        x=alt.X('value:Q', title=''),
+        y='Horsepower',
+        color='Origin',
+    ).add_parameter(
+        selection
+    ).transform_filter(
+        selection
+    )

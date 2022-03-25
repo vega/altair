@@ -444,8 +444,6 @@ data before usage in Altair using GeoPandas for example as such:
    marks
    transform/index
    interactions
-   interactions2
-   configuration
    compound_charts
    scale_resolve
    times_and_dates
