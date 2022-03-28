@@ -37,7 +37,7 @@ The contents of the resulting file will look something like this:
 .. code-block:: json
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "config": {
         "view": {
           "continuousHeight": 300,
@@ -97,7 +97,7 @@ javascript-enabled web browser:
       <div id="vis"></div>
       <script type="text/javascript">
         var spec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "config": {
             "view": {
               "continuousHeight": 300,
