@@ -568,6 +568,28 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if context["datasets"]:
                 dct.setdefault("datasets", {}).update(context["datasets"])
 
+        # Remove every data field that does not occur anywhere else in the spec
+        # The approach taken here is inelegant and conservative as it will
+        # leave some of the data fields that should be removed because they
+        # have a common or short name that happens to occur elsewhere in the
+        # spec by coincidence.
+        # Removing data fields properly is difficult as mentioned here
+        # https://github.com/altair-viz/altair/issues/2428#issuecomment-798917267.
+        # This inelegant approach is still helpful and will reudce the chart
+        # size in many cases
+        if "datasets" in dct:
+            spec_as_string = [
+                val
+                for key, val in dct.items()
+                if key not in ["data", "datasets", "$schema"]
+            ].__str__()
+            for dataset_name in dct["datasets"]:
+                for dict_row in dct["datasets"][dataset_name]:
+                    # Must iterate over a list since the dict will change size
+                    for field in list(dict_row.keys()):
+                        if field not in spec_as_string:
+                            del dict_row[field]
+
         return dct
 
     def to_html(
