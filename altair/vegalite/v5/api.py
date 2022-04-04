@@ -103,6 +103,34 @@ def _prepare_data(data, context=None):
     return data
 
 
+def _compress_datasets(dct):
+    """Remove data fields that do not occurr elsewhere in the chart spec
+
+    The approach taken here is conservative as it will
+    leave some of the data fields that should be removed because they
+    have a common or short name that happens to occur elsewhere in the
+    spec by coincidence.
+    It might incorreclty remove fields when advanced transforms are used.
+    Removing data fields properly is difficult as mentioned here
+    https://github.com/altair-viz/altair/issues/2428#issuecomment-798917267.
+
+    Parameters
+    ----------
+    dct : dict
+        The input chart schema
+    """
+    spec_as_string = [
+        val for key, val in dct.items() if key not in ["data", "datasets", "$schema"]
+    ].__str__()
+    for dataset_name in dct["datasets"]:
+        for dict_row in dct["datasets"][dataset_name]:
+            # Must iterate over a list since the dict will change size
+            for field in list(dict_row.keys()):
+                if field not in spec_as_string:
+                    del dict_row[field]
+    return dct
+
+
 # ------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
@@ -568,28 +596,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if context["datasets"]:
                 dct.setdefault("datasets", {}).update(context["datasets"])
 
-        # Remove every data field that does not occur anywhere else in the spec
-        # The approach taken here is inelegant and conservative as it will
-        # leave some of the data fields that should be removed because they
-        # have a common or short name that happens to occur elsewhere in the
-        # spec by coincidence.
-        # Removing data fields properly is difficult as mentioned here
-        # https://github.com/altair-viz/altair/issues/2428#issuecomment-798917267.
-        # This inelegant approach is still helpful and will reudce the chart
-        # size in many cases
-        if "datasets" in dct:
-            spec_as_string = [
-                val
-                for key, val in dct.items()
-                if key not in ["data", "datasets", "$schema"]
-            ].__str__()
-            for dataset_name in dct["datasets"]:
-                for dict_row in dct["datasets"][dataset_name]:
-                    # Must iterate over a list since the dict will change size
-                    for field in list(dict_row.keys()):
-                        if field not in spec_as_string:
-                            del dict_row[field]
-
+        # Remove data fields that do not occurr elsewhere in the chart spec
+        if data_transformers._compress_datasets:
+            if (
+                not data_transformers._compress_transformed_charts
+                and "transform" not in dct.keys()
+            ) or data_transformers._compress_transformed_charts:
+                if "datasets" in dct:
+                    dct = _compress_datasets(dct)
         return dct
 
     def to_html(

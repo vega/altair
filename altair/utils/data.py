@@ -21,7 +21,9 @@ DataTransformerType = Callable
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
-    _global_settings = {"consolidate_datasets": True}
+    _global_settings = {
+        "consolidate_datasets": True,
+    }
 
     @property
     def consolidate_datasets(self):
@@ -30,6 +32,40 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
     @consolidate_datasets.setter
     def consolidate_datasets(self, value):
         self._global_settings["consolidate_datasets"] = value
+
+    def compress_datasets(self, enable=True, transformed_charts=False):
+        """Whether to remove data fields that do not occurr elsewhere in the chart spec
+
+        The approach taken here is conservative as it will
+        leave some of the data fields that should be removed because they
+        have a common or short name that happens to occur elsewhere in the
+        spec by coincidence.
+
+        Parameters
+        ----------
+
+        enable : bool
+            Whether compression is enabled.
+
+        transformed_charts : bool
+            Whether to enable compression for transformed charts.
+            Data compression can break charts with transforms where data
+            fields are referenced without the field name occurring
+            literally in the chart spec.
+        """
+        if transformed_charts:
+            warnings.warn(
+                "Data compression can break charts with transforms where data"
+                " fields are referenced without the field name occurring"
+                " literally in the chart spec. Please revert this option if you"
+                " are observing unexpected behavior with transformed charts."
+            )
+        self._compress_datasets = enable
+        self._compress_transformed_charts = transformed_charts
+        return
+
+    _compress_datasets = True
+    _compress_transformed_charts = False
 
 
 # ==============================================================================
