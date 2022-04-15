@@ -713,10 +713,14 @@ Some possible use cases for the above interactivity are not currently supported 
     source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower'])
     dropdown_options = source['variable'].drop_duplicates().tolist()
 
-    dropdown = alt.binding_select(options=dropdown_options, name='X-axis column ')
+    dropdown = alt.binding_select(
+        options=dropdown_options,
+        name='X-axis column'
+    )
     selection = alt.selection_point(
         fields=['variable'],
         value=[{'variable': dropdown_options[0]}],
+       # init={'variable': dropdown_options[0]},  # For Altair 4
         bind=dropdown
     )
 
@@ -724,8 +728,31 @@ Some possible use cases for the above interactivity are not currently supported 
         x=alt.X('value:Q', title=''),
         y='Horsepower',
         color='Origin',
-    ).add_parameter(
+    ).add_selection(
         selection
     ).transform_filter(
         selection
+    )
+
+Taking advantage of the parameter interface introduced in Altair 5, we can express this more succinctly:
+
+.. altair-plot::
+    dropdown = alt.binding_select(
+        options=['Miles_per_Gallon', 'Acceleration', 'Displacement'],
+        name='X-axis column '
+    )
+    param = alt.parameter(
+        name='selected_column',
+        value='Miles_per_Gallon',
+        bind=dropdown
+    )
+
+    alt.Chart(data.cars.url).mark_circle().encode(
+        x='x:Q',
+        y='Horsepower:Q',
+        color='Origin:N'
+    ).transform_calculate(
+        x='datum[selected_column]'
+    ).add_parameter(
+        param
     )
