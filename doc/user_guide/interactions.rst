@@ -710,7 +710,7 @@ Some possible use cases for the above interactivity are not currently supported 
 2. It is not possible to use an encoding such as ``y=column_variable`` to then dynamically display different charts based on different column choices.  Similar functionality could be created using for example ``ipywidgets`` or ``panel``, but the resulting interactivity would be controlled by Python, and would not work for example as a stand-alone web page.  The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365. In the meantime you can workaround this by transforming the data into long form using either `melt` in pandas or :meth:`transform_fold` in Altair.
 
 .. altair-plot::
-    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower'])
+    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower', 'Cylinders'])
     dropdown_options = source['variable'].drop_duplicates().tolist()
 
     dropdown = alt.binding_select(
@@ -738,7 +738,7 @@ Taking advantage of the parameter interface introduced in Altair 5, we can expre
 
 .. altair-plot::
     dropdown = alt.binding_select(
-        options=['Miles_per_Gallon', 'Acceleration', 'Displacement'],
+        options=['Miles_per_Gallon', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
         name='X-axis column '
     )
     param = alt.parameter(
