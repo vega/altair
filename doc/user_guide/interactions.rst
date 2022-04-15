@@ -704,6 +704,9 @@ Limitations
 Some possible use cases for the above interactivity are not currently supported by Vega-Lite, and hence are not currently supported by Altair.  Here are some examples.
 
 1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python.  This is not currently possible (and as of December 2021 it does not seem likely to become possible any time soon), so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
+
+   - The dashboarding package ``Panel`` has added support for processing Altair selections with custom callbacks in their 0.13 release. This is currently the only Python dashboarding package that supports custom callbacks for Altair selections and you can read more about how to use this functionality in `the Panel documentation <https://pyviz-dev.github.io/panel/reference/panes/Vega.html#selections>`_.
+
 2. It is not possible to use an encoding such as ``y=column_variable`` to then dynamically display different charts based on different column choices.  Similar functionality could be created using for example ``ipywidgets`` or ``panel``, but the resulting interactivity would be controlled by Python, and would not work for example as a stand-alone web page.  The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365. In the meantime you can workaround this by transforming the data into long form using either `melt` in pandas or :meth:`transform_fold` in Altair.
 
 .. altair-plot::
