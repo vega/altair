@@ -3,7 +3,7 @@
 
 from . import core
 import pandas as pd
-from altair.utils.schemapi import Undefined
+from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
 
 
@@ -64,7 +64,7 @@ class FieldChannelMixin(object):
 class ValueChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        condition = getattr(self, 'condition', Undefined)
+        condition = self._get('condition', Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
@@ -81,7 +81,7 @@ class ValueChannelMixin(object):
 class DatumChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        datum = getattr(self, 'datum', Undefined)
+        datum = self._get('datum', Undefined)
         copy = self  # don't copy unless we need to
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):
@@ -90,7 +90,7 @@ class DatumChannelMixin(object):
                                                       ignore=ignore,
                                                       context=context)
 
-
+@with_property_setters
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Angle schema wrapper
 
@@ -330,6 +330,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """AngleDatum schema wrapper
 
@@ -451,6 +452,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """AngleValue schema wrapper
 
@@ -473,6 +475,7 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Color schema wrapper
 
@@ -712,6 +715,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """ColorDatum schema wrapper
 
@@ -833,6 +837,7 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """ColorValue schema wrapper
 
@@ -855,6 +860,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Column schema wrapper
 
@@ -1079,6 +1085,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                                      title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
@@ -1291,6 +1298,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """DescriptionValue schema wrapper
 
@@ -1313,6 +1321,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         super(DescriptionValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """Detail schema wrapper
 
@@ -1481,6 +1490,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
                                      title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     """Facet schema wrapper
 
@@ -1743,6 +1753,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                                     spacing=spacing, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Fill schema wrapper
 
@@ -1982,6 +1993,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
                                    **kwds)
 
 
+@with_property_setters
 class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """FillDatum schema wrapper
 
@@ -2103,6 +2115,7 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
                                         title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """FillValue schema wrapper
 
@@ -2125,6 +2138,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """FillOpacity schema wrapper
 
@@ -2364,6 +2378,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """FillOpacityDatum schema wrapper
 
@@ -2485,6 +2500,7 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
                                                condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """FillOpacityValue schema wrapper
 
@@ -2507,6 +2523,7 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
         super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
@@ -2719,6 +2736,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
                                    **kwds)
 
 
+@with_property_setters
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """HrefValue schema wrapper
 
@@ -2741,6 +2759,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """Key schema wrapper
 
@@ -2909,6 +2928,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
                                   **kwds)
 
 
+@with_property_setters
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     """Latitude schema wrapper
 
@@ -3076,6 +3096,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """LatitudeDatum schema wrapper
 
@@ -3187,6 +3208,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
                                             type=type, **kwds)
 
 
+@with_property_setters
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Latitude2 schema wrapper
 
@@ -3287,6 +3309,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
                                         timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """Latitude2Datum schema wrapper
 
@@ -3398,6 +3421,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
                                              type=type, **kwds)
 
 
+@with_property_setters
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Latitude2Value schema wrapper
 
@@ -3420,6 +3444,7 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
         super(Latitude2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     """Longitude schema wrapper
 
@@ -3587,6 +3612,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """LongitudeDatum schema wrapper
 
@@ -3698,6 +3724,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
                                              type=type, **kwds)
 
 
+@with_property_setters
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Longitude2 schema wrapper
 
@@ -3798,6 +3825,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
                                          timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """Longitude2Datum schema wrapper
 
@@ -3909,6 +3937,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
                                               type=type, **kwds)
 
 
+@with_property_setters
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Longitude2Value schema wrapper
 
@@ -3931,6 +3960,7 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
         super(Longitude2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Opacity schema wrapper
 
@@ -4170,6 +4200,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """OpacityDatum schema wrapper
 
@@ -4291,6 +4322,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """OpacityValue schema wrapper
 
@@ -4313,6 +4345,7 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Order(FieldChannelMixin, core.OrderFieldDef):
     """Order schema wrapper
 
@@ -4483,6 +4516,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
                                     type=type, **kwds)
 
 
+@with_property_setters
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """OrderValue schema wrapper
 
@@ -4510,6 +4544,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         super(OrderValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     """Radius schema wrapper
 
@@ -4761,6 +4796,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                                      **kwds)
 
 
+@with_property_setters
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """RadiusDatum schema wrapper
 
@@ -4916,6 +4952,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                                           stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """RadiusValue schema wrapper
 
@@ -4938,6 +4975,7 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
         super(RadiusValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """Radius2 schema wrapper
 
@@ -5038,6 +5076,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """Radius2Datum schema wrapper
 
@@ -5149,6 +5188,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
                                            type=type, **kwds)
 
 
+@with_property_setters
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """Radius2Value schema wrapper
 
@@ -5171,6 +5211,7 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
         super(Radius2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Row schema wrapper
 
@@ -5395,6 +5436,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                                   title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull):
     """Shape schema wrapper
 
@@ -5634,6 +5676,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstringnull):
     """ShapeDatum schema wrapper
 
@@ -5755,6 +5798,7 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
     """ShapeValue schema wrapper
 
@@ -5777,6 +5821,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Size schema wrapper
 
@@ -6016,6 +6061,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                                    **kwds)
 
 
+@with_property_setters
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """SizeDatum schema wrapper
 
@@ -6137,6 +6183,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
                                         title=title, type=type, **kwds)
 
 
+@with_property_setters
 class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """SizeValue schema wrapper
 
@@ -6159,6 +6206,7 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Stroke schema wrapper
 
@@ -6398,6 +6446,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """StrokeDatum schema wrapper
 
@@ -6519,6 +6568,7 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
                                           title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """StrokeValue schema wrapper
 
@@ -6541,6 +6591,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray):
     """StrokeDash schema wrapper
 
@@ -6780,6 +6831,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumberArray):
     """StrokeDashDatum schema wrapper
 
@@ -6901,6 +6953,7 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
                                               condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray):
     """StrokeDashValue schema wrapper
 
@@ -6923,6 +6976,7 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
         super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """StrokeOpacity schema wrapper
 
@@ -7162,6 +7216,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
                                             timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeOpacityDatum schema wrapper
 
@@ -7283,6 +7338,7 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
                                                  condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """StrokeOpacityValue schema wrapper
 
@@ -7305,6 +7361,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
         super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """StrokeWidth schema wrapper
 
@@ -7544,6 +7601,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeWidthDatum schema wrapper
 
@@ -7665,6 +7723,7 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
                                                condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """StrokeWidthValue schema wrapper
 
@@ -7687,6 +7746,7 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
         super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
     """Text schema wrapper
 
@@ -7899,6 +7959,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
                                    **kwds)
 
 
+@with_property_setters
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
     """TextDatum schema wrapper
 
@@ -8055,6 +8116,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
                                         **kwds)
 
 
+@with_property_setters
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
     """TextValue schema wrapper
 
@@ -8077,6 +8139,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     """Theta schema wrapper
 
@@ -8327,6 +8390,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                                     timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """ThetaDatum schema wrapper
 
@@ -8482,6 +8546,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                                          stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """ThetaValue schema wrapper
 
@@ -8504,6 +8569,7 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
         super(ThetaValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """Theta2 schema wrapper
 
@@ -8604,6 +8670,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """Theta2Datum schema wrapper
 
@@ -8715,6 +8782,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
                                           type=type, **kwds)
 
 
+@with_property_setters
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """Theta2Value schema wrapper
 
@@ -8737,6 +8805,7 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
         super(Theta2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
@@ -8949,6 +9018,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """TooltipValue schema wrapper
 
@@ -8971,6 +9041,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
@@ -9183,6 +9254,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
                                   **kwds)
 
 
+@with_property_setters
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """UrlValue schema wrapper
 
@@ -9205,6 +9277,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         super(UrlValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class X(FieldChannelMixin, core.PositionFieldDef):
     """X schema wrapper
 
@@ -9473,6 +9546,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                                 type=type, **kwds)
 
 
+@with_property_setters
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """XDatum schema wrapper
 
@@ -9645,6 +9719,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                                      scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XValue(ValueChannelMixin, core.PositionValueDef):
     """XValue schema wrapper
 
@@ -9667,6 +9742,7 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
         super(XValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """X2 schema wrapper
 
@@ -9766,6 +9842,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
                                  bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class X2Datum(DatumChannelMixin, core.DatumDef):
     """X2Datum schema wrapper
 
@@ -9877,6 +9954,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
                                       **kwds)
 
 
+@with_property_setters
 class X2Value(ValueChannelMixin, core.PositionValueDef):
     """X2Value schema wrapper
 
@@ -9899,6 +9977,7 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
         super(X2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
     """XError schema wrapper
 
@@ -9999,6 +10078,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """XErrorValue schema wrapper
 
@@ -10021,6 +10101,7 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
         super(XErrorValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     """XError2 schema wrapper
 
@@ -10121,6 +10202,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """XError2Value schema wrapper
 
@@ -10143,6 +10225,7 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
         super(XError2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     """XOffset schema wrapper
 
@@ -10363,6 +10446,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """XOffsetDatum schema wrapper
 
@@ -10488,6 +10572,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """XOffsetValue schema wrapper
 
@@ -10510,6 +10595,7 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super(XOffsetValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Y(FieldChannelMixin, core.PositionFieldDef):
     """Y schema wrapper
 
@@ -10778,6 +10864,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                                 type=type, **kwds)
 
 
+@with_property_setters
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """YDatum schema wrapper
 
@@ -10950,6 +11037,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                                      scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YValue(ValueChannelMixin, core.PositionValueDef):
     """YValue schema wrapper
 
@@ -10972,6 +11060,7 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
         super(YValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """Y2 schema wrapper
 
@@ -11071,6 +11160,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
                                  bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Y2Datum(DatumChannelMixin, core.DatumDef):
     """Y2Datum schema wrapper
 
@@ -11182,6 +11272,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
                                       **kwds)
 
 
+@with_property_setters
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """Y2Value schema wrapper
 
@@ -11204,6 +11295,7 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
         super(Y2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YError(FieldChannelMixin, core.SecondaryFieldDef):
     """YError schema wrapper
 
@@ -11304,6 +11396,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """YErrorValue schema wrapper
 
@@ -11326,6 +11419,7 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
         super(YErrorValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     """YError2 schema wrapper
 
@@ -11426,6 +11520,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """YError2Value schema wrapper
 
@@ -11448,6 +11543,7 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
         super(YError2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     """YOffset schema wrapper
 
@@ -11668,6 +11764,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """YOffsetDatum schema wrapper
 
@@ -11793,6 +11890,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """YOffsetValue schema wrapper
 

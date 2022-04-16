@@ -145,7 +145,7 @@ class FieldChannelMixin(object):
 class ValueChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        condition = getattr(self, 'condition', Undefined)
+        condition = self._get('condition', Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
@@ -162,7 +162,7 @@ class ValueChannelMixin(object):
 class DatumChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        datum = getattr(self, 'datum', Undefined)
+        datum = self._get('datum', Undefined)
         copy = self  # don't copy unless we need to
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):
@@ -176,6 +176,7 @@ class DatumChannelMixin(object):
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(FieldChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
@@ -189,6 +190,7 @@ class FieldSchemaGenerator(SchemaGenerator):
 class ValueSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(ValueChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
@@ -202,6 +204,7 @@ class ValueSchemaGenerator(SchemaGenerator):
 class DatumSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(DatumChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
@@ -427,7 +430,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
         imports = [
             "from . import core",
             "import pandas as pd",
-            "from altair.utils.schemapi import Undefined",
+            "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
         ]
     contents = [HEADER]
