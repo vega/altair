@@ -222,7 +222,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                     schema_path,
                     self.validator,
                     altair_class,
-                    list(self.instance.keys())[0],
+                    self.message.split("('")[-1].split("'")[0],
                     param_names_table,
                     altair_class,
                 )
