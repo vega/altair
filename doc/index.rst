@@ -38,6 +38,7 @@ it can be helpful to also browse the `Vega-Lite documentation <https://vega.gith
    user_guide/ecosystem
    releases/changes
    Help <user_guide/getting_help>
+   Try online <https://joelostblom.github.io/altair-docs/lite/lab/?path=wellcome.ipynb>
 
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues

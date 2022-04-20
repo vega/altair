@@ -39,8 +39,11 @@ extensions = [
     "altair.sphinxext.altairplot",
     "altair.sphinxext.altairgallery",
     "altair.sphinxext.schematable",
+    'jupyterlite_sphinx',
     # "sphinxext.rediraffe",
 ]
+
+jupyterlite_config = "jupyterlite_config.json"
 
 altair_plot_links = {"editor": True, "source": False, "export": False}
 
