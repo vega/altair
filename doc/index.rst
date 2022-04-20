@@ -9,88 +9,40 @@ Altair: Declarative Visualization in Python
    :size: 15
 
 Altair is a declarative statistical visualization library for Python, based on
-Vega_ and Vega-Lite_, and the source is available on
-`GitHub <http://github.com/altair-viz/altair>`_.
+Vega_ and Vega-Lite_.
 
 With Altair, you can spend more time understanding your data and its meaning.
 Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Started
+Altair is BSD-licensed and the source is available on `GitHub`_,
+where you can also report `bugs and feature requests`_.
+For general questions, please ask on `StackOverflow`_
+using the `altair` tag.
 
-   getting_started/overview
-   getting_started/installation
-   getting_started/starting
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Gallery
-
-   gallery/index
+You can browse this documentation
+via the links in the top navigation panel
+or by viewing the full site :ref:`genindex`.
+In addition to reading this documentation page,
+it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
 .. toctree::
    :maxdepth: 1
-   :caption: User Guide
+   :hidden:
 
-   user_guide/data
-   user_guide/encoding
-   user_guide/marks
-   user_guide/transform/index
-   user_guide/interactions
-   user_guide/interactions2
-   user_guide/configuration
-   user_guide/compound_charts
-   user_guide/scale_resolve
-   user_guide/saving_charts
-   user_guide/customization
-   user_guide/times_and_dates
-   user_guide/faq
-   user_guide/troubleshooting
-   user_guide/internals
-   user_guide/API
+   Getting Started <getting_started/overview>
+   User Guide <user_guide/data>
+   Examples <gallery/index>
+   Reference <user_guide/API>
    user_guide/ecosystem
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Case Studies
-
-   case_studies/exploring-weather
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Advanced Usage
-
-   user_guide/importing
-   user_guide/display_frontends
-   user_guide/custom_renderers
-   user_guide/data_transformers
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Release Notes
-   
    releases/changes
-
-Bug Reports & Questions
------------------------
-
-Altair is BSD-licensed and the source is available on `GitHub`_. If any
-questions or issues come up as you use Altair, please get in touch via
-`Git Issues`_ or our `Google Group`_.
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-
+   Help <user_guide/getting_help>
+   Try online <https://joelostblom.github.io/altair-docs/lite/lab/?path=wellcome.ipynb>
 
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
-.. _Google Group: https://groups.google.com/forum/#!forum/altair-viz
+.. _bugs and feature requests: https://github.com/altair-viz/altair/issues/new/choose
+.. _StackOverflow: https://stackoverflow.com/tags/altair

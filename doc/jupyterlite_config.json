@@ -1,0 +1,8 @@
+{
+    "LiteBuildConfig": {
+        "ignore_sys_prefix": true,
+        "piplite_urls": [
+            "https://files.pythonhosted.org/packages/py3/a/altair/altair-4.2.0-py3-none-any.whl"
+        ]
+    }
+}

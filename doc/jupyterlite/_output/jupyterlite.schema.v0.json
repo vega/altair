@@ -1,0 +1,324 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://jupyterlite.readthedocs.org/en/latest/schema-v0.html#",
+  "title": "JupyterLite Schema v0",
+  "description": "a schema for user-serviceable customizaton of a JupyterLite",
+  "$ref": "#/definitions/top",
+  "definitions": {
+    "top": {
+      "title": "JupyterLite Configuration",
+      "description": "a user-serviceable file for customizing a JupyterLite site",
+      "properties": {
+        "jupyter-lite-schema-version": {
+          "type": "integer",
+          "description": "version of the schema to which the instance conforms",
+          "enum": [0]
+        },
+        "jupyter-config-data": {
+          "$ref": "#/definitions/jupyter-config-data"
+        }
+      }
+    },
+    "jupyterlab-settings-overrides": {
+      "title": "JupyterLab Settings Overrides",
+      "description": "A map of config objects keyed by `@org/pkg:plugin` which override the default settings. See https://jupyterlab.readthedocs.io/en/stable/user/directories.html#overridesjson",
+      "type": "object",
+      "patternProperties": {
+        "^(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*:(.*)$": {
+          "description": "A valid configuration which must conform to the plugin's defined schema",
+          "type": "object"
+        }
+      }
+    },
+    "jupyter-config-data": {
+      "title": "Jupyter Config Data",
+      "description": "contents of a jupyter-config-data `<script>`, as read by `PageConfig`. These well-known values may be augmented by other extensions.",
+      "properties": {
+        "appName": {
+          "description": "The application name, as would appear in a Help menu",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "The version of the application",
+          "type": "string"
+        },
+        "baseUrl": {
+          "description": "base URL of this JupyterLite, must end in `/`, will be expanded by `config-utils.js` to include a leading `/`",
+          "type": "string",
+          "format": "uri",
+          "default": "./",
+          "pattern": ".*/$"
+        },
+        "appUrl": {
+          "description": "default app to load",
+          "default": "./lab",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "faviconUrl": {
+          "description": "browser tab icon to show",
+          "type": "string",
+          "format": "uri",
+          "default": "./lab/favicon.ico"
+        },
+        "settingsOverrides": {
+          "$ref": "#/definitions/jupyterlab-settings-overrides"
+        },
+        "federated_extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/federated-extension"
+          },
+          "default": []
+        },
+        "fullLabextensionsUrl": {
+          "description": "path to federated extensions, a folder organized by `({:org}/){package}`",
+          "default": "./extensions",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "fullMathjaxUrl": {
+          "type": "string",
+          "description": "path to MathJax2 assets",
+          "default": "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js",
+          "format": "uri"
+        },
+        "fullWebRtcSignalingUrls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": "WebSocket URLs to use for finding WebRTC peers",
+          "default": [
+            "wss://signaling.yjs.dev",
+            "wss://y-webrtc-signaling-eu.herokuapp.com",
+            "wss://y-webrtc-signaling-us.herokuapp.com"
+          ],
+          "minItems": 1
+        },
+        "mathjaxConfig": {
+          "type": "string",
+          "default": "TeX-AMS_CHTML-full,Safe",
+          "description": "a valid MathJax configuration blob, a comma-delimited list of MathJax profiles"
+        },
+        "fullStaticUrl": {
+          "description": "relative path to built static assets",
+          "default": "./build",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "enableMemoryStorage": {
+          "description": "enable memory storage fallback which can lose data if the page is reloaded",
+          "type": "boolean",
+          "default": false
+        },
+        "contentsStorageDrivers": {
+          "description": "names of the localforage driver for contents, or `null` for the best available",
+          "$ref": "#/definitions/localforage-driver-set"
+        },
+        "contentsStorageName": {
+          "description": "name used to store Jupyter contents in the browser",
+          "type": "string",
+          "default": "JupyterLite Storage"
+        },
+        "settingsStorageDrivers": {
+          "description": "names of the localforage driver for settings, or `null` for the best available",
+          "$ref": "#/definitions/localforage-driver-set"
+        },
+        "settingsStorageName": {
+          "description": "name used to store Jupyter settings in the browser",
+          "type": "string",
+          "default": "JupyterLite Storage"
+        },
+        "settingsUrl": {
+          "description": "relative path to bundled schemas",
+          "default": "./build/schemas",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "themesUrl": {
+          "description": "relative path to bundled themes",
+          "default": "./build/themes",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "licensesUrl": {
+          "description": "relative path to bundled licenses",
+          "default": "./lab/api/licenses",
+          "$ref": "#/definitions/non-trailing-slash-uri"
+        },
+        "disabledExtensions": {
+          "description": "Lab extensions (or specific plugins) to disable",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/npm-package-name"
+              },
+              {
+                "$ref": "#/definitions/lab-extension-plugin-name"
+              }
+            ]
+          }
+        },
+        "litePluginSettings": {
+          "description": "Additional configuration options for jupyterlite plugins, keyed by npm-compatible name",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "@jupyterlite/pyolite-kernel-extension:kernel": {
+              "$ref": "#/definitions/pyolite-settings"
+            }
+          }
+        },
+        "retroPage": {
+          "description": "The page corresponding the named Notebook Classic UI section",
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "an unknown retro page"
+            },
+            {
+              "type": "string",
+              "enum": ["consoles", "notebooks", "edit", "tree"],
+              "description": "a well-known retro page"
+            }
+          ]
+        },
+        "exposeAppInBrowser": {
+          "description": "Whether to make the top-level Application instance available as ``window.jupyterapp``",
+          "type": "boolean",
+          "default": false
+        },
+        "collaborative": {
+          "description": "Whether to enable collaborative editing over WebRTC. Should be paired with the ``?room=<room name>`` URL parameter",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "pyolite-settings": {
+      "description": "Pyodide-specific configuration values. Will be defined in another location in the future.",
+      "type": "object",
+      "properties": {
+        "pyodideUrl": {
+          "description": "The path to the main pyodide.js entry point",
+          "type": "string",
+          "default": "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js",
+          "format": "uri"
+        },
+        "disablePyPIFallback": {
+          "description": "Disable the piplite behavior of falling back to https://pypi.org/pypi/",
+          "default": false,
+          "type": "boolean"
+        },
+        "pipliteUrls": {
+          "description": "Paths to PyPI-compatible API endpoints for wheels. If ending in ``all.json``, assumed to be an aggregate, keyed by package name, with relative paths",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "format": "uri"
+        }
+      }
+    },
+    "non-trailing-slash-uri": {
+      "title": "A URI what doesn't end in /",
+      "type": "string",
+      "format": "uri",
+      "pattern": ".*[^/]$"
+    },
+    "federated-extension": {
+      "title": "A Federated Extension",
+      "type": "object",
+      "required": ["name", "load"],
+      "properties": {
+        "extension": {
+          "type": "string",
+          "format": "uri",
+          "description": "path to the extension module to load, relative to the extension's `package.json`"
+        },
+        "mimeExtension": {
+          "type": "string",
+          "format": "uri",
+          "description": "path to the mime extension module to load, relative to the extension's `package.json`"
+        },
+        "load": {
+          "type": "string",
+          "format": "uri",
+          "description": "path to the WebPack 5-compatible `remoteEntry*.js` file describing the bundle"
+        },
+        "name": {
+          "$ref": "#/definitions/npm-package-name"
+        },
+        "style": {
+          "type": "string",
+          "format": "uri",
+          "description": "path to the optional style module provided by the extension"
+        }
+      }
+    },
+    "npm-package-name": {
+      "title": "An NPM Package Name",
+      "type": "string",
+      "description": "package.json-compatible extension name, with an optional organization prefix. See https://github.com/dword-design/package-name-regex/blob/master/src/index.js",
+      "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*$"
+    },
+    "lab-extension-plugin-name": {
+      "title": "A JupyterLab Plugin",
+      "type": "string",
+      "description": "a package.json-compatible extension name followed by a colon (:) and a specific plugin name",
+      "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*:(.*)$"
+    },
+    "localforage-driver-set": {
+      "title": "A LocalForage Driver Set",
+      "anyOf": [
+        {
+          "type": "null",
+          "title": "detect",
+          "description": "choose the best available driver"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/localforage-driver"
+          }
+        }
+      ]
+    },
+    "localforage-driver": {
+      "title": "A LocalForage Driver",
+      "description": "choose a storage driver from any number of localForage drivers",
+      "anyOf": [
+        {
+          "type": "string",
+          "title": "custom",
+          "description": "use a custom driver added by a third-party plugin"
+        },
+        {
+          "title": "IndexedDB",
+          "description": "use the broadly-compatible IndexedDB key/value persistent store",
+          "type": "string",
+          "enum": ["asyncStorage"]
+        },
+        {
+          "title": "WebSQL",
+          "description": "use the WebSQL persistent store",
+          "type": "string",
+          "enum": ["webSQLStorage"]
+        },
+        {
+          "title": "localStorage",
+          "description": "use the localStorage persistent store",
+          "type": "string",
+          "enum": ["localStorageWrapper"]
+        },
+        {
+          "title": "memory",
+          "description": "use the memory-based, volatile store: must be enabled with enableMemoryStorage",
+          "type": "string",
+          "enum": ["localStorageWrapper"]
+        }
+      ]
+    }
+  }
+}

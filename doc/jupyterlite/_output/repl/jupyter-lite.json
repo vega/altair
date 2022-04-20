@@ -1,0 +1,7 @@
+{
+  "jupyter-lite-schema-version": 0,
+  "jupyter-config-data": {
+    "settingsUrl": "../build/schemas",
+    "themesUrl": "./build/themes"
+  }
+}

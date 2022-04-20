@@ -1,0 +1,8 @@
+# %%
+# Running this cell is required to get the examples to work in this online
+# notebook until there is a way to preinstall packages
+# You have to wait until it has executed before you click to run the next cell
+import micropip
+micropip.install(['altair', 'vega_datasets'])
+
+# %%

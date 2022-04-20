@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // redirect to /retro by default
+      (function () {
+        window.location.href = window.location.href.replace(
+          /\/tree(\/|\/index.html)?$/,
+          '/retro/tree/index.html'
+        );
+      }.call(this));
+    </script>
+  </head>
+</html>
