@@ -437,10 +437,55 @@ Caveats:
 
 - For the type `quantize` and `quantile` scales we observe that the default number of 
 classes is 5. It is currently not possible to define a different number of classes in 
-Altair. Track the following issue at the Vega-Lite repository: https://github.com/vega/vega-lite/issues/8127
+Altair in combination with a predefined color scheme. Track the following issue at the 
+Vega-Lite repository: https://github.com/vega/vega-lite/issues/8127
+- To define custom colors for each class, one should specify the `domain` and `range`. 
+Where the `range` contains +1 values than the classes specified in the `domain`
+For example: `alt.Scale(type='threshold', domain=[0.05, 0.20], range=['blue','white','red'])`
+In this `blue` is the class for all values below `0.05`, `white` for all values between 
+`0.05` and `0.20` and `red` for all values above `0.20`.
 - The natural breaks method will determine the optimal class breaks given the required 
 number of classes. But how many classes should one pick? One can investigate usage of 
 goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
+
+
+Repeat a Map
+~~~~~~~~~~~~
+The :class:`RepeatChart` pattern, accessible via the :meth:`Chart.repeat` method 
+provides a convenient interface for a particular type of horizontal or vertical 
+concatenation of a multi-dimensional dataset.
+
+In the following example we have a dataset referenced as `source` from which we use 
+three columns defining the `population`, `engineers` and `hurricanes` of each US state.
+
+The `states` is defined by making use of :func:`topo_feature` using `url` and `feature`
+as parameters. This is a convenience function for extracting features from a topojson url.
+
+These variables we provide as list in the `.repeat()` operator, which we refer to within
+the color encoding as `alt.repeat('row')`
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    states = alt.topo_feature(data.us_10m.url, 'states')
+    source = data.population_engineers_hurricanes.url
+    variable_list = ['population', 'engineers', 'hurricanes']
+
+    alt.Chart(states).mark_geoshape(tooltip=True).encode(
+        alt.Color(alt.repeat('row'), type='quantitative')
+    ).transform_lookup(
+        lookup='id',
+        from_=alt.LookupData(source, 'id', variable_list)
+    ).project(
+        type='albersUsa'
+    ).repeat(
+        row=variable_list
+    ).resolve_scale(
+        color='independent'
+    )
+
 
 Interaction
 ~~~~~~~~~~~
