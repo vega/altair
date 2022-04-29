@@ -486,6 +486,44 @@ the color encoding as `alt.repeat('row')`
         color='independent'
     )
 
+Facet a Map
+~~~~~~~~~~~
+The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method 
+provides a convenient interface for a particular type of horizontal or vertical 
+concatenation of a dataset where one field contain multiple `variables`.
+
+Unfortuantely, the following open issue https://github.com/altair-viz/altair/issues/2369 
+will make the following not work for geographic visualization:
+
+.. altair-plot::
+
+    source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
+    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')  
+    gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
+
+    alt.Chart(gdf_comb).mark_geoshape().encode(
+        color=alt.Color('value:Q'),
+        facet=alt.Facet('variable:N', columns=3)
+    ).properties(
+        width=200,
+        height=200
+    ).resolve_scale('independent')
+
+For now, the following workaround can be adopted to facet a map, manually filter the 
+data in pandas, and create a small multiples chart via concatenation. For example:
+
+.. altair-plot::
+
+    alt.concat(*(
+        alt.Chart(gdf_comb[gdf_comb.variable == var], title=var).mark_geoshape().encode(
+        color='value:Q',
+        ).properties(
+        width=200
+        )
+        for var in gdf_comb.variable.unique()
+    ), columns=3
+    ).resolve_scale(color='independent')
+
 
 Interaction
 ~~~~~~~~~~~
