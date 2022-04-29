@@ -571,6 +571,80 @@ populous states.
 
     choropleth & bars
 
+Expression
+~~~~~~~~~~
+Altair expressions can be used within a geographical visualization. The following example
+visualize earthquakes on the globe using an `orthographic` projection. Where we can rotate
+the earth on a single-axis. (`rotate0`). The utility function :func:sphere is adopted to 
+get a disk of the earth as background. 
+
+The earthquakes are displayed using a `mark_geoshape` and filtered once out of sight of 
+the the visible part of the world.
+
+An hover highlighting is added to get more insight of each earthquake.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    import geopandas as gpd
+
+    # load data
+    gdf_quakies = gpd.read_file(data.earthquakes.url, driver='GeoJSON')
+    gdf_world = gpd.read_file(data.world_110m.url, driver='TopoJSON')
+
+    # define parameters
+    range0 = alt.binding_range(min=-180, max=180, step=5)
+    rotate0 = alt.parameter(value=120, bind=range0, name='rotate0')
+    hover = alt.selection_point(on='mouseover', clear='mouseout')
+
+    # world disk
+    sphere = alt.Chart(alt.sphere()).mark_geoshape(
+        fill='aliceblue', 
+        stroke='black',
+        strokeWidth=1.5
+    )
+
+    # countries as shapes
+    world = alt.Chart(gdf_world).mark_geoshape(
+        fill='mintcream', 
+        stroke='black', 
+        strokeWidth=0.35
+    )
+
+    # earthquakes as circles with fill for depth and size for magnitude
+    # the hover param is added on the mar_circle only
+    quakes = alt.Chart(gdf_quakies).mark_circle(
+        opacity=0.35,
+        tooltip=True,
+        stroke='black'
+    ).transform_calculate(
+        lon="datum.geometry.coordinates[0]",
+        lat="datum.geometry.coordinates[1]",
+        depth="datum.geometry.coordinates[2]"
+    ).transform_filter('''
+        (rotate0 * -1) - 90 < datum.lon && datum.lon < (rotate0 * -1) + 90
+        '''
+    ).encode(
+        longitude='lon:Q',    
+        latitude='lat:Q',
+        strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
+        size=alt.Size('mag:Q', scale=alt.Scale(type='pow', range=[1,1000], domain=[0,6], exponent=4)),
+        fill=alt.Fill('depth:Q', scale=alt.Scale(scheme='lightorange', domain=[0,400]))
+    ).add_parameter(hover)
+
+    # define projection and add the rotation param for all layers
+    comb = alt.layer(sphere, world, quakes).project(
+        'orthographic',
+        rotate=[90, 0, 0]
+    ).add_parameter(rotate0)
+
+    # temporary changing params to top-level
+    # and defining the rotate reference expression on compiled VL directly
+    chart_vl = comb.to_dict()
+    chart_vl['params'] =  chart_vl['layer'][0].pop('params')
+    chart_vl['projection']['rotate'] = {'expr':'[rotate0, 0, 0]'}
+    alt.Chart().from_dict(chart_vl)
 
 Geoshape Options
 ~~~~~~~~~~~~~~~~
