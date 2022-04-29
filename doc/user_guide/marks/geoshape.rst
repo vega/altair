@@ -273,14 +273,184 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
     )
 
 
+Chloropleth Classification
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Choropleth maps provide an easy way to visualize how a variable varies across a 
+geographic area or show the level of variability within a region. 
+
+Take for example the following example of unemployment statistics of 2018 of US counties 
+(we define a utility function (`classify()` that we will use later again):
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    import geopandas as gpd
+
+    def classify(scale_type, breaks=None, nice=False, title=None, size='small'):
+
+        if size =='default':
+            width=400
+            height=300
+        else:
+            width=200
+            height=150
+            
+        us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+        us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')    
+        us_unemp = data.unemployment()  
+        
+        if title is None:
+            title=scale_type
+        
+        if 'threshold' in scale_type:
+            scale = alt.Scale(type=scale_type, domain=breaks, scheme='turbo')
+        else:
+            scale = alt.Scale(type=scale_type, nice=nice, scheme='turbo')
+            
+        fill = alt.Fill(
+            'rate:Q', 
+            scale=scale,
+            legend=alt.Legend(direction='horizontal', orient='bottom', format='.1%')
+        )    
+        
+        distrib_square = alt.Chart(
+            us_unemp, 
+            height=20,
+            width=width
+        ).mark_square(
+            size=3,
+            opacity=1
+        ).encode(
+            x=alt.X('rate:Q', title=None, axis=alt.Axis(format='.0%')),
+            y=alt.Y('jitter:Q', title=None, axis=None),
+            fill=fill
+        ).transform_calculate(
+            jitter='random()'
+        )
+        
+        distrib_geoshape = alt.Chart(
+            us_counties,
+            width=width,
+            height=height,
+            title=title
+        ).mark_geoshape().transform_lookup(
+            lookup='id', 
+            from_=alt.LookupData(data=us_unemp, key='id', fields=['rate'])
+        ).encode(
+            fill=fill
+        ).project(
+            type='albersUsa'
+        )
+        
+        states_geoshape = alt.Chart(
+            us_states,
+            width=width,
+            height=height
+        ).mark_geoshape(filled=False, stroke='white', strokeWidth=0.75).project(
+            type='albersUsa'
+        )     
+        
+        return (distrib_geoshape + states_geoshape) & distrib_square
+
+    classify('linear', size='default')
+
+
+We visualise the unemployment `rate` in percentage of 2018 with a linear scale range 
+using a `mark_geoshape()` to present the spatial patterns on a map and a _jitter_ plot 
+(using `mark_square()`) to visualise the distribution of the `rate` values. Each value/
+county has defined an unique color. This gives a bit of insight, but often we like to 
+group the distribution into classes.
+
+By grouping values in classes, you can classify the dataset so all values/geometries in 
+each class get assigned the same color.
+
+Here we present a number of scale methods how Altair can be used:
+- _quantile_, this type will divide your dataset (`domain`) into intervals of similar 
+sizes. Each class contains more or less the same number of values/geometries (equal 
+counts). The scale definition will look as follow: 
+
+```python
+alt.Scale(type='quantile')
+```
+
+- _quantize_, this type will divide the extent of your dataset (`range`) in equal 
+intervals. Each class contains different number of values, but the step size is equal 
+(equal range). The scale definition will look as follow: 
+
+```python
+alt.Scale(type='quantize')
+```
+
+The `quantize` methode can also be used in combination with `nice`. This will "nice" 
+the domain before applying quantization. As such:
+
+```python
+alt.Scale(type='quantize', nice=True)
+```
+
+- _threshold_, this type will divide your dataset in separate classes by manually 
+specifying the cut values. Each class is separated by defined classes. The scale 
+definition will look as follow: 
+
+```python
+alt.Scale(type='quantize', range=[0.05, 0.20])
+```
+
+This definition above will create 3 classes. One class with values below `0.05`, one 
+class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
+
+So which method provides the optimal data classification for chloropleths maps? As 
+usual, it depends. There is another popular method that aid in determining class breaks.
+This method will maximize the similarity of values in a class while maximizing the 
+distance between the classes (natural breaks). The method is also known by as the 
+Fisher-Jenks algorithm and is similar to _k_-Means in 1D:
+-  By using the external Python package `jenskpy` we can derive these _optimim_ breaks 
+as such:
+
+```python
+>>> from jenkspy import JenksNaturalBreaks
+>>> jnb = JenksNaturalBreaks(5)
+>>> jnb.fit(us_unemp['rate'])
+>>> jnb.inner_breaks_
+[0.061, 0.088, 0.116, 0.161]
+```
+So when applying these different classification schemes to the county unemployment 
+dataset, we get the following overview:
+
+.. altair-plot::
+
+    alt.concat(
+        classify('linear'),
+        classify('quantile', title=['quantile','equal counts']),
+        classify('quantize', title=['quantize', 'equal range']),
+        classify('quantize', nice=True, title=['quantize', 'equal range nice']),
+        classify('threshold', breaks=[0.05, 0.20]),    
+        classify('threshold', breaks=[0.061, 0.088, 0.116, 0.161], 
+                title=['threshold Jenks','natural breaks']
+        ),
+        columns=3
+    )
+
+
+Caveats: 
+
+- For the type `quantize` and `quantile` scales we observe that the default number of 
+classes is 5. It is currently not possible to define a different number of classes in 
+Altair. Track the following issue at the Vega-Lite repository: https://github.com/vega/vega-lite/issues/8127
+- The natural breaks method will determine the optimal class breaks given the required 
+number of classes. But how many classes should one pick? One can investigate usage of 
+goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
+
 Interaction
 ~~~~~~~~~~~
 Often a map does not come alone, but is used in combination with another chart. 
 Here we provide an example of an interactive visualization of a bar chart and a map.
 
-The data shows the states of the US in combination with a bar chart showing the 15 most populous states.
+The data shows the states of the US in combination with a bar chart showing the 15 most 
+populous states.
 
- .. altair-plot::
+.. altair-plot::
 
     import altair as alt
     from vega_datasets import data
