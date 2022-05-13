@@ -10,6 +10,8 @@ import jsonschema
 import numpy as np
 import pandas as pd
 
+from .. import vegalite
+
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
@@ -600,6 +602,11 @@ class _PropertySetter(object):
     def __get__(self, obj, cls):
         self.obj = obj
         self.cls = cls
+        altair_prop = getattr(vegalite, f"{self.prop}".capitalize())
+        self.__doc__ = altair_prop.__doc__
+        self.__signature__ = inspect.signature(altair_prop)
+        self.__wrapped__ = inspect.getfullargspec(altair_prop)
+        self.__name__ = altair_prop.__name__
         return self
 
     def __call__(self, *args, **kwargs):
