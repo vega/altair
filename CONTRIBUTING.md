@@ -20,73 +20,52 @@ slack](https://bit.ly/join-vega-slack).
 
 ### Setting Up Your Environment
 
-Fork the Altair repository on GitHub and clone the fork to you local
+Install the latest version of Altair locally using 
+```
+$ pip install git+https://github.com/altair-viz/altair/
+```
+Next step is to fork the repository on GitHub and clone the fork to you local
 machine. For more details on forking see the [GitHub
 Documentation](https://help.github.com/en/articles/fork-a-repo).
 ```
 $ git clone https://github.com/YOUR-USERNAME/altair.git
 ```
-
-To keep your fork up to date with changes in the this repo,
-you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
-
-Now you can install the latest version of Altair locally using `pip`.
-The `-e` flag indicates that your local changes will be reflected
-every time you open a new Python interpreter
-(instead of having to reinstall the package each time).
+You can have a single clone of the repository that points to both your fork and
+the main package repository. These pointers to GitHub are called "remotes" .
+On your local clone you should run:
 ```
-$ cd altair/ 
-$ python -m pip install -e .
+$ git remote add upstream https://github.com/altair-viz/altair.git
+$ git checkout master
+$ git pull upstream master
 ```
-
-You can now install the development requirements using
-```
-$ python -m pip install -r requirement_dev.txt
-```
-
+And then you'll have all the updates in the master branch of your local fork.
+Note that git will complain if you've committed changes to your local master
+branch that are not on upstream (this is one reason it's good practice to **never**
+work directly on your master branch).
 
 ### Creating a Branch
 
-Once your local environment is up-to-date, you can create a new git branch
-which will contain your contribution
-(always create a new branch instead of making changes to the master branch):
+Once your local environment is up-to-date, you can create a new git branch which will
+contain your contribution:
 ```
-$ git switch -c <branch-name>
+$ git checkout -b <branch-name>
 ```
 With this branch checked-out, make the desired changes to the package.
-
 Note that Altair code uses the [black](https://black.readthedocs.io/)
-code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter
-which you can apply to your modifications by running:
+code formatter, which you can apply to your modifications by installing
+and running black on the local directory:
 ```
-$ black --diff .  # View changes
-$ black .  # Apply changes
-$ flake8 .  --statistics  # View changes (fix manually)
+$ pip install black
+$ black .
 ```
-
-### Testing your Changes
-
-Before suggesting your contributing your changing to the main Altair repository,
-it is recommended that you run the Altair test suite,
-which includes a number of tests to validate the correctness of your code:
-
-```
-$ make test
-```
-
-Study the output of any failed tests and try to fix the issues
-before proceeding to the next section.
-
-### Creating a Pull Request
-
 When you are happy with your changes, you can commit them to your branch by running
 ```
 $ git add <modified-file>
 $ git commit -m "Some descriptive message about your change"
 $ git push origin <branch-name>
 ```
-You will then need to submit a pull request (PR) on GitHub asking to merge
-your example branch into the main Altair repository. For details on creating a PR see GitHub
+Finally you will need to submit a pull request (PR) on GitHub asking to merge
+your example branch into Altair master. For details on creating a PR see GitHub
 documentation [Creating a pull
 request](https://help.github.com/en/articles/creating-a-pull-request). You can
 add more details about your example in the PR such as motivation for the
@@ -97,6 +76,20 @@ automatically shown in the PR.
 
 Hopefully your PR will be answered in a timely manner and your contribution will
 help others in the future.
+
+### Testing your Changes
+
+When you submit a pull request, Altair's continuous integration test suite will
+run a number of tests to validate the correctness of your code. It can be helpful
+when debugging to run those tests locally; to do this first install Altair's
+development requirements:
+```
+$ pip install -r requirements_dev.txt
+```
+and then run the test suite with:
+```
+$ make test
+```
 
 ## Adding Examples
 
