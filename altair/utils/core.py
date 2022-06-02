@@ -541,7 +541,12 @@ def use_signature(Obj):
 
         # Supplement the docstring of f with information from Obj
         if Obj.__doc__:
+
+            # Patch in a reference to the class this docstring is copied from,
+            # to generate a hyperlink
             doclines = Obj.__doc__.splitlines()
+            doclines[0] = f"Refer to :class:`{Obj.__name__}`"
+
             if f.__doc__:
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
