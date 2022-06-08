@@ -112,7 +112,7 @@ def _todict(
 
 
 def _resolve_references(
-    schema: Mapping[str, Any], root: Optional[Schema] = None
+    schema: Schema, root: Optional[Schema] = None
 ) -> Schema:
     """Resolve schema references."""
     resolver: RefResolver = jsonschema.RefResolver.from_schema(root or schema)

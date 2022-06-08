@@ -12,8 +12,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeAlias, Type
 import jsonschema
 from jsonschema.validators import RefResolver
 
-from utils.schemapi import SchemaBase
-from vegalite.v4.schema.core import Type
+from schemapi import SchemaBase
 
 
 EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
