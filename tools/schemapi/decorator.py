@@ -1,8 +1,12 @@
+from __future__ import annotations
 import warnings
+from typing import Any, Callable, Type, TypeVar
 from . import codegen, SchemaBase, Undefined
 
+T = TypeVar("T", bound=SchemaBase)
 
-def schemaclass(*args, init_func=True, docstring=True, property_map=True):
+
+def schemaclass(*args: Any, init_func: bool = True, docstring: bool = True, property_map: bool = True) -> Callable[[Type[T], bool, bool], Type[T]]:
     """A decorator to add boilerplate to a schema class
 
     This will read the _json_schema attribute of a SchemaBase class, and add
@@ -28,7 +32,7 @@ def schemaclass(*args, init_func=True, docstring=True, property_map=True):
             __schema = {...}
     """
 
-    def _decorator(cls, init_func=init_func, docstring=docstring):
+    def _decorator(cls: Type[T], init_func:bool = init_func, docstring: bool = docstring) -> Type[T]:
         if not (isinstance(cls, type) and issubclass(cls, SchemaBase)):
             warnings.warn("class is not an instance of SchemaBase.")
 
