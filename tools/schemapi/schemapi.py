@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import collections
 import contextlib
 import inspect
 import json
-from __future__ import annotations
 from typing import Any, Callable, DefaultDict, Dict, FrozenSet, Iterable, Iterator, List, Literal, Mapping, Optional, Sequence, Set, Tuple, Type, TypeAlias, TypeVar, Union
 
 import jsonschema
