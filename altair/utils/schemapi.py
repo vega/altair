@@ -111,9 +111,7 @@ def _todict(
         return obj
 
 
-def _resolve_references(
-    schema: Schema, root: Optional[Schema] = None
-) -> Schema:
+def _resolve_references(schema: Schema, root: Optional[Schema] = None) -> Schema:
     """Resolve schema references."""
     resolver: RefResolver = jsonschema.RefResolver.from_schema(root or schema)
     while "$ref" in schema:

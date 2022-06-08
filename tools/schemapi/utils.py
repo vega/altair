@@ -7,7 +7,17 @@ import pkgutil
 import re
 import textwrap
 import urllib
-from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeAlias, TypeVar, Union
+from typing import (
+    Any,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Sequence,
+    TypeAlias,
+    TypeVar,
+    Union,
+)
 
 import jsonschema
 from jsonschema.validators import RefResolver
@@ -26,7 +36,7 @@ def load_metaschema() -> Any:
     return json.loads(schema)
 
 
-def resolve_references(schema: Schema, root: Optional[Schema]=None):
+def resolve_references(schema: Schema, root: Optional[Schema] = None):
     """Resolve References within a JSON schema"""
     resolver: RefResolver = jsonschema.RefResolver.from_schema(root or schema)
     while "$ref" in schema:
@@ -36,7 +46,10 @@ def resolve_references(schema: Schema, root: Optional[Schema]=None):
 
 
 def get_valid_identifier(
-    prop: str, replacement_character: str = "", allow_unicode: bool = False, url_decode: bool = True
+    prop: str,
+    replacement_character: str = "",
+    allow_unicode: bool = False,
+    url_decode: bool = True,
 ) -> str:
     """Given a string property, generate a valid Python identifier
 
@@ -112,7 +125,9 @@ def is_valid_identifier(var: str, allow_unicode: bool = False) -> Optional[bool]
 class SchemaProperties(object):
     """A wrapper for properties within a schema"""
 
-    def __init__(self, properties: Any, schema: Schema, rootschema: Optional[Schema] = None) -> None:
+    def __init__(
+        self, properties: Any, schema: Schema, rootschema: Optional[Schema] = None
+    ) -> None:
         self._properties = properties
         self._schema = schema
         self._rootschema = rootschema or schema
@@ -151,7 +166,12 @@ class SchemaProperties(object):
 class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
 
-    def __init__(self, schema: Schema, rootschema: Optional[Schema] = None, validate: bool = False) -> None:
+    def __init__(
+        self,
+        schema: Schema,
+        rootschema: Optional[Schema] = None,
+        validate: bool = False,
+    ) -> None:
         if hasattr(schema, "_schema"):
             if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -395,7 +415,9 @@ class SchemaInfo(object):
         return {prop: val for prop, val in pairs if prop != val}
 
 
-def indent_arglist(args: Sequence[Any], indent_level: int, width: int = 100, lstrip: bool = True) -> str:
+def indent_arglist(
+    args: Sequence[Any], indent_level: int, width: int = 100, lstrip: bool = True
+) -> str:
     """Indent an argument list for use in generated code"""
     wrapper = textwrap.TextWrapper(
         width=width,
@@ -409,7 +431,9 @@ def indent_arglist(args: Sequence[Any], indent_level: int, width: int = 100, lst
     return wrapped
 
 
-def indent_docstring(lines: Sequence[str], indent_level: int, width: int = 100, lstrip: bool = True) -> str:
+def indent_docstring(
+    lines: Sequence[str], indent_level: int, width: int = 100, lstrip: bool = True
+) -> str:
     """Indent a docstring for use in generated code"""
     final_lines: List[str] = []
 
