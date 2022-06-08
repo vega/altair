@@ -1,27 +1,31 @@
 """Code generation utilities"""
+from typing import Any, List, Mapping, Optional, Sequence, Set, Tuple, TypeAlias, Union
 from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 import textwrap
 import re
 
 
+Schema: TypeAlias = Mapping[str, Any]
+
+
 class CodeSnippet(object):
     """Object whose repr() is a string of code"""
 
-    def __init__(self, code):
+    def __init__(self, code: str):
         self.code = code
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.code
 
 
-def _get_args(info):
+def _get_args(info: SchemaInfo) -> Tuple[bool, Set[str], Set[str], Set[str], bool]:
     """Return the list of args & kwds for building the __init__ function"""
     # TODO: - set additional properties correctly
     #       - handle patternProperties etc.
-    required = set()
-    kwds = set()
-    invalid_kwds = set()
+    required: Set[str] = set()
+    kwds: Set[str] = set()
+    invalid_kwds: Set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
 
@@ -99,20 +103,20 @@ class SchemaGenerator(object):
     """
     ).lstrip()
 
-    def _process_description(self, description):
+    def _process_description(self, description: str):
         return description
 
     def __init__(
         self,
-        classname,
-        schema,
-        rootschema=None,
-        basename="SchemaBase",
-        schemarepr=None,
-        rootschemarepr=None,
-        nodefault=(),
-        **kwargs,
-    ):
+        classname: str,
+        schema: Schema,
+        rootschema: Optional[Schema] = None,
+        basename: str = "SchemaBase",
+        schemarepr: Optional[Union[CodeSnippet, Any]] = None,
+        rootschemarepr: Optional[Union[CodeSnippet, Any]] = None,
+        nodefault: Sequence[Any] = (),
+        **kwargs: Any,
+    ) -> None:
         self.classname = classname
         self.schema = schema
         self.rootschema = rootschema
@@ -122,12 +126,12 @@ class SchemaGenerator(object):
         self.nodefault = nodefault
         self.kwargs = kwargs
 
-    def subclasses(self):
+    def subclasses(self) -> List[str]:
         """Return a list of subclass names, if any."""
         info = SchemaInfo(self.schema, self.rootschema)
         return [child.refname for child in info.anyOf if child.is_reference()]
 
-    def schema_class(self):
+    def schema_class(self) -> str:
         """Generate code for a schema class"""
         rootschema = self.rootschema if self.rootschema is not None else self.schema
         schemarepr = self.schemarepr if self.schemarepr is not None else self.schema
@@ -151,7 +155,7 @@ class SchemaGenerator(object):
             **self.kwargs,
         )
 
-    def docstring(self, indent=0):
+    def docstring(self, indent: int = 0) -> str:
         # TODO: add a general description at the top, derived from the schema.
         #       for example, a non-object definition should list valid type, enum
         #       values, etc.
@@ -176,8 +180,8 @@ class SchemaGenerator(object):
             doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
-    def init_code(self, indent=0):
-        """Return code suitablde for the __init__ function of a Schema class"""
+    def init_code(self, indent: int = 0) -> str:
+        """Return code suitable for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
         nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
 
@@ -186,7 +190,7 @@ class SchemaGenerator(object):
         kwds -= nodefault
 
         args = ["self"]
-        super_args = []
+        super_args: List[str] = []
 
         if nodefault:
             args.extend(sorted(nodefault))
