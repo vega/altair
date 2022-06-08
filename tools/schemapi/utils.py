@@ -1,4 +1,5 @@
 """Utilities for working with schemas"""
+from __future__ import annotations
 
 import json
 import keyword
@@ -6,22 +7,29 @@ import pkgutil
 import re
 import textwrap
 import urllib
+from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeAlias, TypeVar, Union
 
 import jsonschema
+from jsonschema.validators import RefResolver
+
+from utils.schemapi import SchemaBase
+from vegalite.v4.schema.core import Type
 
 
 EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
+Schema: TypeAlias = Union[Mapping[str, Any], SchemaBase]
+T = TypeVar("T", bound="SchemaInfo")
 
 
-def load_metaschema():
+def load_metaschema() -> Any:
     schema = pkgutil.get_data("schemapi", "jsonschema-draft04.json")
     schema = schema.decode()
     return json.loads(schema)
 
 
-def resolve_references(schema, root=None):
+def resolve_references(schema: Schema, root: Optional[Schema]=None):
     """Resolve References within a JSON schema"""
-    resolver = jsonschema.RefResolver.from_schema(root or schema)
+    resolver: RefResolver = jsonschema.RefResolver.from_schema(root or schema)
     while "$ref" in schema:
         with resolver.resolving(schema["$ref"]) as resolved:
             schema = resolved
@@ -29,8 +37,8 @@ def resolve_references(schema, root=None):
 
 
 def get_valid_identifier(
-    prop, replacement_character="", allow_unicode=False, url_decode=True
-):
+    prop: str, replacement_character: str = "", allow_unicode: bool = False, url_decode: bool = True
+) -> str:
     """Given a string property, generate a valid Python identifier
 
     Parameters
@@ -63,7 +71,7 @@ def get_valid_identifier(
     """
     # Decode URL characters.
     if url_decode:
-        prop = urllib.parse.unquote(prop)
+        prop: str = urllib.parse.unquote(prop)
 
     # Deal with []
     prop = prop.replace("[]", "Array")
@@ -87,7 +95,7 @@ def get_valid_identifier(
     return valid
 
 
-def is_valid_identifier(var, allow_unicode=False):
+def is_valid_identifier(var: str, allow_unicode: bool = False) -> Optional[bool]:
     """Return true if var contains a valid Python identifier
 
     Parameters
@@ -105,30 +113,30 @@ def is_valid_identifier(var, allow_unicode=False):
 class SchemaProperties(object):
     """A wrapper for properties within a schema"""
 
-    def __init__(self, properties, schema, rootschema=None):
+    def __init__(self, properties: Any, schema: Schema, rootschema: Optional[Schema] = None) -> None:
         self._properties = properties
         self._schema = schema
         self._rootschema = rootschema or schema
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return bool(self._properties)
 
-    def __dir__(self):
+    def __dir__(self) -> List[str]:
         return list(self._properties.keys())
 
-    def __getattr__(self, attr):
+    def __getattr__(self, attr: str) -> Any:
         try:
             return self[attr]
         except KeyError:
             return super(SchemaProperties, self).__getattr__(attr)
 
-    def __getitem__(self, attr):
+    def __getitem__(self, attr: str) -> SchemaInfo:
         dct = self._properties[attr]
         if "definitions" in self._schema and "definitions" not in dct:
             dct = dict(definitions=self._schema["definitions"], **dct)
         return SchemaInfo(dct, self._rootschema)
 
-    def __iter__(self):
+    def __iter__(self) -> Any:
         return iter(self._properties)
 
     def items(self):
@@ -144,7 +152,7 @@ class SchemaProperties(object):
 class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
 
-    def __init__(self, schema, rootschema=None, validate=False):
+    def __init__(self, schema: Schema, rootschema: Optional[Schema] = None, validate: bool = False) -> None:
         if hasattr(schema, "_schema"):
             if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -160,11 +168,11 @@ class SchemaInfo(object):
         self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
 
-    def child(self, schema):
+    def child(self: T, schema: Schema) -> T:
         return self.__class__(schema, rootschema=self.rootschema)
 
-    def __repr__(self):
-        keys = []
+    def __repr__(self) -> str:
+        keys: List[str] = []
         for key in sorted(self.schema.keys()):
             val = self.schema[key]
             rval = repr(val).replace("\n", "")
@@ -178,14 +186,14 @@ class SchemaInfo(object):
         return "SchemaInfo({\n  " + "\n  ".join(keys) + "\n})"
 
     @property
-    def title(self):
+    def title(self) -> str:
         if self.is_reference():
             return get_valid_identifier(self.refname)
         else:
             return ""
 
     @property
-    def short_description(self):
+    def short_description(self) -> Optional[str]:
         if self.title:
             # use RST syntax for generated sphinx docs
             return ":class:`{}`".format(self.title)
@@ -193,7 +201,7 @@ class SchemaInfo(object):
             return self.medium_description
 
     @property
-    def medium_description(self):
+    def medium_description(self) -> Optional[str]:
         _simple_types = {
             "string": "string",
             "number": "float",
@@ -245,102 +253,102 @@ class SchemaInfo(object):
             return "any"
 
     @property
-    def long_description(self):
+    def long_description(self) -> Optional[str]:
         # TODO
         return "Long description including arguments and their types"
 
     @property
-    def properties(self):
+    def properties(self) -> SchemaProperties:
         return SchemaProperties(
             self.schema.get("properties", {}), self.schema, self.rootschema
         )
 
     @property
-    def definitions(self):
+    def definitions(self) -> SchemaProperties:
         return SchemaProperties(
             self.schema.get("definitions", {}), self.schema, self.rootschema
         )
 
     @property
-    def required(self):
+    def required(self) -> List[Any]:
         return self.schema.get("required", [])
 
     @property
-    def patternProperties(self):
+    def patternProperties(self) -> Dict[Any, Any]:
         return self.schema.get("patternProperties", {})
 
     @property
-    def additionalProperties(self):
+    def additionalProperties(self) -> Union[Any, bool]:
         return self.schema.get("additionalProperties", True)
 
     @property
-    def type(self):
+    def type(self) -> Optional[str]:
         return self.schema.get("type", None)
 
     @property
-    def anyOf(self):
+    def anyOf(self) -> List[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("anyOf", [])]
 
     @property
-    def oneOf(self):
+    def oneOf(self) -> List[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("oneOf", [])]
 
     @property
-    def allOf(self):
+    def allOf(self) -> List[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("allOf", [])]
 
     @property
-    def not_(self):
+    def not_(self) -> List[SchemaInfo]:
         return self.child(self.schema.get("not", {}))
 
     @property
-    def items(self):
+    def items(self) -> Dict[Any, Any]:
         return self.schema.get("items", {})
 
     @property
-    def enum(self):
+    def enum(self) -> List[Any]:
         return self.schema.get("enum", [])
 
     @property
-    def refname(self):
+    def refname(self) -> str:
         return self.raw_schema.get("$ref", "#/").split("/")[-1]
 
     @property
-    def ref(self):
+    def ref(self) -> Optional[Any]:
         return self.raw_schema.get("$ref", None)
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self.raw_schema.get("description", self.schema.get("description", ""))
 
-    def is_list(self):
+    def is_list(self) -> bool:
         return isinstance(self.schema, list)
 
-    def is_reference(self):
+    def is_reference(self) -> bool:
         return "$ref" in self.raw_schema
 
-    def is_enum(self):
+    def is_enum(self) -> bool:
         return "enum" in self.schema
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
 
-    def is_compound(self):
+    def is_compound(self) -> bool:
         return any(key in self.schema for key in ["anyOf", "allOf", "oneOf"])
 
-    def is_anyOf(self):
+    def is_anyOf(self) -> bool:
         return "anyOf" in self.schema
 
-    def is_allOf(self):
+    def is_allOf(self) -> bool:
         return "allOf" in self.schema
 
-    def is_oneOf(self):
+    def is_oneOf(self) -> bool:
         return "oneOf" in self.schema
 
-    def is_not(self):
+    def is_not(self) -> bool:
         return "not" in self.schema
 
-    def is_object(self):
+    def is_object(self) -> bool:
         if self.type == "object":
             return True
         elif self.type is not None:
@@ -355,13 +363,13 @@ class SchemaInfo(object):
         else:
             raise ValueError("Unclear whether schema.is_object() is True")
 
-    def is_value(self):
+    def is_value(self) -> bool:
         return not self.is_object()
 
-    def is_array(self):
+    def is_array(self) -> bool:
         return self.type == "array"
 
-    def schema_type(self):
+    def schema_type(self) -> Optional[str]:
         if self.is_empty():
             return "empty"
         elif self.is_compound():
@@ -377,7 +385,7 @@ class SchemaInfo(object):
         else:
             raise ValueError("Unknown type with keys {}".format(self.schema))
 
-    def property_name_map(self):
+    def property_name_map(self) -> Dict[str, Any]:
         """
         Return a mapping of schema property names to valid Python attribute names
 
@@ -388,7 +396,7 @@ class SchemaInfo(object):
         return {prop: val for prop, val in pairs if prop != val}
 
 
-def indent_arglist(args, indent_level, width=100, lstrip=True):
+def indent_arglist(args: Sequence[Any], indent_level: int, width: int = 100, lstrip: bool = True) -> str:
     """Indent an argument list for use in generated code"""
     wrapper = textwrap.TextWrapper(
         width=width,
@@ -402,9 +410,9 @@ def indent_arglist(args, indent_level, width=100, lstrip=True):
     return wrapped
 
 
-def indent_docstring(lines, indent_level, width=100, lstrip=True):
+def indent_docstring(lines: Sequence[str], indent_level: int, width: int = 100, lstrip: bool = True) -> str:
     """Indent a docstring for use in generated code"""
-    final_lines = []
+    final_lines: List[str] = []
 
     for i, line in enumerate(lines):
         stripped = line.lstrip()
@@ -442,7 +450,7 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
         else:
             final_lines.append("")
     # Remove any trailing whitespaces on the right side
-    stripped_lines = []
+    stripped_lines: List[str] = []
     for i, line in enumerate(final_lines):
         if i + 1 == len(final_lines):
             stripped_lines.append(line)
