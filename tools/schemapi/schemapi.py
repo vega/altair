@@ -4,7 +4,26 @@ import collections
 import contextlib
 import inspect
 import json
-from typing import Any, Callable, DefaultDict, Dict, FrozenSet, Iterable, Iterator, List, Literal, Mapping, Optional, Sequence, Set, Tuple, Type, TypeAlias, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    DefaultDict,
+    Dict,
+    FrozenSet,
+    Iterable,
+    Iterator,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    Sequence,
+    Set,
+    Tuple,
+    Type,
+    TypeAlias,
+    TypeVar,
+    Union,
+)
 
 import jsonschema
 from jsonschema.validators import RefResolver
@@ -22,7 +41,16 @@ DEBUG_MODE = True
 GenericT = TypeVar("GenericT")
 Schema: TypeAlias = Mapping[str, Any]
 T = TypeVar("T", bound="SchemaBase")
-AltairObj: TypeAlias = Union["SchemaBase", List[Any], Tuple[Any], npt.NDArray[Any], Dict[Any, Any], np.number[Any], pd.Timestamp, np.datetime64]
+AltairObj: TypeAlias = Union[
+    "SchemaBase",
+    List[Any],
+    Tuple[Any],
+    npt.NDArray[Any],
+    Dict[Any, Any],
+    np.number[Any],
+    pd.Timestamp,
+    np.datetime64,
+]
 
 
 def enable_debug_mode() -> None:
@@ -57,7 +85,9 @@ def _subclasses(cls: Type[GenericT]) -> Iterable[Type[GenericT]]:
             yield cls
 
 
-def _todict(obj: AltairObj, validate: Union[bool, str], context: Optional[Mapping[Any, Any]]) -> Union[AltairObj, Dict[Any, Any], str, float]:
+def _todict(
+    obj: AltairObj, validate: Union[bool, str], context: Optional[Mapping[Any, Any]]
+) -> Union[AltairObj, Dict[Any, Any], str, float]:
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=validate, context=context)
@@ -79,7 +109,9 @@ def _todict(obj: AltairObj, validate: Union[bool, str], context: Optional[Mappin
         return obj
 
 
-def _resolve_references(schema: Mapping[str, Any], root: Optional[Schema] = None) -> Schema:
+def _resolve_references(
+    schema: Mapping[str, Any], root: Optional[Schema] = None
+) -> Schema:
     """Resolve schema references."""
     resolver: RefResolver = jsonschema.RefResolver.from_schema(root or schema)
     while "$ref" in schema:
@@ -183,7 +215,9 @@ class SchemaBase(object):
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
 
-    def copy(self: T, deep: Union[bool, Sequence[Any]] = True, ignore: Sequence[Any] = ()) -> T:
+    def copy(
+        self: T, deep: Union[bool, Sequence[Any]] = True, ignore: Sequence[Any] = ()
+    ) -> T:
         """Return a copy of the object
 
         Parameters
@@ -294,7 +328,12 @@ class SchemaBase(object):
             and self._kwds == other._kwds
         )
 
-    def to_dict(self, validate: Union[bool, str] = True, ignore: Optional[Sequence[str]] = None, context: Optional[Mapping[Any, Any]] = None) -> Union[AltairObj, Dict[Any, Any], str, float]:
+    def to_dict(
+        self,
+        validate: Union[bool, str] = True,
+        ignore: Optional[Sequence[str]] = None,
+        context: Optional[Mapping[Any, Any]] = None,
+    ) -> Union[AltairObj, Dict[Any, Any], str, float]:
         """Return a dictionary representation of the object
 
         Parameters
@@ -348,7 +387,13 @@ class SchemaBase(object):
         return result
 
     def to_json(
-        self, validate: Union[bool, str] = True, ignore: Optional[Sequence[str]] = None, context: Optional[Mapping[Any, Any]] = None, indent: int = 2, sort_keys: bool = True, **kwargs: Any
+        self,
+        validate: Union[bool, str] = True,
+        ignore: Optional[Sequence[str]] = None,
+        context: Optional[Mapping[Any, Any]] = None,
+        indent: int = 2,
+        sort_keys: bool = True,
+        **kwargs: Any,
     ) -> str:
         """Emit the JSON representation for this object as a string.
 
@@ -390,7 +435,14 @@ class SchemaBase(object):
         return _subclasses(SchemaBase)
 
     @classmethod
-    def from_dict(cls: Type[T], dct: Mapping[str, Any], validate: bool = True, _wrapper_classes: Optional[Union[Iterable[Type[SchemaBase]], Iterable[Type[T]]]] = None) -> T:
+    def from_dict(
+        cls: Type[T],
+        dct: Mapping[str, Any],
+        validate: bool = True,
+        _wrapper_classes: Optional[
+            Union[Iterable[Type[SchemaBase]], Iterable[Type[T]]]
+        ] = None,
+    ) -> T:
         """Construct class from a dictionary representation
 
         Parameters
@@ -422,7 +474,9 @@ class SchemaBase(object):
         return converter.from_dict(dct, cls)
 
     @classmethod
-    def from_json(cls: Type[T], json_string: str, validate: bool = True, **kwargs: Any) -> T:
+    def from_json(
+        cls: Type[T], json_string: str, validate: bool = True, **kwargs: Any
+    ) -> T:
         """Instantiate the object from a valid JSON string
 
         Parameters
@@ -450,7 +504,9 @@ class SchemaBase(object):
         """
         if schema is None:
             schema = cls._schema
-        resolver: RefResolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
+        resolver: RefResolver = jsonschema.RefResolver.from_schema(
+            cls._rootschema or cls._schema
+        )
         return jsonschema.validate(
             instance, schema, cls=cls._validator, resolver=resolver
         )
@@ -471,7 +527,9 @@ class SchemaBase(object):
         """
         value = _todict(value, validate=False, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        resolver: RefResolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
+        resolver: RefResolver = jsonschema.RefResolver.from_schema(
+            cls._rootschema or cls._schema
+        )
         return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
 
     def __dir__(self) -> List[str]:
@@ -524,7 +582,9 @@ class _FromDict(object):
             return hash(s)
         else:
 
-            def _freeze(val: Union[Mapping[Any, Any], Set[Any], Sequence[Any], GenericT]) -> Union[FrozenSet[Any], Tuple[Any], GenericT]:
+            def _freeze(
+                val: Union[Mapping[Any, Any], Set[Any], Sequence[Any], GenericT]
+            ) -> Union[FrozenSet[Any], Tuple[Any], GenericT]:
                 if isinstance(val, dict):
                     return frozenset((k, _freeze(v)) for k, v in val.items())
                 elif isinstance(val, set):
@@ -537,7 +597,12 @@ class _FromDict(object):
             return hash(_freeze(schema))
 
     def from_dict(
-        self, dct: Union[Schema, SchemaBase], cls: Optional[Type[T]] = None, schema: Optional[Schema] = None, rootschema: Optional[Schema] = None, default_class: Any = _passthrough
+        self,
+        dct: Union[Schema, SchemaBase],
+        cls: Optional[Type[T]] = None,
+        schema: Optional[Schema] = None,
+        rootschema: Optional[Schema] = None,
+        default_class: Any = _passthrough,
     ) -> Union[T, SchemaBase]:
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
