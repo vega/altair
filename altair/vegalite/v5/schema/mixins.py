@@ -32,9 +32,7 @@ class MarkMethodMixin(object):
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
                  **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'arc' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -91,9 +89,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'area' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -150,9 +146,7 @@ class MarkMethodMixin(object):
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
                  **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'bar' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -209,9 +203,7 @@ class MarkMethodMixin(object):
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'image' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -268,9 +260,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'line' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -327,9 +317,7 @@ class MarkMethodMixin(object):
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'point' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -386,9 +374,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'rect' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -445,9 +431,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'rule' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -504,9 +488,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'text' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -563,9 +545,7 @@ class MarkMethodMixin(object):
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                   yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'tick' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -622,9 +602,7 @@ class MarkMethodMixin(object):
                    tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                    x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                    yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'trail' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -681,9 +659,7 @@ class MarkMethodMixin(object):
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
                     y2Offset=Undefined, yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'circle' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -740,9 +716,7 @@ class MarkMethodMixin(object):
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
                     y2Offset=Undefined, yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'square' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -800,9 +774,7 @@ class MarkMethodMixin(object):
                       url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                       xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                       yOffset=Undefined, **kwds):
-        """Set the chart's mark to :class:`MarkDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                     ariaRoleDescription=ariaRoleDescription, aspect=aspect, bandSize=bandSize,
@@ -838,9 +810,7 @@ class MarkMethodMixin(object):
     def mark_boxplot(self, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
                      median=Undefined, opacity=Undefined, orient=Undefined, outliers=Undefined,
                      rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
-        """Set the chart's mark to :class:`BoxPlotDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)
         """
         kwds = dict(box=box, clip=clip, color=color, extent=extent, median=median, opacity=opacity,
                     orient=orient, outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
@@ -854,9 +824,7 @@ class MarkMethodMixin(object):
     def mark_errorbar(self, clip=Undefined, color=Undefined, extent=Undefined, opacity=Undefined,
                       orient=Undefined, rule=Undefined, size=Undefined, thickness=Undefined,
                       ticks=Undefined, **kwds):
-        """Set the chart's mark to :class:`ErrorBarDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)
         """
         kwds = dict(clip=clip, color=color, extent=extent, opacity=opacity, orient=orient, rule=rule,
                     size=size, thickness=thickness, ticks=ticks, **kwds)
@@ -870,9 +838,7 @@ class MarkMethodMixin(object):
     def mark_errorband(self, band=Undefined, borders=Undefined, clip=Undefined, color=Undefined,
                        extent=Undefined, interpolate=Undefined, opacity=Undefined, orient=Undefined,
                        tension=Undefined, **kwds):
-        """Set the chart's mark to :class:`ErrorBandDef`.
-    
-        For information on additional arguments
+        """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)
         """
         kwds = dict(band=band, borders=borders, clip=clip, color=color, extent=extent,
                     interpolate=interpolate, opacity=opacity, orient=orient, tension=tension, **kwds)
