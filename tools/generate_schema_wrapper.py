@@ -491,9 +491,9 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
 
 MARK_METHOD = '''
 def mark_{mark}({def_arglist}):
-    """Set the chart's mark to '{mark}'
+    """Set the chart's mark to :class:`{mark_def}`.
 
-    For information on additional arguments, see :class:`{mark_def}`
+    For information on additional arguments
     """
     kwds = dict({dict_arglist})
     copy = self.copy(deep=False)
