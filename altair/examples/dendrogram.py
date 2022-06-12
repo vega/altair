@@ -112,7 +112,6 @@ arm2 = base.encode(*arm2_encoding).mark_rule()
 chart_den = shoulder + arm1 + arm2
 
 df_text = pd.DataFrame(dict(labels=den["ivl"], x=get_leaf_loc(den)))
-df_text
 
 chart_text = alt.Chart(
     df_text
