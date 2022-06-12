@@ -8,6 +8,8 @@ https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrog
 
 import pandas as pd
 import altair as alt
+import numpy as np
+
 
 den = {
     'dcoord': [[0.0, 0.8187388676087964, 0.8187388676087964, 0.0],
