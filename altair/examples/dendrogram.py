@@ -10,7 +10,10 @@ import pandas as pd
 import altair as alt
 import numpy as np
 
-
+# the variable `den` shown below is an exemplary output of `scipy.cluster.hierarchy.dendrogram`, where
+# the dendrogram itself is truncated such that no more than 3 levels of the dendrogram tree are shown.
+# Please refer to https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html
+# for the exact details.
 den = {
     'dcoord': [[0.0, 0.8187388676087964, 0.8187388676087964, 0.0],
   [0.0, 1.105139508538779, 1.105139508538779, 0.0],
@@ -97,17 +100,21 @@ source = get_df_coord(den)
 base = alt.Chart(source)
 
 # the U shape is composed of a shoulder plus two arms
-shoulder_encoding = [
-        alt.X("xk2:Q", title=""),
-        alt.X2("xk3:Q"),
-        alt.Y("yk2:Q", title="")
-]
-arm1_encoding = [alt.X("xk1:Q"), alt.Y("yk1:Q"), alt.Y2("yk2:Q")]
-arm2_encoding = [alt.X("xk3:Q"), alt.Y("yk3:Q"), alt.Y2("yk4:Q")]
-
-shoulder = base.encode(*shoulder_encoding).mark_rule()
-arm1 = base.encode(*arm1_encoding).mark_rule()
-arm2 = base.encode(*arm2_encoding).mark_rule()
+shoulder = base.encode(
+    alt.X("xk2:Q", title=""),
+    alt.X2("xk3:Q"),
+    alt.Y("yk2:Q", title="")
+).mark_rule()
+arm1 = base.encode(
+    alt.X("xk1:Q"), 
+    alt.Y("yk1:Q"), 
+    alt.Y2("yk2:Q")
+).mark_rule()
+arm2 = base.encode(
+    alt.X("xk3:Q"), 
+    alt.Y("yk3:Q"), 
+    alt.Y2("yk4:Q")
+).mark_rule()
 
 chart_den = shoulder + arm1 + arm2
 
