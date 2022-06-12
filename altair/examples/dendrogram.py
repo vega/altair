@@ -122,11 +122,16 @@ chart_text = alt.Chart(
     text = alt.Text("labels:N")
 )
 
-(
-    (chart_den & chart_text)
-    .resolve_scale(x="shared")
-    .configure(padding={"top":10,"left":10})
-    .configure_concat(spacing=0)
-    .configure_axis(labels=False, ticks=False, grid=False)
-    .properties(title="Hierarchical Clustering Dendrogram")
+(chart_den & chart_text).resolve_scale(
+    x="shared"
+).configure(
+    padding={"top":10,"left":10}
+).configure_concat(
+    spacing=0
+).configure_axis(
+    labels=False,
+    ticks=False,
+    grid=False
+).properties(
+    title="Hierarchical Clustering Dendrogram"
 )
