@@ -110,11 +110,11 @@ arm1 = base.mark_rule().encode(
     alt.Y("yk1:Q"), 
     alt.Y2("yk2:Q")
 )
-arm2 = base.encode(
+arm2 = base.mark_rule().encode(
     alt.X("xk3:Q"), 
     alt.Y("yk3:Q"), 
     alt.Y2("yk4:Q")
-).mark_rule()
+)
 
 chart_den = shoulder + arm1 + arm2
 
