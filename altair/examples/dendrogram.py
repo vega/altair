@@ -10,10 +10,9 @@ import pandas as pd
 import altair as alt
 import numpy as np
 
-# the variable `den` shown below is an exemplary output of `scipy.cluster.hierarchy.dendrogram`, where
-# the dendrogram itself is truncated such that no more than 3 levels of the dendrogram tree are shown.
-# Please refer to https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html
-# for the exact details.
+# the variable `den` shown below is an exemplary output of `scipy.cluster.hierarchy.dendrogram` 
+# (https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.dendrogram.html#scipy.cluster.hierarchy.dendrogram)
+# where the dendrogram itself is truncated such that no more than 3 levels of the dendrogram tree are shown.
 den = {
     'dcoord': [[0.0, 0.8187388676087964, 0.8187388676087964, 0.0],
   [0.0, 1.105139508538779, 1.105139508538779, 0.0],
