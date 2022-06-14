@@ -100,11 +100,11 @@ source = get_df_coord(den)
 base = alt.Chart(source)
 
 # the U shape is composed of a shoulder plus two arms
-shoulder = base.encode(
+shoulder = base.mark_rule().encode(
     alt.X("xk2:Q", title=""),
     alt.X2("xk3:Q"),
     alt.Y("yk2:Q", title="")
-).mark_rule()
+)
 arm1 = base.encode(
     alt.X("xk1:Q"), 
     alt.Y("yk1:Q"), 
