@@ -105,11 +105,11 @@ shoulder = base.mark_rule().encode(
     alt.X2("xk3:Q"),
     alt.Y("yk2:Q", title="")
 )
-arm1 = base.encode(
+arm1 = base.mark_rule().encode(
     alt.X("xk1:Q"), 
     alt.Y("yk1:Q"), 
     alt.Y2("yk2:Q")
-).mark_rule()
+)
 arm2 = base.encode(
     alt.X("xk3:Q"), 
     alt.Y("yk3:Q"), 
