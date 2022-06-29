@@ -65,8 +65,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "Altair"
-copyright = "2016-2020, Altair Developers"
-author = "Brian Granger and Jake VanderPlas"
+copyright = "2016-2022, Altair Developers"
+author = "Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -253,7 +253,7 @@ latex_documents = [
         master_doc,
         "altair.tex",
         "altair Documentation",
-        "Brian Granger and Jake VanderPlas",
+        "Altair Developers",
         "manual",
     ),
 ]

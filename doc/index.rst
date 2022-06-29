@@ -8,9 +8,11 @@ Altair: Declarative Visualization in Python
    :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
    :size: 15
 
-Altair is a declarative statistical visualization library for Python, based on
+Vega-Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_, and the source is available on
 `GitHub <http://github.com/altair-viz/altair>`_.
+
+*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
 With Altair, you can spend more time understanding your data and its meaning.
 Altair's API is simple, friendly and consistent and built on top of the
