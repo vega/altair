@@ -1,7 +1,7 @@
 .. _changes:
 
-Altair Change Log
-=================
+Release Notes
+=============
 
 Version 4.3.0 (unreleased)
 --------------------------

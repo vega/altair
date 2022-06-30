@@ -432,3 +432,33 @@ data before usage in Altair using GeoPandas for example as such:
 .. _Protocol geo_interface: https://gist.github.com/sgillies/2217756
 .. _Packages supporting the geo_interface: https://github.com/mlaloux/Python-geo_interface-applications
 .. _The GeoJSON format: https://tools.ietf.org/html/rfc7946#section-3.1.9
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User Guide
+   :hidden:
+
+   self
+   encoding
+   marks
+   transform/index
+   interactions
+   compound_charts
+   scale_resolve
+   times_and_dates
+   customization
+   configuration
+   saving_charts
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Advanced Usage
+   :hidden:
+
+   internals
+   importing
+   display_frontends
+   custom_renderers
+   data_transformers

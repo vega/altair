@@ -1,7 +1,7 @@
 .. _ecosystem:
 
-Altair Ecosystem
-================
+Ecosystem
+=========
 
 This is a list of projects related to or built on top of Altair. We hope to make it easier to find these projects by listing them here. If you know of a project that should be added, please let us know.
 

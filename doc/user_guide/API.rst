@@ -15,6 +15,7 @@ Top-Level Objects
 
 .. autosummary::
    :toctree: generated/toplevel/
+   :caption: Top-Level Objects
    :nosignatures:
 
    Chart
@@ -32,6 +33,7 @@ Encoding Channels
 
 .. autosummary::
    :toctree: generated/channels/
+   :caption: Encoding Channels
    :nosignatures:
 
    Angle
@@ -140,6 +142,7 @@ API Functions
 
 .. autosummary::
    :toctree: generated/api/
+   :caption: API Functions
    :nosignatures:
 
    binding
@@ -170,6 +173,7 @@ Low-Level Schema Wrappers
 
 .. autosummary::
    :toctree: generated/core/
+   :caption: Low-Level Schema Wrappers
    :nosignatures:
 
    Aggregate
