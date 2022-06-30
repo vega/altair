@@ -195,7 +195,7 @@ with a ``brush`` selection to add interaction:
 
     lower = base.properties(
         height=60
-    ).add_selection(brush)
+    ).add_parameter(brush)
 
     alt.vconcat(upper, lower)
 
@@ -362,7 +362,7 @@ layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
+    hover = alt.selection_point(on='mouseover', nearest=True, empty='none')
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',
@@ -373,7 +373,7 @@ layered chart with a hover selection:
         height=180,
     )
 
-    points = base.mark_point().add_selection(
+    points = base.mark_point().add_parameter(
         hover
     )
 
