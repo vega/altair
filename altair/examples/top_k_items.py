@@ -5,7 +5,7 @@ This example shows how to use the window and transformation filter to display
 the Top items of a long list of items in decreasing order.
 Here we sort the top 10 highest ranking movies of IMDB.
 """
-# category: case studies
+# category: other charts
 import altair as alt
 from vega_datasets import data
 
