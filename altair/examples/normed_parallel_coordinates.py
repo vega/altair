@@ -1,6 +1,6 @@
 """
-Normalized Parallel Coordinates Example
----------------------------------------
+Normalized Parallel Coordinates
+-------------------------------
 A `Parallel Coordinates <https://en.wikipedia.org/wiki/Parallel_coordinates>`_
 chart is a chart that lets you visualize the individual data points by drawing
 a single line for each of them.
