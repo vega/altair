@@ -1,5 +1,5 @@
 """
-Bar Chart with rounded edges
+Bar Chart with Rounded Edges
 ----------------------------
 This example shows how to create a bar chart with rounded edges.
 """
