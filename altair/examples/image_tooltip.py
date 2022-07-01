@@ -5,7 +5,7 @@ This example shows how to render images in tooltips.
 Either URLs or local file paths can be used to reference
 the images.
 """
-# category: other charts
+# category: interactive charts
 
 import altair as alt
 import pandas as pd
