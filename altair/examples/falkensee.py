@@ -1,7 +1,7 @@
 """
-Falkensee
------------------------
-This example is a reproduction of the Falkensee plot found in the vega-lite examples.
+Population of Falkensee from 1875 to 2014
+-----------------------------------------
+This example is a reproduction of the Falkensee plot found in the Vega-Lite examples.
 """
 # category: case studies
 import altair as alt
