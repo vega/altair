@@ -3,7 +3,7 @@ Point map
 =========
 This is a layered map that shows the positions of airports on a background of U.S. states.
 """
-# category: maps 
+# category: maps
 import altair as alt
 from vega_datasets import data
 
