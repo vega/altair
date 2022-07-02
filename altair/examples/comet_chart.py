@@ -1,6 +1,6 @@
 """
-Comet Chart Example
-----------------------------
+Comet Chart
+-----------
 Inspired by `Zan Armstrong's comet chart <https://www.zanarmstrong.com/infovisresearch>`_
 this plot uses ``mark_trail`` to visualize change of grouped data over time.
 A more elaborate example and explanation of creating comet charts in Altair
