@@ -3,6 +3,7 @@ Pyramid Pie Chart
 -----------------
 Altair reproduction of http://robslink.com/SAS/democd91/pyramid_pie.htm
 """
+# category: case studies
 import altair as alt
 import pandas as pd
 
