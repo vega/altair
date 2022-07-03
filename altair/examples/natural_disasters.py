@@ -28,7 +28,11 @@ alt.Chart(source).transform_filter(
         legend=alt.Legend(title='Deaths', clipHeight=30, format='s')
     ),
     color=alt.Color('Entity:N', legend=None),
-    tooltip=["Entity:N", "Year:O", "Deaths:Q"]
+    tooltip=[
+        "Entity:N", 
+        alt.Tooltip("Year:T", format='%Y'), 
+        alt.Tooltip("Deaths:Q", format='~s')
+    ],
 ).properties(
     width=450,
     height=320,
