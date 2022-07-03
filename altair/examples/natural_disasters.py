@@ -25,7 +25,7 @@ alt.Chart(source).transform_filter(
     ),
     size=alt.Size('Deaths:Q',
         scale=alt.Scale(range=[0, 2500]),
-        legend=alt.Legend(title='Deaths')
+        legend=alt.Legend(title='Deaths', clipHeight=30, format='s')
     ),
     color=alt.Color('Entity:N', legend=None),
     tooltip=["Entity:N", "Year:O", "Deaths:Q"]
