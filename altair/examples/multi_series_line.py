@@ -8,10 +8,10 @@ This example shows how to make a line chart with multiple series of data.
 import altair as alt
 from vega_datasets import data
 
-source = data.iowa_electricity()
+source = data.stocks()
 
 alt.Chart(source).mark_line().encode(
-    x="year",
-    y="net_generation",
-    color="source"
+    x='date',
+    y='price',
+    color='symbol',
 )
