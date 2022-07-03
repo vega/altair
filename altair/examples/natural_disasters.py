@@ -17,7 +17,7 @@ alt.Chart(source).transform_filter(
     strokeWidth=1,
     strokeOpacity=0.4
 ).encode(
-    x=alt.X('Year:O', axis=alt.Axis(labelAngle=0), title=None),
+    x=alt.X('Year:T', title=None, scale=alt.Scale(domain=['1899','2018'])),
     y=alt.Y(
         'Entity:N',
         sort=alt.EncodingSortField(field="Deaths", op="sum", order='descending'),
