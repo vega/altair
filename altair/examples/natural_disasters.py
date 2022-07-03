@@ -32,7 +32,11 @@ alt.Chart(source).transform_filter(
 ).properties(
     width=450,
     height=320,
-    title="Global Deaths from Natural Disasters"
+    title=alt.TitleParams(
+        text="Global Deaths from Natural Disasters (1900-2017)",
+        subtitle="The size of the bubble represents the total death count per year, by type of disaster",
+        anchor='start'
+    )
 ).configure_axis(
     domain=False,
     ticks=False,    
