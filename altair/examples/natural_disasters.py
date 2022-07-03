@@ -41,7 +41,7 @@ alt.Chart(source).transform_filter(
         subtitle="The size of the bubble represents the total death count per year, by type of disaster",
         anchor='start'
     )
-).configure_axis(
+).configure_axisY(
     domain=False,
     ticks=False,
     offset=10
