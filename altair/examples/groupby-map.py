@@ -1,8 +1,7 @@
 """
-Locations of US Airports
-========================
-This is a layered geographic visualization that shows the positions of US
-airports on a background of US states.
+Grouped Points with Proportional Symbols Map
+============================================
+This is a layered geographic visualization that groups points by state.
 """
 # category: maps
 import altair as alt
@@ -20,7 +19,7 @@ background = alt.Chart(states).mark_geoshape(
     height=300
 ).project('albersUsa')
 
-# airport positions on background
+# Airports grouped by state
 points = alt.Chart(airports).transform_aggregate(
     latitude='mean(latitude)',
     longitude='mean(longitude)',
