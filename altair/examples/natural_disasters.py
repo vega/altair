@@ -17,8 +17,12 @@ alt.Chart(source).transform_filter(
     strokeWidth=1,
     strokeOpacity=0.4
 ).encode(
-    x=alt.X('Year:O', axis=alt.Axis(labelAngle=0)),
-    y=alt.Y('Entity:N', sort=alt.EncodingSortField(field="Deaths", op="sum", order='descending')),
+    x=alt.X('Year:O', axis=alt.Axis(labelAngle=0), title=None),
+    y=alt.Y(
+        'Entity:N',
+        sort=alt.EncodingSortField(field="Deaths", op="sum", order='descending'),
+        title=None
+    ),
     size=alt.Size('Deaths:Q',
         scale=alt.Scale(range=[0, 2500]),
         legend=alt.Legend(title='Deaths')
@@ -29,8 +33,11 @@ alt.Chart(source).transform_filter(
     width=450,
     height=320,
     title="Global Deaths from Natural Disasters"
+).configure_axis(
+    domain=False,
+    ticks=False,    
 ).configure_axisX(
-    labelOverlap=True
+    labelOverlap=True,
 ).configure_view(
     stroke=None
 )
