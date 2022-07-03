@@ -7,18 +7,13 @@ This chart shows a simple line chart with points marking each value. Use
 """
 # category: line charts
 import altair as alt
-import numpy as np
-import pandas as pd
+from vega_datasets import data
 
-x = np.arange(100)
-source = pd.DataFrame({
-  'x': x,
-  'f(x)': np.sin(x / 5)
-})
+source = data.wheat()
 
 alt.Chart(source).mark_line(
     point=alt.OverlayMarkDef(color="red")
 ).encode(
-    x='x',
-    y='f(x)'
-)
+    x='year:O',
+    y='wheat:Q'
+).properties(width=600)
