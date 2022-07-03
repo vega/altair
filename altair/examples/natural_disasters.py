@@ -43,7 +43,8 @@ alt.Chart(source).transform_filter(
     )
 ).configure_axis(
     domain=False,
-    ticks=False,    
+    ticks=False,
+    offset=10
 ).configure_axisX(
     labelOverlap=True,
 ).configure_view(
