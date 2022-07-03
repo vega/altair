@@ -25,7 +25,7 @@ line = chart.mark_line().encode(
 
 # Use the `argmax` aggregate to limit the dataset to the final value
 label = chart.encode(
-    x=alt.X('date:T', aggregate='max'),
+    x=alt.X('max(date):T'),
     y=alt.Y('price:Q', aggregate={'argmax': 'date'}),
     text='symbol'
 )
