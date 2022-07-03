@@ -46,7 +46,7 @@ alt.Chart(source).transform_filter(
     ticks=False,
     offset=10
 ).configure_axisX(
-    labelOverlap=True,
+    grid=False,
 ).configure_view(
     stroke=None
 )
