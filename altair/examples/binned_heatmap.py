@@ -3,7 +3,7 @@ Binned Heatmap
 --------------
 This example shows how to make a heatmap from binned quantitative data.
 """
-# category: other charts
+# category: heatmaps
 import altair as alt
 from vega_datasets import data
 
