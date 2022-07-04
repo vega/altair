@@ -3,7 +3,7 @@ Violin Plot
 -----------
 This example shows how to make a Violin Plot using Altair's density transform.
 """
-# category: other charts
+# category: area charts
 import altair as alt
 from vega_datasets import data
 
