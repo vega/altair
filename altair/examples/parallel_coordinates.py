@@ -8,7 +8,7 @@ Such a chart can be created in Altair by first transforming the data into a
 suitable representation.
 This example shows a parallel coordinates chart with the Iris dataset.
 """
-# category: other charts
+# category: line charts
 
 import altair as alt
 from vega_datasets import data
