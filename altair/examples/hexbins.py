@@ -1,8 +1,9 @@
 """
 Hexbin Chart
------------------
+------------
 This example shows a hexbin chart.
 """
+# category: heatmaps
 import altair as alt
 from vega_datasets import data
 
