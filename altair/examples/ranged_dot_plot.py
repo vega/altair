@@ -3,7 +3,7 @@ Ranged Dot Plot
 ---------------
 This example shows a ranged dot plot to convey changing life expectancy for the five most populous countries (between 1955 and 2000).
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

@@ -4,7 +4,7 @@ Text over a Heatmap
 
 An example of a layered chart of text over a heatmap using the cars dataset.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 
