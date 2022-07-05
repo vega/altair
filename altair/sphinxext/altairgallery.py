@@ -272,6 +272,7 @@ def main(app):
             "Tables": [],
             "Maps": [],
             "Interactive Charts": [],
+            "Advanced Calculations": [],
             "Case Studies": [],
             "Other Charts": [],
         }
