@@ -273,6 +273,7 @@ def main(app):
             "Interactive Charts": [],
             "Advanced Calculations": [],
             "Case Studies": [],
+            "Other Charts": [],
         }
     )
     for d in examples:
