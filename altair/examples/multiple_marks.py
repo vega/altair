@@ -4,7 +4,7 @@ Multiple Marks
 This example demonstrates creating a single chart with multiple markers
 representing the same data.
 """
-# category: other charts
+# category: line charts
 import altair as alt
 from vega_datasets import data
 

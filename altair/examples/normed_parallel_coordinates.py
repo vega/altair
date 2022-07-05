@@ -12,7 +12,7 @@ This example shows a modified parallel coordinates chart with the Iris dataset,
 where the y-axis shows the value after min-max rather than the raw value. It's a
 simplified Altair version of `the VegaLite version <https://vega.github.io/vega-lite/examples/parallel_coordinate.html>`_
 """
-# category: line charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 from altair import datum

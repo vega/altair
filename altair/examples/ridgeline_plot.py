@@ -9,7 +9,7 @@ Such a chart can be created in Altair by first transforming the data into a
 suitable representation.
 
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 
