@@ -212,7 +212,7 @@ JSON). The type signature of a renderer is thus::
     def renderer(spec: dict) -> dict:
         ...
 
-Altair's default ``html`` render returns a cross-platform HTML representation using
+Altair's default ``html`` renderer returns a cross-platform HTML representation using
 the ``"text/html"`` mimetype; schematically it looks like this::
 
     def default_renderer(spec):
