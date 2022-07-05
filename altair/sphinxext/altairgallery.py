@@ -271,7 +271,7 @@ def main(app):
             "Histograms": [],
             "Maps": [],
             "Interactive Charts": [],
-            "Advanced calculations": [],
+            "Advanced Calculations": [],
             "Case Studies": [],
         }
     )
