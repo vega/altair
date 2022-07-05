@@ -5,7 +5,7 @@ This example shows how to use a window transform in order to display only the
 top K categories by number of entries. In this case, we rank the characters in
 the first paragraph of Dickens' *A Tale of Two Cities* by number of occurances.
 """
-# category: case studies
+# category: other charts
 import altair as alt
 import pandas as pd
 import numpy as np

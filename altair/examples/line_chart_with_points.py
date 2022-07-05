@@ -1,19 +1,16 @@
 """
-Line Chart with Points
-----------------------
-This chart shows a simple line chart with points marking each value. Use
-``point=True`` for points with default appearance or customize it with
-``OverlayMarkDef()``.
+Line Chart with Point Markers
+-----------------------------
+This chart shows a simple line chart with points marking each value.
 """
 # category: line charts
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat()
+source = data.stocks()
 
-alt.Chart(source).mark_line(
-    point=alt.OverlayMarkDef(color="red")
-).encode(
-    x='year:O',
-    y='wheat:Q'
-).properties(width=600)
+alt.Chart(source).mark_line(point=True).encode(
+    x='date:T',
+    y='price:Q',
+    color='symbol:N'
+)

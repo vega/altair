@@ -14,6 +14,7 @@
 
 import sys
 import os
+from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -38,6 +39,7 @@ extensions = [
     "altair.sphinxext.altairplot",
     "altair.sphinxext.altairgallery",
     "altair.sphinxext.schematable",
+    # "sphinxext.rediraffe",
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}
@@ -65,7 +67,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Altair"
-copyright = "2016-2022, Altair Developers"
+copyright = "2016-{}, Altair Developers".format(datetime.now().year)
 author = "Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -73,7 +75,7 @@ author = "Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "4.3.0.dev0"
+version = "5.0.0"
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -127,12 +129,16 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
+html_theme_options = {
+    "navbar_start": ["navbar-project"],
+    "navbar_center": ["navbar-nav"],
+    "navbar_end": ["navbar-icon-links"],
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -166,6 +172,7 @@ def setup(app):
     app.add_css_file("theme_overrides.css")
     app.add_css_file("custom.css")
 
+
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
@@ -181,7 +188,15 @@ def setup(app):
 # html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-# html_sidebars = {}
+html_sidebars = {
+    "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
+}
+
+# Redirection of old page locations via the rediraffe sphinx-extension
+# It seems like only pages can be redirected, not headings within pages
+# rediraffe_redirects = {
+#     'case_studies/exploring-weather.rst': 'user_guide/case_studies/exploring-weather.rst'
+# }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
