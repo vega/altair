@@ -134,7 +134,7 @@ def build_row(item):
 
 
 def build_schema_tabel(items):
-    """Return schema table of items (iterator of prop, schema.item, requred)"""
+    """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
     )
@@ -145,7 +145,7 @@ def build_schema_tabel(items):
 
 
 def select_items_from_schema(schema, props=None):
-    """Return iterator  (prop, schema.item, requred) on prop, return all in None"""
+    """Return iterator  (prop, schema.item, required) on prop, return all in None"""
     properties = schema.get("properties", {})
     required = schema.get("required", [])
     if not props:

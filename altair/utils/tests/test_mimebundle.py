@@ -166,7 +166,7 @@ def vega_spec():
 
 
 def test_vegalite_to_vega_mimebundle(require_altair_saver, vegalite_spec, vega_spec):
-    # temporay fix for https://github.com/vega/vega-lite/issues/7776
+    # temporary fix for https://github.com/vega/vega-lite/issues/7776
     def delete_none(axes):
         for axis in axes:
             for key, value in list(axis.items()):
