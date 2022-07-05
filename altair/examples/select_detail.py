@@ -1,6 +1,6 @@
 """
-Selection Detail Example
-========================
+Selection Detail
+================
 This example shows a selection that links two views of data: the left panel
 contains one point per object, and the right panel contains one line per
 object. Clicking on either the points or lines will select the corresponding

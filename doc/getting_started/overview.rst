@@ -33,3 +33,13 @@ concise grammar.
 
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Getting Started
+   :hidden:
+
+   self
+   installation
+   starting

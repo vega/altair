@@ -5,7 +5,7 @@ The example demonstrates the trellis charts created by Richard Becker, William C
 This is the Altair replicate of `the VegaLite version <https://vega.github.io/vega-lite/docs/facet.html#facet-full>`_ 
 demonstrating the usage of `columns` argument to create wrapped facet.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

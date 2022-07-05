@@ -3,7 +3,7 @@ Isotype Grid
 ------------
 This example is a grid of isotype figures.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 import pandas as pd
 
