@@ -7,9 +7,10 @@ This chart shows a line chart with the path interpolated. A full list of interpo
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat()
+source = data.stocks()
 
 alt.Chart(source).mark_line(interpolate="monotone").encode(
-    x="year:O",
-    y="wheat:Q"
-).properties(width=600)
+    x="date:T",
+    y="price:Q",
+    color="symbol:N"
+)
