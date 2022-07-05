@@ -1,6 +1,6 @@
 """
-Ridgeline plot Example
-----------------------
+Ridgeline plot
+--------------
 A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_
 chart is a chart that lets you visualize distribution of a numeric value for 
 several groups.

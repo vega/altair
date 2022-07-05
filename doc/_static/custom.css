@@ -24,3 +24,62 @@ table.docutils td li {
   line-height: 18px;
 
 }
+
+/* Everything below this comment is for the pydata sphinx theme*/
+
+/* Blue topbar */
+.navbar-light {
+    background-color: #16A7F0 !important;
+}
+/* White text in topbar */
+.navbar-light a {
+    color: #fff !important;
+}
+/* White bold project title in topbar */
+.navbar-light p.title {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    text-align: center;
+    width: 100%;
+}
+/* There is a small jump in the title positionin when the navbar transitions full */
+/* title to the collapse button. 27% width here makes that jump as discrete as possible */
+div#navbar-start {
+    width: 27%;
+    margin-left: 0px !important;
+}
+/* Adjust the title position for narrow screens, such as mobile phones. */
+/* This also prevents that the collapse button stacks under the title, */
+/* which would cover a bit of the logo. 719px makes the title */
+/* switch to narrow screen layout at the same time as the rest of the page. */
+@media only screen and (max-width: 719px) {
+    div#navbar-start {
+        width: 60%;
+        margin-left: 0px !important;
+    }
+    .navbar-light p.title {
+        text-align: right;
+    }
+}
+
+/* Version number in the same darkblue color as other text */
+div.navbar-brand-box p#site-version.site-version {
+    color: #130654 !important;
+}
+/* The box that contains the logo and the version number */
+div.navbar-brand-box a {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: column !important;
+}
+/* The logo */
+div.navbar-brand-box img {
+    display: block !important;
+    height: auto !important;
+    width: auto !important;
+    max-height: 18vh !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    margin-top: -40px !important;
+}
