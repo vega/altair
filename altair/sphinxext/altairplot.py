@@ -265,7 +265,7 @@ def html_visit_altair_plot(self, node):
                 raise ValueError("Invalid chart: {0}".format(node["code"]))
             actions = node["links"]
 
-            # TODO: add an option to save spects to file & load from there.
+            # TODO: add an option to save chart specs to file & load from there.
             # TODO: add renderer option
 
             # Write spec to a *.vl.json file
