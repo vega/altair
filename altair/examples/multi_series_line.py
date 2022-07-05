@@ -11,7 +11,7 @@ from vega_datasets import data
 source = data.stocks()
 
 alt.Chart(source).mark_line().encode(
-    x='date',
-    y='price',
-    color='symbol',
+    x='date:T',
+    y='price:Q',
+    color='symbol:N',
 )
