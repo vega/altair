@@ -19,7 +19,7 @@ points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
-).add_selection(brush)
+).add_parameter(brush)
 
 # Base chart for data tables
 ranked_text = alt.Chart(source).mark_text().encode(

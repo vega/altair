@@ -11,7 +11,7 @@ from vega_datasets import data
 
 source = data.population.url
 
-select_year = alt.selection_single(
+select_year = alt.selection_point(
     name="Year",
     fields=["year"],
     bind=alt.binding_range(min=1900, max=2000, step=10, name="Year"),
@@ -27,7 +27,10 @@ alt.Chart(source).mark_bar().encode(
         title="Sex",
     ),
     column=alt.Column("age:O", title="Age"),
-).properties(width=20, title="U.S. Population by Age and Sex").add_selection(
+).properties(
+    width=20,
+    title="U.S. Population by Age and Sex"
+).add_parameter(
     select_year
 ).transform_calculate(
     "sex", alt.expr.if_(alt.datum.sex == 1, "Male", "Female")
