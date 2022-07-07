@@ -310,8 +310,9 @@ store geo-spatial vector data.
 
 To make working with Geospatial Data as similar as working with long-form structured data
 the geo_interface is serialized in order to:
+
 - make it be correctly interpreted by Altair
-- provide users a similar experience as when working with tabular data such as Pandas.
+- provide users a similar experience as when working with tabular data such as Pandas
 
 Altair can interpret a spatial bounded entity (a Feature) or a list of Features
 (FeatureCollection). In order for correct interpretation it is made sure that all records
