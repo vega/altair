@@ -22,10 +22,12 @@ base = alt.Chart(source).encode(
 line = base.mark_line().encode(x="date", y="price")
 
 
-last_price = (
-    base.mark_circle()
-    .transform_aggregate(last_date="argmax(date)", groupby=["symbol"])
-    .encode(x=alt.X("last_date['date']:T"), y=alt.Y("last_date['price']:Q"))
+last_price = base.mark_circle().encode(
+    x=alt.X("last_date['date']:T"),
+    y=alt.Y("last_date['price']:Q")
+).transform_aggregate(
+    last_date="argmax(date)",
+    groupby=["symbol"]
 )
 
 company_name = last_price.mark_text(align="left", dx=4).encode(text="symbol")
