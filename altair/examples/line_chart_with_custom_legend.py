@@ -31,7 +31,7 @@ company_name = last_price.mark_text(align="left", dx=4).encode(text="symbol")
 
 chart = (line + last_price + company_name).encode(
     x=alt.X(title="date"),
-    y=alt.X(title="price"),
+    y=alt.Y(title="price"),
 )
 
 chart
