@@ -27,7 +27,7 @@ grouped by the number of Cylinders.
 
     alt.Chart(cars).mark_bar().encode(
         y='Cylinders:O',
-        x='mean(Acceleration):Q',
+        x='mean(Acceleration):Q'
     )
 
 The Altair shorthand string::
@@ -43,9 +43,9 @@ is made available for convenience, and is equivalent to the longer form::
     # ...
 
 For more information on shorthand encodings specifications, see
-:ref:`encoding-aggregates`.
+:ref:`shorthand-description`.
 
-The same plot can be shown using an explicitly computed aggregation, using the
+The same plot can be shown via an explicitly computed aggregation, using the
 :meth:`~Chart.transform_aggregate` method:
 
 .. altair-plot::
