@@ -8,7 +8,7 @@ There are two ways to aggregate data within Altair: within the encoding itself,
 or using a top level aggregate transform.
 
 The aggregate property of a field definition can be used to compute aggregate
-summary statistics (e.g., median, min, max) over groups of data.
+summary statistics (e.g., :code:`median`, :code:`min`, :code:`max`) over groups of data.
 
 If at least one fields in the specified encoding channels contain aggregate,
 the resulting visualization will show aggregate data. In this case, all
@@ -110,8 +110,9 @@ respect to their country of origin.
 :code:`quantitative` by default, it does not matter if the source data is a
 DataFrame, URL pointer, CSV file or JSON file.
 
-Functions that handle categorical data (such as count, missing, distinct and
-valid) are the ones that get the most out of this feature.
+Functions that handle categorical data (such as :code:`count`,
+:code:`missing`, :code:`distinct` and :code:`valid`) are the ones that get
+the most out of this feature.
 
 Argmin / Argmax
 ^^^^^^^^^^^^^^^
@@ -145,9 +146,8 @@ with respect to their country/region of origin. This can be done using
 It is clear that Japan's strongest car is also the lightest, while that of USA
 is the heaviest.
 
-For another example of using the :code:`argmax` aggregate function, see
-:ref:`gallery_line_chart_with_custom_legend`. Using :code:`argmin` is completely
-similar.
+See :ref:`gallery_line_chart_with_custom_legend` for another example that uses
+:code:`argmax`. The case of :code:`argmin` is completely similar.
 
 Transform Options
 ^^^^^^^^^^^^^^^^^
@@ -162,8 +162,8 @@ The :class:`~AggregatedFieldDef` objects have the following options:
 
 .. _agg-func-table:
 
-Aggregation Functions
-^^^^^^^^^^^^^^^^^^^^^
+List of Aggregation Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In addition to ``count`` and ``average``, there are a large number of available
 aggregation functions built into Altair; they are listed in the following table:
