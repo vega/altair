@@ -80,6 +80,14 @@ Pandas, and then plot the resulting DataFrame:
 **Note:** As mentioned in :doc:`../data`, this approach of transforming the
 data with Pandas is preferable if we already have the DataFrame at hand.
 
+Because :code:`Cylinders` is of type :code:`int64` in the :code:`source`
+DataFrame, Altair would have treated it as a :code:`qualitative` --instead of
+:code:`ordinal`-- type had we not specified it. Making the type of data
+explicit is important since it affects the resulting plot; see
+:ref:`type-legend-scale` and :ref:`type-axis-scale` for two illustrated
+examples. As a rule of thumb, it is better to make the data type explicit,
+instead of relying on an implicit type conversion.
+
 Transform Options
 ^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_aggregate` method is built on the :class:`~AggregateTransform`
