@@ -82,11 +82,47 @@ data with Pandas is preferable if we already have the DataFrame at hand.
 
 Because :code:`Cylinders` is of type :code:`int64` in the :code:`source`
 DataFrame, Altair would have treated it as a :code:`qualitative` --instead of
-:code:`ordinal`-- type had we not specified it. Making the type of data
+:code:`ordinal`-- type, had we not specified it. Making the type of data
 explicit is important since it affects the resulting plot; see
 :ref:`type-legend-scale` and :ref:`type-axis-scale` for two illustrated
 examples. As a rule of thumb, it is better to make the data type explicit,
 instead of relying on an implicit type conversion.
+
+Argmin / Argmax
+^^^^^^^^^^^^^^^
+Both :code:`argmin` and :code:`argmax` aggregate functions can only be used
+with the :meth:`~Chart.transform_aggregate` method. Trying to use their
+respective shorthand notations will result in an error. This is due to the fact
+that either :code:`argmin` or :code:`argmax` functions return an object, not
+values.  This object then specifies the values to be selected from other
+columns when encoding.  One can think of the returned object as being a
+dictionary, while the column serves the purpose of being a key, which then
+obtains its respective value.
+
+The true value of these functions is appreciated when we want to compare the
+most **distinctive** samples from two sets of data with respect to another set
+of data.
+
+As an example, suppose we want to compare the weight of the strongest cars,
+with respect to their country/region of origin. This can be done using
+:code:`argmax`:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+      x='greatest_hp[Weight_in_lbs]:Q',
+      y='Origin:N'
+   ).transform_aggregate(
+      greatest_hp='argmax(Horsepower)',
+      groupby=['Origin']
+   )
+
+It is clear that Japan's strongest car is also the lightest, while that of USA
+is the heaviest.
+
+For another example of using the :code:`argmax` aggregate function, see
+:ref:`gallery_line_chart_with_custom_legend`. Using :code:`argmin` is completely
+similar.
 
 Transform Options
 ^^^^^^^^^^^^^^^^^
