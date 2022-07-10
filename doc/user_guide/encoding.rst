@@ -426,7 +426,7 @@ aggregation functions built into Altair; they are listed in the following table:
 Aggregate  Description                                                                  Example
 =========  ===========================================================================  =====================================
 argmin     An input data object containing the minimum field value.                     N/A
-argmax     An input data object containing the maximum field value.                     N/A
+argmax     An input data object containing the maximum field value.                     :ref:`gallery_line_chart_with_custom_legend`
 average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
 count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
 distinct   The count of distinct field values.                                          N/A
