@@ -58,6 +58,28 @@ The same plot can be shown via an explicitly computed aggregation, using the
         groupby=["Cylinders"]
     )
 
+The alternative to using aggregate functions is to preprocess the data with
+Pandas, and then plot the resulting DataFrame:
+
+.. altair-plot::
+
+   cars_df = data.cars()
+   source = (
+      cars_df.groupby('Cylinders')
+      .Acceleration
+      .mean()
+      .reset_index()
+      .rename(columns={'Acceleration': 'mean_acc'})
+   )
+
+   alt.Chart(source).mark_bar().encode(
+      y='Cylinders:O',
+      x='mean_acc:Q'
+   )
+
+**Note:** As mentioned in :doc:`../data`, this approach of transforming the
+data with Pandas is preferable if we already have the DataFrame at hand.
+
 Transform Options
 ^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_aggregate` method is built on the :class:`~AggregateTransform`
