@@ -88,6 +88,31 @@ explicit is important since it affects the resulting plot; see
 examples. As a rule of thumb, it is better to make the data type explicit,
 instead of relying on an implicit type conversion.
 
+Functions Without Arguments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible for aggregate functions to not
+have an argument. In this case, aggregation will be performed on the column
+used in the other axis.
+
+The following chart demonstrates this by counting the number of cars with
+respect to their country of origin.
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+      y='Origin:N',
+      # shorthand form of alt.Y(aggregate='count')
+      x='count()'
+   )
+
+**Note:** The :code:`count` aggregate function is of type
+:code:`quantitative` by default, it does not matter if the source data is a
+DataFrame, URL pointer, CSV file or JSON file.
+
+Functions that handle categorical data (such as count, missing, distinct and
+valid) are the ones that get the most out of this feature.
+
 Argmin / Argmax
 ^^^^^^^^^^^^^^^
 Both :code:`argmin` and :code:`argmax` aggregate functions can only be used
