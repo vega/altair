@@ -171,10 +171,7 @@ class Parameter(expr.core.OperatorMixin, object):
 
     def to_dict(self):
         if self.param_type == "variable":
-            if self.param.expr is Undefined:
-                return {"expr": self.name}
-            else:
-                return {"expr": repr(self.param.expr)}
+            return {"expr": self.name}
         elif self.param_type == "selection":
             return {
                 "param": self.name.to_dict()
@@ -208,13 +205,10 @@ class Parameter(expr.core.OperatorMixin, object):
         return "Parameter({0!r}, {1})".format(self.name, self.param)
 
     def _to_expr(self):
-        if not hasattr(self.param, "expr") or self.param.expr is Undefined:
-            return self.name
-        else:
-            return self.param.expr
+        return self.name
 
     def _from_expr(self, expr):
-        return parameter(expr=expr)
+        return ParameterExpression(expr=expr)
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
@@ -242,6 +236,20 @@ class SelectionPredicateComposition(core.PredicateComposition):
 
     def __or__(self, other):
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+
+
+class ParameterExpression(expr.core.OperatorMixin, object):
+    def __init__(self, expr):
+        self.expr = expr
+
+    def to_dict(self):
+        return {"expr": repr(self.expr)}
+
+    def _to_expr(self):
+        return repr(self.expr)
+
+    def _from_expr(self, expr):
+        return ParameterExpression(expr=expr)
 
 
 class SelectionExpression(expr.core.OperatorMixin, object):
