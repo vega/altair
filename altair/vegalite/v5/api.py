@@ -2226,9 +2226,7 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(
-            selection_interval(bind="scales", encodings=encodings)
-        )
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
 
 def _check_if_valid_subspec(spec, classname):
