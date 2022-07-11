@@ -394,8 +394,8 @@ def test_selection():
     assert multi.name == "selec_3"
 
     # test adding to chart
-    chart = alt.Chart().add_parameter(single)
-    chart = chart.add_parameter(multi, interval)
+    chart = alt.Chart().add_params(single)
+    chart = chart.add_params(multi, interval)
     assert set(x.name for x in chart.params) == {"selec_1", "selec_2", "selec_3"}
 
     # test logical operations
@@ -596,8 +596,8 @@ def test_add_selection():
     chart = (
         alt.Chart()
         .mark_point()
-        .add_parameter(selections[0])
-        .add_parameter(selections[1], selections[2])
+        .add_params(selections[0])
+        .add_params(selections[1], selections[2])
     )
     expected = [s.param for s in selections]
     assert chart.params == expected
@@ -606,24 +606,24 @@ def test_add_selection():
 def test_repeat_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    chart1 = base.add_parameter(selection).repeat(list("ABC"))
-    chart2 = base.repeat(list("ABC")).add_parameter(selection)
+    chart1 = base.add_params(selection).repeat(list("ABC"))
+    chart2 = base.repeat(list("ABC")).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_facet_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    chart1 = base.add_parameter(selection).facet("val:Q")
-    chart2 = base.facet("val:Q").add_parameter(selection)
+    chart1 = base.add_params(selection).facet("val:Q")
+    chart2 = base.facet("val:Q").add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_layer_add_selection():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    chart1 = alt.layer(base.add_parameter(selection), base)
-    chart2 = alt.layer(base, base).add_parameter(selection)
+    chart1 = alt.layer(base.add_params(selection), base)
+    chart2 = alt.layer(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
@@ -631,8 +631,8 @@ def test_layer_add_selection():
 def test_compound_add_selections(charttype):
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    chart1 = charttype(base.add_parameter(selection), base.add_parameter(selection))
-    chart2 = charttype(base, base).add_parameter(selection)
+    chart1 = charttype(base.add_params(selection), base.add_params(selection))
+    chart2 = charttype(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 

@@ -23,7 +23,7 @@ base = alt.Chart(source).encode(
 
 points = base.mark_circle().encode(
     opacity=alt.value(0)
-).add_parameter(
+).add_params(
     highlight
 ).properties(
     width=600

@@ -61,7 +61,7 @@ values on multiple lines:
    ).mark_rule().encode(
        opacity=alt.condition(selection, alt.value(0.3), alt.value(0)),
        tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
-   ).add_parameter(selection)
+   ).add_params(selection)
    
    lines + points + rule
 

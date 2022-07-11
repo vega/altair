@@ -34,7 +34,7 @@ color_scale = alt.Scale(domain=['M', 'F'],
 base = alt.Chart(source).properties(
     width=250,
     height=250
-).add_parameter(selector)
+).add_params(selector)
 
 points = base.mark_point(filled=True, size=200).encode(
     x=alt.X('mean(height):Q', scale=alt.Scale(domain=[0,84])),

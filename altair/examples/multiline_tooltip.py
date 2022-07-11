@@ -38,7 +38,7 @@ line = alt.Chart(source).mark_line(interpolate='basis').encode(
 selectors = alt.Chart(source).mark_point().encode(
     x='x:Q',
     opacity=alt.value(0),
-).add_parameter(
+).add_params(
     nearest
 )
 

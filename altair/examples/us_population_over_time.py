@@ -30,7 +30,7 @@ alt.Chart(source).mark_bar().encode(
 ).properties(
     width=20,
     title="U.S. Population by Age and Sex"
-).add_parameter(
+).add_params(
     select_year
 ).transform_calculate(
     "sex", alt.expr.if_(alt.datum.sex == 1, "Male", "Female")
