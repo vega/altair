@@ -10,36 +10,38 @@ used to map columns to visual attributes of the plot.
 The ``mark`` property is what specifies how exactly those attributes
 should be represented on the plot.
 
-Altair provides a number of basic mark properties:
+Altair provides a number of basic mark properties
+(the mark properties column links to the Vega-Lite documentation
+that allows you to interactively explore the effects of modifying each property):
 
-==========  ============================  ===================================================  ====================================
-Mark Name   Method                        Description                                          Example
-==========  ============================  ===================================================  ====================================
-arc         :meth:`~Chart.mark_arc`       A pie chart.                                         :ref:`gallery_pie_chart`
-area        :meth:`~Chart.mark_area`      A filled area plot.                                  :ref:`gallery_simple_stacked_area_chart`
-bar         :meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`
-circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`
-geoshape    :meth:`~Chart.mark_geoshape`  A geographic shape                                   :ref:`gallery_choropleth`
-image       :meth:`~Chart.mark_image`     A scatter plot with image markers.                   :ref:`user-guide-image-mark`
-line        :meth:`~Chart.mark_line`      A line plot.                                         :ref:`gallery_simple_line_chart`
-point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`
-rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
-rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.     :ref:`gallery_candlestick_chart`
-square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A
-text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
-tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
-trail       :meth:`~Chart.mark_trail`     A line with variable widths.                         :ref:`gallery_trail_marker`
-==========  ============================  ===================================================  ====================================
+============================  ===================================================  ========================================  ================================================================
+Mark                          Description                                          Example                                   Mark Properties
+============================  ===================================================  ========================================  ================================================================
+:meth:`~Chart.mark_arc`       A pie chart.                                         :ref:`gallery_pie_chart`                  `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/arc.html#properties>`_
+:meth:`~Chart.mark_area`      A filled area plot.                                  :ref:`gallery_simple_stacked_area_chart`  `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/area.html#properties>`_
+:meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`           `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/bar.html#properties>`_
+:meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`        `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/circle.html#properties>`_
+:meth:`~Chart.mark_geoshape`  A geographic shape                                   :ref:`gallery_choropleth`                 `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/geoshape.html#properties>`_
+:meth:`~Chart.mark_image`     A scatter plot with image markers.                   :ref:`user-guide-image-mark`              `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/image.html#properties>`_
+:meth:`~Chart.mark_line`      A line plot.                                         :ref:`gallery_simple_line_chart`          `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/line.html#properties>`_
+:meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`       `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/point.html#properties>`_
+:meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`             `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/rect.html#properties>`_
+:meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.     :ref:`gallery_candlestick_chart`          `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/rule.html#properties>`_
+:meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A                                       `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/square.html#properties>`_
+:meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`      `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/text.html#properties>`_
+:meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`                 `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/tick.html#properties>`_
+:meth:`~Chart.mark_trail`     A line with variable widths.                         :ref:`gallery_trail_marker`               `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/trail.html#properties>`_
+============================  ===================================================  ========================================  ================================================================
 
 In addition, Altair provides the following compound marks:
 
-==========  ==============================  ================================  ==================================
-Mark Name   Method                          Description                       Example
-==========  ==============================  ================================  ==================================
-box plot    :meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot`
-error band  :meth:`~Chart.mark_errorband`   A continuous band around a line.  :ref:`gallery_line_with_ci`
-error bar   :meth:`~Chart.mark_errorbar`    An errorbar around a point.       :ref:`gallery_errorbars_with_ci`
-==========  ==============================  ================================  ==================================
+==============================  ================================  ==================================  ================================================================
+Mark                            Description                       Example                             Mark Properties
+==============================  ================================  ==================================  ================================================================
+:meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot`              `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/boxplot.html#properties>`_
+:meth:`~Chart.mark_errorband`   A continuous band around a line.  :ref:`gallery_line_with_ci`         `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/errorband.html#properties>`_
+:meth:`~Chart.mark_errorbar`    An errorbar around a point.       :ref:`gallery_errorbars_with_ci`    `Vega-Lite Docs <https://vega.github.io/vega-lite/docs/errorbar.html#properties>`_
+==============================  ================================  ==================================  ================================================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
 of the Chart object, which take optional keyword arguments that are passed to

@@ -23,8 +23,8 @@ base = alt.Chart(source).mark_area(
     y='sum(count):Q',
 )
 
-brush = alt.selection_interval(encodings=['x'],empty='all')
-background = base.add_selection(brush)
+brush = alt.selection_interval(encodings=['x'])
+background = base.add_parameter(brush)
 selected = base.transform_filter(brush).mark_area(color='goldenrod')
 
 background + selected

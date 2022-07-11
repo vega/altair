@@ -1,5 +1,7 @@
 # Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
+*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
+
 [![build status](https://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
 [![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -57,7 +59,7 @@ points = alt.Chart(source).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color=alt.condition(brush, 'Origin', alt.value('lightgray'))
-).add_selection(
+).add_parameter(
     brush
 )
 

@@ -29,7 +29,7 @@ base = alt.Chart().mark_bar().encode(
 # gray background with selection
 background = base.encode(
     color=alt.value('#ddd')
-).add_selection(brush)
+).add_parameter(brush)
 
 # blue highlights on the transformed data
 highlight = base.transform_filter(brush)

@@ -312,13 +312,13 @@ def parameter(name=None, select=None, **kwds):
         if parameter.empty == "none":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
-                DeprecationWarning,
+                utils.AltairDeprecationWarning,
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
-                DeprecationWarning,
+                utils.AltairDeprecationWarning,
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -329,7 +329,7 @@ def parameter(name=None, select=None, **kwds):
     if "init" in kwds:
         warnings.warn(
             """Use 'value' instead of 'init'.""",
-            DeprecationWarning,
+            utils.AltairDeprecationWarning,
         )
         if "value" not in kwds:
             kwds["value"] = kwds.pop("init")
@@ -382,7 +382,7 @@ def selection(type=Undefined, **kwds):
         warnings.warn(
             """The types 'single' and 'multi' are now
         combined and should be specified using "type='point'".""",
-            DeprecationWarning,
+            utils.AltairDeprecationWarning,
         )
     else:
         raise ValueError("""'type' must be 'point' or 'interval'""")
@@ -402,21 +402,19 @@ def selection_point(**kwargs):
     return selection(type="point", **kwargs)
 
 
+@utils.deprecation.deprecated(
+    message="'selection_multi' is deprecated.  Use 'selection_point'"
+)
 @utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
-    warnings.warn(
-        """'selection_multi' is deprecated.  Use 'selection_point'""",
-        DeprecationWarning,
-    )
     return selection(type="point", **kwargs)
 
 
+@utils.deprecation.deprecated(
+    message="'selection_single' is deprecated.  Use 'selection_point'"
+)
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
-    warnings.warn(
-        """'selection_single' is deprecated.  Use 'selection_point'""",
-        DeprecationWarning,
-    )
     return selection(type="point", **kwargs)
 
 
@@ -1890,7 +1888,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             display(self)
 
-    @utils.deprecation.deprecated(message="serve() is deprecated. Use show() instead.")
+    @utils.deprecation.deprecated(message="'serve' is deprecated. Use 'show' instead.")
     def serve(
         self,
         ip="127.0.0.1",
@@ -1964,7 +1962,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             import altair_viewer  # type: ignore
         except ImportError:
             raise ValueError(
-                "show() method requires the altair_viewer package. "
+                "'show' method requires the altair_viewer package. "
                 "See http://github.com/altair-viz/altair_viewer"
             )
         altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
@@ -2206,11 +2204,10 @@ class Chart(
             copy.params.append(s.param)
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *params):
-        warnings.warn(
-            """'add_selection' is deprecated. Use 'add_parameter'.""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*params)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
@@ -2383,11 +2380,10 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.add_parameter(*params)
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 
@@ -2443,11 +2439,10 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy.concat = [chart.add_parameter(*params) for chart in copy.concat]
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 
@@ -2486,11 +2481,10 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy.hconcat = [chart.add_parameter(*params) for chart in copy.hconcat]
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 
@@ -2529,11 +2523,10 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy.vconcat = [chart.add_parameter(*params) for chart in copy.vconcat]
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 
@@ -2617,11 +2610,10 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         copy.layer[0] = copy.layer[0].add_parameter(*params)
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 
@@ -2669,11 +2661,10 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.add_parameter(*params)
         return copy
 
+    @utils.deprecation.deprecated(
+        message="'add_selection' is deprecated. Use 'add_parameter' instead."
+    )
     def add_selection(self, *selections):
-        warnings.warn(
-            """'add_selection' is deprecated.  Use 'add_parameter'""",
-            DeprecationWarning,
-        )
         return self.add_parameter(*selections)
 
 

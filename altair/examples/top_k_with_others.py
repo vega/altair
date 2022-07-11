@@ -5,7 +5,7 @@ This example shows how to use aggregate, window, and calculate transfromations
 to display the top-k directors by average worldwide gross while grouping the 
 remaining directors as 'All Others'.
 """
-# category: case studies
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

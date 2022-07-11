@@ -1,6 +1,6 @@
 """
-Selection Detail Example
-========================
+Selection Detail
+================
 This example shows a selection that links two views of data: the left panel
 contains one point per object, and the right panel contains one line per
 object. Clicking on either the points or lines will select the corresponding
@@ -41,12 +41,12 @@ data = pd.merge(timeseries, locations, on='id')
 
 # Data is prepared, now make a chart
 
-selector = alt.selection_single(empty='all', fields=['id'])
+selector = alt.selection_point(fields=['id'])
 
 base = alt.Chart(data).properties(
     width=250,
     height=250
-).add_selection(selector)
+).add_parameter(selector)
 
 points = base.mark_point(filled=True, size=200).encode(
     x='mean(x)',

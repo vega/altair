@@ -23,8 +23,8 @@ source = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
 source = source.reset_index().melt('x', var_name='category', value_name='y')
 
 # Create a selection that chooses the nearest point & selects based on x-value
-nearest = alt.selection(type='single', nearest=True, on='mouseover',
-                        fields=['x'], empty='none')
+nearest = alt.selection(type='point', nearest=True, on='mouseover',
+                        fields=['x'], empty=False)
 
 # The basic line
 line = alt.Chart(source).mark_line(interpolate='basis').encode(
@@ -38,7 +38,7 @@ line = alt.Chart(source).mark_line(interpolate='basis').encode(
 selectors = alt.Chart(source).mark_point().encode(
     x='x:Q',
     opacity=alt.value(0),
-).add_selection(
+).add_parameter(
     nearest
 )
 

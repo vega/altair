@@ -16,8 +16,8 @@ flights_airport = data.flights_airport.url
 states = alt.topo_feature(data.us_10m.url, feature="states")
 
 # Create mouseover selection
-select_city = alt.selection_single(
-    on="mouseover", nearest=True, fields=["origin"], empty="none"
+select_city = alt.selection_point(
+    on="mouseover", nearest=True, fields=["origin"], empty=False
 )
 
 # Define which attributes to lookup from airports.csv
@@ -63,7 +63,7 @@ points = alt.Chart(flights_airport).mark_circle().encode(
     from_=lookup_data
 ).transform_filter(
     (alt.datum.state != "PR") & (alt.datum.state != "VI")
-).add_selection(
+).add_parameter(
     select_city
 )
 

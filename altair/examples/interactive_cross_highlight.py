@@ -11,7 +11,7 @@ from vega_datasets import data
 
 source = data.movies.url
 
-pts = alt.selection(type="single", encodings=['x'])
+pts = alt.selection(type="point", encodings=['x'])
 
 rect = alt.Chart(data.movies.url).mark_rect().encode(
     alt.X('IMDB_Rating:Q', bin=True),
@@ -38,7 +38,7 @@ bar = alt.Chart(source).mark_bar().encode(
 ).properties(
     width=550,
     height=200
-).add_selection(pts)
+).add_parameter(pts)
 
 alt.vconcat(
     rect + circ,
