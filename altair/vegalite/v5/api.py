@@ -214,7 +214,7 @@ class Parameter(expr.core.OperatorMixin, object):
             return self.param.expr
 
     def _from_expr(self, expr):
-        return parameter(expr=expr)
+        return param(expr=expr)
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
