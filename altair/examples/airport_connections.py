@@ -63,7 +63,7 @@ points = alt.Chart(flights_airport).mark_circle().encode(
     from_=lookup_data
 ).transform_filter(
     (alt.datum.state != "PR") & (alt.datum.state != "VI")
-).add_parameter(
+).add_params(
     select_city
 )
 

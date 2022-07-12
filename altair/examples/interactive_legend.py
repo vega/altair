@@ -18,6 +18,6 @@ alt.Chart(source).mark_area().encode(
     alt.Y('sum(count):Q', stack='center', axis=None),
     alt.Color('series:N', scale=alt.Scale(scheme='category20b')),
     opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
-).add_parameter(
+).add_params(
     selection
 )

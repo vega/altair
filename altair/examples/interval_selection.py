@@ -27,6 +27,6 @@ upper = base.encode(
 
 lower = base.properties(
     height=60
-).add_parameter(brush)
+).add_params(brush)
 
 upper & lower

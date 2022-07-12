@@ -38,6 +38,6 @@ text = base.mark_text(dy=-5, align='right').encode(
 points = base.mark_point().encode(
     color=alt.value('black'),
     size=alt.condition(~hover, alt.value(30), alt.value(100))
-).add_parameter(hover)
+).add_params(hover)
 
 background + points + text

@@ -38,7 +38,7 @@ bar = alt.Chart(source).mark_bar().encode(
 ).properties(
     width=550,
     height=200
-).add_parameter(pts)
+).add_params(pts)
 
 alt.vconcat(
     rect + circ,

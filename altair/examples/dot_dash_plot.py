@@ -12,7 +12,7 @@ source = data.cars()
 
 # Configure the options common to all layers
 brush = alt.selection(type='interval')
-base = alt.Chart(source).add_parameter(brush)
+base = alt.Chart(source).add_params(brush)
 
 # Configure the points
 points = base.mark_point().encode(

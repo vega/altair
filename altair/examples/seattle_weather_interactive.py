@@ -33,7 +33,7 @@ points = alt.Chart().mark_point().encode(
 ).properties(
     width=550,
     height=300
-).add_parameter(
+).add_params(
     brush
 ).transform_filter(
     click
@@ -48,7 +48,7 @@ bars = alt.Chart().mark_bar().encode(
     brush
 ).properties(
     width=550,
-).add_parameter(
+).add_params(
     click
 )
 

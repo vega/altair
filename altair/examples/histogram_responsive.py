@@ -31,5 +31,5 @@ alt.vconcat(
   ),
   base.encode(
     alt.X('time:Q', bin=alt.Bin(maxbins=30)),
-  ).add_parameter(brush)
+  ).add_params(brush)
 )

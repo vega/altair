@@ -17,7 +17,7 @@ points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-).add_parameter(
+).add_params(
     brush
 )
 

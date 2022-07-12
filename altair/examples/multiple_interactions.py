@@ -42,7 +42,7 @@ year_slider = alt.binding_range(min=1969, max=2018, step=1)
 slider_selection = alt.selection_point(bind=year_slider, fields=['Release_Year'], name="Release Year_")
 
 
-filter_year = base.add_parameter(
+filter_year = base.add_params(
     slider_selection
 ).transform_filter(
     slider_selection
@@ -52,7 +52,7 @@ filter_year = base.add_parameter(
 genre_dropdown = alt.binding_select(options=genres)
 genre_select = alt.selection_point(fields=['Major_Genre'], bind=genre_dropdown, name="Genre")
 
-filter_genres = base.add_parameter(
+filter_genres = base.add_params(
     genre_select
 ).transform_filter(
     genre_select
@@ -66,7 +66,7 @@ rating_color_condition = alt.condition(rating_select,
                       alt.Color('MPAA_Rating:N', legend=None),
                       alt.value('lightgray'))
 
-highlight_ratings = base.add_parameter(
+highlight_ratings = base.add_params(
     rating_select
 ).encode(
     color=rating_color_condition
@@ -81,7 +81,7 @@ size_checkbox_condition = alt.condition(checkbox_selection,
                                         alt.Size('Hundred_Million_Production:Q')
                                        )
 
-budget_sizing = base.add_parameter(
+budget_sizing = base.add_params(
     checkbox_selection
 ).encode(
     size=size_checkbox_condition

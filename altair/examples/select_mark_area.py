@@ -24,7 +24,7 @@ base = alt.Chart(source).mark_area(
 )
 
 brush = alt.selection_interval(encodings=['x'])
-background = base.add_parameter(brush)
+background = base.add_params(brush)
 selected = base.transform_filter(brush).mark_area(color='goldenrod')
 
 background + selected

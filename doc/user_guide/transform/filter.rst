@@ -151,7 +151,7 @@ to select the data to be shown in the top chart:
         color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
     ).properties(
         width=600, height=100
-    ).add_parameter(
+    ).add_params(
         selection
     )
 
