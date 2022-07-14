@@ -1,9 +1,10 @@
+import hashlib
 import json
 import pkgutil
 import textwrap
 from typing import Callable, Dict
-import uuid
 
+from collections import defaultdict
 from jsonschema import validate
 
 from .plugin_registry import PluginRegistry
@@ -166,17 +167,19 @@ def json_renderer_base(spec, str_repr, **options):
 class HTMLRenderer(object):
     """Object to render charts as HTML, with a unique output div each time"""
 
-    def __init__(self, output_div="altair-viz-{}", **kwargs):
+    def __init__(self, output_div="altair-viz-{}-{}", **kwargs):
         self._output_div = output_div
         self.kwargs = kwargs
+        self.counts = defaultdict(int)
 
-    @property
-    def output_div(self):
-        return self._output_div.format(uuid.uuid4().hex)
+    def get_output_div(self, spec):
+        template = json.dumps(spec).encode()
+        signature = hashlib.md5(template).hexdigest()
+        self.counts[signature] += 1
+        return self._output_div.format(signature, self.counts[signature])
 
     def __call__(self, spec, **metadata):
+        output_div = self.get_output_div(spec)
         kwargs = self.kwargs.copy()
         kwargs.update(metadata)
-        return spec_to_mimebundle(
-            spec, format="html", output_div=self.output_div, **kwargs
-        )
+        return spec_to_mimebundle(spec, format="html", output_div=output_div, **kwargs)
