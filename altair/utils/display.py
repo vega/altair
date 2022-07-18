@@ -1,9 +1,10 @@
+import hashlib
 import json
 import pkgutil
 import textwrap
 from typing import Callable, Dict
-import uuid
 
+from collections import defaultdict
 from jsonschema import validate
 
 from .plugin_registry import PluginRegistry
@@ -48,12 +49,10 @@ class RendererRegistry(PluginRegistry[RendererType]):
         **kwargs,
     ):
         """Set options for embeddings of Vega & Vega-Lite charts.
-
         Options are fully documented at https://github.com/vega/vega-embed.
         Similar to the `enable()` method, this can be used as either
         a persistent global switch, or as a temporary local setting using
         a context manager (i.e. a `with` statement).
-
         Parameters
         ----------
         defaultStyle : bool or string
@@ -100,13 +99,10 @@ class RendererRegistry(PluginRegistry[RendererType]):
 
 class Displayable(object):
     """A base display class for VegaLite v1/v2.
-
     This class takes a VegaLite v1/v2 spec and does the following:
-
     1. Optionally validates the spec against a schema.
     2. Uses the RendererPlugin to grab a renderer and call it when the
        IPython/Jupyter display method (_repr_mimebundle_) is called.
-
     The spec passed to this class must be fully schema compliant and already
     have the data portion of the spec fully processed and ready to serialize.
     In practice, this means, the data portion of the spec should have been passed
@@ -138,7 +134,6 @@ class Displayable(object):
 
 def default_renderer_base(spec, mime_type, str_repr, **options):
     """A default renderer for Vega or VegaLite that works for modern frontends.
-
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
     """
@@ -155,7 +150,6 @@ def default_renderer_base(spec, mime_type, str_repr, **options):
 
 def json_renderer_base(spec, str_repr, **options):
     """A renderer that returns a MIME type of application/json.
-
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
     return default_renderer_base(
@@ -166,17 +160,19 @@ def json_renderer_base(spec, str_repr, **options):
 class HTMLRenderer(object):
     """Object to render charts as HTML, with a unique output div each time"""
 
-    def __init__(self, output_div="altair-viz-{}", **kwargs):
+    def __init__(self, output_div="altair-viz-{}-{}", **kwargs):
         self._output_div = output_div
         self.kwargs = kwargs
+        self.counts = defaultdict(int)
 
-    @property
-    def output_div(self):
-        return self._output_div.format(uuid.uuid4().hex)
+    def get_output_div(self, spec):
+        template = json.dumps(spec).encode()
+        signature = hashlib.md5(template).hexdigest()
+        self.counts[signature] += 1
+        return self._output_div.format(signature, self.counts[signature])
 
     def __call__(self, spec, **metadata):
+        output_div = self.get_output_div(spec)
         kwargs = self.kwargs.copy()
         kwargs.update(metadata)
-        return spec_to_mimebundle(
-            spec, format="html", output_div=self.output_div, **kwargs
-        )
+        return spec_to_mimebundle(spec, format="html", output_div=output_div, **kwargs)
