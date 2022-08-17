@@ -4,6 +4,7 @@ import collections
 import contextlib
 import inspect
 import json
+from typing import Any
 
 import jsonschema
 import numpy as np
@@ -137,7 +138,7 @@ class UndefinedType(object):
         return "Undefined"
 
 
-Undefined = UndefinedType()
+Undefined: Any = UndefinedType()
 
 
 class SchemaBase(object):
