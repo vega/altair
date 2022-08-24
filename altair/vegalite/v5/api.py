@@ -332,6 +332,11 @@ def param(name=None, select=None, **kwds):
     if select is None:
         parameter.param = core.VariableParameter(name=parameter.name, **kwds)
         parameter.param_type = "variable"
+    elif "views" in kwds:
+        parameter.param = core.TopLevelSelectionParameter(
+            name=parameter.name, select=select, **kwds
+        )
+        parameter.param_type = "selection"
     else:
         parameter.param = core.SelectionParameter(
             name=parameter.name, select=select, **kwds
@@ -361,7 +366,7 @@ def selection(type=Undefined, **kwds):
     # We separate out the parameter keywords from the selection keywords
     param_kwds = {}
 
-    for kwd in {"name", "value", "bind", "empty", "init"}:
+    for kwd in {"name", "value", "bind", "empty", "init", "views"}:
         if kwd in kwds:
             param_kwds[kwd] = kwds.pop(kwd)
 
@@ -2141,6 +2146,13 @@ class Chart(
             **kwargs,
         )
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "Chart{:03d}".format(cls._counter)
+
     @classmethod
     def from_dict(cls, dct, validate=True):
         """Construct class from a dictionary representation
@@ -2339,6 +2351,13 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "RepeatChart{:03d}".format(cls._counter)
+
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
@@ -2364,10 +2383,14 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or self.spec is Undefined:
+        if not params:
             return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_params(*params)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2401,6 +2424,13 @@ def repeat(repeater="repeat"):
 class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "ConcatChart{:03d}".format(cls._counter)
+
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
         for spec in concat:
@@ -2409,11 +2439,13 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             data=data, concat=list(concat), columns=columns, **kwargs
         )
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
+        self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, "ConcatChart")
         self.concat.append(other)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
+        self.params, self.concat = _combine_subchart_params(self.params, self.concat)
         return self
 
     def __or__(self, other):
@@ -2423,10 +2455,14 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or not self.concat:
+        if not params:
             return self
-        copy = self.copy()
-        copy.concat = [chart.add_params(*params) for chart in copy.concat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2445,17 +2481,26 @@ def concat(*charts, **kwargs):
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "HConcatChart{:03d}".format(cls._counter)
+
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
         super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
+        self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
+        self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
     def __or__(self, other):
@@ -2465,10 +2510,14 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or not self.hconcat:
+        if not params:
             return self
-        copy = self.copy()
-        copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2487,17 +2536,26 @@ def hconcat(*charts, **kwargs):
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "VConcatChart{:03d}".format(cls._counter)
+
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
         super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
+        self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
     def __iand__(self, other):
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
+        self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
     def __and__(self, other):
@@ -2507,10 +2565,14 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or not self.vconcat:
+        if not params:
             return self
-        copy = self.copy()
-        copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2529,6 +2591,13 @@ def vconcat(*charts, **kwargs):
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
 
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "LayerChart{:03d}".format(cls._counter)
+
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
@@ -2537,6 +2606,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        self.params, self.layer = _combine_subchart_params(self.params, self.layer)
 
         # Some properties are not allowed within layer; we'll move to parent.
         layer_props = ("height", "width", "view")
@@ -2550,6 +2620,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         _check_if_can_be_layered(other)
         self.layer.append(other)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
     def __add__(self, other):
@@ -2594,10 +2665,14 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or not self.layer:
+        if not params:
             return self
-        copy = self.copy()
-        copy.layer[0] = copy.layer[0].add_params(*params)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2615,6 +2690,13 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
+
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "FacetChart{:03d}".format(cls._counter)
 
     def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, "FacetChart")
@@ -2645,10 +2727,14 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params or self.spec is Undefined:
+        if not params:
             return self
-        copy = self.copy()
-        copy.spec = copy.spec.add_params(*params)
+        copy = self.copy(deep=["params"])
+        if copy.params is Undefined:
+            copy.params = []
+
+        for s in params:
+            copy.params.append(s.param)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2704,6 +2790,78 @@ def _combine_subchart_data(data, subcharts):
             subcharts = [remove_data(c) for c in subcharts]
 
     return data, subcharts
+
+
+def _has_select_params(subchart):
+    if subchart.params is Undefined:
+        return False
+
+    for p in subchart.params:
+        if p.select is not Undefined:
+            return True
+
+    return False
+
+
+def _combine_subchart_params(params, subcharts):
+    if params is Undefined:
+        params = []
+
+    subcharts = [subchart.copy(deep=["params"]) for subchart in subcharts]
+
+    paramcharts = [
+        subchart for subchart in subcharts if subchart.params is not Undefined
+    ]
+    selectcharts = [
+        subchart for subchart in paramcharts if _has_select_params(subchart)
+    ]
+
+    # We give a name to each subchart that will be referenced in the top level.
+    for subchart in selectcharts:
+        if subchart.name is Undefined:
+            subchart.name = subchart._get_name()
+
+    # Some parameters might live on multiple subcharts.
+    # We will be careful to only include each parameter once on the top level.
+    # namedict will list the views, if any, for each selection parameter
+    namedict = {p.name: [] for c in paramcharts for p in c.params}
+
+    for subchart in selectcharts:
+        for p in subchart.params:
+            if p.select is not Undefined:
+                namedict[p.name].append(subchart.name)
+
+    # Give each appropriate selection parameter a "views" property
+    # and place that parameter on the top level.
+    for subchart in paramcharts:
+        for p in subchart.params:
+            # If p.name is not in namedict, then we already dealt with it.
+            if p.name not in namedict:
+                continue
+
+            # Include a "views" property if appropriate.
+            if namedict[p.name]:
+                if isinstance(p, core.SelectionParameter):
+                    p = core.TopLevelSelectionParameter(
+                        **p.to_dict(), views=namedict[p.name]
+                    )
+                elif p.views is Undefined:
+                    p.views = namedict[p.name]
+                elif p.views is not Undefined:
+                    p.views += namedict[p.name]
+
+            # Move p to the top level params list.
+            params.append(p)
+            del namedict[p.name]
+
+    for subchart in subcharts:
+        subchart.params = Undefined
+
+    # If params is an empty list, reset it to Undefined.
+    if len(params) == 0:
+        params = Undefined
+
+    return params, subcharts
 
 
 def _remove_layer_props(chart, subcharts, layer_props):
