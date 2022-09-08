@@ -2797,7 +2797,7 @@ def _has_select_params(subchart):
         return False
 
     for p in subchart.params:
-        if p.select is not Undefined:
+        if isinstance(p, core.SelectionParameter) and (p.select is not Undefined):
             return True
 
     return False
