@@ -2792,17 +2792,10 @@ def _combine_subchart_data(data, subcharts):
     return data, subcharts
 
 
-def _has_select_params(subchart):
-    if subchart.params is Undefined:
-        return False
-
-    for p in subchart.params:
-        if isinstance(
-            p, (core.SelectionParameter, core.TopLevelSelectionParameter)
-        ) and (p.select is not Undefined):
-            return True
-
-    return False
+def _viewless_dict(param):
+    d = param.to_dict()
+    d.pop("views", None)
+    return d
 
 
 def _combine_subchart_params(params, subcharts):
@@ -2811,60 +2804,83 @@ def _combine_subchart_params(params, subcharts):
 
     subcharts = [subchart.copy() for subchart in subcharts]
 
-    paramcharts = [
-        subchart for subchart in subcharts if subchart.params is not Undefined
-    ]
-    selectcharts = [
-        subchart for subchart in paramcharts if _has_select_params(subchart)
-    ]
-
-    # We give a name to each subchart that will be referenced in the top level.
-    for subchart in selectcharts:
-        if subchart.name is Undefined:
-            subchart.name = subchart._get_name()
-
+    # We will consider two parameters to be equal if their corresponding
+    # dictionaries are equal or if their dictionaries are equal everywhere
+    # except for "views" keys.
     subparams = []
+    subparam_dicts = []
+    subparam_views = []
 
-    # We proceed in two passes through the subchart parameters.
-    # In the first pass, we find each unique parameter and append it to `subparams`.
-    # In the second pass, we define a `views` property for the selection parameters,
-    # which is a list of the names of all subcharts containing the parameter.
-
-    # First pass
-    for subchart in paramcharts:
-        for p in subchart.params:
-            if p not in subparams:
-                subparams.append(p)
-
-    # Second pass
-    for p in subparams:
+    # Deal with parameters already found
+    for p in params:
+        subparams.append(p.copy())
+        subparam_dicts.append(_viewless_dict(p))
         if isinstance(p, core.VariableParameter):
-            params.append(p)
-            continue
-
-        views = []
-        for subchart in selectcharts:
-            if p in subchart.params and isinstance(subchart, Chart):
-                views.append(subchart.name)
-
-        if isinstance(p, core.SelectionParameter):
-            p = core.TopLevelSelectionParameter(**p.to_dict(), views=views)
+            subparam_views.append([])
         elif p.views is Undefined:
-            p.views = views
-        elif p.views is not Undefined:
-            p.views += views
-
-        # Move p to the top level params list.
-        params.append(p)
+            subparam_views.append([])
+        else:
+            subparam_views.append(p.views)
 
     for subchart in subcharts:
+        if subchart.params is Undefined:
+            continue
+        for param in subchart.params:
+            found = False
+            param_dict = _viewless_dict(param)
+
+            for p, d, v in zip(subparams, subparam_dicts, subparam_views):
+                if param_dict == d:
+                    found = True
+                    # Only add `Chart` objects to the views list, not multiview charts.
+                    if isinstance(subchart, Chart) and isinstance(
+                        param,
+                        (core.SelectionParameter, core.TopLevelSelectionParameter),
+                    ):
+                        if subchart.name is Undefined:
+                            subchart.name = subchart._get_name()
+                        if subchart.name not in v:
+                            v.append(subchart.name)
+                    break
+
+            if not found:
+                param = param.copy()
+
+                if isinstance(param, core.VariableParameter):
+                    subparams.append(param)
+                    subparam_dicts.append(param_dict)
+                    subparam_views.append([])
+                    # Done with this parameter
+                    continue
+
+                if isinstance(param, core.SelectionParameter):
+                    param = core.TopLevelSelectionParameter(**param.to_dict(), views=[])
+                elif param.views is Undefined:
+                    param.views = []
+
+                views = param.views
+
+                if isinstance(subchart, Chart):
+                    if subchart.name is Undefined:
+                        subchart.name = subchart._get_name()
+                    if subchart.name not in views:
+                        views.append(subchart.name)
+
+                subparams.append(param)
+                subparam_dicts.append(param_dict)
+                subparam_views.append(views)
+
         subchart.params = Undefined
 
-    # If params is an empty list, reset it to Undefined.
-    if len(params) == 0:
-        params = Undefined
+    for p, v in zip(subparams, subparam_views):
+        if len(v) == 0:
+            continue
+        p.views = v
 
-    return params, subcharts
+    if len(subparams) == 0:
+        subparams = Undefined
+
+    return subparams, subcharts
 
 
 def _remove_layer_props(chart, subcharts, layer_props):
