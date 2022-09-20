@@ -138,7 +138,14 @@ class UndefinedType(object):
         return "Undefined"
 
 
-Undefined: Any = UndefinedType()
+# In the future Altair may implement a more complete set of type hints.
+# But for now, we'll add an annotation to indicate that the type checker
+# should permit any value passed to a function argument whose default
+# value is Undefined.
+UndefinedLike = Any
+
+
+Undefined: UndefinedLike = UndefinedType()
 
 
 class SchemaBase(object):
