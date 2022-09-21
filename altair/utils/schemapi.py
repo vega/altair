@@ -4,7 +4,6 @@ import collections
 import contextlib
 import inspect
 import json
-from typing import Any
 
 import jsonschema
 import numpy as np
@@ -138,14 +137,7 @@ class UndefinedType(object):
         return "Undefined"
 
 
-# In the future Altair may implement a more complete set of type hints.
-# But for now, we'll add an annotation to indicate that the type checker
-# should permit any value passed to a function argument whose default
-# value is Undefined.
-UndefinedLike = Any
-
-
-Undefined: UndefinedLike = UndefinedType()
+Undefined = UndefinedType()
 
 
 class SchemaBase(object):
