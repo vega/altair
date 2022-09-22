@@ -129,9 +129,9 @@ def test_sanitize_nullable_integers():
     )
 
     df_clean = sanitize_dataframe(df)
-    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+    assert {col.dtype.name for _, col in df_clean.items()} == {"object"}
 
-    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
+    result_python = {col_name: list(col) for col_name, col in df_clean.items()}
     assert result_python == {
         "int_np": [1, 2, 3, 4, 5],
         "int64": [1, 2, 3, None, 5],
@@ -157,9 +157,9 @@ def test_sanitize_string_dtype():
     )
 
     df_clean = sanitize_dataframe(df)
-    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+    assert {col.dtype.name for _, col in df_clean.items()} == {"object"}
 
-    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
+    result_python = {col_name: list(col) for col_name, col in df_clean.items()}
     assert result_python == {
         "string_object": ["a", "b", "c", "d"],
         "string_string": ["a", "b", "c", "d"],
@@ -182,9 +182,9 @@ def test_sanitize_boolean_dtype():
     )
 
     df_clean = sanitize_dataframe(df)
-    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+    assert {col.dtype.name for _, col in df_clean.items()} == {"object"}
 
-    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
+    result_python = {col_name: list(col) for col_name, col in df_clean.items()}
     assert result_python == {
         "bool_none": [True, False, None],
         "none": [None, None, None],
