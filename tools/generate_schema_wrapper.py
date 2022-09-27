@@ -26,8 +26,8 @@ import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    "vega": {"v5": "v5.10.0"},
-    "vega-lite": {"v3": "v3.4.0", "v4": "v4.17.0", "v5": "v5.2.0"},
+    "vega": {"v5": "v5.22.1"},
+    "vega-lite": {"v3": "v3.4.0", "v4": "v4.17.0", "v5": "v5.5.0"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
@@ -402,20 +402,19 @@ def generate_vega_schema_wrapper(schema_file):
             schemarepr=CodeSnippet("{}._rootschema".format(basename)),
         )
     )
-    for deflist in ["defs", "refs"]:
-        for name in rootschema[deflist]:
-            defschema = {"$ref": "#/{}/{}".format(deflist, name)}
-            defschema_repr = {"$ref": "#/{}/{}".format(deflist, name)}
-            contents.append(
-                schema_class(
-                    get_valid_identifier(name),
-                    schema=defschema,
-                    schemarepr=defschema_repr,
-                    rootschema=rootschema,
-                    basename=basename,
-                    rootschemarepr=CodeSnippet("Root._schema"),
-                )
+    for name in rootschema["definitions"]:
+        defschema = {"$ref": f"#/definitions/{name}"}
+        defschema_repr = {"$ref": f"#/definitions/{name}"}
+        contents.append(
+            schema_class(
+                get_valid_identifier(name),
+                schema=defschema,
+                schemarepr=defschema_repr,
+                rootschema=rootschema,
+                basename=basename,
+                rootschemarepr=CodeSnippet("Root._schema"),
             )
+        )
     contents.append("")  # end with newline
     return "\n".join(contents)
 
