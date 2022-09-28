@@ -2803,16 +2803,12 @@ def _combine_subchart_params(params, subcharts):
             )
         )
 
-    subcharts_with_params = []
-    other_charts = []
+    subcharts = [subchart.copy() for subchart in subcharts]
 
     for subchart in subcharts:
-        if subchart.params is not Undefined:
-            subcharts_with_params.append(subchart.copy())
-        else:
-            other_charts.append(subchart.copy())
+        if subchart.params is Undefined:
+            continue
 
-    for subchart in subcharts_with_params:
         if _needs_name(subchart):
             subchart.name = subchart._get_name()
 
@@ -2854,7 +2850,7 @@ def _combine_subchart_params(params, subcharts):
     if len(subparams) == 0:
         subparams = Undefined
 
-    return subparams, subcharts_with_params + other_charts
+    return subparams, subcharts
 
 
 def _remove_layer_props(chart, subcharts, layer_props):
