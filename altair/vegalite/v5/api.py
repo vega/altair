@@ -2441,14 +2441,10 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.concat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.concat = [chart.add_params(*params) for chart in copy.concat]
         return copy
 
     @utils.deprecation.deprecated(
@@ -2489,14 +2485,10 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.hconcat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
         return copy
 
     @utils.deprecation.deprecated(
@@ -2537,14 +2529,10 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.vconcat:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
         return copy
 
     @utils.deprecation.deprecated(

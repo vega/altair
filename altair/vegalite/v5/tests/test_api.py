@@ -631,7 +631,9 @@ def test_layer_add_selection():
 def test_compound_add_selections(charttype):
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = charttype(base.add_params(selection), base.add_params(selection))
+    alt.Chart._counter = 0
     chart2 = charttype(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
