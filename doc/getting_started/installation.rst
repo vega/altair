@@ -24,7 +24,7 @@ Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
 - python 3.6 or newer
-- entrypoints_
+- importlib_metadata_ (python<3.8)
 - jsonschema_
 - NumPy_
 - Pandas_
@@ -74,7 +74,7 @@ development version directly from GitHub using:
 .. _Zeppelin: https://zeppelin.apache.org/
 .. _IPython: https://github.com/ipython/ipython
 
-.. _entrypoints: https://github.com/takluyver/entrypoints
+.. _importlib_metadata: https://github.com/python/importlib_metadata
 .. _jsonschema: https://github.com/Julian/jsonschema
 .. _NumPy: http://www.numpy.org/
 .. _Pandas: http://pandas.pydata.org
