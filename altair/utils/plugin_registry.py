@@ -121,7 +121,7 @@ class PluginRegistry(Generic[PluginType]):
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
-        more_exts = [ep.name for ep in entry_points(group=self.entry_point_group)]
+        more_exts = [ep.name for ep in entry_points().get(self.entry_point_group, [])]
         exts.extend(more_exts)
         return sorted(set(exts))
 
@@ -150,7 +150,11 @@ class PluginRegistry(Generic[PluginType]):
     def _enable(self, name: str, **options) -> None:
         if name not in self._plugins:
             try:
-                (ep,) = entry_points(group=self.entry_point_group, name=name)
+                (ep,) = [
+                    ep
+                    for ep in entry_points().get(self.entry_point_group, [])
+                    if ep.name == name
+                ]
             except ValueError:
                 if name in self.entrypoint_err_messages:
                     raise ValueError(self.entrypoint_err_messages[name])
