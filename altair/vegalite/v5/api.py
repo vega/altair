@@ -2376,14 +2376,10 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or self.spec is Undefined:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.spec = copy.spec.add_params(*params)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2618,14 +2614,10 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or not self.layer:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.layer[0] = copy.layer[0].add_params(*params)
         return copy
 
     @utils.deprecation.deprecated(
@@ -2673,14 +2665,10 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
-        if not params:
+        if not params or self.spec is Undefined:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
+        copy = self.copy()
+        copy.spec = copy.spec.add_params(*params)
         return copy
 
     @utils.deprecation.deprecated(

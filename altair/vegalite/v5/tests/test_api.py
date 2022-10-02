@@ -622,7 +622,9 @@ def test_facet_add_selections():
 def test_layer_add_selection():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = alt.layer(base.add_params(selection), base)
+    alt.Chart._counter = 0
     chart2 = alt.layer(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
