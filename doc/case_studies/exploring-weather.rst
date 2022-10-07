@@ -237,7 +237,7 @@ of the selection (for more information on selections, see
     ).properties(
         width=600,
         height=400
-    ).add_parameter(
+    ).add_params(
         brush
     )
 

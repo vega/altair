@@ -60,9 +60,9 @@ We can create a variable parameter using :func:`parameter`, and assign that para
 .. altair-plot::
     :output: none
 
-    op_var = alt.parameter(value=0.1)
+    op_var = alt.param(value=0.1)
 
-In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`Chart.add_parameter` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`Chart.add_params` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
 
 .. altair-plot::
 
@@ -71,17 +71,17 @@ In order to use this variable in the chart specification, we explicitly add it t
 
     cars = data.cars.url
 
-    op_var = alt.parameter(value=0.1)
+    op_var = alt.param(value=0.1)
 
     alt.Chart(cars).mark_circle(opacity=op_var).encode(
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color='Origin:N'
-    ).add_parameter(
+    ).add_params(
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.parameter` and ``add_parameter``.
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.param` and ``add_parameter``.
 
 .. altair-plot::
 
@@ -98,7 +98,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`alt.parameter` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
+The benefit of using :func:`alt.param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
 
 .. altair-plot::
 
@@ -108,13 +108,13 @@ The benefit of using :func:`alt.parameter` doesn't become apparent until we inco
     cars = data.cars.url
 
     slider = alt.binding_range(min=0, max=1, step=0.05, name='opacity:')
-    op_var = alt.parameter(value=0.1, bind=slider)
+    op_var = alt.param(value=0.1, bind=slider)
 
     alt.Chart(cars).mark_circle(opacity=op_var).encode(
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color='Origin:N'
-    ).add_parameter(
+    ).add_params(
         op_var
     )
 
@@ -123,7 +123,7 @@ Now we can dynamically change the opacity of the points in our chart using the s
 The above example includes some aspects which occur frequently when creating interactive charts in Altair:
 
 1. Creating a variable parameter using :func:`parameter`.
-2. Attaching the parameter to a chart using the :meth:`Chart.add_parameter` method.
+2. Attaching the parameter to a chart using the :meth:`Chart.add_params` method.
 3. Binding the parameter to an input widget (such as the slider above) using the parameter's ``bind`` property.
 
 
@@ -137,7 +137,7 @@ There are two types of selections:
 :func:`selection_interval` and :func:`selection_point`.
 
 Here we will create a simple chart and then add an selection interval to it.
-We could create a selection interval via ``alt.parameter(select="interval")``,
+We could create a selection interval via ``alt.param(select="interval")``,
 but it is more convenient to use the shorter ``alt.selection_interval``
 (and this also matches the syntax that was used in Altair 4).
 
@@ -173,7 +173,7 @@ property:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color='Origin:N'
-    ).add_parameter(
+    ).add_params(
         brush
     )
 
@@ -200,7 +200,7 @@ for points outside the selection:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-    ).add_parameter(
+    ).add_params(
         brush
     )
 
@@ -231,7 +231,7 @@ tied to ``"Miles_per_Gallon"``
     ).properties(
         width=250,
         height=250
-    ).add_parameter(
+    ).add_params(
         brush
     )
 
@@ -257,7 +257,7 @@ We can modify the brush definition, and leave the rest of the code unchanged:
     ).properties(
         width=250,
         height=250
-    ).add_parameter(
+    ).add_params(
         brush
     )
 
@@ -287,7 +287,7 @@ selection:
         ).properties(
             width=300,
             height=180
-        ).add_parameter(
+        ).add_params(
             selector
         )
 
@@ -326,7 +326,7 @@ chart scales; this is how Altair plots can be made interactive:
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'
-    ).add_parameter(
+    ).add_params(
         scales
     )
 
@@ -401,7 +401,7 @@ selection.
         x='Cylinders:O',
         y='Origin:O',
         color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
-    ).add_parameter(
+    ).add_params(
         alex, morgan
     ).properties(
         width=300,
@@ -446,7 +446,7 @@ with a matching ``Origin``.
     legend = alt.Chart(cars).mark_point().encode(
         y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
         color=color
-    ).add_parameter(
+    ).add_params(
         selection
     )
 
@@ -480,7 +480,7 @@ cylinders:
         y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
         x='Cylinders:O',
         color=color
-    ).add_parameter(
+    ).add_params(
         selection
     )
 
@@ -516,7 +516,7 @@ depending on the size and position of the selection in the scatter plot.
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'
-    ).add_parameter(
+    ).add_params(
         brush
     )
 
@@ -557,7 +557,7 @@ For instance, using our example from above a dropdown can be used to highlight c
         y='Miles_per_Gallon:Q',
         color=color,
         tooltip='Name:N'
-    ).add_parameter(
+    ).add_params(
         selection
     )
 
@@ -591,7 +591,7 @@ Bindings and input elements can also be used to filter data on the client side. 
         y='Miles_per_Gallon:Q',
         color='Origin:N',
         tooltip='Name:N'
-    ).add_parameter(
+    ).add_params(
         selection
     ).transform_filter(
         selection
@@ -611,7 +611,7 @@ With interval selections, the ``bind`` property can be set to the value of ``"sc
         y='Miles_per_Gallon:Q',
         color='Origin:N',
         tooltip='Name:N'
-    ).add_parameter(
+    ).add_params(
         selection
     )
 
@@ -651,7 +651,7 @@ points based on whether they are smaller or larger than the value:
            # 'datum.xval < SelectorName.cutoff',  # An equivalent alternative
            alt.value('red'), alt.value('blue')
        )
-   ).add_parameter(
+   ).add_params(
        selector
    )
 
@@ -673,7 +673,7 @@ since they can also be accessed in expression strings:
 .. altair-plot::
 
     slider = alt.binding_range(min=0, max=100, step=1, name='Cutoff ')
-    selector = alt.parameter(name='SelectorName', value=50, bind=slider)
+    selector = alt.param(name='SelectorName', value=50, bind=slider)
 
     alt.Chart(df).mark_point().encode(
        x='xval',
@@ -683,7 +683,7 @@ since they can also be accessed in expression strings:
            # 'datum.xval < SelectorName',  # An equivalent alternative
            alt.value('red'), alt.value('blue')
        )
-    ).add_parameter(
+    ).add_params(
        selector
     )
 
@@ -741,7 +741,7 @@ Taking advantage of the parameter interface introduced in Altair 5, we can expre
         options=['Miles_per_Gallon', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
         name='X-axis column '
     )
-    param = alt.parameter(
+    param = alt.param(
         name='selected_column',
         value='Miles_per_Gallon',
         bind=dropdown
@@ -753,6 +753,6 @@ Taking advantage of the parameter interface introduced in Altair 5, we can expre
         color='Origin:N'
     ).transform_calculate(
         x='datum[selected_column]'
-    ).add_parameter(
+    ).add_params(
         param
     )

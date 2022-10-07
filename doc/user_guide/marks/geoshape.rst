@@ -555,7 +555,7 @@ populous states.
         color='population:Q',
         opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
         tooltip=['state:N', 'population:Q']
-    ).project(type='albersUsa').add_parameter(click_state)
+    ).project(type='albersUsa').add_params(click_state)
 
     # create a bar chart with a similar condition on the opacity encoding.
     bars = alt.Chart(
@@ -566,7 +566,7 @@ populous states.
         opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
         color='population',
         y=alt.Y('state', sort='-x')
-    ).add_parameter(click_state)
+    ).add_params(click_state)
 
 
     choropleth & bars
@@ -595,7 +595,7 @@ An hover highlighting is added to get more insight of each earthquake.
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5)
-    rotate0 = alt.parameter(value=120, bind=range0, name='rotate0')
+    rotate0 = alt.param(value=120, bind=range0, name='rotate0')
     hover = alt.selection_point(on='mouseover', clear='mouseout')
 
     # world disk
@@ -631,13 +631,13 @@ An hover highlighting is added to get more insight of each earthquake.
         strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
         size=alt.Size('mag:Q', scale=alt.Scale(type='pow', range=[1,1000], domain=[0,6], exponent=4)),
         fill=alt.Fill('depth:Q', scale=alt.Scale(scheme='lightorange', domain=[0,400]))
-    ).add_parameter(hover)
+    ).add_params(hover)
 
     # define projection and add the rotation param for all layers
     comb = alt.layer(sphere, world, quakes).project(
         'orthographic',
         rotate=[90, 0, 0]
-    ).add_parameter(rotate0)
+    ).add_params(rotate0)
 
     # temporary changing params to top-level
     # and defining the rotate reference expression on compiled VL directly
