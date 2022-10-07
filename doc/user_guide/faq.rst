@@ -19,7 +19,7 @@ Kaggle kernels, VSCode, Hydrogen, and nteract that know how to automatically
 perform this rendering (see :ref:`installation` for details).
 
 For other frontends that don't have vega-lite rendering built-in, it is
-possible to work with Altair charts using the build-in :meth:`Chart.show`
+possible to work with Altair charts using the built-in :meth:`Chart.show`
 or :meth:`Chart.save` methods.
 For more information on these, see :ref:`display-general`.
 

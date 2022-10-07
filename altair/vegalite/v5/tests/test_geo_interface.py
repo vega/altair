@@ -168,7 +168,7 @@ def test_geo_interface_feature_collection():
 
 
 # typical output of a __geo_interface__ from geopandas GeoDataFrame
-# notic that the index value is registerd as a commonly used identifier
+# notic that the index value is registered as a commonly used identifier
 # with the name "id" (in this case 49). Similar to serialization of a
 # pandas DataFrame is the index not included in the output
 def test_geo_interface_feature_collection_gdf():

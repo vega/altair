@@ -1,8 +1,8 @@
 """
-U.S. state capitals overlayed on a map of the U.S
+U.S. state capitals overlaid on a map of the U.S
 -------------------------------------------------
 This is a layered geographic visualization that shows US capitals
-overlayed on a map.
+overlaid on a map.
 """
 # category: case studies
 import altair as alt

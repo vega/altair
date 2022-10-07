@@ -550,7 +550,7 @@ the subchart rather than to the overall chart:
    )
 
 If you want your chart size to respond to the width of the HTML page or container in which
-it is rendererd, you can set ``width`` or ``height`` to the string ``"container"``:
+it is rendered, you can set ``width`` or ``height`` to the string ``"container"``:
 
 .. altair-plot::
 

@@ -242,7 +242,7 @@ def merge_props_geom(feat):
 
 
 def sanitize_geo_interface(geo):
-    """Santize a geo_interface to prepare it for serialization.
+    """Sanitize a geo_interface to prepare it for serialization.
 
     * Make a copy
     * Convert type array or _Array to list

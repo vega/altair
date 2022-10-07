@@ -2,7 +2,7 @@
 Interactive Average
 ===================
 The plot below uses an interval selection, which causes the chart to include an interactive brush
-(shown in grey). The brush selection parameterizes the red guideline, which visualizes the average
+(shown in grey). The brush selection parametrizes the red guideline, which visualizes the average
 value within the selected interval.
 """
 # category: interactive charts

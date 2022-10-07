@@ -213,7 +213,7 @@ class AreaConfig(VegaLiteSchema):
         **Default value:** ``0``, indicating no limit
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
-        properties of the overlayed lines.
+        properties of the overlaid lines.
 
 
         If this value is an empty object ( ``{}`` ) or ``true``, lines with default
@@ -245,7 +245,7 @@ class AreaConfig(VegaLiteSchema):
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, :class:`OverlayMarkDef`, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
@@ -526,8 +526,8 @@ class Axis(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the axis
@@ -2874,8 +2874,8 @@ class ConditionalPredicateTextFieldDef(ConditionalTextFieldDef):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -3038,8 +3038,8 @@ class ConditionalSelectionTextFieldDef(ConditionalTextFieldDef):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -5111,8 +5111,8 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -5531,8 +5531,8 @@ class Header(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     labelAlign : :class:`Align`
         Horizontal text alignment of header labels.
@@ -5685,8 +5685,8 @@ class HeaderConfig(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     labelAlign : :class:`Align`
         Horizontal text alignment of header labels.
@@ -6350,8 +6350,8 @@ class Legend(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     gradientLength : float
         The length in pixels of the primary axis of a color gradient. This value corresponds
@@ -7139,7 +7139,7 @@ class LineConfig(VegaLiteSchema):
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, :class:`OverlayMarkDef`, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
@@ -7757,7 +7757,7 @@ class MarkDef(AnyMark):
         **Default value:** ``0``, indicating no limit
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
-        properties of the overlayed lines.
+        properties of the overlaid lines.
 
 
         If this value is an empty object ( ``{}`` ) or ``true``, lines with default
@@ -7789,7 +7789,7 @@ class MarkDef(AnyMark):
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, :class:`OverlayMarkDef`, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
@@ -13130,8 +13130,8 @@ class TextFieldDef(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -13295,8 +13295,8 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal

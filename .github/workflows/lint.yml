@@ -3,21 +3,31 @@ name: lint
 on: [push, pull_request]
 
 jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: codespell-project/actions-codespell@master
+        with:
+          skip: "*.json"
+          ignore_words_list: nd
+
   build:
     runs-on: ubuntu-latest
     name: black-flake8
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v1
-      with:
-        python-version: "3.10"
-    - name: Check formatting with black
-      run: |
-        pip install black
-        black --diff --color .
-        black --check .
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8 .  --statistics
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.10"
+      - name: Check formatting with black
+        run: |
+          pip install black
+          black --diff --color .
+          black --check .
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .  --statistics

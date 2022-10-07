@@ -1302,8 +1302,8 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -3818,8 +3818,8 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
@@ -4012,8 +4012,8 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         **Default value:**
 
 
-        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
-        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+        * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal

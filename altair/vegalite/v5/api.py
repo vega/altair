@@ -1944,7 +1944,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         embed_opt : dict (optional)
-            The Vega embed options that control the dispay of the chart.
+            The Vega embed options that control the display of the chart.
         open_browser : bool (optional)
             Specify whether a browser window should be opened. If not specified,
             a browser window will be opened only if the server is not already

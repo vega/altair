@@ -1,7 +1,7 @@
 """
 Bar Chart with Rolling Mean
 ---------------------------
-A bar chart overlayed with a rolling mean. In this example the average of values over the previous decade is displayed as a line.
+A bar chart overlaid with a rolling mean. In this example the average of values over the previous decade is displayed as a line.
 """
 # category: bar charts
 import altair as alt

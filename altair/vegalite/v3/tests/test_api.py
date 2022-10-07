@@ -425,7 +425,7 @@ def test_transforms():
     kwds = {"as": "binned", "field": "field", "bin": True}
     assert chart.transform == [alt.BinTransform(**kwds)]
 
-    # calcualte transform
+    # calculate transform
     chart = alt.Chart().transform_calculate("calc", "datum.a * 4")
     kwds = {"as": "calc", "calculate": "datum.a * 4"}
     assert chart.transform == [alt.CalculateTransform(**kwds)]

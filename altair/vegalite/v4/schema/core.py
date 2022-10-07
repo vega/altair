@@ -230,7 +230,7 @@ class AreaConfig(AnyMarkConfig):
 
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
-        properties of the overlayed lines.
+        properties of the overlaid lines.
 
 
         If this value is an empty object ( ``{}`` ) or ``true``, lines with default
@@ -266,7 +266,7 @@ class AreaConfig(AnyMarkConfig):
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
@@ -7404,7 +7404,7 @@ class LineConfig(AnyMarkConfig):
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
@@ -8403,7 +8403,7 @@ class MarkDef(AnyMark):
 
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
-        properties of the overlayed lines.
+        properties of the overlaid lines.
 
 
         If this value is an empty object ( ``{}`` ) or ``true``, lines with default
@@ -8439,7 +8439,7 @@ class MarkDef(AnyMark):
 
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
-        properties of the overlayed points.
+        properties of the overlaid points.
 
 
         If this property is ``"transparent"``, transparent points will be used (for
