@@ -81,7 +81,7 @@ In order to use this variable in the chart specification, we explicitly add it t
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.param` and ``add_param``.
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.param` and ``add_params``.
 
 .. altair-plot::
 
@@ -182,7 +182,7 @@ a selection region, and to move this region once the region is created.
 
 So far this example is very similar to what we did in the :ref:`variable example <basic variable>`:
 we created a selection parameter using ``brush = alt.selection_interval()``,
-and we attached that parameter to the chart using ``add_param``.
+and we attached that parameter to the chart using ``add_params``.
 
 Conditions: Making the Chart Respond
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
