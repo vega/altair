@@ -1,14 +1,16 @@
 """
-Locations of US Airports
-========================
-This is a layered geographic visualization that shows the positions of US
-airports on a background of US states.
+Point map
+=========
+This is a layered map that shows the positions of airports on a background of U.S. states.
 """
-# category: case studies
+# category: maps
 import altair as alt
 from vega_datasets import data
 
+# Read in points
 airports = data.airports()
+
+# Read in polygons from topojson
 states = alt.topo_feature(data.us_10m.url, feature='states')
 
 # US states background

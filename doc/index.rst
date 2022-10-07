@@ -1,5 +1,5 @@
-Altair: Declarative Visualization in Python
-===========================================
+Vega-Altair: Declarative Visualization in Python
+================================================
 .. role:: raw-html(raw)
    :format: html
 
@@ -13,7 +13,7 @@ Vega_ and Vega-Lite_.
 
 *The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
-With Altair, you can spend more time understanding your data and its meaning.
+With Vega-Altair, you can spend more time understanding your data and its meaning.
 Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.

@@ -6,7 +6,7 @@ as shape for ``mark_point`` and ``angle`` encoding for the wind direction.
 This is adapted from this corresponding Vega-Lite Example:
 `Wind Vector Map <https://vega.github.io/vega-lite/examples/point_angle_windvector.html>`_.
 """
-# category: scatter plots
+# category: tables
 
 import altair as alt
 from vega_datasets import data

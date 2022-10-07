@@ -1,4 +1,4 @@
-# Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
+# Vega-Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
 *The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
@@ -12,21 +12,21 @@
 
 [https://altair-viz.github.io](https://altair-viz.github.io)
 
-**Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
+**Vega-Altair** is a declarative statistical visualization library for Python. With Vega-Altair, you can spend more time understanding your data and its meaning. Vega-Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
-simplicity produces beautiful and effective visualizations with a minimal amount of code. *Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+simplicity produces beautiful and effective visualizations with a minimal amount of code. *Vega-Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
 Interactive Data Lab](https://idl.cs.washington.edu/).*
 
-## Altair Documentation
+## Vega-Altair Documentation
 
-See [Altair's Documentation Site](https://altair-viz.github.io),
-as well as Altair's [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks).
+See [Vega-Altair's Documentation Site](https://altair-viz.github.io),
+as well as Vega-Altair's [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks).
 
 ## Example
 
-Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the JupyterLab:
+Here is an example using Vega-Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the JupyterLab:
 
 ```python
 import altair as alt
@@ -42,9 +42,9 @@ alt.Chart(cars).mark_point().encode(
 )
 ```
 
-![Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png)
+![Vega-Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png)
 
-One of the unique features of Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_. 
+One of the unique features of Vega-Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_. 
 With a few modifications to the example above we can create a linked histogram that is filtered based on a selection of the scatter plot.
 
 ```python 
@@ -74,7 +74,7 @@ bars = alt.Chart(source).mark_bar().encode(
 points & bars
 ```
 
-![Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
+![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
 
 
 ## Getting your Questions Answered
@@ -83,13 +83,13 @@ If you have a question that is not addressed in the documentation, there are sev
 
 - open a [Github Issue](https://github.com/altair-viz/altair/issues)
 - post a [StackOverflow Question](https://stackoverflow.com/questions/tagged/altair) (be sure to use the `altair` tag)
-- ask on the [Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz)
+- ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz)
 
 We'll do our best to get your question answered
 
 ## A Python API for statistical visualizations
 
-Altair provides a Python API for building statistical visualizations in a declarative
+Vega-Altair provides a Python API for building statistical visualizations in a declarative
 manner. By statistical visualization we mean:
 
 * The **data source** is a `DataFrame` that consists of columns of different data types (quantitative, ordinal, nominal and date/time).
@@ -98,7 +98,7 @@ manner. By statistical visualization we mean:
 * The data is mapped to the **visual properties** (position, color, size, shape,
   faceting, etc.) using the group-by data transformation.
 
-The Altair API contains no actual visualization rendering code but instead
+The Vega-Altair API contains no actual visualization rendering code but instead
 emits JSON data structures following the
 [Vega-Lite](https://github.com/vega/vega-lite) specification. The resulting
 Vega-Lite JSON data can be rendered in the following user-interfaces:
@@ -114,24 +114,23 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
 * Auto-generated internal Python API that guarantees visualizations are type-checked and
   in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
   specification.
-* Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
   [nbviewer](https://nbviewer.jupyter.org/).
 * Export visualizations to PNG/SVG images, stand-alone HTML pages and the
 [Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
-* Explore Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
+* Explore Vega-Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
 
 ## Installation
 
-To use Altair for visualization, you need to install two sets of tools
+To use Vega-Altair for visualization, you need to install two sets of tools
 
-1. The core Altair Package and its dependencies
+1. The core Vega-Altair Package and its dependencies
 
 2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`,
    `JupyterLab`, or `nteract`)
 
-Altair can be installed with either ``pip`` or with ``conda``.
+Vega-Altair can be installed with either ``pip`` or with ``conda``.
 For full installation instructions, please see
 https://altair-viz.github.io/getting_started/installation.html
 
@@ -193,11 +192,11 @@ Lab's](https://idl.cs.washington.edu/)
 
 We believe that these challenges can be addressed without the creation of yet
 another visualization library that has a programmatic API and built-in
-rendering. Altair's approach to building visualizations uses a layered design
+rendering. Vega-Altair's approach to building visualizations uses a layered design
 that leverages the full capabilities of existing visualization libraries:
 
-1. Create a constrained, simple Python API (Altair) that is purely declarative
-2. Use the API (Altair) to emit JSON output that follows the Vega-Lite spec
+1. Create a constrained, simple Python API (Vega-Altair) that is purely declarative
+2. Use the API (Vega-Altair) to emit JSON output that follows the Vega-Lite spec
 3. Render that spec using existing visualization libraries
 
 This approach enables users to perform exploratory visualizations with a much
@@ -212,7 +211,7 @@ visualization.
 
 ## Development install
 
-Altair requires the following dependencies:
+Vega-Altair requires the following dependencies:
 
 * [pandas](https://pandas.pydata.org/)
 * [traitlets](https://github.com/ipython/traitlets)
@@ -244,11 +243,11 @@ py.test --pyargs altair
 
 See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
 
-## Citing Altair
+## Citing Vega-Altair
 
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 
-If you use Altair in academic work, please consider citing https://joss.theoj.org/papers/10.21105/joss.01057 as
+If you use Vega-Altair in academic work, please consider citing https://joss.theoj.org/papers/10.21105/joss.01057 as
 
 ```bib
 @article{VanderPlas2018,
@@ -264,7 +263,7 @@ If you use Altair in academic work, please consider citing https://joss.theoj.or
     journal = {Journal of Open Source Software}
 }
 ```
-Please additionally consider citing the [vega-lite](https://vega.github.io/vega-lite/) project, which Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
+Please additionally consider citing the [vega-lite](https://vega.github.io/vega-lite/) project, which Vega-Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
 ```bib
 @article{Satyanarayan2017,
     author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},
@@ -278,6 +277,6 @@ Please additionally consider citing the [vega-lite](https://vega.github.io/vega-
 } 
 ```
 
-## Whence Altair?
+## Whence Vega-Altair?
 
-Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
+The Vega project was named after the brightest star in the constellation Lyra; nearby Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).

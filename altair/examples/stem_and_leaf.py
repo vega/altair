@@ -3,7 +3,7 @@ Stem and Leaf Plot
 ------------------
 This example shows how to make a stem and leaf plot.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 import pandas as pd
 import numpy as np

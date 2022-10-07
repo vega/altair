@@ -22,7 +22,7 @@ background = alt.Chart(states).mark_geoshape(
 ).project('albersUsa')
 
 # Points and text
-hover = alt.selection(type='single', on='mouseover', nearest=True,
+hover = alt.selection(type='point', on='mouseover', nearest=True,
                       fields=['lat', 'lon'])
 
 base = alt.Chart(capitals).encode(
@@ -38,6 +38,6 @@ text = base.mark_text(dy=-5, align='right').encode(
 points = base.mark_point().encode(
     color=alt.value('black'),
     size=alt.condition(~hover, alt.value(30), alt.value(100))
-).add_selection(hover)
+).add_params(hover)
 
 background + points + text
