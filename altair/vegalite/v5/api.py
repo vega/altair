@@ -2327,6 +2327,10 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         **kwds,
     ):
         _check_if_valid_subspec(spec, "RepeatChart")
+        _spec_as_list = [spec]
+        params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
+        assert len(_spec_as_list) == 1
+        spec = _spec_as_list[0]
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -2380,7 +2384,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             return self
         copy = self.copy()
         copy.spec = copy.spec.add_params(*params)
-        return copy
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
@@ -2618,7 +2622,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             return self
         copy = self.copy()
         copy.layer[0] = copy.layer[0].add_params(*params)
-        return copy
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
@@ -2782,7 +2786,7 @@ def _combine_subchart_params(params, subcharts):
     subcharts = [subchart.copy() for subchart in subcharts]
 
     for subchart in subcharts:
-        if subchart.params is Undefined:
+        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
             continue
 
         if _needs_name(subchart):

@@ -606,7 +606,9 @@ def test_add_selection():
 def test_repeat_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = base.add_params(selection).repeat(list("ABC"))
+    alt.Chart._counter = 0
     chart2 = base.repeat(list("ABC")).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
