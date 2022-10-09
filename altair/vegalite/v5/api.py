@@ -2329,7 +2329,6 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _check_if_valid_subspec(spec, "RepeatChart")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
-        assert len(_spec_as_list) == 1
         spec = _spec_as_list[0]
         super(RepeatChart, self).__init__(
             repeat=repeat,
@@ -2559,6 +2558,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        # Currently (Vega-Lite 5.5) the same param can't occur on two layers
+        self.layer = _remove_duplicate_params(self.layer)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
 
         # Some properties are not allowed within layer; we'll move to parent.
@@ -2762,6 +2763,38 @@ def _prepare_to_lift(param):
         param.views = []
 
     return param
+
+
+def _remove_duplicate_params(layer):
+    subcharts = [subchart.copy() for subchart in layer]
+    found_params = []
+
+    for subchart in subcharts:
+
+        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+            continue
+
+        params = []
+
+        # Ensure the same selection parameter doesn't appear twice
+        for param in subchart.params:
+            if isinstance(param, core.VariableParameter):
+                params.append(param)
+                continue
+
+            p = param.copy()
+            pd = _viewless_dict(p)
+
+            if pd not in found_params:
+                params.append(p)
+                found_params.append(pd)
+
+        if len(params) == 0:
+            subchart.params = Undefined
+        else:
+            subchart.params = params
+
+    return subcharts
 
 
 def _combine_subchart_params(params, subcharts):
