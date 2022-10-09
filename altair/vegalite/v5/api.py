@@ -2641,9 +2641,21 @@ def layer(*charts, **kwargs):
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
 
-    def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
+    def __init__(
+        self,
+        data=Undefined,
+        spec=Undefined,
+        facet=Undefined,
+        params=Undefined,
+        **kwargs,
+    ):
         _check_if_valid_subspec(spec, "FacetChart")
-        super(FacetChart, self).__init__(data=data, spec=spec, facet=facet, **kwargs)
+        _spec_as_list = [spec]
+        params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
+        spec = _spec_as_list[0]
+        super(FacetChart, self).__init__(
+            data=data, spec=spec, facet=facet, params=params, **kwargs
+        )
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -2674,7 +2686,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             return self
         copy = self.copy()
         copy.spec = copy.spec.add_params(*params)
-        return copy
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
