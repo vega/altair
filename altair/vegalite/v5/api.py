@@ -2438,6 +2438,32 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
         if not params or not self.concat:
@@ -2482,6 +2508,32 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
         if not params or not self.hconcat:
@@ -2525,6 +2577,32 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
+
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
