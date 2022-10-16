@@ -12,4 +12,9 @@ source = data.movies.url
 alt.Chart(source).transform_window(
     ecdf="cume_dist()",
     sort=[{"field": "IMDB_Rating"}],
-).mark_line(interpolate="step-after").encode(x="IMDB_Rating:Q", y="ecdf:Q")
+).mark_line(
+    interpolate="step-after"
+).encode(
+    x="IMDB_Rating:Q",
+    y="ecdf:Q"
+)
