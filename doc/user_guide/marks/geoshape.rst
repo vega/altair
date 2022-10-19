@@ -296,9 +296,11 @@ Take for example the following example of unemployment statistics of 2018 of US 
             width=200
             height=150
             
-        us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
-        us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')    
-        us_unemp = data.unemployment()  
+        # us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+        # us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
+        us_counties = alt.topo_feature(data.us_10m.url, 'counties')
+        us_states = alt.topo_feature(data.us_10m.url, 'states')
+        us_unemp = data.unemployment.url
         
         if title is None:
             title=scale_type
