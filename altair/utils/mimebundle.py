@@ -50,13 +50,44 @@ def spec_to_mimebundle(
             raise ValueError("Must specify vega_version")
         return {"application/vnd.vega.v{}+json".format(vega_version[0]): spec}
     if format in ["png", "svg", "pdf", "vega"]:
+        if format in ["png", "svg", "vega"]:
+            try:
+                import vl_convert as vlc
+                from ..vegalite import SCHEMA_VERSION
+
+                # Compute VlConvert's vl_version string (of the form 'v5_2')
+                # from SCHEMA_VERSION (of the form 'v5.2.0')
+                vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
+
+                if format == "vega":
+                    vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
+                    return {"application/vnd.vega.v5+json": vg}
+                elif format == "svg":
+                    svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
+                    return {"image/svg+xml": svg}
+                elif format == "png":
+                    png = vlc.vegalite_to_png(
+                        spec,
+                        vl_version=vl_version,
+                        scale=kwargs.get("scale_factor", 1.0)
+                    )
+                    return {"image/png": png}
+            except ImportError:
+                # Continue and try to use altair_saver below
+                pass
         try:
             import altair_saver
         except ImportError:
-            raise ValueError(
-                "Saving charts in {fmt!r} format requires the altair_saver package: "
-                "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-            )
+            if format == "pdf":
+                raise ValueError(
+                    "Saving charts in {fmt!r} format requires the altair_saver package: "
+                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+                )
+            else:
+                raise ValueError(
+                    "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
+                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+                )
         return altair_saver.render(spec, format, mode=mode, **kwargs)
     if format == "html":
         html = spec_to_html(
