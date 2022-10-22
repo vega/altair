@@ -6,6 +6,7 @@ import json
 import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
+import itertools
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -2330,6 +2331,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
+        if isinstance(spec, Chart):
+            params = _repeat_names(params, repeat)
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -2954,6 +2957,47 @@ def _combine_subchart_params(params, subcharts):
         subparams = Undefined
 
     return subparams, subcharts
+
+
+def _get_repeat_strings(repeat):
+    if isinstance(repeat, list):
+        return repeat
+    if isinstance(repeat, core.RepeatMapping):
+        rclist = [k for k in ["row", "column"] if repeat[k] is not Undefined]
+        rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
+        return ["".join(s) for s in itertools.product(*rcstrings)]
+
+
+def _extend_view_name(v, r):
+    if v.endswith("child__" + r):
+        return v
+    else:
+        return v + "child__" + r
+
+
+def _repeat_names(params, repeat):
+    if params is Undefined:
+        return params
+
+    repeat = _get_repeat_strings(repeat)
+    params_named = []
+
+    for param in params:
+        if not isinstance(param, core.TopLevelSelectionParameter):
+            params_named.append(param)
+            continue
+        p = param.copy()
+        views = []
+        repeat_strings = _get_repeat_strings(repeat)
+        for v in param.views:
+            if any([v.endswith(f"child__{r}") for r in repeat_strings]):
+                views.append(v)
+            else:
+                views += [_extend_view_name(v, r) for r in repeat_strings]
+        p.views = views
+        params_named.append(p)
+
+    return params_named
 
 
 def _remove_layer_props(chart, subcharts, layer_props):
