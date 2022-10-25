@@ -724,15 +724,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         elif repeat_specified and layer_specified:
             raise ValueError("repeat argument cannot be combined with layer argument.")
-        elif layer_specified and rowcol_specified:
-            raise ValueError(
-                "layer argument cannot be combined with row/column argument."
-            )
 
         if repeat_specified:
             repeat = repeat
         elif layer_specified:
-            repeat = core.LayerRepeatMapping(layer=layer)
+            repeat = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
             repeat = core.RepeatMapping(row=row, column=column)
 
@@ -2962,10 +2958,13 @@ def _combine_subchart_params(params, subcharts):
 def _get_repeat_strings(repeat):
     if isinstance(repeat, list):
         return repeat
-    if isinstance(repeat, core.RepeatMapping):
-        rclist = [k for k in ["row", "column"] if repeat[k] is not Undefined]
-        rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
-        return ["".join(s) for s in itertools.product(*rcstrings)]
+    elif isinstance(repeat, core.LayerRepeatMapping):
+        klist = ["row", "column", "layer"]
+    elif isinstance(repeat, core.RepeatMapping):
+        klist = ["row", "column"]
+    rclist = [k for k in klist if repeat[k] is not Undefined]
+    rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
+    return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
 def _extend_view_name(v, r):
