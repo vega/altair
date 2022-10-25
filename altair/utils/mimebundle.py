@@ -50,45 +50,8 @@ def spec_to_mimebundle(
             raise ValueError("Must specify vega_version")
         return {"application/vnd.vega.v{}+json".format(vega_version[0]): spec}
     if format in ["png", "svg", "pdf", "vega"]:
-        if format in ["png", "svg", "vega"]:
-            try:
-                import vl_convert as vlc
-                from ..vegalite import SCHEMA_VERSION
-
-                # Compute VlConvert's vl_version string (of the form 'v5_2')
-                # from SCHEMA_VERSION (of the form 'v5.2.0')
-                vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
-
-                if format == "vega":
-                    vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
-                    return {"application/vnd.vega.v5+json": vg}
-                elif format == "svg":
-                    svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
-                    return {"image/svg+xml": svg}
-                elif format == "png":
-                    png = vlc.vegalite_to_png(
-                        spec,
-                        vl_version=vl_version,
-                        scale=kwargs.get("scale_factor", 1.0),
-                    )
-                    return {"image/png": png}
-            except ImportError:
-                # Continue and try to use altair_saver below
-                pass
-        try:
-            import altair_saver
-        except ImportError:
-            if format == "pdf":
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
-            else:
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
-        return altair_saver.render(spec, format, mode=mode, **kwargs)
+        engine = kwargs.get("engine", None)
+        return _spec_to_mimebundle_with_engine(spec, format, mode, engine, **kwargs)
     if format == "html":
         html = spec_to_html(
             spec,
@@ -112,3 +75,110 @@ def spec_to_mimebundle(
         "format must be one of "
         "['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
     )
+
+
+def _spec_to_mimebundle_with_engine(spec, format, mode, engine, **kwargs):
+    """Helper for Vega-Lite to mimebundle conversions that require an engine
+
+    Parameters
+    ----------
+    spec : dict
+        a dictionary representing a vega-lite plot spec
+    format : string {'png', 'svg', 'pdf', 'vega'}
+        the format of the mimebundle to be returned
+    mode : string {'vega', 'vega-lite'}
+        The rendering mode.
+    engine: string {'vl-convert', 'altair_saver'}
+        the conversion engine to use
+    **kwargs :
+        Additional arguments will be passed to the conversion function
+    """
+    # Try to import vl_convert
+    try:
+        import vl_convert as vlc
+    except ImportError:
+        vlc = None
+
+    # Try to import altair_saver
+    try:
+        import altair_saver
+    except ImportError:
+        altair_saver = None
+
+    # Normalize the engine string (if any) by lower casing
+    # and removing underscores and hyphens
+    normalized_engine = (
+        None if engine is None else engine.lower().replace("-", "").replace("_", "")
+    )
+
+    # Validate or infer default value of engine
+    if normalized_engine == "vlconvert":
+        if vlc is None:
+            raise ValueError(
+                "The 'vl-convert' conversion engine requires the vl-convert-python package"
+            )
+        if format == "pdf":
+            raise ValueError(
+                "The 'vl-convert' conversion engine does not support the {fmt!r} format.\n"
+                "Use the 'altair_saver' engine instead".format(fmt=format)
+            )
+    elif normalized_engine == "altairsaver":
+        if altair_saver is None:
+            raise ValueError(
+                "The 'altair_saver' conversion engine requires the altair_saver package"
+            )
+    elif normalized_engine is None:
+        if vlc is not None and format != "pdf":
+            normalized_engine = "vlconvert"
+        elif altair_saver is not None:
+            normalized_engine = "altairsaver"
+        else:
+            if format == "pdf":
+                raise ValueError(
+                    "Saving charts in {fmt!r} format requires the altair_saver package: "
+                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+                )
+            else:
+                raise ValueError(
+                    "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
+                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+                )
+    else:
+        raise ValueError(
+            "Invalid conversion engine {engine!r}. Expected one of {valid!r}".format(
+                engine=engine, valid=("vl-convert", "altair_saver")
+            )
+        )
+
+    if normalized_engine == "vlconvert":
+        from ..vegalite import SCHEMA_VERSION
+
+        # Compute VlConvert's vl_version string (of the form 'v5_2')
+        # from SCHEMA_VERSION (of the form 'v5.2.0')
+        vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
+
+        if format == "vega":
+            vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
+            return {"application/vnd.vega.v5+json": vg}
+        elif format == "svg":
+            svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
+            return {"image/svg+xml": svg}
+        elif format == "png":
+            png = vlc.vegalite_to_png(
+                spec,
+                vl_version=vl_version,
+                scale=kwargs.get("scale_factor", 1.0),
+            )
+            return {"image/png": png}
+        else:
+            # This should be validated above
+            # but raise exception for the sake of future development
+            raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
+    elif normalized_engine == "altairsaver":
+        return altair_saver.render(spec, format, mode=mode, **kwargs)
+    else:
+        # This should be validated above
+        # but raise exception for the sake of future development
+        raise ValueError(
+            "Unexpected normalized_engine {eng!r}".format(eng=normalized_engine)
+        )

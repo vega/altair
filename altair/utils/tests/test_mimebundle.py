@@ -3,13 +3,15 @@ import pytest
 import altair as alt
 from ..mimebundle import spec_to_mimebundle
 
+try:
+    import altair_saver  # noqa: F401
+except ImportError:
+    altair_saver = None
 
-@pytest.fixture
-def require_altair_saver():
-    try:
-        import altair_saver  # noqa: F401
-    except ImportError:
-        pytest.skip("altair_saver not importable; cannot run saver tests")
+try:
+    import vl_convert as vlc  # noqa: F401
+except ImportError:
+    vlc = None
 
 
 @pytest.fixture
@@ -165,7 +167,13 @@ def vega_spec():
     }
 
 
-def test_vegalite_to_vega_mimebundle(require_altair_saver, vegalite_spec, vega_spec):
+@pytest.mark.parametrize("engine", ["vl-convert", "altair_saver", None])
+def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
+    if engine == "vl-convert" and vlc is None:
+        pytest.skip("vl_convert not importable; cannot run mimebundle tests")
+    elif engine == "altair_saver" and altair_saver is None:
+        pytest.skip("altair_saver not importable; cannot run mimebundle tests")
+
     # temporary fix for https://github.com/vega/vega-lite/issues/7776
     def delete_none(axes):
         for axis in axes:
