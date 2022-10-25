@@ -50,8 +50,7 @@ def spec_to_mimebundle(
             raise ValueError("Must specify vega_version")
         return {"application/vnd.vega.v{}+json".format(vega_version[0]): spec}
     if format in ["png", "svg", "pdf", "vega"]:
-        engine = kwargs.get("engine", None)
-        return _spec_to_mimebundle_with_engine(spec, format, mode, engine, **kwargs)
+        return _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs)
     if format == "html":
         html = spec_to_html(
             spec,
@@ -77,7 +76,7 @@ def spec_to_mimebundle(
     )
 
 
-def _spec_to_mimebundle_with_engine(spec, format, mode, engine, **kwargs):
+def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
     """Helper for Vega-Lite to mimebundle conversions that require an engine
 
     Parameters
@@ -107,6 +106,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, engine, **kwargs):
 
     # Normalize the engine string (if any) by lower casing
     # and removing underscores and hyphens
+    engine = kwargs.pop("engine", None)
     normalized_engine = (
         None if engine is None else engine.lower().replace("-", "").replace("_", "")
     )

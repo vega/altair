@@ -189,6 +189,7 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
         vega_version=alt.VEGA_VERSION,
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
+        engine=engine,
     )
 
     bundle["application/vnd.vega.v5+json"]["axes"] = delete_none(
