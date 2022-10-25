@@ -69,7 +69,7 @@ def spec_to_mimebundle(
                     png = vlc.vegalite_to_png(
                         spec,
                         vl_version=vl_version,
-                        scale=kwargs.get("scale_factor", 1.0)
+                        scale=kwargs.get("scale_factor", 1.0),
                     )
                     return {"image/png": png}
             except ImportError:
