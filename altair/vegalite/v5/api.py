@@ -6,6 +6,7 @@ import json
 import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
+import itertools
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -162,7 +163,7 @@ class Parameter(expr.core.OperatorMixin, object):
     @classmethod
     def _get_name(cls):
         cls._counter += 1
-        return "parameter{:03d}".format(cls._counter)
+        return f"param_{cls._counter}"
 
     def __init__(self, name):
         if name is None:
@@ -171,10 +172,7 @@ class Parameter(expr.core.OperatorMixin, object):
 
     def to_dict(self):
         if self.param_type == "variable":
-            if self.param.expr is Undefined:
-                return {"expr": self.name}
-            else:
-                return {"expr": repr(self.param.expr)}
+            return {"expr": self.name}
         elif self.param_type == "selection":
             return {
                 "param": self.name.to_dict()
@@ -208,13 +206,10 @@ class Parameter(expr.core.OperatorMixin, object):
         return "Parameter({0!r}, {1})".format(self.name, self.param)
 
     def _to_expr(self):
-        if not hasattr(self.param, "expr") or self.param.expr is Undefined:
-            return self.name
-        else:
-            return self.param.expr
+        return self.name
 
     def _from_expr(self, expr):
-        return param(expr=expr)
+        return ParameterExpression(expr=expr)
 
     def __getattr__(self, field_name):
         if field_name.startswith("__") and field_name.endswith("__"):
@@ -242,6 +237,20 @@ class SelectionPredicateComposition(core.PredicateComposition):
 
     def __or__(self, other):
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+
+
+class ParameterExpression(expr.core.OperatorMixin, object):
+    def __init__(self, expr):
+        self.expr = expr
+
+    def to_dict(self):
+        return {"expr": repr(self.expr)}
+
+    def _to_expr(self):
+        return repr(self.expr)
+
+    def _from_expr(self, expr):
+        return ParameterExpression(expr=expr)
 
 
 class SelectionExpression(expr.core.OperatorMixin, object):
@@ -723,15 +732,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         elif repeat_specified and layer_specified:
             raise ValueError("repeat argument cannot be combined with layer argument.")
-        elif layer_specified and rowcol_specified:
-            raise ValueError(
-                "layer argument cannot be combined with row/column argument."
-            )
 
         if repeat_specified:
             repeat = repeat
         elif layer_specified:
-            repeat = core.LayerRepeatMapping(layer=layer)
+            repeat = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
             repeat = core.RepeatMapping(row=row, column=column)
 
@@ -2151,7 +2156,7 @@ class Chart(
     @classmethod
     def _get_name(cls):
         cls._counter += 1
-        return "Chart{:03d}".format(cls._counter)
+        return f"view_{cls._counter}"
 
     @classmethod
     def from_dict(cls, dct, validate=True):
@@ -2327,6 +2332,11 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         **kwds,
     ):
         _check_if_valid_subspec(spec, "RepeatChart")
+        _spec_as_list = [spec]
+        params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
+        spec = _spec_as_list[0]
+        if isinstance(spec, Chart):
+            params = _repeat_names(params, repeat)
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -2385,13 +2395,9 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         """Add one or more parameters to the chart."""
         if not params:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
-        return copy
+        copy = self.copy()
+        copy.spec = copy.spec.add_params(*params)
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
@@ -2453,6 +2459,32 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
         if not params:
@@ -2507,6 +2539,32 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
+
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
@@ -2563,6 +2621,32 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The parameter name to use for the axes scales. This name should be
+            unique among all parameters within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+
+        """
+        encodings = []
+        if bind_x:
+            encodings.append("x")
+        if bind_y:
+            encodings.append("y")
+        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+
     def add_params(self, *params):
         """Add one or more parameters to the chart."""
         if not params:
@@ -2606,6 +2690,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        # Currently (Vega-Lite 5.5) the same param can't occur on two layers
+        self.layer = _remove_duplicate_params(self.layer)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
 
         # Some properties are not allowed within layer; we'll move to parent.
@@ -2667,13 +2753,9 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         """Add one or more parameters to the chart."""
         if not params:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
-        return copy
+        copy = self.copy()
+        copy.layer[0] = copy.layer[0].add_params(*params)
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
@@ -2691,16 +2773,21 @@ def layer(*charts, **kwargs):
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
 
-    _counter = 0
-
-    @classmethod
-    def _get_name(cls):
-        cls._counter += 1
-        return "FacetChart{:03d}".format(cls._counter)
-
-    def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
+    def __init__(
+        self,
+        data=Undefined,
+        spec=Undefined,
+        facet=Undefined,
+        params=Undefined,
+        **kwargs,
+    ):
         _check_if_valid_subspec(spec, "FacetChart")
-        super(FacetChart, self).__init__(data=data, spec=spec, facet=facet, **kwargs)
+        _spec_as_list = [spec]
+        params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
+        spec = _spec_as_list[0]
+        super(FacetChart, self).__init__(
+            data=data, spec=spec, facet=facet, params=params, **kwargs
+        )
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -2729,13 +2816,9 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         """Add one or more parameters to the chart."""
         if not params:
             return self
-        copy = self.copy(deep=["params"])
-        if copy.params is Undefined:
-            copy.params = []
-
-        for s in params:
-            copy.params.append(s.param)
-        return copy
+        copy = self.copy()
+        copy.spec = copy.spec.add_params(*params)
+        return copy.copy()
 
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
@@ -2798,89 +2881,178 @@ def _viewless_dict(param):
     return d
 
 
+def _needs_name(subchart):
+    # Only `Chart` objects need a name
+    if (subchart.name is not Undefined) or (not isinstance(subchart, Chart)):
+        return False
+
+    # Variable parameters won't receive a views property.
+    if all([isinstance(p, core.VariableParameter) for p in subchart.params]):
+        return False
+
+    return True
+
+
+# Convert SelectionParameters to TopLevelSelectionParameters with a views property.
+def _prepare_to_lift(param):
+    param = param.copy()
+
+    if isinstance(param, core.VariableParameter):
+        return param
+
+    if isinstance(param, core.SelectionParameter):
+        return core.TopLevelSelectionParameter(**param.to_dict(), views=[])
+
+    if param.views is Undefined:
+        param.views = []
+
+    return param
+
+
+def _remove_duplicate_params(layer):
+    subcharts = [subchart.copy() for subchart in layer]
+    found_params = []
+
+    for subchart in subcharts:
+
+        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+            continue
+
+        params = []
+
+        # Ensure the same selection parameter doesn't appear twice
+        for param in subchart.params:
+            if isinstance(param, core.VariableParameter):
+                params.append(param)
+                continue
+
+            p = param.copy()
+            pd = _viewless_dict(p)
+
+            if pd not in found_params:
+                params.append(p)
+                found_params.append(pd)
+
+        if len(params) == 0:
+            subchart.params = Undefined
+        else:
+            subchart.params = params
+
+    return subcharts
+
+
 def _combine_subchart_params(params, subcharts):
+
     if params is Undefined:
         params = []
 
+    # List of triples related to params, (param, dictionary minus views, views)
+    param_info = []
+
+    # Put parameters already found into `param_info` list.
+    for param in params:
+        p = _prepare_to_lift(param)
+        param_info.append(
+            (
+                p,
+                _viewless_dict(p),
+                [] if isinstance(p, core.VariableParameter) else p.views,
+            )
+        )
+
     subcharts = [subchart.copy() for subchart in subcharts]
 
-    # We will consider two parameters to be equal if their corresponding
-    # dictionaries are equal or if their dictionaries are equal everywhere
-    # except for "views" keys.
-    subparams = []
-    subparam_dicts = []
-    subparam_views = []
-
-    # Deal with parameters already found
-    for p in params:
-        subparams.append(p.copy())
-        subparam_dicts.append(_viewless_dict(p))
-        if isinstance(p, core.VariableParameter):
-            subparam_views.append([])
-        elif p.views is Undefined:
-            subparam_views.append([])
-        else:
-            subparam_views.append(p.views)
-
     for subchart in subcharts:
-        if subchart.params is Undefined:
+        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
             continue
+
+        if _needs_name(subchart):
+            subchart.name = subchart._get_name()
+
         for param in subchart.params:
-            found = False
-            param_dict = _viewless_dict(param)
+            p = _prepare_to_lift(param)
+            pd = _viewless_dict(p)
 
-            for p, d, v in zip(subparams, subparam_dicts, subparam_views):
-                if param_dict == d:
-                    found = True
-                    # Only add `Chart` objects to the views list, not multiview charts.
-                    if isinstance(subchart, Chart) and isinstance(
-                        param,
-                        (core.SelectionParameter, core.TopLevelSelectionParameter),
-                    ):
-                        if subchart.name is Undefined:
-                            subchart.name = subchart._get_name()
-                        if subchart.name not in v:
-                            v.append(subchart.name)
-                    break
+            dlist = [d for _, d, _ in param_info]
+            found = pd in dlist
 
-            if not found:
-                param = param.copy()
+            if isinstance(p, core.VariableParameter) and found:
+                continue
 
-                if isinstance(param, core.VariableParameter):
-                    subparams.append(param)
-                    subparam_dicts.append(param_dict)
-                    subparam_views.append([])
-                    # Done with this parameter
-                    continue
+            if isinstance(p, core.VariableParameter) and not found:
+                param_info.append((p, pd, []))
+                continue
 
-                if isinstance(param, core.SelectionParameter):
-                    param = core.TopLevelSelectionParameter(**param.to_dict(), views=[])
-                elif param.views is Undefined:
-                    param.views = []
+            # At this stage in the loop, p must be a TopLevelSelectionParameter.
 
-                views = param.views
+            if isinstance(subchart, Chart) and (subchart.name not in p.views):
+                p.views.append(subchart.name)
 
-                if isinstance(subchart, Chart):
-                    if subchart.name is Undefined:
-                        subchart.name = subchart._get_name()
-                    if subchart.name not in views:
-                        views.append(subchart.name)
-
-                subparams.append(param)
-                subparam_dicts.append(param_dict)
-                subparam_views.append(views)
+            if found:
+                i = dlist.index(pd)
+                _, _, old_views = param_info[i]
+                new_views = [v for v in p.views if v not in old_views]
+                old_views += new_views
+            else:
+                param_info.append((p, pd, p.views))
 
         subchart.params = Undefined
 
-    for p, v in zip(subparams, subparam_views):
-        if len(v) == 0:
-            continue
-        p.views = v
+    for p, _, v in param_info:
+        if len(v) > 0:
+            p.views = v
+
+    subparams = [p for p, _, _ in param_info]
 
     if len(subparams) == 0:
         subparams = Undefined
 
     return subparams, subcharts
+
+
+def _get_repeat_strings(repeat):
+    if isinstance(repeat, list):
+        return repeat
+    elif isinstance(repeat, core.LayerRepeatMapping):
+        klist = ["row", "column", "layer"]
+    elif isinstance(repeat, core.RepeatMapping):
+        klist = ["row", "column"]
+    rclist = [k for k in klist if repeat[k] is not Undefined]
+    rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
+    return ["".join(s) for s in itertools.product(*rcstrings)]
+
+
+def _extend_view_name(v, r):
+    # prevent the same extension from happening more than once
+    if v.endswith("child__" + r):
+        return v
+    else:
+        return v + "child__" + r
+
+
+def _repeat_names(params, repeat):
+    if params is Undefined:
+        return params
+
+    repeat = _get_repeat_strings(repeat)
+    params_named = []
+
+    for param in params:
+        if not isinstance(param, core.TopLevelSelectionParameter):
+            params_named.append(param)
+            continue
+        p = param.copy()
+        views = []
+        repeat_strings = _get_repeat_strings(repeat)
+        for v in param.views:
+            if any([v.endswith(f"child__{r}") for r in repeat_strings]):
+                views.append(v)
+            else:
+                views += [_extend_view_name(v, r) for r in repeat_strings]
+        p.views = views
+        params_named.append(p)
+
+    return params_named
 
 
 def _remove_layer_props(chart, subcharts, layer_props):
