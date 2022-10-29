@@ -606,7 +606,9 @@ def test_add_selection():
 def test_repeat_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = base.add_params(selection).repeat(list("ABC"))
+    alt.Chart._counter = 0
     chart2 = base.repeat(list("ABC")).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -614,7 +616,9 @@ def test_repeat_add_selections():
 def test_facet_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = base.add_params(selection).facet("val:Q")
+    alt.Chart._counter = 0
     chart2 = base.facet("val:Q").add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -622,7 +626,9 @@ def test_facet_add_selections():
 def test_layer_add_selection():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = alt.layer(base.add_params(selection), base)
+    alt.Chart._counter = 0
     chart2 = alt.layer(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -631,7 +637,9 @@ def test_layer_add_selection():
 def test_compound_add_selections(charttype):
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
+    alt.Chart._counter = 0
     chart1 = charttype(base.add_params(selection), base.add_params(selection))
+    alt.Chart._counter = 0
     chart2 = charttype(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
