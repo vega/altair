@@ -3,7 +3,9 @@ Image tooltip
 -------------
 This example shows how to render images in tooltips.
 Either URLs or local file paths can be used to reference
-the images.
+the images. To render the image, you must use the special
+column name "image" in your data and pass it as a list to
+the tooltip encoding.
 """
 # category: interactive charts
 
@@ -17,5 +19,5 @@ source = pd.DataFrame.from_records(
 alt.Chart(source).mark_circle(size=200).encode(
     x='a',
     y='b',
-    tooltip=['image']  # Must be a list for the image to render
+    tooltip=['image']  # Must be a list containing a field called "image"
 )
