@@ -26,7 +26,7 @@ In the example above, Altair applies a default blue color and uses a default map
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape(
-        fill='lightgray', stroke='white', strokeWidth=0.5
+        fill='lightgrey', stroke='white', strokeWidth=0.5
     ).project(
         type='equalEarth'
     )
@@ -48,7 +48,7 @@ The following examples show different approaches to focus on continental Africa:
         type='equalEarth'
     )
 
-2. Filter the source data using a ``transorm_filter``:
+2. Filter the source data using a ``transform_filter``:
 
 .. altair-plot::
 
@@ -65,7 +65,7 @@ The following examples show different approaches to focus on continental Africa:
     alt.Chart(gdf_ne).mark_geoshape().project(
         type='equalEarth', 
         scale=200, 
-        translate=[160, 160]  # lon, lat rotation
+        translate=[160, 160]  # lon, lat, rotation
     )
 
 Cartesian coordinates
@@ -73,7 +73,7 @@ Cartesian coordinates
 The default projection of Altair is ``equalEarth``. This default assumes that your geometries are in degrees and referenced by longitude and latitude values. 
 Another widely used coordinate system for data visualization is the 2d cartesian coordinate system. This coordinate system does not take into account the curvature of the Earth.
 
-In the following example the input geometry is not projected and is instead rendered directly in raw coordinates using the ``identity`` transformation. We have to define the ``reflectY`` as well since Canvas and SVG treats postive ``y`` as pointing down.
+In the following example the input geometry is not projected and is instead rendered directly in raw coordinates using the ``identity`` transformation. We have to define the ``reflectY`` as well since Canvas and SVG treats positive ``y`` as pointing down.
 
 .. altair-plot::
 
@@ -95,7 +95,7 @@ The following example maps the visual property of the ``name`` column using the 
         reflectY=True
     )
 
-Since each country is represented by a (multi)polygon, one can separate the ``stroke`` and ``fill`` defintions as such: 
+Since each country is represented by a (multi)polygon, one can separate the ``stroke`` and ``fill`` definitions as such: 
 
 .. altair-plot::
 
@@ -176,15 +176,15 @@ But to use the ``size`` encoding for the Points you will need to use the ``mark_
     gdf_centroid['lat'] = gdf_centroid['geometry'].y
 
     alt.Chart(gdf_centroid).mark_circle().encode(
-        latitude='lat:Q',
         longitude='lon:Q',
+        latitude='lat:Q',
         size="pop_est:Q"
     ).project(
         type='identity', 
         reflectY=True
     )
 
-You could skip the extra assingment to the ``lon`` and ``lat`` column in the GeoDataFrame and use the coordinates directly.  We combine the chart with a basemap to bring some perspective to the points:
+You could skip the extra assignment to the ``lon`` and ``lat`` column in the GeoDataFrame and use the coordinates directly.  We combine the chart with a basemap to bring some perspective to the points:
 
 .. altair-plot::
 
@@ -195,8 +195,8 @@ You could skip the extra assingment to the ``lon`` and ``lat`` column in the Geo
     bubbles = alt.Chart(gdf_centroid).mark_circle(
         stroke='black'
     ).encode(
+        longitude='geometry.coordinates[0]:Q',    
         latitude='geometry.coordinates[1]:Q',
-        longitude='geometry.coordinates[0]:Q',
         size="pop_est:Q" 
     )
 
@@ -235,7 +235,7 @@ You can use the ``lookup`` transform in two directions.
 1. Use a GeoDataFrame with geometries as source and lookup related information in another DataFrame.
 2. Use a DataFrame as source and lookup related geometries in a GeoDataFrame.
 
-Depending on your usecase one or the other is more favorable.
+Depending on your use-case one or the other is more favorable.
 
 First show an example of the first approach. 
 Here we lookup the field ``rate`` from the ``us_unemp`` DataFrame, where the ``us_counties`` GeoDataFrame is used as source: 
@@ -358,9 +358,9 @@ Take for example the following example of unemployment statistics of 2018 of US 
     classify('linear', size='default')
 
 
-We visualise the unemployment `rate` in percentage of 2018 with a linear scale range 
+We visualize the unemployment `rate` in percentage of 2018 with a linear scale range 
 using a `mark_geoshape()` to present the spatial patterns on a map and a _jitter_ plot 
-(using `mark_square()`) to visualise the distribution of the `rate` values. Each value/
+(using `mark_square()`) to visualize the distribution of the `rate` values. Each value/
 county has defined an unique color. This gives a bit of insight, but often we like to 
 group the distribution into classes.
 
@@ -384,7 +384,7 @@ intervals. Each class contains different number of values, but the step size is 
 alt.Scale(type='quantize')
 ```
 
-The `quantize` methode can also be used in combination with `nice`. This will "nice" 
+The `quantize` method can also be used in combination with `nice`. This will "nice" 
 the domain before applying quantization. As such:
 
 ```python
@@ -402,12 +402,12 @@ alt.Scale(type='quantize', range=[0.05, 0.20])
 This definition above will create 3 classes. One class with values below `0.05`, one 
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
 
-So which method provides the optimal data classification for chloropleths maps? As 
+So which method provides the optimal data classification for chloropleth maps? As 
 usual, it depends. There is another popular method that aid in determining class breaks.
 This method will maximize the similarity of values in a class while maximizing the 
 distance between the classes (natural breaks). The method is also known by as the 
 Fisher-Jenks algorithm and is similar to _k_-Means in 1D:
--  By using the external Python package `jenskpy` we can derive these _optimim_ breaks 
+-  By using the external Python package `jenskpy` we can derive these _optimum_ breaks 
 as such:
 
 ```python
@@ -438,11 +438,11 @@ dataset, we get the following overview:
 Caveats: 
 
 - For the type `quantize` and `quantile` scales we observe that the default number of 
-classes is 5. It is currently not possible to define a different number of classes in 
-Altair in combination with a predefined color scheme. Track the following issue at the 
-Vega-Lite repository: https://github.com/vega/vega-lite/issues/8127
+classes is 5. You can change the number of classes using a `SchemeParams()` object. In the 
+above specification we can change `scheme='turbo'` into `scheme=alt.SchemeParams('turbo', count=2)`
+to manually specify usage of 2 classes for the scheme within the scale.
 - To define custom colors for each class, one should specify the `domain` and `range`. 
-Where the `range` contains +1 values than the classes specified in the `domain`
+Where the `range` contains `+1` values than the classes specified in the `domain`
 For example: `alt.Scale(type='threshold', domain=[0.05, 0.20], range=['blue','white','red'])`
 In this `blue` is the class for all values below `0.05`, `white` for all values between 
 `0.05` and `0.20` and `red` for all values above `0.20`.
@@ -494,7 +494,7 @@ The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method
 provides a convenient interface for a particular type of horizontal or vertical 
 concatenation of a dataset where one field contain multiple `variables`.
 
-Unfortuantely, the following open issue https://github.com/altair-viz/altair/issues/2369 
+Unfortunately, the following open issue https://github.com/altair-viz/altair/issues/2369 
 will make the following not work for geographic visualization:
 
 .. altair-plot::
@@ -516,15 +516,19 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
 
 .. altair-plot::
 
-    alt.concat(*(
-        alt.Chart(gdf_comb[gdf_comb.variable == var], title=var).mark_geoshape().encode(
-        color='value:Q',
-        ).properties(
-        width=200
-        )
-        for var in gdf_comb.variable.unique()
-    ), columns=3
-    ).resolve_scale(color='independent')
+    alt.concat(
+        *(
+            alt.Chart(gdf_comb[gdf_comb.variable == var], title=var)
+            .mark_geoshape()
+            .encode(
+                color="value:Q",
+            )
+            .properties(width=200)
+            for var in gdf_comb.variable.unique()
+        ),
+        columns=3
+    ).resolve_scale(color="independent")
+
 
 
 Interaction
@@ -550,7 +554,7 @@ populous states.
 
     # create a chloropleth map using a lookup transform 
     # define a condition on the opacity encoding depending on the selection
-    choropleth = alt.Chart(us_states).mark_geoshape().transform_lookup(
+    chloropleth = alt.Chart(us_states).mark_geoshape().transform_lookup(
         lookup='id',
         from_=alt.LookupData(us_population, 'id', ['population', 'state'])
     ).encode(
@@ -571,7 +575,7 @@ populous states.
     ).add_params(click_state)
 
 
-    choropleth & bars
+    chloropleth & bars
 
 Expression
 ~~~~~~~~~~
@@ -597,7 +601,8 @@ An hover highlighting is added to get more insight of each earthquake.
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5)
-    rotate0 = alt.param(value=120, bind=range0, name='rotate0')
+    rotate0 = alt.param(value=120, bind=range0, name='param_rotate0')
+    rotate_param = alt.param(expr=f'[{rotate0.name}, 0, 0]')
     hover = alt.selection_point(on='mouseover', clear='mouseout')
 
     # world disk
@@ -624,8 +629,8 @@ An hover highlighting is added to get more insight of each earthquake.
         lon="datum.geometry.coordinates[0]",
         lat="datum.geometry.coordinates[1]",
         depth="datum.geometry.coordinates[2]"
-    ).transform_filter('''
-        (rotate0 * -1) - 90 < datum.lon && datum.lon < (rotate0 * -1) + 90
+    ).transform_filter(f'''
+        ({rotate0.name} * -1) - 90 < datum.lon && datum.lon < ({rotate0.name} * -1) + 90
         '''
     ).encode(
         longitude='lon:Q',    
@@ -633,20 +638,14 @@ An hover highlighting is added to get more insight of each earthquake.
         strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
         size=alt.Size('mag:Q', scale=alt.Scale(type='pow', range=[1,1000], domain=[0,6], exponent=4)),
         fill=alt.Fill('depth:Q', scale=alt.Scale(scheme='lightorange', domain=[0,400]))
-    ).add_params(hover)
+    ).add_params(hover, rotate0)
 
     # define projection and add the rotation param for all layers
     comb = alt.layer(sphere, world, quakes).project(
         'orthographic',
-        rotate=[90, 0, 0]
-    ).add_params(rotate0)
-
-    # temporary changing params to top-level
-    # and defining the rotate reference expression on compiled VL directly
-    chart_vl = comb.to_dict()
-    chart_vl['params'] =  chart_vl['layer'][0].pop('params')
-    chart_vl['projection']['rotate'] = {'expr':'[rotate0, 0, 0]'}
-    alt.Chart().from_dict(chart_vl)
+        rotate=rotate_param
+    ).add_params(rotate_param)
+    comb
 
 Geoshape Options
 ~~~~~~~~~~~~~~~~
