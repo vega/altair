@@ -70,7 +70,7 @@ The following examples applies these approaches to focus on continental Africa:
     alt.Chart(gdf_ne).mark_geoshape().project(
         type='equalEarth', 
         scale=200, 
-        translate=[160, 160, 0]  # lon, lat, rotation
+        translate=[160, 160]  # lon, lat
     )
 
 3. Specify ``fit`` (extent) within the ``project`` method & ``clip=True`` in the mark properties:
@@ -288,7 +288,8 @@ Chloropleth Classification
 Chloropleth maps provide an easy way to visualize how a variable varies across a 
 geographic area or show the level of variability within a region. 
 
-We first define a utility function ``classify()`` that we will use to showcase different approaches to make a chloropleth map:
+We first define a utility function ``classify()`` that we will use to showcase different approaches to make a chloropleth map.
+We apply it to define a chloropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
 
 .. altair-plot::
 
@@ -302,8 +303,8 @@ We first define a utility function ``classify()`` that we will use to showcase d
             width=400
             height=300
         else:
-            width=200
-            height=150
+            width=180
+            height=130
             
         # us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
         # us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
@@ -364,12 +365,7 @@ We first define a utility function ``classify()`` that we will use to showcase d
         
         return (distrib_geoshape + states_geoshape) & distrib_square
 
-
-Take for example the following example where we define a cholorpleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
-
-.. altair-plot::
-
-    classify('linear', size='default')
+    classify('linear', size='default')        
 
 
 We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
@@ -537,8 +533,8 @@ will make the following not work for geographic visualization:
         color=alt.Color('value:Q'),
         facet=alt.Facet('variable:N', columns=3)
     ).properties(
-        width=200,
-        height=200
+        width=180,
+        height=130
     ).resolve_scale('independent')
 
 For now, the following workaround can be adopted to facet a map, manually filter the 
@@ -551,9 +547,11 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
             alt.Chart(gdf_comb[gdf_comb.variable == var], title=var)
             .mark_geoshape()
             .encode(
-                color="value:Q",
+                color=alt.Color(
+                    "value:Q", legend=alt.Legend(orient="bottom", direction="horizontal")
+                )
             )
-            .properties(width=200)
+            .properties(width=180, height=130)
             for var in gdf_comb.variable.unique()
         ),
         columns=3
