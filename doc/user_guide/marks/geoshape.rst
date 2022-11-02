@@ -34,9 +34,14 @@ In the example above, Altair applies a default blue color and uses a default map
 Focus & Filtering
 ~~~~~~~~~~~~~~~~~
 By default Altair automatically adjusts the projection so that all the data fits within the width and height of the chart. 
-Multiple approaches can be used to focus on specific regions of your spatial data. 
+Multiple approaches can be used to focus on specific regions of your spatial data. Namely:
 
-The following examples show different approaches to focus on continental Africa:
+1. Filter the source data within your GeoDataFrame.
+2. Filter the source data using a ``transform_filter``.
+3. Specify ``scale`` (zoom level) and ``translate`` (panning) within the ``project()`` method.
+4. Specify ``fit`` (extent) within the ``project()`` method.
+
+The following examples applies these approaches to focus on continental Africa:
 
 1. Filter the source data within your GeoDataFrame:
 
@@ -58,15 +63,35 @@ The following examples show different approaches to focus on continental Africa:
         alt.datum.continent == 'Africa'
     )
 
-3. Specify projection parameters, such as ``scale`` (zoom level) and ``translate`` (panning):
+3. Specify ``scale`` (zoom level) and ``translate`` (panning) within the ``project()`` method:
 
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape().project(
         type='equalEarth', 
         scale=200, 
-        translate=[160, 160]  # lon, lat, rotation
+        translate=[160, 160, 0]  # lon, lat, rotation
     )
+
+3. Specify ``fit`` (extent) within the ``project()`` method:
+
+.. altair-plot::
+
+    from shapely.ops import orient
+    from shapely.geometry import mapping
+
+    extent_roi = gdf_ne.query("continent == 'Africa'").unary_union.envelope
+
+    # fit object should be an array of GeoJSON-like features
+    # order polygon exterior needs to be clock-wise (left-hand-rule)
+    if extent_roi.exterior.is_ccw:
+        extent_roi = orient(extent_roi, -1)
+    extent_roi_geojson = [mapping(extent_roi)]
+
+    alt.Chart(gdf_ne).mark_geoshape().project(
+        type='equalEarth',
+        fit=extent_roi_geojson
+    )    
 
 Cartesian coordinates
 ~~~~~~~~~~~~~~~~~~~~~
@@ -232,13 +257,13 @@ In this case you can use the ``lookup`` transform to connect related information
 
 You can use the ``lookup`` transform in two directions. 
 
-1. Use a GeoDataFrame with geometries as source and lookup related information in another DataFrame.
-2. Use a DataFrame as source and lookup related geometries in a GeoDataFrame.
+1. Use a ``GeoDataFrame`` with geometries as source and lookup related information in another ``DataFrame``.
+2. Use a ``DataFrame`` as source and lookup related geometries in a ``GeoDataFrame``.
 
 Depending on your use-case one or the other is more favorable.
 
 First show an example of the first approach. 
-Here we lookup the field ``rate`` from the ``us_unemp`` DataFrame, where the ``us_counties`` GeoDataFrame is used as source: 
+Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the ``gdf_us_counties`` GeoDataFrame is used as source: 
 
 .. altair-plot::
 
@@ -246,12 +271,12 @@ Here we lookup the field ``rate`` from the ``us_unemp`` DataFrame, where the ``u
     from vega_datasets import data
     import geopandas as gpd
 
-    us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
-    us_unemp = data.unemployment()
+    gdf_us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+    df_us_unemp = data.unemployment()
 
-    alt.Chart(us_counties).mark_geoshape().transform_lookup(
+    alt.Chart(gdf_us_counties).mark_geoshape().transform_lookup(
         lookup='id', 
-        from_=alt.LookupData(data=us_unemp, key='id', fields=['rate'])
+        from_=alt.LookupData(data=df_us_unemp, key='id', fields=['rate'])
     ).encode(
         alt.Color('rate:Q')
     ).project(
@@ -259,13 +284,13 @@ Here we lookup the field ``rate`` from the ``us_unemp`` DataFrame, where the ``u
     )
 
 Next, we show an example of the second approach.
-Here we lookup the geometries through the fields ``geometry`` and ``type`` from the ``us_counties`` GeoDataFrame, where the ``us_unemp`` DataFrame is used as source.
+Here we lookup the geometries through the fields ``geometry`` and ``type`` from the ``gdf_us_counties`` GeoDataFrame, where the ``df_us_unemp`` DataFrame is used as source.
 
 .. altair-plot::
 
-    alt.Chart(us_unemp).mark_geoshape().transform_lookup(
+    alt.Chart(df_us_unemp).mark_geoshape().transform_lookup(
         lookup='id',
-        from_=alt.LookupData(data=us_counties, key='id', fields=['geometry', 'type'])
+        from_=alt.LookupData(data=gdf_us_counties, key='id', fields=['geometry', 'type'])
     ).encode(
         alt.Color('rate:Q')
     ).project(
@@ -278,8 +303,7 @@ Chloropleth Classification
 Choropleth maps provide an easy way to visualize how a variable varies across a 
 geographic area or show the level of variability within a region. 
 
-Take for example the following example of unemployment statistics of 2018 of US counties 
-(we define a utility function (`classify()` that we will use later again):
+We first define a utility function ``classify()`` that we will use to showcase different approaches:
 
 .. altair-plot::
 
@@ -355,69 +379,102 @@ Take for example the following example of unemployment statistics of 2018 of US 
         
         return (distrib_geoshape + states_geoshape) & distrib_square
 
+
+Take for example the following example of unemployment statistics of 2018 of US counties. 
+
+.. altair-plot::
+
     classify('linear', size='default')
 
 
-We visualize the unemployment `rate` in percentage of 2018 with a linear scale range 
-using a `mark_geoshape()` to present the spatial patterns on a map and a _jitter_ plot 
-(using `mark_square()`) to visualize the distribution of the `rate` values. Each value/
-county has defined an unique color. This gives a bit of insight, but often we like to 
+We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
+using a ``mark_geoshape()`` to present the spatial patterns on a map and a ``jitter`` plot 
+(using ``mark_square()``) to visualize the distribution of the ``rate`` values. Each value/
+county has defined a `unique` color. This gives a bit of insight, but often we like to 
 group the distribution into classes.
 
 By grouping values in classes, you can classify the dataset so all values/geometries in 
 each class get assigned the same color.
 
 Here we present a number of scale methods how Altair can be used:
-- _quantile_, this type will divide your dataset (`domain`) into intervals of similar 
+
+- ``quantile``, this type will divide your dataset (`domain`) into intervals of similar 
 sizes. Each class contains more or less the same number of values/geometries (equal 
 counts). The scale definition will look as follow: 
 
-```python
-alt.Scale(type='quantile')
-```
+.. code:: python
 
-- _quantize_, this type will divide the extent of your dataset (`range`) in equal 
+    alt.Scale(type='quantile')
+
+
+.. altair-plot::
+
+    classify('quantile', size='default')
+
+
+- ``quantize``, this type will divide the extent of your dataset (`range`) in equal 
 intervals. Each class contains different number of values, but the step size is equal 
-(equal range). The scale definition will look as follow: 
+(`equal range`). The scale definition will look as follow: 
 
-```python
-alt.Scale(type='quantize')
-```
+.. code:: python
 
-The `quantize` method can also be used in combination with `nice`. This will "nice" 
+    alt.Scale(type='quantize')
+
+.. altair-plot::
+
+    classify('quantize', size='default')
+
+
+The ``quantize`` method can also be used in combination with ``nice``. This will "nice" 
 the domain before applying quantization. As such:
 
-```python
-alt.Scale(type='quantize', nice=True)
-```
+.. code:: python
 
-- _threshold_, this type will divide your dataset in separate classes by manually 
+    alt.Scale(type='quantize', nice=True)
+
+.. altair-plot::
+
+    classify('quantize', nice=True, size='default')
+
+
+
+- ``threshold``, this type will divide your dataset in separate classes by manually 
 specifying the cut values. Each class is separated by defined classes. The scale 
 definition will look as follow: 
 
-```python
-alt.Scale(type='quantize', range=[0.05, 0.20])
-```
+.. code:: python
+
+    alt.Scale(type='threshold', breaks=[0.05, 0.20])
+
+
+.. altair-plot::
+
+    classify('threshold', breaks=[0.05, 0.20], size='default')
+
 
 This definition above will create 3 classes. One class with values below `0.05`, one 
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
 
 So which method provides the optimal data classification for chloropleth maps? As 
-usual, it depends. There is another popular method that aid in determining class breaks.
+usual, it depends. 
+
+There is another popular method that aid in determining class breaks.
 This method will maximize the similarity of values in a class while maximizing the 
 distance between the classes (natural breaks). The method is also known by as the 
-Fisher-Jenks algorithm and is similar to _k_-Means in 1D:
--  By using the external Python package `jenskpy` we can derive these _optimum_ breaks 
+Fisher-Jenks algorithm and is similar to k-Means in 1D:
+
+-  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks 
 as such:
 
-```python
->>> from jenkspy import JenksNaturalBreaks
->>> jnb = JenksNaturalBreaks(5)
->>> jnb.fit(us_unemp['rate'])
->>> jnb.inner_breaks_
-[0.061, 0.088, 0.116, 0.161]
-```
-So when applying these different classification schemes to the county unemployment 
+.. code:: python
+
+    >>> from jenkspy import JenksNaturalBreaks
+    >>> jnb = JenksNaturalBreaks(5)
+    >>> jnb.fit(us_unemp['rate'])
+    >>> jnb.inner_breaks_
+    [0.061, 0.088, 0.116, 0.161]
+
+So when applying all these different classification schemes to the county unemployment 
 dataset, we get the following overview:
 
 .. altair-plot::
@@ -437,18 +494,9 @@ dataset, we get the following overview:
 
 Caveats: 
 
-- For the type `quantize` and `quantile` scales we observe that the default number of 
-classes is 5. You can change the number of classes using a `SchemeParams()` object. In the 
-above specification we can change `scheme='turbo'` into `scheme=alt.SchemeParams('turbo', count=2)`
-to manually specify usage of 2 classes for the scheme within the scale.
-- To define custom colors for each class, one should specify the `domain` and `range`. 
-Where the `range` contains `+1` values than the classes specified in the `domain`
-For example: `alt.Scale(type='threshold', domain=[0.05, 0.20], range=['blue','white','red'])`
-In this `blue` is the class for all values below `0.05`, `white` for all values between 
-`0.05` and `0.20` and `red` for all values above `0.20`.
-- The natural breaks method will determine the optimal class breaks given the required 
-number of classes. But how many classes should one pick? One can investigate usage of 
-goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
+- For the type ``quantize`` and ``quantile`` scales we observe that the default number of classes is 5. You can change the number of classes using a `SchemeParams()` object. In the above specification we can change ``scheme='turbo'`` into ``scheme=alt.SchemeParams('turbo', count=2)`` to manually specify usage of 2 classes for the scheme within the scale.
+- To define custom colors for each class, one should specify the ``domain`` and ``range``. Where the ``range`` contains ``+1`` values than the classes specified in the ``domain``. For example: ``alt.Scale(type='threshold', domain=[0.05, 0.20], range=['blue','white','red'])``. ``blue`` is the class for all values below ``0.05``, ``white`` for all values between ``0.05`` and ``0.20`` and ``red`` for all values above ``0.20``.
+- The natural breaks method will determine the optimal class breaks given the required number of classes. But how many classes should one pick? One can investigate usage of goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
 
 
 Repeat a Map
@@ -577,17 +625,14 @@ populous states.
 
     chloropleth & bars
 
+The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
+
 Expression
 ~~~~~~~~~~
 Altair expressions can be used within a geographical visualization. The following example
-visualize earthquakes on the globe using an `orthographic` projection. Where we can rotate
-the earth on a single-axis. (`rotate0`). The utility function :func:sphere is adopted to 
+visualize earthquakes on the globe using an ``orthographic`` projection. Where we can rotate
+the earth on a single-axis. (``rotate0``). The utility function :func:sphere is adopted to 
 get a disk of the earth as background. 
-
-The earthquakes are displayed using a `mark_geoshape` and filtered once out of sight of 
-the the visible part of the world.
-
-An hover highlighting is added to get more insight of each earthquake.
 
 .. altair-plot::
 
@@ -646,6 +691,11 @@ An hover highlighting is added to get more insight of each earthquake.
         rotate=rotate_param
     ).add_params(rotate_param)
     comb
+
+The earthquakes are displayed using a ``mark_geoshape`` and filtered once out of sight of 
+the the visible part of the world.
+
+A hover highlighting is added to get more insight of each earthquake.
 
 Geoshape Options
 ~~~~~~~~~~~~~~~~
