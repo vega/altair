@@ -16,7 +16,7 @@ df = pd.DataFrame({
 })
 
 slider = alt.binding_range(min=0, max=100, step=1)
-cutoff = alt.parameter(bind=slider, value=50)
+cutoff = alt.param(bind=slider, value=50)
 
 alt.Chart(df).mark_point().encode(
     x='xval',
@@ -25,6 +25,6 @@ alt.Chart(df).mark_point().encode(
         alt.datum.xval < cutoff,
         alt.value('red'), alt.value('blue')
     )
-).add_parameter(
+).add_params(
     cutoff
 )

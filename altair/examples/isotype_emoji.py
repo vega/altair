@@ -5,7 +5,7 @@ Isotype Visualization shows the distribution of animals across UK and US, using 
 marks rather than custom SVG paths (see https://altair-viz.github.io/gallery/isotype.html).
 This is adapted from Vega-Lite example https://vega.github.io/vega-lite/examples/isotype_bar_chart_emoji.html.
 '''
-# category: case studies
+# category:advanced calculations
 import altair as alt
 import pandas as pd
 

@@ -45,7 +45,7 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
 .. code-block:: none
 
-   $ pip install vega_datasets
+   python -m pip install vega_datasets
 
 {% for grouper, group in examples %}
 
@@ -59,7 +59,7 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
    <span class="gallery">
    {% for example in group %}
    <a class="imagegroup" href="{{ example.name }}.html">
-     <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
+     <span class="image" alt="{{ example.title }}" style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.png);"></span>
      <span class="image-title">{{ example.title }}</span>
    </a>
    {% endfor %}
@@ -67,13 +67,16 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
    <div style='clear:both;'></div>
 
-.. toctree::
-  :hidden:
-{% for example in group %}
-  {{ example.name }}
-{%- endfor %}
-
 {% endfor %}
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples
+   :hidden:
+
+   Gallery <self>
+   Tutorials <../case_studies/exploring-weather>
 """
 )
 
@@ -84,7 +87,7 @@ MINIGALLERY_TEMPLATE = jinja2.Template(
     <div id="showcase">
       <div class="examples">
       {% for example in examples %}
-        <a class="preview" href="{{ gallery_dir }}/{{ example.name }}.html" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png)"></a>
+        <a class="preview" href="{{ gallery_dir }}/{{ example.name }}.html" style="background-image: url(.{{ image_dir }}/{{ example.name }}-thumb.png)"></a>
       {% endfor %}
       </div>
     </div>
@@ -105,9 +108,6 @@ EXAMPLE_TEMPLATE = jinja2.Template(
     {% if strict %}:strict:{% endif %}
 
     {{ code | indent(4) }}
-
-.. toctree::
-   :hidden:
 """
 )
 
@@ -269,8 +269,10 @@ def main(app):
             "Circular Plots": [],
             "Scatter Plots": [],
             "Histograms": [],
+            "Tables": [],
             "Maps": [],
             "Interactive Charts": [],
+            "Advanced Calculations": [],
             "Case Studies": [],
             "Other Charts": [],
         }

@@ -3,7 +3,7 @@ Layered chart with Dual-Axis
 ----------------------------
 This example shows how to create a second independent y axis.
 """
-# category: other charts
+# category: advanced calculations
 
 import altair as alt
 from vega_datasets import data

@@ -17,7 +17,7 @@ zoom = alt.selection_interval(encodings=["x", "y"])
 minimap = (
     alt.Chart(source)
     .mark_point()
-    .add_selection(zoom)
+    .add_params(zoom)
     .encode(
         x="date:T",
         y="temp_max:Q",

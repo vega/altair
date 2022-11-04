@@ -4,7 +4,7 @@ Window Rank Line Chart
 This example shows the Group F rankings in the 2018 World Cup after each matchday. 
 A window transformation is used to rank each after each match day, sorting by points and difference.
 """
-# category: case studies
+# category: line charts
 import altair as alt
 import pandas as pd
 

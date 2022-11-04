@@ -12,7 +12,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-highlight = alt.selection(type='single', on='mouseover',
+highlight = alt.selection(type='point', on='mouseover',
                           fields=['symbol'], nearest=True)
 
 base = alt.Chart(source).encode(
@@ -23,7 +23,7 @@ base = alt.Chart(source).encode(
 
 points = base.mark_circle().encode(
     opacity=alt.value(0)
-).add_selection(
+).add_params(
     highlight
 ).properties(
     width=600

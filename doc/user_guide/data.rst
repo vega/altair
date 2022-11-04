@@ -310,8 +310,9 @@ store geo-spatial vector data.
 
 To make working with Geospatial Data as similar as working with long-form structured data
 the geo_interface is serialized in order to:
+
 - make it be correctly interpreted by Altair
-- provide users a similar experience as when working with tabular data such as Pandas.
+- provide users a similar experience as when working with tabular data such as Pandas
 
 Altair can interpret a spatial bounded entity (a Feature) or a list of Features
 (FeatureCollection). In order for correct interpretation it is made sure that all records
@@ -432,3 +433,33 @@ data before usage in Altair using GeoPandas for example as such:
 .. _Protocol geo_interface: https://gist.github.com/sgillies/2217756
 .. _Packages supporting the geo_interface: https://github.com/mlaloux/Python-geo_interface-applications
 .. _The GeoJSON format: https://tools.ietf.org/html/rfc7946#section-3.1.9
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User Guide
+   :hidden:
+
+   self
+   encoding
+   marks
+   transform/index
+   interactions
+   compound_charts
+   scale_resolve
+   times_and_dates
+   customization
+   configuration
+   saving_charts
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Advanced Usage
+   :hidden:
+
+   internals
+   importing
+   display_frontends
+   custom_renderers
+   data_transformers

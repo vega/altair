@@ -147,16 +147,18 @@ API Functions
    binding_radio
    binding_range
    binding_select
+   check_fields_and_encodings
    concat
    condition
    graticule
    hconcat
    layer
-   parameter
+   param
    repeat
    selection
    selection_interval
    selection_multi
+   selection_point
    selection_single
    sequence
    sphere
@@ -282,6 +284,7 @@ Low-Level Schema Wrappers
    Day
    DensityTransform
    DerivedStream
+   Dict
    DictInlineDataset
    DictSelectionInit
    DictSelectionInitInterval
@@ -328,6 +331,7 @@ Low-Level Schema Wrappers
    FieldOrDatumDefWithConditionStringDatumDefText
    FieldOrDatumDefWithConditionStringFieldDefText
    FieldOrDatumDefWithConditionStringFieldDefstring
+   FieldRange
    FieldRangePredicate
    FieldValidPredicate
    FilterTransform
@@ -410,7 +414,6 @@ Low-Level Schema Wrappers
    Orientation
    OverlayMarkDef
    Padding
-   Parameter
    ParameterExtent
    ParameterName
    ParameterPredicate
@@ -527,6 +530,7 @@ Low-Level Schema Wrappers
    TopLevelFacetSpec
    TopLevelHConcatSpec
    TopLevelLayerSpec
+   TopLevelParameter
    TopLevelRepeatSpec
    TopLevelSelectionParameter
    TopLevelSpec
