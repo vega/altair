@@ -4,7 +4,7 @@ Scatter Plot with LOESS Lines
 This example shows how to add a trend line to a scatter plot using 
 the LOESS transform (LOcally Estimated Scatterplot Smoothing).
 """
-# category: scatter plots
+# category: uncertainties and trends
 
 import altair as alt
 import pandas as pd

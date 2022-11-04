@@ -4,7 +4,7 @@ Polynomial Fit Plot with Regression Transform
 This example shows how to overlay data with multiple fitted polynomials using
 the regression transform.
 """
-# category: scatter plots
+# category: uncertainties and trends
 
 import numpy as np
 import pandas as pd
