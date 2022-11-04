@@ -269,7 +269,7 @@ def main(app):
             "Circular Plots": [],
             "Scatter Plots": [],
             "Uncertainties And Trends": [],
-            "Histograms": [],
+            "Distributions": [],
             "Tables": [],
             "Maps": [],
             "Interactive Charts": [],

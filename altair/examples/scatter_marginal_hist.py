@@ -5,7 +5,7 @@ This example demonstrates how to generate a facetted scatterplot,
 with marginal facetted histograms, and how to share their respective
 - x,some y-limits.
 """
-# category: scatter plots
+# category: distributions
 import altair as alt
 from vega_datasets import data
 
