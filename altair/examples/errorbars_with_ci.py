@@ -1,5 +1,5 @@
 """
-Error Bars showing Confidence Interval
+Error Bars with Confidence Interval
 ======================================
 This example shows how to show error bars using confidence intervals.
 The confidence intervals are computed internally in vega by a non-parametric

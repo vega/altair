@@ -1,7 +1,7 @@
 """
-Binned Scatterplot
+Binned Scatter Plot
 ------------------
-This example shows how to make a binned scatterplot.
+This example shows how to make a binned scatter plot.
 """
 # category: distributions
 import altair as alt
