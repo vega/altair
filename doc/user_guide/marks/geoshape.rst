@@ -292,9 +292,7 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
 
 Chloropleth Classification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Chloropleth maps provide an easy way to visualize how a variable varies across a 
-geographic area or show the level of variability within a region. 
-
+In addition to displaying a continuous quantitative variable, choropleths can also be used to show discrete levels of a variable. While we should generally be careful to not create artificial groups when discretizing a continuous variable, it can be very useful when we have natural cutoff levels of a variable that we want to showcase clearly.
 We first define a utility function ``classify()`` that we will use to showcase different approaches to make a chloropleth map.
 We apply it to define a chloropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
 
