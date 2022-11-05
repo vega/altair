@@ -91,7 +91,7 @@ The following examples applies these approaches to focus on continental Africa:
 
 Cartesian coordinates
 ~~~~~~~~~~~~~~~~~~~~~
-The default projection of Altair is ``equalEarth``. This default assumes that your geometries are in degrees and referenced by longitude and latitude values. 
+The default projection of Altair is ``equalEarth``, which accurately represents the areas of the world's landmasses relative each other. This default assumes that your geometries are in degrees and referenced by longitude and latitude values. 
 Another widely used coordinate system for data visualization is the 2d cartesian coordinate system. This coordinate system does not take into account the curvature of the Earth.
 
 In the following example the input geometry is not projected and is instead rendered directly in raw coordinates using the ``identity`` projection type. We have to define the ``reflectY`` as well since Canvas and SVG treats positive ``y`` as pointing down.
