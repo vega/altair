@@ -55,9 +55,7 @@ The following examples applies these approaches to focus on continental Africa:
 
 .. altair-plot::
 
-    alt.Chart(gdf_ne).mark_geoshape().project(
-        type='equalEarth'
-    ).transform_filter(
+    alt.Chart(gdf_ne).mark_geoshape().transform_filter(
         alt.datum.continent == 'Africa'
     )
 
