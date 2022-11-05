@@ -230,7 +230,18 @@ Altair also contains expressions related to geographical features. We can for ex
     (basemap + bubbles).project(
         type='identity', reflectY=True
     )
+Choropleths
+~~~~~~~~~
 
+An alternative to showing the population sizes as bubbles, is to create a "Choropleth" map. These are geographical heatmaps where the color or each region are mapped to the values of a column in the dataframe. 
+
+.. altair-plot::
+
+    alt.Chart(gdf_sel).mark_geoshape().encode(
+        color='pop_est'
+    )
+
+When we create choropleth maps, we need to be careful, because although the color changes according to the value of the column we are interested in, the size is tied to the area of each country and we might miss interesting values in small countries just because we can't easily see them on the map (e.g. if we were to visualize population density).
 Lookup datasets
 ~~~~~~~~~~~~~~~
 Sometimes your data is separated in two datasets. One ``DataFrame`` with the data and one ``GeoDataFrame`` with the geometries.
