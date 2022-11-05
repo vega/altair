@@ -65,6 +65,7 @@ associated :class:`MarkDef` instance, which supports the following attributes:
    circle
    errorband
    errorbar
+   geoshape
    image
    line
    point
