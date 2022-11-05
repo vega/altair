@@ -556,6 +556,7 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
                     "value:Q", legend=alt.Legend(orient="bottom", direction="horizontal")
                 )
             )
+            .project('albersUsa')
             .properties(width=180, height=130)
             for var in gdf_comb.variable.unique()
         ),
