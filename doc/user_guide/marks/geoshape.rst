@@ -1,6 +1,6 @@
 .. currentmodule:: altair
 
-.. _user-guide-mark-geoshape:
+.. _user-guide-geoshape-marks:
 
 Geoshape
 ~~~~~~~~~~~~~
@@ -285,7 +285,7 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
         us_unemp = data.unemployment.url
 
         # define choropleth scale
-        if "threshold" in scale_type:
+        if "threshold" in scale:
             scale = alt.Scale(type=type, domain=breaks, scheme="inferno")
         else:
             scale = alt.Scale(type=type, nice=nice, scheme="inferno")
