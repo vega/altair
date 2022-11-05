@@ -609,7 +609,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
     ).add_params(click_state)
 
 
-    chloropleth & bars
+    choropleth & bars
 
 The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
 
