@@ -8,7 +8,7 @@ Geoshape
 
 Basic Map
 ~~~~~~~~~
-Its most convenient to use a ``GeoDataFrame`` as input. Here we load the Natural Earth dataset and create a basic map using the ``mark_geoshape``:
+Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth dataset and create a basic map using ``mark_geoshape``:
 
 .. altair-plot::
 
