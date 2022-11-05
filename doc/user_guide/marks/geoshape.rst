@@ -438,7 +438,7 @@ And applied in our utility function:
 The definition above will create 3 classes. One class with values below `0.05`, one 
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
 
-So which method provides the optimal data classification for chloropleth maps? As 
+So which method provides the optimal data classification for choropleth maps? As 
 usual, it depends. 
 
 There is another popular method that aid in determining class breaks.
