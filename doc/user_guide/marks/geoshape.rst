@@ -585,9 +585,9 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
     # define a pointer selection
     click_state = alt.selection_point(fields=['state'])
 
-    # create a chloropleth map using a lookup transform 
+    # create a choropleth map using a lookup transform 
     # define a condition on the opacity encoding depending on the selection
-    chloropleth = alt.Chart(us_states).mark_geoshape().transform_lookup(
+    choropleth = alt.Chart(us_states).mark_geoshape().transform_lookup(
         lookup='id',
         from_=alt.LookupData(us_population, 'id', ['population', 'state'])
     ).encode(
