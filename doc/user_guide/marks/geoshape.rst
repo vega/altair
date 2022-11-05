@@ -170,7 +170,7 @@ We first assign the centroids of Polygons as Point geometry and plot these:
 .. altair-plot::
 
     gdf_centroid = gpd.GeoDataFrame(
-        data=gdf_sel.drop('geometry', axis=1), 
+        data=gdf_sel.copy(),  # .copy() to prevent changing the original `gdf_sel` variable 
         geometry=gdf_sel.geometry.centroid
     )
 
