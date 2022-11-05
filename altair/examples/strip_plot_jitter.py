@@ -9,7 +9,7 @@ from vega_datasets import data
 
 source = data.movies.url
 
-alt.Chart(source).mark_circle(size=8).encode(
+gaussian_jitter = alt.Chart(source, title='Normally distributed jitter').mark_circle(size=8).encode(
     y="Major_Genre:N",
     x="IMDB_Rating:Q",
     yOffset="jitter:Q",
@@ -18,3 +18,14 @@ alt.Chart(source).mark_circle(size=8).encode(
     # Generate Gaussian jitter with a Box-Muller transform
     jitter="sqrt(-2*log(random()))*cos(2*PI*random())"
 )
+
+uniform_jitter = gaussian_jitter.transform_calculate(
+    # Generate uniform jitter
+    jitter='random()'
+).encode(
+    y=alt.Y('Major_Genre:N', axis=None)
+).properties(
+    title='Uniformly distributed jitter'
+)
+
+(gaussian_jitter | uniform_jitter).resolve_scale(yOffset='independent')
