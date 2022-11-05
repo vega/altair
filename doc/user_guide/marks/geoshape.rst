@@ -321,9 +321,9 @@ We apply it to define a chloropleth map of the unemployment statistics of 2018 o
             title=scale_type
         
         if 'threshold' in scale_type:
-            scale = alt.Scale(type=scale_type, domain=breaks, scheme='turbo')
+            scale = alt.Scale(type=scale_type, domain=breaks, scheme='inferno')
         else:
-            scale = alt.Scale(type=scale_type, nice=nice, scheme='turbo')
+            scale = alt.Scale(type=scale_type, nice=nice, scheme='inferno')
             
         fill = alt.Fill(
             'rate:Q', 
