@@ -21,14 +21,14 @@ Altair can work with many different geographical data formats, including geojson
 
     alt.Chart(gdf_ne).mark_geoshape()
 
-In the example above, Altair applies a default blue ``fill`` color and uses a default map projection (``equalEarth``). We can customize the colors and boundary stroke widths using standard mark properties. Using the ``project`` method we can also define the map projection manually:
+In the example above, Altair applies a default blue ``fill`` color and uses a default map projection (``equalEarth``). We can customize the colors and boundary stroke widths using standard mark properties. Using the ``project`` method we can also define a custom map projection manually:
 
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape(
         fill='lightgrey', stroke='white', strokeWidth=0.5
     ).project(
-        type='equalEarth'
+        type='albers'
     )
 
 Focus & Filtering
@@ -64,7 +64,6 @@ The following examples applies these approaches to focus on continental Africa:
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape().project(
-        type='equalEarth', 
         scale=200, 
         translate=[160, 160]  # lon, lat
     )
@@ -85,7 +84,6 @@ The following examples applies these approaches to focus on continental Africa:
     extent_roi_geojson = [mapping(extent_roi)]
 
     alt.Chart(gdf_ne).mark_geoshape(clip=True).project(
-        type='equalEarth',
         fit=extent_roi_geojson
     )    
 
@@ -181,34 +179,11 @@ Caveat: To use the ``size`` encoding for the Points you will need to use the ``m
 
 .. altair-plot::
 
-    gdf_centroid['lon'] = gdf_centroid['geometry'].x
-    gdf_centroid['lat'] = gdf_centroid['geometry'].y
+    gdf_centroid["lon"] = gdf_centroid.geometry.x
+    gdf_centroid["lat"] = gdf_centroid.geometry.y
 
     alt.Chart(gdf_centroid).mark_circle().encode(
-        longitude='lon:Q',
-        latitude='lat:Q',
-        size="pop_est:Q"
-    )
-
-You could skip the extra assignment to the ``lon`` and ``lat`` column in the GeoDataFrame and use the coordinates directly.  We combine the chart with a basemap to bring some perspective to the points:
-
-.. altair-plot::
-
-    basemap = alt.Chart(gdf_sel).mark_geoshape(
-        fill='lightgray', stroke='white', strokeWidth=0.5
-    )
-
-    bubbles = alt.Chart(gdf_centroid).mark_circle(
-        stroke='black'
-    ).encode(
-        longitude='geometry.coordinates[0]:Q',    
-        latitude='geometry.coordinates[1]:Q',
-        size="pop_est:Q" 
-    )
-
-    (basemap + bubbles).project(
-        type='identity', 
-        reflectY=True
+        longitude="lon:Q", latitude="lat:Q", size="pop_est:Q"
     )
 
 Altair also contains expressions related to geographical features. We can for example define the ``centroids`` using a ``geoCentroid`` expression:
@@ -230,6 +205,7 @@ Altair also contains expressions related to geographical features. We can for ex
     (basemap + bubbles).project(
         type='identity', reflectY=True
     )
+
 Choropleths
 ~~~~~~~~~
 
@@ -242,6 +218,7 @@ An alternative to showing the population sizes as bubbles, is to create a "Choro
     )
 
 When we create choropleth maps, we need to be careful, because although the color changes according to the value of the column we are interested in, the size is tied to the area of each country and we might miss interesting values in small countries just because we can't easily see them on the map (e.g. if we were to visualize population density).
+
 Lookup datasets
 ~~~~~~~~~~~~~~~
 Sometimes your data is separated in two datasets. One ``DataFrame`` with the data and one ``GeoDataFrame`` with the geometries.
@@ -290,11 +267,11 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
     )
 
 
-Chloropleth Classification
+Choropleth Classification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 In addition to displaying a continuous quantitative variable, choropleths can also be used to show discrete levels of a variable. While we should generally be careful to not create artificial groups when discretizing a continuous variable, it can be very useful when we have natural cutoff levels of a variable that we want to showcase clearly.
-We first define a utility function ``classify()`` that we will use to showcase different approaches to make a chloropleth map.
-We apply it to define a chloropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
+We first define a utility function ``classify()`` that we will use to showcase different approaches to make a choropleth map.
+We apply it to define a choropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
 
 .. altair-plot::
 
@@ -302,80 +279,46 @@ We apply it to define a chloropleth map of the unemployment statistics of 2018 o
     from vega_datasets import data
     import geopandas as gpd
 
-    def classify(scale_type, breaks=None, nice=False, title=None, size='small'):
-
-        if size =='default':
-            width=400
-            height=300
-        else:
-            width=180
-            height=130
-            
-        # us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
-        # us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
-        us_counties = alt.topo_feature(data.us_10m.url, 'counties')
-        us_states = alt.topo_feature(data.us_10m.url, 'states')
+    def classify(type, breaks=None, nice=False, title=None):
+        # define data
+        us_counties = alt.topo_feature(data.us_10m.url, "counties")
         us_unemp = data.unemployment.url
-        
-        if title is None:
-            title=scale_type
-        
-        if 'threshold' in scale_type:
-            scale = alt.Scale(type=scale_type, domain=breaks, scheme='inferno')
+
+        # define choropleth scale
+        if "threshold" in scale_type:
+            scale = alt.Scale(type=type, domain=breaks, scheme="inferno")
         else:
-            scale = alt.Scale(type=scale_type, nice=nice, scheme='inferno')
-            
-        fill = alt.Fill(
-            'rate:Q', 
-            scale=scale,
-            legend=alt.Legend(direction='horizontal', orient='bottom', format='.1%')
-        )    
-        
-        distrib_square = alt.Chart(
-            us_unemp, 
-            height=20,
-            width=width
-        ).mark_square(
-            size=3,
-            opacity=1
-        ).encode(
-            x=alt.X('rate:Q', title=None, axis=alt.Axis(format='.0%')),
-            y=alt.Y('jitter:Q', title=None, axis=None),
-            fill=fill
-        ).transform_calculate(
-            jitter='random()'
-        )
-        
-        distrib_geoshape = alt.Chart(
-            us_counties,
-            width=width,
-            height=height,
-            title=title
-        ).mark_geoshape().transform_lookup(
-            lookup='id', 
-            from_=alt.LookupData(data=us_unemp, key='id', fields=['rate'])
-        ).encode(
-            fill=fill
-        ).project(
-            type='albersUsa'
-        )
-        
-        states_geoshape = alt.Chart(
-            us_states,
-            width=width,
-            height=height
-        ).mark_geoshape(filled=False, stroke='white', strokeWidth=0.75).project(
-            type='albersUsa'
-        )     
-        
-        return (distrib_geoshape + states_geoshape) & distrib_square
+            scale = alt.Scale(type=type, nice=nice, scheme="inferno")
 
-    classify('linear', size='default')        
+        # define title
+        if title is None:
+            title = type
 
+        # define choropleth chart
+        choropleth = (
+            alt.Chart(us_counties, title=title)
+            .mark_geoshape()
+            .transform_lookup(
+                lookup="id", from_=alt.LookupData(data=us_unemp, key="id", fields=["rate"])
+            )
+            .encode(
+                alt.Color(
+                    "rate:Q",
+                    scale=scale,
+                    legend=alt.Legend(
+                        direction="horizontal", orient="bottom", format=".1%"
+                    ),
+                )
+            )
+            .project(type="albersUsa")
+        )
+
+        return choropleth
+
+        classify(scale_type='linear')
 
 We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
-using a ``mark_geoshape()`` to present the spatial patterns on a map and a ``jitter`` plot 
-(using ``mark_square()``) to visualize the distribution of the ``rate`` values. Each value/
+using a ``mark_geoshape()`` to present the spatial patterns on a map. Each value/
 county has defined a `unique` color. This gives a bit of insight, but often we like to 
 group the distribution into classes.
 
@@ -384,7 +327,7 @@ each class get assigned the same color.
 
 Here we present a number of scale methods how Altair can be used:
 
-- ``quantile``, this type will divide your dataset (`domain`) into intervals of similar sizes. Each class contains more or less the same number of values/geometries (equal counts). The scale definition will look as follow: 
+- ``quantile``, this type will divide your dataset (`domain`) into intervals of similar sizes. Each class contains more or less the same number of values/geometries (`equal counts`). The scale definition will look as follow: 
 
 .. code:: python
 
@@ -394,8 +337,7 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify('quantile', size='default')
-
+    classify(type='quantile', title=['quantile', 'equal counts'])
 
 - ``quantize``, this type will divide the extent of your dataset (`range`) in equal intervals. Each class contains different number of values, but the step size is equal (`equal range`). The scale definition will look as follow: 
 
@@ -407,10 +349,10 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify('quantize', size='default')
+    classify(type='quantize', title=['quantile', 'equal range'])
 
 
-The ``quantize`` method can also be used in combination with ``nice``. This will "nice" the domain before applying quantization. As such:
+The ``quantize`` method can also be used in combination with ``nice``. This will `"nice"` the domain before applying quantization. As such:
 
 .. code:: python
 
@@ -420,7 +362,7 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify('quantize', nice=True, size='default')
+    classify(type='quantize', nice=True, title=['quantize', 'equal range nice'])
 
 - ``threshold``, this type will divide your dataset in separate classes by manually specifying the cut values. Each class is separated by defined classes. The scale definition will look as follow: 
 
@@ -432,8 +374,7 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify('threshold', breaks=[0.05, 0.20], size='default')
-
+    classify(type='threshold', breaks=[0.05, 0.20])
 
 The definition above will create 3 classes. One class with values below `0.05`, one 
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
@@ -443,7 +384,7 @@ usual, it depends.
 
 There is another popular method that aid in determining class breaks.
 This method will maximize the similarity of values in a class while maximizing the 
-distance between the classes (natural breaks). The method is also known as the 
+distance between the classes (`natural breaks`). The method is also known as the 
 Fisher-Jenks algorithm and is similar to k-Means in 1D:
 
 -  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks 
@@ -457,30 +398,17 @@ as such:
     >>> jnb.inner_breaks_
     [0.061, 0.088, 0.116, 0.161]
 
-So when applying all these different classification schemes to the county unemployment 
-dataset, we get the following overview:
+And applied in our utility function:
 
 .. altair-plot::
 
-    alt.concat(
-        classify('linear'),
-        classify('quantile', title=['quantile','equal counts']),
-        classify('quantize', title=['quantize', 'equal range']),
-        classify('quantize', nice=True, title=['quantize', 'equal range nice']),
-        classify('threshold', breaks=[0.05, 0.20]),    
-        classify('threshold', breaks=[0.061, 0.088, 0.116, 0.161], 
-                title=['threshold Jenks','natural breaks']
-        ),
-        columns=3
-    )
-
+    classify(type='threshold', breaks=[0.061, 0.088, 0.116, 0.161],
+            title=['threshold Jenks','natural breaks'])
 
 Caveats: 
 
 - For the type ``quantize`` and ``quantile`` scales we observe that the default number of classes is 5. You can change the number of classes using a ``SchemeParams()`` object. In the above specification we can change ``scheme='turbo'`` into ``scheme=alt.SchemeParams('turbo', count=2)`` to manually specify usage of 2 classes for the scheme within the scale.
-- To define custom colors for each class, one should specify the ``domain`` and ``range``. Where the ``range`` contains ``+1`` values than the classes specified in the ``domain``. For example: ``alt.Scale(type='threshold', domain=[0.05, 0.20], range=['blue','white','red'])``. ``blue`` is the class for all values below ``0.05``, ``white`` for all values between ``0.05`` and ``0.20`` and ``red`` for all values above ``0.20``.
 - The natural breaks method will determine the optimal class breaks given the required number of classes, but how many classes should you pick? One can investigate usage of goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
-
 
 Repeat a Map
 ~~~~~~~~~~~~
@@ -563,8 +491,6 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
         columns=3
     ).resolve_scale(color="independent")
 
-
-
 Interaction
 ~~~~~~~~~~~
 Often a map does not come alone, but is used in combination with another chart. 
@@ -580,36 +506,44 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
     import geopandas as gpd
 
     # load the data
-    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
-    us_population = data.population_engineers_hurricanes()[['state', 'id', 'population']]
+    us_states = gpd.read_file(data.us_10m.url, driver="TopoJSON", layer="states")
+    us_population = data.population_engineers_hurricanes()[["state", "id", "population"]]
 
     # define a pointer selection
-    click_state = alt.selection_point(fields=['state'])
+    click_state = alt.selection_point(fields=["state"])
 
-    # create a choropleth map using a lookup transform 
+    # create a choropleth map using a lookup transform
     # define a condition on the opacity encoding depending on the selection
-    choropleth = alt.Chart(us_states).mark_geoshape().transform_lookup(
-        lookup='id',
-        from_=alt.LookupData(us_population, 'id', ['population', 'state'])
-    ).encode(
-        color='population:Q',
-        opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
-        tooltip=['state:N', 'population:Q']
-    ).project(type='albersUsa').add_params(click_state)
+    choropleth = (
+        alt.Chart(us_states)
+        .mark_geoshape()
+        .transform_lookup(
+            lookup="id", from_=alt.LookupData(us_population, "id", ["population", "state"])
+        )
+        .encode(
+            color="population:Q",
+            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            tooltip=["state:N", "population:Q"],
+        )
+        .project(type="albersUsa")
+    )
 
     # create a bar chart with a similar condition on the opacity encoding.
-    bars = alt.Chart(
-        us_population.nlargest(15, 'population'),
-        title='Top 15 states by population').mark_bar(
-    ).encode(
-        x='population',
-        opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
-        color='population',
-        y=alt.Y('state', sort='-x')
-    ).add_params(click_state)
+    bars = (
+        alt.Chart(
+            us_population.nlargest(15, "population"), title="Top 15 states by population"
+        )
+        .mark_bar()
+        .encode(
+            x="population",
+            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            color="population",
+            y=alt.Y("state", sort="-x"),
+        )
+    )
 
+    (choropleth & bars).add_params(click_state)
 
-    choropleth & bars
 
 The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
 
@@ -617,8 +551,9 @@ Expression
 ~~~~~~~~~~
 Altair expressions can be used within a geographical visualization. The following example
 visualize earthquakes on the globe using an ``orthographic`` projection. Where we can rotate
-the earth on a single-axis. (``rotate0``). The utility function :func:sphere is adopted to 
-get a disk of the earth as background. 
+the earth on a single-axis. (``rotate0``). The utility function :func:`sphere` is adopted to 
+get a disk of the earth as background. The GeoDataFrame with the earthquakes has an ``XYZ``` point geometry, where each coordinate represent ``lon``, ``lat`` and ``depth`` respectively.
+We use here an elegant way to access the nested point coordinates from the geometry column directly to draw circles. Using this approach we do not need to assign them to three separate columns first.
 
 .. altair-plot::
 
@@ -627,61 +562,63 @@ get a disk of the earth as background.
     import geopandas as gpd
 
     # load data
-    gdf_quakies = gpd.read_file(data.earthquakes.url, driver='GeoJSON')
-    gdf_world = gpd.read_file(data.world_110m.url, driver='TopoJSON')
+    gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
+    gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5)
-    rotate0 = alt.param(value=120, bind=range0, name='param_rotate0')
-    rotate_param = alt.param(expr=f'[{rotate0.name}, 0, 0]')
-    hover = alt.selection_point(on='mouseover', clear='mouseout')
+    rotate0 = alt.param(value=120, bind=range0, name='rotate0')
+    rotate_param = alt.param(expr=f"[{rotate0.name}, 0, 0]")
+    hover = alt.selection_point(on="mouseover", clear="mouseout")
 
     # world disk
     sphere = alt.Chart(alt.sphere()).mark_geoshape(
-        fill='aliceblue', 
-        stroke='black',
-        strokeWidth=1.5
+        fill="aliceblue", stroke="black", strokeWidth=1.5
     )
 
     # countries as shapes
     world = alt.Chart(gdf_world).mark_geoshape(
-        fill='mintcream', 
-        stroke='black', 
-        strokeWidth=0.35
+        fill="mintcream", stroke="black", strokeWidth=0.35
     )
 
     # earthquakes as circles with fill for depth and size for magnitude
     # the hover param is added on the mar_circle only
-    quakes = alt.Chart(gdf_quakies).mark_circle(
-        opacity=0.35,
-        tooltip=True,
-        stroke='black'
-    ).transform_calculate(
-        lon="datum.geometry.coordinates[0]",
-        lat="datum.geometry.coordinates[1]",
-        depth="datum.geometry.coordinates[2]"
-    ).transform_filter(f'''
-        ({rotate0.name} * -1) - 90 < datum.lon && datum.lon < ({rotate0.name} * -1) + 90
-        '''
-    ).encode(
-        longitude='lon:Q',    
-        latitude='lat:Q',
-        strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
-        size=alt.Size('mag:Q', scale=alt.Scale(type='pow', range=[1,1000], domain=[0,6], exponent=4)),
-        fill=alt.Fill('depth:Q', scale=alt.Scale(scheme='lightorange', domain=[0,400]))
-    ).add_params(hover, rotate0)
+    quakes = (
+        alt.Chart(gdf_quakies)
+        .mark_circle(opacity=0.35, tooltip=True, stroke="black")
+        .transform_calculate(
+            lon="datum.geometry.coordinates[0]",
+            lat="datum.geometry.coordinates[1]",
+            depth="datum.geometry.coordinates[2]",
+        )
+        .transform_filter(
+            ((rotate0 * -1 - 90 < alt.datum.lon) & (alt.datum.lon < rotate0 * -1 + 90)).expr
+        )
+        .encode(
+            longitude="lon:Q",
+            latitude="lat:Q",
+            strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
+            size=alt.Size(
+                "mag:Q",
+                scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 6], exponent=4),
+            ),
+            fill=alt.Fill(
+                "depth:Q", scale=alt.Scale(scheme="lightorange", domain=[0, 400])
+            ),
+        )
+        .add_params(hover, rotate0)
+    )
 
     # define projection and add the rotation param for all layers
-    comb = alt.layer(sphere, world, quakes).project(
-        'orthographic',
-        rotate=rotate_param
-    ).add_params(rotate_param)
+    comb = (
+        alt.layer(sphere, world, quakes)
+        .project("orthographic", rotate=rotate_param)
+        .add_params(rotate_param)
+    )
     comb
 
 The earthquakes are displayed using a ``mark_geoshape`` and filtered once out of sight of 
-the the visible part of the world.
-
-A hover highlighting is added to get more insight of each earthquake.
+the visible part of the world. A hover highlighting is added to get more insight of each earthquake.
 
 Geoshape Options
 ~~~~~~~~~~~~~~~~
