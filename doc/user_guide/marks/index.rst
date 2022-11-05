@@ -57,3 +57,7 @@ associated :class:`MarkDef` instance, which supports the following attributes:
 
 .. toctree::
    :hidden:
+   
+   arc
+   area
+   geoshape
