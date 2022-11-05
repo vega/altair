@@ -4,7 +4,7 @@
 
 Geoshape
 ~~~~~~~~~~~~~
-The ``mark_geoshape`` represents an arbitrary shapes whose geometry is determined by specified spatial data.
+``mark_geoshape`` represents an arbitrary shapes whose geometry is determined by specified spatial data.
 
 Basic Map
 ~~~~~~~~~
