@@ -1,7 +1,7 @@
 """
-Binned Scatter Plot
+2D Histogram Scatter Plot
 ------------------
-This example shows how to make a binned scatter plot.
+This example shows how to make a 2d histogram scatter plot.
 """
 # category: distributions
 import altair as alt

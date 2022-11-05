@@ -3,7 +3,7 @@ Hexbin Chart
 ------------
 This example shows a hexbin chart.
 """
-# category: tables
+# category: distributions
 import altair as alt
 from vega_datasets import data
 
