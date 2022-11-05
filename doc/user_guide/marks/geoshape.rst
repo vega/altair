@@ -49,9 +49,7 @@ The following examples applies these approaches to focus on continental Africa:
 
     gdf_sel = gdf_ne[gdf_ne.continent == 'Africa']
 
-    alt.Chart(gdf_sel).mark_geoshape().project(
-        type='equalEarth'
-    )
+    alt.Chart(gdf_sel).mark_geoshape()
 
 2. Filter the source data using a ``transform_filter``:
 
