@@ -1,6 +1,6 @@
 .. currentmodule:: altair
 
-.. _user-guide-mark-geoshape:
+.. _user-guide-geoshape-marks:
 
 Geoshape
 ~~~~~~~~~~~~~
@@ -192,6 +192,10 @@ Altair also contains expressions related to geographical features. We can for ex
 
     from altair.expr import datum, geoCentroid
 
+    basemap = alt.Chart(gdf_sel).mark_geoshape(
+         fill='lightgray', stroke='white', strokeWidth=0.5
+    )
+
     bubbles = alt.Chart(gdf_sel).transform_calculate(
         centroid=geoCentroid(None, datum)
     ).mark_circle(
@@ -266,7 +270,6 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
         type='albersUsa'
     )
 
-
 Choropleth Classification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 In addition to displaying a continuous quantitative variable, choropleths can also be used to show discrete levels of a variable. While we should generally be careful to not create artificial groups when discretizing a continuous variable, it can be very useful when we have natural cutoff levels of a variable that we want to showcase clearly.
@@ -285,7 +288,7 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
         us_unemp = data.unemployment.url
 
         # define choropleth scale
-        if "threshold" in scale_type:
+        if "threshold" in type:
             scale = alt.Scale(type=type, domain=breaks, scheme="inferno")
         else:
             scale = alt.Scale(type=type, nice=nice, scheme="inferno")
@@ -312,10 +315,9 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
             )
             .project(type="albersUsa")
         )
-
         return choropleth
 
-        classify(scale_type='linear')
+    classify(type='linear')
 
 We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
 using a ``mark_geoshape()`` to present the spatial patterns on a map. Each value/
