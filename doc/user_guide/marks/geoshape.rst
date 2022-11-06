@@ -317,7 +317,7 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
         )
         return choropleth
 
-        classify(type='linear')
+    classify(type='linear')
 
 We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
 using a ``mark_geoshape()`` to present the spatial patterns on a map. Each value/
