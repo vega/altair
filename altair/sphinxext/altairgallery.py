@@ -168,7 +168,9 @@ def populate_examples(**kwds):
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
         example.update(kwds)
         if category is None:
-            raise Exception(f"The example {example['name']} is not assigned to a category")
+            raise Exception(
+                f"The example {example['name']} is not assigned to a category"
+            )
         example.update(
             {
                 "docstring": docstring,
