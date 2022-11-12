@@ -442,7 +442,7 @@ data before usage in Altair using GeoPandas for example as such:
 
    self
    encoding
-   marks
+   marks/index
    transform/index
    interactions
    compound_charts
