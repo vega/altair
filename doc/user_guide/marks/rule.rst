@@ -6,7 +6,7 @@ Rule
 ~~~~
 The ``rule`` mark represents each data point as a line segment. It can be used in two ways. First, as a line segment that spans the complete width or height of a view. Second, a rule can be used to draw a line segment between two positions.
 
-Examples 
+Examples
 --------
 Width/Height-Spanning Rules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -90,8 +90,3 @@ For example, we can use ``y`` and ``y2 ``show the ``"min"`` and ``"max"`` values
         y2 = 'max(Horsepower)'
     )
 
-Rule Config
-^^^^^^^^^^^
-The ``rule`` property of the top-level ``config`` object sets the default properties for all rule marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The rule config can contain any rule mark properties (except ``type``, ``style``, and ``clip``).

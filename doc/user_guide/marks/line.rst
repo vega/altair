@@ -8,7 +8,7 @@ The ``line`` mark represents the data points stored in a field with a line conne
 
 Note: For line segments that connect (x,y) positions to (x2,y2) positions, please use ``rule`` marks. For continuous lines with varying size, please use ``trail`` marks.
 
-Examples 
+Examples
 --------
 Line Chart
 ^^^^^^^^^^
@@ -99,7 +99,7 @@ We can also use line grouping to create a line chart that has multiple parts wit
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({ 
+    source = pd.DataFrame({
         'a' : ['A', 'B', 'D', 'E', 'E', 'G', 'H'],
         'b' : [28, 55, 91, 81, 81, 19, 87],
         'predicted' : [False, False, False, False, True, True, True]
@@ -110,7 +110,7 @@ We can also use line grouping to create a line chart that has multiple parts wit
         y = 'b:Q',
         strokeDash = 'predicted:N'
     )
-  
+
 Multi-series Line Chart with the Detail Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To group lines by a field without mapping the field to any visual properties, we can map the field to the ``detail`` channel to create a multi-series line chart with the same color.
@@ -139,7 +139,7 @@ The same method can be used to group lines for a ranged dot plot.
         alt.X('life_expect:Q', title= 'Life Expectancy (years)', scale=alt.Scale(zero=False)),
         alt.Y('country:N', title = 'Country', axis = alt.Axis(offset = 5, ticks = False, minExtent = 70, domain = False)),
     ).transform_filter(
-        alt.FieldOneOfPredicate(field = 'country', 
+        alt.FieldOneOfPredicate(field = 'country',
                                 oneOf = ["China", "India", "United States", "Indonesia", "Brazil"])
     )
 
@@ -151,7 +151,7 @@ The same method can be used to group lines for a ranged dot plot.
     )
 
     point = base.mark_point(filled = True).encode(
-        alt.Color(field = 'year', 
+        alt.Color(field = 'year',
                 scale = alt.Scale(range = ["#e6959c", "#911a24"], domain = [1995, 2000])),
         size = alt.value(100),
         opacity = alt.value(1)
@@ -244,7 +244,7 @@ We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
         alt.datum.symbol == 'GOOG'
     )
 
-Geo Line 
+Geo Line
 ^^^^^^^^
 By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels of a corresponding projection, we can draw lines through geographic points.
 
@@ -263,7 +263,7 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
         airports, key="iata", fields=["state", "latitude", "longitude"]
     )
 
-    source = pd.DataFrame({ 
+    source = pd.DataFrame({
         'airport' : ['SEA', 'SFO', 'LAX', 'LAS', 'DFW', 'DEN', 'ORD', 'JFK'],
         'order' : [1, 2, 3, 4, 5, 6, 7, 8],
     })
@@ -287,9 +287,3 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
     background + line
 
-Line Config
-^^^^^^^^^^^
-
-The ``line`` property of the top-level ``config`` object sets the default properties for all line marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The line config can contain any line mark properties (except ``type``, ``style``, and ``clip``).

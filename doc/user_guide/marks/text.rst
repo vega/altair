@@ -6,7 +6,7 @@ Text
 ~~~~~~
 ``text`` mark represents each data point with a text instead of a point.
 
-Examples 
+Examples
 --------
 Text Table Heatmap
 ^^^^^^^^^^^^^^^^^^
@@ -50,7 +50,7 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({ 
+    source = pd.DataFrame({
         'a' : ['A', 'B', 'C'],
         'b' : [28, 55, 43]
     })
@@ -60,9 +60,9 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
         x = alt.X('b:Q', scale = alt.Scale(domain = [0,60]))
     )
 
-    text = bar.mark_text( 
-                align = 'left', 
-                baseline = 'middle', 
+    text = bar.mark_text(
+                align = 'left',
+                baseline = 'middle',
                 dx = 3
     ).encode(
         text = 'b'
@@ -70,7 +70,7 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
 
     bar + text
 
-Scatterplot with Text 
+Scatterplot with Text
 ^^^^^^^^^^^^^^^^^^^^^
 Mapping a field to ``text`` channel of text mark sets the mark’s text value. For example, we can make a colored scatterplot with text marks showing the initial character of its origin, instead of ``point`` marks.
 
@@ -88,7 +88,7 @@ Mapping a field to ``text`` channel of text mark sets the mark’s text value. F
         text = 'Origin[0]:N'
     )
 
-Geo Text 
+Geo Text
 ^^^^^^^^
 By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels of a corresponding projection, we can show text at accurate locations. The example below shows the name of every US state capital at the location of the capital.
 
@@ -122,6 +122,3 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
     background + line + point
 
-Text Config 
-^^^^^^^^^^^
-The ``text`` property of the top-level ``config`` object sets the default properties for all text marks. If mark property encoding channels are specified for marks, these config values will be overridden.

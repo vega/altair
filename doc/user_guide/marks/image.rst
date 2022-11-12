@@ -28,9 +28,3 @@ Scatterplot with Image Marks
         y='y',
         url='img'
     )
-
-Image Config 
-^^^^^^^^^^^^
-The ``image`` property of the top-level ``config`` object sets the default properties for all image marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The image config can contain any image mark properties (except ``type``, ``style``, and ``clip``).

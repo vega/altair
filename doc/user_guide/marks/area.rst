@@ -4,7 +4,7 @@
 
 Area
 ~~~~~~~~~~
-``area`` represent multple data element as a single area shape. 
+``area`` represent multple data element as a single area shape.
 Area marks are often used to show change over time, using either a single area or stacked areas.
 
 Examples
@@ -12,8 +12,8 @@ Examples
 
 Area Chart
 ^^^^^^^^^^
-Using ``area`` mark with one temporal or ordinal field (typically on ``x``) and 
-one quantitative field (typically on ``y``) produces an area chart. For example, 
+Using ``area`` mark with one temporal or ordinal field (typically on ``x``) and
+one quantitative field (typically on ``y``) produces an area chart. For example,
 the following area chart shows a number of unemployment people in the US over time.
 
 .. altair-plot::
@@ -33,10 +33,10 @@ the following area chart shows a number of unemployment people in the US over ti
 Area Chart with Overlaying Lines and Point Markers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By setting ``line`` and ``point`` properties of the mark definition 
+By setting ``line`` and ``point`` properties of the mark definition
 to ``true`` or an object defining a property of the overlaying point marks, we can overlay line and point markers on top of area.
 
-.. altair-plot:: 
+.. altair-plot::
     import altair as alt
     from vega_datasets import data
     from altair.expr import datum
@@ -50,10 +50,10 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
         datum.symbol == 'GOOG'
     )
 
-Instead of using a single color as the fill color of the area, we can set it to a gradient. 
-In this example, we are also customizing the overlay. For more information about gradient options see the Vega-Lite Gradient documentation. 
+Instead of using a single color as the fill color of the area, we can set it to a gradient.
+In this example, we are also customizing the overlay. For more information about gradient options see the Vega-Lite Gradient documentation.
 
-.. altair-plot.:: 
+.. altair-plot.::
     import altair as alt
     from vega_datasets import data
 
@@ -119,7 +119,7 @@ You can also create a normalized stacked area chart by setting ``"stack"`` to ``
 Steamgraph
 ^^^^^^^^^^^
 
-We can also shift the stacked area chart’s baseline to center and produces a streamgraph by setting ``"stack"`` to ``"center"`` in the encoding channel. 
+We can also shift the stacked area chart’s baseline to center and produces a streamgraph by setting ``"stack"`` to ``"center"`` in the encoding channel.
 Adding the ``interactive`` method allows for changing the scales.
 
 .. altair-plot::
@@ -140,7 +140,7 @@ Adding the ``interactive`` method allows for changing the scales.
 
 Ranged Area
 ^^^^^^^^^^^
-Specifying ``x2`` or ``y2`` for the quantitative axis of area marks produce ranged areas. For example, we can use ranged area with the ``ci0`` and ``ci0`` 
+Specifying ``x2`` or ``y2`` for the quantitative axis of area marks produce ranged areas. For example, we can use ranged area with the ``ci0`` and ``ci0``
 aggregation operators to highlight 95% confidence interval of a line chart that shows mean values over time.
 
 .. altair-plot::
@@ -157,9 +157,3 @@ aggregation operators to highlight 95% confidence interval of a line chart that 
         width=600,
         height=300
     )
-
-Area Config 
-^^^^^^^^^^^
-The ``area`` property of the top-level ``config`` object sets the default properties for all area marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The area config can contain any area mark properties (except ``type``, ``style``, ``clip``, and ``orient``).

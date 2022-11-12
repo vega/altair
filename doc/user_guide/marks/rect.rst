@@ -7,9 +7,9 @@ Rect
 
 The ``rect`` mark represents an arbitrary rectangle.
 
-Examples 
+Examples
 --------
-Heatmap 
+Heatmap
 ^^^^^^^
 
 Using the ``rect`` marks with discrete fields on ``x`` and ``y`` channels creates a heatmap.
@@ -51,8 +51,3 @@ For example, we can use ``rect`` to create an annotation ``layer`` that provides
 
     point + rect
 
-Rect Config 
-^^^^^^^^^^^
-The ``rect`` property of the top-level ``config`` object sets the default properties for all rect marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The rect config can contain any rect mark properties (except ``type``, ``style``, and ``clip``).

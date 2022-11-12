@@ -6,9 +6,9 @@ Point
 ~~~~~
 ``point`` mark represents each data point with a symbol. Point marks are commonly used in visualizations like scatterplots.
 
-Examples 
+Examples
 --------
-Dot Plot 
+Dot Plot
 ^^^^^^^^
 Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot plot.
 
@@ -19,9 +19,9 @@ Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot 
     source =  data.movies()
     alt.Chart(source).mark_point().encode(
         x = 'IMDB_Rating:Q'
-    ) 
+    )
 
-Scatter Plot 
+Scatter Plot
 ^^^^^^^^^^^^
 Mapping fields to both the ``x`` and ``y`` channels creates a scatter plot.
 
@@ -49,7 +49,7 @@ By default, ``point`` marks only have borders and are transparent inside. You ca
         y = 'Miles_per_Gallon:Q'
     )
 
-Bubble Plot 
+Bubble Plot
 ^^^^^^^^^^^
 By mapping a third field to the ``size`` channel in the scatter plot, we can create a bubble plot instead.
 
@@ -65,7 +65,7 @@ By mapping a third field to the ``size`` channel in the scatter plot, we can cre
         size = 'Acceleration:Q'
     )
 
-Scatter Plot with Color and/or Shape 
+Scatter Plot with Color and/or Shape
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` channels. For example, this specification encodes the field ``Origin`` with both ``color`` and ``shape``.
@@ -82,7 +82,7 @@ Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` 
         alt.Y('body_mass_g:Q', scale = alt.Scale(zero = False)),
         color = 'species:N',
         shape = 'species:N'
-    )  
+    )
 
 Dot Plot with Jittering
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -107,7 +107,7 @@ To jitter points on a discrete scale, you can add random offset:
 Wind Vector Example
 ^^^^^^^^^^^^^^^^^^^
 We can also use point mark with ``wedge`` as ``shape`` and ``angle`` encoding to create a wind vector map. Other shape options are:
-``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, ``"triangle-left"``, ``"stroke"``, ``"arrow"``, and ``"triangle"``. 
+``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, ``"triangle-left"``, ``"stroke"``, ``"arrow"``, and ``"triangle"``.
 
 .. altair-plot::
     import altair as alt
@@ -125,7 +125,7 @@ We can also use point mark with ``wedge`` as ``shape`` and ``angle`` encoding to
         size=alt.Size("speed", scale=alt.Scale(rangeMax=500)),
     ).project("equalEarth")
 
-Geo Point 
+Geo Point
 ^^^^^^^^^
 By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels of a corresponding projection, we can visualize geographic points. The example below shows major airports in the US.
 
@@ -157,8 +157,3 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
     background + points
 
-Point Config 
-^^^^^^^^^^^^
-The ``point`` property of the top-level ``config`` object sets the default properties for all point marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The point config can contain any point mark properties (except ``type``, ``style``, and ``clip``).

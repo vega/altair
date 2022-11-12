@@ -2,14 +2,14 @@
 
 .. _user-guide-boxplot-marks:
 
-Box Plot 
+Box Plot
 ~~~~~~~~~
 
 A box plot summarizes a distribution of quantitative values using a set of summary statistics. The median tick in the box represents the median. The lower and upper parts of the box represent the first and third quartile respectively. Depending on the type of box plot, the ends of the whiskers can represent multiple things.
 
 To create a box plot, set ``mark`` to ``"boxplot"``.
 
-Types of Box Plot 
+Types of Box Plot
 ^^^^^^^^^^^^^^^^^
 Altair supports two types of box plots, defined by the ``extent`` property in the mark definition object.
 
@@ -69,7 +69,7 @@ Color, Size, and Opacity Encoding Channels
 
 You can customize the color, size, and opacity of the box in the ``boxplot`` by using the ``color``, ``size``, and ``opacity ``encoding channels. The ``size`` is applied to only the box and median tick. The ``color`` is applied to only the box and the outlier points. Meanwhile, the ``opacity`` is applied to the whole ``boxplot``.
 
-An example of a ``boxplot`` where the ``size`` encoding channel is specified. 
+An example of a ``boxplot`` where the ``size`` encoding channel is specified.
 
 .. altair-plot::
     import altair as alt
@@ -117,8 +117,3 @@ If the field in the tooltip encoding is unaggregated, it replaces the tooltips o
         tooltip = 'mean(body_mass_g):Q'
     )
 
-Mark Config 
-^^^^^^^^^^^
-The ``boxplot`` config object sets the default properties for ``boxplot`` marks.  
-
-The boxplot config can contain all boxplot mark properties, including ``box``, ``median``, ``rule``, ``outliers``, and ``ticks``. 

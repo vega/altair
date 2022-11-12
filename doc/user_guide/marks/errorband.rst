@@ -28,7 +28,7 @@ All the properties and usage of error band are identical to error bar’s, excep
 
 **Error Bar**
 
-.. altair-plot:: 
+.. altair-plot::
     import altair as alt
     from vega_datasets import data
 
@@ -50,7 +50,7 @@ Using Error Band to Visualize Aggregated Data
 1. Data is aggregated with low and high values of the error band
 If the data is already pre-aggregated with low and high values of the error band, you can directly specify ``x`` and ``x2`` (or ``y`` and ``y2``) to use error band as a ranged mark.
 
-.. altair-plot:: 
+.. altair-plot::
     import altair as alt
     import pandas as pd
 
@@ -77,7 +77,7 @@ If the data is already pre-aggregated with low and high values of the error band
 2. Data is aggregated with center and error value(s)
 If the data is already pre-aggregated with center and error values of the error band, you can use ``x/y``, ``x/yError``, and ``x/yError2`` as defined in Error Bar.
 
-Dimension 
+Dimension
 ^^^^^^^^^
 
 Altair supports both 1D and 2D error bands:
@@ -140,9 +140,3 @@ Here is an example of a ``errorband`` with the ``color`` encoding channel set to
         color = alt.value('black')
     )
 
-Mark Config 
-^^^^^^^^^^^
-
-The ``errorband`` config object sets the default properties for ``errorband`` marks.
-
-The error band config can contain all error band mark properties but currently not supporting ``color``, ``opacity``, and ``orient``.

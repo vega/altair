@@ -31,7 +31,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     y=alt.Y('variety:N'),
     )
 
-    error_bars + points 
+    error_bars + points
 
 2. **Error bar showing standard deviation** can be specified by setting ``extent`` to ``"stdev"``. For this type of error bar, the length of lower and upper rules represent standard deviation. Like an error bar that shows Standard Error, the rule marks expand from the mean by default.
 
@@ -51,7 +51,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     y=alt.Y('variety:N'),
     )
 
-    error_bars + points 
+    error_bars + points
 
 3. **Error bars showing interquartile range** can be specified by setting ``extent`` to ``"iqr"``. For this type of error bar, the rule marks expand from the first quartile to the third quartile.
 
@@ -71,7 +71,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     y=alt.Y('variety:N'),
     )
 
-    error_bars + points 
+    error_bars + points
 
 Using Error Bars to Visualize Aggregated Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -157,7 +157,7 @@ The orientation of an error bar is automatically determined by the continuous fi
 A **2D error bar** shows the error range of a continuous field, broken down by categories.
 
 For 2D error bars with one continuous field and one discrete field, the error bars will be horizontal if the continuous field is on the x axis. Alternatively, if the continuous field is on the y axis, the error bar will be vertical.
- 
+
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
@@ -216,8 +216,4 @@ You can add custom tooltips to error bars. The custom tooltip will override the 
         alt.Y('variety:N'),
         tooltip = 'variety:N'
     )
-
-Mark Config
-^^^^^^^^^^^
-The ``errorbar`` config object sets the default properties for ``errorbar`` marks.
 

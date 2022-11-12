@@ -8,7 +8,7 @@ The ``trail`` mark represents the data points stored in a field with a line conn
 
 Examples
 --------
-A Line Chart with varying size using ``trail`` mark 
+A Line Chart with varying size using ``trail`` mark
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. altair-plot::
@@ -49,9 +49,3 @@ A Comet Chart showing changes between two states
         .configure_legend(orient='bottom', direction='horizontal')
         .properties(title='Barley Yield comparison between 1932 and 1931')
     )
-
-Trail Config 
-^^^^^^^^^^^^
-The ``trail`` property of the top-level ``config`` object sets the default properties for all trail marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The trail config can contain any trail mark properties (except ``type``, ``style``, and ``clip``).
