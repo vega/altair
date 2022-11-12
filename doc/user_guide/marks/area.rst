@@ -51,9 +51,10 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
     )
 
 Instead of using a single color as the fill color of the area, we can set it to a gradient.
-In this example, we are also customizing the overlay. For more information about gradient options see the Vega-Lite Gradient documentation.
+In this example, we are also customizing the overlay. For more information about gradient options see the `Vega-Lite Gradient documentation
+<https://vega.github.io/vega-lite/docs/gradient.html>`_.
 
-.. altair-plot.::
+.. altair-plot::
     import altair as alt
     from vega_datasets import data
 
@@ -119,8 +120,8 @@ You can also create a normalized stacked area chart by setting ``"stack"`` to ``
 Steamgraph
 ^^^^^^^^^^^
 
-We can also shift the stacked area chart’s baseline to center and produces a streamgraph by setting ``"stack"`` to ``"center"`` in the encoding channel.
-Adding the ``interactive`` method allows for changing the scales.
+We can also shift the stacked area chart's baseline to center and produces a streamgraph by setting ``"stack"`` to ``"center"`` in the encoding channel.
+Adding the ``interactive`` method allows for zooming and panning the x-scale.
 
 .. altair-plot::
     import altair as alt
