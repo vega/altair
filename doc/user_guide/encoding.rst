@@ -95,6 +95,8 @@ key      :class:`Key`      --                        N/A
 tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
 =======  ================  ========================  =========================================
 
+.. _hyperlink-channel:
+
 Hyperlink Channel
 ^^^^^^^^^^^^^^^^^
 
@@ -553,8 +555,8 @@ sort options available:
 - ``sort='ascending'`` (Default) will sort the field's value in ascending order.
   for string data, this uses standard alphabetical order.
 - ``sort='descending'`` will sort the field's value in descending order
-- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for 
-  sorting by that channel. An optional minus prefix can be used for a descending 
+- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
+  sorting by that channel. An optional minus prefix can be used for a descending
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
 - passing a list to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
@@ -621,9 +623,9 @@ x-axis, using the barley dataset:
         columns=3
     )
 
-The last two charts are the same because the default aggregation 
-(see :ref:`encoding-aggregates`) is ``mean``. To highlight the 
-difference between sorting via channel and sorting via field consider the 
+The last two charts are the same because the default aggregation
+(see :ref:`encoding-aggregates`) is ``mean``. To highlight the
+difference between sorting via channel and sorting via field consider the
 following example where we don't aggregate the data:
 
 .. altair-plot::
@@ -635,7 +637,7 @@ following example where we don't aggregate the data:
     base = alt.Chart(barley).mark_point().encode(
         y='yield:Q',
     ).properties(width=200)
-    
+
     # Sort according to encoding channel
     sortchannel = base.encode(
         alt.X(field='site', type='nominal',
@@ -653,7 +655,7 @@ following example where we don't aggregate the data:
     )
     sortchannel | sortfield
 
-By passing a :class:`EncodingSortField` class to ``sort`` we have more control over 
+By passing a :class:`EncodingSortField` class to ``sort`` we have more control over
 the sorting process.
 
 

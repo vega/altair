@@ -42,16 +42,45 @@ Mark Name                                  Method                          Descr
 =========================================  ==============================  ================================  ==================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
-of the Chart object, which take optional keyword arguments that are passed to
-:class:`MarkDef` to configure the look of the marks.
+of the Chart object, which take optional keyword arguments to configure the look of the marks.
 
 Mark Properties
 _______________
 
-Additional arguments to ``mark_*()`` methods are passed along to an
-associated :class:`MarkDef` instance, which supports the following attributes:
+This section lists standard mark properties for primitive mark types. Additionally, some marks may have special mark properties (listed in their documentation page).
+
+General Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. altair-object-table:: altair.MarkDef
+   :properties: type aria description style tooltip clip invalid order
+
+Position and Offset Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. altair-object-table:: altair.MarkDef
+   :properties: x x2 width height y y2 xOffset x2Offset yOffset y2Offset
+
+Color Properties
+^^^^^^^^^^^^^^^^
+
+.. altair-object-table:: altair.MarkDef
+   :properties: filled color fill stroke blend opacity fillOpacity strokeOpacity
+
+Stroke Style Properties
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. altair-object-table:: altair.MarkDef
+   :properties: strokeCap strokeDash strokeDashOffset strokeJoin strokeMiterLimit strokeWidth
+
+Hyperlink Properties
+^^^^^^^^^^^^^^^^^^^^
+Marks can act as hyperlinks when the ``href`` property or :ref:`channel <hyperlink-channel>`
+is defined. When the ``href`` property is specified, the ``cursor`` mark property is
+set to ``"pointer"`` by default to serve as affordance for hyperlinks.
+
+.. altair-object-table:: altair.MarkDef
+   :properties: href cursor
 
 .. toctree::
    :hidden:
