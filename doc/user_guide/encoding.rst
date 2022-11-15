@@ -50,8 +50,8 @@ x           :class:`X`           The x-axis value                   :ref:`galler
 y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
 x2          :class:`X2`          Second x value for ranges          :ref:`gallery_gantt_chart`
 y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_candlestick_chart`
-longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airport_connections`
-latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airport_connections`
+longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_point_map`
+latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_point_map`
 longitude2  :class:`Longitude2`  Second longitude value for ranges  :ref:`gallery_airport_connections`
 latitude2   :class:`Latitude2`   Second latitude value for ranges   :ref:`gallery_airport_connections`
 xError      :class:`XError`      The x-axis error value             N/A
