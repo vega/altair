@@ -142,7 +142,7 @@ Adding the ``interactive`` method allows for zooming and panning the x-scale.
 Ranged Area
 ^^^^^^^^^^^
 Specifying ``x2`` or ``y2`` for the quantitative axis of area marks produce ranged areas. For example, we can use ranged area with the ``ci0`` and ``ci0``
-aggregation operators to highlight 95% confidence interval of a line chart that shows mean values over time.
+:ref:`aggregation operators <encoding-aggregates>` to highlight 95% confidence interval of a line chart that shows mean values over time.
 
 .. altair-plot::
     import altair as alt
