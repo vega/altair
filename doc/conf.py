@@ -137,7 +137,26 @@ html_theme = "pydata_sphinx_theme"
 html_theme_options = {
     "navbar_start": ["navbar-logo", "navbar-project"],
     "navbar_center": ["navbar-nav"],
-    "navbar_end": ["navbar-icon-links"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "footer_items": [],
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/altair-viz/altair",
+            "icon": "fab fa-github",
+            "type": "fontawesome",
+        },
+        {
+            "name": "StackOverflow",
+            "url": "https://stackoverflow.com/tags/altair",
+            "icon": "fab fa-stack-overflow",
+            "type": "fontawesome",
+        },
+    ]
+}
+
+html_context = {
+   "default_mode": "light"
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
