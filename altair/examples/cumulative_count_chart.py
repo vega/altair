@@ -5,7 +5,7 @@ This example shows an area chart with cumulative count.
 Adapted from https://vega.github.io/vega-lite/examples/area_cumulative_freq.html
 
 """
-# category: area charts
+# category: distributions
 
 import altair as alt
 from vega_datasets import data

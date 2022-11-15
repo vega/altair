@@ -141,8 +141,7 @@ Some additional notes:
   a title in the docstring underlined with `---`, and be sure that the size of
   the underline exactly matches the size of the title text.
 - If your example fits into a chart type but involves significant configuration
-  it should be in the `Case Studies` category. If your example doesn't fit well
-  into any category then it can be included in the `Other Charts` category.
+  it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the
   variable `source`. Then `source` is passed to the `alt.Chart` object. See
   other examples for guidance. 

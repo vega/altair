@@ -1,10 +1,10 @@
 """
-Error Bar with Standard Deviation
+Error Bars with Standard Deviation
 ---------------------------------
 This example shows how to show error bars with standard deviation using crop yields data of different
 in the years of 1930s.
 """
-# category:advanced calculations
+# category: uncertainties and trends
 import altair as alt
 from vega_datasets import data
 

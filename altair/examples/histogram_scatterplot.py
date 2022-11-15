@@ -1,9 +1,9 @@
 """
-Binned Scatterplot
+2D Histogram Scatter Plot
 ------------------
-This example shows how to make a binned scatterplot.
+This example shows how to make a 2d histogram scatter plot.
 """
-# category: scatter plots
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

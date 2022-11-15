@@ -3,7 +3,7 @@ Quantile-Quantile Plot
 ----------------------
 A quantile-quantile plot comparing input data to theoretical distributions.
 """
-# category: scatter plots
+# category: distributions
 
 import altair as alt
 from vega_datasets import data

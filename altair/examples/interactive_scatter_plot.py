@@ -1,7 +1,7 @@
 """
-Simple Interactive Colored Scatterplot
+Simple Interactive Colored Scatter Plot
 --------------------------------------
-This example shows how to make an interactive scatterplot.
+This example shows how to make an interactive scatter plot.
 """
 # category: interactive charts
 import altair as alt

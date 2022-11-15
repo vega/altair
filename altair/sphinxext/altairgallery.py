@@ -168,7 +168,9 @@ def populate_examples(**kwds):
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
         example.update(kwds)
         if category is None:
-            category = "other charts"
+            raise Exception(
+                f"The example {example['name']} is not assigned to a category"
+            )
         example.update(
             {
                 "docstring": docstring,
@@ -268,13 +270,13 @@ def main(app):
             "Area Charts": [],
             "Circular Plots": [],
             "Scatter Plots": [],
-            "Histograms": [],
+            "Uncertainties And Trends": [],
+            "Distributions": [],
             "Tables": [],
             "Maps": [],
             "Interactive Charts": [],
             "Advanced Calculations": [],
             "Case Studies": [],
-            "Other Charts": [],
         }
     )
     for d in examples:
