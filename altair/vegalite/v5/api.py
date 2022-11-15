@@ -762,7 +762,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type="mercator",
+        type=Undefined,
         center=Undefined,
         clipAngle=Undefined,
         clipExtent=Undefined,
@@ -801,7 +801,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             projection types [in the
             documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
 
-            **Default value:** `mercator`
+            **Default value:** `equalEarth`
         center : List(float)
             Sets the projection’s center to the specified center, a two-element array of
             longitude and latitude in degrees.
