@@ -1,6 +1,6 @@
 """
 Simple Interactive Colored Scatter Plot
---------------------------------------
+---------------------------------------
 This example shows how to make an interactive scatter plot.
 """
 # category: interactive charts

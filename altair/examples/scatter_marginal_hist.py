@@ -1,6 +1,6 @@
 """
 Facetted Scatter Plot with Marginal Histograms
----------------------------------------------
+----------------------------------------------
 This example demonstrates how to generate a facetted scatter plot,
 with marginal facetted histograms, and how to share their respective
 - x,some y-limits.

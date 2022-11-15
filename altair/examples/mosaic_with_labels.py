@@ -1,6 +1,6 @@
 """
 Mosaic Chart with Labels
-------------
+------------------------
 """
 # category: tables
 

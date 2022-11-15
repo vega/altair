@@ -1,6 +1,6 @@
 """
 2D Histogram Scatter Plot
-------------------
+-------------------------
 This example shows how to make a 2d histogram scatter plot.
 """
 # category: distributions
