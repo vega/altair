@@ -156,7 +156,7 @@ html_theme_options = {
 }
 
 html_context = {
-   "default_mode": "light"
+    "default_mode": "light"
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
