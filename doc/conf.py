@@ -143,13 +143,13 @@ html_theme_options = {
         {
             "name": "GitHub",
             "url": "https://github.com/altair-viz/altair",
-            "icon": "fab fa-github",
+            "icon": "fab fa-github fa-lg",
             "type": "fontawesome",
         },
         {
             "name": "StackOverflow",
             "url": "https://stackoverflow.com/tags/altair",
-            "icon": "fab fa-stack-overflow",
+            "icon": "fab fa-stack-overflow fa-xl",
             "type": "fontawesome",
         },
     ]
