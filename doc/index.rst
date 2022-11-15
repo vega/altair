@@ -1,3 +1,5 @@
+:html_theme.sidebar_secondary.remove:
+
 Vega-Altair: Declarative Visualization in Python
 ================================================
 .. role:: raw-html(raw)

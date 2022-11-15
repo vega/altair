@@ -1,6 +1,6 @@
 """
 Lasagna Plot (Dense Time-Series Heatmap)
-------------
+----------------------------------------
 """
 # category: tables
 import altair as alt

@@ -1,6 +1,6 @@
 """
 Annual Weather Heatmap
-------------
+----------------------
 """
 # category: tables
 import altair as alt

@@ -1,6 +1,6 @@
 """
 2D Histogram Heatmap
---------------
+--------------------
 This example shows how to make a heatmap from binned quantitative data.
 """
 # category: distributions

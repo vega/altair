@@ -1,7 +1,13 @@
 """
 Strip Plot with Jitter
----------
-In this chart, we encode the ``Major_Genre`` column from the ``movies`` dataset in the ``y``-channel. In the default presentation of this data, it would be difficult to gauge the relative frequencies with which different values occur because there would be so much overlap. To address this, we use the ``yOffset`` channel to incorporate a random offset (jittering). The example is shown twice, on the left side using normally distributed and on the right side using uniformally distributed jitter.
+----------------------
+In this chart, we encode the ``Major_Genre`` column from the ``movies`` dataset
+in the ``y``-channel. In the default presentation of this data, it would be
+difficult to gauge the relative frequencies with which different values occur
+because there would be so much overlap. To address this, we use the ``yOffset``
+channel to incorporate a random offset (jittering). The example is shown twice,
+on the left side using normally distributed and on the right side using
+uniformally distributed jitter.
 """
 # category: distributions
 import altair as alt
