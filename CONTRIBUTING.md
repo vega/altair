@@ -41,7 +41,7 @@ $ python -m pip install -e .
 
 You can now install the development requirements using
 ```
-$ python -m pip install -r requirement_dev.txt
+$ python -m pip install -r requirements_dev.txt
 ```
 
 
