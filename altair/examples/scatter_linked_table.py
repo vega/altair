@@ -1,5 +1,5 @@
 """
-Brushing Scatter Plot to show data on a table
+Brushing Scatter Plot to Show Data on a Table
 ---------------------------------------------
 A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin. 
 The tables update to reflect the selection on the scatter plot.

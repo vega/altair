@@ -3,7 +3,7 @@ Layered Histogram
 =================
 This example shows how to use opacity to make a layered histogram in Altair.
 """
-# category: histograms
+# category: distributions
 import pandas as pd
 import altair as alt
 import numpy as np

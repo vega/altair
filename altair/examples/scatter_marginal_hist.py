@@ -1,11 +1,11 @@
 """
-Facetted Scatterplot with marginal histograms
----------------------------------------------
-This example demonstrates how to generate a facetted scatterplot,
+Facetted Scatter Plot with Marginal Histograms
+----------------------------------------------
+This example demonstrates how to generate a facetted scatter plot,
 with marginal facetted histograms, and how to share their respective
 - x,some y-limits.
 """
-# category: scatter plots
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

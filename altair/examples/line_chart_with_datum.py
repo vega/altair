@@ -1,5 +1,5 @@
 """
-Line Chart with datum
+Line Chart with Datum
 ---------------------------------
 An example of using ``datum`` to highlight certain values, including a ``DateTime`` value.
 This is adapted from two corresponding Vega-Lite Examples:

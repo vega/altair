@@ -1,5 +1,5 @@
 """
-Top-K plot with Others
+Top-K Plot with Others
 ----------------------
 This example shows how to use aggregate, window, and calculate transfromations
 to display the top-k directors by average worldwide gross while grouping the 
