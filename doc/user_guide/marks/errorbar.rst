@@ -5,9 +5,21 @@
 Error Bar
 ~~~~~~~~~~
 
-An error bar summarizes an error range of quantitative values using a set of summary statistics, representing by rules (and optional end ticks). Error bars in Vega-Lite can either be used to aggregate raw data or directly visualize aggregated data.
+An error bar summarizes an error range of quantitative values using a set of summary statistics,
+representing by rules (and optional end ticks). Error bars in Vega-Lite can either be used to aggregate
+raw data or directly visualize aggregated data.
 
-To create an error bar, set ``mark`` to ``"errorbar"``.
+To create an error bar, use ``mark_errorbar``.
+
+Error Bar Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^
+An ``errorbar`` mark definition can contain the following properties:
+
+.. altair-object-table:: altair.ErrorBarDef
+   :properties: extent orient color opacity
+
+Besides the properties listed above, ``rule`` and ``ticks`` can be used to specify
+the underlying mark properties for different parts of the error bar as well.
 
 Using Error Bars to Aggregate Raw Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

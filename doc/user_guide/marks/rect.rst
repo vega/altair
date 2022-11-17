@@ -7,6 +7,14 @@ Rect
 
 The ``rect`` mark represents an arbitrary rectangle.
 
+Rect Mark Properties
+--------------------
+A ``rect`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: width height align baseline cornerRadius
+
 Examples
 --------
 Heatmap

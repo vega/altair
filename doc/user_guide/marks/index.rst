@@ -44,6 +44,8 @@ Mark Name                                  Method                          Descr
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
 of the Chart object, which take optional keyword arguments to configure the look of the marks.
 
+.. _mark-properties:
+
 Mark Properties
 _______________
 

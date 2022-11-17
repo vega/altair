@@ -9,6 +9,15 @@ A box plot summarizes a distribution of quantitative values using a set of summa
 
 To create a box plot, set ``mark`` to ``"boxplot"``.
 
+Box Plot Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^
+A ``boxplot's`` mark definition can contain the following properties:
+
+.. altair-object-table:: altair.BoxPlotDef
+   :properties: type extent orient size color opacity
+
+Besides the properties listed above, ``box``, ``median``, ``rule``, ``outliers``, and ``ticks`` can be used to specify the underlying mark properties for different parts of the box plots as well.
+
 Types of Box Plot
 ^^^^^^^^^^^^^^^^^
 Altair supports two types of box plots, defined by the ``extent`` property in the mark definition object.

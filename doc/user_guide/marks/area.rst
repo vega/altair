@@ -7,6 +7,14 @@ Area
 ``area`` represent multple data element as a single area shape.
 Area marks are often used to show change over time, using either a single area or stacked areas.
 
+Area Mark Properties
+--------------------
+An ``area`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following line interpolation as well as line and point overlay properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: align baseline orient interpolate tension line point
+
 Examples
 --------
 

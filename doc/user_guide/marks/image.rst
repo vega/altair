@@ -7,6 +7,14 @@ Image
 
 Image marks allow external images, such as icons or photographs, to be included in Altair visualizations. Image files such as PNG or JPG images are loaded from provided URLs.
 
+Image Mark Properties
+^^^^^^^^^^^^^^^^^^^^^
+An ``image`` mark can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: url aspect align baseline
+
 Scatterplot with Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

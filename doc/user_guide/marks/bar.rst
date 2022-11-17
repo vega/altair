@@ -7,6 +7,14 @@ Bar
 
 Bar marks are useful in many visualizations, including bar charts, stacked bar charts, and timelines.
 
+Bar Mark Properties
+-------------------
+A ``bar`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: width height orient align baseline binSpacing cornerRadius cornerRadiusEnd cornerRadiusTopLeft cornerRadiusTopRight cornerRadiusBottomRight cornerRadiusBottomLeft
+
 Examples
 --------
 

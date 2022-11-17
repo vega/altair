@@ -6,6 +6,14 @@ Tick
 ~~~~
 The ``tick`` mark represents each data point as a short line. This is a useful mark for displaying the distribution of values in a field.
 
+Tick Mark Properties
+--------------------
+A ``tick`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: cornerRadius orient
+
 Examples
 --------
 Dot Plot

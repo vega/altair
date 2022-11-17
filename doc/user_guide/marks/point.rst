@@ -6,6 +6,14 @@ Point
 ~~~~~
 ``point`` mark represents each data point with a symbol. Point marks are commonly used in visualizations like scatterplots.
 
+Point Mark Properties
+--------------------
+A ``point`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: shape size
+
 Examples
 --------
 Dot Plot

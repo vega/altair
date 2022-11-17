@@ -8,6 +8,14 @@ The ``line`` mark represents the data points stored in a field with a line conne
 
 Note: For line segments that connect (x,y) positions to (x2,y2) positions, please use ``rule`` marks. For continuous lines with varying size, please use ``trail`` marks.
 
+Line Mark Properties
+--------------------
+A ``line`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following line interpolation and point overlay properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: orient interpolate tension point
+
 Examples
 --------
 Line Chart

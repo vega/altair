@@ -6,6 +6,14 @@ Text
 ~~~~~~
 ``text`` mark represents each data point with a text instead of a point.
 
+Text Mark Properties
+--------------------
+A ``text`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: angle align baseline dir dx dy ellipsis font fontSize fontStyle fontWeight limit lineHeight radius text theta
+
 Examples
 --------
 Text Table Heatmap

@@ -6,6 +6,14 @@ Square
 ~~~~~~
 ``square`` marks is similar to ``point`` mark, except that (1) the ``shape`` value is always set to ``square`` (2) they are filled by default.
 
+Square Mark Properties
+----------------------
+A ``square`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: size
+
 Scatterplot with Square
 -----------------------
 .. altair-plot::

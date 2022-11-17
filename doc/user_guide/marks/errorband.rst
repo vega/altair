@@ -7,7 +7,17 @@ Error Band
 
 An error band summarizes an error range of quantitative values using a set of summary statistics, representing by area. Error band in Altair can either be used to aggregate raw data or directly visualize aggregated data.
 
-To create an error band, set ``mark`` to ``"errorband"``.
+To create an error band, use ``mark_errorband``.
+
+Error Band Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+An ``errorband`` mark definition can contain the following properties:
+
+.. altair-object-table:: altair.ErrorBandDef
+   :properties: extent orient color opacity interpolate tension
+
+Besides the properties listed above, ``band`` and ``borders`` can be used to specify
+the underlying mark properties for different parts of the error band as well.
 
 Comparing the usage of Error Band to the usage of Error Bar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

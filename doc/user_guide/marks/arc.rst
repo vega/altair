@@ -8,6 +8,14 @@ Arc
 Arc marks are circular arcs defined by a center point plus angular and radial extents.
 Arc marks are typically used for radial plots such as pie and donut charts.
 
+Arc Mark Properties
+-------------------
+An ``arc`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following special properties:
+
+.. altair-object-table:: altair.MarkDef
+   :properties: radius radius2 innerRadius outerRadius theta theta2 cornerRadius padAngle radiusOffset radius2Offset thetaOffset theta2Offset
+
 Examples
 --------
 
