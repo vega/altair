@@ -25,6 +25,16 @@ table.docutils td li {
 
 }
 
+.vega-bind-name {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.vega-bindings {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
 /* Use full page width without sidebars */
 /* .bd-content { */
 /*   max-width: 100%; */

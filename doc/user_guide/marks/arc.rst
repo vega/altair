@@ -10,6 +10,9 @@ Arc marks are typically used for radial plots such as pie and donut charts.
 
 Arc Mark Properties
 -------------------
+.. raw:: html
+    :file: parameter_charts/arc_params.html
+
 An ``arc`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following special properties:
 
