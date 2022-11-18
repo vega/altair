@@ -48,7 +48,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 2. **Error bar showing standard deviation** can be specified by setting ``extent`` to ``"stdev"``. For this type of error bar, the length of lower and upper rules represent standard deviation. Like an error bar that shows Standard Error, the rule marks expand from the mean by default.
 
 .. altair-plot::
-   import altair as alt
+    import altair as alt
     from vega_datasets import data
 
     source = data.barley()
@@ -68,7 +68,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 3. **Error bars showing interquartile range** can be specified by setting ``extent`` to ``"iqr"``. For this type of error bar, the rule marks expand from the first quartile to the third quartile.
 
 .. altair-plot::
-   import altair as alt
+    import altair as alt
     from vega_datasets import data
 
     source = data.barley()

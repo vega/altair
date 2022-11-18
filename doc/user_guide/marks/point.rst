@@ -7,7 +7,7 @@ Point
 ``point`` mark represents each data point with a symbol. Point marks are commonly used in visualizations like scatter plots.
 
 Point Mark Properties
---------------------
+---------------------
 A ``point`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following special properties:
 
@@ -21,7 +21,7 @@ Dot Plot
 Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot plot.
 
 .. altair-plot::
-   import altair as alt
+    import altair as alt
     from vega_datasets import data
 
     source =  data.movies()
@@ -76,21 +76,21 @@ By mapping a third field to the ``size`` channel in the scatter plot, we can cre
 Scatter Plot with Color and/or Shape
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` channels. For example, this specification encodes the field ``species`` with both ``color`` and ``shape``.
+Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` channels. For example, this specification encodes the field ``Origin`` with both ``color`` and ``shape``.
 
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
     alt.Chart(source).mark_point().encode(
-        alt.X('flipper_length_mm:Q', scale = alt.Scale(zero = False)),
-        alt.Y('body_mass_g:Q', scale = alt.Scale(zero = False)),
-        color = 'species:N',
-        shape = 'species:N'
+        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.Y("Horsepower:Q", scale=alt.Scale(zero=False)),
+        color="Origin:N",
+        shape="Origin:N",
     )
+
 
 Dot Plot with Jittering
 ^^^^^^^^^^^^^^^^^^^^^^^

@@ -26,15 +26,13 @@ Altair supports two types of box plots, defined by the ``extent`` property in th
 By default, the extent is ``1.5``.
 
 .. altair-plot::
-    pip install palmerpenguins
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.X('body_mass_g:Q', scale=alt.Scale(zero=False))
+        alt.X('Miles_per_Gallon:Q', scale=alt.Scale(zero=False))
     )
 
 2. ``min-max`` Box Plot is a box plot where the lower and upper whiskers are defined as the min and max respectively. No points will be considered as outliers for this type of box plots.
@@ -42,14 +40,13 @@ By default, the extent is ``1.5``.
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
-    alt.Chart(source).mark_boxplot(extent = 'min-max').encode(
-        alt.X('body_mass_g:Q', scale=alt.Scale(zero=False)),
-        alt.Y('species:N')
+    alt.Chart(source).mark_boxplot(extent="min-max").encode(
+        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)), alt.Y("Origin:N")
     )
+
 
 Dimension and Orientation
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -61,12 +58,11 @@ A box plot’s orientation is automatically determined by the continuous field a
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.Y('body_mass_g:Q', scale=alt.Scale(zero=False))
+        alt.Y('Miles_per_Gallon:Q', scale=alt.Scale(zero=False))
     )
 
 2D box plot shows the distribution of a continuous field, broken down by categories.
@@ -78,33 +74,20 @@ Color, Size, and Opacity Encoding Channels
 
 You can customize the color, size, and opacity of the box in the box plot by using the ``color``, ``size``, and ``opacity`` encoding channels. The ``size`` is applied to only the box and median tick. The ``color`` is applied to only the box and the outlier points. Meanwhile, the ``opacity`` is applied to the whole ``boxplot``.
 
-An example of a box plot where the ``size`` encoding channel is specified.
+An example of a box plot where the ``color`` encoding channel is specified.
 
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
-    alt.Chart(source).mark_boxplot().encode(
-        alt.Y('body_mass_g:Q', scale=alt.Scale(zero=False)),
-        alt.X('species:N'),
-        color = 'species:N'
+    alt.Chart(source).mark_boxplot(extent="min-max").encode(
+        alt.X("Origin:N"),
+        alt.Y("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.Color("Origin:N", legend=None),
     )
 
-.. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    from palmerpenguins import load_penguins
-
-    source = load_penguins()
-
-    alt.Chart(source).mark_boxplot().encode(
-        alt.Y('body_mass_g:Q', scale=alt.Scale(zero=False)),
-        alt.X('species:N'),
-        alt.Color(value = 'teal')
-    )
 
 Tooltip Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -116,13 +99,12 @@ If the field in the tooltip encoding is unaggregated, it replaces the tooltips o
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from palmerpenguins import load_penguins
 
-    source = load_penguins()
+    source = data.cars()
 
-    alt.Chart(source).mark_boxplot().encode(
-        alt.X('body_mass_g:Q', scale=alt.Scale(zero=False)),
-        alt.Y('species:N'),
-        tooltip = 'mean(body_mass_g):Q'
+    alt.Chart(source).mark_boxplot(extent="min-max").encode(
+        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.Y("Origin:N"),
+        alt.Tooltip("mean(Miles_per_Gallon)")
     )
 

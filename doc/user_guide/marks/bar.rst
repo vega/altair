@@ -37,7 +37,7 @@ Mapping a quantitative field to either ``x`` or ``y`` of the ``bar`` mark produc
 
 Bar Chart
 ^^^^^^^^^
-If we map a different discrete field to the ``y`` channel, we can produce a horizontal bar chart. Specifying ``alt.Step(100)`` will adjust the bar’s height per discrete step.
+If we map a different discrete field to the ``y`` channel, we can produce a horizontal bar chart. Specifying ``alt.Step(20)`` will adjust the bar's height per discrete step.
 
 .. altair-plot::
     import altair as alt
@@ -47,11 +47,9 @@ If we map a different discrete field to the ``y`` channel, we can produce a hori
     source = data.population.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X('sum(people):Q', title = "Population"),
-        alt.Y('age:O')
-    ).transform_filter(
-        datum.year == 2000
-    ).properties(height = 500)
+        alt.X("sum(people):Q", title="Population"), alt.Y("age:O")
+    ).transform_filter(datum.year == 2000).properties(height=alt.Step(20))
+
 
 Bar Chart with a Temporal Axis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
