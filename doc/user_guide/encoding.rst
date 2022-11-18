@@ -530,7 +530,7 @@ The same approach works for other mark types, like stacked areas charts.
         order=alt.Order("site", sort="ascending")
     )
 
-For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
+For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
 
 .. altair-plot::
 

@@ -16,8 +16,8 @@ and the following special properties:
 
 Examples
 --------
-A Line Chart with varying size using ``trail`` mark
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Line Chart with Varying Size
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. altair-plot::
     import altair as alt
@@ -32,8 +32,8 @@ A Line Chart with varying size using ``trail`` mark
         size='price',
     )
 
-A Comet Chart showing changes between two states
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Comet Chart Showing Changes Between Two States
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. altair-plot::
     import altair as alt
     import vega_datasets

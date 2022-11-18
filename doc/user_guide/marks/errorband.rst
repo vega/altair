@@ -134,7 +134,7 @@ A **2D error** band shows the error range of a continuous field for each dimensi
 Color and Opacity Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can customize the color, size, and opacity of the band in the ``errorband`` by using the ``color`` and ``opacity`` encoding channels, which applied to the whole ``errorband``.
+You can customize the color and opacity of the bands by using the ``color`` and ``opacity`` encoding channels.
 
 Here is an example of a ``errorband`` with the ``color`` encoding channel set to ``alt.value('black')``.
 

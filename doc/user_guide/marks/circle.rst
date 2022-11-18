@@ -15,8 +15,8 @@ and the following special properties:
 .. altair-object-table:: altair.MarkDef
    :properties: size
 
-Scatterplot with Circle
-^^^^^^^^^^^^^^^^^^^^^^^
+Scatter Plot with Circle
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here is an example scatter plot with ``circle`` marks:
 

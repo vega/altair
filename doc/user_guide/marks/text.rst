@@ -78,9 +78,9 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
 
     bar + text
 
-Scatterplot with Text
-^^^^^^^^^^^^^^^^^^^^^
-Mapping a field to ``text`` channel of text mark sets the mark’s text value. For example, we can make a colored scatterplot with text marks showing the initial character of its origin, instead of ``point`` marks.
+Scatter Plot with Text
+^^^^^^^^^^^^^^^^^^^^^^
+Mapping a field to ``text`` channel of text mark sets the mark’s text value. For example, we can make a colored scatter plot with text marks showing the initial character of its origin, instead of ``point`` marks.
 
 .. altair-plot::
     import altair as alt

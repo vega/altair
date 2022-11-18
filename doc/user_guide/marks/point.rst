@@ -4,7 +4,7 @@
 
 Point
 ~~~~~
-``point`` mark represents each data point with a symbol. Point marks are commonly used in visualizations like scatterplots.
+``point`` mark represents each data point with a symbol. Point marks are commonly used in visualizations like scatter plots.
 
 Point Mark Properties
 --------------------
@@ -44,7 +44,7 @@ Mapping fields to both the ``x`` and ``y`` channels creates a scatter plot.
         y = 'Miles_per_Gallon:Q'
     )
 
-By default, ``point`` marks only have borders and are transparent inside. You can create a filled point by setting ``filled`` to ``true``.
+By default, ``point`` marks only have borders and are transparent inside. You can create a filled point by setting ``filled`` to ``True``.
 
 .. altair-plot::
     import altair as alt
@@ -76,7 +76,7 @@ By mapping a third field to the ``size`` channel in the scatter plot, we can cre
 Scatter Plot with Color and/or Shape
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` channels. For example, this specification encodes the field ``Origin`` with both ``color`` and ``shape``.
+Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` channels. For example, this specification encodes the field ``species`` with both ``color`` and ``shape``.
 
 .. altair-plot::
     import altair as alt
@@ -94,7 +94,7 @@ Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` 
 
 Dot Plot with Jittering
 ^^^^^^^^^^^^^^^^^^^^^^^
-To jitter points on a discrete scale, you can add random offset:
+To jitter points on a discrete scale, you can add a random offset:
 
 .. altair-plot::
     import altair as alt

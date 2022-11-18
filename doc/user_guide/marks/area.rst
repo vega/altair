@@ -108,7 +108,7 @@ Adding a color field to area chart creates stacked area chart by default. For ex
 Normalized Stacked Area Chart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also create a normalized stacked area chart by setting ``"stack"`` to ``"normalize"`` in the encoding channel. Here we can easily see the percentage of unemployment across industries.
+You can also create a normalized stacked area chart by setting ``stack`` to ``"normalize"`` in the encoding channel. Here we can easily see the percentage of unemployment across industries.
 
 .. altair-plot::
     import altair as alt
@@ -128,7 +128,7 @@ You can also create a normalized stacked area chart by setting ``"stack"`` to ``
 Steamgraph
 ^^^^^^^^^^^
 
-We can also shift the stacked area chart's baseline to center and produces a streamgraph by setting ``"stack"`` to ``"center"`` in the encoding channel.
+We can also shift the stacked area chart's baseline to center and produces a streamgraph by setting ``stack`` to ``"center"`` in the encoding channel.
 Adding the ``interactive`` method allows for zooming and panning the x-scale.
 
 .. altair-plot::

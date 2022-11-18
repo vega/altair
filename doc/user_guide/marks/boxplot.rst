@@ -7,14 +7,14 @@ Box Plot
 
 A box plot summarizes a distribution of quantitative values using a set of summary statistics. The median tick in the box represents the median. The lower and upper parts of the box represent the first and third quartile respectively. Depending on the type of box plot, the ends of the whiskers can represent multiple things.
 
-To create a box plot, set ``mark`` to ``"boxplot"``.
+To create a box plot, use the ``mark_boxplot`` method.
 
 Box Plot Mark Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^
-A ``boxplot's`` mark definition can contain the following properties:
+A box plot's mark definition can contain the following properties:
 
 .. altair-object-table:: altair.BoxPlotDef
-   :properties: type extent orient size color opacity
+   :properties: extent orient size color opacity
 
 Besides the properties listed above, ``box``, ``median``, ``rule``, ``outliers``, and ``ticks`` can be used to specify the underlying mark properties for different parts of the box plots as well.
 
@@ -56,7 +56,7 @@ Dimension and Orientation
 Altair supports bot 1D and 2D box plots:
 
 1D box plot shows the distribution of a continuous field.
-A boxplot’s orientation is automatically determined by the continuous field axis. For example, you can create a vertical 1D box plot by encoding a continuous field on the y axis.
+A box plot’s orientation is automatically determined by the continuous field axis. For example, you can create a vertical 1D box plot by encoding a continuous field on the y axis.
 
 .. altair-plot::
     import altair as alt
@@ -76,9 +76,9 @@ For 2D box plots with one continuous field and one discrete field, the box plot 
 Color, Size, and Opacity Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can customize the color, size, and opacity of the box in the ``boxplot`` by using the ``color``, ``size``, and ``opacity ``encoding channels. The ``size`` is applied to only the box and median tick. The ``color`` is applied to only the box and the outlier points. Meanwhile, the ``opacity`` is applied to the whole ``boxplot``.
+You can customize the color, size, and opacity of the box in the box plot by using the ``color``, ``size``, and ``opacity`` encoding channels. The ``size`` is applied to only the box and median tick. The ``color`` is applied to only the box and the outlier points. Meanwhile, the ``opacity`` is applied to the whole ``boxplot``.
 
-An example of a ``boxplot`` where the ``size`` encoding channel is specified.
+An example of a box plot where the ``size`` encoding channel is specified.
 
 .. altair-plot::
     import altair as alt
@@ -109,7 +109,7 @@ An example of a ``boxplot`` where the ``size`` encoding channel is specified.
 Tooltip Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can add custom tooltips to box plots. The custom tooltip will override the default boxplot’s tooltips.
+You can add custom tooltips to box plots. The custom tooltip will override the default box plot's tooltips.
 
 If the field in the tooltip encoding is unaggregated, it replaces the tooltips of the outlier marks. On the other hand, if the field in the tooltip encoding is aggregated, it replaces the tooltips of the box and whisker marks.
 

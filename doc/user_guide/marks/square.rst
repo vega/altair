@@ -4,7 +4,7 @@
 
 Square
 ~~~~~~
-``square`` marks is similar to ``point`` mark, except that (1) the ``shape`` value is always set to ``square`` (2) they are filled by default.
+``square`` mark is similar to ``point`` mark, except that (1) the ``shape`` value is always set to ``square`` (2) they are filled by default.
 
 Square Mark Properties
 ----------------------
@@ -14,8 +14,8 @@ and the following special properties:
 .. altair-object-table:: altair.MarkDef
    :properties: size
 
-Scatterplot with Square
------------------------
+Scatter Plot with Square
+------------------------
 .. altair-plot::
     import altair as alt
     from vega_datasets import data

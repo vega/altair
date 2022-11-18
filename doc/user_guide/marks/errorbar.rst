@@ -6,7 +6,7 @@ Error Bar
 ~~~~~~~~~~
 
 An error bar summarizes an error range of quantitative values using a set of summary statistics,
-representing by rules (and optional end ticks). Error bars in Vega-Lite can either be used to aggregate
+representing by rules (and optional end ticks). Error bars in Altair can either be used to aggregate
 raw data or directly visualize aggregated data.
 
 To create an error bar, use ``mark_errorbar``.
@@ -190,7 +190,7 @@ For 2D error bars with one continuous field and one discrete field, the error ba
 
 Color, and Opacity Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can customize the color, size, and opacity of the bar in the ``errorbar`` by using the ``color`` and ``opacity`` encoding channels, which are applied to the whole errorbar.
+You can customize the color and opacity of the bars by using the ``color`` and ``opacity`` encoding channels.
 
 Here is an example of a ``errorbar`` with the ``color`` encoding channel set to ``alt.value("#4682b4")``.
 

@@ -15,8 +15,8 @@ and the following special properties:
 .. altair-object-table:: altair.MarkDef
    :properties: url aspect align baseline
 
-Scatterplot with Image Marks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Scatter Plot with Image Marks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. altair-plot::
     import altair as alt

@@ -80,7 +80,7 @@ Ranged Rules
 ^^^^^^^^^^^^
 To control the spans of horizontal/vertical rules, ``x`` and ``x2``/ ``y`` and ``y2`` channels can be specified.
 
-For example, we can use ``y`` and ``y2 ``show the ``"min"`` and ``"max"`` values of horsepowers for cars from different locations.
+For example, we can use ``y`` and ``y2`` show the ``"min"`` and ``"max"`` values of horsepowers for cars from different locations.
 
 .. altair-plot::
     import altair as alt

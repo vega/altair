@@ -42,7 +42,7 @@ Mark Name                                  Method                          Descr
 =========================================  ==============================  ================================  ==================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
-of the Chart object, which take optional keyword arguments to configure the look of the marks.
+of the Chart object (e.g. ``mark_bar``), which take optional keyword arguments to configure the look of the marks.
 
 .. _mark-properties:
 
@@ -55,7 +55,7 @@ General Mark Properties
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. altair-object-table:: altair.MarkDef
-   :properties: type aria description style tooltip clip invalid order
+   :properties: aria description style tooltip clip invalid order
 
 Position and Offset Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -169,7 +169,7 @@ The same method can be used to group lines for a ranged dot plot.
 
 Line Chart with Point Markers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-By setting the ``point`` property of the mark definition to ``true`` or an object defining a property of the overlaying point marks, we can overlay point markers on top of line.
+By setting the ``point`` property of the mark definition to ``True`` or an object defining a property of the overlaying point marks, we can overlay point markers on top of a line.
 
 .. altair-plot::
     import altair as alt
@@ -187,7 +187,7 @@ This is equivalent to adding another layer of filled point marks.
 
 Note that the overlay point marks have ``opacity`` = 1 by default (instead of semi-transparent like normal point marks).
 
-Here we create stroked points by setting their ``\"filled\"`` to ``false`` and their fill to ``\"white\"``.
+Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to ``"white"``.
 
 .. altair-plot::
     import altair as alt
