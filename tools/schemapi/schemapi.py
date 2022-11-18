@@ -140,10 +140,7 @@ class UndefinedType(object):
 # But for now, we'll add an annotation to indicate that the type checker
 # should permit any value passed to a function argument whose default
 # value is Undefined.
-UndefinedLike = Any
-
-
-Undefined: UndefinedLike = UndefinedType()
+Undefined: Any = UndefinedType()
 
 
 class SchemaBase(object):
