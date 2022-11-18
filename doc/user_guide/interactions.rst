@@ -20,7 +20,7 @@ There are three core concepts of this grammar:
   between the selection and an input element of your chart,
   such as a drop-down, radio button or slider.
 
-Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data. 
+Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data.
 
 
 Parameters: Building Blocks of Interaction
@@ -55,7 +55,7 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
         color='Origin:N'
     )
 
-We can create a variable parameter using :func:`parameter`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
+We can create a variable parameter using :func:`alt.param`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
 
 .. altair-plot::
     :output: none
@@ -463,7 +463,7 @@ clickable legend that will select points by both Origin and number of
 cylinders:
 
 .. altair-plot::
-   
+
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
     color = alt.condition(selection,
                           alt.Color('Origin:N', legend=None),
@@ -562,11 +562,11 @@ For instance, using our example from above a dropdown can be used to highlight c
     )
 
 
-    
 
-The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data. 
 
-The following are the input elements supported in vega-lite: 
+The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data.
+
+The following are the input elements supported in vega-lite:
 
 
 ========================= ===========================================================================  ===============================================
@@ -585,7 +585,7 @@ Bindings and input elements can also be used to filter data on the client side. 
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
-    
+
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
