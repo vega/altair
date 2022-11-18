@@ -31,12 +31,10 @@ the following area chart shows a number of unemployment people in the US over ti
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        x = 'yearmonth(date):T',
-        y = 'sum(count):Q',
-    ).properties(
-        width=300,
-        height=200
-    )
+        x="yearmonth(date):T",
+        y="sum(count):Q",
+    ).properties(width=300, height=200)
+
 
 Area Chart with Overlaying Lines and Point Markers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -51,12 +49,10 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
 
     source = data.stocks.url
 
-    alt.Chart(source).mark_area(line = True, point = True).encode(
-        x = 'date:T',
-        y = 'price:Q',
-    ).transform_filter(
-        datum.symbol == 'GOOG'
-    )
+    alt.Chart(source).mark_area(line=True, point=True).encode(
+        x="date:T",
+        y="price:Q",
+    ).transform_filter(datum.symbol == "GOOG")
 
 Instead of using a single color as the fill color of the area, we can set it to a gradient.
 In this example, we are also customizing the overlay. For more information about gradient options see the `Vega-Lite Gradient documentation
@@ -68,23 +64,21 @@ In this example, we are also customizing the overlay. For more information about
 
     source = data.stocks()
 
-    alt.Chart(source).transform_filter(
-        'datum.symbol==="GOOG"'
-    ).mark_area(
-        line={'color':'darkgreen'},
+    alt.Chart(source).transform_filter('datum.symbol==="GOOG"').mark_area(
+        line={"color": "darkgreen"},
         color=alt.Gradient(
-            gradient='linear',
-            stops=[alt.GradientStop(color='white', offset=0),
-                alt.GradientStop(color='darkgreen', offset=1)],
+            gradient="linear",
+            stops=[
+                alt.GradientStop(color="white", offset=0),
+                alt.GradientStop(color="darkgreen", offset=1),
+            ],
             x1=1,
             x2=1,
             y1=1,
-            y2=0
-        )
-    ).encode(
-        alt.X('date:T'),
-        alt.Y('price:Q')
-    )
+            y2=0,
+        ),
+    ).encode(alt.X("date:T"), alt.Y("price:Q"))
+
 
 Stacked Area Chart
 ^^^^^^^^^^^^^^^^^^
@@ -97,13 +91,11 @@ Adding a color field to area chart creates stacked area chart by default. For ex
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X('yearmonth(date):T',
-            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-        ),
-        alt.Y('sum(count):Q'),
-        alt.Color('series:N',
-            scale=alt.Scale(scheme='category20b')
-    ))
+        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
+        alt.Y("sum(count):Q"),
+        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
+    )
+
 
 Normalized Stacked Area Chart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,13 +109,11 @@ You can also create a normalized stacked area chart by setting ``stack`` to ``"n
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X('yearmonth(date):T',
-            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-        ),
-        alt.Y('sum(count):Q', stack = 'normalize'),
-        alt.Color('series:N',
-            scale=alt.Scale(scheme='category20b')
-    ))
+        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
+        alt.Y("sum(count):Q", stack="normalize"),
+        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
+    )
+
 
 Steamgraph
 ^^^^^^^^^^^
@@ -138,14 +128,11 @@ Adding the ``interactive`` method allows for zooming and panning the x-scale.
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X('yearmonth(date):T',
-            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-        ),
-        alt.Y('sum(count):Q', stack='center', axis=None),
-        alt.Color('series:N',
-            scale=alt.Scale(scheme='category20b')
-        )
+        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
+        alt.Y("sum(count):Q", stack="center", axis=None),
+        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
     ).interactive()
+
 
 Ranged Area
 ^^^^^^^^^^^
@@ -159,10 +146,10 @@ Specifying ``x2`` or ``y2`` for the quantitative axis of area marks produce rang
     source = data.seattle_weather()
 
     alt.Chart(source).mark_area(opacity=0.7).encode(
-        alt.X('monthdate(date):T', title = 'Date'),
-        alt.Y('mean(temp_max):Q', title = "Daily Temperature Range (C)"),
-        alt.Y2('mean(temp_min):Q', )
-    ).properties(
-        width=600,
-        height=300
-    )
+        alt.X("monthdate(date):T", title="Date"),
+        alt.Y("mean(temp_max):Q", title="Daily Temperature Range (C)"),
+        alt.Y2(
+            "mean(temp_min):Q",
+        ),
+    ).properties(width=600, height=300)
+

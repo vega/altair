@@ -26,10 +26,10 @@ Line Chart with Varying Size
     source = data.stocks()
 
     alt.Chart(source).mark_trail().encode(
-        x='date',
-        y='price',
-        color='symbol',
-        size='price',
+        x="date",
+        y="price",
+        color="symbol",
+        size="price",
     )
 
 Comet Chart Showing Changes Between Two States
@@ -45,15 +45,22 @@ Comet Chart Showing Changes Between Two States
         .transform_calculate(calculate="datum['1932'] - datum['1931']", as_="delta")
         .mark_trail()
         .encode(
-            x=alt.X('year:O', title=None),
-            y=alt.Y('variety:N', title='Variety'),
-            size=alt.Size('yield:Q', scale=alt.Scale(range=[0, 12]), legend=alt.Legend(values=[20, 60], title='Barley Yield (bushels/acre)')),
-            color=alt.Color('delta:Q', scale=alt.Scale(domainMid=0), legend=alt.Legend(title='Yield Delta (%)')),
-            tooltip=alt.Tooltip(['year:O', 'yield:Q']),
-            column=alt.Column('site:N', title='Site')
-
+            x=alt.X("year:O", title=None),
+            y=alt.Y("variety:N", title="Variety"),
+            size=alt.Size(
+                "yield:Q",
+                scale=alt.Scale(range=[0, 12]),
+                legend=alt.Legend(values=[20, 60], title="Barley Yield (bushels/acre)"),
+            ),
+            color=alt.Color(
+                "delta:Q",
+                scale=alt.Scale(domainMid=0),
+                legend=alt.Legend(title="Yield Delta (%)"),
+            ),
+            tooltip=alt.Tooltip(["year:O", "yield:Q"]),
+            column=alt.Column("site:N", title="Site"),
         )
         .configure_view(stroke=None)
-        .configure_legend(orient='bottom', direction='horizontal')
-        .properties(title='Barley Yield comparison between 1932 and 1931')
+        .configure_legend(orient="bottom", direction="horizontal")
+        .properties(title="Barley Yield comparison between 1932 and 1931")
     )

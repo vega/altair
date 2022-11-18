@@ -30,10 +30,9 @@ Mapping a quantitative field to either ``x`` or ``y`` of the ``bar`` mark produc
     source = data.population.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X('sum(people):Q', title = "Population")
-    ).transform_filter(
-        datum.year == 2000
-    )
+        alt.X("sum(people):Q", title="Population")
+    ).transform_filter(datum.year == 2000)
+
 
 Bar Chart
 ^^^^^^^^^
@@ -67,9 +66,10 @@ bars on continuous scales will be set based on the ``continuousBandSize`` config
     source = data.seattle_weather()
 
     alt.Chart(source).mark_bar().encode(
-        alt.X('month(date):T', title = 'Date'),
-        alt.Y('mean(precipitation):Q'),
+        alt.X("month(date):T", title="Date"),
+        alt.Y("mean(precipitation):Q"),
     )
+
 
 Histograms
 ^^^^^^^^^^
@@ -97,11 +97,8 @@ Adding color to the bar chart (by using the ``color`` attribute) creates a stack
 
     source = data.barley()
 
-    alt.Chart(source).mark_bar().encode(
-        x='variety',
-        y='sum(yield)',
-        color='site'
-    )
+    alt.Chart(source).mark_bar().encode(x="variety", y="sum(yield)", color="site")
+
 
 Grouped Bar Chart with Offset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -109,16 +106,18 @@ Grouped Bar Chart with Offset
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({
-        'category': ['A', 'A', 'B','B', "C", "C"],
-        'group': ['x', 'y', 'z', 'x', 'y', 'z'],
-        'value': [0.1, 0.6, 0.9, 0.7, 0.2, 0.6]
-    })
+    source = pd.DataFrame(
+        {
+            "category": ["A", "A", "B", "B", "C", "C"],
+            "group": ["x", "y", "z", "x", "y", "z"],
+            "value": [0.1, 0.6, 0.9, 0.7, 0.2, 0.6],
+        }
+    )
 
     alt.Chart(source).mark_bar().encode(
-        x = alt.X('category:N'),
-        xOffset = 'group:N',
-        y = alt.Y('value:Q'),
-        color = alt.Color('group:N')
+        x=alt.X("category:N"),
+        xOffset="group:N",
+        y=alt.Y("value:Q"),
+        color=alt.Color("group:N"),
     )
 

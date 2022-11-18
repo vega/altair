@@ -28,13 +28,10 @@ We can create a pie chart by encoding ``theta`` or ``color`` arc marks.
     source = pd.DataFrame({"category": [1, 2, 3, 4, 5, 6], "value": [4, 6, 10, 3, 7, 8]})
 
     alt.Chart(source).mark_arc().encode(
-        theta=alt.Theta(
-            field="value",
-            type="quantitative"),
-        color=alt.Color(
-            field="category",
-            type="nominal"),
-        )
+        theta=alt.Theta(field="value", type="quantitative"),
+        color=alt.Color(field="category", type="nominal"),
+    )
+
 
 Setting ``innerRadius`` to non-zero values will create a donut chart.
 
@@ -45,13 +42,10 @@ Setting ``innerRadius`` to non-zero values will create a donut chart.
     source = pd.DataFrame({"category": [1, 2, 3, 4, 5, 6], "value": [4, 6, 10, 3, 7, 8]})
 
     alt.Chart(source).mark_arc(innerRadius=50).encode(
-        theta=alt.Theta(
-            field="value",
-            type="quantitative"),
-        color=alt.Color(
-            field="category",
-            type="nominal"),
-        )
+        theta=alt.Theta(field="value", type="quantitative"),
+        color=alt.Color(field="category", type="nominal"),
+    )
+
 
 You can also add a text layer to add labels to a pie chart.
 

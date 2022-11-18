@@ -32,8 +32,9 @@ By default, the extent is ``1.5``.
     source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.X('Miles_per_Gallon:Q', scale=alt.Scale(zero=False))
+        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False))
     )
+
 
 2. ``min-max`` Box Plot is a box plot where the lower and upper whiskers are defined as the min and max respectively. No points will be considered as outliers for this type of box plots.
 
@@ -62,7 +63,7 @@ A box plot’s orientation is automatically determined by the continuous field a
     source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.Y('Miles_per_Gallon:Q', scale=alt.Scale(zero=False))
+        alt.Y("Miles_per_Gallon:Q", scale=alt.Scale(zero=False))
     )
 
 2D box plot shows the distribution of a continuous field, broken down by categories.
@@ -105,6 +106,6 @@ If the field in the tooltip encoding is unaggregated, it replaces the tooltips o
     alt.Chart(source).mark_boxplot(extent="min-max").encode(
         alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
         alt.Y("Origin:N"),
-        alt.Tooltip("mean(Miles_per_Gallon)")
+        alt.Tooltip("mean(Miles_per_Gallon)"),
     )
 

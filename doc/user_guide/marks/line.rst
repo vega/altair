@@ -31,10 +31,9 @@ Using line with one temporal or ordinal field (typically on ``x``) and another q
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-    ).transform_filter(
-        datum.symbol == 'GOOG')
+        x="date",
+        y="price",
+    ).transform_filter(datum.symbol == "GOOG")
 
 We can add create multiple lines by grouping along different attributes, such as ``color`` or ``detail``.
 
@@ -49,9 +48,9 @@ Adding a field to a mark property channel such as ``color`` groups data points i
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        color='symbol',
+        x="date",
+        y="price",
+        color="symbol",
     )
 
 We can further apply selection to highlight a certain line on hover.
@@ -62,21 +61,17 @@ We can further apply selection to highlight a certain line on hover.
 
     source = data.stocks()
 
-    highlight = alt.selection(type='single', on='mouseover',
-                            fields=['symbol'], nearest=True)
-
-    base = alt.Chart(source).encode(
-        x='date:T',
-        y='price:Q',
-        color='symbol:N'
+    highlight = alt.selection(
+        type="single", on="mouseover", fields=["symbol"], nearest=True
     )
 
-    points = base.mark_circle().encode(
-        opacity=alt.value(0)
-    ).add_selection(
-        highlight
-    ).properties(
-        width=600
+    base = alt.Chart(source).encode(x="date:T", y="price:Q", color="symbol:N")
+
+    points = (
+        base.mark_circle()
+        .encode(opacity=alt.value(0))
+        .add_selection(highlight)
+        .properties(width=600)
     )
 
     lines = base.mark_line().encode(
@@ -96,9 +91,9 @@ Adding a field to ``strokeDash`` also produces a multi-series line chart.
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        strokeDash='symbol',
+        x="date",
+        y="price",
+        strokeDash="symbol",
     )
 
 We can also use line grouping to create a line chart that has multiple parts with varying styles.
@@ -107,17 +102,15 @@ We can also use line grouping to create a line chart that has multiple parts wit
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({
-        'a' : ['A', 'B', 'D', 'E', 'E', 'G', 'H'],
-        'b' : [28, 55, 91, 81, 81, 19, 87],
-        'predicted' : [False, False, False, False, True, True, True]
-    })
-
-    alt.Chart(source).mark_line().encode(
-        x = 'a:O',
-        y = 'b:Q',
-        strokeDash = 'predicted:N'
+    source = pd.DataFrame(
+        {
+            "a": ["A", "B", "D", "E", "E", "G", "H"],
+            "b": [28, 55, 91, 81, 81, 19, 87],
+            "predicted": [False, False, False, False, True, True, True],
+        }
     )
+
+    alt.Chart(source).mark_line().encode(x="a:O", y="b:Q", strokeDash="predicted:N")
 
 Multi-series Line Chart with the Detail Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -130,9 +123,9 @@ To group lines by a field without mapping the field to any visual properties, we
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        detail='symbol',
+        x="date",
+        y="price",
+        detail="symbol",
     )
 
 The same method can be used to group lines for a ranged dot plot.
@@ -143,26 +136,40 @@ The same method can be used to group lines for a ranged dot plot.
 
     source = data.countries()
 
-    base = alt.Chart(source).encode(
-        alt.X('life_expect:Q', title= 'Life Expectancy (years)', scale=alt.Scale(zero=False)),
-        alt.Y('country:N', title = 'Country', axis = alt.Axis(offset = 5, ticks = False, minExtent = 70, domain = False)),
-    ).transform_filter(
-        alt.FieldOneOfPredicate(field = 'country',
-                                oneOf = ["China", "India", "United States", "Indonesia", "Brazil"])
+    base = (
+        alt.Chart(source)
+        .encode(
+            alt.X(
+                "life_expect:Q",
+                title="Life Expectancy (years)",
+                scale=alt.Scale(zero=False),
+            ),
+            alt.Y(
+                "country:N",
+                title="Country",
+                axis=alt.Axis(offset=5, ticks=False, minExtent=70, domain=False),
+            ),
+        )
+        .transform_filter(
+            alt.FieldOneOfPredicate(
+                field="country",
+                oneOf=["China", "India", "United States", "Indonesia", "Brazil"],
+            )
+        )
     )
 
-    line = base.mark_line().encode(
-        detail = 'country',
-        color = alt.value("#db646f")
-    ).transform_filter(
-        alt.FieldOneOfPredicate(field = 'year', oneOf = [1995, 2000])
+    line = (
+        base.mark_line()
+        .encode(detail="country", color=alt.value("#db646f"))
+        .transform_filter(alt.FieldOneOfPredicate(field="year", oneOf=[1995, 2000]))
     )
 
-    point = base.mark_point(filled = True).encode(
-        alt.Color(field = 'year',
-                scale = alt.Scale(range = ["#e6959c", "#911a24"], domain = [1995, 2000])),
-        size = alt.value(100),
-        opacity = alt.value(1)
+    point = base.mark_point(filled=True).encode(
+        alt.Color(
+            field="year", scale=alt.Scale(range=["#e6959c", "#911a24"], domain=[1995, 2000])
+        ),
+        size=alt.value(100),
+        opacity=alt.value(1),
     )
 
     line + point
@@ -178,9 +185,7 @@ By setting the ``point`` property of the mark definition to ``True`` or an objec
     source = data.stocks()
 
     alt.Chart(source).mark_line(point=True).encode(
-        x='year(date)',
-        y='mean(price):Q',
-        color='symbol:N'
+        x="year(date)", y="mean(price):Q", color="symbol:N"
     )
 
 This is equivalent to adding another layer of filled point marks.
@@ -195,11 +200,9 @@ Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(point= alt.OverlayMarkDef(filled = False, fill = 'white')).encode(
-        x='year(date)',
-        y='mean(price):Q',
-        color='symbol:N'
-    )
+    alt.Chart(source).mark_line(
+        point=alt.OverlayMarkDef(filled=False, fill="white")
+    ).encode(x="year(date)", y="mean(price):Q", color="symbol:N")
 
 Connected Scatter Plot (Line Chart with Custom Path)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -215,9 +218,9 @@ For example, to show a pattern of data change over time between gasoline price a
     source = data.driving()
 
     alt.Chart(source).mark_line(point=True).encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False)),
-        order='year'
+        alt.X("miles", scale=alt.Scale(zero=False)),
+        alt.Y("gas", scale=alt.Scale(zero=False)),
+        order="year",
     )
 
 Line interpolation
@@ -230,12 +233,9 @@ The ``interpolate`` property of a mark definition can be used to change line int
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(interpolate='monotone').encode(
-        x='date',
-        y='price'
-    ).transform_filter(
-        alt.datum.symbol == 'GOOG'
-    )
+    alt.Chart(source).mark_line(interpolate="monotone").encode(
+        x="date", y="price"
+    ).transform_filter(alt.datum.symbol == "GOOG")
 
 We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
 
@@ -245,12 +245,10 @@ We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(interpolate='step-after').encode(
-        x='date',
-        y='price'
-    ).transform_filter(
-        alt.datum.symbol == 'GOOG'
-    )
+    alt.Chart(source).mark_line(interpolate="step-after").encode(
+        x="date", y="price"
+    ).transform_filter(alt.datum.symbol == "GOOG")
+
 
 Geo Line
 ^^^^^^^^
@@ -271,27 +269,25 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
         airports, key="iata", fields=["state", "latitude", "longitude"]
     )
 
-    source = pd.DataFrame({
-        'airport' : ['SEA', 'SFO', 'LAX', 'LAS', 'DFW', 'DEN', 'ORD', 'JFK'],
-        'order' : [1, 2, 3, 4, 5, 6, 7, 8],
-    })
-
-    background = alt.Chart(states).mark_geoshape(
-        fill="lightgray",
-        stroke="white"
-    ).properties(
-        width=750,
-        height=500
-    ).project("albersUsa")
-
-    line = alt.Chart(source).mark_line().encode(
-        latitude="latitude:Q",
-        longitude="longitude:Q",
-        order = 'order'
-    ).transform_lookup(
-        lookup = 'airport',
-        from_ = lookup_data
+    source = pd.DataFrame(
+        {
+            "airport": ["SEA", "SFO", "LAX", "LAS", "DFW", "DEN", "ORD", "JFK"],
+            "order": [1, 2, 3, 4, 5, 6, 7, 8],
+        }
     )
 
+    background = (
+        alt.Chart(states)
+        .mark_geoshape(fill="lightgray", stroke="white")
+        .properties(width=750, height=500)
+        .project("albersUsa")
+    )
+
+    line = (
+        alt.Chart(source)
+        .mark_line()
+        .encode(latitude="latitude:Q", longitude="longitude:Q", order="order")
+        .transform_lookup(lookup="airport", from_=lookup_data)
+    )
     background + line
 

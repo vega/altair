@@ -24,10 +24,8 @@ Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot 
     import altair as alt
     from vega_datasets import data
 
-    source =  data.movies()
-    alt.Chart(source).mark_point().encode(
-        x = 'IMDB_Rating:Q'
-    )
+    source = data.movies()
+    alt.Chart(source).mark_point().encode(x="IMDB_Rating:Q")
 
 Scatter Plot
 ^^^^^^^^^^^^
@@ -37,12 +35,9 @@ Mapping fields to both the ``x`` and ``y`` channels creates a scatter plot.
     import altair as alt
     from vega_datasets import data
 
-    source =  data.cars()
+    source = data.cars()
 
-    alt.Chart(source).mark_point().encode(
-        x = 'Horsepower:Q',
-        y = 'Miles_per_Gallon:Q'
-    )
+    alt.Chart(source).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
 
 By default, ``point`` marks only have borders and are transparent inside. You can create a filled point by setting ``filled`` to ``True``.
 
@@ -50,11 +45,10 @@ By default, ``point`` marks only have borders and are transparent inside. You ca
     import altair as alt
     from vega_datasets import data
 
-    source =  data.cars()
+    source = data.cars()
 
-    alt.Chart(source).mark_point(filled = True).encode(
-        x = 'Horsepower:Q',
-        y = 'Miles_per_Gallon:Q'
+    alt.Chart(source).mark_point(filled=True).encode(
+        x="Horsepower:Q", y="Miles_per_Gallon:Q"
     )
 
 Bubble Plot
@@ -65,12 +59,10 @@ By mapping a third field to the ``size`` channel in the scatter plot, we can cre
     import altair as alt
     from vega_datasets import data
 
-    source =  data.cars()
+    source = data.cars()
 
     alt.Chart(source).mark_point().encode(
-        x = 'Horsepower:Q',
-        y = 'Miles_per_Gallon:Q',
-        size = 'Acceleration:Q'
+        x="Horsepower:Q", y="Miles_per_Gallon:Q", size="Acceleration:Q"
     )
 
 Scatter Plot with Color and/or Shape
@@ -100,17 +92,11 @@ To jitter points on a discrete scale, you can add a random offset:
     import altair as alt
     from vega_datasets import data
 
-    source =  data.cars()
+    source = data.cars()
 
     alt.Chart(source).mark_point().encode(
-        x = 'Horsepower:Q',
-        y = 'Cylinders:O',
-        yOffset = 'random:Q'
-    ).transform_calculate(
-        random = 'random()'
-    ).properties(
-        height = alt.Step(50)
-    )
+        x="Horsepower:Q", y="Cylinders:O", yOffset="random:Q"
+    ).transform_calculate(random="random()").properties(height=alt.Step(50))
 
 Wind Vector Example
 ^^^^^^^^^^^^^^^^^^^
@@ -142,25 +128,25 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
     from vega_datasets import data
 
     airports = data.airports()
-    states = alt.topo_feature(data.us_10m.url, feature='states')
+    states = alt.topo_feature(data.us_10m.url, feature="states")
 
     # US states background
-    background = alt.Chart(states).mark_geoshape(
-        fill='lightgray',
-        stroke='white'
-    ).properties(
-        width=500,
-        height=300
-    ).project('albersUsa')
+    background = (
+        alt.Chart(states)
+        .mark_geoshape(fill="lightgray", stroke="white")
+        .properties(width=500, height=300)
+        .project("albersUsa")
+    )
 
     # airport positions on background
-    points = alt.Chart(airports).mark_circle(
-        size=10,
-        color='steelblue'
-    ).encode(
-        longitude='longitude:Q',
-        latitude='latitude:Q',
-        tooltip=['name', 'city', 'state']
+    points = (
+        alt.Chart(airports)
+        .mark_circle(size=10, color="steelblue")
+        .encode(
+            longitude="longitude:Q",
+            latitude="latitude:Q",
+            tooltip=["name", "city", "state"],
+        )
     )
 
     background + points

@@ -31,10 +31,15 @@ All the properties and usage of error band are identical to error bar’s, excep
 
     source = data.cars.url
 
-    alt.Chart(source).mark_errorband(extent = 'ci', borders = True).encode(
-        x = 'year(Year)',
-        y = alt.Y('Miles_per_Gallon:Q', scale=alt.Scale(zero=False), title = 'Miles per Gallon (95% CIs)')
+    alt.Chart(source).mark_errorband(extent="ci", borders=True).encode(
+        x="year(Year)",
+        y=alt.Y(
+            "Miles_per_Gallon:Q",
+            scale=alt.Scale(zero=False),
+            title="Miles per Gallon (95% CIs)",
+        ),
     )
+
 
 **Error Bar**
 
@@ -44,9 +49,13 @@ All the properties and usage of error band are identical to error bar’s, excep
 
     source = data.cars.url
 
-    alt.Chart(source).mark_errorbar(extent = 'ci', ticks = True).encode(
-        x = 'year(Year)',
-        y = alt.Y('Miles_per_Gallon:Q', scale=alt.Scale(zero=False), title = 'Miles per Gallon (95% CIs)')
+    alt.Chart(source).mark_errorbar(extent="ci", ticks=True).encode(
+        x="year(Year)",
+        y=alt.Y(
+            "Miles_per_Gallon:Q",
+            scale=alt.Scale(zero=False),
+            title="Miles per Gallon (95% CIs)",
+        ),
     )
 
 Using Error Band to Aggregate Raw Data
@@ -64,23 +73,30 @@ If the data is already pre-aggregated with low and high values of the error band
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({
-        'ci1': [23.5007, 25.8214, 26.4472, 27.7074],
-        'ci0': [19.6912, 20.8554, 21.9749, 22.6203],
-        'center': [21.5735, 23.3750, 24.0611, 25.0931],
-        'Year': [189302400000, 220924800000, 252460800000, 283996800000]
-    })
-
-    band = alt.Chart(source).mark_errorband().encode(
-        alt.Y('ci1:Q', scale=alt.Scale(zero=False), title = 'Mean of Miles per Gallon (95% CIs)'),
-        alt.Y2('ci0:Q'),
-        alt.X('year(Year)')
+    source = pd.DataFrame(
+        {
+            "ci1": [23.5007, 25.8214, 26.4472, 27.7074],
+            "ci0": [19.6912, 20.8554, 21.9749, 22.6203],
+            "center": [21.5735, 23.3750, 24.0611, 25.0931],
+            "Year": [189302400000, 220924800000, 252460800000, 283996800000],
+        }
     )
 
-    line = alt.Chart(source).mark_line().encode(
-        alt.Y('center:Q'),
-        alt.X('year(Year)')
+    band = (
+        alt.Chart(source)
+        .mark_errorband()
+        .encode(
+            alt.Y(
+                "ci1:Q",
+                scale=alt.Scale(zero=False),
+                title="Mean of Miles per Gallon (95% CIs)",
+            ),
+            alt.Y2("ci0:Q"),
+            alt.X("year(Year)"),
+        )
     )
+
+    line = alt.Chart(source).mark_line().encode(alt.Y("center:Q"), alt.X("year(Year)"))
 
     band + line
 
@@ -100,16 +116,16 @@ A **1D error band** shows the error range of a continuous field; it can be used 
 
     source = data.cars.url
 
-    band = alt.Chart(source).mark_errorband(extent = 'stdev').encode(
-        alt.Y('Miles_per_Gallon:Q', title = "Miles per Gallon")
+    band = (
+        alt.Chart(source)
+        .mark_errorband(extent="stdev")
+        .encode(alt.Y("Miles_per_Gallon:Q", title="Miles per Gallon"))
     )
 
-    points = alt.Chart(source).mark_point().encode(
-        x = 'Horsepower:Q',
-        y = 'Miles_per_Gallon:Q'
-    )
+    points = alt.Chart(source).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
 
     band + points
+
 
 A **2D error** band shows the error range of a continuous field for each dimension value such as year.
 
@@ -119,14 +135,15 @@ A **2D error** band shows the error range of a continuous field for each dimensi
 
     source = data.cars()
 
-    line = alt.Chart(source).mark_line().encode(
-        x='Year',
-        y='mean(Miles_per_Gallon)'
-    )
+    line = alt.Chart(source).mark_line().encode(x="Year", y="mean(Miles_per_Gallon)")
 
-    band = alt.Chart(source).mark_errorband(extent='ci').encode(
-        x='Year',
-        y=alt.Y('Miles_per_Gallon', title='Miles/Gallon'),
+    band = (
+        alt.Chart(source)
+        .mark_errorband(extent="ci")
+        .encode(
+            x="Year",
+            y=alt.Y("Miles_per_Gallon", title="Miles/Gallon"),
+        )
     )
 
     band + line
@@ -144,9 +161,14 @@ Here is an example of a ``errorband`` with the ``color`` encoding channel set to
 
     source = data.cars.url
 
-    alt.Chart(source).mark_errorband(extent = 'ci', borders = True).encode(
-        x = 'year(Year)',
-        y = alt.Y('Miles_per_Gallon:Q', scale=alt.Scale(zero=False), title = 'Miles per Gallon (95% CIs)'),
-        color = alt.value('black')
+    alt.Chart(source).mark_errorband(extent="ci", borders=True).encode(
+        x="year(Year)",
+        y=alt.Y(
+            "Miles_per_Gallon:Q",
+            scale=alt.Scale(zero=False),
+            title="Miles per Gallon (95% CIs)",
+        ),
+        color=alt.value("black"),
     )
+
 
