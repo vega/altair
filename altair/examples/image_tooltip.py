@@ -1,5 +1,5 @@
 """
-Image tooltip
+Image Tooltip
 -------------
 This example shows how to render images in tooltips.
 Either URLs or local file paths can be used to reference

@@ -3,7 +3,7 @@ Empirical Cumulative Distribution Function
 ------------------------------------------
 This example shows an empirical cumulative distribution function.
 """
-# category: line charts
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

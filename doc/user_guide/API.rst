@@ -530,7 +530,6 @@ Low-Level Schema Wrappers
    TopLevelFacetSpec
    TopLevelHConcatSpec
    TopLevelLayerSpec
-   TopLevelParameter
    TopLevelRepeatSpec
    TopLevelSelectionParameter
    TopLevelSpec
