@@ -55,7 +55,7 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
         color='Origin:N'
     )
 
-We can create a variable parameter using :func:`alt.param`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
+We can create a variable parameter using :func:`param`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
 
 .. altair-plot::
     :output: none
@@ -81,7 +81,7 @@ In order to use this variable in the chart specification, we explicitly add it t
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.param` and ``add_params``.
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`param` and ``add_params``.
 
 .. altair-plot::
 
@@ -98,7 +98,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`alt.param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
+The benefit of using :func:`param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
 
 .. altair-plot::
 
@@ -122,7 +122,7 @@ Now we can dynamically change the opacity of the points in our chart using the s
 
 The above example includes some aspects which occur frequently when creating interactive charts in Altair:
 
-1. Creating a variable parameter using :func:`parameter`.
+1. Creating a variable parameter using :func:`param`.
 2. Attaching the parameter to a chart using the :meth:`Chart.add_params` method.
 3. Binding the parameter to an input widget (such as the slider above) using the parameter's ``bind`` property.
 
