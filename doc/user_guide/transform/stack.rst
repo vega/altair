@@ -2,8 +2,8 @@
 
 .. _user-guide-stack-transform:
 
-Stack Transform
-~~~~~~~~~~~~~~~
+Stack
+~~~~~
 The stack transform allows you to compute values associated with stacked versions
 of encodings. For example, consider this stacked bar chart:
 

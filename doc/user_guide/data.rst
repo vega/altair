@@ -1,7 +1,7 @@
 .. _user-guide-data:
 
-Specifying Data in Altair
--------------------------
+Specifying Data
+---------------
 
 .. currentmodule:: altair
 

@@ -2,8 +2,8 @@
 
 .. _user-guide-time:
 
-Times and Dates in Altair
-=========================
+Times and Dates
+===============
 Working with dates, times, and timezones is often one of the more challenging
 aspects of data analysis. In Altair, the difficulties are compounded by the
 fact that users are writing Python code, which outputs JSON-serialized

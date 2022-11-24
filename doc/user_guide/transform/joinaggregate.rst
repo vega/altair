@@ -2,8 +2,8 @@
 
 .. _user-guide-joinaggregate-transform:
 
-Join Aggregate Transform
-~~~~~~~~~~~~~~~~~~~~~~~~
+Join Aggregate
+~~~~~~~~~~~~~~
 The Join Aggregate transform acts in almost every way the same as an Aggregate
 transform, but the resulting aggregate is joined to the original dataset.
 To make this more clear, consider the following dataset:

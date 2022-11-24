@@ -2,8 +2,8 @@
 
 .. _user-guide-aggregate-transform:
 
-Aggregate Transforms
-~~~~~~~~~~~~~~~~~~~~
+Aggregate
+~~~~~~~~~
 There are two ways to aggregate data within Altair: within the encoding itself,
 or using a top level aggregate transform.
 
