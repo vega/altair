@@ -40,7 +40,8 @@ Encoding Channels
 Altair provides a number of encoding channels that can be useful in different
 circumstances; the following table summarizes them:
 
-Position Channels:
+Position Channels
+^^^^^^^^^^^^^^^^^
 
 ==========  ===================  =================================  ===================================
 Channel     Altair Class         Description                        Example
@@ -49,8 +50,8 @@ x           :class:`X`           The x-axis value                   :ref:`galler
 y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
 x2          :class:`X2`          Second x value for ranges          :ref:`gallery_gantt_chart`
 y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_candlestick_chart`
-longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
-latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
+longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_point_map`
+latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_point_map`
 longitude2  :class:`Longitude2`  Second longitude value for ranges  :ref:`gallery_airport_connections`
 latitude2   :class:`Latitude2`   Second latitude value for ranges   :ref:`gallery_airport_connections`
 xError      :class:`XError`      The x-axis error value             N/A
@@ -58,12 +59,13 @@ yError      :class:`YError`      The y-axis error value             N/A
 xError2     :class:`XError2`     The second x-axis error value      N/A
 yError2     :class:`YError2`     The second y-axis error value      N/A
 xOffset     :class:`XOffset`     Offset to the x position           :ref:`gallery_grouped_bar_chart2`
-yOffset     :class:`YOffset`     Offset to the y position           :ref:`gallery_jitter_chart`
+yOffset     :class:`YOffset`     Offset to the y position           :ref:`gallery_strip_plot_jitter`
 theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
 theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
 ==========  ===================  =================================  ===================================
 
-Mark Property Channels:
+Mark Property Channels
+^^^^^^^^^^^^^^^^^^^^^^
 
 =============  ======================  ==============================  =========================================
 Channel        Altair Class            Description                     Example
@@ -82,7 +84,8 @@ strokeOpacity  :class:`StrokeOpacity`  The opacity of the line         N/A
 strokeWidth    :class:`StrokeWidth`    The width of the line           N/A
 =============  ======================  ==============================  =========================================
 
-Text and Tooltip Channels:
+Text and Tooltip Channels
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
@@ -92,7 +95,8 @@ key      :class:`Key`      --                        N/A
 tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
 =======  ================  ========================  =========================================
 
-Hyperlink Channel:
+Hyperlink Channel
+^^^^^^^^^^^^^^^^^
 
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
@@ -100,7 +104,8 @@ Channel  Altair Class      Description               Example
 href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
 =======  ================  ========================  =========================================
 
-Level of Detail Channel:
+Level of Detail Channel
+^^^^^^^^^^^^^^^^^^^^^^^
 
 =======  ================  ===============================  =========================================
 Channel  Altair Class      Description                      Example
@@ -108,7 +113,8 @@ Channel  Altair Class      Description                      Example
 detail   :class:`Detail`   Additional property to group by  :ref:`gallery_ranged_dot_plot`
 =======  ================  ===============================  =========================================
 
-Order Channel:
+Order Channel
+^^^^^^^^^^^^^
 
 =======  ================  =============================  =====================================
 Channel  Altair Class      Description                    Example
@@ -116,7 +122,8 @@ Channel  Altair Class      Description                    Example
 order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connected_scatterplot`
 =======  ================  =============================  =====================================
 
-Facet Channels:
+Facet Channels
+^^^^^^^^^^^^^^
 
 =======  ================  ===============================================  =============================================
 Channel  Altair Class      Description                                      Example
@@ -254,64 +261,105 @@ titles, binning parameters, aggregation, sorting, and many more.
 The particular options that are available vary by encoding type; the various
 options are listed below.
 
+X and Y
+^^^^^^^
 
 The :class:`X` and :class:`Y` encodings accept the following options:
 
 .. altair-object-table:: altair.PositionFieldDef
 
+Color, Fill, and Stroke
+^^^^^^^^^^^^^^^^^^^^^^^
+
 The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
 
 .. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
 
+Shape
+^^^^^
+
 The :class:`Shape` encoding accepts the following options:
 
 .. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
+
+Order
+^^^^^
+
+The :class:`Order` encoding accepts the following options:
+
+.. altair-object-table:: altair.OrderFieldDef
+
+Angle, FillOpacity, Opacity, Size, StrokeOpacity, and StrokeWidth
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :class:`Angle`, :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
 and :class:`StrokeWidth` encodings accept the following options:
 
 .. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 
+StrokeDash
+^^^^^^^^^^
+
+The :class:`StrokeDash` encoding accepts the following options:
+
+.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
+
+Row and Column
+^^^^^^^^^^^^^^
+
 The :class:`Row` and :class:`Column`, and :class:`Facet` encodings accept the following options:
 
 .. altair-object-table:: altair.RowColumnEncodingFieldDef
+
+Facet
+^^^^^
 
 The :class:`Facet` encoding accepts the following options:
 
 .. altair-object-table:: altair.FacetEncodingFieldDef
 
+Text
+^^^^
+
 The :class:`Text` encoding accepts the following options:
 
 .. altair-object-table:: altair.FieldOrDatumDefWithConditionStringFieldDefText
+
+Description, Href, Tooltip, Url
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :class:`Description`, :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
 
 .. altair-object-table:: altair.StringFieldDefWithCondition
 
+Detail and Key
+^^^^^^^^^^^^^^
+
 The :class:`Detail` and :class:`Key` encodings accept the following options:
 
 .. altair-object-table:: altair.FieldDefWithoutScale
+
+Latitude and Longitude
+^^^^^^^^^^^^^^^^^^^^^^
 
 The :class:`Latitude` and :class:`Longitude` encodings accept the following options:
 
 .. altair-object-table:: altair.LatLongFieldDef
 
-The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`,
-:class:`XError2`, and :class:`YError2` encodings accept the following options:
-
-.. altair-object-table:: altair.SecondaryFieldDef
-
-The :class:`Order` encoding accepts the following options:
-
-.. altair-object-table:: altair.OrderFieldDef
+Radius and Theta
+^^^^^^^^^^^^^^^^
 
 The :class:`Radius` and :class:`Theta` encodings accept the following options:
 
 .. altair-object-table:: altair.PositionFieldDefBase
 
-The :class:`StrokeDash` encoding accepts the following options:
+Latitude2, Longitude2, Radius2, Theta2, X2, Y2, XError, YError, XError2, and YError2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
+The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`, :class:`XError2`, and :class:`YError2` encodings accept the following options:
+
+.. altair-object-table:: altair.SecondaryFieldDef
+
 
 .. _encoding-aggregates:
 
@@ -368,6 +416,9 @@ represents the mean of a third quantity, such as acceleration:
        color='average(Acceleration):Q'
    )
 
+Aggregation Functions
+^^^^^^^^^^^^^^^^^^^^^
+
 In addition to ``count`` and ``average``, there are a large number of available
 aggregation functions built into Altair; they are listed in the following table:
 
@@ -375,7 +426,7 @@ aggregation functions built into Altair; they are listed in the following table:
 Aggregate  Description                                                                  Example
 =========  ===========================================================================  =====================================
 argmin     An input data object containing the minimum field value.                     N/A
-argmax     An input data object containing the maximum field value.                     N/A
+argmax     An input data object containing the maximum field value.                     :ref:`gallery_line_chart_with_custom_legend`
 average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
 count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
 distinct   The count of distinct field values.                                          N/A

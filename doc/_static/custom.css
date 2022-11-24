@@ -24,3 +24,9 @@ table.docutils td li {
   line-height: 18px;
 
 }
+
+/* Use full page width without sidebars */
+/* .bd-content { */
+/*   max-width: 100%; */
+/*   flex-grow: 1; */
+/* } */

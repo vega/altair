@@ -133,7 +133,7 @@ to select the data to be shown in the top chart:
     from vega_datasets import data
     pop = data.population.url
 
-    selection = alt.selection_multi(fields=['year'])
+    selection = alt.selection_point(fields=['year'])
 
     top = alt.Chart().mark_line().encode(
         x='age:O',
@@ -151,7 +151,7 @@ to select the data to be shown in the top chart:
         color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
     ).properties(
         width=600, height=100
-    ).add_selection(
+    ).add_params(
         selection
     )
 

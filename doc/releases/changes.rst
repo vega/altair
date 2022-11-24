@@ -1,7 +1,7 @@
 .. _changes:
 
-Altair Change Log
-=================
+Release Notes
+=============
 
 Version 4.3.0 (unreleased)
 --------------------------
@@ -15,7 +15,7 @@ Enhancements
 Grammar Changes
 ~~~~~~~~~~~~~~~
 - ``selection_single`` and ``selection_multi`` are now deprecated; use ``selection_point`` instead.  Similarly, ``type=point`` should be used instead of ``type=single`` and ``type=multi``.
-- ``add_selection`` is deprecated; use ``add_parameter`` instead.
+- ``add_selection`` is deprecated; use ``add_params`` instead.
 - The ``selection`` keyword argument must in many cases be replaced by ``param`` (e.g., when specifying a filter transform).
 - The ``empty`` keyword argument for a selection parameter should be specified as ``True`` or ``False`` instead of ``all`` or ``none``, respectively.
 - The ``init`` keyword argument for a parameter is deprecated; use ``value`` instead.

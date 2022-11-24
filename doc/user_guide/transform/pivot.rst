@@ -49,7 +49,7 @@ values on multiple lines:
    source = data.stocks()
    base = alt.Chart(source).encode(x='date:T')
    columns = sorted(source.symbol.unique())
-   selection = alt.selection_single(
+   selection = alt.selection_point(
        fields=['date'], nearest=True, on='mouseover', empty='none', clear='mouseout'
    )
    
@@ -61,7 +61,7 @@ values on multiple lines:
    ).mark_rule().encode(
        opacity=alt.condition(selection, alt.value(0.3), alt.value(0)),
        tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
-   ).add_selection(selection)
+   ).add_params(selection)
    
    lines + points + rule
 
