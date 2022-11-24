@@ -564,7 +564,7 @@ For instance, using our example from above a dropdown can be used to highlight c
 
 
 
-The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data.
+The above example shows all three elements at work. The ``input_dropdown`` is ``bind`` to the ``selection`` which is called from the ``condition`` encoded through the data.
 
 The following are the input elements supported in vega-lite:
 
