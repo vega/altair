@@ -9,7 +9,7 @@ except ImportError:
     IPYTHON_AVAILABLE = False
     pass
 
-from altair.vegalite.v4 import VegaLite
+from altair.vegalite.v5 import VegaLite
 from altair.vega.v5 import Vega
 
 
@@ -113,7 +113,7 @@ VEGA_SPEC = {
 
 
 VEGALITE_SPEC = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {"values": DATA_RECORDS},
     "description": "A simple bar chart with embedded data.",
     "encoding": {
