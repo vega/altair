@@ -205,7 +205,7 @@ class AltairPlotDirective(Directive):
             result += [plot_node]
 
         if hide_code:
-            html = "<details><summary><a>Show code</a></summary>"
+            html = "<details><summary><a>Click to show code</a></summary>"
             raw_html = nodes.raw("", html, format="html")
             result += [raw_html]
 
