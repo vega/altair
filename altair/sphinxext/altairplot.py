@@ -150,7 +150,7 @@ class AltairPlotDirective(Directive):
         env = self.state.document.settings.env
         app = env.app
 
-        show_code = "hide-code" not in self.options
+        hide_code = "hide-code" in self.options
         code_below = "code-below" in self.options
         strict = "strict" in self.options
 
@@ -163,9 +163,9 @@ class AltairPlotDirective(Directive):
 
         code = "\n".join(self.content)
 
-        if show_code:
-            source_literal = nodes.literal_block(code, code)
-            source_literal["language"] = "python"
+        # Show code
+        source_literal = nodes.literal_block(code, code)
+        source_literal["language"] = "python"
 
         # get the name of the source file we are currently processing
         rst_source = self.state_machine.document["source"]
@@ -203,8 +203,19 @@ class AltairPlotDirective(Directive):
 
         if code_below:
             result += [plot_node]
-        if show_code:
-            result += [source_literal]
+
+        if hide_code:
+            html = "<details><summary><a>Click to show code</a></summary>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
+        result += [source_literal]
+
+        if hide_code:
+            html = "</details>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
         if not code_below:
             result += [plot_node]
 

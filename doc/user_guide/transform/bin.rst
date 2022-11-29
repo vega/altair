@@ -2,8 +2,8 @@
 
 .. _user-guide-bin-transform:
 
-Bin transforms
-~~~~~~~~~~~~~~
+Bin
+~~~
 As with :ref:`user-guide-aggregate-transform`, there are two ways to apply
 a bin transform in Altair: within the encoding itself, or using a top-level
 bin transform.

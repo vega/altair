@@ -64,7 +64,7 @@ Altair 4 this can be installed with:
     $ jupyter labextension install @jupyterlab/vega5-extension
 
 In JupyterLab version 2.0 or newer, this extension is installed by default, though the
-version available in the jupyterlab release often takes a few months to catch up with
+version available in the JupyterLab release often takes a few months to catch up with
 new Altair releases.
 
 
@@ -80,7 +80,7 @@ Optionally, for offline rendering in Jupyter Notebook, you can use the notebook 
     # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
     alt.renderers.enable('notebook')
     
-This renderer is provided by the `ipyvega`_ notebook extension. which can be
+This renderer is provided by the `ipyvega`_ notebook extension, which can be
 installed and enabled either using pip:
 
 .. code-block:: bash
@@ -106,7 +106,7 @@ Displaying in nteract
 ---------------------
 nteract_ cannot display HTML outputs natively, and so Altair's default ``html`` renderer
 will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
-To use Altair in nteract, ensure you are using a version that supports the vega-lite v4
+To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v5
 mimetype, and use::
 
     alt.renderers.enable('mimetype')
@@ -223,7 +223,7 @@ the ``"text/html"`` mimetype; schematically it looks like this::
 Propertly-configured Jupyter frontends know how to interpret and display charts using
 custom vega-specific mimetypes; for example:
 
-* Vega-Lite 4.x: ``application/vnd.vegalite.v4+json``
+* Vega-Lite 5.x: ``application/vnd.vegalite.v5+json``
 * Vega 5.x: ``application/vnd.vega.v5+json``
 
 Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
@@ -231,8 +231,8 @@ Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
     def default_renderer(spec):
         bundle = {}
         metadata = {}
-        bundle['text/plain'] = '<VegaLite 4 object>`
-        bundle['application/vnd.vegalite.v4+json'] = spec
+        bundle['text/plain'] = '<VegaLite 5 object>`
+        bundle['application/vnd.vegalite.v5+json'] = spec
         return bundle, metadata
 
 If a renderer needs to do custom display logic that doesn't use Jupyter's display

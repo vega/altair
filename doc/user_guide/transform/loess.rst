@@ -2,9 +2,9 @@
 
 .. _user-guide-loess-transform:
 
-LOESS Transform
-~~~~~~~~~~~~~~~
-The LOESS transform (LOcally Estimated Scatter Plot Smoothing) uses a
+LOESS
+~~~~~
+The LOESS transform (LOcally Estimated Scatterplot Smoothing) uses a
 locally-estimated regression  to produce a trend line.
 LOESS performs a sequence of local weighted regressions over a sliding
 window of nearest-neighbor points. For standard parametric regression options,
