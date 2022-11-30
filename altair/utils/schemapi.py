@@ -4,6 +4,7 @@ import collections
 import contextlib
 import inspect
 import json
+import textwrap
 from typing import Any
 
 import jsonschema
@@ -602,11 +603,30 @@ class _PropertySetter(object):
     def __get__(self, obj, cls):
         self.obj = obj
         self.cls = cls
-        altair_prop = getattr(vegalite, f"{self.prop}".capitalize())
-        self.__doc__ = altair_prop.__doc__
-        self.__signature__ = inspect.signature(altair_prop)
-        self.__wrapped__ = inspect.getfullargspec(altair_prop)
-        self.__name__ = altair_prop.__name__
+        # The docs from the encoding class parameter (e.g. `bin` in X, Color,
+        # etc); this provides a general description of the parameter.
+        self.__doc__ = self.schema['description'].replace('__', '**')
+        property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
+        if hasattr(vegalite, property_name):
+            altair_prop = getattr(vegalite, property_name)
+            # Add the docstring from the helper class (e.g. `BinParams`) so
+            # that all the parameter names of the helper class are included in
+            # the final docstring
+            attribute_index = altair_prop.__doc__.index("Attributes\n")
+            self.__doc__ = (
+                altair_prop.__doc__[:attribute_index].replace('    ', '')
+                + self.__doc__
+                + textwrap.dedent(f'\n\n    {altair_prop.__doc__[attribute_index:]}')
+            )
+            # Add signatures and tab completion for the method and parameter names
+            # Currently works for `alt.X.bin` but not alt.X().bin`
+            self.__signature__ = inspect.signature(altair_prop)
+            self.__wrapped__ = inspect.getfullargspec(altair_prop)
+            self.__name__ = altair_prop.__name__
+        else:
+            # It seems like bandPosition is the only parameter that doesn't
+            # have a helper class.
+            pass
         return self
 
     def __call__(self, *args, **kwargs):
