@@ -605,7 +605,7 @@ class _PropertySetter(object):
         self.cls = cls
         # The docs from the encoding class parameter (e.g. `bin` in X, Color,
         # etc); this provides a general description of the parameter.
-        self.__doc__ = self.schema['description'].replace('__', '**')
+        self.__doc__ = self.schema["description"].replace("__", "**")
         property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
         if hasattr(vegalite, property_name):
             altair_prop = getattr(vegalite, property_name)
@@ -615,15 +615,17 @@ class _PropertySetter(object):
             attribute_index = altair_prop.__doc__.find("Attributes\n")
             if attribute_index > -1:
                 self.__doc__ = (
-                    altair_prop.__doc__[:attribute_index].replace('    ', '')
+                    altair_prop.__doc__[:attribute_index].replace("    ", "")
                     + self.__doc__
-                    + textwrap.dedent(f'\n\n    {altair_prop.__doc__[attribute_index:]}')
+                    + textwrap.dedent(
+                        f'\n\n    {altair_prop.__doc__[attribute_index:]}'
+                    )
                 )
             # For short docsstrings such as Aggregate, Stack, et
             else:
                 self.__doc__ = (
-                    altair_prop.__doc__.replace('    ', '')
-                    + '\n' + self.__doc__
+                    altair_prop.__doc__.replace("    ", "")
+                    + "\n" + self.__doc__
                 )
             # Add signatures and tab completion for the method and parameter names
             # Currently works for `alt.X.bin` but not alt.X().bin`
