@@ -107,6 +107,8 @@ def _prepare_data(data, context=None):
 # ------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
+Impute = core.ImputeParams
+Title = core.TitleParams
 
 
 @utils.use_signature(core.LookupData)
