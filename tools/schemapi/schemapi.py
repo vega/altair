@@ -610,12 +610,19 @@ class _PropertySetter(object):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
-            attribute_index = altair_prop.__doc__.index("Attributes\n")
-            self.__doc__ = (
-                altair_prop.__doc__[:attribute_index].replace('    ', '')
-                + self.__doc__
-                + textwrap.dedent(f'\n\n    {altair_prop.__doc__[attribute_index:]}')
-            )
+            attribute_index = altair_prop.__doc__.find("Attributes\n")
+            if attribute_index > -1:
+                self.__doc__ = (
+                    altair_prop.__doc__[:attribute_index].replace('    ', '')
+                    + self.__doc__
+                    + textwrap.dedent(f'\n\n    {altair_prop.__doc__[attribute_index:]}')
+                )
+            # For short docsstrings such as Aggregate, Stack, et
+            else:
+                self.__doc__ = (
+                    altair_prop.__doc__.replace('    ', '')
+                    + '\n' + self.__doc__
+                )
             # Add signatures and tab completion for the method and parameter names
             # Currently works for `alt.X.bin` but not alt.X().bin`
             self.__signature__ = inspect.signature(altair_prop)
