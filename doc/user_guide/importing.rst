@@ -3,27 +3,24 @@
 Importing Vega & Vega-Lite Versions
 ===================================
 
-The main Altair API is based on version 2.X of `Vega-Lite`_. The core of the API,
-found in the ``altair.vegalite.v2.schema`` module, is programmatically generated
+The main Altair API is based on version 5.X of `Vega-Lite`_. The core of the API,
+found in the ``altair.vegalite.v5.schema`` module, is programmatically generated
 from the Vega-Lite schema.
 
-Altair additionally provides wrappers for several other schemas:
-
-- Vega-Lite 1.X in ``altair.vegalite.v1``
-- Vega 2.X in ``altair.vega.v2``
-- Vega 3.X in ``altair.vega.v3``
+Altair additionally provides wrappers for some of the previous `Vega-Lite`_ schemas
+and the current `Vega`_ schema (``altair.vega.v5``).
 
 So, for example, if you would like to create Altair plots targeting Vega-Lite
-version 1, you can use::
+version 3, you can use::
 
-    import altair.vegalite.v1 as alt
+    import altair.vegalite.v3 as alt
 
-and then proceed to use the Altair version 1 API.
+and then proceed to use the Altair version 3 API.
 
 .. note::
 
-  We strongly recommend all users transition to Vega-Lite 4.x and Vega 5.x.
-  These versions support many new features, are more stable, and Altair 4
+  We strongly recommend all users transition to Vega-Lite 5.x and Vega 5.x.
+  These versions support many new features, are more stable, and Altair 5
   works best with them.
 
 Because Altair has focused primarily on the vega-lite API, the vega wrappers are
