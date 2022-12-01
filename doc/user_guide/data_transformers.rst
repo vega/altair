@@ -1,6 +1,6 @@
 .. _data-transformers:
 
-Data transformers
+Data Transformers
 =================
 
 Before a Vega-Lite or Vega specification can be passed to a renderer, it typically
@@ -95,7 +95,7 @@ individual layer. This duplication of data is the reason that dataset
 consolidation is set to ``True`` by default.
 
 
-Built-in data transformers
+Built-in Data Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Altair includes a default set of data transformers with the following signatures.
@@ -129,7 +129,7 @@ Multiple data transformers can be piped together using ``pipe``::
     from toolz.curried import pipe
     pipe(data, limit_rows(10000), to_values)
 
-Managing data transformers
+Managing Data Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Altair maintains a registry of data transformers, which includes a default
@@ -174,7 +174,7 @@ be registered and enabled as::
     alt.data_transformers.enable('s3')
 
 
-Storing JSON data in a separate directory
+Storing JSON Data in a Separate Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When creating many charts with ``alt.data_transformers.enable('json')`` the
