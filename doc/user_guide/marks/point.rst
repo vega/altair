@@ -8,6 +8,59 @@ Point
 
 Point Mark Properties
 ---------------------
+.. altair-plot::
+    :hide-code:
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.cars()
+
+    shape_select = alt.binding_select(
+        options=[
+        "arrow",
+        "circle",
+        "square",
+        "cross",
+        "diamond",
+        "triangle",
+        "triangle-up",
+        "triangle-down",
+        "triangle-right",
+        "triangle-left",
+        "wedge",
+        "stroke",
+        "M-1,-1H1V1H-1Z",
+        "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z"
+        ],
+        name="shape",
+    )
+    shape_var = alt.param(bind=shape_select, value="circle")
+
+    angle_slider = alt.binding_range(min=-360, max=360, step=1, name="angle")
+    angle_var = alt.param(bind=angle_slider, value=0)
+
+    size_slider = alt.binding_range(min=0, max=500, step=10, name="size")
+    size_var = alt.param(bind=size_slider, value=50)
+
+    strokeWidth_slider = alt.binding_range(min=0, max=10, step=0.5, name="strokeWidth")
+    strokeWidth_var = alt.param(bind=strokeWidth_slider, value=2)
+
+    alt.Chart(source).mark_point(
+        shape=shape_var,
+        angle=angle_var,
+        size=size_var,
+        strokeWidth=strokeWidth_var,
+    ).encode(
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q"
+    ).add_params(
+        shape_var,
+        angle_var,
+        size_var,
+        strokeWidth_var
+    )
+
 A ``point`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following special properties:
 

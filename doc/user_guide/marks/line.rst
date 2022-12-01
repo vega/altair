@@ -10,11 +10,77 @@ Note: For line segments that connect (x,y) positions to (x2,y2) positions, pleas
 
 Line Mark Properties
 --------------------
+.. altair-plot::
+    :hide-code:
+
+    import altair as alt
+    import pandas as pd
+
+    interpolate_select = alt.binding_select(
+        options=[
+        "basis",
+        "cardinal",
+        "catmull-rom",
+        "linear",
+        "monotone",
+        "natural",
+        "step",
+        "step-after",
+        "step-before"
+        ],
+        name="interpolate",
+    )
+    interpolate_var = alt.param(bind=interpolate_select, value="linear")
+
+    tension_slider = alt.binding_range(min=0, max=1, step=0.05, name="tension")
+    tension_var = alt.param(bind=tension_slider, value=0)
+
+    strokeWidth_slider = alt.binding_range(min=0, max=10, step=0.5, name="strokeWidth")
+    strokeWidth_var = alt.param(bind=strokeWidth_slider, value=2)
+
+    strokeCap_select = alt.binding_select(
+        options=["butt", "round", "square"],
+        name="strokeCap",
+    )
+    strokeCap_var = alt.param(bind=strokeCap_select, value="butt")
+
+    strokeDash_select = alt.binding_select(
+        options=[
+            [1, 0],
+            [8, 8],
+            [8, 4],
+            [4, 4],
+            [4, 2],
+            [2, 1],
+            [1, 1]
+        ],
+        name="strokeDash",
+    )
+    strokeDash_var = alt.param(bind=strokeDash_select, value=[1,0])
+
+    source = pd.DataFrame({"u": [1, 2, 3, 4, 5, 6], "v": [28, 55, 42, 34, 36, 38]})
+
+    alt.Chart(source).mark_line(
+        interpolate=interpolate_var,
+        tension=tension_var,
+        strokeWidth=strokeWidth_var,
+        strokeCap=strokeCap_var,
+        strokeDash=strokeDash_var
+    ).encode(
+        x="u", y="v"
+    ).add_params(
+        interpolate_var,
+        tension_var,
+        strokeWidth_var,
+        strokeCap_var,
+        strokeDash_var
+    )
+
 A ``line`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following line interpolation and point overlay properties:
 
 .. altair-object-table:: altair.MarkDef
-   :properties: orient interpolate tension point
+:properties: orient interpolate tension point
 
 Examples
 --------
