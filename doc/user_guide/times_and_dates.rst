@@ -220,5 +220,5 @@ it is ES6-compliant or because your computer locale happens to be set to
 the UTC+0 (GMT) timezone.
 
 .. _Coordinated Universal Time (UTC): https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-.. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/timeseries.html
+.. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
 .. _ECMAScript 6: http://www.ecma-international.org/ecma-262/6.0/
