@@ -106,11 +106,36 @@ href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
 Level of Detail Channel
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+Grouping data is an important operation in data visualization. For line and area marks,
+mapping an unaggregated data field to any
+non-position channel will group the lines and stacked areas by that field.
+For aggregated plots, all unaggregated fields encoded are used as grouping fields
+in the aggregation (similar to fields in ``GROUP BY`` in SQL).
+
+The ``detail`` channel specifies an additional grouping field (or fields) for grouping
+data without mapping the field(s) to any visual properties.
+
 =======  ================  ===============================  =========================================
 Channel  Altair Class      Description                      Example
 =======  ================  ===============================  =========================================
 detail   :class:`Detail`   Additional property to group by  :ref:`gallery_ranged_dot_plot`
 =======  ================  ===============================  =========================================
+
+For example here is a line chart showing stock prices of 5 tech companies over time.
+We map the ``symbol`` variable to ``detail`` to use them to group lines.
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    alt.Chart(source).mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        detail="symbol:N"
+    )
+
 
 Order Channel
 ^^^^^^^^^^^^^
