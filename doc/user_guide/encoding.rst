@@ -38,7 +38,7 @@ Encoding Channels
 ~~~~~~~~~~~~~~~~~
 
 Altair provides a number of encoding channels that can be useful in different
-circumstances; the following table summarizes them:
+circumstances. The following tables summarize them:
 
 Position Channels
 ^^^^^^^^^^^^^^^^^
@@ -701,3 +701,84 @@ While the above examples show sorting of axes by specifying ``sort`` in the
 
 Here the y-axis is sorted reverse-alphabetically, while the color legend is
 sorted in the specified order, beginning with ``'Morris'``.
+
+Datum and Value
+~~~~~~~~~~~~~~~
+
+So far we always mapped an encoding channel to a column in our dataset. However, sometimes
+it is also useful to map to a single constant value. In Altair, you can do this with
+
+* ``datum``, which describes a constant data value encoded via a scale
+* ``value``, which describes an encoded constant visual value
+
+``datum`` is particularly useful for annotating a specific data value. 
+For example, you can use it with a rule mark to highlight a 
+threshold value (e.g., 200 dollars stock price).
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.datum(300)
+    )
+
+    lines + rule
+
+You can also use ``datum`` with :class:`DateTime`, for example, to highlight a certain year.
+In addition, we will set the color for the rule to the same one as the line for the symbol ``MSFT``
+with ``alt.datum("MSFT")``.
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.datum("MSFT")
+    )
+
+    lines + rule
+
+
+Similar to when mapping to a data column, when using ``datum`` different encoding channels 
+may support ``band``, ``scale``, ``axis``, ``legend``, ``format``, or ``condition`` properties.
+However, data transforms (e.g. ``aggregate``, ``bin``, ``timeUnit``, ``sort``) cannot be applied.
+
+Expanding on the example above, if you would want to color the ``rule`` mark regardless of 
+the color scale used for the lines, you can use ``value``, e.g. ``alt.value("red")``:
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.value("red")
+    )
+
+    lines + rule
