@@ -25,12 +25,12 @@ table.docutils td li {
 
 }
 
-.vega-bind-name {
+.properties-example .vega-bind-name {
   display: inline-block;
   min-width: 150px;
 }
 
-.vega-bindings {
+.properties-example .vega-bindings {
   padding-left: 20px;
   padding-bottom: 10px;
 }

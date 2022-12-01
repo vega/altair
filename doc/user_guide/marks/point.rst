@@ -10,6 +10,7 @@ Point Mark Properties
 ---------------------
 .. altair-plot::
     :hide-code:
+    :div_class: properties-example
 
     import altair as alt
     from vega_datasets import data

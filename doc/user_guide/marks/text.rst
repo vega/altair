@@ -10,6 +10,7 @@ Text Mark Properties
 --------------------
 .. altair-plot::
     :hide-code:
+    :div_class: properties-example
 
     import altair as alt
     import pandas as pd
