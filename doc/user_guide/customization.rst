@@ -461,7 +461,7 @@ you can set ``scale=None`` to use those colors directly:
       color=alt.Color('color', scale=None)
   )
 
-Adjusting the width of Bar Marks
+Adjusting the Width of Bar Marks
 --------------------------------
 The width of the bars in a bar plot are controlled through the ``size`` property in the :meth:`~Chart.mark_bar()`:
 
