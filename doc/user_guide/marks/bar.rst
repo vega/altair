@@ -9,6 +9,26 @@ Bar marks are useful in many visualizations, including bar charts, stacked bar c
 
 Bar Mark Properties
 -------------------
+.. altair-plot::
+    :hide-code:
+
+    import altair as alt
+
+    corner_slider = alt.binding_range(min=0, max=50, step=1)
+    corner_var = alt.param(bind=corner_slider, value=0, name="cornerRadius")
+
+    source = pd.DataFrame(
+        {
+            "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+            "b": [28, 55, 43, 91, 81, 53, 19, 87, 52],
+        }
+    )
+
+    alt.Chart(source).mark_bar(cornerRadius=corner_var).encode(
+        x=alt.X("a:N", axis=alt.Axis(labelAngle=0)), y="b:Q"
+    ).add_params(corner_var)
+
+
 A ``bar`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following special properties:
 

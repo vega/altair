@@ -9,6 +9,39 @@ Area marks are often used to show change over time, using either a single area o
 
 Area Mark Properties
 --------------------
+.. altair-plot::
+    :hide-code:
+
+    import altair as alt
+    import pandas as pd
+
+    interpolate_select = alt.binding_select(
+        options=[
+            "basis",
+            "cardinal",
+            "catmull-rom",
+            "linear",
+            "monotone",
+            "natural",
+            "step",
+            "step-after",
+            "step-before",
+        ],
+        name="interpolate",
+    )
+    interpolate_var = alt.param(bind=interpolate_select, value="linear")
+
+    tension_slider = alt.binding_range(min=0, max=1, step=0.05, name="tension")
+    tension_var = alt.param(bind=tension_slider, value=0)
+
+
+    source = pd.DataFrame({"u": [1, 2, 3, 4, 5, 6], "v": [28, 55, 42, 34, 36, 38]})
+
+    alt.Chart(source).mark_area(interpolate=interpolate_var, tension=tension_var).encode(
+        x="u", y="v"
+    ).add_params(interpolate_var, tension_var)
+
+
 An ``area`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following line interpolation as well as line and point overlay properties:
 

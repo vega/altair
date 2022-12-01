@@ -8,6 +8,104 @@ Text
 
 Text Mark Properties
 --------------------
+.. altair-plot::
+    :hide-code:
+
+    import numpy as np
+    import pandas as pd
+    import altair as alt
+
+    angle_slider = alt.binding_range(min=-180, max=180, step=1)
+    angle_var = alt.param(bind=angle_slider, value=0, name="angle")
+
+    dx_slider = alt.binding_range(min=-20, max=20, step=1)
+    dx_var = alt.param(bind=dx_slider, value=5, name="dx")
+
+    dy_slider = alt.binding_range(min=-20, max=20, step=1)
+    dy_var = alt.param(bind=dy_slider, value=0, name="dy")
+
+    xOffset_slider = alt.binding_range(min=-20, max=20, step=1)
+    xOffset_var = alt.param(bind=xOffset_slider, value=0, name="xOffset")
+
+    yOffset_slider = alt.binding_range(min=-20, max=20, step=1)
+    yOffset_var = alt.param(bind=yOffset_slider, value=0, name="yOffset")
+
+    fontSize_slider = alt.binding_range(min=1, max=36, step=1)
+    fontSize_var = alt.param(bind=fontSize_slider, value=14, name="fontSize")
+
+    limit_slider = alt.binding_range(min=0, max=150, step=1)
+    limit_var = alt.param(bind=limit_slider, value=0, name="limit")
+
+    align_select = alt.binding_select(options=["left", "center", "right"])
+    align_var = alt.param(bind=align_select, value="left", name="align")
+
+    baseline_select = alt.binding_select(
+        options=["alphabetic", "top", "middle", "bottom"]
+    )
+    baseline_var = alt.param(bind=baseline_select, value="midle", name="baseline")
+
+    font_select = alt.binding_select(options=["sans-serif", "serif", "monospace"])
+    font_var = alt.param(bind=font_select, value="sans-serif", name="font")
+
+    fontWeight_select = alt.binding_select(options=["normal", "bold"])
+    fontWeight_var = alt.param(
+        bind=fontWeight_select, value="normal", name="fontWeight"
+    )
+
+    fontStyle_select = alt.binding_select(options=["normal", "italic"])
+    fontStyle_var = alt.param(
+        bind=fontStyle_select, value="normal", name="fontStyle"
+    )
+
+    source = pd.DataFrame(
+        {
+            "a": [30, 25, 70],
+            "b": [28, 65, 43],
+            "label": ["Andy", "Brian", "Charlie"],
+        }
+    )
+
+
+    base = alt.Chart(source).encode(
+        x=alt.X(
+            "a:Q", axis=alt.Axis(labelAngle=0), scale=alt.Scale(domain=[0, 100])
+        ),
+        y=alt.Y("b:Q", scale=alt.Scale(domain=[0, 100])),
+    )
+
+    pts = base.mark_point()
+
+    text = base.mark_text(
+        dx=dx_var,
+        dy=dy_var,
+        xOffset=xOffset_var,
+        yOffset=yOffset_var,
+        angle=angle_var,
+        align=align_var,
+        baseline=baseline_var,
+        font=font_var,
+        fontSize=fontSize_var,
+        fontStyle=fontStyle_var,
+        fontWeight=fontWeight_var,
+        limit=limit_var,
+    ).encode(text="label:N")
+
+    (pts + text).add_params(
+        dx_var,
+        dy_var,
+        xOffset_var,
+        yOffset_var,
+        angle_var,
+        align_var,
+        baseline_var,
+        font_var,
+        fontSize_var,
+        fontStyle_var,
+        fontWeight_var,
+        limit_var,
+    )
+
+
 A ``text`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
 and the following special properties:
 
