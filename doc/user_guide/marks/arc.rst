@@ -13,9 +13,9 @@ Arc Mark Properties
 .. altair-plot::
     :hide-code:
 
+    import altair as alt
     import numpy as np
     import pandas as pd
-    import altair as alt
 
     rad_slider = alt.binding_range(min=0, max=100, step=1)
     rad_var = alt.param(bind=rad_slider, value=0, name="radius")
@@ -23,16 +23,16 @@ Arc Mark Properties
     rad2_slider = alt.binding_range(min=0, max=100, step=1)
     rad_var2 = alt.param(bind=rad_slider, value=50, name="radius2")
 
-    theta_slider = alt.binding_range(min=-2*np.pi, max=2*np.pi)
+    theta_slider = alt.binding_range(min=-2 * np.pi, max=2 * np.pi)
     theta_var = alt.param(bind=theta_slider, value=-0.73, name="theta_single_arc")
 
-    theta_slider2 = alt.binding_range(min=-2*np.pi, max=2*np.pi)
+    theta_slider2 = alt.binding_range(min=-2 * np.pi, max=2 * np.pi)
     theta2_var = alt.param(bind=theta_slider, value=0.73, name="theta2_single_arc")
 
-    corner_slider = alt.binding_range(min=0, max=50, step = 1)
+    corner_slider = alt.binding_range(min=0, max=50, step=1)
     corner_var = alt.param(bind=corner_slider, value=0, name="cornerRadius")
 
-    pad_slider = alt.binding_range(min=0, max=np.pi/2)
+    pad_slider = alt.binding_range(min=0, max=np.pi / 2)
     pad_var = alt.param(bind=pad_slider, value=0, name="padAngle")
 
     source = pd.DataFrame({"category": [1, 2, 3, 4, 5, 6], "value": [4, 6, 10, 3, 7, 8]})
@@ -40,23 +40,27 @@ Arc Mark Properties
     c1 = alt.Chart(source, title="Single Arc").mark_arc(
         radius=rad_var,
         radius2=rad_var2,
-        theta = theta_var,
-        theta2 = theta2_var,
-        cornerRadius = corner_var,
-        padAngle = pad_var,
+        theta=theta_var,
+        theta2=theta2_var,
+        cornerRadius=corner_var,
+        padAngle=pad_var,
     )
 
-    c2 = alt.Chart(source, title="Stacked Arcs").mark_arc(
-        radius=rad_var,
-        radius2=rad_var2,
-        cornerRadius = corner_var,
-        padAngle = pad_var,
-    ).encode(
-        theta=alt.Theta(field="value", type="quantitative"),
-        color=alt.Color(field="category", type="nominal"),
+    c2 = (
+        alt.Chart(source, title="Stacked Arcs")
+        .mark_arc(
+            radius=rad_var,
+            radius2=rad_var2,
+            cornerRadius=corner_var,
+            padAngle=pad_var,
+        )
+        .encode(
+            theta=alt.Theta(field="value", type="quantitative"),
+            color=alt.Color(field="category", type="nominal"),
+        )
     )
 
-    alt.hconcat(c1,c2).add_params(
+    alt.hconcat(c1.properties(width=200), c2.properties(width=200)).add_params(
         rad_var, rad_var2, theta_var, theta2_var, corner_var, pad_var
     )
 

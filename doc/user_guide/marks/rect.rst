@@ -29,21 +29,12 @@ Rect Mark Properties
     cornerRadius_slider = alt.binding_range(min=0, max=50, step=1)
     cornerRadius_var = alt.param(bind=cornerRadius_slider, value=0, name="cornerRadius")
 
-    c = alt.Chart().mark_rect(
-        cornerRadius=cornerRadius_var,
-        color="orange"
-    ).encode(
-        x=alt.XDatum(x_var, type="quantitative", scale=alt.Scale(domain=[0,100])),
+    alt.Chart().mark_rect(cornerRadius=cornerRadius_var, color="orange").encode(
+        x=alt.XDatum(x_var, type="quantitative", scale=alt.Scale(domain=[0, 100])),
         x2=alt.X2Datum(x2_var),
-        y=alt.XDatum(y_var, type="quantitative", scale=alt.Scale(domain=[0,100])),
+        y=alt.XDatum(y_var, type="quantitative", scale=alt.Scale(domain=[0, 100])),
         y2=alt.X2Datum(y2_var),
-    ).add_params(
-        x_var,
-        x2_var,
-        y_var,
-        y2_var,
-        cornerRadius_var
-    )
+    ).add_params(x_var, x2_var, y_var, y2_var, cornerRadius_var)
 
 
 A ``rect`` mark definition can contain any :ref:`standard mark properties <mark-properties>`

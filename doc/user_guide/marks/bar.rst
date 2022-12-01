@@ -13,6 +13,7 @@ Bar Mark Properties
     :hide-code:
 
     import altair as alt
+    import pandas as pd
 
     corner_slider = alt.binding_range(min=0, max=50, step=1)
     corner_var = alt.param(bind=corner_slider, value=0, name="cornerRadius")
@@ -27,6 +28,7 @@ Bar Mark Properties
     alt.Chart(source).mark_bar(cornerRadius=corner_var).encode(
         x=alt.X("a:N", axis=alt.Axis(labelAngle=0)), y="b:Q"
     ).add_params(corner_var)
+
 
 
 A ``bar`` mark definition can contain any :ref:`standard mark properties <mark-properties>`

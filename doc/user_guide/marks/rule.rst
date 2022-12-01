@@ -27,21 +27,15 @@ Rule Mark Properties
     y2_var = alt.param(bind=y2_slider, value=75, name="y2")
 
     strokeWidth_slider = alt.binding_range(min=0, max=10, step=0.5)
-    strokeWidth_var = alt.param(
-        bind=strokeWidth_slider, value=2, name="strokeWidth"
-    )
+    strokeWidth_var = alt.param(bind=strokeWidth_slider, value=2, name="strokeWidth")
 
     strokeCap_select = alt.binding_select(options=["butt", "round", "square"])
-    strokeCap_var = alt.param(
-        bind=strokeCap_select, value="butt", name="strokeCap"
-    )
+    strokeCap_var = alt.param(bind=strokeCap_select, value="butt", name="strokeCap")
 
     strokeDash_select = alt.binding_select(
         options=[[1, 0], [8, 8], [8, 4], [4, 4], [4, 2], [2, 1], [1, 1]]
     )
-    strokeDash_var = alt.param(
-        bind=strokeDash_select, value=[1, 0], name="strokeDash"
-    )
+    strokeDash_var = alt.param(bind=strokeDash_select, value=[1, 0], name="strokeDash")
 
     alt.Chart().mark_rule(
         color="orange",

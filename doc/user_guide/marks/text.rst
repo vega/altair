@@ -11,9 +11,8 @@ Text Mark Properties
 .. altair-plot::
     :hide-code:
 
-    import numpy as np
-    import pandas as pd
     import altair as alt
+    import pandas as pd
 
     angle_slider = alt.binding_range(min=-180, max=180, step=1)
     angle_var = alt.param(bind=angle_slider, value=0, name="angle")
@@ -39,23 +38,17 @@ Text Mark Properties
     align_select = alt.binding_select(options=["left", "center", "right"])
     align_var = alt.param(bind=align_select, value="left", name="align")
 
-    baseline_select = alt.binding_select(
-        options=["alphabetic", "top", "middle", "bottom"]
-    )
+    baseline_select = alt.binding_select(options=["alphabetic", "top", "middle", "bottom"])
     baseline_var = alt.param(bind=baseline_select, value="midle", name="baseline")
 
     font_select = alt.binding_select(options=["sans-serif", "serif", "monospace"])
     font_var = alt.param(bind=font_select, value="sans-serif", name="font")
 
     fontWeight_select = alt.binding_select(options=["normal", "bold"])
-    fontWeight_var = alt.param(
-        bind=fontWeight_select, value="normal", name="fontWeight"
-    )
+    fontWeight_var = alt.param(bind=fontWeight_select, value="normal", name="fontWeight")
 
     fontStyle_select = alt.binding_select(options=["normal", "italic"])
-    fontStyle_var = alt.param(
-        bind=fontStyle_select, value="normal", name="fontStyle"
-    )
+    fontStyle_var = alt.param(bind=fontStyle_select, value="normal", name="fontStyle")
 
     source = pd.DataFrame(
         {
@@ -65,11 +58,8 @@ Text Mark Properties
         }
     )
 
-
     base = alt.Chart(source).encode(
-        x=alt.X(
-            "a:Q", axis=alt.Axis(labelAngle=0), scale=alt.Scale(domain=[0, 100])
-        ),
+        x=alt.X("a:Q", axis=alt.Axis(labelAngle=0), scale=alt.Scale(domain=[0, 100])),
         y=alt.Y("b:Q", scale=alt.Scale(domain=[0, 100])),
     )
 

@@ -18,20 +18,20 @@ Point Mark Properties
 
     shape_select = alt.binding_select(
         options=[
-        "arrow",
-        "circle",
-        "square",
-        "cross",
-        "diamond",
-        "triangle",
-        "triangle-up",
-        "triangle-down",
-        "triangle-right",
-        "triangle-left",
-        "wedge",
-        "stroke",
-        "M-1,-1H1V1H-1Z",
-        "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z"
+            "arrow",
+            "circle",
+            "square",
+            "cross",
+            "diamond",
+            "triangle",
+            "triangle-up",
+            "triangle-down",
+            "triangle-right",
+            "triangle-left",
+            "wedge",
+            "stroke",
+            "M-1,-1H1V1H-1Z",
+            "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z",
         ],
         name="shape",
     )
@@ -51,14 +51,8 @@ Point Mark Properties
         angle=angle_var,
         size=size_var,
         strokeWidth=strokeWidth_var,
-    ).encode(
-        x="Horsepower:Q",
-        y="Miles_per_Gallon:Q"
-    ).add_params(
-        shape_var,
-        angle_var,
-        size_var,
-        strokeWidth_var
+    ).encode(x="Horsepower:Q", y="Miles_per_Gallon:Q").add_params(
+        shape_var, angle_var, size_var, strokeWidth_var
     )
 
 A ``point`` mark definition can contain any :ref:`standard mark properties <mark-properties>`

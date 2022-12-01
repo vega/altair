@@ -18,15 +18,15 @@ Line Mark Properties
 
     interpolate_select = alt.binding_select(
         options=[
-        "basis",
-        "cardinal",
-        "catmull-rom",
-        "linear",
-        "monotone",
-        "natural",
-        "step",
-        "step-after",
-        "step-before"
+            "basis",
+            "cardinal",
+            "catmull-rom",
+            "linear",
+            "monotone",
+            "natural",
+            "step",
+            "step-after",
+            "step-before",
         ],
         name="interpolate",
     )
@@ -45,18 +45,10 @@ Line Mark Properties
     strokeCap_var = alt.param(bind=strokeCap_select, value="butt")
 
     strokeDash_select = alt.binding_select(
-        options=[
-            [1, 0],
-            [8, 8],
-            [8, 4],
-            [4, 4],
-            [4, 2],
-            [2, 1],
-            [1, 1]
-        ],
+        options=[[1, 0], [8, 8], [8, 4], [4, 4], [4, 2], [2, 1], [1, 1]],
         name="strokeDash",
     )
-    strokeDash_var = alt.param(bind=strokeDash_select, value=[1,0])
+    strokeDash_var = alt.param(bind=strokeDash_select, value=[1, 0])
 
     source = pd.DataFrame({"u": [1, 2, 3, 4, 5, 6], "v": [28, 55, 42, 34, 36, 38]})
 
@@ -65,15 +57,9 @@ Line Mark Properties
         tension=tension_var,
         strokeWidth=strokeWidth_var,
         strokeCap=strokeCap_var,
-        strokeDash=strokeDash_var
-    ).encode(
-        x="u", y="v"
-    ).add_params(
-        interpolate_var,
-        tension_var,
-        strokeWidth_var,
-        strokeCap_var,
-        strokeDash_var
+        strokeDash=strokeDash_var,
+    ).encode(x="u", y="v").add_params(
+        interpolate_var, tension_var, strokeWidth_var, strokeCap_var, strokeDash_var
     )
 
 A ``line`` mark definition can contain any :ref:`standard mark properties <mark-properties>`

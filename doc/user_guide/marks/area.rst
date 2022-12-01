@@ -34,7 +34,6 @@ Area Mark Properties
     tension_slider = alt.binding_range(min=0, max=1, step=0.05, name="tension")
     tension_var = alt.param(bind=tension_slider, value=0)
 
-
     source = pd.DataFrame({"u": [1, 2, 3, 4, 5, 6], "v": [28, 55, 42, 34, 36, 38]})
 
     alt.Chart(source).mark_area(interpolate=interpolate_var, tension=tension_var).encode(
