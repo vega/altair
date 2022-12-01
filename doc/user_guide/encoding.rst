@@ -91,7 +91,6 @@ Text and Tooltip Channels
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
 text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_labels`
-key      :class:`Key`      --                        N/A
 tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
 =======  ================  ========================  =========================================
 
