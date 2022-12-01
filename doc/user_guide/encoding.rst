@@ -349,17 +349,17 @@ The :class:`Text` encoding accepts the following options:
 
 .. altair-object-table:: altair.FieldOrDatumDefWithConditionStringFieldDefText
 
-Description, Href, Tooltip, Url
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Href, Tooltip, Url
+^^^^^^^^^^^^^^^^^^
 
-The :class:`Description`, :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
+The :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
 
 .. altair-object-table:: altair.StringFieldDefWithCondition
 
-Detail and Key
-^^^^^^^^^^^^^^
+Detail
+^^^^^^
 
-The :class:`Detail` and :class:`Key` encodings accept the following options:
+The :class:`Detail` encoding accepts the following options:
 
 .. altair-object-table:: altair.FieldDefWithoutScale
 
