@@ -38,6 +38,11 @@ table.docutils td li {
 .properties-example .vega-bindings select {
   max-width: 180px;
 }
+
+.properties-example .vega-bindings input {
+  vertical-align: text-bottom;
+  margin-right: 3px;
+}
   
 .full-width-plot {
   width: 100%;
