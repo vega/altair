@@ -35,6 +35,10 @@ table.docutils td li {
   padding-bottom: 10px;
 }
 
+.full-width-plot {
+  width: 100%;
+}
+
 /* Use full page width without sidebars */
 /* .bd-content { */
 /*   max-width: 100%; */
