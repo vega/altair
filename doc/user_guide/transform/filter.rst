@@ -2,8 +2,8 @@
 
 .. _user-guide-filter-transform:
 
-Filter Transform
-~~~~~~~~~~~~~~~~
+Filter
+~~~~~~
 The filter transform removes objects from a data stream based on a provided
 filter expression, selection, or other filter predicate. A filter can be
 added at the top level of a chart using the :meth:`Chart.transform_filter`

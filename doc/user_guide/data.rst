@@ -1,7 +1,7 @@
 .. _user-guide-data:
 
-Specifying Data in Altair
--------------------------
+Specifying Data
+---------------
 
 .. currentmodule:: altair
 
@@ -408,7 +408,7 @@ without applying a projection.
 
 .. _data-winding-order:
 
-Winding order
+Winding Order
 ~~~~~~~~~~~~~
 LineString, Polygon and MultiPolygon geometries contain coordinates in an order: lines
 go in a certain direction, and polygon rings do too. The GeoJSON-like structure of the

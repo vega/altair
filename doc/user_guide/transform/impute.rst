@@ -2,8 +2,8 @@
 
 .. _user-guide-impute-transform:
 
-Impute Transform
-~~~~~~~~~~~~~~~~
+Impute
+~~~~~~
 The impute transform allows you to fill-in missing entries in a dataset.
 As an example, consider the following data, which includes missing values
 that we filter-out of the long-form representation (see :ref:`data-long-vs-wide`

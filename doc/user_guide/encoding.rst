@@ -475,7 +475,7 @@ Shorthand            Equivalent long-form
 
 .. _ordering-channels:
 
-Ordering marks
+Ordering Marks
 ~~~~~~~~~~~~~~
 
 The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.

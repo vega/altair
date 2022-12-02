@@ -2,8 +2,8 @@
 
 .. _user-guide-calculate-transform:
 
-Calculate Transform
-~~~~~~~~~~~~~~~~~~~
+Calculate
+~~~~~~~~~
 The calculate transform allows the user to define new fields in the dataset
 which are calculated from other fields using an expression syntax.
 
