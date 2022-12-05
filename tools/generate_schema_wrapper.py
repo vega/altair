@@ -5,7 +5,7 @@ import os
 import sys
 import json
 import re
-from os.path import abspath, join, dirname
+from os.path import abspath, join, dirname, pardir
 
 import textwrap
 from urllib import request

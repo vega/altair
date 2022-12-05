@@ -90,6 +90,7 @@ class DatumChannelMixin(object):
                                                       ignore=ignore,
                                                       context=context)
 
+
 @with_property_setters
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Angle schema wrapper

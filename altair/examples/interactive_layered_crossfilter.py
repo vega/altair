@@ -18,12 +18,9 @@ brush = alt.selection(type='interval', encodings=['x'])
 
 # Define the base chart, with the common parts of the
 # background and highlights
-base = alt.Chart().mark_bar().encode(
-    x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
+base = alt.Chart(width=160, height=130).mark_bar().encode(
+    x=alt.X(alt.repeat('column')).bin(maxbins=20),
     y='count()'
-).properties(
-    width=160,
-    height=130
 )
 
 # gray background with selection
