@@ -964,3 +964,18 @@ def test_validate_dataset():
     jsn = chart.to_json()
 
     assert jsn
+
+
+def test_method_based_attr_setting():
+    x1 = alt.X(field="foo")
+    x2 = alt.X().field("foo")
+    x3 = alt.X()
+    x3.field = "foo"
+    assert x1 == x2 == x3
+    assert x1["field"] == x2["field"] == x3["field"]
+
+    x1["field"] = "bah"
+    x2 = x2.field("bah")
+    x3.field = "bah"
+    assert x1 == x2 == x3
+    assert x1.field != x1["field"]
