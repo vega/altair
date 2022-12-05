@@ -27,25 +27,24 @@ base = alt.Chart(
     groupby=['decade'],
     frame=[None, None]
 ).transform_calculate(
-  end="datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null"
+  end=(
+      "datum.first_date === datum.scaled_date ? 'first'"
+      ": datum.last_date === datum.scaled_date ? 'last'"
+      ": null"
+  )
 ).encode(
-    x=alt.X(
-        "scaled_date:Q",
-        axis=alt.Axis(title="Year into Decade", tickCount=11)
-    ),
-    y=alt.Y(
-        "CO2:Q",
-        title="CO2 concentration in ppm",
-        scale=alt.Scale(zero=False)
-    )
+    alt.X("scaled_date:Q")
+        .title("Year into Decade")
+        .axis(tickCount=11),
+    alt.Y("CO2:Q")
+        .title("CO2 concentration in ppm")
+        .scale(zero=False)
 )
 
 line = base.mark_line().encode(
-    color=alt.Color(
-        "decade:O",
-        scale=alt.Scale(scheme="magma"),
-        legend=None
-    )
+    alt.Color("decade:O")
+        .scale(scheme="magma")
+        .legend(None)
 )
 
 text = base.encode(text="year:N")
