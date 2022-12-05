@@ -22,18 +22,18 @@ source = pd.DataFrame([
 
 area1 = alt.Chart(source).mark_area(
     clip=True,
-    interpolate='monotone'
+    interpolate='monotone',
+    opacity=0.6
 ).encode(
-    alt.X('x', scale=alt.Scale(zero=False, nice=False)),
-    alt.Y('y', scale=alt.Scale(domain=[0, 50]), title='y'),
-    opacity=alt.value(0.6)
+    alt.X('x').scale(zero=False, nice=False),
+    alt.Y('y').scale(domain=[0, 50]).title('y'),
 ).properties(
     width=500,
     height=75
 )
 
 area2 = area1.encode(
-    alt.Y('ny:Q', scale=alt.Scale(domain=[0, 50]))
+    alt.Y('ny:Q').scale(domain=[0, 50])
 ).transform_calculate(
     "ny", alt.datum.y - 50
 )

@@ -24,12 +24,11 @@ base = alt.Chart(source).transform_calculate(
 
 alt.vconcat(
   base.encode(
-    alt.X('time:Q',
-      bin=alt.Bin(maxbins=30, extent=brush),
-      scale=alt.Scale(domain=brush)
-    )
+    alt.X('time:Q')
+      .bin(maxbins=30, extent=brush)
+      .scale(domain=brush)
   ),
   base.encode(
-    alt.X('time:Q', bin=alt.Bin(maxbins=30)),
+    alt.X('time:Q').bin(maxbins=30),
   ).add_params(brush)
 )

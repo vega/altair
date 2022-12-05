@@ -20,7 +20,7 @@ background = alt.Chart(states).mark_geoshape(
 ).project('albersUsa')
 
 # Airports grouped by state
-points = alt.Chart(airports).transform_aggregate(
+points = alt.Chart(airports, title='Number of airports in US').transform_aggregate( 
     latitude='mean(latitude)',
     longitude='mean(longitude)',
     count='count()',
@@ -28,11 +28,9 @@ points = alt.Chart(airports).transform_aggregate(
 ).mark_circle().encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
-    size=alt.Size('count:Q', title='Number of Airports'),
+    size=alt.Size('count:Q').title('Number of Airports'),
     color=alt.value('steelblue'),
     tooltip=['state:N','count:Q']
-).properties(
-    title='Number of airports in US'
 )
 
 background + points

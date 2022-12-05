@@ -11,7 +11,7 @@ source = data.barley()
 
 bars = alt.Chart().mark_bar().encode(
     x='year:O',
-    y=alt.Y('mean(yield):Q', title='Mean Yield'),
+    y=alt.Y('mean(yield):Q').title('Mean Yield'),
     color='year:N',
 )
 
