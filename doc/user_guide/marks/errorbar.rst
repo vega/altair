@@ -58,7 +58,8 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
     error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
         x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
-        y=alt.Y("variety:N")),
+        y=alt.Y("variety:N"),
+    )
 
     points = alt.Chart(source).mark_point(filled=True, color="black").encode(
         x=alt.X("yield:Q", aggregate="mean"),

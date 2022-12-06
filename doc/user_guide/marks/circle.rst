@@ -21,12 +21,12 @@ Scatter Plot with Circle
 Here is an example scatter plot with ``circle`` marks:
 
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
+   import altair as alt
+   from vega_datasets import data
 
-    source = data.cars.url
+   source = data.cars.url
 
-    alt.Chart(source).mark_circle().encode(
+   alt.Chart(source).mark_circle().encode(
       x=("Horsepower:Q"),
       y=("Miles_per_Gallon:Q"),
    )
