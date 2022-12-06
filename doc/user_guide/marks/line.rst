@@ -160,12 +160,11 @@ We can also use line grouping to create a line chart that has multiple parts wit
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame(
-        {
-            "a": ["A", "B", "D", "E", "E", "G", "H"],
-            "b": [28, 55, 91, 81, 81, 19, 87],
-            "predicted": [False, False, False, False, True, True, True],
-        }
+    source = pd.DataFrame({ 
+        'a' : ['A', 'B', 'D', 'E', 'E', 'G', 'H'],
+        'b' : [28, 55, 91, 81, 81, 19, 87],
+        'predicted' : [False, False, False, False, True, True, True]
+    })
     )
 
     alt.Chart(source).mark_line().encode(x="a:O", y="b:Q", strokeDash="predicted:N")
