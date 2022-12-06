@@ -3,11 +3,11 @@
 .. _user-guide-geoshape-marks:
 
 Geoshape
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 ``mark_geoshape`` represents an arbitrary shapes whose geometry is determined by specified spatial data.
 
 Basic Map
-~~~~~~~~~
+^^^^^^^^^
 Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth dataset and create a basic map using ``mark_geoshape``:
 
 .. altair-plot::
@@ -32,7 +32,7 @@ In the example above, Altair applies a default blue ``fill`` color and uses a de
     )
 
 Focus & Filtering
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 By default Altair automatically adjusts the projection so that all the data fits within the width and height of the chart.
 Multiple approaches can be used to focus on specific regions of your spatial data. Namely:
 
@@ -88,7 +88,7 @@ The following examples applies these approaches to focus on continental Africa:
     )
 
 Cartesian coordinates
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 The default projection of Altair is ``equalEarth``, which accurately represents the areas of the world's landmasses relative each other. This default assumes that your geometries are in degrees and referenced by longitude and latitude values.
 Another widely used coordinate system for data visualization is the 2d cartesian coordinate system. This coordinate system does not take into account the curvature of the Earth.
 
@@ -102,7 +102,7 @@ In the following example the input geometry is not projected and is instead rend
     )
 
 Mapping Polygons
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 The following example maps the visual property of the ``name`` column using the ``color`` encoding.
 
 .. altair-plot::
@@ -123,7 +123,7 @@ Since each country is represented by a (multi)polygon, we can separate the ``str
     )
 
 Mapping Lines
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 By default Altair assumes for ``mark_geoshape`` that the mark's color is used for the fill color instead of the stroke color.
 This means that if your source data contain (multi)lines, you will have to explicitly define the ``filled`` value as ``False``.
 
@@ -161,7 +161,7 @@ Using this approach one can also style Polygons as if they are Linestrings:
     )
 
 Mapping Points
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 Points can be drawn when they are defined as ``Points`` within a GeoDataFrame using ``mark_geoshape``.
 We first assign the centroids of Polygons as Point geometry and plot these:
 
@@ -211,7 +211,7 @@ Altair also contains expressions related to geographical features. We can for ex
     )
 
 Choropleths
-~~~~~~~~~
+^^^^^^^^^^^
 
 An alternative to showing the population sizes as bubbles, is to create a "Choropleth" map. These are geographical heatmaps where the color or each region are mapped to the values of a column in the dataframe.
 
@@ -224,7 +224,7 @@ An alternative to showing the population sizes as bubbles, is to create a "Choro
 When we create choropleth maps, we need to be careful, because although the color changes according to the value of the column we are interested in, the size is tied to the area of each country and we might miss interesting values in small countries just because we can't easily see them on the map (e.g. if we were to visualize population density).
 
 Lookup datasets
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 Sometimes your data is separated in two datasets. One ``DataFrame`` with the data and one ``GeoDataFrame`` with the geometries.
 In this case you can use the ``lookup`` transform to collect related information from the other dataset.
 
@@ -271,7 +271,7 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
     )
 
 Choropleth Classification
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 In addition to displaying a continuous quantitative variable, choropleths can also be used to show discrete levels of a variable. While we should generally be careful to not create artificial groups when discretizing a continuous variable, it can be very useful when we have natural cutoff levels of a variable that we want to showcase clearly.
 We first define a utility function ``classify()`` that we will use to showcase different approaches to make a choropleth map.
 We apply it to define a choropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale.
@@ -413,7 +413,7 @@ Caveats:
 - The natural breaks method will determine the optimal class breaks given the required number of classes, but how many classes should you pick? One can investigate usage of goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
 
 Repeat a Map
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 The :class:`RepeatChart` pattern, accessible via the :meth:`Chart.repeat` method
 provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a multi-dimensional dataset.
@@ -450,7 +450,7 @@ the color encoding as ``alt.repeat('row')``
     )
 
 Facet a Map
-~~~~~~~~~~~
+^^^^^^^^^^^
 The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method
 provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a dataset where one field contain multiple ``variables``.
@@ -494,7 +494,7 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
     ).resolve_scale(color="independent")
 
 Interaction
-~~~~~~~~~~~
+^^^^^^^^^^^
 Often a map does not come alone, but is used in combination with another chart.
 Here we provide an example of an interactive visualization of a bar chart and a map.
 
@@ -550,7 +550,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
 
 Expression
-~~~~~~~~~~
+^^^^^^^^^^
 Altair expressions can be used within a geographical visualization. The following example
 visualize earthquakes on the globe using an ``orthographic`` projection. Where we can rotate
 the earth on a single-axis. (``rotate0``). The utility function :func:`sphere` is adopted to
