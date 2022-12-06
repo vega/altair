@@ -33,10 +33,9 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar()
-        .encode(x=alt.X("yield:Q", scale=alt.Scale(zero=False)), y=alt.Y("variety:N"))
+    error_bars = alt.Chart(source).mark_errorbar().encode(
+        x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('variety:N')
     )
 
     points = (
