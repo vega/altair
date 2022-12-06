@@ -61,6 +61,11 @@ Comet Chart Showing Changes Between Two States
             column=alt.Column("site:N", title="Site"),
         )
         .configure_view(stroke=None)
-        .configure_legend(orient="bottom", direction="horizontal")
-        .properties(title="Barley Yield comparison between 1932 and 1931")
+        .configure_legend(
+            orient="bottom",
+            direction="horizontal"
+        )
+        .properties(
+            title="Barley Yield comparison between 1932 and 1931"
+        )
     )

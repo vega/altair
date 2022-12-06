@@ -76,14 +76,15 @@ For example, we can use ``rect`` to create an annotation ``layer`` that provides
 
     source = data.cars()
 
-    point = alt.Chart(source).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+    point = alt.Chart(source).mark_point().encode(
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q",
+    )
 
-    rect = (
-        alt.Chart(source)
-        .mark_rect()
-        .encode(
-            y="max(Miles_per_Gallon)", y2="min(Miles_per_Gallon)", opacity=alt.value(0.2)
-        )
+    rect = alt.Chart(source).mark_rect().encode(
+        y="max(Miles_per_Gallon)",
+        y2="min(Miles_per_Gallon)",
+        opacity=alt.value(0.2),
     )
 
     point + rect

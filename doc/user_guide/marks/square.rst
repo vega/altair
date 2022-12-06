@@ -22,4 +22,7 @@ Scatter Plot with Square
 
     source = data.cars()
 
-    alt.Chart(source).mark_square().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+    alt.Chart(source).mark_square().encode(
+      x="Horsepower:Q",
+      y="Miles_per_Gallon:Q",
+   )

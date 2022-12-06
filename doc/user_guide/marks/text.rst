@@ -113,13 +113,12 @@ Text Table Heatmap
 
     source = data.cars()
 
-    base = (
-        alt.Chart(source)
-        .transform_aggregate(num_cars="count()", groupby=["Origin", "Cylinders"])
-        .encode(
-            alt.X("Cylinders:O", scale=alt.Scale(paddingInner=0)),
-            alt.Y("Origin:O", scale=alt.Scale(paddingInner=0)),
-        )
+    base = alt.Chart(source).transform_aggregate(
+        num_cars="count()",
+        groupby=["Origin", "Cylinders"],
+    ).encode(
+        alt.X("Cylinders:O", scale=alt.Scale(paddingInner=0)),
+        alt.Y("Origin:O", scale=alt.Scale(paddingInner=0)),
     )
 
     heatmap = base.mark_rect().encode(
@@ -133,7 +132,9 @@ Text Table Heatmap
     text = base.mark_text(baseline="middle").encode(
         text="num_cars:Q",
         color=alt.condition(
-            alt.datum.num_cars > 100, alt.value("black"), alt.value("white")
+            alt.datum.num_cars > 100,
+            alt.value("black"),
+            alt.value("white"),
         ),
     )
 
@@ -147,14 +148,20 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({"a": ["A", "B", "C"], "b": [28, 55, 43]})
+    source = pd.DataFrame({
+        "a": ["A", "B", "C"],
+        "b": [28, 55, 43]
+    })
 
-    bar = (
-        alt.Chart(source)
-        .mark_bar()
-        .encode(y="a:N", x=alt.X("b:Q", scale=alt.Scale(domain=[0, 60])))
+    bar = alt.Chart(source).mark_bar().encode(
+        y="a:N",
+        x=alt.X("b:Q", scale=alt.Scale(domain=[0, 60]))
     )
-    text = bar.mark_text(align="left", baseline="middle", dx=3).encode(text="b")
+    text = bar.mark_text(
+        align="left",
+        baseline="middle",
+        dx=3
+    ).encode(text="b")
 
     bar + text
 
@@ -170,7 +177,10 @@ Mapping a field to ``text`` channel of text mark sets the mark’s text value. F
     source = data.cars()
 
     alt.Chart(source).mark_text().encode(
-        x="Horsepower:Q", y="Miles_per_Gallon:Q", color="Origin:N", text="Origin[0]:N"
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q",
+        color="Origin:N",
+        text="Origin[0]:N",
     )
 
 Geo Text
@@ -185,23 +195,24 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
     source = data.us_state_capitals()
 
-    background = (
-        alt.Chart(states)
-        .mark_geoshape(fill="lightgray", stroke="white")
-        .properties(width=750, height=500)
-        .project("albersUsa")
+    background = alt.Chart(states).mark_geoshape(
+        fill="lightgray",
+        stroke="white",
+    ).properties(
+        width=750,
+        height=500,
+    ).project("albersUsa")
+
+    line = alt.Chart(source).mark_text(dy=-10).encode(
+        latitude="lat:Q",
+        longitude="lon:Q",
+        text="city:N"
     )
 
-    line = (
-        alt.Chart(source)
-        .mark_text(dy=-10)
-        .encode(latitude="lat:Q", longitude="lon:Q", text="city:N")
-    )
-
-    point = (
-        alt.Chart(source)
-        .mark_circle()
-        .encode(latitude="lat:Q", longitude="lon:Q", color=alt.value("orange"))
+    point = alt.Chart(source).mark_circle().encode(
+        latitude="lat:Q",
+        longitude="lon:Q",
+        color=alt.value("orange"),
     )
 
     background + line + point

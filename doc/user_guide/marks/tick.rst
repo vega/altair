@@ -26,7 +26,9 @@ The following dot plot uses tick marks to show the distribution of precipitation
 
     source = data.seattle_weather()
 
-    alt.Chart(source).mark_tick().encode(x="precipitation:Q")
+    alt.Chart(source).mark_tick().encode(
+        x="precipitation:Q"
+    )
 
 Strip Plot
 ^^^^^^^^^^
@@ -38,7 +40,10 @@ By adding a ``y`` field, a strip plot can be created that shows the distribution
 
     source = data.cars()
 
-    alt.Chart(source).mark_tick().encode(x="Horsepower:Q", y="Cylinders:O")
+    alt.Chart(source).mark_tick().encode(
+        x="Horsepower:Q",
+        y="Cylinders:O",
+    )
 
 
 Customizing Tick’s Size and Thickness
@@ -49,6 +54,9 @@ Customizing Tick’s Size and Thickness
 
     source = data.seattle_weather()
 
-    alt.Chart(source).mark_tick().encode(x="precipitation:Q").configure_tick(
-        thickness=2, bandSize=10
+    alt.Chart(source).mark_tick().encode(
+        x="precipitation:Q"
+    ).configure_tick(
+        thickness=2,
+        bandSize=10,
     )
