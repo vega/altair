@@ -118,13 +118,18 @@ We can further apply selection to highlight a certain line on hover.
         type="single", on="mouseover", fields=["symbol"], nearest=True
     )
 
-    base = alt.Chart(source).encode(x="date:T", y="price:Q", color="symbol:N")
+    base = alt.Chart(source).encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
 
-    points = (
-        base.mark_circle()
-        .encode(opacity=alt.value(0))
-        .add_selection(highlight)
-        .properties(width=600)
+    points = base.mark_circle().encode(
+        opacity=alt.value(0)
+    ).add_selection(
+        highlight
+    ).properties(
+        width=600
     )
 
     lines = base.mark_line().encode(
