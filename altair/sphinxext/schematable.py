@@ -133,7 +133,7 @@ def build_row(item):
     return row
 
 
-def build_schema_tabel(items):
+def build_schema_table(items):
     """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
@@ -162,7 +162,7 @@ def select_items_from_schema(schema, props=None):
 def prepare_schema_tabel(schema, props=None):
 
     items = select_items_from_schema(schema, props)
-    return build_schema_tabel(items)
+    return build_schema_table(items)
 
 
 class AltairObjectTableDirective(Directive):
