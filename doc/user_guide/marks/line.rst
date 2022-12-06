@@ -167,7 +167,11 @@ We can also use line grouping to create a line chart that has multiple parts wit
     })
     )
 
-    alt.Chart(source).mark_line().encode(x="a:O", y="b:Q", strokeDash="predicted:N")
+    alt.Chart(source).mark_line().encode(
+        x = 'a:O',
+        y = 'b:Q',
+        strokeDash = 'predicted:N'
+    )
 
 Multi-series Line Chart with the Detail Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -259,7 +263,11 @@ Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to
 
     alt.Chart(source).mark_line(
         point=alt.OverlayMarkDef(filled=False, fill="white")
-    ).encode(x="year(date)", y="mean(price):Q", color="symbol:N")
+    ).encode(
+        x="year(date)",
+        y="mean(price):Q",
+        color="symbol:N"
+    )
 
 Connected Scatter Plot (Line Chart with Custom Path)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
