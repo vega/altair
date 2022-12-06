@@ -6,6 +6,10 @@ Geoshape
 ^^^^^^^^^^^^^
 ``mark_geoshape`` represents an arbitrary shapes whose geometry is determined by specified spatial data.
 
+Geoshape Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^
+A ``geoshape`` mark can contain any :ref:`standard mark properties <mark-properties>`.
+
 Basic Map
 ^^^^^^^^^
 Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth dataset and create a basic map using ``mark_geoshape``:
