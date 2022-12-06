@@ -113,11 +113,14 @@ You can also add a text layer to add labels to a pie chart.
     )
 
     base = alt.Chart(source).encode(
-        theta=alt.Theta("value:Q", stack=True), color=alt.Color("category:N", legend=None)
+        theta=alt.Theta("value:Q", stack=True),
+        color=alt.Color("category:N", legend=None),
     )
 
     pie = base.mark_arc(outerRadius=120)
-    text = base.mark_text(radius=140, size=20).encode(text="category:N")
+    text = base.mark_text(radius=140, size=20).encode(
+        text="category:N"
+    )
 
     pie + text
 

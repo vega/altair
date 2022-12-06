@@ -82,21 +82,20 @@ If the data is already pre-aggregated with low and high values of the error band
         }
     )
 
-    band = (
-        alt.Chart(source)
-        .mark_errorband()
-        .encode(
-            alt.Y(
-                "ci1:Q",
-                scale=alt.Scale(zero=False),
-                title="Mean of Miles per Gallon (95% CIs)",
-            ),
-            alt.Y2("ci0:Q"),
-            alt.X("year(Year)"),
-        )
+    band = alt.Chart(source).mark_errorband().encode(
+        alt.Y(
+            "ci1:Q",
+            scale=alt.Scale(zero=False),
+            title="Mean of Miles per Gallon (95% CIs)"
+        ),
+        alt.Y2("ci0:Q"),
+        alt.X("year(Year)"),
     )
 
-    line = alt.Chart(source).mark_line().encode(alt.Y("center:Q"), alt.X("year(Year)"))
+    line = alt.Chart(source).mark_line().encode(
+        alt.Y("center:Q"),
+        alt.X("year(Year)")
+    )
 
     band + line
 
@@ -116,13 +115,14 @@ A **1D error band** shows the error range of a continuous field; it can be used 
 
     source = data.cars.url
 
-    band = (
-        alt.Chart(source)
-        .mark_errorband(extent="stdev")
-        .encode(alt.Y("Miles_per_Gallon:Q", title="Miles per Gallon"))
+    band = alt.Chart(source).mark_errorband(extent="stdev").encode(
+        alt.Y("Miles_per_Gallon:Q", title="Miles per Gallon")
     )
 
-    points = alt.Chart(source).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+    points = alt.Chart(source).mark_point().encode(
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q",
+    )
 
     band + points
 
@@ -135,15 +135,14 @@ A **2D error** band shows the error range of a continuous field for each dimensi
 
     source = data.cars()
 
-    line = alt.Chart(source).mark_line().encode(x="Year", y="mean(Miles_per_Gallon)")
+    line = alt.Chart(source).mark_line().encode(
+        x="Year",
+        y="mean(Miles_per_Gallon)"
+    )
 
-    band = (
-        alt.Chart(source)
-        .mark_errorband(extent="ci")
-        .encode(
-            x="Year",
-            y=alt.Y("Miles_per_Gallon", title="Miles/Gallon"),
-        )
+    band = alt.Chart(source).mark_errorband(extent="ci").encode(
+        x="Year",
+        y=alt.Y("Miles_per_Gallon", title="Miles/Gallon"),
     )
 
     band + line

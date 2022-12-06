@@ -27,7 +27,8 @@ Bar Mark Properties
     )
 
     alt.Chart(source).mark_bar(cornerRadius=corner_var).encode(
-        x=alt.X("a:N", axis=alt.Axis(labelAngle=0)), y="b:Q"
+        x=alt.X("a:N", axis=alt.Axis(labelAngle=0)),
+        y="b:Q",
     ).add_params(corner_var)
 
 
@@ -54,7 +55,9 @@ Mapping a quantitative field to either ``x`` or ``y`` of the ``bar`` mark produc
 
     alt.Chart(source).mark_bar().encode(
         alt.X("sum(people):Q", title="Population")
-    ).transform_filter(datum.year == 2000)
+    ).transform_filter(
+        datum.year == 2000
+    )
 
 
 Bar Chart
@@ -69,8 +72,11 @@ If we map a different discrete field to the ``y`` channel, we can produce a hori
     source = data.population.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("sum(people):Q", title="Population"), alt.Y("age:O")
-    ).transform_filter(datum.year == 2000).properties(height=alt.Step(20))
+        alt.X("sum(people):Q", title="Population"),
+        alt.Y("age:O"),
+    ).transform_filter(
+        datum.year == 2000
+    ).properties(height=alt.Step(20))
 
 
 Bar Chart with a Temporal Axis
@@ -120,7 +126,11 @@ Adding color to the bar chart (by using the ``color`` attribute) creates a stack
 
     source = data.barley()
 
-    alt.Chart(source).mark_bar().encode(x="variety", y="sum(yield)", color="site")
+    alt.Chart(source).mark_bar().encode(
+        x="variety",
+        y="sum(yield)",
+        color="site"
+    )
 
 
 Grouped Bar Chart with Offset

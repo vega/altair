@@ -26,6 +26,9 @@ Here is an example scatter plot with ``circle`` marks:
 
     source = data.cars.url
 
-    alt.Chart(source).mark_circle().encode(x=("Horsepower:Q"), y=("Miles_per_Gallon:Q"))
+    alt.Chart(source).mark_circle().encode(
+      x=("Horsepower:Q"),
+      y=("Miles_per_Gallon:Q"),
+   )
 
 

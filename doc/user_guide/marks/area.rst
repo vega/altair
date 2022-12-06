@@ -85,7 +85,9 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
     alt.Chart(source).mark_area(line=True, point=True).encode(
         x="date:T",
         y="price:Q",
-    ).transform_filter(datum.symbol == "GOOG")
+    ).transform_filter(
+        datum.symbol == "GOOG"
+    )
 
 Instead of using a single color as the fill color of the area, we can set it to a gradient.
 In this example, we are also customizing the overlay. For more information about gradient options see the `Vega-Lite Gradient documentation
@@ -110,7 +112,10 @@ In this example, we are also customizing the overlay. For more information about
             y1=1,
             y2=0,
         ),
-    ).encode(alt.X("date:T"), alt.Y("price:Q"))
+    ).encode(
+        alt.X("date:T"),
+        alt.Y("price:Q"),
+    )
 
 
 Stacked Area Chart

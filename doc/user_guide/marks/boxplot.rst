@@ -45,7 +45,8 @@ By default, the extent is ``1.5``.
     source = data.cars()
 
     alt.Chart(source).mark_boxplot(extent="min-max").encode(
-        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)), alt.Y("Origin:N")
+        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.Y("Origin:N"),
     )
 
 

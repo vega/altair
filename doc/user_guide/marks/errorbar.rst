@@ -38,13 +38,12 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
         y=alt.Y('variety:N')
     )
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(
-            x=alt.X("yield:Q", aggregate="mean"),
-            y=alt.Y("variety:N"),
-        )
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black",
+    ).encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
     error_bars + points
@@ -57,19 +56,13 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar(extent="stdev")
-        .encode(x=alt.X("yield:Q", scale=alt.Scale(zero=False)), y=alt.Y("variety:N"))
-    )
+    error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
+        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        y=alt.Y("variety:N")),
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(
-            x=alt.X("yield:Q", aggregate="mean"),
-            y=alt.Y("variety:N"),
-        )
+    points = alt.Chart(source).mark_point(filled=True, color="black").encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
     error_bars + points
@@ -83,19 +76,17 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar(extent="iqr")
-        .encode(x=alt.X("yield:Q", scale=alt.Scale(zero=False)), y=alt.Y("variety:N"))
+    error_bars = alt.Chart(source).mark_errorbar(extent="iqr").encode(
+        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        y=alt.Y("variety:N"),
     )
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(
-            x=alt.X("yield:Q", aggregate="mean"),
-            y=alt.Y("variety:N"),
-        )
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
     error_bars + points
@@ -109,29 +100,25 @@ If the data is already pre-aggregated with low and high values of the error bars
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame(
-        {
-            "lower_yield": [23.1311, 23.9503, 24.7778, 21.7823],
-            "upper_yield": [43.5522, 38.9775, 46.9167, 48.9732],
-            "center": [32.4, 30.96667, 33.966665, 30.45],
-            "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
-        }
+    source = pd.DataFrame({
+        "lower_yield": [23.1311, 23.9503, 24.7778, 21.7823],
+        "upper_yield": [43.5522, 38.9775, 46.9167, 48.9732],
+        "center": [32.4, 30.96667, 33.966665, 30.45],
+        "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
+    })
+
+    bar = alt.Chart(source).mark_errorbar().encode(
+        alt.X("upper_yield:Q", scale=alt.Scale(zero=False), title="yield"),
+        alt.X2("lower_yield:Q"),
+        alt.Y("variety:N"),
     )
 
-    bar = (
-        alt.Chart(source)
-        .mark_errorbar()
-        .encode(
-            alt.X("upper_yield:Q", scale=alt.Scale(zero=False), title="yield"),
-            alt.X2("lower_yield:Q"),
-            alt.Y("variety:N"),
-        )
-    )
-
-    point = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(alt.X("center:Q"), alt.Y("variety:N"))
+    point = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("center:Q"),
+        alt.Y("variety:N")
     )
 
     point + bar
@@ -143,28 +130,24 @@ If the data is already pre-aggregated with center and error values of the error 
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame(
-        {
-            "yield_error": [7.5522, 6.9775, 3.9167, 11.9732],
-            "yield_center": [32.4, 30.96667, 33.966665, 30.45],
-            "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
-        }
+    source = pd.DataFrame({
+        "yield_error": [7.5522, 6.9775, 3.9167, 11.9732],
+        "yield_center": [32.4, 30.96667, 33.966665, 30.45],
+        "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
+    })
+
+    bar = alt.Chart(source).mark_errorbar().encode(
+        x=alt.X("yield_center:Q", scale=alt.Scale(zero=False), title="yield"),
+        xError=("yield_error:Q"),
+        y=alt.Y("variety:N"),
     )
 
-    bar = (
-        alt.Chart(source)
-        .mark_errorbar()
-        .encode(
-            x=alt.X("yield_center:Q", scale=alt.Scale(zero=False), title="yield"),
-            xError=("yield_error:Q"),
-            y=alt.Y("variety:N"),
-        )
-    )
-
-    point = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(alt.X("yield_center:Q"), alt.Y("variety:N"))
+    point = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("yield_center:Q"),
+        alt.Y("variety:N"),
     )
 
     point + bar
@@ -185,16 +168,15 @@ The orientation of an error bar is automatically determined by the continuous fi
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar()
-        .encode(alt.Y("yield:Q", scale=alt.Scale(zero=False)))
+    error_bars = alt.Chart(source).mark_errorbar().encode(
+        alt.Y("yield:Q", scale=alt.Scale(zero=False))
     )
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(alt.Y("yield:Q", aggregate="mean"))
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.Y("yield:Q", aggregate="mean")
     )
 
     error_bars + points
@@ -209,19 +191,17 @@ For 2D error bars with one continuous field and one discrete field, the error ba
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar(extent="stdev")
-        .encode(alt.Y("yield:Q", scale=alt.Scale(zero=False)), alt.X("variety:N"))
+    error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
+        alt.Y("yield:Q", scale=alt.Scale(zero=False)),
+        alt.X("variety:N"),
     )
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(
-            alt.Y("yield:Q", aggregate="mean"),
-            alt.X("variety:N"),
-        )
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black",
+    ).encode(
+        alt.Y("yield:Q", aggregate="mean"),
+        alt.X("variety:N"),
     )
 
     error_bars + points
@@ -238,23 +218,18 @@ Here is an example of a ``errorbar`` with the ``color`` encoding channel set to 
 
     source = data.barley()
 
-    error_bars = (
-        alt.Chart(source)
-        .mark_errorbar(ticks=True)
-        .encode(
-            alt.X("yield:Q", scale=alt.Scale(zero=False)),
-            alt.Y("variety:N"),
-            color=alt.value("#4682b4"),
-        )
+    error_bars = alt.Chart(source).mark_errorbar(ticks=True).encode(
+        alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        alt.Y("variety:N"),
+        color=alt.value("#4682b4"),
     )
 
-    points = (
-        alt.Chart(source)
-        .mark_point(filled=True, color="black")
-        .encode(
-            alt.X("yield:Q", aggregate="mean"),
-            alt.Y("variety:N"),
-        )
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("yield:Q", aggregate="mean"),
+        alt.Y("variety:N"),
     )
 
     error_bars + points
