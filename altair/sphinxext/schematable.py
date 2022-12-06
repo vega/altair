@@ -117,7 +117,7 @@ def build_row(item):
         is_text = not is_text
 
     # row += nodes.entry('')
-    row += nodes.entry("", par_type)  # , classes=["vl-type-def"]
+    row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
     md_parser = CommonMarkParser()
