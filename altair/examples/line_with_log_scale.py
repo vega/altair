@@ -11,8 +11,5 @@ source = data.population()
 
 alt.Chart(source).mark_line().encode(
     x='year:O',
-    y=alt.Y(
-        'sum(people)',
-        scale=alt.Scale(type="log")  # Here the scale is applied
-    )
+    y=alt.Y('sum(people)').scale(type="log")
 )

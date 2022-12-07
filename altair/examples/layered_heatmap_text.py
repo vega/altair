@@ -22,15 +22,14 @@ base = alt.Chart(source).transform_aggregate(
 
 # Configure heatmap
 heatmap = base.mark_rect().encode(
-    color=alt.Color('mean_horsepower:Q',
-        scale=alt.Scale(scheme='viridis'),
-        legend=alt.Legend(title="Mean of Horsepower"),
-    )
+    alt.Color('mean_horsepower:Q')
+        .scale(scheme='viridis')
+        .title("Mean of Horsepower")
 )
 
 # Configure text
 text = base.mark_text(baseline='middle').encode(
-    text=alt.Text('mean_horsepower:Q', format=".0f"),
+    alt.Text('mean_horsepower:Q', format=".0f"),
     color=alt.condition(
         alt.datum.mean_horsepower > 150,
         alt.value('black'),

@@ -17,17 +17,15 @@ color_condition = alt.condition(
 alt.Chart(source, width=300, height=100).transform_filter(
     alt.datum.symbol != "GOOG"
 ).mark_rect().encode(
-    x=alt.X(
-        "yearmonthdate(date):O",
-        axis=alt.Axis(
+    alt.X("yearmonthdate(date):O")
+        .title("Time")
+        .axis(
             format="%Y",
             labelAngle=0,
             labelOverlap=False,
             labelColor=color_condition,
             tickColor=color_condition,
         ),
-        title="Time",
-    ),
-    y=alt.Y("symbol:N", title=None),
-    color=alt.Color("sum(price)", title="Price"),
+    alt.Y("symbol:N").title(None),
+    alt.Color("sum(price)").title("Price")
 )

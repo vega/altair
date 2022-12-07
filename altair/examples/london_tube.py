@@ -13,14 +13,11 @@ boroughs = alt.topo_feature(data.londonBoroughs.url, 'boroughs')
 tubelines = alt.topo_feature(data.londonTubeLines.url, 'line')
 centroids = data.londonCentroids.url
 
-background = alt.Chart(boroughs).mark_geoshape(
+background = alt.Chart(boroughs, width=700, height=500).mark_geoshape(
     stroke='white',
     strokeWidth=2
 ).encode(
     color=alt.value('#eee'),
-).properties(
-    width=700,
-    height=500
 )
 
 labels = alt.Chart(centroids).mark_text().encode(
@@ -45,15 +42,10 @@ lines = alt.Chart(tubelines).mark_geoshape(
     filled=False,
     strokeWidth=2
 ).encode(
-    alt.Color(
-        'id:N',
-        legend=alt.Legend(
-            title=None,
-            orient='bottom-right',
-            offset=0
-        ),
-        scale=line_scale
-    )
+    alt.Color('id:N')
+        .title(None)
+        .legend(orient='bottom-right', offset=0)
+        .scale(line_scale)
 )
 
 background + labels + lines

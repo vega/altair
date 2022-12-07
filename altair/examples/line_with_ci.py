@@ -16,7 +16,7 @@ line = alt.Chart(source).mark_line().encode(
 
 band = alt.Chart(source).mark_errorband(extent='ci').encode(
     x='Year',
-    y=alt.Y('Miles_per_Gallon', title='Miles/Gallon'),
+    y=alt.Y('Miles_per_Gallon').title('Miles/Gallon'),
 )
 
 band + line

@@ -14,7 +14,7 @@ source = data.stocks()
 chart = alt.Chart(source).transform_filter(
     alt.datum.symbol != "IBM"  # A reducation of the dataset to clarify our example. Not required.
 ).encode(
-    color=alt.Color("symbol", legend=None)
+    alt.Color("symbol").legend(None)
 )
 
 # Draw the line
@@ -25,8 +25,8 @@ line = chart.mark_line().encode(
 
 # Use the `argmax` aggregate to limit the dataset to the final value
 label = chart.encode(
-    x=alt.X('max(date):T'),
-    y=alt.Y('price:Q', aggregate=alt.ArgmaxDef(argmax='date')),
+    x='max(date):T',
+    y=alt.Y('price:Q').aggregate(argmax='date'),
     text='symbol'
 )
 

@@ -51,13 +51,16 @@ source = pd.DataFrame([
 
 
 alt.Chart(source).mark_text(size=45, baseline='middle').encode(
-    alt.X('x:O', axis=None),
-    alt.Y('animal:O', axis=None),
-    alt.Row('country:N', header=alt.Header(title='')),
+    alt.X('x:O').axis(None),
+    alt.Y('animal:O').axis(None),
+    alt.Row('country:N').title(''),
     alt.Text('emoji:N')
 ).transform_calculate(
     emoji="{'cattle': '🐄', 'pigs': '🐖', 'sheep': '🐏'}[datum.animal]"
 ).transform_window(
     x='rank()',
     groupby=['country', 'animal']
-).properties(width=550, height=140)
+).properties(
+    width=550,
+    height=140
+)

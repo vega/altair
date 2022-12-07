@@ -27,9 +27,9 @@ alt.Chart(data).transform_calculate(
     filled=True,
     size=50
 ).encode(
-    x=alt.X("col:O", axis=None),
-    y=alt.Y("row:O", axis=None),
-    shape=alt.ShapeValue(person)
+    alt.X("col:O").axis(None),
+    alt.Y("row:O").axis(None),
+    alt.ShapeValue(person)
 ).properties(
     width=400,
     height=400
