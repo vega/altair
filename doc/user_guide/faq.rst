@@ -5,38 +5,6 @@
 Frequently Asked Questions
 ==========================
 
-.. _faq-other-ides:
-
-Does Altair work with IPython Terminal/PyCharm/Spyder/<my favorite IDE>
------------------------------------------------------------------------
-Altair can be used to create chart specifications with any frontend that
-executes Python code, but in order to *render* those charts requires connecting
-altair to an environment capable of executing the javascript code that
-turns the JSON specification into a visual chart.
-
-There are extensions included in JupyterLab, Jupyter Notebook, Colab,
-Kaggle kernels, VSCode, Hydrogen, and nteract that know how to automatically
-perform this rendering (see :ref:`installation` for details).
-
-For other frontends that don't have vega-lite rendering built-in, it is
-possible to work with Altair charts using the build-in :meth:`Chart.show`
-or :meth:`Chart.save` methods.
-For more information on these, see :ref:`display-general`.
-
-.. _faq-no-display:
-
-I tried to make a plot but it doesn't show up
----------------------------------------------
-There are two basic reasons that a chart might not show up:
-
-1. You have not installed and/or enabled the appropriate renderer for your
-   frontend, which means charts cannot be displayed.
-2. You have inadvertently created an invalid chart, and there is a javascript
-   error preventing it from being displayed.
-
-For details on how to trouble-shoot these kinds of display issues on various
-front-ends, see :ref:`display-troubleshooting`.
-
 .. _altair-faq-large-notebook:
 
 Why does Altair lead to such extremely large notebooks?
