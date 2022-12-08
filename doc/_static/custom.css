@@ -26,8 +26,12 @@ table.docutils td li {
 }
 
 table td.vl-type-def {
-  max-width: 200px;
-  overflow-x: hidden;
+  max-width: 170px;
+  overflow-x: clip;
+}
+
+.bd-sidebar-primary {
+  max-width: 20%
 }
 
 /* Use full page width without sidebars */
