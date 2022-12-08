@@ -713,7 +713,7 @@ it is also useful to map to a single constant value. In Altair, you can do this 
 
 ``datum`` is particularly useful for annotating a specific data value. 
 For example, you can use it with a rule mark to highlight a 
-threshold value (e.g., 200 dollars stock price).
+threshold value (e.g., 300 dollars stock price).
 
 .. altair-plot::
     
