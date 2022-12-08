@@ -13,8 +13,8 @@ import altair as alt
 source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
 
 base = alt.Chart(source).encode(
-    theta=alt.Theta("values:Q", stack=True),
-    radius=alt.Radius("values", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+    alt.Theta("values:Q").stack(True),
+    alt.Radius("values").scale(type="sqrt", zero=True, rangeMin=20),
     color="values:N",
 )
 

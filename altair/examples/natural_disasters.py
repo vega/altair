@@ -17,20 +17,20 @@ alt.Chart(source).transform_filter(
     strokeWidth=1,
     strokeOpacity=0.4
 ).encode(
-    x=alt.X('Year:T', title=None, scale=alt.Scale(domain=['1899','2018'])),
-    y=alt.Y(
-        'Entity:N',
-        sort=alt.EncodingSortField(field="Deaths", op="sum", order='descending'),
-        title=None
-    ),
-    size=alt.Size('Deaths:Q',
-        scale=alt.Scale(range=[0, 2500]),
-        legend=alt.Legend(title='Deaths', clipHeight=30, format='s')
-    ),
-    color=alt.Color('Entity:N', legend=None),
+    alt.X('Year:T')
+        .title(None)
+        .scale(domain=['1899','2018']),
+    alt.Y('Entity:N')
+        .title(None)
+        .sort(field="Deaths", op="sum", order='descending'),
+    alt.Size('Deaths:Q')
+        .scale(range=[0, 2500])
+        .title('Deaths')
+        .legend(clipHeight=30, format='s'),
+    alt.Color('Entity:N').legend(None),
     tooltip=[
-        "Entity:N", 
-        alt.Tooltip("Year:T", format='%Y'), 
+        "Entity:N",
+        alt.Tooltip("Year:T", format='%Y'),
         alt.Tooltip("Deaths:Q", format='~s')
     ],
 ).properties(

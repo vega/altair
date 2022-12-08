@@ -18,8 +18,10 @@ import pandas as pd
 import numpy as np
 
 np.random.seed(42)
-source = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
-                    columns=['A', 'B', 'C'], index=pd.RangeIndex(100, name='x'))
+source = pd.DataFrame(
+    np.cumsum(np.random.randn(100, 3), 0).round(2),
+    columns=['A', 'B', 'C'], index=pd.RangeIndex(100, name='x')
+)
 source = source.reset_index().melt('x', var_name='category', value_name='y')
 
 # Create a selection that chooses the nearest point & selects based on x-value

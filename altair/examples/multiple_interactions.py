@@ -19,9 +19,11 @@ movies = alt.UrlData(
     format=alt.DataFormat(parse={"Release_Date":"date"})
 )
 ratings = ['G', 'NC-17', 'PG', 'PG-13', 'R']
-genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
-       'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
-       'Romantic Comedy', 'Thriller/Suspense', 'Western']
+genres = [
+    'Action', 'Adventure', 'Black Comedy', 'Comedy',
+    'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
+    'Romantic Comedy', 'Thriller/Suspense', 'Western'
+]
 
 base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transform_calculate(
     Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)",
@@ -32,14 +34,18 @@ base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transfor
 ).transform_filter(
     alt.FieldOneOfPredicate(field='MPAA_Rating', oneOf=ratings)
 ).encode(
-    x=alt.X('Worldwide_Gross:Q', scale=alt.Scale(domain=(100000,10**9), clamp=True)),
+    x=alt.X('Worldwide_Gross:Q').scale(domain=(100000,10**9), clamp=True),
     y='IMDB_Rating:Q',
     tooltip="Title:N"
 )
 
 # A slider filter
 year_slider = alt.binding_range(min=1969, max=2018, step=1)
-slider_selection = alt.selection_point(bind=year_slider, fields=['Release_Year'], name="Release Year_")
+slider_selection = alt.selection_point(
+    bind=year_slider,
+    fields=['Release_Year'],
+    name="Release Year_"
+)
 
 
 filter_year = base.add_params(
@@ -62,9 +68,11 @@ filter_genres = base.add_params(
 rating_radio = alt.binding_radio(options=ratings)
 
 rating_select = alt.selection_point(fields=['MPAA_Rating'], bind=rating_radio, name="Rating")
-rating_color_condition = alt.condition(rating_select,
-                      alt.Color('MPAA_Rating:N', legend=None),
-                      alt.value('lightgray'))
+rating_color_condition = alt.condition(
+    rating_select,
+    alt.Color('MPAA_Rating:N').legend(None),
+    alt.value('lightgray')
+)
 
 highlight_ratings = base.add_params(
     rating_select

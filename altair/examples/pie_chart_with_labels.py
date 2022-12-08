@@ -15,7 +15,8 @@ source = pd.DataFrame(
 )
 
 base = alt.Chart(source).encode(
-    theta=alt.Theta("value:Q", stack=True), color=alt.Color("category:N", legend=None)
+    alt.Theta("value:Q").stack(True),
+    alt.Color("category:N").legend(None)
 )
 
 pie = base.mark_arc(outerRadius=120)
