@@ -733,6 +733,16 @@ threshold value (e.g., 300 dollars stock price).
 
     lines + rule
 
+If we instead used `alt.value` in this example, we would position the rule 300 pixels from the left of the chart border rather than at the 300 dollars position:
+
+.. altair-plot::
+
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.datum(300)
+    )
+
+    lines + rule
+
 You can also use ``datum`` with :class:`DateTime`, for example, to highlight a certain year.
 In addition, we will set the color for the rule to the same one as the line for the symbol ``MSFT``
 with ``alt.datum("MSFT")``.
