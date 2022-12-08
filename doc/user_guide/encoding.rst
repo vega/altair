@@ -733,12 +733,12 @@ threshold value (e.g., 300 dollars stock price).
 
     lines + rule
 
-If we instead used `alt.value` in this example, we would position the rule 300 pixels from the left of the chart border rather than at the 300 dollars position:
+If we instead used ``alt.value`` in this example, we would position the rule 300 pixels from the bottom of the chart border rather than at the 300 dollars position:
 
 .. altair-plot::
 
     rule = base.mark_rule(strokeDash=[2, 2]).encode(
-        y=alt.datum(300)
+        y=alt.value(300)
     )
 
     lines + rule
