@@ -82,7 +82,7 @@ VEGAEMBED_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-embed@{}".format(
 
 VGL_TEMPLATE = jinja2.Template(
     """
-<div id="{{ div_id }}">
+<div id="{{ div_id }}"{% if div_class %} class="{{ div_class }}"{% endif %}>
 <script>
   // embed when document is loaded, to ensure vega library is available
   // this works on all modern browsers, except IE8 and older
@@ -132,6 +132,10 @@ def validate_output(output):
     return output
 
 
+def validate_div_class(output):
+    return output.strip().lower()
+
+
 class AltairPlotDirective(Directive):
     has_content = True
 
@@ -144,6 +148,7 @@ class AltairPlotDirective(Directive):
         "links": validate_links,
         "chart-var-name": unchanged,
         "strict": flag,
+        "div_class": validate_div_class,
     }
 
     def run(self):
@@ -153,6 +158,7 @@ class AltairPlotDirective(Directive):
         hide_code = "hide-code" in self.options
         code_below = "code-below" in self.options
         strict = "strict" in self.options
+        div_class = self.options.get("div_class", None)
 
         if not hasattr(env, "_altair_namespaces"):
             env._altair_namespaces = {}
@@ -184,6 +190,7 @@ class AltairPlotDirective(Directive):
         plot_node = altair_plot()
         plot_node["target_id"] = target_id
         plot_node["div_id"] = div_id
+        plot_node["div_class"] = div_class
         plot_node["code"] = code
         plot_node["namespace"] = namespace
         plot_node["relpath"] = os.path.relpath(rst_dir, env.srcdir)
@@ -291,6 +298,7 @@ def html_visit_altair_plot(self, node):
             # Pass relevant info into the template and append to the output
             html = VGL_TEMPLATE.render(
                 div_id=node["div_id"],
+                div_class=node["div_class"],
                 spec=json.dumps(spec),
                 mode="vega-lite",
                 renderer="canvas",
