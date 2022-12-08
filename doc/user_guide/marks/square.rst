@@ -17,12 +17,12 @@ and the following special properties:
 Scatter Plot with Square
 ------------------------
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
+   import altair as alt
+   from vega_datasets import data
 
-    source = data.cars()
+   source = data.cars()
 
-    alt.Chart(source).mark_square().encode(
+   alt.Chart(source).mark_square().encode(
       x="Horsepower:Q",
       y="Miles_per_Gallon:Q",
    )

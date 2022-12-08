@@ -67,7 +67,7 @@ A ``line`` mark definition can contain any :ref:`standard mark properties <mark-
 and the following line interpolation and point overlay properties:
 
 .. altair-object-table:: altair.MarkDef
-:properties: orient interpolate tension point
+    :properties: orient interpolate tension point
 
 Examples
 --------
