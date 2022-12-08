@@ -103,8 +103,8 @@ Channel  Altair Class      Description               Example
 href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
 =======  ================  ========================  =========================================
 
-Level of Detail Channel
-^^^^^^^^^^^^^^^^^^^^^^^
+Detail Channel
+^^^^^^^^^^^^^^
 
 Grouping data is an important operation in data visualization. For line and area marks,
 mapping an unaggregated data field to any
