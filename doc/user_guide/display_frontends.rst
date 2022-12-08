@@ -70,8 +70,8 @@ new Altair releases.
 
 .. _display-notebook:
 
-Displaying in the Jupyter Notebook
-----------------------------------
+Displaying in Jupyter Notebook
+------------------------------
 The classic Jupyter Notebook will work with Altair's default renderer with
 a live web connection: no render enable step is required.
 
