@@ -708,8 +708,8 @@ Datum and Value
 So far we always mapped an encoding channel to a column in our dataset. However, sometimes
 it is also useful to map to a single constant value. In Altair, you can do this with
 
-* ``datum``, which describes a constant data value encoded via a scale
-* ``value``, which describes an encoded constant visual value
+* ``datum``, which encodes a constant domain value via a scale using the same units as the underlying data
+* ``value``, which encodes a constant visual value, using absolute units such as an exact position in pixels, the name or RGB value of a color, the name of shape,  etc
 
 ``datum`` is particularly useful for annotating a specific data value. 
 For example, you can use it with a rule mark to highlight a 
