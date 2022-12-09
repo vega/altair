@@ -2,8 +2,8 @@
 
 .. _user-guide-interactions:
 
-Interactive Charts: Parameters, Conditions, Bindings
-====================================================
+Interactive Charts
+==================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*.
