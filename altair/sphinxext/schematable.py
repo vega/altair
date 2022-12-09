@@ -117,7 +117,7 @@ def build_row(item):
         is_text = not is_text
 
     # row += nodes.entry('')
-    row += nodes.entry("", par_type)  # , classes=["vl-type-def"]
+    row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
     md_parser = CommonMarkParser()
@@ -133,7 +133,7 @@ def build_row(item):
     return row
 
 
-def build_schema_tabel(items):
+def build_schema_table(items):
     """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
@@ -161,7 +161,7 @@ def select_items_from_schema(schema, props=None):
 
 def prepare_schema_table(schema, props=None):
     items = select_items_from_schema(schema, props)
-    return build_schema_tabel(items)
+    return build_schema_table(items)
 
 
 def validate_properties(properties):

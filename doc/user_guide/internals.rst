@@ -2,8 +2,8 @@
 
 .. _user-guide-internals:
 
-Altair Internals: Understanding the Library
-===========================================
+Altair Internals
+================
 This section will provide some details about how the Altair API relates to the
 Vega-Lite visualization specification, and how you can use that knowledge to
 use the package more effectively.
