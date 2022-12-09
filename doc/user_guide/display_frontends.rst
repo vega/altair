@@ -24,7 +24,7 @@ Altair's Renderer Framework
 Because different display systems have different requirements and constraints, Altair provides
 an API to switch between various *renderers* to tune Altair's chart representation.
 These can be chosen with the renderer registry in ``alt.renderers``.
-Some of the built-in renderers are:
+The most used built-in renderers are:
 
 ``alt.renderers.enable('html')``
   *(the default)* Output an HTML representation of the chart. The HTML renderer works
@@ -40,8 +40,21 @@ Some of the built-in renderers are:
   newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
-Other renderers can be installed by third-party packages via Python's entrypoints_ system;
-see :ref:`renderer-api`.
+In addition, Altair includes the following renderers:
+
+- ``"default"``, ``colab``, ``kaggle``, ``zeppelin``: identical to ``"html"``
+- ``"jupyterlab"``, ``"nteract"``: identical to ``"mimetype"``
+- ``"png"``: renderer that renders and converts the chart to PNG, outputting it
+  using the ``'image/png'`` MIME type.
+- ``"svg"``: renderer that renders and converts the chart to an SVG image,
+  outputting it using the ``'image/svg+xml'`` MIME type.
+- ``"json"``: renderer that outputs the raw JSON chart specification, using the
+  ``'application/json'`` MIME type.
+
+You can use ``alt.renderers.names()`` to return all registered renderers as a Python list.
+
+Other renderers can be installed by third-party packages via Python's entrypoints_ system or you can create your own,
+see :ref:`customizing-renderers`.
 
 
 .. _display-jupyterlab:
@@ -190,77 +203,6 @@ Manual ``save()`` and display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you would prefer, you can save your chart to a file (html, png, etc.) first and then display it.
 See :ref:`user-guide-saving` for more information.
-
-.. _renderer-api:
-
-Renderer API
-============
-
-If you want to enable Altair rendering with behavior not provided by the built-in
-renderers, you can use the renderer API to create that custom behavior.
-In Altair, a renderer is any function that accepts a Vega-Lite or Vega
-visualization specification as a Python ``dict``, and returns a Python ``dict``
-in Jupyter's `MIME Bundle format
-<https://jupyter-client.readthedocs.io/en/stable/messaging.html#display-data>`_.
-The keys of the MIME bundle should be MIME types (such as ``image/png``) and the
-values should be the data for that MIME type (text, base64 encoded binary or
-JSON). The type signature of a renderer is thus::
-
-    def renderer(spec: dict) -> dict:
-        ...
-
-Altair's default ``html`` renderer returns a cross-platform HTML representation using
-the ``"text/html"`` mimetype; schematically it looks like this::
-
-    def default_renderer(spec):
-        bundle = {'text/html': generate_html(spec)}
-        metadata = {}
-        return bundle, metadata
-
-Propertly-configured Jupyter frontends know how to interpret and display charts using
-custom vega-specific mimetypes; for example:
-
-* Vega-Lite 5.x: ``application/vnd.vegalite.v5+json``
-* Vega 5.x: ``application/vnd.vega.v5+json``
-
-Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
-
-    def default_renderer(spec):
-        bundle = {}
-        metadata = {}
-        bundle['text/plain'] = '<VegaLite 5 object>`
-        bundle['application/vnd.vegalite.v5+json'] = spec
-        return bundle, metadata
-
-If a renderer needs to do custom display logic that doesn't use Jupyter's display
-system, it can return an empty MIME bundle dict::
-
-    def non_jupyter_renderer(spec):
-        # Custom display logic that uses the spec
-        ...
-        # Return empty MIME bundle
-        return {}
-
-Altair offers an API to list the known renderers, register new ones and enable
-a given one. To return the registered renderers as a Python list::
-
-    >>> import altair as alt
-    >>> alt.renderers.names()
-    ['colab', 'default', 'html', 'json', 'jupyterlab', 'kaggle', 'mimetype',
-    'nteract', 'png', 'svg', 'zeppelin']
-
-To enable the JSON renderer, which results in a collapsible JSON tree view
-in JupyterLab/nteract::
-
-    >>> alt.renderers.enable('json')
-
-To register and enable a new renderer::
-
-    >>> alt.renderers.register('custom_renderer', custom_renderer)
-    >>> alt.renderers.enable('custom_renderer')
-
-Renderers can also be registered using the `entrypoints`_ API of Python packages.
-For an example, see `ipyvega`_.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
