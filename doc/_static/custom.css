@@ -34,6 +34,29 @@ table td.vl-type-def {
   max-width: 20%
 }
 
+.properties-example .vega-bind-name {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.properties-example .vega-bindings {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.properties-example .vega-bindings select {
+  max-width: 180px;
+}
+
+.properties-example .vega-bindings input {
+  vertical-align: text-bottom;
+  margin-right: 3px;
+}
+  
+.full-width-plot {
+  width: 100%;
+}
+
 /* Use full page width without sidebars */
 /* .bd-content { */
 /*   max-width: 100%; */

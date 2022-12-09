@@ -28,7 +28,7 @@ Some of the built-in renderers are:
 
 ``alt.renderers.enable('html')``
   *(the default)* Output an HTML representation of the chart. The HTML renderer works
-  in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, and many related notebook frontends,
+  in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, `VSCode-Python`_ and many related notebook frontends,
   as well as Jupyter ecosystem tools like nbviewer_ and nbconvert_ HTML output.
   It requires a web connection in order to load relevant Javascript libraries.
 
@@ -116,11 +116,12 @@ mimetype, and use::
 
 Displaying in VSCode
 --------------------
-`VSCode-Python`_ includes a vega-lite renderer to display charts in-app via the
-vega-lite mimetype output. You can enable it by running::
+`VSCode-Python`_ works with Altair's default renderer with a live web connection: no render enable step is required.
 
+Optionally, for offline rendering, you can use the mimetype renderer::
+
+    # Optional in VS Code
     alt.renderers.enable('mimetype')
-
 
 .. _display-general:
 
@@ -187,12 +188,8 @@ the chart is closed.
 
 Manual ``save()`` and display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you would prefer, you can manually save your chart as html and open it with
-a web browser. Once you have created your chart, run::
-
-    chart.save('filename.html')
-
-and use a web browser to open this file.
+If you would prefer, you can save your chart to a file (html, png, etc.) first and then display it.
+See :ref:`user-guide-saving` for more information.
 
 .. _renderer-api:
 

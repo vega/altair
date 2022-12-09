@@ -3,11 +3,15 @@
 .. _user-guide-geoshape-marks:
 
 Geoshape
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 ``mark_geoshape`` represents an arbitrary shapes whose geometry is determined by specified spatial data.
 
+Geoshape Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^
+A ``geoshape`` mark can contain any :ref:`standard mark properties <mark-properties>`.
+
 Basic Map
-~~~~~~~~~
+^^^^^^^^^
 Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth dataset and create a basic map using ``mark_geoshape``:
 
 .. altair-plot::
@@ -17,7 +21,7 @@ Altair can work with many different geographical data formats, including geojson
     import geopandas as gpd
 
     fp = gpd.datasets.get_path('naturalearth_lowres')
-    gdf_ne = gpd.read_file(fp)  # shapefile    
+    gdf_ne = gpd.read_file(fp)  # shapefile
 
     alt.Chart(gdf_ne).mark_geoshape()
 
@@ -32,8 +36,8 @@ In the example above, Altair applies a default blue ``fill`` color and uses a de
     )
 
 Focus & Filtering
-~~~~~~~~~~~~~~~~~
-By default Altair automatically adjusts the projection so that all the data fits within the width and height of the chart. 
+^^^^^^^^^^^^^^^^^
+By default Altair automatically adjusts the projection so that all the data fits within the width and height of the chart.
 Multiple approaches can be used to focus on specific regions of your spatial data. Namely:
 
 1. Filter the source data within your GeoDataFrame.
@@ -64,7 +68,7 @@ The following examples applies these approaches to focus on continental Africa:
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape().project(
-        scale=200, 
+        scale=200,
         translate=[160, 160]  # lon, lat
     )
 
@@ -85,11 +89,11 @@ The following examples applies these approaches to focus on continental Africa:
 
     alt.Chart(gdf_ne).mark_geoshape(clip=True).project(
         fit=extent_roi_geojson
-    )    
+    )
 
 Cartesian coordinates
-~~~~~~~~~~~~~~~~~~~~~
-The default projection of Altair is ``equalEarth``, which accurately represents the areas of the world's landmasses relative each other. This default assumes that your geometries are in degrees and referenced by longitude and latitude values. 
+^^^^^^^^^^^^^^^^^^^^^
+The default projection of Altair is ``equalEarth``, which accurately represents the areas of the world's landmasses relative each other. This default assumes that your geometries are in degrees and referenced by longitude and latitude values.
 Another widely used coordinate system for data visualization is the 2d cartesian coordinate system. This coordinate system does not take into account the curvature of the Earth.
 
 In the following example the input geometry is not projected and is instead rendered directly in raw coordinates using the ``identity`` projection type. We have to define the ``reflectY`` as well since Canvas and SVG treats positive ``y`` as pointing down.
@@ -97,12 +101,12 @@ In the following example the input geometry is not projected and is instead rend
 .. altair-plot::
 
     alt.Chart(gdf_sel).mark_geoshape().project(
-        type='identity', 
+        type='identity',
         reflectY=True
     )
 
 Mapping Polygons
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 The following example maps the visual property of the ``name`` column using the ``color`` encoding.
 
 .. altair-plot::
@@ -111,7 +115,7 @@ The following example maps the visual property of the ``name`` column using the 
         color='name:N'
     )
 
-Since each country is represented by a (multi)polygon, we can separate the ``stroke`` and ``fill`` definitions as such: 
+Since each country is represented by a (multi)polygon, we can separate the ``stroke`` and ``fill`` definitions as such:
 
 .. altair-plot::
 
@@ -120,34 +124,34 @@ Since each country is represented by a (multi)polygon, we can separate the ``str
         strokeWidth=1.5
     ).encode(
         fill='name:N'
-    ) 
+    )
 
 Mapping Lines
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 By default Altair assumes for ``mark_geoshape`` that the mark's color is used for the fill color instead of the stroke color.
 This means that if your source data contain (multi)lines, you will have to explicitly define the ``filled`` value as ``False``.
 
 Compare:
 
 .. altair-plot::
-    
+
     gs_line = gpd.GeoSeries.from_wkt(['LINESTRING (0 0, 1 1, 0 2, 2 2, -1 1, 1 0)'])
     alt.Chart(gs_line).mark_geoshape().project(
-        type='identity', 
+        type='identity',
         reflectY=True
-    )    
+    )
 
 With:
 
 .. altair-plot::
-    
+
     gs_line = gpd.GeoSeries.from_wkt(['LINESTRING (0 0, 1 1, 0 2, 2 2, -1 1, 1 0)'])
     alt.Chart(gs_line).mark_geoshape(
         filled=False
     ).project(
-        type='identity', 
+        type='identity',
         reflectY=True
-    ) 
+    )
 
 Using this approach one can also style Polygons as if they are Linestrings:
 
@@ -161,14 +165,14 @@ Using this approach one can also style Polygons as if they are Linestrings:
     )
 
 Mapping Points
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 Points can be drawn when they are defined as ``Points`` within a GeoDataFrame using ``mark_geoshape``.
 We first assign the centroids of Polygons as Point geometry and plot these:
 
 .. altair-plot::
 
     gdf_centroid = gpd.GeoDataFrame(
-        data=gdf_sel.copy(),  # .copy() to prevent changing the original `gdf_sel` variable 
+        data=gdf_sel.copy(),  # .copy() to prevent changing the original `gdf_sel` variable
         geometry=gdf_sel.geometry.centroid
     )
 
@@ -203,7 +207,7 @@ Altair also contains expressions related to geographical features. We can for ex
     ).encode(
         longitude='centroid[0]:Q',
         latitude='centroid[1]:Q',
-        size="pop_est:Q" 
+        size="pop_est:Q"
     )
 
     (basemap + bubbles).project(
@@ -211,9 +215,9 @@ Altair also contains expressions related to geographical features. We can for ex
     )
 
 Choropleths
-~~~~~~~~~
+^^^^^^^^^^^
 
-An alternative to showing the population sizes as bubbles, is to create a "Choropleth" map. These are geographical heatmaps where the color or each region are mapped to the values of a column in the dataframe. 
+An alternative to showing the population sizes as bubbles, is to create a "Choropleth" map. These are geographical heatmaps where the color or each region are mapped to the values of a column in the dataframe.
 
 .. altair-plot::
 
@@ -224,7 +228,7 @@ An alternative to showing the population sizes as bubbles, is to create a "Choro
 When we create choropleth maps, we need to be careful, because although the color changes according to the value of the column we are interested in, the size is tied to the area of each country and we might miss interesting values in small countries just because we can't easily see them on the map (e.g. if we were to visualize population density).
 
 Lookup datasets
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 Sometimes your data is separated in two datasets. One ``DataFrame`` with the data and one ``GeoDataFrame`` with the geometries.
 In this case you can use the ``lookup`` transform to collect related information from the other dataset.
 
@@ -235,8 +239,8 @@ You can use the ``lookup`` transform in two directions:
 
 Depending on your use-case one or the other is more favorable.
 
-First we show an example of the first approach. 
-Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the ``gdf_us_counties`` GeoDataFrame is used as source: 
+First we show an example of the first approach.
+Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the ``gdf_us_counties`` GeoDataFrame is used as source:
 
 .. altair-plot::
 
@@ -248,7 +252,7 @@ Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the 
     df_us_unemp = data.unemployment()
 
     alt.Chart(gdf_us_counties).mark_geoshape().transform_lookup(
-        lookup='id', 
+        lookup='id',
         from_=alt.LookupData(data=df_us_unemp, key='id', fields=['rate'])
     ).encode(
         alt.Color('rate:Q')
@@ -271,10 +275,10 @@ Here we lookup the geometries through the fields ``geometry`` and ``type`` from 
     )
 
 Choropleth Classification
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 In addition to displaying a continuous quantitative variable, choropleths can also be used to show discrete levels of a variable. While we should generally be careful to not create artificial groups when discretizing a continuous variable, it can be very useful when we have natural cutoff levels of a variable that we want to showcase clearly.
 We first define a utility function ``classify()`` that we will use to showcase different approaches to make a choropleth map.
-We apply it to define a choropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale. 
+We apply it to define a choropleth map of the unemployment statistics of 2018 of US counties using a ``linear`` scale.
 
 .. altair-plot::
 
@@ -319,17 +323,17 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
 
     classify(type='linear')
 
-We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range 
+We visualize the unemployment ``rate`` in percentage of 2018 with a ``linear`` scale range
 using a ``mark_geoshape()`` to present the spatial patterns on a map. Each value/
-county has defined a `unique` color. This gives a bit of insight, but often we like to 
+county has defined a `unique` color. This gives a bit of insight, but often we like to
 group the distribution into classes.
 
-By grouping values in classes, you can classify the dataset so all values/geometries in 
+By grouping values in classes, you can classify the dataset so all values/geometries in
 each class get assigned the same color.
 
 Here we present a number of scale methods how Altair can be used:
 
-- ``quantile``, this type will divide your dataset (`domain`) into intervals of similar sizes. Each class contains more or less the same number of values/geometries (`equal counts`). The scale definition will look as follow: 
+- ``quantile``, this type will divide your dataset (`domain`) into intervals of similar sizes. Each class contains more or less the same number of values/geometries (`equal counts`). The scale definition will look as follow:
 
 .. code:: python
 
@@ -341,7 +345,7 @@ And applied in our utility function:
 
     classify(type='quantile', title=['quantile', 'equal counts'])
 
-- ``quantize``, this type will divide the extent of your dataset (`range`) in equal intervals. Each class contains different number of values, but the step size is equal (`equal range`). The scale definition will look as follow: 
+- ``quantize``, this type will divide the extent of your dataset (`range`) in equal intervals. Each class contains different number of values, but the step size is equal (`equal range`). The scale definition will look as follow:
 
 .. code:: python
 
@@ -366,7 +370,7 @@ And applied in our utility function:
 
     classify(type='quantize', nice=True, title=['quantize', 'equal range nice'])
 
-- ``threshold``, this type will divide your dataset in separate classes by manually specifying the cut values. Each class is separated by defined classes. The scale definition will look as follow: 
+- ``threshold``, this type will divide your dataset in separate classes by manually specifying the cut values. Each class is separated by defined classes. The scale definition will look as follow:
 
 .. code:: python
 
@@ -378,18 +382,18 @@ And applied in our utility function:
 
     classify(type='threshold', breaks=[0.05, 0.20])
 
-The definition above will create 3 classes. One class with values below `0.05`, one 
+The definition above will create 3 classes. One class with values below `0.05`, one
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
 
-So which method provides the optimal data classification for choropleth maps? As 
-usual, it depends. 
+So which method provides the optimal data classification for choropleth maps? As
+usual, it depends.
 
 There is another popular method that aid in determining class breaks.
-This method will maximize the similarity of values in a class while maximizing the 
-distance between the classes (`natural breaks`). The method is also known as the 
+This method will maximize the similarity of values in a class while maximizing the
+distance between the classes (`natural breaks`). The method is also known as the
 Fisher-Jenks algorithm and is similar to k-Means in 1D:
 
--  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks 
+-  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks
 as such:
 
 .. code:: python
@@ -407,18 +411,18 @@ And applied in our utility function:
     classify(type='threshold', breaks=[0.061, 0.088, 0.116, 0.161],
             title=['threshold Jenks','natural breaks'])
 
-Caveats: 
+Caveats:
 
 - For the type ``quantize`` and ``quantile`` scales we observe that the default number of classes is 5. You can change the number of classes using a ``SchemeParams()`` object. In the above specification we can change ``scheme='turbo'`` into ``scheme=alt.SchemeParams('turbo', count=2)`` to manually specify usage of 2 classes for the scheme within the scale.
 - The natural breaks method will determine the optimal class breaks given the required number of classes, but how many classes should you pick? One can investigate usage of goodness of variance fit (GVF), aka Jenks optimization method, to determine this.
 
 Repeat a Map
-~~~~~~~~~~~~
-The :class:`RepeatChart` pattern, accessible via the :meth:`Chart.repeat` method 
-provides a convenient interface for a particular type of horizontal or vertical 
+^^^^^^^^^^^^
+The :class:`RepeatChart` pattern, accessible via the :meth:`Chart.repeat` method
+provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a multi-dimensional dataset.
 
-In the following example we have a dataset referenced as ``source`` from which we use 
+In the following example we have a dataset referenced as ``source`` from which we use
 three columns defining the ``population``, ``engineers`` and ``hurricanes`` of each US state.
 
 The ``states`` is defined by making use of :func:`topo_feature` using ``url`` and ``feature``
@@ -450,18 +454,18 @@ the color encoding as ``alt.repeat('row')``
     )
 
 Facet a Map
-~~~~~~~~~~~
-The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method 
-provides a convenient interface for a particular type of horizontal or vertical 
+^^^^^^^^^^^
+The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method
+provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a dataset where one field contain multiple ``variables``.
 
-Unfortunately, the following open issue https://github.com/altair-viz/altair/issues/2369 
+Unfortunately, the following open issue https://github.com/altair-viz/altair/issues/2369
 will make the following not work for geographic visualization:
 
 .. altair-plot::
 
     source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
-    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')  
+    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
     gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
@@ -472,7 +476,7 @@ will make the following not work for geographic visualization:
         height=130
     ).resolve_scale('independent')
 
-For now, the following workaround can be adopted to facet a map, manually filter the 
+For now, the following workaround can be adopted to facet a map, manually filter the
 data in pandas, and create a small multiples chart via concatenation. For example:
 
 .. altair-plot::
@@ -494,11 +498,11 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
     ).resolve_scale(color="independent")
 
 Interaction
-~~~~~~~~~~~
-Often a map does not come alone, but is used in combination with another chart. 
+^^^^^^^^^^^
+Often a map does not come alone, but is used in combination with another chart.
 Here we provide an example of an interactive visualization of a bar chart and a map.
 
-The data shows the states of the US in combination with a bar chart showing the 15 most 
+The data shows the states of the US in combination with a bar chart showing the 15 most
 populous states. Using an ``alt.selection_point()`` we define a selection parameter that connects to our left-mouseclick.
 
 .. altair-plot::
@@ -550,10 +554,10 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
 
 Expression
-~~~~~~~~~~
+^^^^^^^^^^
 Altair expressions can be used within a geographical visualization. The following example
 visualize earthquakes on the globe using an ``orthographic`` projection. Where we can rotate
-the earth on a single-axis. (``rotate0``). The utility function :func:`sphere` is adopted to 
+the earth on a single-axis. (``rotate0``). The utility function :func:`sphere` is adopted to
 get a disk of the earth as background. The GeoDataFrame with the earthquakes has an ``XYZ``` point geometry, where each coordinate represent ``lon``, ``lat`` and ``depth`` respectively.
 We use here an elegant way to access the nested point coordinates from the geometry column directly to draw circles. Using this approach we do not need to assign them to three separate columns first.
 
@@ -619,16 +623,5 @@ We use here an elegant way to access the nested point coordinates from the geome
     )
     comb
 
-The earthquakes are displayed using a ``mark_geoshape`` and filtered once out of sight of 
+The earthquakes are displayed using a ``mark_geoshape`` and filtered once out of sight of
 the visible part of the world. A hover highlighting is added to get more insight of each earthquake.
-
-Geoshape Options
-~~~~~~~~~~~~~~~~
-
-Additional arguments to ``mark_geoshape()`` method are passed along to an
-associated :class:`MarkDef` instance, which supports the following attributes:
-
-.. altair-object-table:: altair.MarkDef
-
-Marks can also be configured globally using chart-level configurations; see
-:ref:`config-mark` for details.
