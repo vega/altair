@@ -6,8 +6,3 @@ URL
 ~~~
 
 Describe
-
-Examples
---------
-
-Show

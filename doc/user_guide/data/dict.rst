@@ -6,8 +6,3 @@ Dictionary
 ~~~~~~~~~~
 
 Describe
-
-Examples
---------
-
-Show
