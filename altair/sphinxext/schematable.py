@@ -201,12 +201,12 @@ class AltairObjectTableDirective(Directive):
             result += [raw_html]
         # create the table from the object
         result.append(prepare_schema_table(schema, props=properties))
-        
+
         if not dont_collapse_table:
             html = "</details>"
             raw_html = nodes.raw("", html, format="html")
             result += [raw_html]
-        
+
         return result
 
 
