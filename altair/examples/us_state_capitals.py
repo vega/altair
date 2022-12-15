@@ -31,7 +31,7 @@ base = alt.Chart(capitals).encode(
 )
 
 text = base.mark_text(dy=-5, align='right').encode( 
-    alt.Text('city', type='nominal'),
+    alt.Text('city:N'),
     opacity=alt.condition(~hover, alt.value(0), alt.value(1))
 )
 

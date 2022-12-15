@@ -19,31 +19,29 @@ yscale = alt.Scale(domain=(1.9, 4.55))
 bar_args = {'opacity': .3, 'binSpacing': 0}
 
 points = base.mark_circle().encode(
-    alt.X('sepalLength', scale=xscale),
-    alt.Y('sepalWidth', scale=yscale),
+    alt.X('sepalLength').scale(xscale),
+    alt.Y('sepalWidth').scale(yscale),
     color='species',
 )
 
 top_hist = base.mark_bar(**bar_args).encode(
-    alt.X('sepalLength:Q',
+    alt.X('sepalLength:Q')
           # when using bins, the axis scale is set through
           # the bin extent, so we do not specify the scale here
           # (which would be ignored anyway)
-          bin=alt.Bin(maxbins=20, extent=xscale.domain),
-          stack=None,
-          title=''
-         ),
-    alt.Y('count()', stack=None, title=''),
+          .bin(maxbins=20, extent=xscale.domain)
+          .stack(None)
+          .title(''),
+    alt.Y('count()').stack(None).title(''),
     alt.Color('species:N'),
 ).properties(height=60)
 
 right_hist = base.mark_bar(**bar_args).encode(
-    alt.Y('sepalWidth:Q',
-          bin=alt.Bin(maxbins=20, extent=yscale.domain),
-          stack=None,
-          title='',
-         ),
-    alt.X('count()', stack=None, title=''),
+    alt.Y('sepalWidth:Q')
+          .bin(maxbins=20, extent=yscale.domain)
+          .stack(None)
+          .title(''),
+    alt.X('count()').stack(None).title(''),
     alt.Color('species:N'),
 ).properties(width=60)
 

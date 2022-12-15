@@ -11,8 +11,10 @@ from vega_datasets import data
 
 source = data.seattle_weather()
 
-scale = alt.Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
-                  range=['#e7ba52', '#a7a7a7', '#aec7e8', '#1f77b4', '#9467bd'])
+scale = alt.Scale(
+    domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
+    range=['#e7ba52', '#a7a7a7', '#aec7e8', '#1f77b4', '#9467bd']
+)
 color = alt.Color('weather:N', scale=scale)
 
 # We create two selections:
@@ -23,13 +25,12 @@ click = alt.selection_point(encodings=['color'])
 
 # Top panel is scatter plot of temperature vs time
 points = alt.Chart().mark_point().encode(
-    alt.X('monthdate(date):T', title='Date'),
-    alt.Y('temp_max:Q',
-        title='Maximum Daily Temperature (C)',
-        scale=alt.Scale(domain=[-5, 40])
-    ),
+    alt.X('monthdate(date):T').title('Date'),
+    alt.Y('temp_max:Q')
+        .title('Maximum Daily Temperature (C)')
+        .scale(domain=[-5, 40]),
+    alt.Size('precipitation:Q').scale(range=[5, 200]),
     color=alt.condition(brush, color, alt.value('lightgray')),
-    size=alt.Size('precipitation:Q', scale=alt.Scale(range=[5, 200]))
 ).properties(
     width=550,
     height=300

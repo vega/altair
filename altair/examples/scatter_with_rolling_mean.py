@@ -23,9 +23,8 @@ line = alt.Chart(source).mark_line(
 )
 
 points = alt.Chart(source).mark_point().encode(
-    x='date:T', 
-    y=alt.Y('temp_max:Q', 
-            axis=alt.Axis(title='Max Temp'))
+    x='date:T',
+    y=alt.Y('temp_max:Q').title('Max Temp')
 )
 
 points + line

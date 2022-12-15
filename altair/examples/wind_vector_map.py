@@ -14,20 +14,15 @@ from vega_datasets import data
 df_wind = data.windvectors()
 data_world = alt.topo_feature(data.world_110m.url, "countries")
 
-wedge = (
-    alt.Chart(df_wind)
-    .mark_point(shape="wedge", filled=True)
-    .encode(
-        latitude="latitude",
-        longitude="longitude",
-        color=alt.Color(
-            "dir", scale=alt.Scale(domain=[0, 360], scheme="rainbow"), legend=None
-        ),
-        angle=alt.Angle("dir", scale=alt.Scale(domain=[0, 360], range=[180, 540])),
-        size=alt.Size("speed", scale=alt.Scale(rangeMax=500)),
-    )
-    .project("equalEarth")
-)
+wedge = alt.Chart(df_wind).mark_point(shape="wedge", filled=True).encode(
+    alt.Latitude("latitude"),
+    alt.Longitude("longitude"),
+    alt.Color("dir")
+        .scale(domain=[0, 360], scheme="rainbow")
+        .legend(None),
+    alt.Angle("dir").scale(domain=[0, 360], range=[180, 540]),
+    alt.Size("speed").scale(rangeMax=500)
+).project("equalEarth")
 
 xmin, xmax, ymin, ymax = (
     df_wind.longitude.min(),

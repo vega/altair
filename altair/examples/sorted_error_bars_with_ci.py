@@ -14,14 +14,11 @@ points = alt.Chart(source).mark_point(
     filled=True,
     color='black'
 ).encode(
-    x=alt.X('mean(yield)', title='Barley Yield'),
-    y=alt.Y(
-        'variety',
-         sort=alt.EncodingSortField(
-             field='yield',
-             op='mean',
-             order='descending'
-         )
+    x=alt.X('mean(yield)').title('Barley Yield'),
+    y=alt.Y('variety').sort(
+        field='yield',
+        op='mean',
+        order='descending'
     )
 ).properties(
     width=400,

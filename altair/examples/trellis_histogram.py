@@ -11,7 +11,7 @@ from vega_datasets import data
 source = data.cars()
 
 alt.Chart(source).mark_bar().encode(
-    alt.X("Horsepower:Q", bin=True),
+    alt.X("Horsepower:Q").bin(),
     y='count()',
     row='Origin'
 )

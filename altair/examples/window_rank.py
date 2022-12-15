@@ -31,7 +31,7 @@ color_scale = alt.Scale(
 )
 
 alt.Chart(source).mark_line().encode(
-    x="matchday:O", y="rank:O", color=alt.Color("team:N", scale=color_scale)
+    x="matchday:O", y="rank:O", color=alt.Color("team:N").scale(color_scale)
 ).transform_window(
     rank="rank()",
     sort=[

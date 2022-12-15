@@ -16,12 +16,10 @@ source = pd.DataFrame(
     }
 )
 
-alt.Chart(source).mark_circle(opacity=1).transform_window(
-    id='rank()', 
+alt.Chart(source, height=100).mark_circle(opacity=1).transform_window(
+    id='rank()',
     groupby=['data']
 ).encode(
-    alt.X('data:O'), 
-    alt.Y('id:O', 
-          axis=None, 
-          sort='descending')
-).properties(height=100)
+    alt.X('data:O'),
+    alt.Y('id:O').axis(None).sort('descending')
+)

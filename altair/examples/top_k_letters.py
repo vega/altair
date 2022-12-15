@@ -35,6 +35,6 @@ alt.Chart(source).transform_aggregate(
 ).transform_filter(
     alt.datum.rank < 10
 ).mark_bar().encode(
-    y=alt.Y('letters:N', sort='-x'),
+    y=alt.Y('letters:N').sort('-x'),
     x='count:Q',
 )

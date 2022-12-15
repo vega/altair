@@ -29,8 +29,8 @@ points = base.mark_point(
     size=50,
     color='black'
 ).encode(
-    x=alt.X('x', scale=alt.Scale(domain=(0, 6))),
-    y=alt.Y('y', scale=alt.Scale(zero=False))
+    alt.X('x').scale(domain=(0, 6)),
+    alt.Y('y').scale(zero=False)
 )
 
 # generate the error bars
