@@ -2,8 +2,8 @@
 
 .. _user-guide-compound:
 
-Compound Charts: Layer, HConcat, VConcat, Repeat, Facet
--------------------------------------------------------
+Layered and Multi-View Charts
+-----------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
 and repeated charts. They are summarized in the following tables:

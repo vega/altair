@@ -461,7 +461,7 @@ you can set ``scale=None`` to use those colors directly:
       color=alt.Color('color', scale=None)
   )
 
-Adjusting the width of Bar Marks
+Adjusting the Width of Bar Marks
 --------------------------------
 The width of the bars in a bar plot are controlled through the ``size`` property in the :meth:`~Chart.mark_bar()`:
 
@@ -553,14 +553,15 @@ If you want your chart size to respond to the width of the HTML page or containe
 it is rendererd, you can set ``width`` or ``height`` to the string ``"container"``:
 
 .. altair-plot::
+    :div_class_: full-width-plot
 
-   alt.Chart(cars).mark_bar().encode(
-       x='Origin',
-       y='count()',
-   ).properties(
-       width='container',
-       height=200
-   )
+    alt.Chart(cars).mark_bar().encode(
+        x='Origin',
+        y='count()',
+    ).properties(
+        width='container',
+        height=200
+    )
 
 Note that this will only scale with the container if its parent element has a size determined
 outside the chart itself; For example, the container may be a ``<div>`` element that has style

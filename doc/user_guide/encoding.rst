@@ -94,6 +94,8 @@ text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_
 tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
 =======  ================  ========================  =========================================
 
+.. _hyperlink-channel:
+
 Hyperlink Channel
 ^^^^^^^^^^^^^^^^^
 
@@ -499,7 +501,7 @@ Shorthand            Equivalent long-form
 
 .. _ordering-channels:
 
-Ordering marks
+Ordering Marks
 ~~~~~~~~~~~~~~
 
 The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
@@ -552,7 +554,7 @@ The same approach works for other mark types, like stacked areas charts.
         order=alt.Order("site", sort="ascending")
     )
 
-For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
+For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
 
 .. altair-plot::
 
@@ -577,8 +579,8 @@ sort options available:
 - ``sort='ascending'`` (Default) will sort the field's value in ascending order.
   for string data, this uses standard alphabetical order.
 - ``sort='descending'`` will sort the field's value in descending order
-- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for 
-  sorting by that channel. An optional minus prefix can be used for a descending 
+- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
+  sorting by that channel. An optional minus prefix can be used for a descending
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
 - passing a list to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
@@ -645,9 +647,9 @@ x-axis, using the barley dataset:
         columns=3
     )
 
-The last two charts are the same because the default aggregation 
-(see :ref:`encoding-aggregates`) is ``mean``. To highlight the 
-difference between sorting via channel and sorting via field consider the 
+The last two charts are the same because the default aggregation
+(see :ref:`encoding-aggregates`) is ``mean``. To highlight the
+difference between sorting via channel and sorting via field consider the
 following example where we don't aggregate the data:
 
 .. altair-plot::
@@ -659,7 +661,7 @@ following example where we don't aggregate the data:
     base = alt.Chart(barley).mark_point().encode(
         y='yield:Q',
     ).properties(width=200)
-    
+
     # Sort according to encoding channel
     sortchannel = base.encode(
         alt.X(field='site', type='nominal',
@@ -677,7 +679,7 @@ following example where we don't aggregate the data:
     )
     sortchannel | sortfield
 
-By passing a :class:`EncodingSortField` class to ``sort`` we have more control over 
+By passing a :class:`EncodingSortField` class to ``sort`` we have more control over
 the sorting process.
 
 

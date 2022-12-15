@@ -1,11 +1,11 @@
 import importlib
-import warnings
 import re
+import warnings
 
-from docutils.parsers.rst import Directive
 from docutils import nodes, utils
-from sphinx import addnodes
+from docutils.parsers.rst import Directive
 from recommonmark.parser import CommonMarkParser
+from sphinx import addnodes
 
 
 def type_description(schema):
@@ -117,7 +117,7 @@ def build_row(item):
         is_text = not is_text
 
     # row += nodes.entry('')
-    row += nodes.entry("", par_type)  # , classes=["vl-type-def"]
+    row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
     md_parser = CommonMarkParser()
@@ -133,7 +133,7 @@ def build_row(item):
     return row
 
 
-def build_schema_tabel(items):
+def build_schema_table(items):
     """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
@@ -155,14 +155,17 @@ def select_items_from_schema(schema, props=None):
         for prop in props:
             try:
                 yield prop, properties[prop], prop in required
-            except KeyError:
-                warnings.warn("Can't find property:", prop)
+            except KeyError as err:
+                raise Exception(f"Can't find property: {prop}") from err
 
 
-def prepare_schema_tabel(schema, props=None):
-
+def prepare_schema_table(schema, props=None):
     items = select_items_from_schema(schema, props)
-    return build_schema_tabel(items)
+    return build_schema_table(items)
+
+
+def validate_properties(properties):
+    return properties.strip().split()
 
 
 class AltairObjectTableDirective(Directive):
@@ -178,16 +181,19 @@ class AltairObjectTableDirective(Directive):
     has_content = False
     required_arguments = 1
 
-    def run(self):
+    option_spec = {"properties": validate_properties}
 
+    def run(self):
         objectname = self.arguments[0]
         modname, classname = objectname.rsplit(".", 1)
         module = importlib.import_module(modname)
         cls = getattr(module, classname)
         schema = cls.resolve_references(cls._schema)
 
+        properties = self.options.get("properties", None)
+
         # create the table from the object
-        table = prepare_schema_tabel(schema)
+        table = prepare_schema_table(schema, props=properties)
         return [table]
 
 
