@@ -12,7 +12,7 @@ as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 
 For example, here we will visualize the cars dataset using four of the available
-encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
+**encoding channels** (see :ref:`user-guide-encoding-channels`): ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
@@ -28,6 +28,22 @@ encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
        shape='Origin'
    )
 
+Each encoding channel accepts a number of **channel options** which can be used to further configure
+the chart. For example, below we adjust the y-axis title and increase the step between the x-axis ticks:
+
+.. altair-plot::
+    import altair as alt
+    from vega_datasets import data
+    cars = data.cars()
+
+    alt.Chart(cars).mark_point().encode(
+        x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
+        y=alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
+        color='Origin',
+        shape='Origin'
+    )
+
+See :ref:`user-guide-encoding-channel-options` for all available options for each channel.
 
 .. _encoding-data-types:
 
@@ -150,6 +166,29 @@ data: a visual encoding that is suitable for categorical data may not be
 suitable for quantitative data, and vice versa.
 
 
+.. _shorthand-description:
+
+Encoding Shorthands
+~~~~~~~~~~~~~~~~~~~
+
+For convenience, Altair allows the specification of the variable name along
+with the aggregate and type within a simple shorthand string syntax.
+This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
+as well as the aggregate names listed in :ref:`encoding-aggregates`.
+The following table shows examples of the shorthand specification alongside
+the long-form equivalent:
+
+===================  =======================================================
+Shorthand            Equivalent long-form
+===================  =======================================================
+``x='name'``         ``alt.X('name')``
+``x='name:Q'``       ``alt.X('name', type='quantitative')``
+``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
+``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
+``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
+===================  =======================================================
+
+
 .. _encoding-aggregates:
 
 Binning and Aggregation
@@ -239,33 +278,10 @@ variancep  The population variance of field values.                             
 =========  ===========================================================================  =====================================
 
 
-.. _shorthand-description:
+Sort Option
+~~~~~~~~~~~
 
-Encoding Shorthands
-~~~~~~~~~~~~~~~~~~~
-
-For convenience, Altair allows the specification of the variable name along
-with the aggregate and type within a simple shorthand string syntax.
-This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
-as well as the aggregate names listed in :ref:`encoding-aggregates`.
-The following table shows examples of the shorthand specification alongside
-the long-form equivalent:
-
-===================  =======================================================
-Shorthand            Equivalent long-form
-===================  =======================================================
-``x='name'``         ``alt.X('name')``
-``x='name:Q'``       ``alt.X('name', type='quantitative')``
-``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
-``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
-``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
-===================  =======================================================
-
-
-Sorting
-~~~~~~~
-
-Specific channels can take a  :class:`sort` property which determines the
+Some channels can take a  :class:`sort` option which determines the
 order of the scale being used for the channel. There are a number of different
 sort options available:
 
