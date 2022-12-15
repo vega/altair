@@ -17,8 +17,6 @@ it can be helpful to also browse the `Vega-Lite documentation <https://vega.gith
    :caption: Getting Help
    :hidden:
 
-   faq
-
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues
 .. _Vega: http://vega.github.io/vega
