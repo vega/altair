@@ -96,8 +96,7 @@ identical plots:
 The shorthand form, ``x="name:Q"``, is useful for its lack of boilerplate
 when doing quick data explorations. The long-form,
 ``alt.X('name', type='quantitative')``, is useful when doing more fine-tuned
-adjustments to the encoding, such as binning, axis and scale properties,
-or more.
+adjustments to the encoding using channel options such as binning, axis, and scale.
 
 Specifying the correct type for your data is important, as it affects the
 way Altair represents your encoding in the resulting plot.
@@ -248,7 +247,7 @@ Aggregation Functions
 ^^^^^^^^^^^^^^^^^^^^^
 
 In addition to ``count`` and ``average``, there are a large number of available
-aggregation functions built into Altair; they are listed in the following table:
+aggregation functions built into Altair:
 
 =========  ===========================================================================  =====================================
 Aggregate  Description                                                                  Example
@@ -272,7 +271,7 @@ stdev      The sample standard deviation of field values.                       
 stdevp     The population standard deviation of field values.                           N/A
 sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
 valid      The count of field values that are not null or undefined.                    N/A
-values     ??                                                                           N/A
+values     A list of data objects in the group.                                         N/A
 variance   The sample variance of field values.                                         N/A
 variancep  The population variance of field values.                                     N/A
 =========  ===========================================================================  =====================================
@@ -281,7 +280,7 @@ variancep  The population variance of field values.                             
 Sort Option
 ~~~~~~~~~~~
 
-Some channels can take a  :class:`sort` option which determines the
+Some channels accept a  :class:`sort` option which determines the
 order of the scale being used for the channel. There are a number of different
 sort options available:
 
