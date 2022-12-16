@@ -3,18 +3,11 @@
 .. _user-guide-spatial-data:
 
 Spatial Data
-~~~~~~~~~~~~
+============
 
-On this page we explain different methods to work with spatial data and Altair. 
-
-The following methods for working with spatial data are discussed below:
-
-- :ref:`spatial-data-gdf`
-- :ref:`spatial-data-inline-geojson`
-- :ref:`spatial-data-remote-geojson`
-- :ref:`spatial-data-inline-topojson`
-- :ref:`spatial-data-remote-topojson`
-- :ref:`spatial-data-nested-geojson`
+On this page we explain different methods for reading spatial data into Altair.
+To learn more about how to work with this data after you have read it in,
+please see the :ref:`user-guide-geoshape-marks` mark page.
 
 
 .. _spatial-data-gdf:
@@ -22,9 +15,9 @@ The following methods for working with spatial data are discussed below:
 GeoPandas GeoDataFrame
 ~~~~~~~~~~~~~~~~~~~~~~
 
-It is convenient to use geopandas as source for your spatial data.
-Geopandas can read many type spatial data and Altair is optimized in
-reading these. Here we define four polygon geometries into a
+It is convenient to use GeoPandas as the source for your spatial data.
+GeoPandas can read many types of spatial data and Altair works well with GeoDataFrames.
+Here we define four polygon geometries into a
 GeoDataFrame and visualize these using the ``mark_geoshape``.
 
 .. altair-plot::
@@ -45,11 +38,11 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
    gdf_geoms
 
 
-This data uses a non-geographic projection. Therefor we use the
-``project`` configuration ``type="identity", reflectY=True`` to draw the
-geometries without applying a projection. By using ``scale=None`` we
-disable the scale for the color channel and Altair will use the defined
--Hex color- codes directly.
+Since the spatial data in our example is not geographic,
+ we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
+geometries without applying a geographic projection. By using ``alt.Color(..., scale=None)`` we
+disable the automatic color assignment in Altair
+and instead directly use the provided Hex color codes.
 
 .. altair-plot::
 
@@ -64,11 +57,11 @@ Inline GeoJSON object
 ~~~~~~~~~~~~~~~~~~~~~
 
 If your source data is a GeoJSON file and you do not want to load it
-into a GeoPandas GeoDataFrame you can specify it directly in Altair. A
-GeoJSON file consists normally of a ``FeatureCollection`` with a list of
-``features`` where information for each geometry is specified within a
+into a GeoPandas GeoDataFrame you can provide it as a dictionary to the Altair ``Data`` class. A
+GeoJSON file normally consists of a ``FeatureCollection`` with a list of
+``features`` where the information for each geometry is specified within a
 ``properties`` dictionary. In the following example a GeoJSON-like data
-object is specified into an altair Data object using the ``property``
+object is specified into a ``Data`` class using the ``property``
 value of the ``key`` that contain the nested list (here named
 ``features``).
 
@@ -87,9 +80,12 @@ value of the ``key`` that contain the nested list (here named
    data_obj_geojson = alt.Data(values=obj_geojson, format=alt.DataFormat(property="features"))
    data_obj_geojson
 
-The information is stored within the ``properties`` dictionary. We
-specify the nested variable name (here ``location``) within the color
-channel encoding. We apply a ``magma`` color scheme as as custom scale
+The label for each objects location is stored within the ``properties`` dictionary. To access these values
+can specify a nested variable name (here ``properties.location``) within the color
+channel encoding. Here we change the coloring encoding to be based on this location label,
+and apply a ``magma`` color scheme instead of the default one.
+The `:O` suffix indicates that we want Altair to treat these values as ordinal,
+and you can read more about it in the :ref:`_encoding-data-types` page.
 for the ordinal structured data.
 
 .. altair-plot::
@@ -105,10 +101,11 @@ GeoJSON file by URL
 ~~~~~~~~~~~~~~~~~~~
 
 Altair can load GeoJSON resources directly from a web URL. Here we use
-an example from geojson.xyz. As is explained in
-#Spatial-data-from-an-inline-GeoJSON-object, we specify ``features`` as
-value for the ``property`` parameter in the ``alt.DataFormat()`` object
-and prepend ``scalerank`` with the name of the nested dictionary where
+an example from geojson.xyz. As is explained in :ref:`spatial-data-inline-geojson`,
+we specify ``features`` as
+the value for the ``property`` parameter in the ``alt.DataFormat()`` object
+and prepend the attribute we want to plot (``scalerank``)
+with the name of the nested dictionary where the
 information of each geometry is stored (``properties``).
 
 .. altair-plot::
@@ -130,13 +127,12 @@ Inline TopoJSON object
 
 TopoJSON is an extension of GeoJSON, where the geometry of the features
 are referred to from a top-level object named arcs. Each shared arc is
-only stored once to reduce size. An TopoJSON file object can contain
+only stored once to reduce the size of the data. A TopoJSON file object can contain
 multiple objects (eg. boundary border and province border). When
-defining an TopoJSON object for Altair we specify the ``topojson`` type
-data format and the name of the object we like to visualize using the
-``feature`` (here ``MY_DATA``) parameter.
-
-Note: the key-name ``MY_DATA`` is arbitrary and differs in each dataset.
+defining a TopoJSON object for Altair we specify the ``topojson``
+data format type and the name of the object we like to visualize using the
+``feature`` parameter. Here the name of this object key is ``MY_DATA``,
+but this differs in each dataset.
 
 .. altair-plot::
    :output: repr
@@ -178,11 +174,10 @@ Note: the key-name ``MY_DATA`` is arbitrary and differs in each dataset.
 TopoJSON file by URL
 ~~~~~~~~~~~~~~~~~~~~
 
-Altair can load TopoJSON resources directly from a web URL. As is
-explained in #Spatial-data-from-an-inline-TopoJSON-object, we have to
-specify ``boroughs`` as object name for the ``feature`` parameter in and
-define the type of data as ``topjoson`` in the ``alt.DataFormat()``
-object.
+Altair can load TopoJSON resources directly from a web URL. As
+explained in :ref:`spatial-data-inline-topojson`, we have to
+specify ``boroughs`` as the object name for the ``feature`` parameter and
+define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 
 .. altair-plot::
    :output: repr
@@ -203,19 +198,22 @@ topojson file if this file is accessible by URL:
 
 We color encode the Boroughs by there names as they are stored as an
 unique identifier (``id``). We use a ``symbolLimit`` of 33 in two
-columns to display all entries in the legend.
+columns to display all entries in the legend
+and change the color scheme to have more distinct colors.
+We also add a tooltip which shows the name of the borough
+as we hover over it with the mouse.
 
 .. altair-plot::
 
    alt.Chart(data_url_topojson, title="London-Boroughs").mark_geoshape(
        tooltip=True
    ).encode(
-       color=alt.Color("id:N", legend=alt.Legend(columns=2, symbolLimit=33))
+       color=alt.Color("id:N", scale=alt.Scale(scheme='tableau20'), legend=alt.Legend(columns=2, symbolLimit=33))
    )
 
 
 
-.. _spatial-data-nested-ge0json:
+.. _spatial-data-nested-geojson:
 
 Nested GeoJSON objects
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -247,10 +245,8 @@ Projections
 ~~~~~~~~~~~
 For geographic data it is best to use the World Geodetic System 1984 as
 its geographic coordinate reference system with units in decimal degrees.
-
 Try to avoid putting projected data into Altair, but reproject your spatial data to
 EPSG:4326 first.
-
 If your data comes in a different projection (eg. with units in meters) and you don't
 have the option to reproject the data, try using the project configuration
 ``(type: 'identity', reflectY': True)``. It draws the geometries without applying a projection.
@@ -270,7 +266,6 @@ reject geometries that do not use the right-hand rule.
 Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule.
 Meaning that exterior rings should be clockwise and interior rings should be
 counterclockwise.
-
 If you face a problem regarding winding order, try to force the left-hand rule on your
 data before usage in Altair using GeoPandas for example as such:
 
