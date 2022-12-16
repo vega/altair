@@ -46,7 +46,7 @@ and that the y-column should be visualized on a categorical scale:
 
 If we are not happy with the scale that Altair chooses for visualizing that data,
 we can change it by either changing the data types in the underlying pandas dataframe,
-or by changing the :ref:`_encoding-data-types` in Altair.
+or by changing the :ref:`encoding-data-types` in Altair.
 
 .. toctree::
    :hidden:
