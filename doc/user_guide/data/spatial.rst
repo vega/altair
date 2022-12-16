@@ -81,11 +81,11 @@ value of the ``key`` that contain the nested list (here named
    data_obj_geojson
 
 The label for each objects location is stored within the ``properties`` dictionary. To access these values
-can specify a nested variable name (here ``properties.location``) within the color
+you can specify a nested variable name (here ``properties.location``) within the color
 channel encoding. Here we change the coloring encoding to be based on this location label,
 and apply a ``magma`` color scheme instead of the default one.
-The `:O` suffix indicates that we want Altair to treat these values as ordinal,
-and you can read more about it in the :ref:`_encoding-data-types` page.
+The ``:O`` suffix indicates that we want Altair to treat these values as ordinal,
+and you can read more about it in the :ref:`encoding-data-types` page.
 for the ordinal structured data.
 
 .. altair-plot::
@@ -104,20 +104,20 @@ Altair can load GeoJSON resources directly from a web URL. Here we use
 an example from geojson.xyz. As is explained in :ref:`spatial-data-inline-geojson`,
 we specify ``features`` as
 the value for the ``property`` parameter in the ``alt.DataFormat()`` object
-and prepend the attribute we want to plot (``scalerank``)
+and prepend the attribute we want to plot (``continent``)
 with the name of the nested dictionary where the
 information of each geometry is stored (``properties``).
 
 .. altair-plot::
    :output: repr
 
-   url_geojson = "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_land.geojson"
+   url_geojson = "url_geojson = "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson""
    data_url_geojson = alt.Data(url=url_geojson, format=alt.DataFormat(property="features"))
    data_url_geojson
 
 .. altair-plot::
 
-    alt.Chart(data_url_geojson).mark_geoshape().encode(color='properties.scalerank:N')
+    alt.Chart(data_url_geojson).mark_geoshape().encode(color='properties.continent:N')
 
 
 .. _spatial-data-inline-topojson:
@@ -175,8 +175,8 @@ TopoJSON file by URL
 ~~~~~~~~~~~~~~~~~~~~
 
 Altair can load TopoJSON resources directly from a web URL. As
-explained in :ref:`spatial-data-inline-topojson`, we have to
-specify ``boroughs`` as the object name for the ``feature`` parameter and
+explained in :ref:`spatial-data-inline-topojson`, we have to use the 
+``feature`` parameter to specify the object name (here ``boroughs``) and
 define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 
 .. altair-plot::
@@ -211,7 +211,32 @@ as we hover over it with the mouse.
        color=alt.Color("id:N", scale=alt.Scale(scheme='tableau20'), legend=alt.Legend(columns=2, symbolLimit=33))
    )
 
+Similar to the ``feature`` option, there also exists the ``mesh``
+parameter. This parameter extracts a named TopoJSON object set.
+Unlike the feature option, the corresponding geo data is returned as
+a single, unified mesh instance, not as individual GeoJSON features.
+Extracting a mesh is useful for more efficiently drawing borders
+or other geographic elements that you do not need to associate with
+specific regions such as individual countries, states or counties.
 
+Here below we draw the same Boroughs of London, but now as mesh only.
+
+Note: you have to explicitly define ``filled=False`` to draw multi(lines) 
+without fill color.
+
+.. altair-plot::
+
+   from vega_datasets import data
+
+   url_topojson = data.londonBoroughs.url
+    
+   data_url_topojson_mesh = alt.Data(
+       url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")
+   )
+
+   alt.Chart(data_url_topojson_mesh, title="Border London-Boroughs").mark_geoshape(
+       filled=False
+   )  
 
 .. _spatial-data-nested-geojson:
 
@@ -219,9 +244,10 @@ Nested GeoJSON objects
 ~~~~~~~~~~~~~~~~~~~~~~
 
 GeoJSON data can also be nested within another dataset. In this case it
-is possible to use the ``shape`` encoding channel to visualize the
-nested dictionary that contains the GeoJSON objects. In the following
-example the GeoJSON object is nested in ``geo``:
+is possible to use the ``shape`` encoding channel in combination with the
+``:G`` suffix to visualize the nested features as GeoJSON objects.
+In the following example the GeoJSON object are nested within ``geo``
+in the list of dictionaries:
 
 .. altair-plot::
 
