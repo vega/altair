@@ -22,7 +22,7 @@ Data                                       Description
 :ref:`user-guide-dataframe-data`           A `pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_.
 :ref:`user-guide-dict-data`                A :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`).                                 
 :ref:`user-guide-url-data`                 A url string pointing to a ``json`` or ``csv`` formatted text file.                                       
-:ref:`user-guide-spatial-data`             An object that supports the `__geo_interface__` (eg. `Geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_).
+:ref:`user-guide-spatial-data`             A `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``.
 :ref:`user-guide-generator-data`           A generated dataset such as numerical sequences or geographic reference elements.
 =========================================  ================================================================================
 
