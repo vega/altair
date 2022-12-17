@@ -4,7 +4,7 @@ Waterfall Chart
 This example shows how to recreate a vega lite implementation of a waterfall chart.
 Original inspiration is from https://vega.github.io/vega-lite/examples/waterfall_chart.html
 """
-# category: other charts
+# category: advanced calculations
 
 import altair as alt
 from altair import datum
