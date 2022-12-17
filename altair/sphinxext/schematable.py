@@ -4,7 +4,7 @@ import warnings
 
 from docutils import nodes, utils
 from docutils.parsers.rst import Directive
-from recommonmark.parser import CommonMarkParser
+from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
 
@@ -120,7 +120,7 @@ def build_row(item):
     row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
-    md_parser = CommonMarkParser()
+    md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
     str_descr = ""
     str_descr += propschema.get("description", " ")
