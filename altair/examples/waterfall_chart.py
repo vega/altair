@@ -9,30 +9,26 @@ Original inspiration is from https://vega.github.io/vega-lite/examples/waterfall
 import altair as alt
 import pandas as pd
 
-# Compared to the original Vega-Lite example, we add some more fields to help with
-# color labeling and ordering of the bars
 data = [
-    {"label": "Begin", "amount": 4000, "order": 0, "color_label": "Begin"},
-    {"label": "Jan", "amount": 1707, "order": 1, "color_label": "+"},
-    {"label": "Feb", "amount": -1425, "order": 2, "color_label": "-"},
-    {"label": "Mar", "amount": -1030, "order": 3, "color_label": "-"},
-    {"label": "Apr", "amount": 1812, "order": 4, "color_label": "+"},
-    {"label": "May", "amount": -1067, "order": 5, "color_label": "-"},
-    {"label": "Jun", "amount": -1481, "order": 6, "color_label": "-"},
-    {"label": "Jul", "amount": 1228, "order": 7, "color_label": "+"},
-    {"label": "Aug", "amount": 1176, "order": 8, "color_label": "+"},
-    {"label": "Sep", "amount": 1146, "order": 9, "color_label": "+"},
-    {"label": "Oct", "amount": 1205, "order": 10, "color_label": "+"},
-    {"label": "Nov", "amount": -1388, "order": 11, "color_label": "-"},
-    {"label": "Dec", "amount": 1492, "order": 12, "color_label": "+"},
-    {"label": "End", "amount": 0, "order": 13, "color_label": "End"},
+    {"label": "Begin", "amount": 4000},
+    {"label": "Jan", "amount": 1707},
+    {"label": "Feb", "amount": -1425},
+    {"label": "Mar", "amount": -1030},
+    {"label": "Apr", "amount": 1812},
+    {"label": "May", "amount": -1067},
+    {"label": "Jun", "amount": -1481},
+    {"label": "Jul", "amount": 1228},
+    {"label": "Aug", "amount": 1176},
+    {"label": "Sep", "amount": 1146},
+    {"label": "Oct", "amount": 1205},
+    {"label": "Nov", "amount": -1388},
+    {"label": "Dec", "amount": 1492},
+    {"label": "End", "amount": 0},
 ]
 source = pd.DataFrame(data)
 
 # The "base_chart" defines the transform_window, transform_calculate, and X axis
 base_chart = alt.Chart(source).transform_window(
-    sort=[{"field": "order"}],
-    frame=[None, 0],
     window_sum_amount="sum(amount)",
     window_lead_label="lead(label)",
 ).transform_calculate(
@@ -47,19 +43,20 @@ base_chart = alt.Chart(source).transform_window(
     x=alt.X(
         "label:O",
         axis=alt.Axis(title="Months", labelAngle=0),
-        sort=alt.EncodingSortField(field="order", op="max", order="ascending")
+        sort=None,
     )
 )
 
-# Begin and End share the same color
-color_coding = alt.Color(
-    "color_label",
-    scale=alt.Scale(
-        domain=["Begin", "End", "+", "-"],
-        range=["#878d96", "#878d96", "#24a148", "#fa4d56"],
-    ),
-    legend=None,
-)
+# alt.condition does not support multiple if else conditions which is why
+# we use a dictionary instead. See https://stackoverflow.com/a/66109641
+# for more information
+color_coding = {
+    "condition": [
+        {"test": "datum.label === 'Begin' || datum.label === 'End'", "value": "#878d96"},
+        {"test": "datum.calc_amount < 0", "value": "#24a148"},
+    ],
+    "value": "#fa4d56",
+}
 
 bar = base_chart.mark_bar(size=45).encode(
     y=alt.Y("calc_prev_sum:Q", title="Amount"),
