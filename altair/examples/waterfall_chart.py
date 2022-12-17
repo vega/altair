@@ -1,6 +1,6 @@
 """
 Waterfall Chart
--------------
+---------------
 This example shows how to recreate a Vega-Lite implementation of a waterfall chart.
 Original inspiration is from https://vega.github.io/vega-lite/examples/waterfall_chart.html
 """
