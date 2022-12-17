@@ -3,7 +3,7 @@ Faceted Density Estimates
 -------------------------
 Density estimates of measurements for each iris flower feature
 """
-# category: area charts
+# category: distributions
 
 import altair as alt
 from vega_datasets import data

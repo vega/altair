@@ -3,7 +3,7 @@ Line Chart with Confidence Interval Band
 ----------------------------------------
 How to make a line chart with a bootstrapped 95% confidence interval band.
 """
-# category: line charts
+# category: uncertainties and trends
 import altair as alt
 from vega_datasets import data
 

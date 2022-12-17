@@ -14,6 +14,7 @@
 
 import sys
 import os
+from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -38,6 +39,7 @@ extensions = [
     "altair.sphinxext.altairplot",
     "altair.sphinxext.altairgallery",
     "altair.sphinxext.schematable",
+    # "sphinxext.rediraffe",
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}
@@ -64,16 +66,16 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Altair"
-copyright = "2016-2020, Altair Developers"
-author = "Brian Granger and Jake VanderPlas"
+project = "Vega-Altair"
+copyright = "2016-{}, Vega-Altair Developers".format(datetime.now().year)
+author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = "4.3.0.dev0"
+version = "5.0.0"
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -82,7 +84,7 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -127,12 +129,35 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
+html_theme_options = {
+    "navbar_start": ["navbar-logo", "navbar-project"],
+    "navbar_center": ["navbar-nav"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "footer_items": [],
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/altair-viz/altair",
+            "icon": "fab fa-github fa-lg",
+            "type": "fontawesome",
+        },
+        {
+            "name": "StackOverflow",
+            "url": "https://stackoverflow.com/tags/altair",
+            "icon": "fab fa-stack-overflow fa-xl",
+            "type": "fontawesome",
+        },
+    ]
+}
+
+html_context = {
+    "default_mode": "light"
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -166,6 +191,7 @@ def setup(app):
     app.add_css_file("theme_overrides.css")
     app.add_css_file("custom.css")
 
+
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
@@ -181,7 +207,16 @@ def setup(app):
 # html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-# html_sidebars = {}
+html_sidebars = {
+    "index": [],
+    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
+}
+
+# Redirection of old page locations via the rediraffe sphinx-extension
+# It seems like only pages can be redirected, not headings within pages
+# rediraffe_redirects = {
+#     'case_studies/exploring-weather.rst': 'user_guide/case_studies/exploring-weather.rst'
+# }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -197,7 +232,7 @@ def setup(app):
 # html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 # html_show_sphinx = True
@@ -253,7 +288,7 @@ latex_documents = [
         master_doc,
         "altair.tex",
         "altair Documentation",
-        "Brian Granger and Jake VanderPlas",
+        "Altair Developers",
         "manual",
     ),
 ]

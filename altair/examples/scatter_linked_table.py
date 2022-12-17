@@ -1,5 +1,5 @@
 """
-Brushing Scatter Plot to show data on a table
+Brushing Scatter Plot to Show Data on a Table
 ---------------------------------------------
 A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin. 
 The tables update to reflect the selection on the scatter plot.
@@ -19,7 +19,7 @@ points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
-).add_selection(brush)
+).add_params(brush)
 
 # Base chart for data tables
 ranked_text = alt.Chart(source).mark_text().encode(

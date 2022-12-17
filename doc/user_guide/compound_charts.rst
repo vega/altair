@@ -2,8 +2,8 @@
 
 .. _user-guide-compound:
 
-Compound Charts: Layer, HConcat, VConcat, Repeat, Facet
--------------------------------------------------------
+Layered and Multi-View Charts
+-----------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
 and repeated charts. They are summarized in the following tables:
@@ -195,7 +195,7 @@ with a ``brush`` selection to add interaction:
 
     lower = base.properties(
         height=60
-    ).add_selection(brush)
+    ).add_params(brush)
 
     alt.vconcat(upper, lower)
 
@@ -362,7 +362,7 @@ layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
+    hover = alt.selection_point(on='mouseover', nearest=True, empty='none')
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',
@@ -373,7 +373,7 @@ layered chart with a hover selection:
         height=180,
     )
 
-    points = base.mark_point().add_selection(
+    points = base.mark_point().add_params(
         hover
     )
 

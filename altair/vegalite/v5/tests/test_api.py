@@ -241,7 +241,7 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
-    selection = alt.selection_single(fields=["value"])
+    selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
@@ -385,17 +385,17 @@ def test_selection():
     assert interval.param.select.type == "interval"
     assert interval.name == "selec_1"
 
-    single = alt.selection_single(name="selec_2")
+    single = alt.selection_point(name="selec_2")
     assert single.param.select.type == "point"
     assert single.name == "selec_2"
 
-    multi = alt.selection_multi(name="selec_3")
+    multi = alt.selection_point(name="selec_3")
     assert multi.param.select.type == "point"
     assert multi.name == "selec_3"
 
     # test adding to chart
-    chart = alt.Chart().add_selection(single)
-    chart = chart.add_selection(multi, interval)
+    chart = alt.Chart().add_params(single)
+    chart = chart.add_params(multi, interval)
     assert set(x.name for x in chart.params) == {"selec_1", "selec_2", "selec_3"}
 
     # test logical operations
@@ -407,8 +407,8 @@ def test_selection():
     assert "not" in (~single).to_dict().keys()
 
     # test that default names increment (regression for #1454)
-    sel1 = alt.selection_single()
-    sel2 = alt.selection_multi()
+    sel1 = alt.selection_point()
+    sel2 = alt.selection_point()
     sel3 = alt.selection_interval()
     names = {s.name for s in (sel1, sel2, sel3)}
     assert len(names) == 3
@@ -590,14 +590,14 @@ def test_layer_encodings():
 def test_add_selection():
     selections = [
         alt.selection_interval(),
-        alt.selection_single(),
-        alt.selection_multi(),
+        alt.selection_point(),
+        alt.selection_point(),
     ]
     chart = (
         alt.Chart()
         .mark_point()
-        .add_selection(selections[0])
-        .add_selection(selections[1], selections[2])
+        .add_params(selections[0])
+        .add_params(selections[1], selections[2])
     )
     expected = [s.param for s in selections]
     assert chart.params == expected
@@ -605,34 +605,42 @@ def test_add_selection():
 
 def test_repeat_add_selections():
     base = alt.Chart("data.csv").mark_point()
-    selection = alt.selection_single()
-    chart1 = base.add_selection(selection).repeat(list("ABC"))
-    chart2 = base.repeat(list("ABC")).add_selection(selection)
+    selection = alt.selection_point()
+    alt.Chart._counter = 0
+    chart1 = base.add_params(selection).repeat(list("ABC"))
+    alt.Chart._counter = 0
+    chart2 = base.repeat(list("ABC")).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_facet_add_selections():
     base = alt.Chart("data.csv").mark_point()
-    selection = alt.selection_single()
-    chart1 = base.add_selection(selection).facet("val:Q")
-    chart2 = base.facet("val:Q").add_selection(selection)
+    selection = alt.selection_point()
+    alt.Chart._counter = 0
+    chart1 = base.add_params(selection).facet("val:Q")
+    alt.Chart._counter = 0
+    chart2 = base.facet("val:Q").add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_layer_add_selection():
     base = alt.Chart("data.csv").mark_point()
-    selection = alt.selection_single()
-    chart1 = alt.layer(base.add_selection(selection), base)
-    chart2 = alt.layer(base, base).add_selection(selection)
+    selection = alt.selection_point()
+    alt.Chart._counter = 0
+    chart1 = alt.layer(base.add_params(selection), base)
+    alt.Chart._counter = 0
+    chart2 = alt.layer(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 
 @pytest.mark.parametrize("charttype", [alt.concat, alt.hconcat, alt.vconcat])
 def test_compound_add_selections(charttype):
     base = alt.Chart("data.csv").mark_point()
-    selection = alt.selection_single()
-    chart1 = charttype(base.add_selection(selection), base.add_selection(selection))
-    chart2 = charttype(base, base).add_selection(selection)
+    selection = alt.selection_point()
+    alt.Chart._counter = 0
+    chart1 = charttype(base.add_params(selection), base.add_params(selection))
+    alt.Chart._counter = 0
+    chart2 = charttype(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
 

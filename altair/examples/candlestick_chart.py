@@ -6,7 +6,7 @@ This example shows the performance of the Chicago Board Options Exchange `Volati
 in the summer of 2009. The thick bar represents the opening and closing prices, 
 while the thin bar shows intraday high and low prices; if the index closed higher on a given day, the bars are colored green rather than red.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

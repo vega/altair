@@ -1,5 +1,5 @@
 """
-Line Chart with datum for color
+Line Chart with Datum for Color
 -------------------------------
 An example of using ``datum`` and ``repeat`` to color a multi-series line chart.
 This is adapted from this corresponding Vega-Lite Example:
