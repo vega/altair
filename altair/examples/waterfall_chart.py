@@ -46,7 +46,7 @@ base_chart = alt.Chart(source).transform_window(
 ).encode(
     x=alt.X(
         "label:O",
-        title="Months",
+        axis=alt.Axis(title="Months", labelAngle=0),
         sort=alt.EncodingSortField(field="order", op="max", order="ascending")
     )
 )
@@ -61,7 +61,7 @@ color_coding = alt.Color(
     legend=None,
 )
 
-bar = base_chart.mark_bar().encode(
+bar = base_chart.mark_bar(size=45).encode(
     y=alt.Y("calc_prev_sum:Q", title="Amount"),
     y2=alt.Y2("window_sum_amount:Q"),
     color=color_coding,
@@ -69,12 +69,8 @@ bar = base_chart.mark_bar().encode(
 
 # The "rule" chart is for the horizontal lines that connect the bars
 rule = base_chart.mark_rule(
-    color="#404040",
-    opacity=0.9,
-    strokeWidth=2,
-    xOffset=-25,
-    x2Offset=25,
-    strokeDash=[3, 3],
+    xOffset=-22.5,
+    x2Offset=22.5,
 ).encode(
     y="window_sum_amount:Q",
     x2="calc_lead",
@@ -98,11 +94,7 @@ text_neg_values_bot_of_bar = base_chart.mark_text(
 text_bar_values_mid_of_bar = base_chart.mark_text(baseline="middle").encode(
     text=alt.Text("calc_text_amount:N"),
     y="calc_center:Q",
-    color=alt.condition(
-        "datum.label ==='Begin'||datum.label === 'End'",
-        alt.value("white"),
-        alt.value("white"),
-    ),
+    color=alt.value("white"),
 )
 
 alt.layer(
