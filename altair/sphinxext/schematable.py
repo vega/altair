@@ -2,7 +2,7 @@ import importlib
 import re
 import warnings
 
-from docutils import nodes, utils
+from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
@@ -124,7 +124,9 @@ def build_row(item):
     # str_descr = "***Required.*** " if required else ""
     str_descr = ""
     str_descr += propschema.get("description", " ")
-    doc_descr = utils.new_document("schema_description")
+    document_settings = frontend.get_default_settings()
+    document_settings.setdefault("raw_enabled", True)
+    doc_descr = utils.new_document("schema_description", document_settings)
     md_parser.parse(str_descr, doc_descr)
 
     # row += nodes.entry('', *doc_descr.children, classes="vl-decsr")
