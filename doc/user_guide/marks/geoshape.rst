@@ -393,8 +393,7 @@ This method will maximize the similarity of values in a class while maximizing t
 distance between the classes (`natural breaks`). The method is also known as the
 Fisher-Jenks algorithm and is similar to k-Means in 1D:
 
--  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks
-as such:
+-  By using the external Python package ``jenskpy`` we can derive these `optimum` breaks as such:
 
 .. code:: python
 
