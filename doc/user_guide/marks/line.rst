@@ -126,7 +126,7 @@ We can further apply selection to highlight a certain line on hover.
 
     points = base.mark_circle().encode(
         opacity=alt.value(0)
-    ).add_selection(
+    ).add_params(
         highlight
     ).properties(
         width=600

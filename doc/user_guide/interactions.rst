@@ -728,7 +728,7 @@ Some possible use cases for the above interactivity are not currently supported 
         x=alt.X('value:Q', title=''),
         y='Horsepower',
         color='Origin',
-    ).add_selection(
+    ).add_params(
         selection
     ).transform_filter(
         selection
