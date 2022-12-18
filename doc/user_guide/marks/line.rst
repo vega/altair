@@ -115,7 +115,7 @@ We can further apply selection to highlight a certain line on hover.
     source = data.stocks()
 
     highlight = alt.selection(
-        type="single", on="mouseover", fields=["symbol"], nearest=True
+        type="point", on="mouseover", fields=["symbol"], nearest=True
     )
 
     base = alt.Chart(source).encode(
