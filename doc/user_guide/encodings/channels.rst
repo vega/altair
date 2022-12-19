@@ -180,6 +180,7 @@ For line marks, the `order` channel encodes the order in which data points are c
 
 Facet
 ~~~~~
+For more information, see :ref:`facet-chart`.
 
 =======  ================  ===============================================  =============================================
 Channel  Altair Class      Description                                      Example
