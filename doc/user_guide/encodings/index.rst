@@ -443,7 +443,7 @@ threshold value (e.g., 300 dollars stock price).
 
     lines + rule
 
-If we instead used ``alt.value`` in this example, we would position the rule 300 pixels from the bottom of the chart border rather than at the 300 dollars position:
+If we instead used ``alt.value`` in this example, we would position the rule 300 pixels from the top of the chart border rather than at the 300 dollars position. Since the default charts height is 300 pixels, this will show the dotted line just on top of the x-axis -line:
 
 .. altair-plot::
 
