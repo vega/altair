@@ -452,7 +452,9 @@ If we instead used ``alt.value`` in this example, we would position the rule 300
 
     lines + rule
 
-You can also use ``datum`` with :class:`DateTime`, for example, to highlight a certain year.
+If we want to use ``datum``  to highlight a certain year on the x-axis,
+we can't simply type in the year as an integer,
+but instead need to use ``datum`` together with :class:`DateTime`.
 Here we also set the color for the rule to the same one as the line for the symbol ``MSFT``
 with ``alt.datum("MSFT")``.
 
