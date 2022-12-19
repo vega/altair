@@ -191,6 +191,30 @@ Manual ``save()`` and display
 If you would prefer, you can save your chart to a file (html, png, etc.) first and then display it.
 See :ref:`user-guide-saving` for more information.
 
+
+Streamlit apps
+~~~~~~~~~~~~~~
+Streamlit_ is an open-source Python library for creating web apps. To display Altair charts in a
+Streamlit app, pass the chart object to the ``st.altair_chart`` command::
+
+    import streamlit as st
+    import altair as alt
+
+    # load a simple dataset as a pandas DataFrame
+    from vega_datasets import data
+    cars = data.cars()
+
+    chart = alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
+    ).interactive()
+
+    st.altair_chart(chart)
+
+To learn more about Altair in Streamlit, see the 
+`st.altair_chart documentation <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_.
+
 .. _renderer-api:
 
 Renderer API
@@ -276,3 +300,4 @@ For an example, see `ipyvega`_.
 .. _Vega: https://vega.github.io/vega/
 .. _VSCode-Python: https://code.visualstudio.com/docs/python/python-tutorial
 .. _Zeppelin: https://zeppelin.apache.org/
+.. _Streamlit: https://docs.streamlit.io/
