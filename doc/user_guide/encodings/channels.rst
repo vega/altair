@@ -144,6 +144,9 @@ The order can be reversed by changing the sort option to `descending`.
         order=alt.Order("site", sort="descending")
     )
 
+If we want to sort stacked segments in a custom order, we can `follow the approach in this issue comment <https://github.com/altair-viz/altair/issues/245#issuecomment-748443434>`_, although there might be edge cases where this is not fully supported. This also makes the order of the segments align with the order colors shows up in a legend that uses custom sorting for the color domain.
+
+
 The same approach works for other mark types, like stacked areas charts.
 
 .. altair-plot::
