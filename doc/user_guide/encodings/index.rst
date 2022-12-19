@@ -43,7 +43,6 @@ the chart. For example, below we adjust the y-axis title and increase the step b
         shape='Origin'
     )
 
-See :ref:`user-guide-encoding-channel-options` for all available options for each channel.
 
 .. _encoding-data-types:
 
