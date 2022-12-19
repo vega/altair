@@ -7,4 +7,3 @@ sphinx
 mistune<2.0.0  # necessary for m2r v0.2
 m2r
 vega_datasets
-myst-parser
