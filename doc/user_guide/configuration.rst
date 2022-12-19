@@ -104,6 +104,8 @@ Here is an example:
         labelFontSize=14
     )
 
+Additional properties are summarized in the following table:
+
 .. altair-object-table:: altair.HeaderConfig
 
 
@@ -205,7 +207,8 @@ the following properties:
 
 Projection Configuration
 ------------------------
-:meth:`Chart.configure_projection`
+Projections can be configured using :meth:`Chart.configure_projection`,
+which has the following properties:
 
 .. altair-object-table:: altair.ProjectionConfig
 
@@ -214,7 +217,8 @@ Projection Configuration
 
 Selection Configuration
 -----------------------
-:meth:`Chart.configure_selection`
+Selections can be configured using :meth:`Chart.configure_selection`, 
+which has the following properties:
 
 .. altair-object-table:: altair.SelectionConfig
 
