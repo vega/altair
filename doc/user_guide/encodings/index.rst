@@ -12,7 +12,7 @@ as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 
 For example, here we will visualize the cars dataset using four of the available
-**encoding channels** (see :ref:`user-guide-encoding-channels`): ``x`` (the x-axis value), ``y`` (the y-axis value),
+**encoding channels** (see :ref:`user-guide-encoding-channels` for details): ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
