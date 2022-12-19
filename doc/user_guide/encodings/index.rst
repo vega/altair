@@ -454,7 +454,7 @@ If we instead used ``alt.value`` in this example, we would position the rule 300
     lines + rule
 
 You can also use ``datum`` with :class:`DateTime`, for example, to highlight a certain year.
-In addition, we will set the color for the rule to the same one as the line for the symbol ``MSFT``
+Here we also set the color for the rule to the same one as the line for the symbol ``MSFT``
 with ``alt.datum("MSFT")``.
 
 .. altair-plot::
