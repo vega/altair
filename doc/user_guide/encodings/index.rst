@@ -28,7 +28,7 @@ For example, here we will visualize the cars dataset using four of the available
        shape='Origin'
    )
 
-Each encoding channel accepts a number of **channel options** which can be used to further configure
+Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
 the chart. For example, below we adjust the y-axis title and increase the step between the x-axis ticks:
 
 .. altair-plot::
