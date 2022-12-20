@@ -131,8 +131,7 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -299,8 +298,7 @@ class ColorValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -810,8 +808,7 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -978,8 +975,7 @@ class FillValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -1032,8 +1028,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1200,8 +1195,7 @@ class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -1394,8 +1388,7 @@ class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2121,8 +2114,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2289,8 +2281,7 @@ class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2659,8 +2650,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2827,8 +2817,7 @@ class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2881,8 +2870,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3049,8 +3037,7 @@ class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3103,8 +3090,7 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3271,8 +3257,7 @@ class StrokeValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3325,8 +3310,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3494,8 +3478,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3548,8 +3531,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3716,8 +3698,7 @@ class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3910,8 +3891,7 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -4104,8 +4084,7 @@ class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values

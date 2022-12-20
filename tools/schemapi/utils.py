@@ -432,6 +432,13 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
                     final_lines.append("")
                 elif line.startswith("* "):
                     final_lines.extend(list_wrapper.wrap(line[2:]))
+                # Matches lines where an attribute is mentioned followed by the accepted
+                # types (lines starting with a character sequence that
+                # does not contain white spaces or '*' followed by ' : ').
+                # It therefore matches 'condition : anyOf(...' but not '**Notes** : ...'
+                # These lines should not be wrapped at all but appear on one line
+                elif re.match(r"[^\s*]+ : ", line):
+                    final_lines.append(indent * " " + line.lstrip())
                 else:
                     final_lines.extend(wrapper.wrap(line.lstrip()))
 

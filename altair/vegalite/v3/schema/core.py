@@ -3571,8 +3571,7 @@ class Encoding(VegaLiteSchema):
         *Note:* When using ``fill`` channel, ``color`` channel will be ignored. To customize
         both fill and stroke, please use ``fill`` and ``stroke`` channels (not ``fill`` and
         ``color`` ).
-    fillOpacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    fillOpacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Fill opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
@@ -3595,8 +3594,7 @@ class Encoding(VegaLiteSchema):
     longitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    opacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    opacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
@@ -3658,15 +3656,13 @@ class Encoding(VegaLiteSchema):
         *Note:* When using ``stroke`` channel, ``color`` channel will be ignored. To
         customize both stroke and fill, please use ``stroke`` and ``fill`` channels (not
         ``stroke`` and ``color`` ).
-    strokeOpacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    strokeOpacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Stroke opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark>`__ 's ``strokeOpacity``
         property.
-    strokeWidth : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    strokeWidth : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Stroke width of the marks.
 
         **Default value:** If undefined, the default stroke width depends on `mark config
@@ -3674,8 +3670,7 @@ class Encoding(VegaLiteSchema):
         property.
     text : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`)
         Text of the ``text`` mark.
-    tooltip : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`,
-    List(:class:`TextFieldDef`), None)
+    tooltip : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`, List(:class:`TextFieldDef`), None)
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
@@ -4214,8 +4209,7 @@ class FacetedEncoding(VegaLiteSchema):
         *Note:* When using ``fill`` channel, ``color`` channel will be ignored. To customize
         both fill and stroke, please use ``fill`` and ``stroke`` channels (not ``fill`` and
         ``color`` ).
-    fillOpacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    fillOpacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Fill opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
@@ -4238,8 +4232,7 @@ class FacetedEncoding(VegaLiteSchema):
     longitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    opacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    opacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
@@ -4303,15 +4296,13 @@ class FacetedEncoding(VegaLiteSchema):
         *Note:* When using ``stroke`` channel, ``color`` channel will be ignored. To
         customize both stroke and fill, please use ``stroke`` and ``fill`` channels (not
         ``stroke`` and ``color`` ).
-    strokeOpacity : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    strokeOpacity : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Stroke opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark>`__ 's ``strokeOpacity``
         property.
-    strokeWidth : anyOf(:class:`NumericFieldDefWithCondition`,
-    :class:`NumericValueDefWithCondition`)
+    strokeWidth : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Stroke width of the marks.
 
         **Default value:** If undefined, the default stroke width depends on `mark config
@@ -4319,8 +4310,7 @@ class FacetedEncoding(VegaLiteSchema):
         property.
     text : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`)
         Text of the ``text`` mark.
-    tooltip : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`,
-    List(:class:`TextFieldDef`), None)
+    tooltip : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`, List(:class:`TextFieldDef`), None)
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
@@ -4460,8 +4450,7 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4663,8 +4652,7 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4862,8 +4850,7 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -8175,8 +8162,7 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -8307,8 +8293,7 @@ class NumericValueDefWithCondition(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -9928,8 +9913,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`),
-    enum('unaggregated'), :class:`SelectionDomain`)
+    domain : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), enum('unaggregated'), :class:`SelectionDomain`)
         Customized domain values.
 
         For *quantitative* fields, ``domain`` can take the form of a two-element array with
@@ -11087,8 +11071,7 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -11219,8 +11202,7 @@ class ShapeValueDefWithCondition(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -12323,8 +12305,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -12519,8 +12500,7 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -12653,8 +12633,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -12676,8 +12655,7 @@ class StringValueDefWithConditionTypeForShape(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -13350,8 +13328,7 @@ class TextValueDefWithCondition(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -15662,8 +15639,7 @@ class ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -15687,8 +15663,7 @@ class ValueDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -15711,8 +15686,7 @@ class ValueDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -15735,8 +15709,7 @@ class ValueDefWithConditionTextFieldDefValue(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
