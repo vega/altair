@@ -41,6 +41,7 @@ additional dependencies:
 - docutils
 - vega_datasets_
 - ipython
+- myst-parser
 
 Development Install
 ===================
