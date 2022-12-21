@@ -206,8 +206,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -587,8 +588,9 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -950,8 +952,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1611,8 +1614,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1854,8 +1858,9 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -2235,8 +2240,9 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4040,8 +4046,9 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4600,8 +4607,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -5260,8 +5268,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -5501,8 +5510,9 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -5882,8 +5892,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -6263,8 +6274,9 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -6644,8 +6656,9 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -7025,8 +7038,9 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -7406,8 +7420,9 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -8159,8 +8174,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -9303,8 +9319,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -10223,8 +10240,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -10606,8 +10624,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -11526,8 +11545,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
