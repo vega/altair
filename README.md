@@ -211,23 +211,8 @@ visualization.
 
 ## Development install
 
-Vega-Altair requires the following dependencies:
-
-* [pandas](https://pandas.pydata.org/)
-* [traitlets](https://github.com/ipython/traitlets)
-* [IPython](https://github.com/ipython/ipython)
-
-If you have cloned the repository, run the following command from the root of the repository:
-
-```
-pip install -e .[dev]
-```
-
-If you do not wish to clone the repository, you can install using:
-
-```
-pip install git+https://github.com/altair-viz/altair
-```
+Instructions on how to install Vega-Altair for development can be found in
+[the documentation](https://altair-viz.github.io/getting_started/installation.html).
 
 ## Testing
 
