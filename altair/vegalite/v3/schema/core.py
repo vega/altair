@@ -3623,14 +3623,14 @@ class Encoding(VegaLiteSchema):
 
 
         * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-        ``"triangle-left"``.
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
         * the line symbol ``"stroke"``
         * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
         * a custom `SVG path string
-        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
-        sizing, custom shape paths should be defined within a square bounding box with
-        coordinates ranging from -1 to 1 along both the x and y dimensions.)
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         #.
         For ``geoshape`` marks it should be a field definition of the geojson data
@@ -4263,14 +4263,14 @@ class FacetedEncoding(VegaLiteSchema):
 
 
         * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-        ``"triangle-left"``.
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
         * the line symbol ``"stroke"``
         * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
         * a custom `SVG path string
-        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
-        sizing, custom shape paths should be defined within a square bounding box with
-        coordinates ranging from -1 to 1 along both the x and y dimensions.)
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         #.
         For ``geoshape`` marks it should be a field definition of the geojson data
@@ -9012,8 +9012,8 @@ class PositionFieldDef(VegaLiteSchema):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.

@@ -1,11 +1,16 @@
 import importlib
 import re
+import sys
 import warnings
+from os.path import abspath, dirname
 
 from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
+
+sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
+from tools.schemapi.utils import fix_docstring_issues  # noqa: E402
 
 
 def type_description(schema):
@@ -124,6 +129,7 @@ def build_row(item):
     # str_descr = "***Required.*** " if required else ""
     str_descr = ""
     str_descr += propschema.get("description", " ")
+    str_descr = fix_docstring_issues(str_descr)
     document_settings = frontend.get_default_settings()
     document_settings.setdefault("raw_enabled", True)
     doc_descr = utils.new_document("schema_description", document_settings)

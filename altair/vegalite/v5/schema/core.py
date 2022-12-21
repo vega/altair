@@ -10904,8 +10904,8 @@ class PositionDatumDefBase(PolarDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11087,8 +11087,8 @@ class PositionDatumDef(PositionDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11340,8 +11340,8 @@ class PositionFieldDef(PositionDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11587,8 +11587,8 @@ class PositionFieldDefBase(PolarDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
