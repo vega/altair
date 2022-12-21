@@ -184,6 +184,8 @@ class FieldSchemaGenerator(SchemaGenerator):
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
 
+        {method_code}
+
         {init_code}
     '''
     )
@@ -198,6 +200,8 @@ class ValueSchemaGenerator(SchemaGenerator):
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
 
+        {method_code}
+
         {init_code}
     '''
     )
@@ -211,6 +215,9 @@ class DatumSchemaGenerator(SchemaGenerator):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
+
+        {method_code}
+
         {init_code}
     '''
     )
@@ -430,10 +437,11 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
         schema = json.load(f)
     if imports is None:
         imports = [
-            "from . import core",
+            "from . import core, protocols",
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
+            "from typing import Union",
         ]
     contents = [HEADER]
     contents.extend(imports)
@@ -457,11 +465,11 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
             basename = get_valid_identifier(basename)
 
             defschema = {"$ref": definition}
+            defschema = copy.deepcopy(resolve_references(defschema, schema))
 
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
-                defschema = copy.deepcopy(resolve_references(defschema, schema))
 
                 # For Encoding field definitions, we patch the schema by adding the
                 # shorthand property.
@@ -488,8 +496,55 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
                 rootschema=schema,
                 encodingname=prop,
                 nodefault=nodefault,
+                haspropsetters=True,
             )
             contents.append(gen.schema_class())
+
+    return "\n".join(contents)
+
+
+def generate_type_hint_protocols(schemafile, version):
+    contents = [HEADER]
+    contents.extend([
+        "from altair.utils.schemapi import Undefined",
+        "from typing import Any, Protocol",
+        ""
+        ])
+
+    #TODO: is dict correct for object?
+    _equiv_python_types = {
+            "string": "str",
+            "number": "float",
+            "integer": "int",
+            "object": "dict",
+            "boolean": "bool",
+            "array": "list",
+            "null": "type(None)",
+        }
+
+    cd = dict(sorted(SchemaGenerator.callable_dict.items()))
+
+    for name, si in cd.items():
+        contents.append(f"class {name}(Protocol):")
+        props = []
+        #TODO: do we need to specialize the anyOf code?
+        if si.is_anyOf():
+            props = sorted(list({p for si_sub in si.anyOf for p in si_sub.properties}))
+        elif si.properties:
+            props = si.properties
+
+        if props:
+            contents.append(f"    def __call__(self, {', '.join([p+'=Undefined' for p in props])}, **kwds):")
+        elif si.type:
+            py_type = _equiv_python_types[si.type]
+            contents.append(f"    def __call__(self, arg: {py_type}):")
+        else:
+            contents.append("    def __call__(self, **kwds):")
+        contents.extend([
+            "        return None",
+            ""
+            ])
+    
     return "\n".join(contents)
 
 
@@ -631,6 +686,13 @@ def vegalite_main(skip_download=False):
         outfile = join(schemapath, "channels.py")
         print("Generating\n {}\n  ->{}".format(schemafile, outfile))
         code = generate_vegalite_channel_wrappers(schemafile, version=version)
+        with open(outfile, "w", encoding="utf8") as f:
+            f.write(code)
+
+        # Generate the type hint protocols
+        outfile = join(schemapath, "protocols.py")
+        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+        code = generate_type_hint_protocols(schemafile, version=version)
         with open(outfile, "w", encoding="utf8") as f:
             f.write(code)
 

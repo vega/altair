@@ -1,10 +1,11 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from . import core
+from . import core, protocols
 import pandas as pd
 from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
+from typing import Union
 
 
 class FieldChannelMixin(object):
@@ -322,6 +323,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -449,6 +462,12 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(AngleDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -474,6 +493,8 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
@@ -710,6 +731,18 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -837,6 +870,12 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ColorDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -863,6 +902,8 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1082,6 +1123,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    align: protocols.LayoutAlignCallable
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    center: protocols.BooleanCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    header: Union[protocols.HeaderCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.SortOrderCallable, protocols.EncodingSortFieldCallable, protocols.NoneCallable]
+    spacing: protocols.FloatCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
@@ -1297,6 +1351,17 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefstringExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1326,6 +1391,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(DescriptionValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1492,6 +1559,14 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1752,6 +1827,21 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    align: Union[protocols.LayoutAlignCallable, protocols.RowColLayoutAlignCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    bounds: protocols.StringCallable
+    center: Union[protocols.BooleanCallable, protocols.RowColbooleanCallable]
+    columns: protocols.FloatCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    header: Union[protocols.HeaderCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.SortOrderCallable, protocols.EncodingSortFieldCallable, protocols.NoneCallable]
+    spacing: Union[protocols.FloatCallable, protocols.RowColnumberCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, bounds=Undefined, center=Undefined,
                  columns=Undefined, field=Undefined, header=Undefined, sort=Undefined,
@@ -1993,6 +2083,18 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2120,6 +2222,12 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -2146,6 +2254,8 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2382,6 +2492,18 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2509,6 +2631,12 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -2534,6 +2662,8 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2744,6 +2874,17 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefstringExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2773,6 +2914,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2939,6 +3082,14 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -3108,6 +3259,14 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StringCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3223,6 +3382,11 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                             type=type, **kwds)
@@ -3321,6 +3485,13 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -3437,6 +3608,11 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
@@ -3460,6 +3636,8 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Latitude2Value, self).__init__(value=value, **kwds)
@@ -3626,6 +3804,14 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StringCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3741,6 +3927,11 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
@@ -3839,6 +4030,13 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -3955,6 +4153,11 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                               type=type, **kwds)
@@ -3978,6 +4181,8 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Longitude2Value, self).__init__(value=value, **kwds)
@@ -4214,6 +4419,18 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -4341,6 +4558,12 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(OpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -4366,6 +4589,8 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -4534,6 +4759,15 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    sort: protocols.SortOrderCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
                  **kwds):
@@ -4566,6 +4800,8 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
+
+    condition: Union[protocols.ConditionalValueDefnumberCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(OrderValue, self).__init__(value=value, condition=condition, **kwds)
@@ -4813,6 +5049,17 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -4973,6 +5220,13 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
+
+    bandPosition: protocols.FloatCallable
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(RadiusDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -4997,6 +5251,8 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
+
+    
 
     def __init__(self, value, **kwds):
         super(RadiusValue, self).__init__(value=value, **kwds)
@@ -5095,6 +5351,13 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -5211,6 +5474,11 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                            type=type, **kwds)
@@ -5234,6 +5502,8 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Radius2Value, self).__init__(value=value, **kwds)
@@ -5452,6 +5722,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    align: protocols.LayoutAlignCallable
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    center: protocols.BooleanCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    header: Union[protocols.HeaderCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.SortOrderCallable, protocols.EncodingSortFieldCallable, protocols.NoneCallable]
+    spacing: protocols.FloatCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
@@ -5694,6 +5977,18 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeForShapeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -5821,6 +6116,12 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ShapeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -5847,6 +6148,8 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefTypeForShapeCallable, protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6083,6 +6386,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6210,6 +6525,12 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(SizeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -6235,6 +6556,8 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6471,6 +6794,18 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6598,6 +6933,12 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -6624,6 +6965,8 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefGradientstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6860,6 +7203,18 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberArrayExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6987,6 +7342,12 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberArrayExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDashDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7013,6 +7374,8 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberArrayExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7249,6 +7612,18 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7376,6 +7751,12 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7401,6 +7782,8 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7637,6 +8020,18 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    legend: Union[protocols.LegendCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7764,6 +8159,12 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeWidthDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7789,6 +8190,8 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefnumberExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7999,6 +8402,17 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefTextExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -8160,6 +8574,14 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
+
+    bandPosition: protocols.FloatCallable
+    condition: Union[protocols.ConditionalValueDefTextExprRefCallable, protocols.ListCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, format=Undefined,
                  formatType=Undefined, title=Undefined, type=Undefined, **kwds):
         super(TextDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -8186,6 +8608,8 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
+
+    condition: Union[protocols.ConditionalStringFieldDefCallable, protocols.ConditionalValueDefTextExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
@@ -8433,6 +8857,17 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -8592,6 +9027,13 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
+
+    bandPosition: protocols.FloatCallable
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ThetaDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -8616,6 +9058,8 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
+
+    
 
     def __init__(self, value, **kwds):
         super(ThetaValue, self).__init__(value=value, **kwds)
@@ -8714,6 +9158,13 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -8830,6 +9281,11 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                           type=type, **kwds)
@@ -8853,6 +9309,8 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Theta2Value, self).__init__(value=value, **kwds)
@@ -9063,6 +9521,17 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefstringExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9092,6 +9561,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
@@ -9302,6 +9773,17 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    condition: Union[protocols.ConditionalValueDefstringExprRefCallable, protocols.ListCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    format: Union[protocols.StringCallable, protocols.DictCallable]
+    formatType: protocols.StringCallable
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9331,6 +9813,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
+
+    condition: Union[protocols.ConditionalMarkPropFieldOrDatumDefCallable, protocols.ConditionalValueDefstringnullExprRefCallable, protocols.ListCallable]
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(UrlValue, self).__init__(value=value, condition=condition, **kwds)
@@ -9595,6 +10079,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    axis: Union[protocols.AxisCallable, protocols.NoneCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    impute: Union[protocols.ImputeParamsCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9772,6 +10269,15 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
+
+    axis: Union[protocols.AxisCallable, protocols.NoneCallable]
+    bandPosition: protocols.FloatCallable
+    impute: Union[protocols.ImputeParamsCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(XDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
@@ -9796,6 +10302,8 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
+
+    
 
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
@@ -9894,6 +10402,13 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -10009,6 +10524,11 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
@@ -10032,6 +10552,8 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    
 
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
@@ -10131,6 +10653,13 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10156,6 +10685,8 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
+
+    
 
     def __init__(self, value, **kwds):
         super(XErrorValue, self).__init__(value=value, **kwds)
@@ -10255,6 +10786,13 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10280,6 +10818,8 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
+
+    
 
     def __init__(self, value, **kwds):
         super(XError2Value, self).__init__(value=value, **kwds)
@@ -10497,6 +11037,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -10626,6 +11176,12 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
+
+    bandPosition: protocols.FloatCallable
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(XOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -10650,6 +11206,8 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
+
+    
 
     def __init__(self, value, **kwds):
         super(XOffsetValue, self).__init__(value=value, **kwds)
@@ -10914,6 +11472,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    axis: Union[protocols.AxisCallable, protocols.NoneCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.StringCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    impute: Union[protocols.ImputeParamsCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -11091,6 +11662,15 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
+
+    axis: Union[protocols.AxisCallable, protocols.NoneCallable]
+    bandPosition: protocols.FloatCallable
+    impute: Union[protocols.ImputeParamsCallable, protocols.NoneCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    stack: Union[protocols.StackOffsetCallable, protocols.NoneCallable, protocols.BooleanCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(YDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
@@ -11115,6 +11695,8 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
+
+    
 
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
@@ -11213,6 +11795,13 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -11328,6 +11917,11 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    bandPosition: protocols.FloatCallable
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
@@ -11351,6 +11945,8 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
@@ -11450,6 +12046,13 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11475,6 +12078,8 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
+
+    
 
     def __init__(self, value, **kwds):
         super(YErrorValue, self).__init__(value=value, **kwds)
@@ -11574,6 +12179,13 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: protocols.NoneCallable
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11599,6 +12211,8 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
+
+    
 
     def __init__(self, value, **kwds):
         super(YError2Value, self).__init__(value=value, **kwds)
@@ -11816,6 +12430,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
+    aggregate: Union[protocols.NonArgAggregateOpCallable, protocols.ArgmaxDefCallable, protocols.ArgminDefCallable]
+    bandPosition: protocols.FloatCallable
+    bin: Union[protocols.BooleanCallable, protocols.BinParamsCallable, protocols.NoneCallable]
+    field: Union[protocols.FieldNameCallable, protocols.RepeatRefCallable]
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    sort: Union[protocols.SortArrayCallable, protocols.AllSortStringCallable, protocols.EncodingSortFieldCallable, protocols.SortByEncodingCallable, protocols.NoneCallable]
+    timeUnit: Union[protocols.TimeUnitCallable, protocols.TimeUnitParamsCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.StandardTypeCallable
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -11945,6 +12569,12 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    bandPosition: protocols.FloatCallable
+    scale: Union[protocols.ScaleCallable, protocols.NoneCallable]
+    title: Union[protocols.TextCallable, protocols.NoneCallable]
+    type: protocols.TypeCallable
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(YOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -11969,6 +12599,8 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    
 
     def __init__(self, value, **kwds):
         super(YOffsetValue, self).__init__(value=value, **kwds)

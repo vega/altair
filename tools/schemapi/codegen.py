@@ -99,6 +99,8 @@ class SchemaGenerator(object):
     """
     ).lstrip()
 
+    callable_dict = {}
+
     def _process_description(self, description):
         return description
 
@@ -111,6 +113,7 @@ class SchemaGenerator(object):
         schemarepr=None,
         rootschemarepr=None,
         nodefault=(),
+        haspropsetters=False,
         **kwargs,
     ):
         self.classname = classname
@@ -120,6 +123,7 @@ class SchemaGenerator(object):
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault
+        self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
     def subclasses(self):
@@ -148,6 +152,7 @@ class SchemaGenerator(object):
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),
             init_code=self.init_code(indent=4),
+            method_code=self.method_code(indent=4),
             **self.kwargs,
         )
 
@@ -177,7 +182,7 @@ class SchemaGenerator(object):
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent=0):
-        """Return code suitablde for the __init__ function of a Schema class"""
+        """Return code suitable for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
         nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
 
@@ -193,6 +198,8 @@ class SchemaGenerator(object):
         elif nonkeyword:
             args.append("*args")
             super_args.append("*args")
+
+        self.init_kwds = sorted(kwds)
 
         args.extend("{}=Undefined".format(p) for p in sorted(required) + sorted(kwds))
         super_args.extend(
@@ -217,3 +224,32 @@ class SchemaGenerator(object):
         if indent:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
+
+    def get_name(self, si):
+        if si.title:
+            name = si.title
+        elif si.type:
+            name = SchemaInfo._simple_types[si.type]
+            name = name[:1].upper() + name[1:]
+        
+        name += "Callable"
+        self.callable_dict[name] = si
+        
+        return f"protocols.{name}"
+
+    def setter_hint(self, attr):
+        si = SchemaInfo(self.schema, self.rootschema).properties[attr]
+        if si.is_anyOf():
+            names = [self.get_name(s) for s in si.anyOf]
+            return f"Union[{', '.join(names)}]"
+        else:
+            return self.get_name(si)
+
+    def method_code(self, indent=0):
+        """Return code to assist setter methods"""
+        if not self.haspropsetters:
+            return None
+        args = self.init_kwds
+        type_hints = [f"{a}: {self.setter_hint(a)}" for a in args]
+
+        return ("\n" + indent * " ").join(type_hints)
