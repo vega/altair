@@ -12,7 +12,7 @@ as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 
 For example, here we will visualize the cars dataset using four of the available
-encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
+**encoding channels** (see :ref:`user-guide-encoding-channels` for details): ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
@@ -28,112 +28,21 @@ encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
        shape='Origin'
    )
 
-For data specified as a DataFrame, Altair can automatically determine the
-correct data type for each encoding, and creates appropriate scales and
-legends to represent the data.
+Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
+the chart. For example, below we adjust the y-axis title and increase the step between the x-axis ticks:
 
-.. _encoding-channels:
+.. altair-plot::
+    import altair as alt
+    from vega_datasets import data
+    cars = data.cars()
 
-Encoding Channels
-~~~~~~~~~~~~~~~~~
+    alt.Chart(cars).mark_point().encode(
+        x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
+        y=alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
+        color='Origin',
+        shape='Origin'
+    )
 
-Altair provides a number of encoding channels that can be useful in different
-circumstances; the following table summarizes them:
-
-Position Channels
-^^^^^^^^^^^^^^^^^
-
-==========  ===================  =================================  ===================================
-Channel     Altair Class         Description                        Example
-==========  ===================  =================================  ===================================
-x           :class:`X`           The x-axis value                   :ref:`gallery_scatter_tooltips`
-y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
-x2          :class:`X2`          Second x value for ranges          :ref:`gallery_gantt_chart`
-y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_candlestick_chart`
-longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_point_map`
-latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_point_map`
-longitude2  :class:`Longitude2`  Second longitude value for ranges  :ref:`gallery_airport_connections`
-latitude2   :class:`Latitude2`   Second latitude value for ranges   :ref:`gallery_airport_connections`
-xError      :class:`XError`      The x-axis error value             N/A
-yError      :class:`YError`      The y-axis error value             N/A
-xError2     :class:`XError2`     The second x-axis error value      N/A
-yError2     :class:`YError2`     The second y-axis error value      N/A
-xOffset     :class:`XOffset`     Offset to the x position           :ref:`gallery_grouped_bar_chart2`
-yOffset     :class:`YOffset`     Offset to the y position           :ref:`gallery_strip_plot_jitter`
-theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
-theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
-==========  ===================  =================================  ===================================
-
-Mark Property Channels
-^^^^^^^^^^^^^^^^^^^^^^
-
-=============  ======================  ==============================  =========================================
-Channel        Altair Class            Description                     Example
-=============  ======================  ==============================  =========================================
-angle          :class:`Angle`          The angle of the mark           :ref:`gallery_wind_vector_map`
-color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
-fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
-fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
-opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
-radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
-shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
-size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
-stroke         :class:`Stroke`         The stroke of the mark          N/A
-strokeDash     :class:`StrokeDash`     The stroke dash style           :ref:`gallery_multi_series_line`
-strokeOpacity  :class:`StrokeOpacity`  The opacity of the line         N/A
-strokeWidth    :class:`StrokeWidth`    The width of the line           N/A
-=============  ======================  ==============================  =========================================
-
-Text and Tooltip Channels
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-=======  ================  ========================  =========================================
-Channel  Altair Class      Description               Example
-=======  ================  ========================  =========================================
-text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_labels`
-key      :class:`Key`      --                        N/A
-tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
-=======  ================  ========================  =========================================
-
-.. _hyperlink-channel:
-
-Hyperlink Channel
-^^^^^^^^^^^^^^^^^
-
-=======  ================  ========================  =========================================
-Channel  Altair Class      Description               Example
-=======  ================  ========================  =========================================
-href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
-=======  ================  ========================  =========================================
-
-Level of Detail Channel
-^^^^^^^^^^^^^^^^^^^^^^^
-
-=======  ================  ===============================  =========================================
-Channel  Altair Class      Description                      Example
-=======  ================  ===============================  =========================================
-detail   :class:`Detail`   Additional property to group by  :ref:`gallery_ranged_dot_plot`
-=======  ================  ===============================  =========================================
-
-Order Channel
-^^^^^^^^^^^^^
-
-=======  ================  =============================  =====================================
-Channel  Altair Class      Description                    Example
-=======  ================  =============================  =====================================
-order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connected_scatterplot`
-=======  ================  =============================  =====================================
-
-Facet Channels
-^^^^^^^^^^^^^^
-
-=======  ================  ===============================================  =============================================
-Channel  Altair Class      Description                                      Example
-=======  ================  ===============================================  =============================================
-column   :class:`Column`   The column of a faceted plot                     :ref:`gallery_trellis_scatter_plot`
-row      :class:`Row`      The row of a faceted plot                        :ref:`gallery_beckers_barley_trellis_plot`
-facet    :class:`Facet`    The row and/or column of a general faceted plot  :ref:`gallery_us_population_over_time_facet`
-=======  ================  ===============================================  =============================================
 
 .. _encoding-data-types:
 
@@ -151,6 +60,10 @@ nominal       ``N``           a discrete unordered category
 temporal      ``T``           a time or date value
 geojson       ``G``           a geographic shape
 ============  ==============  ================================================
+
+For data specified as a DataFrame, Altair can automatically determine the
+correct data type for each encoding, and creates appropriate scales and
+legends to represent the data.
 
 If types are not specified for data input as a DataFrame, Altair defaults to
 ``quantitative`` for any numeric data, ``temporal`` for date/time data, and
@@ -182,8 +95,7 @@ identical plots:
 The shorthand form, ``x="name:Q"``, is useful for its lack of boilerplate
 when doing quick data explorations. The long-form,
 ``alt.X('name', type='quantitative')``, is useful when doing more fine-tuned
-adjustments to the encoding, such as binning, axis and scale properties,
-or more.
+adjustments to the encoding using channel options such as binning, axis, and scale.
 
 Specifying the correct type for your data is important, as it affects the
 way Altair represents your encoding in the resulting plot.
@@ -252,115 +164,27 @@ data: a visual encoding that is suitable for categorical data may not be
 suitable for quantitative data, and vice versa.
 
 
-.. _encoding-channel-options:
+.. _shorthand-description:
 
-Encoding Channel Options
-~~~~~~~~~~~~~~~~~~~~~~~~
-Each encoding channel allows for a number of additional options to be expressed;
-these can control things like axis properties, scale properties, headers and
-titles, binning parameters, aggregation, sorting, and many more.
+Encoding Shorthands
+~~~~~~~~~~~~~~~~~~~
 
-The particular options that are available vary by encoding type; the various
-options are listed below.
+For convenience, Altair allows the specification of the variable name along
+with the aggregate and type within a simple shorthand string syntax.
+This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
+as well as the aggregate names listed in :ref:`encoding-aggregates`.
+The following table shows examples of the shorthand specification alongside
+the long-form equivalent:
 
-X and Y
-^^^^^^^
-
-The :class:`X` and :class:`Y` encodings accept the following options:
-
-.. altair-object-table:: altair.PositionFieldDef
-
-Color, Fill, and Stroke
-^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
-
-Shape
-^^^^^
-
-The :class:`Shape` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
-
-Order
-^^^^^
-
-The :class:`Order` encoding accepts the following options:
-
-.. altair-object-table:: altair.OrderFieldDef
-
-Angle, FillOpacity, Opacity, Size, StrokeOpacity, and StrokeWidth
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Angle`, :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
-and :class:`StrokeWidth` encodings accept the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
-
-StrokeDash
-^^^^^^^^^^
-
-The :class:`StrokeDash` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
-
-Row and Column
-^^^^^^^^^^^^^^
-
-The :class:`Row` and :class:`Column`, and :class:`Facet` encodings accept the following options:
-
-.. altair-object-table:: altair.RowColumnEncodingFieldDef
-
-Facet
-^^^^^
-
-The :class:`Facet` encoding accepts the following options:
-
-.. altair-object-table:: altair.FacetEncodingFieldDef
-
-Text
-^^^^
-
-The :class:`Text` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionStringFieldDefText
-
-Description, Href, Tooltip, Url
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Description`, :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
-
-.. altair-object-table:: altair.StringFieldDefWithCondition
-
-Detail and Key
-^^^^^^^^^^^^^^
-
-The :class:`Detail` and :class:`Key` encodings accept the following options:
-
-.. altair-object-table:: altair.FieldDefWithoutScale
-
-Latitude and Longitude
-^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Latitude` and :class:`Longitude` encodings accept the following options:
-
-.. altair-object-table:: altair.LatLongFieldDef
-
-Radius and Theta
-^^^^^^^^^^^^^^^^
-
-The :class:`Radius` and :class:`Theta` encodings accept the following options:
-
-.. altair-object-table:: altair.PositionFieldDefBase
-
-Latitude2, Longitude2, Radius2, Theta2, X2, Y2, XError, YError, XError2, and YError2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`, :class:`XError2`, and :class:`YError2` encodings accept the following options:
-
-.. altair-object-table:: altair.SecondaryFieldDef
+===================  =======================================================
+Shorthand            Equivalent long-form
+===================  =======================================================
+``x='name'``         ``alt.X('name')``
+``x='name:Q'``       ``alt.X('name', type='quantitative')``
+``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
+``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
+``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
+===================  =======================================================
 
 
 .. _encoding-aggregates:
@@ -422,7 +246,7 @@ Aggregation Functions
 ^^^^^^^^^^^^^^^^^^^^^
 
 In addition to ``count`` and ``average``, there are a large number of available
-aggregation functions built into Altair; they are listed in the following table:
+aggregation functions built into Altair:
 
 =========  ===========================================================================  =====================================
 Aggregate  Description                                                                  Example
@@ -446,109 +270,16 @@ stdev      The sample standard deviation of field values.                       
 stdevp     The population standard deviation of field values.                           N/A
 sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
 valid      The count of field values that are not null or undefined.                    N/A
-values     ??                                                                           N/A
+values     A list of data objects in the group.                                         N/A
 variance   The sample variance of field values.                                         N/A
 variancep  The population variance of field values.                                     N/A
 =========  ===========================================================================  =====================================
 
 
-.. _shorthand-description:
+Sort Option
+~~~~~~~~~~~
 
-Encoding Shorthands
-~~~~~~~~~~~~~~~~~~~
-
-For convenience, Altair allows the specification of the variable name along
-with the aggregate and type within a simple shorthand string syntax.
-This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
-as well as the aggregate names listed in :ref:`encoding-aggregates`.
-The following table shows examples of the shorthand specification alongside
-the long-form equivalent:
-
-===================  =======================================================
-Shorthand            Equivalent long-form
-===================  =======================================================
-``x='name'``         ``alt.X('name')``
-``x='name:Q'``       ``alt.X('name', type='quantitative')``
-``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
-``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
-``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
-===================  =======================================================
-
-
-.. _ordering-channels:
-
-Ordering Marks
-~~~~~~~~~~~~~~
-
-The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
-
-For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    barley = data.barley()
-
-    alt.Chart(barley).mark_bar().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="ascending")
-    )
-
-The order can be reversed by changing the sort option to `descending`.
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    barley = data.barley()
-
-    alt.Chart(barley).mark_bar().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="descending")
-    )
-
-The same approach works for other mark types, like stacked areas charts.
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    barley = data.barley()
-
-    alt.Chart(barley).mark_area().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="ascending")
-    )
-
-For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    driving = data.driving()
-
-    alt.Chart(driving).mark_line(point=True).encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False)),
-        order='year'
-    )
-
-Sorting
-~~~~~~~
-
-Specific channels can take a  :class:`sort` property which determines the
+Some channels accept a  :class:`sort` option which determines the
 order of the scale being used for the channel. There are a number of different
 sort options available:
 
@@ -679,3 +410,103 @@ While the above examples show sorting of axes by specifying ``sort`` in the
 
 Here the y-axis is sorted reverse-alphabetically, while the color legend is
 sorted in the specified order, beginning with ``'Morris'``.
+
+Datum and Value
+~~~~~~~~~~~~~~~
+
+So far we always mapped an encoding channel to a column in our dataset. However, sometimes
+it is also useful to map to a single constant value. In Altair, you can do this with
+
+* ``datum``, which encodes a constant domain value via a scale using the same units as the underlying data
+* ``value``, which encodes a constant visual value, using absolute units such as an exact position in pixels, the name or RGB value of a color, the name of shape,  etc
+
+``datum`` is particularly useful for annotating a specific data value. 
+For example, you can use it with a rule mark to highlight a 
+threshold value (e.g., 300 dollars stock price).
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.datum(300)
+    )
+
+    lines + rule
+
+If we instead used ``alt.value`` in this example, we would position the rule 300 pixels from the top of the chart border rather than at the 300 dollars position. Since the default charts height is 300 pixels, this will show the dotted line just on top of the x-axis -line:
+
+.. altair-plot::
+
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.value(300)
+    )
+
+    lines + rule
+
+If we want to use ``datum``  to highlight a certain year on the x-axis,
+we can't simply type in the year as an integer,
+but instead need to use ``datum`` together with :class:`DateTime`.
+Here we also set the color for the rule to the same one as the line for the symbol ``MSFT``
+with ``alt.datum("MSFT")``.
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.datum("MSFT")
+    )
+
+    lines + rule
+
+
+Similar to when mapping to a data column, when using ``datum`` different encoding channels 
+may support ``band``, ``scale``, ``axis``, ``legend``, ``format``, or ``condition`` properties.
+However, data transforms (e.g. ``aggregate``, ``bin``, ``timeUnit``, ``sort``) cannot be applied.
+
+Expanding on the example above, if you would want to color the ``rule`` mark regardless of 
+the color scale used for the lines, you can use ``value``, e.g. ``alt.value("red")``:
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.value("red")
+    )
+
+    lines + rule
+
+
+.. toctree::
+   :hidden:
+
+   channels
+   channel_options

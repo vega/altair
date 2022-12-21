@@ -6,6 +6,7 @@ from os.path import abspath, dirname
 
 from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
+from docutils.parsers.rst.directives import flag
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
@@ -189,7 +190,7 @@ class AltairObjectTableDirective(Directive):
     has_content = False
     required_arguments = 1
 
-    option_spec = {"properties": validate_properties}
+    option_spec = {"properties": validate_properties, "dont-collapse-table": flag}
 
     def run(self):
         objectname = self.arguments[0]
@@ -199,10 +200,22 @@ class AltairObjectTableDirective(Directive):
         schema = cls.resolve_references(cls._schema)
 
         properties = self.options.get("properties", None)
+        dont_collapse_table = "dont-collapse-table" in self.options
 
+        result = []
+        if not dont_collapse_table:
+            html = "<details><summary><a>Click to show table</a></summary>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
         # create the table from the object
-        table = prepare_schema_table(schema, props=properties)
-        return [table]
+        result.append(prepare_schema_table(schema, props=properties))
+
+        if not dont_collapse_table:
+            html = "</details>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
+        return result
 
 
 def setup(app):
