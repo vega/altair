@@ -482,7 +482,7 @@ def fix_docstring_issues(docstring):
         docstring,
         flags=re.MULTILINE,
     )
-    
+
     # Links to the vega-lite documentation cannot be relative but instead need to
     # contain the full URL.
     docstring = docstring.replace(
