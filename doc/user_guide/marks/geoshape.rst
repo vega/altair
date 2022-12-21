@@ -170,10 +170,12 @@ Points can be drawn when they are defined as ``Points`` within a GeoDataFrame us
 We first assign the centroids of Polygons as Point geometry and plot these:
 
 .. altair-plot::
-
+    
+    # .copy() to prevent changing the original `gdf_sel` variable
+    # derive centroid in a projected CRS (in meters) and visualize in a projected CRS (in degrees).
     gdf_centroid = gpd.GeoDataFrame(
-        data=gdf_sel.copy(),  # .copy() to prevent changing the original `gdf_sel` variable
-        geometry=gdf_sel.geometry.centroid
+        data=gdf_sel.copy(),
+        geometry=gdf_sel.geometry.to_crs(epsg=3857).centroid.to_crs(epsg=4326)
     )
 
     alt.Chart(gdf_centroid).mark_geoshape()
