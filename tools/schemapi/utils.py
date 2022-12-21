@@ -193,14 +193,14 @@ class SchemaInfo(object):
             return self.medium_description
 
     _simple_types = {
-            "string": "string",
-            "number": "float",
-            "integer": "integer",
-            "object": "mapping",
-            "boolean": "boolean",
-            "array": "list",
-            "null": "None",
-        }
+        "string": "string",
+        "number": "float",
+        "integer": "integer",
+        "object": "mapping",
+        "boolean": "boolean",
+        "array": "list",
+        "null": "None",
+    }
 
     @property
     def medium_description(self):

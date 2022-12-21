@@ -231,10 +231,10 @@ class SchemaGenerator(object):
         elif si.type:
             name = SchemaInfo._simple_types[si.type]
             name = name[:1].upper() + name[1:]
-        
+
         name += "Callable"
         self.callable_dict[name] = si
-        
+
         return f"protocols.{name}"
 
     def setter_hint(self, attr):
