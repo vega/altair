@@ -172,7 +172,7 @@ We first assign the centroids of Polygons as Point geometry and plot these:
 .. altair-plot::
     
     # .copy() to prevent changing the original `gdf_sel` variable
-    # derive centroid in a projected CRS (in meters) and visualize in a projected CRS (in degrees).
+    # derive centroid in a projected CRS (in meters) and visualize in a geographic CRS (in degrees).
     gdf_centroid = gpd.GeoDataFrame(
         data=gdf_sel.copy(),
         geometry=gdf_sel.geometry.to_crs(epsg=3857).centroid.to_crs(epsg=4326)
