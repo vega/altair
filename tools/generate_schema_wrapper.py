@@ -184,6 +184,8 @@ class FieldSchemaGenerator(SchemaGenerator):
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
 
+        {method_code}
+
         {init_code}
     '''
     )
@@ -198,6 +200,8 @@ class ValueSchemaGenerator(SchemaGenerator):
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
 
+        {method_code}
+
         {init_code}
     '''
     )
@@ -211,6 +215,9 @@ class DatumSchemaGenerator(SchemaGenerator):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
+
+        {method_code}
+
         {init_code}
     '''
     )
@@ -434,6 +441,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
+            "from typing import overload",
         ]
     contents = [HEADER]
     contents.extend(imports)
@@ -488,6 +496,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
                 rootschema=schema,
                 encodingname=prop,
                 nodefault=nodefault,
+                haspropsetters=True,
             )
             contents.append(gen.schema_class())
     return "\n".join(contents)
