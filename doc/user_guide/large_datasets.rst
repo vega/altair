@@ -18,11 +18,11 @@ If you try to create a plot that will directly embed a dataset with more than
                   in Altair, see the documentation.
 
 This is not because Altair cannot handle larger datasets, but it is because it
-is important for the user to think carefully about how large datasets are handled. The following sections
-describe various considerations and approaches you can take.
+is important for the user to think carefully about how large datasets are handled. 
+The following sections describe various considerations and approaches you can take.
 
 If you are certain you would like to embed your full dataset within the visualization
-specification, you can disable the ``MaxRows`` check with the following::
+specification, you can disable the ``MaxRows`` check::
 
     alt.data_transformers.disable_max_rows()
 
@@ -62,20 +62,20 @@ where it can be used by Vega-Lite to render the plot.
 As the size of the data grows, this explicit data storage can lead to some
 very large specifications which can have various negative implications:
 
-* large notebook files which can slow down your notebook environment/IDE
+* large notebook files which can slow down your notebook environment such as JupyterLab
 * if you display the chart on a website it slows down the loading of the page
-* slow evaluation of transforms as calculations happen in JavaScript which is not the fastest language for processing large amounts of data
+* slow evaluation of transforms as the calculations are performed in JavaScript which is not the fastest language for processing large amounts of data
 
-A common approach is to transform or filter your data already in Python as described in :ref:`user-guide-transformations`
-and to subset to only the columns which are relevant for your chart. However, sometimes this might not be possible or
-not convenient. The following sections describe various approaches you can try with their advantages and disadvantages.
+The following sections describe various approaches to work with larger datasets
+as well as their advantages and disadvantages.
 
 .. _passing-data-by-url:
 
 Passing Data by URL
 ~~~~~~~~~~~~~~~~~~~
-A better solution when working with large datasets is to not embed the data directly,
-but rather store it separately and pass it to the chart by URL. This not only addresses the issue of large notebooks, but also leads to better
+A common solution when working with large datasets is to not embed the data directly,
+but rather store it separately and pass it to the chart by URL. 
+This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
 
@@ -155,19 +155,25 @@ The approaches presented in :ref:`passing-data-by-url` have the disadvantage tha
 contained in the notebook and you therefore lose portability or don't see the charts when you reopen the notebook.
 Furthermore, the data still needs to be sent to the frontend, e.g. your browser, and any calculations will happen there.
 
-A further speedup might be achieved by enabling either the PNG or SVG renderer 
-as described in :ref:`renderers`. This will lead to only the final static image being sent
+You might achieve a speedup by enabling either the PNG or SVG renderer 
+as described in :ref:`renderers`. They will send only a static image
 to your notebook, in some cases greatly reducing the amount of data transmitted. The downside with this approach is,
-that all interactivity features of Altair will no longer work.
+that you loose all interactivity features of Altair.
 
 Both renderers require you to install either the `vl-convert`_ or the `altair_saver`_ package, see :ref:`saving-png`,
 whereas `vl-convert`_ is expected to provide the better performance.
+
+Preaggregate and Filter Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A common approach is to aggregate or filter your data before passing it to
+Altair. Furthermore, you can subset the columns of your Pandas Dataframe to only 
+the ones which are required for the chart.
 
 
 VegaFusion
 ~~~~~~~~~~
 If you work with large datasets and require your charts to be interactive, the `VegaFusion`_ package might be
-a good option for you. Make sure to check out it's documentation on how to use it as well as the current limitations.
+a good option for you. Make sure to check out it's documentation on how to use it, it's roadmap, as well as the current limitations.
 
 .. _VegaFusion: https://vegafusion.io
 .. _vl-convert: https://github.com/vega/vl-convert
