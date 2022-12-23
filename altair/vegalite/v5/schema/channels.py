@@ -5,6 +5,7 @@ from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
+from typing import overload
 
 
 class FieldChannelMixin(object):
@@ -322,6 +323,105 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Angle':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Angle':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Angle':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -449,6 +549,30 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
+
+    def bandPosition(self, _: float, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'AngleDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'AngleDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(AngleDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -474,6 +598,19 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
+
+    @overload
+    def condition(self, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'AngleValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
@@ -710,6 +847,105 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Color':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Color':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Color':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Color':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Color':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -837,6 +1073,30 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
+
+    def bandPosition(self, _: float, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'ColorDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ColorDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ColorDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -863,6 +1123,19 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
+
+    @overload
+    def condition(self, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ColorValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1082,6 +1355,94 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Column':
+        ...
+
+    def align(self, _: str, **kwds) -> 'Column':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Column':
+        ...
+
+    def center(self, _: bool, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def header(self, _: type(None), **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Column':
+        ...
+
+    def spacing(self, _: float, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Column':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Column':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
@@ -1297,6 +1658,84 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Description':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Description':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Description':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Description':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Description':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1326,6 +1765,19 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
+
+    @overload
+    def condition(self, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'DescriptionValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(DescriptionValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1492,6 +1944,65 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Detail':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Detail':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Detail':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1752,6 +2263,115 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def align(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def align(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Facet':
+        ...
+
+    def bounds(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def center(self, _: bool, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def center(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    def columns(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def header(self, _: type(None), **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def spacing(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def spacing(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Facet':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Facet':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, bounds=Undefined, center=Undefined,
                  columns=Undefined, field=Undefined, header=Undefined, sort=Undefined,
@@ -1993,6 +2613,105 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Fill':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Fill':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Fill':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2120,6 +2839,30 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
+
+    def bandPosition(self, _: float, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'FillDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -2146,6 +2889,19 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
+
+    @overload
+    def condition(self, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2382,6 +3138,105 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'FillOpacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2509,6 +3364,30 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'FillOpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillOpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -2534,6 +3413,19 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
+
+    @overload
+    def condition(self, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacityValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2744,6 +3636,84 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Href':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Href':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Href':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Href':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Href':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2773,6 +3743,19 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
+
+    @overload
+    def condition(self, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'HrefValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2939,6 +3922,65 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Key':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Key':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Key':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Key':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -3108,6 +4150,52 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Latitude':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3223,6 +4311,22 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
+
+    def bandPosition(self, _: float, **kwds) -> 'LatitudeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'LatitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'LatitudeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'LatitudeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                             type=type, **kwds)
@@ -3321,6 +4425,49 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Latitude2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -3437,6 +4584,22 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Latitude2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Latitude2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
@@ -3460,6 +4623,8 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Latitude2Value, self).__init__(value=value, **kwds)
@@ -3626,6 +4791,52 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Longitude':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3741,6 +4952,22 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
+
+    def bandPosition(self, _: float, **kwds) -> 'LongitudeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'LongitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'LongitudeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'LongitudeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
@@ -3839,6 +5066,49 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Longitude2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -3955,6 +5225,22 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Longitude2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Longitude2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                               type=type, **kwds)
@@ -3978,6 +5264,8 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Longitude2Value, self).__init__(value=value, **kwds)
@@ -4214,6 +5502,105 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Opacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -4341,6 +5728,30 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'OpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'OpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(OpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -4366,6 +5777,19 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
+
+    @overload
+    def condition(self, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OpacityValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -4534,6 +5958,68 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Order':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Order':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Order':
+        ...
+
+    def sort(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Order':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Order':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
                  **kwds):
@@ -4566,6 +6052,15 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OrderValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(OrderValue, self).__init__(value=value, condition=condition, **kwds)
@@ -4813,6 +6308,105 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Radius':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Radius':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Radius':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -4973,6 +6567,42 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
+
+    def bandPosition(self, _: float, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'RadiusDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'RadiusDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(RadiusDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -4997,6 +6627,8 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
+
+    
 
     def __init__(self, value, **kwds):
         super(RadiusValue, self).__init__(value=value, **kwds)
@@ -5095,6 +6727,49 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Radius2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -5211,6 +6886,22 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Radius2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Radius2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                            type=type, **kwds)
@@ -5234,6 +6925,8 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Radius2Value, self).__init__(value=value, **kwds)
@@ -5452,6 +7145,94 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Row':
+        ...
+
+    def align(self, _: str, **kwds) -> 'Row':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Row':
+        ...
+
+    def center(self, _: bool, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def header(self, _: type(None), **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Row':
+        ...
+
+    def spacing(self, _: float, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Row':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Row':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
@@ -5694,6 +7475,105 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Shape':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Shape':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Shape':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -5821,6 +7701,30 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
+
+    def bandPosition(self, _: float, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'ShapeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ShapeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ShapeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -5847,6 +7751,19 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
+
+    @overload
+    def condition(self, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ShapeValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6083,6 +8000,105 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Size':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Size':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Size':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Size':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Size':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6210,6 +8226,30 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
+
+    def bandPosition(self, _: float, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'SizeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'SizeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(SizeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -6235,6 +8275,19 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
+
+    @overload
+    def condition(self, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'SizeValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6471,6 +8524,105 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Stroke':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6598,6 +8750,30 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -6624,6 +8800,19 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
+
+    @overload
+    def condition(self, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -6860,6 +9049,105 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeDash':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6987,6 +9275,30 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeDashDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDashDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDashDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7013,6 +9325,19 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
+
+    @overload
+    def condition(self, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDashValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7249,6 +9574,105 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeOpacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7376,6 +9800,30 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7401,6 +9849,19 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
+
+    @overload
+    def condition(self, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacityValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7637,6 +10098,105 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def legend(self, _: type(None), **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeWidth':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7764,6 +10324,30 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeWidthDatum, self).__init__(datum=datum, bandPosition=bandPosition,
@@ -7789,6 +10373,19 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
+
+    @overload
+    def condition(self, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidthValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
@@ -7999,6 +10596,84 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Text':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Text':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Text':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Text':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Text':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -8160,6 +10835,41 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
+
+    def bandPosition(self, _: float, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'TextDatum':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'TextDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, format=Undefined,
                  formatType=Undefined, title=Undefined, type=Undefined, **kwds):
         super(TextDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -8186,6 +10896,19 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
+
+    @overload
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TextValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
@@ -8433,6 +11156,105 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Theta':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Theta':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Theta':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -8592,6 +11414,42 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
+
+    def bandPosition(self, _: float, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'ThetaDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ThetaDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ThetaDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -8616,6 +11474,8 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
+
+    
 
     def __init__(self, value, **kwds):
         super(ThetaValue, self).__init__(value=value, **kwds)
@@ -8714,6 +11574,49 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Theta2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -8830,6 +11733,22 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Theta2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Theta2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                           type=type, **kwds)
@@ -8853,6 +11772,8 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Theta2Value, self).__init__(value=value, **kwds)
@@ -9063,6 +11984,84 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Tooltip':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Tooltip':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9092,6 +12091,19 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
+
+    @overload
+    def condition(self, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TooltipValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
@@ -9302,6 +12314,84 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Url':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Url':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Url':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Url':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Url':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9331,6 +12421,19 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
+
+    @overload
+    def condition(self, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'UrlValue':
+        ...
+
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(UrlValue, self).__init__(value=value, condition=condition, **kwds)
@@ -9595,6 +12698,121 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def axis(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def impute(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'X':
+        ...
+
+    def type(self, _: str, **kwds) -> 'X':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9772,6 +12990,58 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def axis(self, _: type(None), **kwds) -> 'XDatum':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def impute(self, _: type(None), **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'XDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XDatum':
+        ...
+
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(XDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
@@ -9796,6 +13066,8 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
+
+    
 
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
@@ -9894,6 +13166,49 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'X2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'X2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'X2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'X2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -10009,6 +13324,22 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    def bandPosition(self, _: float, **kwds) -> 'X2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'X2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'X2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
@@ -10032,6 +13363,8 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    
 
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
@@ -10131,6 +13464,49 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XError':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XError':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'XError':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'XError':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10156,6 +13532,8 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
+
+    
 
     def __init__(self, value, **kwds):
         super(XErrorValue, self).__init__(value=value, **kwds)
@@ -10255,6 +13633,49 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XError2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XError2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'XError2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10280,6 +13701,8 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
+
+    
 
     def __init__(self, value, **kwds):
         super(XError2Value, self).__init__(value=value, **kwds)
@@ -10497,6 +13920,89 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'XOffset':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -10626,6 +14132,30 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
+
+    def bandPosition(self, _: float, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'XOffsetDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XOffsetDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(XOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -10650,6 +14180,8 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
+
+    
 
     def __init__(self, value, **kwds):
         super(XOffsetValue, self).__init__(value=value, **kwds)
@@ -10914,6 +14446,121 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def axis(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def impute(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Y':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Y':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -11091,6 +14738,58 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def axis(self, _: type(None), **kwds) -> 'YDatum':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def impute(self, _: type(None), **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: type(None), **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'YDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YDatum':
+        ...
+
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(YDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
@@ -11115,6 +14814,8 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
+
+    
 
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
@@ -11213,6 +14914,49 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Y2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Y2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Y2':
+        ...
+
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -11328,6 +15072,22 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Y2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y2Datum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'Y2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Y2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
@@ -11351,6 +15111,8 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    
 
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
@@ -11450,6 +15212,49 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YError':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YError':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'YError':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'YError':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11475,6 +15280,8 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
+
+    
 
     def __init__(self, value, **kwds):
         super(YErrorValue, self).__init__(value=value, **kwds)
@@ -11574,6 +15381,49 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YError2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YError2':
+        ...
+
+    def bin(self, _: type(None), **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'YError2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11599,6 +15449,8 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
+
+    
 
     def __init__(self, value, **kwds):
         super(YError2Value, self).__init__(value=value, **kwds)
@@ -11816,6 +15668,89 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, _: type(None), **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: type(None), **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'YOffset':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -11945,6 +15880,30 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    def bandPosition(self, _: float, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, _: type(None), **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: type(None), **kwds) -> 'YOffsetDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YOffsetDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(YOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
@@ -11969,6 +15928,8 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    
 
     def __init__(self, value, **kwds):
         super(YOffsetValue, self).__init__(value=value, **kwds)
