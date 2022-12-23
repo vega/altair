@@ -230,7 +230,7 @@ class SchemaGenerator(object):
         "object": "dict",
         "boolean": "bool",
         "array": "list",
-        "null": "type(None)",
+        "null": "Type[None]",
     }
 
     def get_args(self, si):

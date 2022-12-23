@@ -441,7 +441,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
-            "from typing import overload",
+            "from typing import overload, Type",
         ]
     contents = [HEADER]
     contents.extend(imports)
