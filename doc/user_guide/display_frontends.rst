@@ -26,13 +26,13 @@ an API to switch between various *renderers* to tune Altair's chart representati
 These can be chosen with the renderer registry in ``alt.renderers``.
 The most used built-in renderers are:
 
-``alt.renderers.enable('html')``
+``alt.renderers.enable("html")``
   *(the default)* Output an HTML representation of the chart. The HTML renderer works
   in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, `VSCode-Python`_ and many related notebook frontends,
   as well as Jupyter ecosystem tools like nbviewer_ and nbconvert_ HTML output.
   It requires a web connection in order to load relevant Javascript libraries.
 
-``alt.renderers.enable('mimetype')``
+``alt.renderers.enable("mimetype")``
   *(default prior to Altair 4.0):* Output a vega-lite specific mimetype that can be
   interpreted by appropriate frontend extensions to display charts. This also outputs
   a PNG representation of the plot, which is useful to view plots offline or on
@@ -42,14 +42,14 @@ The most used built-in renderers are:
 
 In addition, Altair includes the following renderers:
 
-- ``"default"``, ``colab``, ``kaggle``, ``zeppelin``: identical to ``"html"``
+- ``"default"``, ``"colab"``, ``"kaggle"``, ``"zeppelin"``: identical to ``"html"``
 - ``"jupyterlab"``, ``"nteract"``: identical to ``"mimetype"``
 - ``"png"``: renderer that renders and converts the chart to PNG, outputting it
-  using the ``'image/png'`` MIME type.
+  using the ``"image/png"`` MIME type.
 - ``"svg"``: renderer that renders and converts the chart to an SVG image,
-  outputting it using the ``'image/svg+xml'`` MIME type.
+  outputting it using the ``"image/svg+xml"`` MIME type.
 - ``"json"``: renderer that outputs the raw JSON chart specification, using the
-  ``'application/json'`` MIME type.
+  ``"application/json"`` MIME type.
 
 You can use ``alt.renderers.names()`` to return all registered renderers as a Python list.
 
