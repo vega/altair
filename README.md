@@ -77,15 +77,11 @@ points & bars
 ![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
 
 
-## Getting your Questions Answered
-
-If you have a question that is not addressed in the documentation, there are several ways to ask:
-
-- open a [Github Issue](https://github.com/altair-viz/altair/issues)
-- post a [StackOverflow Question](https://stackoverflow.com/questions/tagged/altair) (be sure to use the `altair` tag)
-- ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz)
-
-We'll do our best to get your question answered
+## Getting Help
+If you have a question that is not addressed in the documentation, 
+you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag
+or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
+For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
 
 ## A Python API for statistical visualizations
 
