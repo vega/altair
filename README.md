@@ -83,26 +83,6 @@ you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/al
 or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
 For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
 
-## A Python API for statistical visualizations
-
-Vega-Altair provides a Python API for building statistical visualizations in a declarative
-manner. By statistical visualization we mean:
-
-* The **data source** is a `DataFrame` that consists of columns of different data types (quantitative, ordinal, nominal and date/time).
-* The `DataFrame` is in a [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf)
-  where the rows correspond to samples and the columns correspond to the observed variables.
-* The data is mapped to the **visual properties** (position, color, size, shape,
-  faceting, etc.) using the group-by data transformation.
-
-The Vega-Altair API contains no actual visualization rendering code but instead
-emits JSON data structures following the
-[Vega-Lite](https://github.com/vega/vega-lite) specification. The resulting
-Vega-Lite JSON data can be rendered in the following user-interfaces:
-
-* [Jupyter Notebook](https://github.com/jupyter/notebook) (by installing [ipyvega](https://github.com/vega/ipyvega)).
-* [JupyterLab](https://github.com/jupyterlab/jupyterlab) (no additional dependencies needed).
-* [nteract](https://github.com/nteract/nteract) (no additional dependencies needed).
-
 ## Features
 
 * Carefully-designed, declarative Python API based on
