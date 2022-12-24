@@ -442,7 +442,7 @@ data before usage in Altair using GeoPandas for example as such:
 
    self
    data/index
-   encoding
+   encodings/index
    marks/index
    transform/index
    interactions
