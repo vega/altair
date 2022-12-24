@@ -76,39 +76,30 @@ points & bars
 
 ![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
 
-
-## Getting Help
-If you have a question that is not addressed in the documentation, 
-you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag
-or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
-For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
-
 ## Features
-
-* Carefully-designed, declarative Python API based on
-  [traitlets](https://github.com/ipython/traitlets).
+* Carefully-designed, declarative Python API.
 * Auto-generated internal Python API that guarantees visualizations are type-checked and
   in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
   specification.
-* Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
-  [nbviewer](https://nbviewer.jupyter.org/).
-* Export visualizations to PNG/SVG images, stand-alone HTML pages and the
+* Display visualizations in JupyterLab, Jupyter Notebook, Visual Studio Code, on GitHub and
+  [nbviewer](https://nbviewer.jupyter.org/), and many more.
+* Export visualizations to various formats such as PNG/SVG images, stand-alone HTML pages and the
 [Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
 * Explore Vega-Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
 
 ## Installation
+Vega-Altair can be installed using:
+```bash
+pip install altair
+```
 
-To use Vega-Altair for visualization, you need to install two sets of tools
+If you are using the conda package manager, the equivalent is:
+```bash
+conda install -c conda-forge altair
+```
 
-1. The core Vega-Altair Package and its dependencies
-
-2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`,
-   `JupyterLab`, or `nteract`)
-
-Vega-Altair can be installed with either ``pip`` or with ``conda``.
-For full installation instructions, please see
-https://altair-viz.github.io/getting_started/installation.html
+For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html)
 
 ## Example and tutorial notebooks
 
@@ -122,6 +113,13 @@ To launch a live notebook server with those notebook using [binder](https://mybi
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
+
+## Getting Help
+If you have a question that is not addressed in the documentation, 
+you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag
+or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
+For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
+
 
 ## Project philosophy
 
@@ -185,42 +183,18 @@ full programmatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design
 choice we feel is needed to simplify the user experience of exploratory
 visualization.
 
-## Development install
+## Development
+You can find the instructions on how to install the package for development in [the documentation](https://altair-viz.github.io/getting_started/installation.html).
 
-Vega-Altair requires the following dependencies:
-
-* [pandas](https://pandas.pydata.org/)
-* [traitlets](https://github.com/ipython/traitlets)
-* [IPython](https://github.com/ipython/ipython)
-
-If you have cloned the repository, run the following command from the root of the repository:
-
-```
-pip install -e .[dev]
-```
-
-If you do not wish to clone the repository, you can install using:
-
-```
-pip install git+https://github.com/altair-viz/altair
-```
-
-## Testing
-
-To run the test suite you must have [py.test](https://pytest.org/latest/) installed.
 To run the tests, use
-
 ```
-py.test --pyargs altair
+pytest --doctest-modules altair
 ```
-(you can omit the `--pyargs` flag if you are running the tests from a source checkout).
 
-## Feedback and Contribution
-
-See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
+For information on how to contribute your developments back to the Vega-Altair repository, see
+[`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
 
 ## Citing Vega-Altair
-
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 
 If you use Vega-Altair in academic work, please consider citing https://joss.theoj.org/papers/10.21105/joss.01057 as
