@@ -57,12 +57,14 @@ def validate_jsonschema(*args, **kwargs):
             # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
             # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
             # it is not a valid URI reference due to the characters such as '<'.
-            # This is fine and we can disable this format check below-
+            # This is fine and we can disable this format check below.
             for format_name in ["uri-reference"]:
                 try:
                     checker = validator_cls.FORMAT_CHECKER.checkers.pop(format_name)
                     removed_format_checkers.append((format_name, checker))
                 except KeyError:
+                    # Format checks are only set by jsonschema if it can import
+                    # the relevant dependencies
                     continue
         output = jsonschema.validate(*args, **kwargs)
     finally:
