@@ -2,12 +2,14 @@ import collections
 import contextlib
 import inspect
 import json
+import warnings
 from typing import Any
 
 import jsonschema
 import numpy as np
 import pandas as pd
 
+JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
@@ -36,6 +38,36 @@ def debug_mode(arg):
         yield
     finally:
         DEBUG_MODE = original
+
+
+def validate_jsonschema(*args, **kwargs):
+    # We always want to use the same jsonschema validator across the whole codebase
+    validator_cls = JSONSCHEMA_VALIDATOR
+    if "cls" in kwargs:
+        warnings.warn("The cls argument will be overwritten by the default validator")
+    kwargs["cls"] = validator_cls
+
+    removed_format_checkers = []
+    try:
+        # The "uri-reference" checker fails for some of the Vega-Lite
+        # schemas as URIs in "$ref" are not encoded,
+        # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
+        # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
+        # it is not a valid URI reference due to the characters such as '<'.
+        # This is fine and we can disable this format check below-
+        for format_name in ["uri-reference"]:
+            try:
+                checker = validator_cls.FORMAT_CHECKER.checkers.pop(format_name)
+                removed_format_checkers.append((format_name, checker))
+            except KeyError:
+                continue
+        output = jsonschema.validate(*args, **kwargs)
+    finally:
+        # Restore the original set of checkers as the jsonschema package
+        # might also be used by other packages
+        for format_name, checker in removed_format_checkers:
+            validator_cls.FORMAT_CHECKER.checkers[format_name] = checker
+    return output
 
 
 def _subclasses(cls):
@@ -153,7 +185,7 @@ class SchemaBase(object):
     _schema = None
     _rootschema = None
     _class_is_valid_at_instantiation = True
-    _validator = jsonschema.Draft7Validator
+    _validator = JSONSCHEMA_VALIDATOR
 
     def __init__(self, *args, **kwds):
         # Two valid options for initialization, which should be handled by
@@ -443,9 +475,7 @@ class SchemaBase(object):
         if schema is None:
             schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(
-            instance, schema, cls=cls._validator, resolver=resolver
-        )
+        return validate_jsonschema(instance, schema, resolver=resolver)
 
     @classmethod
     def resolve_references(cls, schema=None):
@@ -464,7 +494,7 @@ class SchemaBase(object):
         value = _todict(value, validate=False, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
+        return validate_jsonschema(value, props.get(name, {}), resolver=resolver)
 
     def __dir__(self):
         return list(self._kwds.keys())
@@ -558,7 +588,7 @@ class _FromDict(object):
             for possible_schema in schemas:
                 resolver = jsonschema.RefResolver.from_schema(rootschema)
                 try:
-                    jsonschema.validate(dct, possible_schema, resolver=resolver)
+                    validate_jsonschema(dct, possible_schema, resolver=resolver)
                 except jsonschema.ValidationError:
                     continue
                 else:
