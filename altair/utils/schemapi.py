@@ -51,18 +51,21 @@ def validate_jsonschema(*args, **kwargs):
 
     removed_format_checkers = []
     try:
-        # The "uri-reference" checker fails for some of the Vega-Lite
-        # schemas as URIs in "$ref" are not encoded,
-        # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
-        # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
-        # it is not a valid URI reference due to the characters such as '<'.
-        # This is fine and we can disable this format check below-
-        for format_name in ["uri-reference"]:
-            try:
-                checker = validator_cls.FORMAT_CHECKER.checkers.pop(format_name)
-                removed_format_checkers.append((format_name, checker))
-            except KeyError:
-                continue
+        # In older versions of jsonschema this attribute did not yet exist
+        # and we do not need to disable any format checkers
+        if hasattr(validator_cls, "FORMAT_CHECKER"):
+            # The "uri-reference" checker fails for some of the Vega-Lite
+            # schemas as URIs in "$ref" are not encoded,
+            # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
+            # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
+            # it is not a valid URI reference due to the characters such as '<'.
+            # This is fine and we can disable this format check below-
+            for format_name in ["uri-reference"]:
+                try:
+                    checker = validator_cls.FORMAT_CHECKER.checkers.pop(format_name)
+                    removed_format_checkers.append((format_name, checker))
+                except KeyError:
+                    continue
         output = jsonschema.validate(*args, **kwargs)
     finally:
         # Restore the original set of checkers as the jsonschema package
