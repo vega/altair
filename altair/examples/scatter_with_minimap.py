@@ -17,7 +17,7 @@ zoom = alt.selection_interval(encodings=["x", "y"])
 minimap = (
     alt.Chart(source)
     .mark_point()
-    .add_selection(zoom)
+    .add_params(zoom)
     .encode(
         x="date:T",
         y="temp_max:Q",
@@ -35,11 +35,11 @@ detail = (
     .mark_point()
     .encode(
         x=alt.X(
-            "date:T", scale=alt.Scale(domain={"selection": zoom.name, "encoding": "x"})
+            "date:T", scale=alt.Scale(domain={"param": zoom.name, "encoding": "x"})
         ),
         y=alt.Y(
             "temp_max:Q",
-            scale=alt.Scale(domain={"selection": zoom.name, "encoding": "y"}),
+            scale=alt.Scale(domain={"param": zoom.name, "encoding": "y"}),
         ),
         color="weather",
     )

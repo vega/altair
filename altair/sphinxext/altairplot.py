@@ -37,6 +37,7 @@ The directives have the following options::
         :alt: text  # Alternate text when plot cannot be rendered
         :links: editor source export  # specify one or more of these options
         :chart-var-name: chart  # name of variable in namespace containing output
+        :strict: # if set, then code with errors will raise instead of being skipped
 
 
 Additionally, this extension introduces a global configuration
@@ -81,7 +82,7 @@ VEGAEMBED_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-embed@{}".format(
 
 VGL_TEMPLATE = jinja2.Template(
     """
-<div id="{{ div_id }}">
+<div id="{{ div_id }}"{% if div_class %} class="{{ div_class }}"{% endif %}>
 <script>
   // embed when document is loaded, to ensure vega library is available
   // this works on all modern browsers, except IE8 and older
@@ -131,6 +132,10 @@ def validate_output(output):
     return output
 
 
+def validate_div_class(output):
+    return output.strip().lower()
+
+
 class AltairPlotDirective(Directive):
     has_content = True
 
@@ -142,14 +147,18 @@ class AltairPlotDirective(Directive):
         "alt": unchanged,
         "links": validate_links,
         "chart-var-name": unchanged,
+        "strict": flag,
+        "div_class": validate_div_class,
     }
 
     def run(self):
         env = self.state.document.settings.env
         app = env.app
 
-        show_code = "hide-code" not in self.options
+        hide_code = "hide-code" in self.options
         code_below = "code-below" in self.options
+        strict = "strict" in self.options
+        div_class = self.options.get("div_class", None)
 
         if not hasattr(env, "_altair_namespaces"):
             env._altair_namespaces = {}
@@ -160,9 +169,9 @@ class AltairPlotDirective(Directive):
 
         code = "\n".join(self.content)
 
-        if show_code:
-            source_literal = nodes.literal_block(code, code)
-            source_literal["language"] = "python"
+        # Show code
+        source_literal = nodes.literal_block(code, code)
+        source_literal["language"] = "python"
 
         # get the name of the source file we are currently processing
         rst_source = self.state_machine.document["source"]
@@ -181,6 +190,7 @@ class AltairPlotDirective(Directive):
         plot_node = altair_plot()
         plot_node["target_id"] = target_id
         plot_node["div_id"] = div_id
+        plot_node["div_class"] = div_class
         plot_node["code"] = code
         plot_node["namespace"] = namespace
         plot_node["relpath"] = os.path.relpath(rst_dir, env.srcdir)
@@ -191,6 +201,7 @@ class AltairPlotDirective(Directive):
         )
         plot_node["output"] = self.options.get("output", "plot")
         plot_node["chart-var-name"] = self.options.get("chart-var-name", None)
+        plot_node["strict"] = strict
 
         if "alt" in self.options:
             plot_node["alt"] = self.options["alt"]
@@ -199,8 +210,19 @@ class AltairPlotDirective(Directive):
 
         if code_below:
             result += [plot_node]
-        if show_code:
-            result += [source_literal]
+
+        if hide_code:
+            html = "<details><summary><a>Click to show code</a></summary>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
+        result += [source_literal]
+
+        if hide_code:
+            html = "</details>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
         if not code_below:
             result += [plot_node]
 
@@ -216,13 +238,14 @@ def html_visit_altair_plot(self, node):
             chart = eval_block(node["code"], namespace)
         stdout = f.getvalue()
     except Exception as e:
-        warnings.warn(
-            "altair-plot: {}:{} Code Execution failed:"
-            "{}: {}".format(
-                node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
-            )
+        message = "altair-plot: {}:{} Code Execution failed:" "{}: {}".format(
+            node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
         )
-        raise nodes.SkipNode
+        if node["strict"]:
+            raise ValueError(message) from e
+        else:
+            warnings.warn(message)
+            raise nodes.SkipNode
 
     chart_name = node["chart-var-name"]
     if chart_name is not None:
@@ -260,7 +283,7 @@ def html_visit_altair_plot(self, node):
                 raise ValueError("Invalid chart: {0}".format(node["code"]))
             actions = node["links"]
 
-            # TODO: add an option to save spects to file & load from there.
+            # TODO: add an option to save chart specs to file & load from there.
             # TODO: add renderer option
 
             # Write spec to a *.vl.json file
@@ -275,6 +298,7 @@ def html_visit_altair_plot(self, node):
             # Pass relevant info into the template and append to the output
             html = VGL_TEMPLATE.render(
                 div_id=node["div_id"],
+                div_class=node["div_class"],
                 spec=json.dumps(spec),
                 mode="vega-lite",
                 renderer="canvas",
@@ -304,9 +328,9 @@ def depart_altair_plot(self, node):
 
 
 def builder_inited(app):
-    app.add_javascript(app.config.altairplot_vega_js_url)
-    app.add_javascript(app.config.altairplot_vegalite_js_url)
-    app.add_javascript(app.config.altairplot_vegaembed_js_url)
+    app.add_js_file(app.config.altairplot_vega_js_url)
+    app.add_js_file(app.config.altairplot_vegalite_js_url)
+    app.add_js_file(app.config.altairplot_vegaembed_js_url)
 
 
 def setup(app):
@@ -324,7 +348,7 @@ def setup(app):
 
     app.add_directive("altair-plot", AltairPlotDirective)
 
-    app.add_stylesheet("altair-plot.css")
+    app.add_css_file("altair-plot.css")
 
     app.add_node(
         altair_plot,

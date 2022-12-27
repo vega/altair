@@ -194,6 +194,8 @@ class Selection(object):
         return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
 
     def __getattr__(self, field_name):
+        if field_name.startswith("__") and field_name.endswith("__"):
+            raise AttributeError(field_name)
         return expr.core.GetAttrExpression(self.name, field_name)
 
     def __getitem__(self, field_name):
@@ -1639,7 +1641,7 @@ class Chart(
         Sets how the visualization size should be determined. If a string, should be one of
         `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
         content sizing and automatic resizing. `"fit"` is only supported for single and
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
+        layered views that don't use `rangeStep`.  Default value: `pad`
     background : string
         CSS color property to use as the background of visualization.
 

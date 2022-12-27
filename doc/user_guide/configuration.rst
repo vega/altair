@@ -104,6 +104,8 @@ Here is an example:
         labelFontSize=14
     )
 
+Additional properties are summarized in the following table:
+
 .. altair-object-table:: altair.HeaderConfig
 
 
@@ -205,7 +207,8 @@ the following properties:
 
 Projection Configuration
 ------------------------
-:meth:`Chart.configure_projection`
+Projections can be configured using :meth:`Chart.configure_projection`,
+which has the following properties:
 
 .. altair-object-table:: altair.ProjectionConfig
 
@@ -214,7 +217,8 @@ Projection Configuration
 
 Selection Configuration
 -----------------------
-:meth:`Chart.configure_selection`
+Selections can be configured using :meth:`Chart.configure_selection`, 
+which has the following properties:
 
 .. altair-object-table:: altair.SelectionConfig
 
@@ -286,144 +290,3 @@ Additional properties are summarized in the following table:
 
 .. altair-object-table:: altair.ViewConfig
 
-
-.. _chart-themes:
-
-Altair Themes
--------------
-Altair makes available a theme registry that lets users apply chart configurations
-globally within any Python session. This is done via the ``alt.themes`` object.
-
-The themes registry consists of functions which define a specification dictionary
-that will be added to every created chart.
-For example, the default theme configures the default size of a single chart:
-
-    >>> import altair as alt
-    >>> default = alt.themes.get()
-    >>> default()
-    {'config': {'view': {'continuousWidth': 400, 'continuousHeight': 300}}}
-
-You can see that any chart you create will have this theme applied, and these configurations
-added to its specification:
-
-.. altair-plot::
-    :output: repr
-
-    import altair as alt
-    from vega_datasets import data
-
-    chart = alt.Chart(data.cars.url).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
-
-    chart.to_dict()
-
-The rendered chart will then reflect these configurations:
-
-.. altair-plot::
-
-    chart
-
-Changing the Theme
-~~~~~~~~~~~~~~~~~~
-If you would like to enable any other theme for the length of your Python session,
-you can call ``alt.themes.enable(theme_name)``.
-For example, Altair includes a theme in which the chart background is opaque
-rather than transparent:
-
-.. altair-plot::
-    :output: repr
-
-    alt.themes.enable('opaque')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Notice that the background color of the chart is now set to white.
-If you would like no theme applied to your chart, you can use the
-theme named ``'none'``:
-
-.. altair-plot::
-    :output: repr
-
-    alt.themes.enable('none')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Because the view configuration is not set, the chart is smaller
-than the default rendering.
-
-If you would like to use any theme just for a single chart, you can use the
-``with`` statement to enable a temporary theme:
-
-.. altair-plot::
-   :output: none
-
-   with alt.themes.enable('default'):
-       spec = chart.to_json()
-
-Currently Altair does not offer many built-in themes, but we plan to add
-more options in the future.
-
-Defining a Custom Theme
-~~~~~~~~~~~~~~~~~~~~~~~
-The theme registry also allows defining and registering custom themes.
-A theme is simply a function that returns a dictionary of default values
-to be added to the chart specification at rendering time, which is then
-registered and activated.
-
-For example, here we define a theme in which all marks are drawn with black
-fill unless otherwise specified:
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    # define the theme by returning the dictionary of configurations
-    def black_marks():
-        return {
-            'config': {
-                'view': {
-                    'height': 300,
-                    'width': 400,
-                },
-                'mark': {
-                    'color': 'black',
-                    'fill': 'black'
-                }
-            }
-        }
-
-    # register the custom theme under a chosen name
-    alt.themes.register('black_marks', black_marks)
-
-    # enable the newly registered theme
-    alt.themes.enable('black_marks')
-
-    # draw the chart
-    cars = data.cars.url
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
-
-
-If you want to restore the default theme, use:
-
-.. altair-plot::
-   :output: none
-
-   alt.themes.enable('default')
-
-
-For more ideas on themes, see the `Vega Themes`_ repository.
-
-
-.. _Vega Themes: https://github.com/vega/vega-themes/

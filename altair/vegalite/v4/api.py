@@ -32,6 +32,8 @@ def _dataset_name(values):
     """
     if isinstance(values, core.InlineDataset):
         values = values.to_dict()
+    if values == [{}]:
+        return "empty"
     values_json = json.dumps(values, sort_keys=True)
     hsh = hashlib.md5(values_json.encode()).hexdigest()
     return "data-" + hsh
@@ -47,7 +49,10 @@ def _consolidate_data(data, context):
 
     if isinstance(data, core.InlineData):
         if data.name is Undefined and data.values is not Undefined:
-            values = data.values
+            if isinstance(data.values, core.InlineDataset):
+                values = data.to_dict()["values"]
+            else:
+                values = data.values
             kwds = {"format": data.format}
 
     elif isinstance(data, dict):
@@ -106,7 +111,7 @@ Bin = core.BinParams
 @utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
-        """Convert the chart to a dictionary suitable for JSON export"""
+        """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
         return super(LookupData, copy).to_dict(*args, **kwargs)
@@ -194,6 +199,8 @@ class Selection(object):
         return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
 
     def __getattr__(self, field_name):
+        if field_name.startswith("__") and field_name.endswith("__"):
+            raise AttributeError(field_name)
         return expr.core.GetAttrExpression(self.name, field_name)
 
     def __getitem__(self, field_name):
@@ -509,6 +516,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat=Undefined,
         row=Undefined,
         column=Undefined,
+        layer=Undefined,
         columns=Undefined,
         **kwargs,
     ):
@@ -521,11 +529,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         repeat : list
             a list of data column names to be repeated. This cannot be
-            used along with the ``row`` or ``column`` argument.
+            used along with the ``row``, ``column`` or ``layer`` argument.
         row : list
             a list of data column names to be mapped to the row facet
         column : list
             a list of data column names to be mapped to the column facet
+        layer : list
+            a list of data column names to be layered. This cannot be
+            used along with the ``row``, ``column`` or ``repeat`` argument.
         columns : int
             the maximum number of columns before wrapping. Only referenced
             if ``repeat`` is specified.
@@ -539,14 +550,23 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         repeat_specified = repeat is not Undefined
         rowcol_specified = row is not Undefined or column is not Undefined
+        layer_specified = layer is not Undefined
 
         if repeat_specified and rowcol_specified:
             raise ValueError(
                 "repeat argument cannot be combined with row/column argument."
             )
+        elif repeat_specified and layer_specified:
+            raise ValueError("repeat argument cannot be combined with layer argument.")
+        elif layer_specified and rowcol_specified:
+            raise ValueError(
+                "layer argument cannot be combined with row/column argument."
+            )
 
         if repeat_specified:
             repeat = repeat
+        elif layer_specified:
+            repeat = core.LayerRepeatMapping(layer=layer)
         else:
             repeat = core.RepeatMapping(row=row, column=column)
 
@@ -1766,7 +1786,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             connected to a browser.
         """
         try:
-            import altair_viewer
+            import altair_viewer  # type: ignore
         except ImportError:
             raise ValueError(
                 "show() method requires the altair_viewer package. "
@@ -1904,7 +1924,7 @@ class Chart(
         Sets how the visualization size should be determined. If a string, should be one of
         `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
         content sizing and automatic resizing. `"fit"` is only supported for single and
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
+        layered views that don't use `rangeStep`.  Default value: `pad`
     background : string
         CSS color property to use as the background of visualization.
 
@@ -1987,6 +2007,17 @@ class Chart(
 
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
+
+    def to_dict(self, *args, **kwargs):
+        """Convert the chart to a dictionary suitable for JSON export."""
+        context = kwargs.get("context", {})
+        if self.data is Undefined and "data" not in context:
+            # No data specified here or in parent: inject empty data
+            # for easier specification of datum encodings.
+            copy = self.copy(deep=False)
+            copy.data = core.InlineData(values=[{}])
+            return super(Chart, copy).to_dict(*args, **kwargs)
+        return super().to_dict(*args, **kwargs)
 
     def add_selection(self, *selections):
         """Add one or more selections to the chart."""
@@ -2087,9 +2118,57 @@ def _check_if_can_be_layered(spec):
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
 
-    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
+    # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
+    # we set the arguments explicitly here.
+    # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    def __init__(
+        self,
+        repeat=Undefined,
+        spec=Undefined,
+        align=Undefined,
+        autosize=Undefined,
+        background=Undefined,
+        bounds=Undefined,
+        center=Undefined,
+        columns=Undefined,
+        config=Undefined,
+        data=Undefined,
+        datasets=Undefined,
+        description=Undefined,
+        name=Undefined,
+        padding=Undefined,
+        params=Undefined,
+        resolve=Undefined,
+        spacing=Undefined,
+        title=Undefined,
+        transform=Undefined,
+        usermeta=Undefined,
+        **kwds,
+    ):
         _check_if_valid_subspec(spec, "RepeatChart")
-        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(
+            repeat=repeat,
+            spec=spec,
+            align=align,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds,
+        )
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -2131,15 +2210,15 @@ def repeat(repeater="repeat"):
 
     Parameters
     ----------
-    repeater : {'row'|'column'|'repeat'}
+    repeater : {'row'|'column'|'repeat'|'layer'}
         The repeater to tie the field to. Default is 'repeat'.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    if repeater not in ["row", "column", "repeat"]:
-        raise ValueError("repeater must be one of ['row', 'column', 'repeat']")
+    if repeater not in ["row", "column", "repeat", "layer"]:
+        raise ValueError("repeater must be one of ['row', 'column', 'repeat', 'layer']")
     return core.RepeatRef(repeat=repeater)
 
 

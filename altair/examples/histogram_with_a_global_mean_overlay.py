@@ -3,7 +3,7 @@ Histogram with a Global Mean Overlay
 ------------------------------------
 This example shows a histogram with a global mean overlay.
 """
-# category: histograms
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

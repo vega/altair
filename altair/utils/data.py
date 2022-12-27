@@ -185,7 +185,7 @@ def _data_to_json_string(data):
         return json.dumps(data)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
-        return data.to_json(orient="records")
+        return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
@@ -232,7 +232,7 @@ def pipe(data, *funcs):
 
 
 def curry(*args, **kwargs):
-    """ Curry a callable function
+    """Curry a callable function
 
     Deprecated: use toolz.curried.curry() instead.
     """

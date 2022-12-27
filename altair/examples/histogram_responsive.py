@@ -5,7 +5,7 @@ This shows an example of a histogram with bins that are responsive to a
 selection domain. Click and drag on the bottom panel to see the bins
 change on the top panel.
 """
-# category: histograms
+# category: distributions
 import altair as alt
 from vega_datasets import data
 
@@ -31,5 +31,5 @@ alt.vconcat(
   ),
   base.encode(
     alt.X('time:Q', bin=alt.Bin(maxbins=30)),
-  ).add_selection(brush)
+  ).add_params(brush)
 )

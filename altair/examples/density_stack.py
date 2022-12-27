@@ -8,7 +8,7 @@ in a stacked method.  In addition, setting ``counts`` to true multiplies the
 densities by the number of data points in each group, preserving proportional
 differences.
 """
-# category: area charts
+# category: distributions
 
 import altair as alt
 from vega_datasets import data

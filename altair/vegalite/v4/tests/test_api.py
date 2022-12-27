@@ -4,6 +4,7 @@ import io
 import json
 import operator
 import os
+import pathlib
 import tempfile
 
 import jsonschema
@@ -37,7 +38,15 @@ def _make_chart_type(chart_type):
             "color": list("AAAABBBB"),
         }
     )
-    base = alt.Chart(data).mark_point().encode(x="x", y="y", color="color",)
+    base = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(
+            x="x",
+            y="y",
+            color="color",
+        )
+    )
 
     if chart_type in ["layer", "hconcat", "vconcat", "concat"]:
         func = getattr(alt, chart_type)
@@ -240,6 +249,9 @@ def test_selection_expression():
     assert isinstance(selection["value"], alt.expr.Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
+    with pytest.raises(AttributeError):
+        selection.__magic__
+
 
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf"])
 def test_save(format, basic_chart):
@@ -276,12 +288,14 @@ def test_save(format, basic_chart):
     fid, filename = tempfile.mkstemp(suffix="." + format)
     os.close(fid)
 
-    try:
-        basic_chart.save(filename)
-        with open(filename, mode) as f:
-            assert f.read()[:1000] == content[:1000]
-    finally:
-        os.remove(filename)
+    # test both string filenames and pathlib.Paths
+    for fp in [filename, pathlib.Path(filename)]:
+        try:
+            basic_chart.save(fp)
+            with open(fp, mode) as f:
+                assert f.read()[:1000] == content[:1000]
+        finally:
+            os.remove(fp)
 
 
 def test_facet_basic():
@@ -289,7 +303,10 @@ def test_facet_basic():
     chart1 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(x="x:Q", y="y:Q",)
+        .encode(
+            x="x:Q",
+            y="y:Q",
+        )
         .facet("category:N", columns=2)
     )
 
@@ -303,7 +320,10 @@ def test_facet_basic():
     chart2 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(x="x:Q", y="y:Q",)
+        .encode(
+            x="x:Q",
+            y="y:Q",
+        )
         .facet(row="category1:Q", column="category2:Q")
     )
 
@@ -738,7 +758,10 @@ def test_repeat():
     chart1 = (
         alt.Chart("data.csv")
         .mark_point()
-        .encode(x=alt.X(alt.repeat(), type="quantitative"), y="y:Q",)
+        .encode(
+            x=alt.X(alt.repeat(), type="quantitative"),
+            y="y:Q",
+        )
         .repeat(["A", "B", "C", "D"], columns=2)
     )
 
@@ -865,7 +888,9 @@ def test_layer_errors():
 def test_resolve(chart_type):
     chart = _make_chart_type(chart_type)
     chart = (
-        chart.resolve_scale(x="independent",)
+        chart.resolve_scale(
+            x="independent",
+        )
         .resolve_legend(color="independent")
         .resolve_axis(y="independent")
     )
@@ -922,3 +947,12 @@ def test_graticule():
 def test_sphere():
     data = alt.sphere()
     assert data.to_dict() == {"sphere": True}
+
+
+def test_validate_dataset():
+    d = {"data": {"values": [{}]}, "mark": {"type": "point"}}
+
+    chart = alt.Chart.from_dict(d)
+    jsn = chart.to_json()
+
+    assert jsn

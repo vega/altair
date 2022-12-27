@@ -1,19 +1,53 @@
 .. _changes:
 
-Altair Change Log
-=================
+Release Notes
+=============
 
-Version 4.2.0 (unreleased)
+Version 4.3.0 (unreleased)
 --------------------------
+- Update Vega-Lite from version 4.17.0 to version 5.2.0;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
+- As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters.  There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters.
+
+Grammar Changes
+~~~~~~~~~~~~~~~
+- ``selection_single`` and ``selection_multi`` are now deprecated; use ``selection_point`` instead.  Similarly, ``type=point`` should be used instead of ``type=single`` and ``type=multi``.
+- ``add_selection`` is deprecated; use ``add_params`` instead.
+- The ``selection`` keyword argument must in many cases be replaced by ``param`` (e.g., when specifying a filter transform).
+- The ``empty`` keyword argument for a selection parameter should be specified as ``True`` or ``False`` instead of ``all`` or ``none``, respectively.
+- The ``init`` keyword argument for a parameter is deprecated; use ``value`` instead.
 
 Bug Fixes
 ~~~~~~~~~
-
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+
+Version 4.2.0 (released Dec 29, 2021)
+-------------------------------------
+- Update Vega-Lite from version 4.8.1 to version 4.17.0;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+
+Enhancements
+~~~~~~~~~~~~
+- Pie charts are now supported through the use of ``mark_arc``. (Examples: eg.
+  :ref:`gallery_pie_chart` and :ref:`gallery_radial_chart`.)
+- Support for the ``datum`` encoding specifications from Vega-Lite; see 
+  `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
+  (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
+- ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)
+- Support for serialising pandas nullable data types for float data (#2399).
+- Automatically create an empty data object when ``Chart`` is called without a data parameter (#2515).
+- Allow the use of pathlib Paths when saving charts (#2355).
+- Support deepcopy for charts (#2403).
+
+Bug Fixes
+~~~~~~~~~
+- Fix ``to_dict()`` for nested selections (#2120).
+- Fix item access for expressions (#2099).
 
 Version 4.1.0 (released April 1, 2020)
 --------------------------------------
@@ -77,7 +111,7 @@ Enhancements
 
 - New pivot transform: (see :ref:`user-guide-pivot-transform`)
 
-- Image mark (see :ref:`user-guide-image-mark`)
+- Image mark (see :ref:`user-guide-image-marks`)
 
 - New default ``html`` renderer, directly compatible with Jupyter Notebook and
   JupyterLab without the need for frontend extensions, as well as tools like

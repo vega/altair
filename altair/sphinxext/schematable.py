@@ -1,11 +1,17 @@
 import importlib
-import warnings
 import re
+import sys
+import warnings
+from os.path import abspath, dirname
 
+from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
-from docutils import nodes, utils
+from docutils.parsers.rst.directives import flag
+from myst_parser.docutils_ import Parser
 from sphinx import addnodes
-from recommonmark.parser import CommonMarkParser
+
+sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
+from tools.schemapi.utils import fix_docstring_issues  # noqa: E402
 
 
 def type_description(schema):
@@ -37,7 +43,7 @@ def type_description(schema):
 
 
 def prepare_table_header(titles, widths):
-    """Build docutil empty table """
+    """Build docutil empty table"""
     ncols = len(titles)
     assert len(widths) == ncols
 
@@ -60,7 +66,7 @@ reCode = re.compile(r"`([^`]+)`")
 
 
 def add_class_def(node, classDef):
-    """Add reference on classDef to node """
+    """Add reference on classDef to node"""
 
     ref = addnodes.pending_xref(
         reftarget=classDef,
@@ -79,7 +85,7 @@ def add_class_def(node, classDef):
 
 
 def add_text(node, text):
-    """Add text with inline code to node """
+    """Add text with inline code to node"""
     is_text = True
     for part in reCode.split(text):
         if part:
@@ -117,14 +123,17 @@ def build_row(item):
         is_text = not is_text
 
     # row += nodes.entry('')
-    row += nodes.entry("", par_type)  # , classes=["vl-type-def"]
+    row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
-    md_parser = CommonMarkParser()
+    md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
     str_descr = ""
     str_descr += propschema.get("description", " ")
-    doc_descr = utils.new_document("schema_description")
+    str_descr = fix_docstring_issues(str_descr)
+    document_settings = frontend.get_default_settings()
+    document_settings.setdefault("raw_enabled", True)
+    doc_descr = utils.new_document("schema_description", document_settings)
     md_parser.parse(str_descr, doc_descr)
 
     # row += nodes.entry('', *doc_descr.children, classes="vl-decsr")
@@ -133,8 +142,8 @@ def build_row(item):
     return row
 
 
-def build_schema_tabel(items):
-    """Return schema table of items (iterator of prop, schema.item, requred)"""
+def build_schema_table(items):
+    """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
     )
@@ -145,7 +154,7 @@ def build_schema_tabel(items):
 
 
 def select_items_from_schema(schema, props=None):
-    """Return iterator  (prop, schema.item, requred) on prop, return all in None"""
+    """Return iterator  (prop, schema.item, required) on prop, return all in None"""
     properties = schema.get("properties", {})
     required = schema.get("required", [])
     if not props:
@@ -155,14 +164,17 @@ def select_items_from_schema(schema, props=None):
         for prop in props:
             try:
                 yield prop, properties[prop], prop in required
-            except KeyError:
-                warnings.warn("Can't find property:", prop)
+            except KeyError as err:
+                raise Exception(f"Can't find property: {prop}") from err
 
 
-def prepare_schema_tabel(schema, props=None):
-
+def prepare_schema_table(schema, props=None):
     items = select_items_from_schema(schema, props)
-    return build_schema_tabel(items)
+    return build_schema_table(items)
+
+
+def validate_properties(properties):
+    return properties.strip().split()
 
 
 class AltairObjectTableDirective(Directive):
@@ -178,17 +190,32 @@ class AltairObjectTableDirective(Directive):
     has_content = False
     required_arguments = 1
 
-    def run(self):
+    option_spec = {"properties": validate_properties, "dont-collapse-table": flag}
 
+    def run(self):
         objectname = self.arguments[0]
         modname, classname = objectname.rsplit(".", 1)
         module = importlib.import_module(modname)
         cls = getattr(module, classname)
         schema = cls.resolve_references(cls._schema)
 
+        properties = self.options.get("properties", None)
+        dont_collapse_table = "dont-collapse-table" in self.options
+
+        result = []
+        if not dont_collapse_table:
+            html = "<details><summary><a>Click to show table</a></summary>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
         # create the table from the object
-        table = prepare_schema_tabel(schema)
-        return [table]
+        result.append(prepare_schema_table(schema, props=properties))
+
+        if not dont_collapse_table:
+            html = "</details>"
+            raw_html = nodes.raw("", html, format="html")
+            result += [raw_html]
+
+        return result
 
 
 def setup(app):

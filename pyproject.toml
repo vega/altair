@@ -17,5 +17,7 @@ exclude = '''
 '''
 
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel"]
+# Reason for setuptools version restriction to <64 can be found at
+# https://github.com/altair-viz/altair/pull/2758#issuecomment-1358091909
+requires = ["setuptools >= 40.6.0, <64", "wheel"]
 build-backend = "setuptools.build_meta"

@@ -45,8 +45,11 @@ The renderers built-in to Altair are the following:
 - ``"default"``: default rendering, using the
   ``'application/vnd.vegalite.v2+json'`` MIME type which is supported
   by JupyterLab and nteract.
-- ``"jupyterlab"``: identical to ``"default"``
-- ``"nteract"``: identical to ``"default"``
+- ``"html"``: identical to ``"default"``
+- ``"mimetype"``: outputs a vega-lite specific mimetype together with a PNG
+  representation.
+- ``"jupyterlab"``: identical to ``"mimetype"``
+- ``"nteract"``: identical to ``"mimetype"``
 - ``"colab"``: renderer for Google's Colab notebook, using the
   ``"text/html"`` MIME type.
 - ``"notebook"``: renderer for the classic notebook, provided by the ipyvega_

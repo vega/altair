@@ -28,17 +28,19 @@ Some of the built-in renderers are:
 
 ``alt.renderers.enable('html')``
   *(the default)* Output an HTML representation of the chart. The HTML renderer works
-  in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, and many related notebook frontends,
+  in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, `VSCode-Python`_ and many related notebook frontends,
   as well as Jupyter ecosystem tools like nbviewer_ and nbconvert_ HTML output.
   It requires a web connection in order to load relevant Javascript libraries.
 
-``alt.renderers.enable('mimebundle')``
+``alt.renderers.enable('mimetype')``
   *(default prior to Altair 4.0):* Output a vega-lite specific mimetype that can be
-  interpreted by appropriate frontend extensions to display charts.
-  It works with newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does
-  not work with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
+  interpreted by appropriate frontend extensions to display charts. This also outputs
+  a PNG representation of the plot, which is useful to view plots offline or on
+  platforms that don't support rendering vegaspecs, such as GitHub. It works with
+  newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
+  with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
-Other renderers can be installed by third-party packages via Python's entrypoints_ system;
+Other renderers can be installed by third-party packages via Python's entrypoints system;
 see :ref:`renderer-api`.
 
 
@@ -62,7 +64,7 @@ Altair 4 this can be installed with:
     $ jupyter labextension install @jupyterlab/vega5-extension
 
 In JupyterLab version 2.0 or newer, this extension is installed by default, though the
-version available in the jupyterlab release often takes a few months to catch up with
+version available in the JupyterLab release often takes a few months to catch up with
 new Altair releases.
 
 
@@ -77,8 +79,8 @@ Optionally, for offline rendering in Jupyter Notebook, you can use the notebook 
 
     # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
     alt.renderers.enable('notebook')
-    
-This renderer is provided by the `ipyvega`_ notebook extension. which can be
+ 
+This renderer is provided by the `ipyvega`_ notebook extension, which can be
 installed and enabled either using pip:
 
 .. code-block:: bash
@@ -104,7 +106,7 @@ Displaying in nteract
 ---------------------
 nteract_ cannot display HTML outputs natively, and so Altair's default ``html`` renderer
 will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
-To use Altair in nteract, ensure you are using a version that supports the vega-lite v4
+To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v5
 mimetype, and use::
 
     alt.renderers.enable('mimetype')
@@ -114,11 +116,12 @@ mimetype, and use::
 
 Displaying in VSCode
 --------------------
-`VSCode-Python`_ includes a vega-lite renderer to display charts in-app via the
-vega-lite mimetype output. You can enable it by running::
+`VSCode-Python`_ works with Altair's default renderer with a live web connection: no render enable step is required.
 
+Optionally, for offline rendering, you can use the mimetype renderer::
+
+    # Optional in VS Code
     alt.renderers.enable('mimetype')
-
 
 .. _display-general:
 
@@ -143,7 +146,7 @@ Examples are:
 - The `VSCode-Python`_ extension, which supports native Altair and Vega-Lite
   chart display as of November 2019.
 - The Hydrogen_ project, which is built on nteract_ and renders Altair charts
-  via the ``mimebundle`` renderer.
+  via the ``mimetype`` renderer.
 
 Altair Viewer
 ~~~~~~~~~~~~~
@@ -185,12 +188,8 @@ the chart is closed.
 
 Manual ``save()`` and display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you would prefer, you can manually save your chart as html and open it with
-a web browser. Once you have created your chart, run::
-
-    chart.save('filename.html')
-
-and use a web browser to open this file.
+If you would prefer, you can save your chart to a file (html, png, etc.) first and then display it.
+See :ref:`user-guide-saving` for more information.
 
 .. _renderer-api:
 
@@ -210,7 +209,7 @@ JSON). The type signature of a renderer is thus::
     def renderer(spec: dict) -> dict:
         ...
 
-Altair's default ``html`` rendeer returns a cross-platform HTML representation using
+Altair's default ``html`` renderer returns a cross-platform HTML representation using
 the ``"text/html"`` mimetype; schematically it looks like this::
 
     def default_renderer(spec):
@@ -221,7 +220,7 @@ the ``"text/html"`` mimetype; schematically it looks like this::
 Propertly-configured Jupyter frontends know how to interpret and display charts using
 custom vega-specific mimetypes; for example:
 
-* Vega-Lite 4.x: ``application/vnd.vegalite.v4+json``
+* Vega-Lite 5.x: ``application/vnd.vegalite.v5+json``
 * Vega 5.x: ``application/vnd.vega.v5+json``
 
 Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
@@ -229,8 +228,8 @@ Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
     def default_renderer(spec):
         bundle = {}
         metadata = {}
-        bundle['text/plain'] = '<VegaLite 4 object>`
-        bundle['application/vnd.vegalite.v4+json'] = spec
+        bundle['text/plain'] = '<VegaLite 5 object>`
+        bundle['application/vnd.vegalite.v5+json'] = spec
         return bundle, metadata
 
 If a renderer needs to do custom display logic that doesn't use Jupyter's display
@@ -247,7 +246,8 @@ a given one. To return the registered renderers as a Python list::
 
     >>> import altair as alt
     >>> alt.renderers.names()
-    ['html', 'mimebundle', 'json', ...]
+    ['colab', 'default', 'html', 'json', 'jupyterlab', 'kaggle', 'mimetype',
+    'nteract', 'png', 'svg', 'zeppelin']
 
 To enable the JSON renderer, which results in a collapsible JSON tree view
 in JupyterLab/nteract::
@@ -259,10 +259,9 @@ To register and enable a new renderer::
     >>> alt.renderers.register('custom_renderer', custom_renderer)
     >>> alt.renderers.enable('custom_renderer')
 
-Renderers can also be registered using the `entrypoints`_ API of Python packages.
+Renderers can also be registered using the `entrypoints` API of Python packages.
 For an example, see `ipyvega`_.
 
-.. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
