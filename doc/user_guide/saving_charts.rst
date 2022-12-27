@@ -37,7 +37,7 @@ The contents of the resulting file will look something like this:
 .. code-block:: json
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "config": {
         "view": {
           "continuousHeight": 300,
@@ -97,7 +97,7 @@ javascript-enabled web browser:
       <div id="vis"></div>
       <script type="text/javascript">
         var spec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "config": {
             "view": {
               "continuousHeight": 300,
@@ -159,7 +159,7 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
 However, saving these images requires some additional extensions to run the
 javascript code necessary to interpret the Vega-Lite specification and output
 it in the form of an image. There are two packages that can be used to enable
-image export: vl-convert-python_ or altair_saver_.
+image export: vl-convert_ or altair_saver_.
 
 vl-convert
 ^^^^^^^^^^
@@ -191,8 +191,6 @@ If both vl-convert and altair_saver are installed, vl-convert will take preceden
 The engine argument to :meth:`Chart.save` can be used to override this default
 behavior. For example, to use altair_saver for PNG export when vl-convert is also
 installed you can use::
-
-.. code-block:: python
 
     chart.save('chart.png', engine="altair_saver")
 

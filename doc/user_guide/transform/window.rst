@@ -2,8 +2,8 @@
 
 .. _user-guide-window-transform:
 
-Window Transform
-~~~~~~~~~~~~~~~~
+Window
+~~~~~~
 The window transform performs calculations over sorted groups of data objects.
 These calculations include ranking, lead/lag analysis, and aggregates such as cumulative sums and averages.
 Calculated values are written back to the input data stream, where they can be referenced by encodings.

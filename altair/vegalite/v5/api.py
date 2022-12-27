@@ -762,7 +762,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type="mercator",
+        type=Undefined,
         center=Undefined,
         clipAngle=Undefined,
         clipExtent=Undefined,
@@ -801,7 +801,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             projection types [in the
             documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
 
-            **Default value:** `mercator`
+            **Default value:** `equalEarth`
         center : List(float)
             Sets the projection’s center to the specified center, a two-element array of
             longitude and latitude in degrees.
@@ -2099,7 +2099,7 @@ class Chart(
         Sets how the visualization size should be determined. If a string, should be one of
         `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
         content sizing and automatic resizing. `"fit"` is only supported for single and
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
+        layered views that don't use `rangeStep`.  Default value: `pad`
     background : string
         CSS color property to use as the background of visualization.
 
@@ -2117,8 +2117,8 @@ class Chart(
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle.  If a number, specifies padding for all sides. If an
         object, the value should have the format `{"left": 5, "top": 5, "right": 5,
-        "bottom": 5}` to specify padding for each side of the visualization.  __Default
-        value__: `5`
+        "bottom": 5}` to specify padding for each side of the visualization.  Default
+        value: `5`
     projection : Projection
         An object defining properties of geographic projection.  Works with `"geoshape"`
         marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`,

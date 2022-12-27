@@ -66,9 +66,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Altair"
-copyright = "2016-{}, Altair Developers".format(datetime.now().year)
-author = "Altair Developers"
+project = "Vega-Altair"
+copyright = "2016-{}, Vega-Altair Developers".format(datetime.now().year)
+author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -84,7 +84,7 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -135,9 +135,28 @@ html_theme = "pydata_sphinx_theme"
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    "navbar_start": ["navbar-project"],
+    "navbar_start": ["navbar-logo", "navbar-project"],
     "navbar_center": ["navbar-nav"],
-    "navbar_end": ["navbar-icon-links"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "footer_items": [],
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/altair-viz/altair",
+            "icon": "fab fa-github fa-lg",
+            "type": "fontawesome",
+        },
+        {
+            "name": "StackOverflow",
+            "url": "https://stackoverflow.com/tags/altair",
+            "icon": "fab fa-stack-overflow fa-xl",
+            "type": "fontawesome",
+        },
+    ]
+}
+
+html_context = {
+    "default_mode": "light"
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -189,7 +208,8 @@ def setup(app):
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-    "**": ["sidebar-logo", "search-field", "sidebar-nav-bs", "sidebar-ethical-ads"],
+    "index": [],
+    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
 }
 
 # Redirection of old page locations via the rediraffe sphinx-extension
@@ -212,7 +232,7 @@ html_sidebars = {
 # html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 # html_show_sphinx = True

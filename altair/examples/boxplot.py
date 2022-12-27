@@ -6,7 +6,7 @@ Note that the default value of the `extent` property is 1.5,
 which represents the convention of extending the whiskers
 to the furthest points within 1.5 * IQR from the first and third quartile.
 """
-# category: advanced calculations
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

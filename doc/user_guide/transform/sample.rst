@@ -2,8 +2,8 @@
 
 .. _user-guide-sample-transform:
 
-Sample Transform
-~~~~~~~~~~~~~~~~
+Sample
+~~~~~~
 The sample transform is one of the simpler of all Altair's data transforms;
 it takes a single parameter ``sample`` which specified a number of rows to
 randomly choose from the dataset. The resulting chart will be created using

@@ -210,7 +210,6 @@ Low-Level Schema Wrappers
    BrushConfig
    CalculateTransform
    Categorical
-   Color
    ColorDef
    ColorName
    ColorScheme
@@ -508,7 +507,6 @@ Low-Level Schema Wrappers
    StrokeJoin
    StyleConfigIndex
    SymbolShape
-   Text
    TextBaseline
    TextDef
    TextDirection
@@ -530,7 +528,6 @@ Low-Level Schema Wrappers
    TopLevelFacetSpec
    TopLevelHConcatSpec
    TopLevelLayerSpec
-   TopLevelParameter
    TopLevelRepeatSpec
    TopLevelSelectionParameter
    TopLevelSpec
