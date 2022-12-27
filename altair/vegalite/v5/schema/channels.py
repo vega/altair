@@ -347,7 +347,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Angle':
+    def bin(self, _: None, **kwds) -> 'Angle':
         ...
 
     @overload
@@ -371,7 +371,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Angle':
+    def legend(self, _: None, **kwds) -> 'Angle':
         ...
 
     @overload
@@ -379,7 +379,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Angle':
+    def scale(self, _: None, **kwds) -> 'Angle':
         ...
 
     @overload
@@ -399,7 +399,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Angle':
+    def sort(self, _: None, **kwds) -> 'Angle':
         ...
 
     @overload
@@ -415,7 +415,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Angle':
+    def title(self, _: None, **kwds) -> 'Angle':
         ...
 
     def type(self, _: str, **kwds) -> 'Angle':
@@ -566,7 +566,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'AngleDatum':
+    def title(self, _: None, **kwds) -> 'AngleDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'AngleDatum':
@@ -871,7 +871,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Color':
+    def bin(self, _: None, **kwds) -> 'Color':
         ...
 
     @overload
@@ -895,7 +895,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Color':
+    def legend(self, _: None, **kwds) -> 'Color':
         ...
 
     @overload
@@ -903,7 +903,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Color':
+    def scale(self, _: None, **kwds) -> 'Color':
         ...
 
     @overload
@@ -923,7 +923,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Color':
+    def sort(self, _: None, **kwds) -> 'Color':
         ...
 
     @overload
@@ -939,7 +939,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Color':
+    def title(self, _: None, **kwds) -> 'Color':
         ...
 
     def type(self, _: str, **kwds) -> 'Color':
@@ -1090,7 +1090,7 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'ColorDatum':
+    def title(self, _: None, **kwds) -> 'ColorDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'ColorDatum':
@@ -1382,7 +1382,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Column':
+    def bin(self, _: None, **kwds) -> 'Column':
         ...
 
     def center(self, _: bool, **kwds) -> 'Column':
@@ -1401,7 +1401,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def header(self, _: Type[None], **kwds) -> 'Column':
+    def header(self, _: None, **kwds) -> 'Column':
         ...
 
     @overload
@@ -1417,7 +1417,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Column':
+    def sort(self, _: None, **kwds) -> 'Column':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Column':
@@ -1436,7 +1436,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Column':
+    def title(self, _: None, **kwds) -> 'Column':
         ...
 
     def type(self, _: str, **kwds) -> 'Column':
@@ -1686,7 +1686,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Description':
+    def bin(self, _: None, **kwds) -> 'Description':
         ...
 
     @overload
@@ -1729,7 +1729,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Description':
+    def title(self, _: None, **kwds) -> 'Description':
         ...
 
     def type(self, _: str, **kwds) -> 'Description':
@@ -1973,7 +1973,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Detail':
+    def bin(self, _: None, **kwds) -> 'Detail':
         ...
 
     @overload
@@ -1997,7 +1997,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Detail':
+    def title(self, _: None, **kwds) -> 'Detail':
         ...
 
     def type(self, _: str, **kwds) -> 'Detail':
@@ -2295,7 +2295,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Facet':
+    def bin(self, _: None, **kwds) -> 'Facet':
         ...
 
     def bounds(self, _: str, **kwds) -> 'Facet':
@@ -2325,7 +2325,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def header(self, _: Type[None], **kwds) -> 'Facet':
+    def header(self, _: None, **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2341,7 +2341,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Facet':
+    def sort(self, _: None, **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2365,7 +2365,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Facet':
+    def title(self, _: None, **kwds) -> 'Facet':
         ...
 
     def type(self, _: str, **kwds) -> 'Facet':
@@ -2637,7 +2637,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Fill':
+    def bin(self, _: None, **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2661,7 +2661,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Fill':
+    def legend(self, _: None, **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2669,7 +2669,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Fill':
+    def scale(self, _: None, **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2689,7 +2689,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Fill':
+    def sort(self, _: None, **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2705,7 +2705,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Fill':
+    def title(self, _: None, **kwds) -> 'Fill':
         ...
 
     def type(self, _: str, **kwds) -> 'Fill':
@@ -2856,7 +2856,7 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'FillDatum':
+    def title(self, _: None, **kwds) -> 'FillDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'FillDatum':
@@ -3162,7 +3162,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'FillOpacity':
+    def bin(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3186,7 +3186,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'FillOpacity':
+    def legend(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3194,7 +3194,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'FillOpacity':
+    def scale(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3214,7 +3214,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'FillOpacity':
+    def sort(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3230,7 +3230,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'FillOpacity':
+    def title(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
     def type(self, _: str, **kwds) -> 'FillOpacity':
@@ -3381,7 +3381,7 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'FillOpacityDatum':
+    def title(self, _: None, **kwds) -> 'FillOpacityDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'FillOpacityDatum':
@@ -3664,7 +3664,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Href':
+    def bin(self, _: None, **kwds) -> 'Href':
         ...
 
     @overload
@@ -3707,7 +3707,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Href':
+    def title(self, _: None, **kwds) -> 'Href':
         ...
 
     def type(self, _: str, **kwds) -> 'Href':
@@ -3951,7 +3951,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Key':
+    def bin(self, _: None, **kwds) -> 'Key':
         ...
 
     @overload
@@ -3975,7 +3975,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Key':
+    def title(self, _: None, **kwds) -> 'Key':
         ...
 
     def type(self, _: str, **kwds) -> 'Key':
@@ -4165,7 +4165,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Latitude':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Latitude':
+    def bin(self, _: None, **kwds) -> 'Latitude':
         ...
 
     @overload
@@ -4189,7 +4189,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Latitude':
+    def title(self, _: None, **kwds) -> 'Latitude':
         ...
 
     def type(self, _: str, **kwds) -> 'Latitude':
@@ -4320,7 +4320,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'LatitudeDatum':
+    def title(self, _: None, **kwds) -> 'LatitudeDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'LatitudeDatum':
@@ -4441,7 +4441,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Latitude2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Latitude2':
+    def bin(self, _: None, **kwds) -> 'Latitude2':
         ...
 
     @overload
@@ -4465,7 +4465,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Latitude2':
+    def title(self, _: None, **kwds) -> 'Latitude2':
         ...
 
 
@@ -4593,7 +4593,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Latitude2Datum':
+    def title(self, _: None, **kwds) -> 'Latitude2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'Latitude2Datum':
@@ -4806,7 +4806,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Longitude':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Longitude':
+    def bin(self, _: None, **kwds) -> 'Longitude':
         ...
 
     @overload
@@ -4830,7 +4830,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Longitude':
+    def title(self, _: None, **kwds) -> 'Longitude':
         ...
 
     def type(self, _: str, **kwds) -> 'Longitude':
@@ -4961,7 +4961,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'LongitudeDatum':
+    def title(self, _: None, **kwds) -> 'LongitudeDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'LongitudeDatum':
@@ -5082,7 +5082,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Longitude2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Longitude2':
+    def bin(self, _: None, **kwds) -> 'Longitude2':
         ...
 
     @overload
@@ -5106,7 +5106,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Longitude2':
+    def title(self, _: None, **kwds) -> 'Longitude2':
         ...
 
 
@@ -5234,7 +5234,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Longitude2Datum':
+    def title(self, _: None, **kwds) -> 'Longitude2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'Longitude2Datum':
@@ -5526,7 +5526,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Opacity':
+    def bin(self, _: None, **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5550,7 +5550,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Opacity':
+    def legend(self, _: None, **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5558,7 +5558,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Opacity':
+    def scale(self, _: None, **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5578,7 +5578,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Opacity':
+    def sort(self, _: None, **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5594,7 +5594,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Opacity':
+    def title(self, _: None, **kwds) -> 'Opacity':
         ...
 
     def type(self, _: str, **kwds) -> 'Opacity':
@@ -5745,7 +5745,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'OpacityDatum':
+    def title(self, _: None, **kwds) -> 'OpacityDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'OpacityDatum':
@@ -5986,7 +5986,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Order':
+    def bin(self, _: None, **kwds) -> 'Order':
         ...
 
     @overload
@@ -6013,7 +6013,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Order':
+    def title(self, _: None, **kwds) -> 'Order':
         ...
 
     def type(self, _: str, **kwds) -> 'Order':
@@ -6336,7 +6336,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Radius':
+    def bin(self, _: None, **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6352,7 +6352,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Radius':
+    def scale(self, _: None, **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6372,7 +6372,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Radius':
+    def sort(self, _: None, **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6380,7 +6380,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'Radius':
+    def stack(self, _: None, **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6400,7 +6400,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Radius':
+    def title(self, _: None, **kwds) -> 'Radius':
         ...
 
     def type(self, _: str, **kwds) -> 'Radius':
@@ -6576,7 +6576,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'RadiusDatum':
+    def scale(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
     @overload
@@ -6584,7 +6584,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'RadiusDatum':
+    def stack(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
     @overload
@@ -6596,7 +6596,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'RadiusDatum':
+    def title(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'RadiusDatum':
@@ -6743,7 +6743,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Radius2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Radius2':
+    def bin(self, _: None, **kwds) -> 'Radius2':
         ...
 
     @overload
@@ -6767,7 +6767,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Radius2':
+    def title(self, _: None, **kwds) -> 'Radius2':
         ...
 
 
@@ -6895,7 +6895,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Radius2Datum':
+    def title(self, _: None, **kwds) -> 'Radius2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'Radius2Datum':
@@ -7173,7 +7173,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Row':
+    def bin(self, _: None, **kwds) -> 'Row':
         ...
 
     def center(self, _: bool, **kwds) -> 'Row':
@@ -7192,7 +7192,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def header(self, _: Type[None], **kwds) -> 'Row':
+    def header(self, _: None, **kwds) -> 'Row':
         ...
 
     @overload
@@ -7208,7 +7208,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Row':
+    def sort(self, _: None, **kwds) -> 'Row':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Row':
@@ -7227,7 +7227,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Row':
+    def title(self, _: None, **kwds) -> 'Row':
         ...
 
     def type(self, _: str, **kwds) -> 'Row':
@@ -7499,7 +7499,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Shape':
+    def bin(self, _: None, **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7523,7 +7523,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Shape':
+    def legend(self, _: None, **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7531,7 +7531,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Shape':
+    def scale(self, _: None, **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7551,7 +7551,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Shape':
+    def sort(self, _: None, **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7567,7 +7567,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Shape':
+    def title(self, _: None, **kwds) -> 'Shape':
         ...
 
     def type(self, _: str, **kwds) -> 'Shape':
@@ -7718,7 +7718,7 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'ShapeDatum':
+    def title(self, _: None, **kwds) -> 'ShapeDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'ShapeDatum':
@@ -8024,7 +8024,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Size':
+    def bin(self, _: None, **kwds) -> 'Size':
         ...
 
     @overload
@@ -8048,7 +8048,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Size':
+    def legend(self, _: None, **kwds) -> 'Size':
         ...
 
     @overload
@@ -8056,7 +8056,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Size':
+    def scale(self, _: None, **kwds) -> 'Size':
         ...
 
     @overload
@@ -8076,7 +8076,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Size':
+    def sort(self, _: None, **kwds) -> 'Size':
         ...
 
     @overload
@@ -8092,7 +8092,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Size':
+    def title(self, _: None, **kwds) -> 'Size':
         ...
 
     def type(self, _: str, **kwds) -> 'Size':
@@ -8243,7 +8243,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'SizeDatum':
+    def title(self, _: None, **kwds) -> 'SizeDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'SizeDatum':
@@ -8548,7 +8548,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Stroke':
+    def bin(self, _: None, **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8572,7 +8572,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'Stroke':
+    def legend(self, _: None, **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8580,7 +8580,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Stroke':
+    def scale(self, _: None, **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8600,7 +8600,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Stroke':
+    def sort(self, _: None, **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8616,7 +8616,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Stroke':
+    def title(self, _: None, **kwds) -> 'Stroke':
         ...
 
     def type(self, _: str, **kwds) -> 'Stroke':
@@ -8767,7 +8767,7 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeDatum':
+    def title(self, _: None, **kwds) -> 'StrokeDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeDatum':
@@ -9073,7 +9073,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'StrokeDash':
+    def bin(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9097,7 +9097,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'StrokeDash':
+    def legend(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9105,7 +9105,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'StrokeDash':
+    def scale(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9125,7 +9125,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'StrokeDash':
+    def sort(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9141,7 +9141,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeDash':
+    def title(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeDash':
@@ -9292,7 +9292,7 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeDashDatum':
+    def title(self, _: None, **kwds) -> 'StrokeDashDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeDashDatum':
@@ -9598,7 +9598,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'StrokeOpacity':
+    def bin(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9622,7 +9622,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'StrokeOpacity':
+    def legend(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9630,7 +9630,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'StrokeOpacity':
+    def scale(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9650,7 +9650,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'StrokeOpacity':
+    def sort(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9666,7 +9666,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeOpacity':
+    def title(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeOpacity':
@@ -9817,7 +9817,7 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeOpacityDatum':
+    def title(self, _: None, **kwds) -> 'StrokeOpacityDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeOpacityDatum':
@@ -10122,7 +10122,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'StrokeWidth':
+    def bin(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10146,7 +10146,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def legend(self, _: Type[None], **kwds) -> 'StrokeWidth':
+    def legend(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10154,7 +10154,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'StrokeWidth':
+    def scale(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10174,7 +10174,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'StrokeWidth':
+    def sort(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10190,7 +10190,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeWidth':
+    def title(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeWidth':
@@ -10341,7 +10341,7 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'StrokeWidthDatum':
+    def title(self, _: None, **kwds) -> 'StrokeWidthDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'StrokeWidthDatum':
@@ -10624,7 +10624,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Text':
+    def bin(self, _: None, **kwds) -> 'Text':
         ...
 
     @overload
@@ -10667,7 +10667,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Text':
+    def title(self, _: None, **kwds) -> 'Text':
         ...
 
     def type(self, _: str, **kwds) -> 'Text':
@@ -10863,7 +10863,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'TextDatum':
+    def title(self, _: None, **kwds) -> 'TextDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'TextDatum':
@@ -11184,7 +11184,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Theta':
+    def bin(self, _: None, **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11200,7 +11200,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Theta':
+    def scale(self, _: None, **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11220,7 +11220,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Theta':
+    def sort(self, _: None, **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11228,7 +11228,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'Theta':
+    def stack(self, _: None, **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11248,7 +11248,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Theta':
+    def title(self, _: None, **kwds) -> 'Theta':
         ...
 
     def type(self, _: str, **kwds) -> 'Theta':
@@ -11423,7 +11423,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'ThetaDatum':
+    def scale(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
     @overload
@@ -11431,7 +11431,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'ThetaDatum':
+    def stack(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
     @overload
@@ -11443,7 +11443,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'ThetaDatum':
+    def title(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'ThetaDatum':
@@ -11590,7 +11590,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Theta2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Theta2':
+    def bin(self, _: None, **kwds) -> 'Theta2':
         ...
 
     @overload
@@ -11614,7 +11614,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Theta2':
+    def title(self, _: None, **kwds) -> 'Theta2':
         ...
 
 
@@ -11742,7 +11742,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Theta2Datum':
+    def title(self, _: None, **kwds) -> 'Theta2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'Theta2Datum':
@@ -12012,7 +12012,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Tooltip':
+    def bin(self, _: None, **kwds) -> 'Tooltip':
         ...
 
     @overload
@@ -12055,7 +12055,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Tooltip':
+    def title(self, _: None, **kwds) -> 'Tooltip':
         ...
 
     def type(self, _: str, **kwds) -> 'Tooltip':
@@ -12342,7 +12342,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Url':
+    def bin(self, _: None, **kwds) -> 'Url':
         ...
 
     @overload
@@ -12385,7 +12385,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Url':
+    def title(self, _: None, **kwds) -> 'Url':
         ...
 
     def type(self, _: str, **kwds) -> 'Url':
@@ -12715,7 +12715,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def axis(self, _: Type[None], **kwds) -> 'X':
+    def axis(self, _: None, **kwds) -> 'X':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'X':
@@ -12734,7 +12734,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'X':
+    def bin(self, _: None, **kwds) -> 'X':
         ...
 
     @overload
@@ -12750,7 +12750,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def impute(self, _: Type[None], **kwds) -> 'X':
+    def impute(self, _: None, **kwds) -> 'X':
         ...
 
     @overload
@@ -12758,7 +12758,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'X':
+    def scale(self, _: None, **kwds) -> 'X':
         ...
 
     @overload
@@ -12778,7 +12778,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'X':
+    def sort(self, _: None, **kwds) -> 'X':
         ...
 
     @overload
@@ -12786,7 +12786,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'X':
+    def stack(self, _: None, **kwds) -> 'X':
         ...
 
     @overload
@@ -12806,7 +12806,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'X':
+    def title(self, _: None, **kwds) -> 'X':
         ...
 
     def type(self, _: str, **kwds) -> 'X':
@@ -12996,7 +12996,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def axis(self, _: Type[None], **kwds) -> 'XDatum':
+    def axis(self, _: None, **kwds) -> 'XDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'XDatum':
@@ -13007,7 +13007,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def impute(self, _: Type[None], **kwds) -> 'XDatum':
+    def impute(self, _: None, **kwds) -> 'XDatum':
         ...
 
     @overload
@@ -13015,7 +13015,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'XDatum':
+    def scale(self, _: None, **kwds) -> 'XDatum':
         ...
 
     @overload
@@ -13023,7 +13023,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'XDatum':
+    def stack(self, _: None, **kwds) -> 'XDatum':
         ...
 
     @overload
@@ -13035,7 +13035,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'XDatum':
+    def title(self, _: None, **kwds) -> 'XDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'XDatum':
@@ -13182,7 +13182,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'X2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'X2':
+    def bin(self, _: None, **kwds) -> 'X2':
         ...
 
     @overload
@@ -13206,7 +13206,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'X2':
+    def title(self, _: None, **kwds) -> 'X2':
         ...
 
 
@@ -13333,7 +13333,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'X2Datum':
+    def title(self, _: None, **kwds) -> 'X2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'X2Datum':
@@ -13479,7 +13479,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'XError':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'XError':
+    def bin(self, _: None, **kwds) -> 'XError':
         ...
 
     @overload
@@ -13503,7 +13503,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'XError':
+    def title(self, _: None, **kwds) -> 'XError':
         ...
 
 
@@ -13648,7 +13648,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'XError2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'XError2':
+    def bin(self, _: None, **kwds) -> 'XError2':
         ...
 
     @overload
@@ -13672,7 +13672,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'XError2':
+    def title(self, _: None, **kwds) -> 'XError2':
         ...
 
 
@@ -13944,7 +13944,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'XOffset':
+    def bin(self, _: None, **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13960,7 +13960,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'XOffset':
+    def scale(self, _: None, **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13980,7 +13980,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'XOffset':
+    def sort(self, _: None, **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13996,7 +13996,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'XOffset':
+    def title(self, _: None, **kwds) -> 'XOffset':
         ...
 
     def type(self, _: str, **kwds) -> 'XOffset':
@@ -14141,7 +14141,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'XOffsetDatum':
+    def scale(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
     @overload
@@ -14149,7 +14149,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'XOffsetDatum':
+    def title(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'XOffsetDatum':
@@ -14463,7 +14463,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def axis(self, _: Type[None], **kwds) -> 'Y':
+    def axis(self, _: None, **kwds) -> 'Y':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Y':
@@ -14482,7 +14482,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'Y':
+    def bin(self, _: None, **kwds) -> 'Y':
         ...
 
     @overload
@@ -14498,7 +14498,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def impute(self, _: Type[None], **kwds) -> 'Y':
+    def impute(self, _: None, **kwds) -> 'Y':
         ...
 
     @overload
@@ -14506,7 +14506,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'Y':
+    def scale(self, _: None, **kwds) -> 'Y':
         ...
 
     @overload
@@ -14526,7 +14526,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'Y':
+    def sort(self, _: None, **kwds) -> 'Y':
         ...
 
     @overload
@@ -14534,7 +14534,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'Y':
+    def stack(self, _: None, **kwds) -> 'Y':
         ...
 
     @overload
@@ -14554,7 +14554,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Y':
+    def title(self, _: None, **kwds) -> 'Y':
         ...
 
     def type(self, _: str, **kwds) -> 'Y':
@@ -14744,7 +14744,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def axis(self, _: Type[None], **kwds) -> 'YDatum':
+    def axis(self, _: None, **kwds) -> 'YDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'YDatum':
@@ -14755,7 +14755,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def impute(self, _: Type[None], **kwds) -> 'YDatum':
+    def impute(self, _: None, **kwds) -> 'YDatum':
         ...
 
     @overload
@@ -14763,7 +14763,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'YDatum':
+    def scale(self, _: None, **kwds) -> 'YDatum':
         ...
 
     @overload
@@ -14771,7 +14771,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def stack(self, _: Type[None], **kwds) -> 'YDatum':
+    def stack(self, _: None, **kwds) -> 'YDatum':
         ...
 
     @overload
@@ -14783,7 +14783,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'YDatum':
+    def title(self, _: None, **kwds) -> 'YDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'YDatum':
@@ -14930,7 +14930,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Y2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'Y2':
+    def bin(self, _: None, **kwds) -> 'Y2':
         ...
 
     @overload
@@ -14954,7 +14954,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Y2':
+    def title(self, _: None, **kwds) -> 'Y2':
         ...
 
 
@@ -15081,7 +15081,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'Y2Datum':
+    def title(self, _: None, **kwds) -> 'Y2Datum':
         ...
 
     def type(self, _: str, **kwds) -> 'Y2Datum':
@@ -15227,7 +15227,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'YError':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'YError':
+    def bin(self, _: None, **kwds) -> 'YError':
         ...
 
     @overload
@@ -15251,7 +15251,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'YError':
+    def title(self, _: None, **kwds) -> 'YError':
         ...
 
 
@@ -15396,7 +15396,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'YError2':
         ...
 
-    def bin(self, _: Type[None], **kwds) -> 'YError2':
+    def bin(self, _: None, **kwds) -> 'YError2':
         ...
 
     @overload
@@ -15420,7 +15420,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'YError2':
+    def title(self, _: None, **kwds) -> 'YError2':
         ...
 
 
@@ -15692,7 +15692,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def bin(self, _: Type[None], **kwds) -> 'YOffset':
+    def bin(self, _: None, **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15708,7 +15708,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'YOffset':
+    def scale(self, _: None, **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15728,7 +15728,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, _: Type[None], **kwds) -> 'YOffset':
+    def sort(self, _: None, **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15744,7 +15744,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'YOffset':
+    def title(self, _: None, **kwds) -> 'YOffset':
         ...
 
     def type(self, _: str, **kwds) -> 'YOffset':
@@ -15889,7 +15889,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def scale(self, _: Type[None], **kwds) -> 'YOffsetDatum':
+    def scale(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
     @overload
@@ -15897,7 +15897,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def title(self, _: Type[None], **kwds) -> 'YOffsetDatum':
+    def title(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
     def type(self, _: str, **kwds) -> 'YOffsetDatum':
