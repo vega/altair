@@ -312,7 +312,7 @@ empty selection contains none of the points:
 
 .. altair-plot::
 
-   interval_x = alt.selection_interval(encodings=['x'], empty='none')
+   interval_x = alt.selection_interval(encodings=['x'], empty=False)
    make_example(interval_x)
 
 A special case of an interval selection is when the interval is bound to the
@@ -366,7 +366,7 @@ by hovering over them with your mouse:
 
 .. altair-plot::
 
-    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty='none')
+    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty=False)
     make_example(point_mouseover)
 
 Composing Multiple Selections
@@ -728,7 +728,7 @@ Some possible use cases for the above interactivity are not currently supported 
         x=alt.X('value:Q', title=''),
         y='Horsepower',
         color='Origin',
-    ).add_selection(
+    ).add_params(
         selection
     ).transform_filter(
         selection

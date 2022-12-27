@@ -25,6 +25,7 @@ with the above installation commands:
 
 - python 3.6 or newer
 - entrypoints_
+- jinja2
 - jsonschema_
 - NumPy_
 - Pandas_
@@ -33,14 +34,19 @@ with the above installation commands:
 To run Altair's full test suite and build Altair's documentation requires a few
 additional dependencies:
 
+- black
 - flake8
 - pytest
-- jinja2
 - sphinx
 - m2r
 - docutils
 - vega_datasets_
 - ipython
+- myst-parser
+- numpydoc
+- pillow
+- pydata-sphinx-theme
+- geopandas
 
 Development Install
 ===================

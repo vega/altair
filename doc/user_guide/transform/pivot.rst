@@ -50,7 +50,7 @@ values on multiple lines:
    base = alt.Chart(source).encode(x='date:T')
    columns = sorted(source.symbol.unique())
    selection = alt.selection_point(
-       fields=['date'], nearest=True, on='mouseover', empty='none', clear='mouseout'
+       fields=['date'], nearest=True, on='mouseover', empty=False, clear='mouseout'
    )
 
    lines = base.mark_line().encode(y='price:Q', color='symbol:N')
