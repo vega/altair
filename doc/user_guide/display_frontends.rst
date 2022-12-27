@@ -40,7 +40,7 @@ Some of the built-in renderers are:
   newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
-Other renderers can be installed by third-party packages via Python's entrypoints_ system;
+Other renderers can be installed by third-party packages via Python's entrypoints system;
 see :ref:`renderer-api`.
 
 
@@ -79,7 +79,7 @@ Optionally, for offline rendering in Jupyter Notebook, you can use the notebook 
 
     # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
     alt.renderers.enable('notebook')
-    
+ 
 This renderer is provided by the `ipyvega`_ notebook extension, which can be
 installed and enabled either using pip:
 
@@ -259,10 +259,9 @@ To register and enable a new renderer::
     >>> alt.renderers.register('custom_renderer', custom_renderer)
     >>> alt.renderers.enable('custom_renderer')
 
-Renderers can also be registered using the `entrypoints`_ API of Python packages.
+Renderers can also be registered using the `entrypoints` API of Python packages.
 For an example, see `ipyvega`_.
 
-.. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io

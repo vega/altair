@@ -1,4 +1,4 @@
-entrypoints
+importlib_metadata; python_version < "3.8"
 jinja2
 jsonschema>=3.0
 numpy
