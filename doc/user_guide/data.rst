@@ -464,3 +464,4 @@ data before usage in Altair using GeoPandas for example as such:
    display_frontends
    custom_renderers
    data_transformers
+   large_datasets

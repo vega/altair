@@ -20,14 +20,8 @@ Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
-Vega-Altair is BSD-licensed and the source is available on `GitHub`_,
-where you can also report `bugs and feature requests`_.
-For general questions, please ask on `StackOverflow`_
-using the `altair` tag.
-
 You can browse this documentation
-via the links in the top navigation panel
-or by viewing the full site :ref:`genindex`.
+via the links in the top navigation panel.
 In addition to reading this documentation page,
 it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
@@ -38,10 +32,9 @@ it can be helpful to also browse the `Vega-Lite documentation <https://vega.gith
    Getting Started <getting_started/overview>
    User Guide <user_guide/data>
    Examples <gallery/index>
-   Reference <user_guide/API>
+   API Reference <user_guide/API>
    user_guide/ecosystem
    releases/changes
-   Help <user_guide/getting_help>
 
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues
