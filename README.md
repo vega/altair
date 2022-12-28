@@ -7,10 +7,6 @@
 [![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/altair)](https://pypi.org/project/altair)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altair-viz/altair_notebooks/master?urlpath=lab/tree/notebooks/Index.ipynb)
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
-
-[https://altair-viz.github.io](https://altair-viz.github.io)
 
 **Vega-Altair** is a declarative statistical visualization library for Python. With Vega-Altair, you can spend more time understanding your data and its meaning. Vega-Altair's
 API is simple, friendly and consistent and built on top of the powerful
@@ -19,10 +15,13 @@ simplicity produces beautiful and effective visualizations with a minimal amount
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
 Interactive Data Lab](https://idl.cs.washington.edu/).*
 
-## Vega-Altair Documentation
+## Documentation
 
-See [Vega-Altair's Documentation Site](https://altair-viz.github.io),
-as well as Vega-Altair's [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks).
+See [Vega-Altair's Documentation Site](https://altair-viz.github.io) as well as the [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks). You can
+run the notebooks directly in your browser by clicking on one of the following badges:
+
+[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
 ## Example
 
@@ -86,10 +85,9 @@ points & bars
 * Export visualizations to various formats such as PNG/SVG images, stand-alone HTML pages and the
 [Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
-* Explore Vega-Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
 
 ## Installation
-Vega-Altair can be installed using:
+Vega-Altair can be installed with:
 ```bash
 pip install altair
 ```
@@ -100,19 +98,6 @@ conda install -c conda-forge altair
 ```
 
 For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html)
-
-## Example and tutorial notebooks
-
-We maintain a separate Github repository of Jupyter Notebooks that contain an
-interactive tutorial and examples:
-
-https://github.com/altair-viz/altair_notebooks
-
-To launch a live notebook server with those notebook using [binder](https://mybinder.org/) or
-[Colab](https://colab.research.google.com), click on one of the following badges:
-
-[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
 ## Getting Help
 If you have a question that is not addressed in the documentation, 
