@@ -30,6 +30,13 @@ table td.vl-type-def {
   overflow-x: clip;
 }
 
+/* Hide this empty container as it leads to a vertical scrollbar in 
+the primary sidebar even if there is no need for such a scrollbar as all content
+would fit onto the screen */
+#rtd-footer-container {
+  display: none;
+}
+
 /* Default for the pydata theme is 25% */
 .bd-sidebar-primary {
   max-width: 20%

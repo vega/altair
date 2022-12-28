@@ -138,6 +138,7 @@ html_theme_options = {
     "navbar_start": ["navbar-logo", "navbar-project"],
     "navbar_center": ["navbar-nav"],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "primary_sidebar_end": [],
     "footer_items": [],
     "icon_links": [
         {
@@ -210,7 +211,7 @@ def setup(app):
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
     "index": [],
-    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
+    "**": ["sidebar-nav-bs"],
 }
 
 # Redirection of old page locations via the rediraffe sphinx-extension
