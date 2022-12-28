@@ -15,11 +15,11 @@ HTML_TEMPLATE = jinja2.Template(
     }
   </style>
 {%- if not requirejs %}
-  <script type="text/javascript" src="{{ base_url }}/vega@{{ vega_version }}"></script>
+  <script type="text/javascript" src="{{ base_url }}vega@{{ vega_version }}"></script>
   {%- if mode == 'vega-lite' %}
-  <script type="text/javascript" src="{{ base_url }}/vega-lite@{{ vegalite_version }}"></script>
+  <script type="text/javascript" src="{{ base_url }}vega-lite@{{ vegalite_version }}"></script>
   {%- endif %}
-  <script type="text/javascript" src="{{ base_url }}/vega-embed@{{ vegaembed_version }}"></script>
+  <script type="text/javascript" src="{{ base_url }}vega-embed@{{ vegaembed_version }}"></script>
 {%- endif %}
 {%- if fullhtml %}
 {%- if requirejs %}
@@ -27,10 +27,10 @@ HTML_TEMPLATE = jinja2.Template(
 <script>
 requirejs.config({
     "paths": {
-        "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
-        "vega-lib": "{{ base_url }}/vega-lib?noext",
-        "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
-        "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+        "vega": "{{ base_url }}vega@{{ vega_version }}?noext",
+        "vega-lib": "{{ base_url }}vega-lib?noext",
+        "vega-lite": "{{ base_url }}vega-lite@{{ vegalite_version }}?noext",
+        "vega-embed": "{{ base_url }}vega-embed@{{ vegaembed_version }}?noext",
     }
 });
 </script>
@@ -43,10 +43,10 @@ requirejs.config({
     {%- if requirejs and not fullhtml %}
     requirejs.config({
         "paths": {
-            "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
-            "vega-lib": "{{ base_url }}/vega-lib?noext",
-            "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
-            "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+            "vega": "{{ base_url }}vega@{{ vega_version }}?noext",
+            "vega-lib": "{{ base_url }}vega-lib?noext",
+            "vega-lite": "{{ base_url }}vega-lite@{{ vegalite_version }}?noext",
+            "vega-embed": "{{ base_url }}vega-embed@{{ vegaembed_version }}?noext",
         }
     });
     {% endif %}
@@ -92,10 +92,10 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
       outputDiv = document.getElementById("{{ output_div }}");
     }
     const paths = {
-      "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
-      "vega-lib": "{{ base_url }}/vega-lib?noext",
-      "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
-      "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+      "vega": "{{ base_url }}vega@{{ vega_version }}?noext",
+      "vega-lib": "{{ base_url }}vega-lib?noext",
+      "vega-lite": "{{ base_url }}vega-lite@{{ vegalite_version }}?noext",
+      "vega-embed": "{{ base_url }}vega-embed@{{ vegaembed_version }}?noext",
     };
 
     function maybeLoadScript(lib, version) {
