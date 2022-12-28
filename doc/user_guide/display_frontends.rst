@@ -53,9 +53,8 @@ In addition, Altair includes the following renderers:
 
 You can use ``alt.renderers.names()`` to return all registered renderers as a Python list.
 
-Other renderers can be installed by third-party packages via Python's entrypoints_ system or you can create your own,
+Other renderers can be installed by third-party packages via Python's entrypoints system or you can create your own,
 see :ref:`customizing-renderers`.
-
 
 .. _display-jupyterlab:
 
@@ -92,7 +91,7 @@ Optionally, for offline rendering in Jupyter Notebook, you can use the notebook 
 
     # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
     alt.renderers.enable('notebook')
-    
+ 
 This renderer is provided by the `ipyvega`_ notebook extension, which can be
 installed and enabled either using pip:
 
@@ -642,7 +641,6 @@ see :ref:`display-general`.
 .. _`Javascript Console`: https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers
 .. _Field: https://vega.github.io/vega-lite/docs/field.html
 
-.. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
