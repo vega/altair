@@ -11,11 +11,6 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
-The altair users mailing list can be found at
-https://groups.google.com/forum/#!forum/altair-viz. If you are working on
-Altair, you can talk to other developers in the `#altair` channel of the [Vega
-slack](https://bit.ly/join-vega-slack).
-
 ## How To Contribute Code to Altair
 
 ### Setting Up Your Environment
@@ -98,7 +93,18 @@ automatically shown in the PR.
 Hopefully your PR will be answered in a timely manner and your contribution will
 help others in the future.
 
-## Adding Examples
+## Documentation
+Altair documentation is written in [reStructuredText](http://docutils.sourceforge.net/rst.html)
+and compiled into html pages using [Sphinx](http://www.sphinx-doc.org/en/master/).
+Contributing to the documentation requires some extra dependencies and 
+we have some conventions and plugins that are used to help navigate the docs and 
+generate great Altair visualizations. 
+
+Note that the [Altair website](https://altair-viz.github.io/)
+is only updated when a new version is released so your contribution might not show
+up for a while.
+
+### Adding Examples
 
 We are always interested in new examples contributed from the community.  These
 could be everything from simple one-panel scatter and line plots, to more
@@ -154,7 +160,60 @@ Some additional notes:
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
-  
-Note that examples shown on the [Altair website](https://altair-viz.github.io/)
-are only updated when a new version is released so your new example might not show
-up there for a while. 
+
+### Building the Documentation Locally
+Assuming you have followed all the steps for a [development install](../README.md#development-install), you will need to also install the dependencies for documentation listed in  `docs/requirements.txt` and install altair locally from the branch you are updating: 
+
+```
+cd altair
+pip install -r requirements.txt 
+pip install -e . # See Altair Readme for further information about installing Altair for development. 
+pip install -r doc/requirements.txt # Documentation install 
+```
+In addition, the sphinx documentation builder needs access to Selenium to support generating images of sample visualizations. You may have selenium already installed but if you do not it can also be installed via pip but is not in the requirements file because of its size and dependencies. 
+
+```
+pip install selenium
+```
+
+One you have all the dependencies, you can build the documentation using various commands defined in the Makefile. From the `doc` folder, you can use `make help` to see all of the available commands which control the type of documentation you want to generate:
+
+```
+$ make help
+
+Please use `make <target>' where <target> is one of
+  html       to make standalone HTML files
+  dirhtml    to make HTML files named index.html in directories
+  singlehtml to make a single large HTML file
+  pickle     to make pickle files
+  json       to make JSON files
+  htmlhelp   to make HTML files and a HTML help project
+  qthelp     to make HTML files and a qthelp project
+  applehelp  to make an Apple Help Book
+  devhelp    to make HTML files and a Devhelp project
+  epub       to make an epub
+  epub3      to make an epub3
+  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter
+  latexpdf   to make LaTeX files and run them through pdflatex
+  latexpdfja to make LaTeX files and run them through platex/dvipdfmx
+  text       to make text files
+  man        to make manual pages
+  texinfo    to make Texinfo files
+  info       to make Texinfo files and run them through makeinfo
+  gettext    to make PO message catalogs
+  changes    to make an overview of all changed/added/deprecated items
+  xml        to make Docutils-native XML files
+  pseudoxml  to make pseudoxml-XML files for display purposes
+  linkcheck  to check all external links for integrity
+  doctest    to run all doctests embedded in the documentation (if enabled)
+  coverage   to run coverage check of the documentation (if enabled)
+  dummy      to check syntax errors of document sources
+
+```
+For most updates, run `make html` and the documentation will generate in a sub folder `_build`. You can open `_build/html/index.html` to view the documenation as local static files which should give you a good preview of how any updates will look. Even better, use the command below to serve the static files and you will be able to navigate the whole documentation website. 
+
+```
+cd doc/_build/_html
+python -m http.server
+```
+
