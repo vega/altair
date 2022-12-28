@@ -1,15 +1,15 @@
 """
-Ridgeline plot Example
-----------------------
+Ridgeline plot
+--------------
 A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_
-chart is a chart that lets you visualize distribution of a numeric value for 
+chart is a chart that lets you visualize distribution of a numeric value for
 several groups.
 
 Such a chart can be created in Altair by first transforming the data into a
 suitable representation.
 
 """
-# category: other charts
+# category: distributions
 import altair as alt
 from vega_datasets import data
 

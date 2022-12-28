@@ -1,5 +1,5 @@
 """
-The U.S. employment crash during the Great Recession
+The U.S. Employment Crash During the Great Recession
 ----------------------------------------------------
 This example is a fully developed bar chart with negative values using the sample dataset of U.S. employment changes during the Great Recession.
 """

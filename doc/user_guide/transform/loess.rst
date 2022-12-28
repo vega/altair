@@ -2,8 +2,8 @@
 
 .. _user-guide-loess-transform:
 
-LOESS Transform
-~~~~~~~~~~~~~~~
+LOESS
+~~~~~
 The LOESS transform (LOcally Estimated Scatterplot Smoothing) uses a
 locally-estimated regression  to produce a trend line.
 LOESS performs a sequence of local weighted regressions over a sliding
@@ -17,19 +17,19 @@ Here is an example of using LOESS to smooth samples from a Gaussian random walk:
    import altair as alt
    import pandas as pd
    import numpy as np
-   
+
    np.random.seed(42)
-   
+
    df = pd.DataFrame({
        'x': range(100),
        'y': np.random.randn(100).cumsum()
    })
-   
+
    chart = alt.Chart(df).mark_point().encode(
        x='x',
        y='y'
    )
-   
+
    chart + chart.transform_loess('x', 'y').mark_line()
 
 

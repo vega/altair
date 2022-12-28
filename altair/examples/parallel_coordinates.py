@@ -1,6 +1,6 @@
 """
-Parallel Coordinates Example
-----------------------------
+Parallel Coordinates
+--------------------
 A `Parallel Coordinates <https://en.wikipedia.org/wiki/Parallel_coordinates>`_
 chart is a chart that lets you visualize the individual data points by drawing
 a single line for each of them.
@@ -8,7 +8,7 @@ Such a chart can be created in Altair by first transforming the data into a
 suitable representation.
 This example shows a parallel coordinates chart with the Iris dataset.
 """
-# category: other charts
+# category: advanced calculations
 
 import altair as alt
 from vega_datasets import data

@@ -3,7 +3,7 @@ Simple Scatter Plot with Errorbars
 ----------------------------------
 A simple scatter plot of a data set with errorbars.
 """
-# category: scatter plots
+# category: uncertainties and trends
 import altair as alt
 import pandas as pd
 import numpy as np

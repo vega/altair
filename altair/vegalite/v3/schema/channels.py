@@ -78,6 +78,19 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
+class DatumChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        datum = getattr(self, 'datum', Undefined)
+        copy = self  # don't copy unless we need to
+        if datum is not Undefined:
+            if isinstance(datum, core.SchemaBase):
+                pass
+        return super(DatumChannelMixin, copy).to_dict(validate=validate,
+                                                      ignore=ignore,
+                                                      context=context)
+
+
 class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Color schema wrapper
 
@@ -118,8 +131,7 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -187,8 +199,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -286,8 +299,7 @@ class ColorValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -376,8 +388,9 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -671,8 +684,9 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -797,8 +811,7 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -866,8 +879,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -965,8 +979,7 @@ class FillValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -1019,8 +1032,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1088,8 +1100,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1187,8 +1200,7 @@ class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -1381,8 +1393,7 @@ class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2108,8 +2119,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2177,8 +2187,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -2276,8 +2287,7 @@ class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2520,8 +2530,9 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -2646,8 +2657,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2715,8 +2725,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -2814,8 +2825,7 @@ class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -2868,8 +2878,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2937,8 +2946,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -3036,8 +3046,7 @@ class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3090,8 +3099,7 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3159,8 +3167,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -3258,8 +3267,7 @@ class StrokeValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3312,8 +3320,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3381,8 +3388,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -3481,8 +3489,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3535,8 +3542,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3604,8 +3610,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -3703,8 +3710,7 @@ class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`, List(:class:`ConditionalNumberValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -3897,8 +3903,7 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -4091,8 +4096,7 @@ class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Value`
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
@@ -4214,8 +4218,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4242,8 +4247,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -4817,8 +4822,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4845,8 +4851,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.

@@ -15,6 +15,10 @@ class DatumType(object):
     def __getitem__(self, attr):
         return GetItemExpression("datum", attr)
 
+    def __call__(self, datum, **kwargs):
+        """Specify a datum for use in an encoding"""
+        return dict(datum=datum, **kwargs)
+
 
 datum = DatumType()
 
@@ -27,11 +31,136 @@ def _js_repr(val):
         return "false"
     elif val is None:
         return "null"
+    elif isinstance(val, OperatorMixin):
+        return val._to_expr()
     else:
         return repr(val)
 
 
-class Expression(SchemaBase):
+# Designed to work with Expression and VariableParameter
+class OperatorMixin(object):
+    def _to_expr(self):
+        return repr(self)
+
+    def _from_expr(self, expr):
+        return expr
+
+    def __add__(self, other):
+        comp_value = BinaryExpression("+", self, other)
+        return self._from_expr(comp_value)
+
+    def __radd__(self, other):
+        comp_value = BinaryExpression("+", other, self)
+        return self._from_expr(comp_value)
+
+    def __sub__(self, other):
+        comp_value = BinaryExpression("-", self, other)
+        return self._from_expr(comp_value)
+
+    def __rsub__(self, other):
+        comp_value = BinaryExpression("-", other, self)
+        return self._from_expr(comp_value)
+
+    def __mul__(self, other):
+        comp_value = BinaryExpression("*", self, other)
+        return self._from_expr(comp_value)
+
+    def __rmul__(self, other):
+        comp_value = BinaryExpression("*", other, self)
+        return self._from_expr(comp_value)
+
+    def __truediv__(self, other):
+        comp_value = BinaryExpression("/", self, other)
+        return self._from_expr(comp_value)
+
+    def __rtruediv__(self, other):
+        comp_value = BinaryExpression("/", other, self)
+        return self._from_expr(comp_value)
+
+    __div__ = __truediv__
+
+    __rdiv__ = __rtruediv__
+
+    def __mod__(self, other):
+        comp_value = BinaryExpression("%", self, other)
+        return self._from_expr(comp_value)
+
+    def __rmod__(self, other):
+        comp_value = BinaryExpression("%", other, self)
+        return self._from_expr(comp_value)
+
+    def __pow__(self, other):
+        # "**" Javascript operator is not supported in all browsers
+        comp_value = FunctionExpression("pow", (self, other))
+        return self._from_expr(comp_value)
+
+    def __rpow__(self, other):
+        # "**" Javascript operator is not supported in all browsers
+        comp_value = FunctionExpression("pow", (other, self))
+        return self._from_expr(comp_value)
+
+    def __neg__(self):
+        comp_value = UnaryExpression("-", self)
+        return self._from_expr(comp_value)
+
+    def __pos__(self):
+        comp_value = UnaryExpression("+", self)
+        return self._from_expr(comp_value)
+
+    # comparison operators
+
+    def __eq__(self, other):
+        comp_value = BinaryExpression("===", self, other)
+        return self._from_expr(comp_value)
+
+    def __ne__(self, other):
+        comp_value = BinaryExpression("!==", self, other)
+        return self._from_expr(comp_value)
+
+    def __gt__(self, other):
+        comp_value = BinaryExpression(">", self, other)
+        return self._from_expr(comp_value)
+
+    def __lt__(self, other):
+        comp_value = BinaryExpression("<", self, other)
+        return self._from_expr(comp_value)
+
+    def __ge__(self, other):
+        comp_value = BinaryExpression(">=", self, other)
+        return self._from_expr(comp_value)
+
+    def __le__(self, other):
+        comp_value = BinaryExpression("<=", self, other)
+        return self._from_expr(comp_value)
+
+    def __abs__(self):
+        comp_value = FunctionExpression("abs", (self,))
+        return self._from_expr(comp_value)
+
+    # logical operators
+
+    def __and__(self, other):
+        comp_value = BinaryExpression("&&", self, other)
+        return self._from_expr(comp_value)
+
+    def __rand__(self, other):
+        comp_value = BinaryExpression("&&", other, self)
+        return self._from_expr(comp_value)
+
+    def __or__(self, other):
+        comp_value = BinaryExpression("||", self, other)
+        return self._from_expr(comp_value)
+
+    def __ror__(self, other):
+        comp_value = BinaryExpression("||", other, self)
+        return self._from_expr(comp_value)
+
+    def __invert__(self):
+        comp_value = UnaryExpression("!", self)
+        return self._from_expr(comp_value)
+
+
+class Expression(OperatorMixin, SchemaBase):
     """Expression
 
     Base object for enabling build-up of Javascript expressions using
@@ -47,94 +176,6 @@ class Expression(SchemaBase):
     def __setattr__(self, attr, val):
         # We don't need the setattr magic defined in SchemaBase
         return object.__setattr__(self, attr, val)
-
-    def __add__(self, other):
-        return BinaryExpression("+", self, other)
-
-    def __radd__(self, other):
-        return BinaryExpression("+", other, self)
-
-    def __sub__(self, other):
-        return BinaryExpression("-", self, other)
-
-    def __rsub__(self, other):
-        return BinaryExpression("-", other, self)
-
-    def __mul__(self, other):
-        return BinaryExpression("*", self, other)
-
-    def __rmul__(self, other):
-        return BinaryExpression("*", other, self)
-
-    def __truediv__(self, other):
-        return BinaryExpression("/", self, other)
-
-    def __rtruediv__(self, other):
-        return BinaryExpression("/", other, self)
-
-    __div__ = __truediv__
-
-    __rdiv__ = __rtruediv__
-
-    def __mod__(self, other):
-        return BinaryExpression("%", self, other)
-
-    def __rmod__(self, other):
-        return BinaryExpression("%", other, self)
-
-    def __pow__(self, other):
-        # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression("pow", (self, other))
-
-    def __rpow__(self, other):
-        # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression("pow", (other, self))
-
-    def __neg__(self):
-        return UnaryExpression("-", self)
-
-    def __pos__(self):
-        return UnaryExpression("+", self)
-
-    # comparison operators
-
-    def __eq__(self, other):
-        return BinaryExpression("===", self, other)
-
-    def __ne__(self, other):
-        return BinaryExpression("!==", self, other)
-
-    def __gt__(self, other):
-        return BinaryExpression(">", self, other)
-
-    def __lt__(self, other):
-        return BinaryExpression("<", self, other)
-
-    def __ge__(self, other):
-        return BinaryExpression(">=", self, other)
-
-    def __le__(self, other):
-        return BinaryExpression("<=", self, other)
-
-    def __abs__(self):
-        return FunctionExpression("abs", (self,))
-
-    # logical operators
-
-    def __and__(self, other):
-        return BinaryExpression("&&", self, other)
-
-    def __rand__(self, other):
-        return BinaryExpression("&&", other, self)
-
-    def __or__(self, other):
-        return BinaryExpression("||", self, other)
-
-    def __ror__(self, other):
-        return BinaryExpression("||", other, self)
-
-    def __invert__(self):
-        return UnaryExpression("!", self)
 
     # item access
     def __getitem__(self, val):

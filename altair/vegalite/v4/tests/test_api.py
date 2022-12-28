@@ -947,3 +947,12 @@ def test_graticule():
 def test_sphere():
     data = alt.sphere()
     assert data.to_dict() == {"sphere": True}
+
+
+def test_validate_dataset():
+    d = {"data": {"values": [{}]}, "mark": {"type": "point"}}
+
+    chart = alt.Chart.from_dict(d)
+    jsn = chart.to_json()
+
+    assert jsn

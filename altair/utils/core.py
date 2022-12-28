@@ -96,35 +96,14 @@ WINDOW_AGGREGATES = [
     "nth_value",
 ]
 
-# timeUnits from vega-lite version 4.6.0
+# timeUnits from vega-lite version 4.17.0
 TIMEUNITS = [
-    "utcyear",
-    "utcquarter",
-    "utcmonth",
-    "utcday",
-    "utcdate",
-    "utchours",
-    "utcminutes",
-    "utcseconds",
-    "utcmilliseconds",
-    "utcyearquarter",
-    "utcyearquartermonth",
-    "utcyearmonth",
-    "utcyearmonthdate",
-    "utcyearmonthdatehours",
-    "utcyearmonthdatehoursminutes",
-    "utcyearmonthdatehoursminutesseconds",
-    "utcquartermonth",
-    "utcmonthdate",
-    "utcmonthdatehours",
-    "utchoursminutes",
-    "utchoursminutesseconds",
-    "utcminutesseconds",
-    "utcsecondsmilliseconds",
     "year",
     "quarter",
     "month",
+    "week",
     "day",
+    "dayofyear",
     "date",
     "hours",
     "minutes",
@@ -137,13 +116,68 @@ TIMEUNITS = [
     "yearmonthdatehours",
     "yearmonthdatehoursminutes",
     "yearmonthdatehoursminutesseconds",
+    "yearweek",
+    "yearweekday",
+    "yearweekdayhours",
+    "yearweekdayhoursminutes",
+    "yearweekdayhoursminutesseconds",
+    "yeardayofyear",
     "quartermonth",
     "monthdate",
     "monthdatehours",
+    "monthdatehoursminutes",
+    "monthdatehoursminutesseconds",
+    "weekday",
+    "weeksdayhours",
+    "weekdayhoursminutes",
+    "weekdayhoursminutesseconds",
+    "dayhours",
+    "dayhoursminutes",
+    "dayhoursminutesseconds",
     "hoursminutes",
     "hoursminutesseconds",
     "minutesseconds",
     "secondsmilliseconds",
+    "utcyear",
+    "utcquarter",
+    "utcmonth",
+    "utcweek",
+    "utcday",
+    "utcdayofyear",
+    "utcdate",
+    "utchours",
+    "utcminutes",
+    "utcseconds",
+    "utcmilliseconds",
+    "utcyearquarter",
+    "utcyearquartermonth",
+    "utcyearmonth",
+    "utcyearmonthdate",
+    "utcyearmonthdatehours",
+    "utcyearmonthdatehoursminutes",
+    "utcyearmonthdatehoursminutesseconds",
+    "utcyearweek",
+    "utcyearweekday",
+    "utcyearweekdayhours",
+    "utcyearweekdayhoursminutes",
+    "utcyearweekdayhoursminutesseconds",
+    "utcyeardayofyear",
+    "utcquartermonth",
+    "utcmonthdate",
+    "utcmonthdatehours",
+    "utcmonthdatehoursminutes",
+    "utcmonthdatehoursminutesseconds",
+    "utcweekday",
+    "utcweeksdayhours",
+    "utcweekdayhoursminutes",
+    "utcweekdayhoursminutesseconds",
+    "utcdayhours",
+    "utcdayhoursminutes",
+    "utcdayhoursminutesseconds",
+    "utchoursminutes",
+    "utchoursminutesseconds",
+    "utcminutesseconds",
+    "utcsecondsmilliseconds",
 ]
 
 
@@ -280,7 +314,7 @@ def sanitize_dataframe(df):  # noqa: C901
         else:
             return val
 
-    for col_name, dtype in df.dtypes.iteritems():
+    for col_name, dtype in df.dtypes.items():
         if str(dtype) == "category":
             # XXXX: work around bug in to_json for categorical types
             # https://github.com/pydata/pandas/issues/10778
@@ -329,7 +363,9 @@ def sanitize_dataframe(df):  # noqa: C901
             "UInt16",
             "UInt32",
             "UInt64",
-        }:  # nullable integer datatypes (since 24.0)
+            "Float32",
+            "Float64",
+        }:  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
@@ -633,7 +669,12 @@ def infer_encoding_types(args, kwargs, channels):
     name_to_channel = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
-        key = "value" if chan.__name__.endswith("Value") else "field"
+        if chan.__name__.endswith("Datum"):
+            key = "datum"
+        elif chan.__name__.endswith("Value"):
+            key = "value"
+        else:
+            key = "field"
         chans[key] = chan
 
     # First use the mapping to convert args to kwargs based on their types.

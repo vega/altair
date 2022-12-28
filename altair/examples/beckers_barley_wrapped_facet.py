@@ -1,11 +1,11 @@
 """
-Becker's Barley Trellis Plot (wrapped facet)
+Becker's Barley Trellis Plot (Wrapped Facet)
 --------------------------------------------
 The example demonstrates the trellis charts created by Richard Becker, William Cleveland and others in the 1990s. 
 This is the Altair replicate of `the VegaLite version <https://vega.github.io/vega-lite/docs/facet.html#facet-full>`_ 
 demonstrating the usage of `columns` argument to create wrapped facet.
 """
-# category: other charts
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

@@ -4,6 +4,7 @@ import collections
 import contextlib
 import inspect
 import json
+from typing import Any
 
 import jsonschema
 import numpy as np
@@ -137,7 +138,11 @@ class UndefinedType(object):
         return "Undefined"
 
 
-Undefined = UndefinedType()
+# In the future Altair may implement a more complete set of type hints.
+# But for now, we'll add an annotation to indicate that the type checker
+# should permit any value passed to a function argument whose default
+# value is Undefined.
+Undefined: Any = UndefinedType()
 
 
 class SchemaBase(object):
@@ -150,6 +155,7 @@ class SchemaBase(object):
     _schema = None
     _rootschema = None
     _class_is_valid_at_instantiation = True
+    _validator = jsonschema.Draft7Validator
 
     def __init__(self, *args, **kwds):
         # Two valid options for initialization, which should be handled by
@@ -439,7 +445,9 @@ class SchemaBase(object):
         if schema is None:
             schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(instance, schema, resolver=resolver)
+        return jsonschema.validate(
+            instance, schema, cls=cls._validator, resolver=resolver
+        )
 
     @classmethod
     def resolve_references(cls, schema=None):
@@ -462,6 +470,10 @@ class SchemaBase(object):
 
     def __dir__(self):
         return list(self._kwds.keys())
+
+
+def _passthrough(*args, **kwds):
+    return args[0] if args else kwds
 
 
 class _FromDict(object):
@@ -518,7 +530,9 @@ class _FromDict(object):
 
             return hash(_freeze(schema))
 
-    def from_dict(self, dct, cls=None, schema=None, rootschema=None):
+    def from_dict(
+        self, dct, cls=None, schema=None, rootschema=None, default_class=_passthrough
+    ):
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
             raise ValueError("Must provide either cls or schema, but not both.")
@@ -526,9 +540,6 @@ class _FromDict(object):
             schema = schema or cls._schema
             rootschema = rootschema or cls._rootschema
         rootschema = rootschema or schema
-
-        def _passthrough(*args, **kwds):
-            return args[0] if args else kwds
 
         if isinstance(dct, SchemaBase):
             return dct
@@ -538,7 +549,10 @@ class _FromDict(object):
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[0] if matches else _passthrough
+            if matches:
+                cls = matches[0]
+            else:
+                cls = default_class
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:
@@ -554,6 +568,7 @@ class _FromDict(object):
                         dct,
                         schema=possible_schema,
                         rootschema=rootschema,
+                        default_class=cls,
                     )
 
         if isinstance(dct, dict):

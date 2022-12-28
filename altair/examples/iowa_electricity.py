@@ -1,5 +1,5 @@
 """
-Iowa's renewable energy boom
+Iowa's Renewable Energy Boom
 ----------------------------
 This example is a fully developed stacked chart using the sample dataset of Iowa's electricity sources.
 """

@@ -2,8 +2,8 @@
 
 .. _user-guide-pivot-transform:
 
-Pivot Transform
-~~~~~~~~~~~~~~~
+Pivot
+~~~~~
 The pivot transform is, in short, a way to convert long-form data to wide-form
 data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
 information). Pivot transforms are useful for creating matrix or cross-tabulation
@@ -45,24 +45,24 @@ values on multiple lines:
 
    import altair as alt
    from vega_datasets import data
-   
+
    source = data.stocks()
    base = alt.Chart(source).encode(x='date:T')
    columns = sorted(source.symbol.unique())
-   selection = alt.selection_single(
-       fields=['date'], nearest=True, on='mouseover', empty='none', clear='mouseout'
+   selection = alt.selection_point(
+       fields=['date'], nearest=True, on='mouseover', empty=False, clear='mouseout'
    )
-   
+
    lines = base.mark_line().encode(y='price:Q', color='symbol:N')
    points = lines.mark_point().transform_filter(selection)
-   
+
    rule = base.transform_pivot(
        'symbol', value='price', groupby=['date']
    ).mark_rule().encode(
        opacity=alt.condition(selection, alt.value(0.3), alt.value(0)),
        tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
-   ).add_selection(selection)
-   
+   ).add_params(selection)
+
    lines + points + rule
 
 
