@@ -30,8 +30,26 @@ table td.vl-type-def {
   overflow-x: clip;
 }
 
+/* Hide this empty container as it leads to a vertical scrollbar in 
+the primary sidebar even if there is no need for such a scrollbar as all content
+would fit onto the screen */
+#rtd-footer-container {
+  display: none;
+}
+
+/* Default for the pydata theme is 25% */
 .bd-sidebar-primary {
   max-width: 20%
+}
+
+/* By providing max-width above for .bd-sidebar-primary, we also overwrite
+the setting from the template for small screens, e.g. mobile phones. The values below
+are copied out of pydata-sphinx-theme.css so that the sidebar is again
+properly displayed on mobile devices and not restricted to 20% */
+@media (max-width: 959.98px) {
+  .bd-sidebar-primary {
+      max-width: 350px;
+  }
 }
 
 .properties-example .vega-bind-name {
