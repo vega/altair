@@ -15,14 +15,14 @@ in our separate GitHub repository: https://github.com/altair-viz/altair_notebook
 
 ### Setting Up Your Environment
 
-Fork the Altair repository on GitHub and clone the fork to you local
+Fork the Altair repository on GitHub and then clone the fork to you local
 machine. For more details on forking see the [GitHub
 Documentation](https://help.github.com/en/articles/fork-a-repo).
 ```
 $ git clone https://github.com/YOUR-USERNAME/altair.git
 ```
 
-To keep your fork up to date with changes in the this repo,
+To keep your fork up to date with changes in this repo,
 you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
 Now you can install the latest version of Altair locally using `pip`.
@@ -31,14 +31,11 @@ every time you open a new Python interpreter
 (instead of having to reinstall the package each time).
 ```
 $ cd altair/ 
-$ python -m pip install -e .
+$ python -m pip install -e '.[dev]'
 ```
 
-You can now install the development requirements using
-```
-$ python -m pip install -r requirements_dev.txt
-```
-
+'[dev]' indicates that pip should also install the development requirements
+which you can find in `requirements_dev.txt`
 
 ### Creating a Branch
 
@@ -50,14 +47,6 @@ $ git switch -c <branch-name>
 ```
 With this branch checked-out, make the desired changes to the package.
 
-Note that Altair code uses the [black](https://black.readthedocs.io/)
-code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter
-which you can apply to your modifications by running:
-```
-$ black --diff .  # View changes
-$ black .  # Apply changes
-$ flake8 .  --statistics  # View changes (fix manually)
-```
 
 ### Testing your Changes
 
@@ -68,6 +57,9 @@ which includes a number of tests to validate the correctness of your code:
 ```
 $ make test
 ```
+
+This also runs the [black](https://black.readthedocs.io/)
+code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter.
 
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
@@ -162,21 +154,20 @@ Some additional notes:
   not depend on availability of external HTTP resources.
 
 ### Building the Documentation Locally
-Assuming you have followed all the steps for a [development install](../README.md#development-install), you will need to also install the dependencies for documentation listed in  `docs/requirements.txt` and install altair locally from the branch you are updating: 
+In addition to the development dependencies mentioned further above,
+you will also need to install the dependencies for the documentation 
+listed in  `docs/requirements.txt`. Note that `geopandas` might require you to first
+install some other dependencies, see [their installation page](https://geopandas.org/en/stable/getting_started/install.html#installation)
+for details.
 
 ```
-cd altair
-pip install -r requirements.txt 
-pip install -e . # See Altair Readme for further information about installing Altair for development. 
-pip install -r doc/requirements.txt # Documentation install 
-```
-In addition, the sphinx documentation builder needs access to Selenium to support generating images of sample visualizations. You may have selenium already installed but if you do not it can also be installed via pip but is not in the requirements file because of its size and dependencies. 
-
-```
-pip install selenium
+pip install -r doc/requirements.txt
 ```
 
-One you have all the dependencies, you can build the documentation using various commands defined in the Makefile. From the `doc` folder, you can use `make help` to see all of the available commands which control the type of documentation you want to generate:
+One you have all the dependencies, you can build the documentation 
+using various commands defined in the Makefile. 
+From the `doc` folder, you can use `make help` to see all of the available commands
+which control the type of documentation you want to generate:
 
 ```
 $ make help
@@ -208,12 +199,15 @@ Please use `make <target>' where <target> is one of
   doctest    to run all doctests embedded in the documentation (if enabled)
   coverage   to run coverage check of the documentation (if enabled)
   dummy      to check syntax errors of document sources
+```
+
+Usually, you will want to run `make html` which will generate the documentation
+in a sub folder `_build/html`. You can then view the documentation by running:
 
 ```
-For most updates, run `make html` and the documentation will generate in a sub folder `_build`. You can open `_build/html/index.html` to view the documenation as local static files which should give you a good preview of how any updates will look. Even better, use the command below to serve the static files and you will be able to navigate the whole documentation website. 
-
-```
-cd doc/_build/_html
+cd _build/html
 python -m http.server
 ```
+
+and then opening `http://localhost:8000` in your browser.
 
