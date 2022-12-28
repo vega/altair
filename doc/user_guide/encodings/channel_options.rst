@@ -5,7 +5,7 @@
 Channel Options
 ---------------
 
-Each encoding channel allows for a number of additional options to be expressed.
+Some encoding channels allow for additional options to be expressed.
 These can control things like axis properties, scale properties, headers and
 titles, binning parameters, aggregation, sorting, and many more.
 
