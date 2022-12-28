@@ -152,7 +152,8 @@ html_theme_options = {
             "icon": "fab fa-stack-overflow fa-xl",
             "type": "fontawesome",
         },
-    ]
+    ],
+    "header_links_before_dropdown": 6
 }
 
 html_context = {
