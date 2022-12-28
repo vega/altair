@@ -43,3 +43,4 @@ concise grammar.
    self
    installation
    starting
+   project_philosophy

@@ -97,76 +97,13 @@ If you are using the conda package manager, the equivalent is:
 conda install -c conda-forge altair
 ```
 
-For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html)
+For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html).
 
 ## Getting Help
 If you have a question that is not addressed in the documentation, 
 you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag
 or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
 For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
-
-
-## Project philosophy
-
-Many excellent plotting libraries exist in Python, including the main ones:
-
-* [Matplotlib](https://matplotlib.org/)
-* [Bokeh](https://bokeh.pydata.org/en/latest/)
-* [Seaborn](https://seaborn.pydata.org/)
-* [Lightning](https://github.com/lightning-viz/lightning)
-* [Plotly](https://plot.ly/)
-* [Pandas built-in plotting](https://pandas.pydata.org/pandas-docs/stable/visualization.html)
-* [HoloViews](https://holoviews.org)
-* [VisPy](https://vispy.org/)
-* [pygg](https://www.github.com/sirrice/pygg)
-
-Each library does a particular set of things well.
-
-### User challenges
-
-However, such a proliferation of options creates great difficulty for users
-as they have to wade through all of these APIs to find which of them is the
-best for the task at hand. None of these libraries are optimized for
-high-level statistical visualization, so users have to assemble their own
-using a mishmash of APIs. For individuals just learning data science, this
-forces them to focus on learning APIs rather than exploring their data.
-
-Another challenge is current plotting APIs require the user to write code,
-even for incidental details of a visualization. This results in an unfortunate
-and unnecessary cognitive burden as the visualization type (histogram,
-scatterplot, etc.) can often be inferred using basic information such as the
-columns of interest and the data types of those columns.
-
-For example, if you are interested in the visualization of two numerical
-columns, a scatterplot is almost certainly a good starting point. If you add
-a categorical column to that, you probably want to encode that column using
-colors or facets. If inferring the visualization proves difficult at times, a
-simple user interface can construct a visualization without any coding.
-[Tableau](https://www.tableau.com/) and the [Interactive Data
-Lab's](https://idl.cs.washington.edu/)
-[Polestar](https://github.com/vega/polestar) and
-[Voyager](https://github.com/vega/voyager) are excellent examples of such UIs.
-
-### Design approach and solution
-
-We believe that these challenges can be addressed without the creation of yet
-another visualization library that has a programmatic API and built-in
-rendering. Vega-Altair's approach to building visualizations uses a layered design
-that leverages the full capabilities of existing visualization libraries:
-
-1. Create a constrained, simple Python API (Vega-Altair) that is purely declarative
-2. Use the API (Vega-Altair) to emit JSON output that follows the Vega-Lite spec
-3. Render that spec using existing visualization libraries
-
-This approach enables users to perform exploratory visualizations with a much
-simpler API initially, pick an appropriate renderer for their usage case, and
-then leverage the full capabilities of that renderer for more advanced plot
-customization.
-
-We realize that a declarative API will necessarily be limited compared to the
-full programmatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design
-choice we feel is needed to simplify the user experience of exploratory
-visualization.
 
 ## Development
 You can find the instructions on how to install the package for development in [the documentation](https://altair-viz.github.io/getting_started/installation.html).
@@ -198,7 +135,7 @@ If you use Vega-Altair in academic work, please consider citing https://joss.the
     journal = {Journal of Open Source Software}
 }
 ```
-Please additionally consider citing the [vega-lite](https://vega.github.io/vega-lite/) project, which Vega-Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
+Please additionally consider citing the [Vega-Lite](https://vega.github.io/vega-lite/) project, which Vega-Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
 ```bib
 @article{Satyanarayan2017,
     author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},
@@ -211,7 +148,3 @@ Please additionally consider citing the [vega-lite](https://vega.github.io/vega-
     publisher={IEEE}
 } 
 ```
-
-## Whence Vega-Altair?
-
-The Vega project was named after the brightest star in the constellation Lyra; nearby Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
