@@ -2,8 +2,8 @@
     
 .. _user-guide-data:
 
-Data
-----
+Specifying Data
+---------------
 
 The basic data model used by Altair is tabular data,
 similar to a spreadsheet or database table.
@@ -77,11 +77,13 @@ Similarly, we must also specify the data type when referencing data by URL:
 
 We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
 
+Pandas DataFrame
+~~~~~~~~~~~~~~~~
 
 .. _data-in-index:
 
 Including Index Data
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 By design Altair only accesses dataframe columns, not dataframe indices.
 At times, relevant data appears in the index. For example:
 
@@ -114,7 +116,7 @@ More information is available in the
 .. _data-long-vs-wide:
 
 Long-form vs. Wide-form Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 There are two common conventions for storing data in a dataframe, sometimes called
 *long-form* and *wide-form*. Both are sensible patterns for storing data in
 a tabular format; briefly, the difference is this:
@@ -187,8 +189,8 @@ step within the chart itself. We will detail to two approaches below.
 
 .. _data-converting-long-form:
 
-Converting Between Long-form and Wide-form: Pandas
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Converting with Pandas
+""""""""""""""""""""""
 This sort of data manipulation can be done as a preprocessing step using Pandas_,
 and is discussed in detail in the `Reshaping and Pivot Tables`_ section of the
 Pandas documentation.
@@ -216,8 +218,8 @@ to wide-form, the ``pivot`` method of dataframes is useful.
 
 For more information on the ``pivot`` method, see the `Pandas pivot documentation`_.
 
-Converting Between Long-form and Wide-form: Fold Transform
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Converting with Fold Transform
+""""""""""""""""""""""""""""""
 
 If you would like to avoid data preprocessing, you can reshape your data using Altair's
 Fold Transform (see :ref:`user-guide-fold-transform` for a full discussion).
@@ -343,8 +345,8 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
    gdf_geoms
 
 
-Since the spatial data in our example is not geographic,
- we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
+Since the spatial data in our example is not geographic, 
+we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
 geometries without applying a geographic projection. By using ``alt.Color(..., scale=None)`` we
 disable the automatic color assignment in Altair
 and instead directly use the provided Hex color codes.
@@ -358,7 +360,7 @@ and instead directly use the provided Hex color codes.
 
 .. _spatial-data-inline-geojson:
 
-Inline GeoJSON object
+Inline GeoJSON Object
 ^^^^^^^^^^^^^^^^^^^^^
 
 If your source data is a GeoJSON file and you do not want to load it
@@ -402,7 +404,7 @@ for the ordinal structured data.
 
 .. _spatial-data-remote-geojson:
 
-GeoJSON file by URL
+GeoJSON File by URL
 ^^^^^^^^^^^^^^^^^^^
 
 Altair can load GeoJSON resources directly from a web URL. Here we use
@@ -427,7 +429,7 @@ information of each geometry is stored (``properties``).
 
 .. _spatial-data-inline-topojson:
 
-Inline TopoJSON object
+Inline TopoJSON Object
 ^^^^^^^^^^^^^^^^^^^^^^
 
 TopoJSON is an extension of GeoJSON, where the geometry of the features
@@ -476,7 +478,7 @@ but this differs in each dataset.
 
 .. _spatial-data-remote-topojson:
 
-TopoJSON file by URL
+TopoJSON File by URL
 ^^^^^^^^^^^^^^^^^^^^
 
 Altair can load TopoJSON resources directly from a web URL. As
@@ -545,7 +547,7 @@ without fill color.
 
 .. _spatial-data-nested-geojson:
 
-Nested GeoJSON objects
+Nested GeoJSON Objects
 ^^^^^^^^^^^^^^^^^^^^^^
 
 GeoJSON data can also be nested within another dataset. In this case it
