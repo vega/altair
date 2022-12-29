@@ -4,38 +4,78 @@ Horizon Graph
 This example shows how to make a Horizon Graph with 2 layers. (See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs.)
 """
 # category: area charts
-import altair as alt
+import numpy as np
 import pandas as pd
+import altair as alt
 
-source = pd.DataFrame([
-    {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
-    {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
-    {"x": 5,  "y": 81}, {"x": 6,  "y": 53},
-    {"x": 7,  "y": 19}, {"x": 8,  "y": 87},
-    {"x": 9,  "y": 52}, {"x": 10, "y": 48},
-    {"x": 11, "y": 24}, {"x": 12, "y": 49},
-    {"x": 13, "y": 87}, {"x": 14, "y": 66},
-    {"x": 15, "y": 17}, {"x": 16, "y": 27},
-    {"x": 17, "y": 68}, {"x": 18, "y": 16},
-    {"x": 19, "y": 49}, {"x": 20, "y": 15}
-])
 
-area1 = alt.Chart(source).mark_area(
-    clip=True,
-    interpolate='monotone'
-).encode(
-    alt.X('x', scale=alt.Scale(zero=False, nice=False)),
-    alt.Y('y', scale=alt.Scale(domain=[0, 50]), title='y'),
-    opacity=alt.value(0.6)
-).properties(
-    width=500,
-    height=75
-)
+def horizon(
+    source: pd.DataFrame,
+    x: str = "x",
+    y: str = "y",
+    pos_color: str = "blue",
+    neg_color: str = "firebrick",
+) -> alt.Chart:
+    """Plot a horiozon timeseries graph with two layers and offset negative values.
 
-area2 = area1.encode(
-    alt.Y('ny:Q', scale=alt.Scale(domain=[0, 50]))
-).transform_calculate(
-    "ny", alt.datum.y - 50
-)
+    See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs. 
+    Your timeseries should be zero-centered before plotting.  
 
-area1 + area2
+    Args:
+        source: the data to plot, in long format (i.e. a x column, and a y column)
+        x: the column name containing the 'x' data
+        y: the column name containing the 'y' data
+        pos_color, neg_color: what color to shade the positive and negative parts of the 
+            timeseries
+    """
+    # We're just splitting into four layers here, using the same split for pos and
+    # negative.
+    ysplit = max(source[y].max(), abs(source[y].min())) / 2
+
+    # Generate the layers
+    charts = []
+    for offset in (-1, 0, 1, 2):
+        # Set arguments to mark_area depending on whether we're plotting the positive
+        # or negative part of the graph
+        if offset <= 0:
+            area_kwargs = {"color": pos_color}
+        else:
+            area_kwargs = {"color": neg_color, "y2": ysplit}
+
+        # Generate each layer seperately and append
+        chart = (
+            alt.Chart(source, height=20)
+            .mark_area(clip=True, interpolate="monotone", **area_kwargs)
+            .encode(
+                alt.X("x", scale=alt.Scale(zero=False, nice=False), axis=None),
+                alt.Y(
+                    "shifted:Q",
+                    scale=alt.Scale(domain=[0, ysplit]),
+                    axis=None,
+                    title="y",
+                ),
+                opacity=alt.value(0.36),
+            )
+            .transform_calculate("shifted", alt.datum.y + offset * ysplit)
+        )
+        charts.append(chart)
+
+    return alt.layer(*charts)
+
+
+# Make up some data to plot - sine waves with random noise and a random trend
+charts = []
+for _ in range(15):
+    xs = np.linspace(-15, 15, 300)
+    source = pd.DataFrame(
+        {
+            "x": xs,
+            "y": np.sin(xs)
+            + 0.4 * np.random.normal(0, 1) * xs
+            + np.random.uniform(-0.5, 0.5, size=len(xs)),
+        }
+    )
+    charts.append(horizon(source))
+
+# Stick charts into a vertical frame
+alt.vconcat(*charts).resolve_scale(x="shared").configure_view(strokeOpacity=0)
