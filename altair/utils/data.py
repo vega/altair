@@ -81,7 +81,11 @@ def limit_rows(data, max_rows=5000):
             "The number of rows in your dataset is greater "
             "than the maximum allowed ({}). "
             "For information on how to plot larger datasets "
-            "in Altair, see the documentation".format(max_rows)
+            "in Altair, see the documentation at "
+            "https://altair-viz.github.io/user_guide/faq.html#maxrowserror-how-can-i-plot-large-datasets "
+            "or add "
+            "'alt.data_transformers.disable_max_rows()' "
+            "to your code.".format(max_rows)
         )
     return data
 
