@@ -418,7 +418,7 @@ information of each geometry is stored (``properties``).
 .. altair-plot::
    :output: repr
 
-   url_geojson = "url_geojson = "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson""
+   url_geojson = "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson"
    data_url_geojson = alt.Data(url=url_geojson, format=alt.DataFormat(property="features"))
    data_url_geojson
 
