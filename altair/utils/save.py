@@ -26,6 +26,7 @@ def save(
     json_kwds=None,
     webdriver="chrome",
     scale_factor=1,
+    engine=None,
     **kwargs,
 ):
     """Save a chart to file in a variety of formats
@@ -61,6 +62,8 @@ def save(
         Webdriver to use for png or svg output
     scale_factor : float
         scale_factor to use to change size/resolution of png or svg output
+    engine: string {'vl-convert', 'altair_saver'}
+        the conversion engine to use for 'png', 'svg', and 'pdf' formats
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
@@ -122,6 +125,7 @@ def save(
             vegaembed_version=vegaembed_version,
             webdriver=webdriver,
             scale_factor=scale_factor,
+            engine=engine,
             **kwargs,
         )
         if format == "png":
