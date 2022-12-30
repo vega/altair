@@ -2,8 +2,8 @@
 
 .. _user-guide-timeunit-transform:
 
-TimeUnit Transform
-~~~~~~~~~~~~~~~~~~
+TimeUnit
+~~~~~~~~
 TimeUnit transforms are used to discretize dates and times within Altair.
 As with the :ref:`user-guide-aggregate-transform` and :ref:`user-guide-bin-transform`
 discussed above, they can be defined either as part of the encoding, or as a

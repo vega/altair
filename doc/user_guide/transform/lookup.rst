@@ -2,8 +2,8 @@
 
 .. _user-guide-lookup-transform:
 
-Lookup Transform
-~~~~~~~~~~~~~~~~
+Lookup
+~~~~~~
 The Lookup transform extends a primary data source by looking up values from
 another data source; it is similar to a one-sided join. A lookup can be added
 at the top level of a chart using the :meth:`Chart.transform_lookup` method.

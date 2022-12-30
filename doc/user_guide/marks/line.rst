@@ -8,7 +8,68 @@ The ``line`` mark represents the data points stored in a field with a line conne
 
 Note: For line segments that connect (x,y) positions to (x2,y2) positions, please use ``rule`` marks. For continuous lines with varying size, please use ``trail`` marks.
 
-Examples 
+Line Mark Properties
+--------------------
+.. altair-plot::
+    :hide-code:
+    :div_class: properties-example
+
+    import altair as alt
+    import pandas as pd
+
+    interpolate_select = alt.binding_select(
+        options=[
+            "basis",
+            "cardinal",
+            "catmull-rom",
+            "linear",
+            "monotone",
+            "natural",
+            "step",
+            "step-after",
+            "step-before",
+        ],
+        name="interpolate",
+    )
+    interpolate_var = alt.param(bind=interpolate_select, value="linear")
+
+    tension_slider = alt.binding_range(min=0, max=1, step=0.05, name="tension")
+    tension_var = alt.param(bind=tension_slider, value=0)
+
+    strokeWidth_slider = alt.binding_range(min=0, max=10, step=0.5, name="strokeWidth")
+    strokeWidth_var = alt.param(bind=strokeWidth_slider, value=2)
+
+    strokeCap_select = alt.binding_select(
+        options=["butt", "round", "square"],
+        name="strokeCap",
+    )
+    strokeCap_var = alt.param(bind=strokeCap_select, value="butt")
+
+    strokeDash_select = alt.binding_select(
+        options=[[1, 0], [8, 8], [8, 4], [4, 4], [4, 2], [2, 1], [1, 1]],
+        name="strokeDash",
+    )
+    strokeDash_var = alt.param(bind=strokeDash_select, value=[1, 0])
+
+    source = pd.DataFrame({"u": [1, 2, 3, 4, 5, 6], "v": [28, 55, 42, 34, 36, 38]})
+
+    alt.Chart(source).mark_line(
+        interpolate=interpolate_var,
+        tension=tension_var,
+        strokeWidth=strokeWidth_var,
+        strokeCap=strokeCap_var,
+        strokeDash=strokeDash_var,
+    ).encode(x="u", y="v").add_params(
+        interpolate_var, tension_var, strokeWidth_var, strokeCap_var, strokeDash_var
+    )
+
+A ``line`` mark definition can contain any :ref:`standard mark properties <mark-properties>`
+and the following line interpolation and point overlay properties:
+
+.. altair-object-table:: altair.MarkDef
+    :properties: orient interpolate tension point
+
+Examples
 --------
 Line Chart
 ^^^^^^^^^^
@@ -23,10 +84,9 @@ Using line with one temporal or ordinal field (typically on ``x``) and another q
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-    ).transform_filter(
-        datum.symbol == 'GOOG')
+        x="date",
+        y="price",
+    ).transform_filter(datum.symbol == "GOOG")
 
 We can add create multiple lines by grouping along different attributes, such as ``color`` or ``detail``.
 
@@ -41,9 +101,9 @@ Adding a field to a mark property channel such as ``color`` groups data points i
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        color='symbol',
+        x="date",
+        y="price",
+        color="symbol",
     )
 
 We can further apply selection to highlight a certain line on hover.
@@ -54,18 +114,19 @@ We can further apply selection to highlight a certain line on hover.
 
     source = data.stocks()
 
-    highlight = alt.selection(type='single', on='mouseover',
-                            fields=['symbol'], nearest=True)
+    highlight = alt.selection(
+        type="point", on="mouseover", fields=["symbol"], nearest=True
+    )
 
     base = alt.Chart(source).encode(
-        x='date:T',
-        y='price:Q',
-        color='symbol:N'
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
     )
 
     points = base.mark_circle().encode(
         opacity=alt.value(0)
-    ).add_selection(
+    ).add_params(
         highlight
     ).properties(
         width=600
@@ -88,9 +149,9 @@ Adding a field to ``strokeDash`` also produces a multi-series line chart.
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        strokeDash='symbol',
+        x="date",
+        y="price",
+        strokeDash="symbol",
     )
 
 We can also use line grouping to create a line chart that has multiple parts with varying styles.
@@ -100,17 +161,17 @@ We can also use line grouping to create a line chart that has multiple parts wit
     import pandas as pd
 
     source = pd.DataFrame({ 
-        'a' : ['A', 'B', 'D', 'E', 'E', 'G', 'H'],
-        'b' : [28, 55, 91, 81, 81, 19, 87],
-        'predicted' : [False, False, False, False, True, True, True]
+        "a": ["A", "B", "D", "E", "E", "G", "H"],
+        "b": [28, 55, 91, 81, 81, 19, 87],
+        "predicted": [False, False, False, False, True, True, True]
     })
 
     alt.Chart(source).mark_line().encode(
-        x = 'a:O',
-        y = 'b:Q',
-        strokeDash = 'predicted:N'
+        x="a:O",
+        y="b:Q",
+        strokeDash="predicted:N"
     )
-  
+
 Multi-series Line Chart with the Detail Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To group lines by a field without mapping the field to any visual properties, we can map the field to the ``detail`` channel to create a multi-series line chart with the same color.
@@ -122,9 +183,9 @@ To group lines by a field without mapping the field to any visual properties, we
     source = data.stocks()
 
     alt.Chart(source).mark_line().encode(
-        x='date',
-        y='price',
-        detail='symbol',
+        x="date",
+        y="price",
+        detail="symbol",
     )
 
 The same method can be used to group lines for a ranged dot plot.
@@ -136,32 +197,33 @@ The same method can be used to group lines for a ranged dot plot.
     source = data.countries()
 
     base = alt.Chart(source).encode(
-        alt.X('life_expect:Q', title= 'Life Expectancy (years)', scale=alt.Scale(zero=False)),
-        alt.Y('country:N', title = 'Country', axis = alt.Axis(offset = 5, ticks = False, minExtent = 70, domain = False)),
+        alt.X("life_expect:Q", title="Life Expectancy (years)", scale=alt.Scale(zero=False)),
+        alt.Y("country:N", title="Country", axis=alt.Axis(offset=5, ticks=False, minExtent=70, domain=False)),
     ).transform_filter(
-        alt.FieldOneOfPredicate(field = 'country', 
-                                oneOf = ["China", "India", "United States", "Indonesia", "Brazil"])
+        alt.FieldOneOfPredicate(field="country", oneOf=["China", "India", "United States", "Indonesia", "Brazil"])
     )
+    
 
     line = base.mark_line().encode(
-        detail = 'country',
-        color = alt.value("#db646f")
+        detail="country",
+        color=alt.value("#db646f")
     ).transform_filter(
-        alt.FieldOneOfPredicate(field = 'year', oneOf = [1995, 2000])
+        alt.FieldOneOfPredicate(field="year", oneOf=[1995, 2000])
     )
 
-    point = base.mark_point(filled = True).encode(
-        alt.Color(field = 'year', 
-                scale = alt.Scale(range = ["#e6959c", "#911a24"], domain = [1995, 2000])),
-        size = alt.value(100),
-        opacity = alt.value(1)
+    point = base.mark_point(filled=True).encode(
+        alt.Color(
+            field="year", scale=alt.Scale(range=["#e6959c", "#911a24"], domain=[1995, 2000])
+        ),
+        size=alt.value(100),
+        opacity=alt.value(1),
     )
 
     line + point
 
 Line Chart with Point Markers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-By setting the ``point`` property of the mark definition to ``true`` or an object defining a property of the overlaying point marks, we can overlay point markers on top of line.
+By setting the ``point`` property of the mark definition to ``True`` or an object defining a property of the overlaying point marks, we can overlay point markers on top of a line.
 
 .. altair-plot::
     import altair as alt
@@ -170,16 +232,16 @@ By setting the ``point`` property of the mark definition to ``true`` or an objec
     source = data.stocks()
 
     alt.Chart(source).mark_line(point=True).encode(
-        x='year(date)',
-        y='mean(price):Q',
-        color='symbol:N'
+        x="year(date)",
+        y="mean(price):Q",
+        color="symbol:N"
     )
 
 This is equivalent to adding another layer of filled point marks.
 
 Note that the overlay point marks have ``opacity`` = 1 by default (instead of semi-transparent like normal point marks).
 
-Here we create stroked points by setting their ``\"filled\"`` to ``false`` and their fill to ``\"white\"``.
+Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to ``"white"``.
 
 .. altair-plot::
     import altair as alt
@@ -187,10 +249,12 @@ Here we create stroked points by setting their ``\"filled\"`` to ``false`` and t
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(point= alt.OverlayMarkDef(filled = False, fill = 'white')).encode(
-        x='year(date)',
-        y='mean(price):Q',
-        color='symbol:N'
+    alt.Chart(source).mark_line(
+        point=alt.OverlayMarkDef(filled=False, fill="white")
+    ).encode(
+        x="year(date)",
+        y="mean(price):Q",
+        color="symbol:N"
     )
 
 Connected Scatter Plot (Line Chart with Custom Path)
@@ -207,9 +271,9 @@ For example, to show a pattern of data change over time between gasoline price a
     source = data.driving()
 
     alt.Chart(source).mark_line(point=True).encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False)),
-        order='year'
+        alt.X("miles", scale=alt.Scale(zero=False)),
+        alt.Y("gas", scale=alt.Scale(zero=False)),
+        order="year",
     )
 
 Line interpolation
@@ -222,11 +286,11 @@ The ``interpolate`` property of a mark definition can be used to change line int
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(interpolate='monotone').encode(
-        x='date',
-        y='price'
+    alt.Chart(source).mark_line(interpolate="monotone").encode(
+        x="date",
+        y="price",
     ).transform_filter(
-        alt.datum.symbol == 'GOOG'
+        alt.datum.symbol == "GOOG"
     )
 
 We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
@@ -237,14 +301,15 @@ We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
 
     source = data.stocks()
 
-    alt.Chart(source).mark_line(interpolate='step-after').encode(
-        x='date',
-        y='price'
+    alt.Chart(source).mark_line(interpolate="step-after").encode(
+        x="date",
+        y="price"
     ).transform_filter(
-        alt.datum.symbol == 'GOOG'
+        alt.datum.symbol == "GOOG"
     )
 
-Geo Line 
+
+Geo Line
 ^^^^^^^^
 By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels of a corresponding projection, we can draw lines through geographic points.
 
@@ -263,9 +328,9 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
         airports, key="iata", fields=["state", "latitude", "longitude"]
     )
 
-    source = pd.DataFrame({ 
-        'airport' : ['SEA', 'SFO', 'LAX', 'LAS', 'DFW', 'DEN', 'ORD', 'JFK'],
-        'order' : [1, 2, 3, 4, 5, 6, 7, 8],
+    source = pd.DataFrame({
+        "airport": ["SEA", "SFO", "LAX", "LAS", "DFW", "DEN", "ORD", "JFK"],
+        "order": [1, 2, 3, 4, 5, 6, 7, 8],
     })
 
     background = alt.Chart(states).mark_geoshape(
@@ -273,23 +338,17 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
         stroke="white"
     ).properties(
         width=750,
-        height=500
+        height=500,
     ).project("albersUsa")
 
     line = alt.Chart(source).mark_line().encode(
         latitude="latitude:Q",
         longitude="longitude:Q",
-        order = 'order'
+        order="order"
     ).transform_lookup(
-        lookup = 'airport',
-        from_ = lookup_data
+        lookup="airport",
+        from_=lookup_data
     )
-
+    
     background + line
 
-Line Config
-^^^^^^^^^^^
-
-The ``line`` property of the top-level ``config`` object sets the default properties for all line marks. If mark property encoding channels are specified for marks, these config values will be overridden.
-
-The line config can contain any line mark properties (except ``type``, ``style``, and ``clip``).

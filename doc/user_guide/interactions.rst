@@ -2,8 +2,8 @@
 
 .. _user-guide-interactions:
 
-Interactive Charts: Parameters, Conditions, Bindings
-====================================================
+Interactive Charts
+==================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*.
@@ -20,7 +20,7 @@ There are three core concepts of this grammar:
   between the selection and an input element of your chart,
   such as a drop-down, radio button or slider.
 
-Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data. 
+Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data.
 
 
 Parameters: Building Blocks of Interaction
@@ -55,7 +55,7 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
         color='Origin:N'
     )
 
-We can create a variable parameter using :func:`parameter`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
+We can create a variable parameter using :func:`param`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
 
 .. altair-plot::
     :output: none
@@ -81,7 +81,7 @@ In order to use this variable in the chart specification, we explicitly add it t
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`alt.param` and ``add_params``.
+It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`param` and ``add_params``.
 
 .. altair-plot::
 
@@ -98,7 +98,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`alt.param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
+The benefit of using :func:`param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
 
 .. altair-plot::
 
@@ -122,7 +122,7 @@ Now we can dynamically change the opacity of the points in our chart using the s
 
 The above example includes some aspects which occur frequently when creating interactive charts in Altair:
 
-1. Creating a variable parameter using :func:`parameter`.
+1. Creating a variable parameter using :func:`param`.
 2. Attaching the parameter to a chart using the :meth:`Chart.add_params` method.
 3. Binding the parameter to an input widget (such as the slider above) using the parameter's ``bind`` property.
 
@@ -312,7 +312,7 @@ empty selection contains none of the points:
 
 .. altair-plot::
 
-   interval_x = alt.selection_interval(encodings=['x'], empty='none')
+   interval_x = alt.selection_interval(encodings=['x'], empty=False)
    make_example(interval_x)
 
 A special case of an interval selection is when the interval is bound to the
@@ -366,7 +366,7 @@ by hovering over them with your mouse:
 
 .. altair-plot::
 
-    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty='none')
+    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty=False)
     make_example(point_mouseover)
 
 Composing Multiple Selections
@@ -463,7 +463,7 @@ clickable legend that will select points by both Origin and number of
 cylinders:
 
 .. altair-plot::
-   
+
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
     color = alt.condition(selection,
                           alt.Color('Origin:N', legend=None),
@@ -562,11 +562,11 @@ For instance, using our example from above a dropdown can be used to highlight c
     )
 
 
-    
 
-The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data. 
 
-The following are the input elements supported in vega-lite: 
+The above example shows all three elements at work. The ``input_dropdown`` is ``bind`` to the ``selection`` which is called from the ``condition`` encoded through the data.
+
+The following are the input elements supported in vega-lite:
 
 
 ========================= ===========================================================================  ===============================================
@@ -585,7 +585,7 @@ Bindings and input elements can also be used to filter data on the client side. 
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
-    
+
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
@@ -728,7 +728,7 @@ Some possible use cases for the above interactivity are not currently supported 
         x=alt.X('value:Q', title=''),
         y='Horsepower',
         color='Origin',
-    ).add_selection(
+    ).add_params(
         selection
     ).transform_filter(
         selection

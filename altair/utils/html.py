@@ -153,7 +153,7 @@ def spec_to_html(
     vega_version,
     vegaembed_version,
     vegalite_version=None,
-    base_url="https://cdn.jsdelivr.net/npm/",
+    base_url="https://cdn.jsdelivr.net/npm",
     output_div="vis",
     embed_options=None,
     json_kwds=None,
