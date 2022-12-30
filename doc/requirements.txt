@@ -5,5 +5,3 @@ pillow
 mistune<=0.8.4
 pydata-sphinx-theme
 geopandas
-# Required to generate png thumbnails for the example gallery
-vl-convert-python
