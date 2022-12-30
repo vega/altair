@@ -18,6 +18,11 @@ try:
 except ImportError:
     altair_saver = None
 
+try:
+    import vl_convert as vlc  # noqa: F401
+except ImportError:
+    vlc = None
+
 
 def getargs(*args, **kwargs):
     return args, kwargs
@@ -253,8 +258,9 @@ def test_selection_expression():
         selection.__magic__
 
 
-@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf"])
-def test_save(format, basic_chart):
+@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
+@pytest.mark.parametrize("engine", ["altair_saver", "vl-convert"])
+def test_save(format, engine, basic_chart):
     if format in ["pdf", "png"]:
         out = io.BytesIO()
         mode = "rb"
@@ -262,28 +268,58 @@ def test_save(format, basic_chart):
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png", "pdf"]:
-        if not altair_saver:
-            with pytest.raises(ValueError) as err:
-                basic_chart.save(out, format=format)
-            assert "github.com/altair-viz/altair_saver" in str(err.value)
-            return
-        elif format not in altair_saver.available_formats():
-            with pytest.raises(ValueError) as err:
-                basic_chart.save(out, format=format)
-            assert f"No enabled saver found that supports format='{format}'" in str(
-                err.value
-            )
-            return
+    if format in ["svg", "png", "pdf", "bogus"]:
+        if engine == "altair_saver":
+            if altair_saver is None:
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert "altair_saver" in str(err.value)
+                return
+            elif format == "bogus":
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert f"Unsupported format: '{format}'" in str(err.value)
+                return
+            elif format not in altair_saver.available_formats():
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert f"No enabled saver found that supports format='{format}'" in str(
+                    err.value
+                )
+                return
 
-    basic_chart.save(out, format=format)
+        elif engine == "vl-convert":
+            if vlc is None:
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert "vl-convert-python" in str(err.value)
+                return
+            elif format == "pdf":
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert (
+                    f"The 'vl-convert' conversion engine does not support the 'pdf' format"
+                    in str(err.value)
+                )
+                return
+            elif format not in ("png", "svg"):
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert f"Unsupported format: '{format}'" in str(err.value)
+                return
+
+    basic_chart.save(out, format=format, engine=engine)
     out.seek(0)
     content = out.read()
 
     if format == "json":
         assert "$schema" in json.loads(content)
-    if format == "html":
+    elif format == "html":
         assert content.startswith("<!DOCTYPE html>")
+    elif format == "svg":
+        assert content.startswith("<svg")
+    elif format == "png":
+        assert content.startswith(b"\x89PNG")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
     os.close(fid)
@@ -291,7 +327,7 @@ def test_save(format, basic_chart):
     # test both string filenames and pathlib.Paths
     for fp in [filename, pathlib.Path(filename)]:
         try:
-            basic_chart.save(fp)
+            basic_chart.save(fp, format=format, engine=engine)
             with open(fp, mode) as f:
                 assert f.read()[:1000] == content[:1000]
         finally:

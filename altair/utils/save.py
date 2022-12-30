@@ -135,4 +135,4 @@ def save(
         else:
             write_file_or_filename(fp, mimebundle["image/svg+xml"], mode="w")
     else:
-        raise ValueError("unrecognized format: '{}'".format(format))
+        raise ValueError("Unsupported format: '{}'".format(format))
