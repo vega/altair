@@ -4,7 +4,7 @@ install:
 	python setup.py install
 
 test :
-	black .
+	black . --check
 	flake8 . --statistics
 	python -m pytest --pyargs --doctest-modules altair
 
