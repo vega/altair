@@ -94,7 +94,7 @@ pip install altair
 
 If you are using the conda package manager, the equivalent is:
 ```bash
-conda install -c conda-forge altair
+conda install altair -c conda-forge
 ```
 
 For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html).

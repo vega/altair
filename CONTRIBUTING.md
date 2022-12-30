@@ -171,42 +171,11 @@ for most users to get up and running with working on the documentation.
 However, note that `vl-convert-python` cannot create a thumbnail for the `isotype_emoji.py` example. Therefore,
 to build the documentation for deployment, you will need to install `altair_saver` and uninstall `vl-convert-python` (if both are installed, the `vl-convert-python` is used by default).
 
-One you have all the dependencies, you can build the documentation 
+Once you have all the dependencies, you can build the documentation 
 using various commands defined in the Makefile. 
 From the `doc` folder, you can use `make help` to see all of the available commands
-which control the type of documentation you want to generate:
+which control the type of documentation you want to generate.
 
-```
-$ make help
-
-Please use `make <target>' where <target> is one of
-  html       to make standalone HTML files
-  dirhtml    to make HTML files named index.html in directories
-  singlehtml to make a single large HTML file
-  pickle     to make pickle files
-  json       to make JSON files
-  htmlhelp   to make HTML files and a HTML help project
-  qthelp     to make HTML files and a qthelp project
-  applehelp  to make an Apple Help Book
-  devhelp    to make HTML files and a Devhelp project
-  epub       to make an epub
-  epub3      to make an epub3
-  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter
-  latexpdf   to make LaTeX files and run them through pdflatex
-  latexpdfja to make LaTeX files and run them through platex/dvipdfmx
-  text       to make text files
-  man        to make manual pages
-  texinfo    to make Texinfo files
-  info       to make Texinfo files and run them through makeinfo
-  gettext    to make PO message catalogs
-  changes    to make an overview of all changed/added/deprecated items
-  xml        to make Docutils-native XML files
-  pseudoxml  to make pseudoxml-XML files for display purposes
-  linkcheck  to check all external links for integrity
-  doctest    to run all doctests embedded in the documentation (if enabled)
-  coverage   to run coverage check of the documentation (if enabled)
-  dummy      to check syntax errors of document sources
-```
 
 Usually, you will want to run `make html` which will generate the documentation
 in a sub folder `_build/html`. You can then view the documentation by running:
