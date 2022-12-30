@@ -22,31 +22,31 @@ base_monarchs = alt.Chart(data.monarchs.url).transform_calculate(
 )
 
 bars = base_wheat.mark_bar(**{"fill": "#aaa", "stroke": "#999"}).encode(
-    alt.X("year:Q").axis(format='d', tickCount=5),
-    alt.Y("wheat:Q").axis(zindex=1),
-    alt.X2("year_end")
+    x=alt.X("year:Q", axis=alt.Axis(format='d', tickCount=5)),
+    y=alt.Y("wheat:Q", axis=alt.Axis(zindex=1)),
+    x2=alt.X2("year_end")
 )
 
 area = base_wheat.mark_area(**{"color": "#a4cedb", "opacity": 0.7}).encode(
-    alt.X("year:Q"),
-    alt.Y("wages:Q")
+    x=alt.X("year:Q"),
+    y=alt.Y("wages:Q")
 )
 
 area_line_1 = area.mark_line(**{"color": "#000", "opacity": 0.7})
 area_line_2 = area.mark_line(**{"yOffset": -2, "color": "#EE8182"})
 
 top_bars = base_monarchs.mark_bar(stroke="#000").encode(
-    alt.X("start:Q"),
-    alt.X2("end"),
-    alt.Y("y:Q"),
-    alt.Y2("offset"),
-    alt.Fill("commonwealth:N").legend(None).scale(range=["black", "white"])
+    x=alt.X("start:Q"),
+    x2=alt.X2("end"),
+    y=alt.Y("y:Q"),
+    y2=alt.Y2("offset"),
+    fill=alt.Fill("commonwealth:N", legend=None, scale=alt.Scale(range=["black", "white"]))
 )
 
 top_text = base_monarchs.mark_text(**{"yOffset": 14, "fontSize": 9, "fontStyle": "italic"}).encode(
-    alt.X("x:Q"),
-    alt.Y("off2:Q"),
-    alt.Text("name:N")
+    x=alt.X("x:Q"),
+    y=alt.Y("off2:Q"),
+    text=alt.Text("name:N")
 )
 
 (bars + area + area_line_1 + area_line_2 + top_bars + top_text).properties(

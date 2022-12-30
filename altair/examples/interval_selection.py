@@ -13,13 +13,16 @@ source = data.sp500.url
 
 brush = alt.selection(type='interval', encodings=['x'])
 
-base = alt.Chart(source, width=600, height=200).mark_area().encode(
+base = alt.Chart(source).mark_area().encode(
     x = 'date:T',
     y = 'price:Q'
+).properties(
+    width=600,
+    height=200
 )
 
 upper = base.encode(
-    alt.X('date:T').scale(domain=brush)
+    alt.X('date:T', scale=alt.Scale(domain=brush))
 )
 
 lower = base.properties(

@@ -19,12 +19,14 @@ select_year = alt.selection_point(
 )
 
 alt.Chart(source).mark_bar().encode(
-    alt.X("sex:N").title('').axis(labels=False, ticks=False),
-    alt.Y("people:Q").scale(domain=(0, 12000000)).title("Population"),
-    alt.Color("sex:N")
-        .scale(domain=("Male", "Female"), range=["steelblue", "salmon"])
-        .title("Sex"),
-    alt.Column("age:O").title("Age")
+    x=alt.X("sex:N", axis=alt.Axis(labels=False, title=None, ticks=False)),
+    y=alt.Y("people:Q", scale=alt.Scale(domain=(0, 12000000)), title="Population"),
+    color=alt.Color(
+        "sex:N",
+        scale=alt.Scale(domain=("Male", "Female"), range=["steelblue", "salmon"]),
+        title="Sex",
+    ),
+    column=alt.Column("age:O", title="Age"),
 ).properties(
     width=20,
     title="U.S. Population by Age and Sex"

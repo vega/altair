@@ -23,7 +23,7 @@ alt.Chart(source).transform_fold(
     opacity=0.3,
     binSpacing=0
 ).encode(
-    alt.X('Measurement:Q').bin(maxbins=100),
-    alt.Y('count()').stack(None),
+    alt.X('Measurement:Q', bin=alt.Bin(maxbins=100)),
+    alt.Y('count()', stack=None),
     alt.Color('Experiment:N')
 )

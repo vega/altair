@@ -34,19 +34,23 @@ alt.Chart(source, height=step).transform_timeunit(
     stroke='lightgray',
     strokeWidth=0.5
 ).encode(
-    alt.X('bin_min:Q')
-        .bin(True)
-        .title('Maximum Daily Temperature (C)'),
-    alt.Y('value:Q')
-        .axis(None)
-        .scale(range=[step, -step * overlap]),
-    alt.Fill('mean_temp:Q')
-        .legend(None)
-        .scale(domain=[30, 5], scheme='redyellowblue')
+    alt.X('bin_min:Q', bin='binned', title='Maximum Daily Temperature (C)'),
+    alt.Y(
+        'value:Q',
+        scale=alt.Scale(range=[step, -step * overlap]),
+        axis=None
+    ),
+    alt.Fill(
+        'mean_temp:Q',
+        legend=None,
+        scale=alt.Scale(domain=[30, 5], scheme='redyellowblue')
+    )
 ).facet(
-    alt.Row('Month:T')
-        .title(None)
-        .header(labelAngle=0, labelAlign='right', format='%B')
+    row=alt.Row(
+        'Month:T',
+        title=None,
+        header=alt.Header(labelAngle=0, labelAlign='right', format='%B')
+    )
 ).properties(
     title='Seattle Weather',
     bounds='flush'

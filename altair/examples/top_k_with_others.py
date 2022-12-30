@@ -12,10 +12,12 @@ from vega_datasets import data
 source = data.movies.url
 
 alt.Chart(source).mark_bar().encode(
-    alt.X("aggregate_gross:Q").aggregate("mean").title(None),
-    alt.Y("ranked_director:N")
-        .sort(op="mean", field="aggregate_gross", order="descending")
-        .title(None)
+    x=alt.X("aggregate_gross:Q", aggregate="mean", title=None),
+    y=alt.Y(
+        "ranked_director:N",
+        sort=alt.Sort(op="mean", field="aggregate_gross", order="descending"),
+        title=None,
+    ),
 ).transform_aggregate(
     aggregate_gross='mean(Worldwide_Gross)',
     groupby=["Director"],

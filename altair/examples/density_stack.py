@@ -30,6 +30,6 @@ alt.Chart(source).transform_fold(
     steps=200
 ).mark_area().encode(
     alt.X('value:Q'), 
-    alt.Y('density:Q').stack('zero'),
+    alt.Y('density:Q', stack='zero'),
     alt.Color('Measurement_type:N')
 ).properties(width=400, height=100)

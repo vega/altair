@@ -9,7 +9,7 @@ from vega_datasets import data
 
 source = data.wheat()
 
-alt.Chart(source, width=600).mark_line().transform_window(
+alt.Chart(source).mark_line().transform_window(
     # Sort the data chronologically
     sort=[{'field': 'year'}],
     # Include all previous records before the current record and none after
@@ -21,4 +21,4 @@ alt.Chart(source, width=600).mark_line().transform_window(
     x='year:O',
     # Plot the calculated field created by the transformation
     y='cumulative_wheat:Q'
-)
+).properties(width=600)

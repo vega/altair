@@ -20,8 +20,7 @@ source = pd.DataFrame({"x": x, "y": y})
 degree_list = [1, 3, 5]
 
 base = alt.Chart(source).mark_circle(color="black").encode(
-    alt.X("x"),
-    alt.Y("y")
+        alt.X("x"), alt.Y("y")
 )
 
 polynomial_fit = [

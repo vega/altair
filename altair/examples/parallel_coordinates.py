@@ -15,8 +15,8 @@ from vega_datasets import data
 
 source = data.iris()
 
-alt.Chart(source, width=500).transform_window(
-    index='count()'
+alt.Chart(source).transform_window(
+    index='count()'  
 ).transform_fold(
     ['petalLength', 'petalWidth', 'sepalLength', 'sepalWidth']
 ).mark_line().encode(
@@ -25,4 +25,4 @@ alt.Chart(source, width=500).transform_window(
     color='species:N',
     detail='index:N',
     opacity=alt.value(0.5)
-)
+).properties(width=500)

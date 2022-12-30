@@ -24,15 +24,13 @@ yField = 'date'
 hexagon = "M0,-2.3094010768L2,-1.1547005384 2,1.1547005384 0,2.3094010768 -2,1.1547005384 -2,-1.1547005384Z"
 
 alt.Chart(source).mark_point(size=size**2, shape=hexagon).encode(
-    alt.X('xFeaturePos:Q')
-        .title('Month')
-        .axis(grid=False, tickOpacity=0, domainOpacity=0),
-    alt.Y('day(' + yField + '):O')
-        .title('Weekday')
-        .axis(labelPadding=20, tickOpacity=0, domainOpacity=0),
+    x=alt.X('xFeaturePos:Q', axis=alt.Axis(title='Month',
+                                           grid=False, tickOpacity=0, domainOpacity=0)),
+    y=alt.Y('day(' + yField + '):O', axis=alt.Axis(title='Weekday',
+                                                   labelPadding=20, tickOpacity=0, domainOpacity=0)),
     stroke=alt.value('black'),
     strokeWidth=alt.value(0.2),
-    fill=alt.Color('mean(temp_max):Q').scale(scheme='darkblue'),
+    fill=alt.Color('mean(temp_max):Q', scale=alt.Scale(scheme='darkblue')),
     tooltip=['month(' + xField + '):O', 'day(' + yField + '):O', 'mean(temp_max):Q']
 ).transform_calculate(
     # This field is required for the hexagonal X-Offset

@@ -358,6 +358,10 @@ y_axis = alt.Axis(
 alt.Chart(source).mark_bar().encode(
     x='percentage_start:Q',
     x2='percentage_end:Q',
-    y=alt.Y('question:N').axis(y_axis),
-    color=alt.Color('type:N').title('Response').scale(color_scale),
+    y=alt.Y('question:N', axis=y_axis),
+    color=alt.Color(
+        'type:N',
+        legend=alt.Legend( title='Response'),
+        scale=color_scale,
+    )
 )

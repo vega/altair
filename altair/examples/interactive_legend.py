@@ -14,9 +14,9 @@ source = data.unemployment_across_industries.url
 selection = alt.selection_point(fields=['series'], bind='legend')
 
 alt.Chart(source).mark_area().encode(
-    alt.X('yearmonth(date):T').axis(domain=False, format='%Y', tickSize=0),
-    alt.Y('sum(count):Q').stack('center').axis(None),
-    alt.Color('series:N').scale(scheme='category20b'),
+    alt.X('yearmonth(date):T', axis=alt.Axis(domain=False, format='%Y', tickSize=0)),
+    alt.Y('sum(count):Q', stack='center', axis=None),
+    alt.Color('series:N', scale=alt.Scale(scheme='category20b')),
     opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
 ).add_params(
     selection

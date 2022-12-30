@@ -17,5 +17,5 @@ alt.Chart(source).transform_filter(
     x='date:T',
     y='price:Q',
     color='symbol:N',
-    row=alt.Row('symbol:N').sort(['MSFT', 'AAPL', 'IBM', 'AMZN'])
+    row=alt.Row('symbol:N', sort=['MSFT', 'AAPL', 'IBM', 'AMZN'])
 ).properties(height=50, width=400)

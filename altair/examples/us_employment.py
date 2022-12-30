@@ -26,8 +26,8 @@ bars = alt.Chart(
     source,
     title="The U.S. employment crash during the Great Recession"
 ).mark_bar().encode(
-    alt.X("month:T").title(""),
-    alt.Y("nonfarm_change:Q").title("Change in non-farm employment (in thousands)"),
+    x=alt.X("month:T", title=""),
+    y=alt.Y("nonfarm_change:Q", title="Change in non-farm employment (in thousands)"),
     color=alt.condition(
         alt.datum.nonfarm_change > 0,
         alt.value("steelblue"),

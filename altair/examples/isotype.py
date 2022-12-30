@@ -67,15 +67,12 @@ color_scale = alt.Scale(
 )
 
 alt.Chart(source).mark_point(filled=True, opacity=1, size=100).encode(
-    alt.X('x:O').axis(None),
-    alt.Y('animal:O').axis(None),
-    alt.Row('country:N').header(title=''),
-    alt.Shape('animal:N').legend(None).scale(shape_scale),
-    alt.Color('animal:N').legend(None).scale(color_scale),
+    alt.X('x:O', axis=None),
+    alt.Y('animal:O', axis=None),
+    alt.Row('country:N', header=alt.Header(title='')),
+    alt.Shape('animal:N', legend=None, scale=shape_scale),
+    alt.Color('animal:N', legend=None, scale=color_scale),
 ).transform_window(
     x='rank()',
     groupby=['country', 'animal']
-).properties(
-    width=550,
-    height=140
-)
+).properties(width=550, height=140)

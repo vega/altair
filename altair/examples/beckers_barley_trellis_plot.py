@@ -10,19 +10,24 @@ from vega_datasets import data
 source = data.barley()
 
 alt.Chart(source, title="The Morris Mistake").mark_point().encode(
-    alt.X('yield:Q')
-        .title("Barley Yield (bushels/acre)")
-        .scale(zero=False)
-        .axis(grid=False),
-    alt.Y('variety:N')
-        .title("")
-        .sort('-x')
-        .axis(grid=True),
-    alt.Color('year:N')
-        .legend(title="Year"),
-    alt.Row('site:N')
-        .title("")
-        .sort(alt.EncodingSortField(field='yield', op='sum', order='descending'))
+    alt.X(
+        'yield:Q',
+        title="Barley Yield (bushels/acre)",
+        scale=alt.Scale(zero=False),
+        axis=alt.Axis(grid=False)
+    ),
+    alt.Y(
+        'variety:N',
+        title="",
+        sort='-x',
+        axis=alt.Axis(grid=True)
+    ),
+    color=alt.Color('year:N', legend=alt.Legend(title="Year")),
+    row=alt.Row(
+        'site:N',
+        title="",
+        sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
+    )
 ).properties(
     height=alt.Step(20)
 ).configure_view(stroke="transparent")

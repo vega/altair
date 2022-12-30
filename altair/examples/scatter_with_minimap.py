@@ -34,8 +34,13 @@ detail = (
     alt.Chart(source)
     .mark_point()
     .encode(
-        alt.X("date:T").scale(domain={"param": zoom.name, "encoding": "x"}),
-        alt.Y("temp_max:Q").scale(domain={"param": zoom.name, "encoding": "y"}),
+        x=alt.X(
+            "date:T", scale=alt.Scale(domain={"param": zoom.name, "encoding": "x"})
+        ),
+        y=alt.Y(
+            "temp_max:Q",
+            scale=alt.Scale(domain={"param": zoom.name, "encoding": "y"}),
+        ),
         color="weather",
     )
     .properties(width=600, height=400, title="Seattle weather -- detail view")

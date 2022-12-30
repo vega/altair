@@ -10,10 +10,18 @@ from vega_datasets import data
 source = data.iowa_electricity()
 
 alt.Chart(source, title="Iowa's renewable energy boom").mark_area().encode(
-    alt.X("year:T").title("Year"),
-    alt.Y("net_generation:Q")
-        .title("Share of net generation")
-        .stack("normalize")
-        .axis(format=".0%"),
-    alt.Color("source:N").title("Electricity source")
+    x=alt.X(
+        "year:T",
+        title="Year"
+    ),
+    y=alt.Y(
+        "net_generation:Q",
+        stack="normalize",
+        title="Share of net generation",
+        axis=alt.Axis(format=".0%"),
+    ),
+    color=alt.Color(
+        "source:N",
+        legend=alt.Legend(title="Electricity source"),
+    )
 )

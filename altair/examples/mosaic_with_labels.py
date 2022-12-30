@@ -52,27 +52,29 @@ base = (
 
 
 rect = base.mark_rect().encode(
-    x=alt.X("nx:Q").axis(None),
+    x=alt.X("nx:Q", axis=None),
     x2="nx2",
     y="ny:Q",
     y2="ny2",
-    color=alt.Color("Origin:N").legend(None),
-    opacity=alt.Opacity("Cylinders:Q").legend(None),
+    color=alt.Color("Origin:N", legend=None),
+    opacity=alt.Opacity("Cylinders:Q", legend=None),
     tooltip=["Origin:N", "Cylinders:Q"],
 )
 
 
 text = base.mark_text(baseline="middle").encode(
-    alt.X("xc:Q").axis(None),
-    alt.Y("yc:Q").title("Cylinders"),
-    text="Cylinders:N"
+    x=alt.X("xc:Q", axis=None), y=alt.Y("yc:Q", title="Cylinders"), text="Cylinders:N"
 )
+
 
 mosaic = rect + text
 
 origin_labels = base.mark_text(baseline="middle", align="center").encode(
-    alt.X("min(xc):Q").title("Origin").axis(orient="top"),
-    alt.Color("Origin").legend(None),
+    x=alt.X(
+        "min(xc):Q",
+        axis=alt.Axis(title="Origin", orient="top"),
+    ),
+    color=alt.Color("Origin", legend=None),
     text="Origin",
 )
 

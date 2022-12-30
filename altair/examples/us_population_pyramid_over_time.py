@@ -32,26 +32,24 @@ color_scale = alt.Scale(domain=['Male', 'Female'],
 left = base.transform_filter(
     alt.datum.gender == 'Female'
 ).encode(
-    alt.Y('age:O').axis(None),
-    alt.X('sum(people):Q')
-        .title('population')
-        .sort('descending'),
-    alt.Color('gender:N')
-        .scale(color_scale)
-        .legend(None)
+    y=alt.Y('age:O', axis=None),
+    x=alt.X('sum(people):Q',
+            title='population',
+            sort=alt.SortOrder('descending')),
+    color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Female')
 
 middle = base.encode(
-    alt.Y('age:O').axis(None),
-    alt.Text('age:Q'),
+    y=alt.Y('age:O', axis=None),
+    text=alt.Text('age:Q'),
 ).mark_text().properties(width=20)
 
 right = base.transform_filter(
     alt.datum.gender == 'Male'
 ).encode(
-    alt.Y('age:O').axis(None),
-    alt.X('sum(people):Q').title('population'),
-    alt.Color('gender:N').scale(color_scale).legend(None)
+    y=alt.Y('age:O', axis=None),
+    x=alt.X('sum(people):Q', title='population'),
+    color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Male')
 
 alt.concat(left, middle, right, spacing=5)

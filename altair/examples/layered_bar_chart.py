@@ -11,6 +11,6 @@ source = data.iowa_electricity()
 
 alt.Chart(source).mark_bar(opacity=0.7).encode(
     x='year:O',
-    y=alt.Y('net_generation:Q').stack(None),
+    y=alt.Y('net_generation:Q', stack=None),
     color="source",
 )

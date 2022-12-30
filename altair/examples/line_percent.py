@@ -11,8 +11,8 @@ source = data.jobs.url
 
 alt.Chart(source).mark_line().encode(
     alt.X('year:O'),
-    alt.Y('perc:Q').axis(format='%'),
-    alt.Color('sex:N')
+    alt.Y('perc:Q', axis=alt.Axis(format='%')),
+    color='sex:N'
 ).transform_filter(
     alt.datum.job == 'Welder'
 )

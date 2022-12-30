@@ -15,9 +15,9 @@ source = data.movies.url
 alt.Chart(
     source,
 ).mark_bar().encode(
-    alt.X('Title:N').sort('-y'),
-    alt.Y('IMDB_Rating:Q'),
-    alt.Color('IMDB_Rating:Q')
+    x=alt.X('Title:N', sort='-y'),
+    y=alt.Y('IMDB_Rating:Q'),
+    color=alt.Color('IMDB_Rating:Q')
     
 ).transform_window(
     rank='rank(IMDB_Rating)',
