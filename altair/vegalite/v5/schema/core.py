@@ -613,8 +613,7 @@ class Axis(VegaLiteSchema):
         binned; otherwise, ``false``.
     gridCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
 
-    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     gridDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
 
@@ -628,13 +627,11 @@ class Axis(VegaLiteSchema):
 
     labelAngle : anyOf(float, :class:`ExprRef`)
 
-    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelBaseline`)
+    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`, :class:`ConditionalAxisLabelBaseline`)
 
     labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
 
-    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -659,11 +656,9 @@ class Axis(VegaLiteSchema):
 
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
 
-    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelFontStyle`)
+    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`)
 
-    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelFontWeight`)
+    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`)
 
     labelLimit : anyOf(float, :class:`ExprRef`)
 
@@ -727,8 +722,7 @@ class Axis(VegaLiteSchema):
 
     tickCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
 
-    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     tickCount : anyOf(float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
@@ -827,8 +821,7 @@ class Axis(VegaLiteSchema):
 
     translate : anyOf(float, :class:`ExprRef`)
 
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`),
-    :class:`ExprRef`)
+    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -971,8 +964,7 @@ class AxisConfig(VegaLiteSchema):
         binned; otherwise, ``false``.
     gridCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
 
-    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     gridDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
 
@@ -986,13 +978,11 @@ class AxisConfig(VegaLiteSchema):
 
     labelAngle : anyOf(float, :class:`ExprRef`)
 
-    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelBaseline`)
+    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`, :class:`ConditionalAxisLabelBaseline`)
 
     labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
 
-    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -1017,11 +1007,9 @@ class AxisConfig(VegaLiteSchema):
 
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
 
-    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelFontStyle`)
+    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`)
 
-    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`,
-    :class:`ConditionalAxisLabelFontWeight`)
+    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`)
 
     labelLimit : anyOf(float, :class:`ExprRef`)
 
@@ -1085,8 +1073,7 @@ class AxisConfig(VegaLiteSchema):
 
     tickCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
 
-    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`,
-    :class:`ConditionalAxisColor`)
+    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
 
     tickCount : anyOf(float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
@@ -1185,8 +1172,7 @@ class AxisConfig(VegaLiteSchema):
 
     translate : anyOf(float, :class:`ExprRef`)
 
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`),
-    :class:`ExprRef`)
+    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -3994,8 +3980,7 @@ class Encoding(VegaLiteSchema):
         encoding if conflicting encodings are specified. 2) See the scale documentation for
         more information about customizing `color scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
-    description : anyOf(:class:`StringFieldDefWithCondition`,
-    :class:`StringValueDefWithCondition`)
+    description : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`)
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
     detail : anyOf(:class:`FieldDefWithoutScale`, List(:class:`FieldDefWithoutScale`))
@@ -4121,8 +4106,7 @@ class Encoding(VegaLiteSchema):
     theta2 : :class:`Position2Def`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`,
-    List(:class:`StringFieldDef`), None)
+    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, List(:class:`StringFieldDef`), None)
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -4627,8 +4611,9 @@ class FacetEncodingFieldDef(VegaLiteSchema):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4831,8 +4816,9 @@ class FacetFieldDef(VegaLiteSchema):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4995,8 +4981,7 @@ class FacetedEncoding(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
     column : :class:`RowColumnEncodingFieldDef`
         A field definition for the horizontal facet of trellis plots.
-    description : anyOf(:class:`StringFieldDefWithCondition`,
-    :class:`StringValueDefWithCondition`)
+    description : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`)
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
     detail : anyOf(:class:`FieldDefWithoutScale`, List(:class:`FieldDefWithoutScale`))
@@ -5128,8 +5113,7 @@ class FacetedEncoding(VegaLiteSchema):
     theta2 : :class:`Position2Def`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`,
-    List(:class:`StringFieldDef`), None)
+    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, List(:class:`StringFieldDef`), None)
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -5432,8 +5416,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -7019,8 +7002,7 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`),
-    :class:`ExprRef`)
+    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible legend values.
     zindex : float
         A non-negative integer indicating the z-index of the legend. If zindex is 0, legend
@@ -8644,16 +8626,14 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -8799,8 +8779,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -8870,8 +8849,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -9170,16 +9150,14 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -9324,8 +9302,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -9395,8 +9372,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -9551,16 +9529,14 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -9705,8 +9681,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -9776,8 +9751,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -10093,8 +10069,7 @@ class OrderValueDef(VegaLiteSchema):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalValueDefnumber`,
-    List(:class:`ConditionalValueDefnumber`))
+    condition : anyOf(:class:`ConditionalValueDefnumber`, List(:class:`ConditionalValueDefnumber`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -10791,8 +10766,7 @@ class DatumDef(LatLongDef, Position2Def):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -10903,8 +10877,7 @@ class PositionDatumDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -10936,8 +10909,8 @@ class PositionDatumDefBase(PolarDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11079,8 +11052,7 @@ class PositionDatumDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied. The field
@@ -11120,8 +11092,8 @@ class PositionDatumDef(PositionDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11344,8 +11316,9 @@ class PositionFieldDef(PositionDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -11373,8 +11346,8 @@ class PositionFieldDef(PositionDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11591,8 +11564,9 @@ class PositionFieldDefBase(PolarDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -11620,8 +11594,8 @@ class PositionFieldDefBase(PolarDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11978,8 +11952,7 @@ class FieldRangePredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    range : anyOf(List(anyOf(float, :class:`DateTime`, None, :class:`ExprRef`)),
-    :class:`ExprRef`)
+    range : anyOf(List(anyOf(float, :class:`DateTime`, None, :class:`ExprRef`)), :class:`ExprRef`)
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
@@ -12923,8 +12896,9 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -13093,9 +13067,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : anyOf(List(anyOf(None, string, float, boolean, :class:`DateTime`,
-    :class:`ExprRef`)), string, :class:`ParameterExtent`, :class:`DomainUnionWith`,
-    :class:`ExprRef`)
+    domain : anyOf(List(anyOf(None, string, float, boolean, :class:`DateTime`, :class:`ExprRef`)), string, :class:`ParameterExtent`, :class:`DomainUnionWith`, :class:`ExprRef`)
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -13142,8 +13114,7 @@ class Scale(VegaLiteSchema):
         property is only intended for use with scales having continuous domains.
     exponent : anyOf(float, :class:`ExprRef`)
         The exponent of the ``pow`` scale.
-    interpolate : anyOf(:class:`ScaleInterpolateEnum`, :class:`ExprRef`,
-    :class:`ScaleInterpolateParams`)
+    interpolate : anyOf(:class:`ScaleInterpolateEnum`, :class:`ExprRef`, :class:`ScaleInterpolateParams`)
         The interpolation method for range values. By default, a general interpolator for
         numbers, dates, strings and colors (in HCL space) is used. For color ranges, this
         property allows interpolation in alternative color spaces. Legal values include
@@ -13156,8 +13127,7 @@ class Scale(VegaLiteSchema):
 
 
         * **Default value:** ``hcl``
-    nice : anyOf(boolean, float, :class:`TimeInterval`, :class:`TimeIntervalStep`,
-    :class:`ExprRef`)
+    nice : anyOf(boolean, float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         Extending the domain so that it starts and ends on nice round values. This method
         typically modifies the scale’s domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
@@ -13216,8 +13186,7 @@ class Scale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's ``bandPaddingOuter``
         for band scales and ``pointPadding`` for point scales. By default, Vega-Lite sets
         outer padding such that *width/height = number of unique values * step*.
-    range : anyOf(:class:`RangeEnum`, List(anyOf(float, string, List(float), :class:`ExprRef`)),
-    :class:`FieldRange`)
+    range : anyOf(:class:`RangeEnum`, List(anyOf(float, string, List(float), :class:`ExprRef`)), :class:`FieldRange`)
         The range of the scale. One of:
 
 
@@ -13540,8 +13509,7 @@ class ScaleDatumDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -13749,8 +13717,9 @@ class ScaleFieldDef(OffsetDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -14243,8 +14212,7 @@ class SelectionParameter(VegaLiteSchema):
         JavaScript identifiers: they should contain only alphanumeric characters (or "$", or
         "_") and may not start with a digit. Reserved keywords that may not be used as
         parameter names are "datum", "event", "item", and "parent".
-    select : anyOf(:class:`SelectionType`, :class:`PointSelectionConfig`,
-    :class:`IntervalSelectionConfig`)
+    select : anyOf(:class:`SelectionType`, :class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`)
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -14268,8 +14236,7 @@ class SelectionParameter(VegaLiteSchema):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : anyOf(:class:`SelectionInit`, List(:class:`SelectionInitMapping`),
-    :class:`SelectionInitIntervalMapping`)
+    value : anyOf(:class:`SelectionInit`, List(:class:`SelectionInitMapping`), :class:`SelectionInitIntervalMapping`)
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -14440,16 +14407,14 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -14594,8 +14559,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -14665,8 +14629,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -14867,8 +14832,7 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : Mapping(required=[])
 
-    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`,
-    List(:class:`StringFieldDef`), None)
+    tooltip : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, List(:class:`StringFieldDef`), None)
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -16227,8 +16191,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -16404,9 +16367,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -16571,16 +16532,14 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
-    List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -16761,8 +16720,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
-    List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -17691,8 +17649,7 @@ class TopLevelSelectionParameter(VegaLiteSchema):
         JavaScript identifiers: they should contain only alphanumeric characters (or "$", or
         "_") and may not start with a digit. Reserved keywords that may not be used as
         parameter names are "datum", "event", "item", and "parent".
-    select : anyOf(:class:`SelectionType`, :class:`PointSelectionConfig`,
-    :class:`IntervalSelectionConfig`)
+    select : anyOf(:class:`SelectionType`, :class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`)
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -17716,8 +17673,7 @@ class TopLevelSelectionParameter(VegaLiteSchema):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : anyOf(:class:`SelectionInit`, List(:class:`SelectionInitMapping`),
-    :class:`SelectionInitIntervalMapping`)
+    value : anyOf(:class:`SelectionInit`, List(:class:`SelectionInitMapping`), :class:`SelectionInitIntervalMapping`)
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -19599,9 +19555,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, M
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -19624,9 +19578,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPro
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -19649,8 +19601,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(MarkPropDefnumber, Nume
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -19672,9 +19623,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(MarkPropDefnumberA
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(List(float), :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -19697,9 +19646,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -19721,8 +19668,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalStringFieldDef`,
-    :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Text`, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient

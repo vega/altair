@@ -1,21 +1,32 @@
+.. currentmodule:: altair
+    
 .. _user-guide-data:
 
 Specifying Data
 ---------------
 
-.. currentmodule:: altair
-
+The basic data model used by Altair is tabular data,
+similar to a spreadsheet or database table.
+Individual datasets are assumed to contain a collection of records (rows),
+which may contain any number of named data fields (columns).
 Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
-and :class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
-:class:`FacetChart`) accepts a dataset as its first argument.
-The dataset can be specified in one of the following ways:
+:class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
+and :class:`FacetChart`) accepts a dataset as its first argument.
+
+While the most common way to provide Altair with a dataset is via a pandas DataFrame,
+there are many different ways of specifying a dataset:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
-- as an object that supports the `__geo_interface__` (eg. `Geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_)
+- as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
+- as a generated dataset such as numerical sequences or geographic reference elements
 
-For example, here we specify data via a DataFrame:
+When data is specified as a DataFrame, the encoding is quite simple, as Altair
+uses the data type information provided by pandas to automatically determine
+the data types required in the encoding. For example, here we specify data via a pandas DataFrame
+and Altair automatically detects that the x-column should be visualized on a quantitative scale
+and that the y-column should be visualized on a categorical scale:
 
 .. altair-plot::
 
@@ -28,10 +39,6 @@ For example, here we specify data via a DataFrame:
        x='x',
        y='y',
    )
-
-When data is specified as a DataFrame, the encoding is quite simple, as Altair
-uses the data type information provided by Pandas to automatically determine
-the data types required in the encoding.
 
 By comparison, here we create the same chart using a :class:`Data` object,
 with the data specified as a JSON-style list of records:
@@ -50,7 +57,7 @@ with the data specified as a JSON-style list of records:
        y='y:Q',  # specify quantitative data
    )
 
-notice the extra markup required in the encoding; because Altair cannot infer
+Notice the extra markup required in the encoding; because Altair cannot infer
 the types within a :class:`Data` object, we must specify them manually
 (here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
 and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
@@ -70,11 +77,13 @@ Similarly, we must also specify the data type when referencing data by URL:
 
 We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
 
+Pandas DataFrame
+~~~~~~~~~~~~~~~~
 
 .. _data-in-index:
 
 Including Index Data
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 By design Altair only accesses dataframe columns, not dataframe indices.
 At times, relevant data appears in the index. For example:
 
@@ -107,7 +116,7 @@ More information is available in the
 .. _data-long-vs-wide:
 
 Long-form vs. Wide-form Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 There are two common conventions for storing data in a dataframe, sometimes called
 *long-form* and *wide-form*. Both are sensible patterns for storing data in
 a tabular format; briefly, the difference is this:
@@ -180,8 +189,8 @@ step within the chart itself. We will detail to two approaches below.
 
 .. _data-converting-long-form:
 
-Converting Between Long-form and Wide-form: Pandas
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Converting with Pandas
+""""""""""""""""""""""
 This sort of data manipulation can be done as a preprocessing step using Pandas_,
 and is discussed in detail in the `Reshaping and Pivot Tables`_ section of the
 Pandas documentation.
@@ -209,8 +218,8 @@ to wide-form, the ``pivot`` method of dataframes is useful.
 
 For more information on the ``pivot`` method, see the `Pandas pivot documentation`_.
 
-Converting Between Long-form and Wide-form: Fold Transform
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Converting with Fold Transform
+""""""""""""""""""""""""""""""
 
 If you would like to avoid data preprocessing, you can reshape your data using Altair's
 Fold Transform (see :ref:`user-guide-fold-transform` for a full discussion).
@@ -299,120 +308,290 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 .. _Pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
 
-.. _data-geo-interface:
 
-Geospatial Data
-~~~~~~~~~~~~~~~
-Working with geographical data in Altair is possible if the object contains a
-`__geo_interface__` attribute. This attribute represents the geo_interface which is a
-Python protocol for Geospatial Data. The protocol follows a GeoJSON-like structure to
-store geo-spatial vector data.
+Spatial Data
+~~~~~~~~~~~~
 
-To make working with Geospatial Data as similar as working with long-form structured data
-the geo_interface is serialized in order to:
+In this section, we explain different methods for reading spatial data into Altair.
+To learn more about how to work with this data after you have read it in,
+please see the :ref:`user-guide-geoshape-marks` mark page.
 
-- make it be correctly interpreted by Altair
-- provide users a similar experience as when working with tabular data such as Pandas
 
-Altair can interpret a spatial bounded entity (a Feature) or a list of Features
-(FeatureCollection). In order for correct interpretation it is made sure that all records
-contain a single geometry (one of Point, LineString, Polygon, MultiPoint,
-MultiLineString, MultiPolygon, and GeometryCollection) and is stored as a Feature entity.
+.. _spatial-data-gdf:
 
-The most basic Feature is an entity that only contains a Geometry object. For example
-a Polygon:
+GeoPandas GeoDataFrame
+^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: python
+It is convenient to use GeoPandas as the source for your spatial data.
+GeoPandas can read many types of spatial data and Altair works well with GeoDataFrames.
+Here we define four polygon geometries into a
+GeoDataFrame and visualize these using the ``mark_geoshape``.
 
-    {
-        "type": "Feature",
-        "geometry": {
-            "coordinates": [[
-                [0, 0],
-                [0, 2],
-                [2, 2],
-                [2, 0],
-                [0, 0]
-            ]],
-            "type": "Polygon"
-        }
-    }
+.. altair-plot::
+   :output: repr
 
-Often, the Feature contains also additional metadata next to the Geometry object.
-The `__geo_interface__` provides two approaches to store metadata.
-- Metadata stored as a dictionary within the key `properties` (so called properties
-member). This properties member must exist in a valid Feature entity.
-- Metada may be stored directly as foreign members on the top-level of the Feature.
-There is no normative processing model for usage of this declaration.
+   from shapely import geometry
+   import geopandas as gpd
+   import altair as alt
 
-Altair serializes the metadata from the properties in combination with the declared
-geometry as Feature entities. The result of this approach is that the keys `type`
-and `geometry` in the properties member will be overwritten if used.
+   data_geoms = [
+       {"color": "#F3C14F", "geometry": geometry.Polygon([[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]])},
+       {"color": "#4098D7", "geometry": geometry.Polygon([[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]])},
+       {"color": "#66B4E2", "geometry": geometry.Polygon([[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]])},
+       {"color": "#A9CDE0", "geometry": geometry.Polygon([[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]])},
+   ]
 
-So a `__geo_interface__` that is registered as such
+   gdf_geoms = gpd.GeoDataFrame(data_geoms)
+   gdf_geoms
 
-.. code:: python
 
-    {
-        "type": "Feature",
-        "id": "f1",
-        "geometry": {...},
-        "properties": {
-            "id": 1,
-            "foo": "xx",
-            "bah": "yy",
-            "type": "zz"
-        },
-        "title": "Example Feature"
-    }
+Since the spatial data in our example is not geographic, 
+we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
+geometries without applying a geographic projection. By using ``alt.Color(..., scale=None)`` we
+disable the automatic color assignment in Altair
+and instead directly use the provided Hex color codes.
 
-Is serialized as such:
+.. altair-plot::
 
-.. code:: python
+   alt.Chart(gdf_geoms, title="Vega-Altair").mark_geoshape().encode(
+       color=alt.Color("color:N", scale=None)
+   ).project(type="identity", reflectY=True)
 
-    {
-        "type": "Feature",
-        "geometry": {...},
-        "foo": "xx",
-        "bah": "yy",
-        "id": 1
-    }
 
-The nested `"type": "zz"` in the properties member is overwritten by `"type":"Feature"`
-and only the metadata stored in the properties member is serialized. Meaning that
-foreign members and the commonly used identifier are not serialized.
+.. _spatial-data-inline-geojson:
 
-.. _data-geopandas-vs-pandas:
+Inline GeoJSON Object
+^^^^^^^^^^^^^^^^^^^^^
 
-GeoPandas vs Pandas
-~~~~~~~~~~~~~~~~~~~
-A `GeoDataFrame` is a `DataFrame` including a special column with spatial geometries.
-The column-name containing the spatial geometries defaults to `geometry`. To directly
-use a `GeoDataFrame` with Altair means in practice that only the column-name `type`
-should be avoided.
+If your source data is a GeoJSON file and you do not want to load it
+into a GeoPandas GeoDataFrame you can provide it as a dictionary to the Altair ``Data`` class. A
+GeoJSON file normally consists of a ``FeatureCollection`` with a list of
+``features`` where the information for each geometry is specified within a
+``properties`` dictionary. In the following example a GeoJSON-like data
+object is specified into a ``Data`` class using the ``property``
+value of the ``key`` that contain the nested list (here named
+``features``).
+
+.. altair-plot::
+   :output: repr
+
+   obj_geojson = {
+       "type": "FeatureCollection",
+       "features":[
+           {"type": "Feature", "properties": {"location": "left"}, "geometry": {"type": "Polygon", "coordinates": [[[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]]]}},
+           {"type": "Feature", "properties": {"location": "middle-left"}, "geometry": {"type": "Polygon", "coordinates": [[[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]]]}},
+           {"type": "Feature", "properties": {"location": "middle-right"}, "geometry": {"type": "Polygon", "coordinates": [[[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]]]}},
+           {"type": "Feature", "properties": {"location": "right"}, "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}
+       ]
+   }
+   data_obj_geojson = alt.Data(values=obj_geojson, format=alt.DataFormat(property="features"))
+   data_obj_geojson
+
+The label for each objects location is stored within the ``properties`` dictionary. To access these values
+you can specify a nested variable name (here ``properties.location``) within the color
+channel encoding. Here we change the coloring encoding to be based on this location label,
+and apply a ``magma`` color scheme instead of the default one.
+The ``:O`` suffix indicates that we want Altair to treat these values as ordinal,
+and you can read more about it in the :ref:`encoding-data-types` page.
+for the ordinal structured data.
+
+.. altair-plot::
+
+   alt.Chart(data_obj_geojson, title="Vega-Altair - ordinal scale").mark_geoshape().encode(
+       color=alt.Color("properties.location:O", scale=alt.Scale(scheme='magma'))
+   ).project(type="identity", reflectY=True)
+
+
+.. _spatial-data-remote-geojson:
+
+GeoJSON File by URL
+^^^^^^^^^^^^^^^^^^^
+
+Altair can load GeoJSON resources directly from a web URL. Here we use
+an example from geojson.xyz. As is explained in :ref:`spatial-data-inline-geojson`,
+we specify ``features`` as
+the value for the ``property`` parameter in the ``alt.DataFormat()`` object
+and prepend the attribute we want to plot (``continent``)
+with the name of the nested dictionary where the
+information of each geometry is stored (``properties``).
+
+.. altair-plot::
+   :output: repr
+
+   url_geojson = "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson"
+   data_url_geojson = alt.Data(url=url_geojson, format=alt.DataFormat(property="features"))
+   data_url_geojson
+
+.. altair-plot::
+
+    alt.Chart(data_url_geojson).mark_geoshape().encode(color='properties.continent:N')
+
+
+.. _spatial-data-inline-topojson:
+
+Inline TopoJSON Object
+^^^^^^^^^^^^^^^^^^^^^^
+
+TopoJSON is an extension of GeoJSON, where the geometry of the features
+are referred to from a top-level object named arcs. Each shared arc is
+only stored once to reduce the size of the data. A TopoJSON file object can contain
+multiple objects (eg. boundary border and province border). When
+defining a TopoJSON object for Altair we specify the ``topojson``
+data format type and the name of the object we like to visualize using the
+``feature`` parameter. Here the name of this object key is ``MY_DATA``,
+but this differs in each dataset.
+
+.. altair-plot::
+   :output: repr
+
+   obj_topojson = {
+       "arcs": [
+           [[1.0, 1.0], [0.0, 1.0], [0.0, 0.0], [1.0, 0.0]],
+           [[1.0, 0.0], [2.0, 0.0], [2.0, 1.0], [1.0, 1.0]],
+           [[1.0, 1.0], [1.0, 0.0]],
+       ],
+       "objects": {
+           "MY_DATA": {
+               "geometries": [
+                   {"arcs": [[-3, 0]], "properties": {"name": "abc"}, "type": "Polygon"},
+                   {"arcs": [[1, 2]], "properties": {"name": "def"}, "type": "Polygon"},
+               ],
+               "type": "GeometryCollection",
+           }
+       },
+       "type": "Topology",
+   }
+   data_obj_topojson = alt.Data(
+       values=obj_topojson, format=alt.DataFormat(feature="MY_DATA", type="topojson")
+   )
+   data_obj_topojson
+
+.. altair-plot::
+
+   alt.Chart(data_obj_topojson).mark_geoshape(
+   ).encode(
+       color="properties.name:N"
+   ).project(
+       type='identity', reflectY=True
+   )
+
+
+.. _spatial-data-remote-topojson:
+
+TopoJSON File by URL
+^^^^^^^^^^^^^^^^^^^^
+
+Altair can load TopoJSON resources directly from a web URL. As
+explained in :ref:`spatial-data-inline-topojson`, we have to use the 
+``feature`` parameter to specify the object name (here ``boroughs``) and
+define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
+
+.. altair-plot::
+   :output: repr
+
+   from vega_datasets import data
+
+   url_topojson = data.londonBoroughs.url
+    
+   data_url_topojson = alt.Data(
+       url=url_topojson, format=alt.DataFormat(feature="boroughs", type="topojson")
+   )
+    
+   data_url_topojson
+
+Note: There also exist a shorthand to extract the objects from a
+topojson file if this file is accessible by URL:
+``alt.topo_feature(url=url_topojson, feature="boroughs")``
+
+We color encode the Boroughs by there names as they are stored as an
+unique identifier (``id``). We use a ``symbolLimit`` of 33 in two
+columns to display all entries in the legend
+and change the color scheme to have more distinct colors.
+We also add a tooltip which shows the name of the borough
+as we hover over it with the mouse.
+
+.. altair-plot::
+
+   alt.Chart(data_url_topojson, title="London-Boroughs").mark_geoshape(
+       tooltip=True
+   ).encode(
+       color=alt.Color("id:N", scale=alt.Scale(scheme='tableau20'), legend=alt.Legend(columns=2, symbolLimit=33))
+   )
+
+Similar to the ``feature`` option, there also exists the ``mesh``
+parameter. This parameter extracts a named TopoJSON object set.
+Unlike the feature option, the corresponding geo data is returned as
+a single, unified mesh instance, not as individual GeoJSON features.
+Extracting a mesh is useful for more efficiently drawing borders
+or other geographic elements that you do not need to associate with
+specific regions such as individual countries, states or counties.
+
+Here below we draw the same Boroughs of London, but now as mesh only.
+
+Note: you have to explicitly define ``filled=False`` to draw multi(lines) 
+without fill color.
+
+.. altair-plot::
+
+   from vega_datasets import data
+
+   url_topojson = data.londonBoroughs.url
+    
+   data_url_topojson_mesh = alt.Data(
+       url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")
+   )
+
+   alt.Chart(data_url_topojson_mesh, title="Border London-Boroughs").mark_geoshape(
+       filled=False
+   )  
+
+.. _spatial-data-nested-geojson:
+
+Nested GeoJSON Objects
+^^^^^^^^^^^^^^^^^^^^^^
+
+GeoJSON data can also be nested within another dataset. In this case it
+is possible to use the ``shape`` encoding channel in combination with the
+``:G`` suffix to visualize the nested features as GeoJSON objects.
+In the following example the GeoJSON object are nested within ``geo``
+in the list of dictionaries:
+
+.. altair-plot::
+
+   nested_features = [
+       {"color": "#F3C14F", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]]]}}},
+       {"color": "#4098D7", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]]]}}},
+       {"color": "#66B4E2", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]]]}}},
+       {"color": "#A9CDE0", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}},
+   ]
+   data_nested_features = alt.Data(values=nested_features)
+    
+   alt.Chart(data_nested_features, title="Vega-Altair").mark_geoshape().encode(
+       shape="geo:G", 
+       color=alt.Color("color:N", scale=None)
+   ).project(type="identity", reflectY=True)
+
 
 .. _data-projections:
 
 Projections
-~~~~~~~~~~~
-Altair works best when the Geospatial Data adopts the World Geodetic System 1984 as
+^^^^^^^^^^^
+For geographic data it is best to use the World Geodetic System 1984 as
 its geographic coordinate reference system with units in decimal degrees.
-
 Try to avoid putting projected data into Altair, but reproject your spatial data to
 EPSG:4326 first.
-
 If your data comes in a different projection (eg. with units in meters) and you don't
 have the option to reproject the data, try using the project configuration
-`(type: 'identity', reflectY': True)`. It draws the geometries in a cartesian grid
-without applying a projection.
+``(type: 'identity', reflectY': True)``. It draws the geometries without applying a projection.
+
 
 .. _data-winding-order:
 
 Winding Order
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 LineString, Polygon and MultiPolygon geometries contain coordinates in an order: lines
 go in a certain direction, and polygon rings do too. The GeoJSON-like structure of the
-__geo_interface__ recommends the right-hand rule winding order for Polygon and
+``__geo_interface__`` recommends the right-hand rule winding order for Polygon and
 MultiPolygons. Meaning that the exterior rings should be counterclockwise and interior
 rings are clockwise. While it recommends the right-hand rule winding order, it does not
 reject geometries that do not use the right-hand rule.
@@ -420,20 +599,13 @@ reject geometries that do not use the right-hand rule.
 Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule.
 Meaning that exterior rings should be clockwise and interior rings should be
 counterclockwise.
-
 If you face a problem regarding winding order, try to force the left-hand rule on your
 data before usage in Altair using GeoPandas for example as such:
 
 .. code:: python
 
-    from shapely.ops import orient # version >=1.7a2
+    from shapely.ops import orient
     gdf.geometry = gdf.geometry.apply(orient, args=(-1,))
-
-
-.. _Protocol geo_interface: https://gist.github.com/sgillies/2217756
-.. _Packages supporting the geo_interface: https://github.com/mlaloux/Python-geo_interface-applications
-.. _The GeoJSON format: https://tools.ietf.org/html/rfc7946#section-3.1.9
-
 
 .. toctree::
    :maxdepth: 1
@@ -441,7 +613,7 @@ data before usage in Altair using GeoPandas for example as such:
    :hidden:
 
    self
-   encoding
+   encodings/index
    marks/index
    transform/index
    interactions
@@ -463,3 +635,4 @@ data before usage in Altair using GeoPandas for example as such:
    display_frontends
    custom_renderers
    data_transformers
+   large_datasets

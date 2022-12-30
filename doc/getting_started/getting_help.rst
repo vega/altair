@@ -12,14 +12,6 @@ or by viewing the full site :ref:`genindex`.
 In addition to reading this documentation page,
 it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Help
-   :hidden:
-
-   faq
-   troubleshooting
-
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues
 .. _Vega: http://vega.github.io/vega

@@ -15,7 +15,7 @@ select_year = alt.selection_point(
     name="Year",
     fields=["year"],
     bind=alt.binding_range(min=1900, max=2000, step=10, name="Year"),
-    init={"year": 2000},
+    value={"year": 2000},
 )
 
 alt.Chart(source).mark_bar().encode(
