@@ -298,7 +298,7 @@ def test_save(format, engine, basic_chart):
                 with pytest.raises(ValueError) as err:
                     basic_chart.save(out, format=format, engine=engine)
                 assert (
-                    f"The 'vl-convert' conversion engine does not support the 'pdf' format"
+                    f"The 'vl-convert' conversion engine does not support the '{format}' format"
                     in str(err.value)
                 )
                 return
