@@ -46,12 +46,12 @@ the chart. For example, below we adjust the y-axis title and increase the step b
 
 .. _method-based-attribute-setting:
 
-Alternative Syntax
-~~~~~~~~~~~~~~~~~~
+Alternative Syntax for Channel Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Altair 5.0 introduced an alternative method-based syntax for setting channel attributes.  In the example above, the ``axis`` attribute of the x channel encoding is set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``.  To define the same :class:`X` object using the method-based syntax (new as of Altair 5.0), we can use ``x=alt.X('Horsepower').axis(tickMinStep=50)``.  In other words, the use of the ``axis`` keyword argument is replaced by the use of the ``axis`` method.
+Altair 5.0 introduced an alternative method-based syntax for setting channel options.  In the example above, the ``axis`` option of the ``x`` channel encoding is set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``.  To define the same :class:`X` object using the alternative method-based syntax, we can use ``x=alt.X('Horsepower').axis(tickMinStep=50)``.  In other words, the use of the ``axis`` keyword argument is replaced by the use of the ``axis`` method.
 
-The same technique works with all encoding channels and all channel attributes.  For example, notice how we make the analogous change with respect to the ``title`` attribute of the y channel.  The following produces the same chart as the previous example.
+The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel.  The following produces the same chart as the previous example.
 
 .. altair-plot::
     import altair as alt
@@ -60,12 +60,12 @@ The same technique works with all encoding channels and all channel attributes. 
 
     alt.Chart(cars).mark_point().encode(
         x=alt.X('Horsepower').axis(tickMinStep=50),
-        y=alt.Y('Miles_per_Gallon').title("Miles per Gallon"),
+        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
 
-These attribute-setter methods can also be chained together, as in the following, in which we set the ``axis``, ``bin``, and ``scale`` attributes of the x channel by using the corresponding methods (``axis``, ``bin``, and ``scale``).  We break the ``x`` definition over multiple lines to improve readability.  (This is valid syntax because of the enclosing parentheses from ``encode``.)
+These option-setter methods can also be chained together, as in the following, in which we set the ``axis``, ``bin``, and ``scale`` options of the ``x`` channel by using the corresponding methods (``axis``, ``bin``, and ``scale``).  We can break the ``x`` definition over multiple lines to improve readability.  (This is valid syntax because of the enclosing parentheses from ``encode``.)
 
 .. altair-plot::
     import altair as alt
@@ -77,7 +77,7 @@ These attribute-setter methods can also be chained together, as in the following
                 .axis(ticks=False)
                 .bin(maxbins=10)
                 .scale(domain=(30,300), reverse=True),
-        y=alt.Y('Miles_per_Gallon').title("Miles per Gallon"),
+        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
@@ -542,7 +542,7 @@ the color scale used for the lines, you can use ``value``, e.g. ``alt.value("red
 
     lines + rule
 
-One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly introduced as of Altair 5.0) method-based attribute setter syntax described in :ref:`method-based-attribute-setting`.  If you are using ``alt.datum`` for the y channel encoding (for example) and you wish to use an attribute setter method (e.g., ``scale``), then you should probably be using :class:`YDatum` instead.  Here is a simple example.
+One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly introduced as of Altair 5.0) method-based syntax to set channel options described in :ref:`method-based-attribute-setting`. For example, if you are using ``alt.datum`` for the ``y`` channel encoding and you wish to use an option setter method (e.g., ``scale``), then you can use :class:`YDatum` instead.  Here is a simple example.
 
 .. altair-plot::
     
@@ -555,7 +555,7 @@ One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly in
 
     bar
 
-If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` is simply a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
+If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
 
 .. toctree::
    :hidden:
