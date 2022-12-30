@@ -3,14 +3,33 @@
 
 Customizing Renderers
 =====================
-Renderers in Altair are all based on the mimebundle representation accessed by
-the ``_repr_mimebundle_`` method of the top-level Altair objects. When you enable
-a renderer, functionally what that does is to define a new kind of mimebundle
-output.
+A renderer, as introduced in :ref:`renderers`, is a function that accepts a Vega-Lite or Vega
+visualization specification as a Python ``dict``, and returns a Python ``dict``
+in Jupyter's `MIME Bundle format
+<https://jupyter-client.readthedocs.io/en/stable/messaging.html#display-data>`_. 
+This dictionary will be returned by a charts ``_repr_mimebundle_`` method.
 
-The ``alt.renderers`` registry allows the user to define and enable new mimetypes
-for the chart.
-As a simple example, imagine we would like to add a ``plaintext`` renderer that
+The keys of the MIME bundle should be MIME types (such as ``image/png``) and the
+values should be the data for that MIME type (text, base64 encoded binary or
+JSON). Altair's default ``html`` renderer returns a cross-platform HTML representation using
+the ``"text/html"`` mimetype; schematically it looks like this::
+
+    def default_renderer(spec):
+        bundle = {'text/html': generate_html(spec)}
+        metadata = {}
+        return bundle, metadata
+
+
+If a renderer needs to do custom display logic that doesn't use the frontend's display
+system, it can also return an empty MIME bundle dict::
+
+    def empty_bundle_renderer(spec):
+        # Custom display logic that uses the spec
+        ...
+        # Return empty MIME bundle
+        return {}
+
+As a simple example of a custom renderer, imagine we would like to add a ``plaintext`` renderer that
 renders a chart description in plain text. We could do it this way::
 
     def plaintext_mimetype(spec):
@@ -18,7 +37,8 @@ renders a chart description in plain text. We could do it this way::
 
     alt.renderers.register('plaintext', plaintext_mimetype)
 
-Now you can enable this mimetype, and then when your chart is displayed you
+The ``alt.renderers`` registry allows the user to define and enable new renderers. 
+Now you can enable this mimetype and then when your chart is displayed you
 will see this description::
 
     alt.renderers.enable('plaintext')
@@ -39,27 +59,3 @@ If you have a frontend that recognizes ``_repr_mimebundle_`` as a means of
 obtaining a MIME type representation of a Python object, then you can define
 a function that will process the chart content in any way before returning
 any mimetype.
-
-The renderers built-in to Altair are the following:
-
-- ``"default"``: default rendering, using the
-  ``'application/vnd.vegalite.v2+json'`` MIME type which is supported
-  by JupyterLab and nteract.
-- ``"html"``: identical to ``"default"``
-- ``"mimetype"``: outputs a vega-lite specific mimetype together with a PNG
-  representation.
-- ``"jupyterlab"``: identical to ``"mimetype"``
-- ``"nteract"``: identical to ``"mimetype"``
-- ``"colab"``: renderer for Google's Colab notebook, using the
-  ``"text/html"`` MIME type.
-- ``"notebook"``: renderer for the classic notebook, provided by the ipyvega_
-  package
-- ``"json"``: renderer that outputs the raw JSON chart specification, using the
-  ``'application/json'`` MIME type.
-- ``"png"``: renderer that renders and converts the chart to PNG, outputting it
-  using the ``'image/png'`` MIME type.
-- ``"svg"``: renderer that renders and converts the chart to an SVG image,
-  outputting it using the ``'image/svg+xml'`` MIME type.
-
-
-.. _ipyvega: https://github.com/vega/ipyvega/tree/vega

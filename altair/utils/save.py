@@ -24,7 +24,7 @@ def save(
     vegalite_version=None,
     embed_options=None,
     json_kwds=None,
-    webdriver="chrome",
+    webdriver=None,
     scale_factor=1,
     engine=None,
     **kwargs,
@@ -46,21 +46,21 @@ def save(
         Either 'vega' or 'vegalite'. If not specified, then infer the mode from
         the '$schema' property of the spec, or the ``opt`` dictionary.
         If it's not specified in either of those places, then use 'vegalite'.
-    vega_version : string
+    vega_version : string (optional)
         For html output, the version of vega.js to use
-    vegalite_version : string
+    vegalite_version : string (optional)
         For html output, the version of vegalite.js to use
-    vegaembed_version : string
+    vegaembed_version : string (optional)
         For html output, the version of vegaembed.js to use
-    embed_options : dict
+    embed_options : dict (optional)
         The vegaEmbed options dictionary. Default is {}
         (See https://github.com/vega/vega-embed for details)
-    json_kwds : dict
+    json_kwds : dict (optional)
         Additional keyword arguments are passed to the output method
         associated with the specified format.
-    webdriver : string {'chrome' | 'firefox'}
+    webdriver : string {'chrome' | 'firefox'} (optional)
         Webdriver to use for png or svg output
-    scale_factor : float
+    scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats

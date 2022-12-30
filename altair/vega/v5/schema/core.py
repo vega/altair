@@ -107,8 +107,7 @@ class axis(VegaSchema):
 
     labelAngle : oneOf(float, :class:`numberValue`)
 
-    labelBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top',
-    'line-bottom'), :class:`baselineValue`)
+    labelBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top', 'line-bottom'), :class:`baselineValue`)
 
     labelBound : oneOf(boolean, float, :class:`signalRef`)
 
@@ -124,9 +123,7 @@ class axis(VegaSchema):
 
     labelFontStyle : oneOf(string, :class:`stringValue`)
 
-    labelFontWeight : oneOf(enum(None, 'normal', 'bold', 'lighter', 'bolder', '100', '200',
-    '300', '400', '500', '600', '700', '800', '900', 100, 200, 300, 400, 500, 600, 700, 800,
-    900), :class:`fontWeightValue`)
+    labelFontWeight : oneOf(enum(None, 'normal', 'bold', 'lighter', 'bolder', '100', '200', '300', '400', '500', '600', '700', '800', '900', 100, 200, 300, 400, 500, 600, 700, 800, 900), :class:`fontWeightValue`)
 
     labelLimit : oneOf(float, :class:`numberValue`)
 
@@ -188,8 +185,7 @@ class axis(VegaSchema):
 
     titleAngle : oneOf(float, :class:`numberValue`)
 
-    titleBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top',
-    'line-bottom'), :class:`baselineValue`)
+    titleBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top', 'line-bottom'), :class:`baselineValue`)
 
     titleColor : oneOf(None, string, :class:`colorValue`)
 
@@ -199,9 +195,7 @@ class axis(VegaSchema):
 
     titleFontStyle : oneOf(string, :class:`stringValue`)
 
-    titleFontWeight : oneOf(enum(None, 'normal', 'bold', 'lighter', 'bolder', '100', '200',
-    '300', '400', '500', '600', '700', '800', '900', 100, 200, 300, 400, 500, 600, 700, 800,
-    900), :class:`fontWeightValue`)
+    titleFontWeight : oneOf(enum(None, 'normal', 'bold', 'lighter', 'bolder', '100', '200', '300', '400', '500', '600', '700', '800', '900', 100, 200, 300, 400, 500, 600, 700, 800, 900), :class:`fontWeightValue`)
 
     titleLimit : oneOf(float, :class:`numberValue`)
 
@@ -1268,8 +1262,7 @@ class facet(VegaSchema):
     Attributes
     ----------
 
-    facet : oneOf(Mapping(required=[name, data, field]), Mapping(required=[name, data,
-    groupby]))
+    facet : oneOf(Mapping(required=[name, data, field]), Mapping(required=[name, data, groupby]))
 
     data : string
 
@@ -1465,11 +1458,9 @@ class projection(VegaSchema):
 
     clipAngle : :class:`numberOrSignal`
 
-    clipExtent : oneOf(List(oneOf(List(:class:`numberOrSignal`), :class:`signalRef`)),
-    :class:`signalRef`)
+    clipExtent : oneOf(List(oneOf(List(:class:`numberOrSignal`), :class:`signalRef`)), :class:`signalRef`)
 
-    extent : oneOf(List(oneOf(List(:class:`numberOrSignal`), :class:`signalRef`)),
-    :class:`signalRef`)
+    extent : oneOf(List(oneOf(List(:class:`numberOrSignal`), :class:`signalRef`)), :class:`signalRef`)
 
     fit : oneOf(Mapping(required=[]), List(Any))
 
@@ -1803,8 +1794,7 @@ class crossfilterTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     query : oneOf(List(Any), :class:`signalRef`)
 
@@ -1926,8 +1916,7 @@ class stackTransform(VegaSchema):
 
     field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     offset : anyOf(enum('zero', 'center', 'normalize'), :class:`signalRef`)
 
@@ -1962,9 +1951,7 @@ class forceTransform(VegaSchema):
 
     alphaTarget : anyOf(float, :class:`signalRef`)
 
-    forces : List(oneOf(Mapping(required=[force]), Mapping(required=[force]),
-    Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force]),
-    Mapping(required=[force])))
+    forces : List(oneOf(Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force])))
 
     iterations : anyOf(float, :class:`signalRef`)
 
@@ -2047,8 +2034,7 @@ class geojsonTransform(VegaSchema):
 
     type : enum('geojson')
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     geojson : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
@@ -2099,8 +2085,7 @@ class geopointTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     projection : string
 
@@ -2242,8 +2227,7 @@ class isocontourTransform(VegaSchema):
 
     thresholds : oneOf(List(anyOf(float, :class:`signalRef`)), :class:`signalRef`)
 
-    translate : oneOf(List(anyOf(float, :class:`signalRef`, :class:`expr`,
-    :class:`paramField`)), :class:`signalRef`)
+    translate : oneOf(List(anyOf(float, :class:`signalRef`, :class:`expr`, :class:`paramField`)), :class:`signalRef`)
 
     zero : anyOf(boolean, :class:`signalRef`)
 
@@ -2283,8 +2267,7 @@ class kde2dTransform(VegaSchema):
 
     counts : anyOf(boolean, :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     signal : string
 
@@ -2315,8 +2298,7 @@ class nestTransform(VegaSchema):
 
     generate : anyOf(boolean, :class:`signalRef`)
 
-    keys : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    keys : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     signal : string
 
@@ -2485,8 +2467,7 @@ class treemapTransform(VegaSchema):
 
     field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    method : anyOf(enum('squarify', 'resquarify', 'binary', 'dice', 'slice', 'slicedice'),
-    :class:`signalRef`)
+    method : anyOf(enum('squarify', 'resquarify', 'binary', 'dice', 'slice', 'slicedice'), :class:`signalRef`)
 
     padding : anyOf(float, :class:`signalRef`)
 
@@ -2592,8 +2573,7 @@ class loessTransform(VegaSchema):
 
     bandwidth : anyOf(float, :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     signal : string
 
@@ -2624,8 +2604,7 @@ class regressionTransform(VegaSchema):
 
     extent : oneOf(List(anyOf(float, :class:`signalRef`)), :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     method : anyOf(string, :class:`signalRef`)
 
@@ -2661,18 +2640,13 @@ class aggregateTransform(VegaSchema):
 
     drop : anyOf(boolean, :class:`signalRef`)
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)), :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
-    'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr',
-    'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'),
-    :class:`signalRef`)), :class:`signalRef`)
+    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)), :class:`signalRef`)
 
     signal : string
 
@@ -2826,9 +2800,7 @@ class densityTransform(VegaSchema):
 
     type : enum('density')
 
-    distribution : oneOf(Mapping(required=[function]), Mapping(required=[function]),
-    Mapping(required=[function]), Mapping(required=[function, field]),
-    Mapping(required=[function]))
+    distribution : oneOf(Mapping(required=[function]), Mapping(required=[function]), Mapping(required=[function]), Mapping(required=[function, field]), Mapping(required=[function]))
 
     extent : oneOf(List(anyOf(float, :class:`signalRef`)), :class:`signalRef`)
 
@@ -2866,8 +2838,7 @@ class dotbinTransform(VegaSchema):
 
     type : enum('dotbin')
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     signal : string
 
@@ -2936,8 +2907,7 @@ class flattenTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     type : enum('flatten')
 
@@ -2963,8 +2933,7 @@ class foldTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     type : enum('fold')
 
@@ -3019,8 +2988,7 @@ class imputeTransform(VegaSchema):
 
     type : enum('impute')
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     keyvals : oneOf(List(Any), :class:`signalRef`)
 
@@ -3050,18 +3018,13 @@ class joinaggregateTransform(VegaSchema):
 
     type : enum('joinaggregate')
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)), :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
-    'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr',
-    'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'),
-    :class:`signalRef`)), :class:`signalRef`)
+    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)), :class:`signalRef`)
 
     signal : string
 
@@ -3096,8 +3059,7 @@ class kdeTransform(VegaSchema):
 
     extent : oneOf(List(anyOf(float, :class:`signalRef`)), :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     maxsteps : anyOf(float, :class:`signalRef`)
 
@@ -3131,8 +3093,7 @@ class lookupTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
@@ -3142,8 +3103,7 @@ class lookupTransform(VegaSchema):
 
     signal : string
 
-    values : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    values : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     as : oneOf(List(anyOf(string, :class:`signalRef`)), :class:`signalRef`)
 
@@ -3172,16 +3132,13 @@ class pivotTransform(VegaSchema):
 
     value : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     limit : anyOf(float, :class:`signalRef`)
 
-    op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'product',
-    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
-    'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)
+    op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)
 
     signal : string
 
@@ -3204,8 +3161,7 @@ class projectTransform(VegaSchema):
 
     type : enum('project')
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     signal : string
 
@@ -3230,8 +3186,7 @@ class quantileTransform(VegaSchema):
 
     type : enum('quantile')
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     probs : oneOf(List(anyOf(float, :class:`signalRef`)), :class:`signalRef`)
 
@@ -3324,9 +3279,7 @@ class timeunitTransform(VegaSchema):
 
     timezone : anyOf(enum('local', 'utc'), :class:`signalRef`)
 
-    units : oneOf(List(anyOf(enum('year', 'quarter', 'month', 'week', 'date', 'day',
-    'dayofyear', 'hours', 'minutes', 'seconds', 'milliseconds'), :class:`signalRef`)),
-    :class:`signalRef`)
+    units : oneOf(List(anyOf(enum('year', 'quarter', 'month', 'week', 'date', 'day', 'dayofyear', 'hours', 'minutes', 'seconds', 'milliseconds'), :class:`signalRef`)), :class:`signalRef`)
 
     as : oneOf(List(anyOf(string, :class:`signalRef`)), :class:`signalRef`)
 
@@ -3351,22 +3304,15 @@ class windowTransform(VegaSchema):
 
     type : enum('window')
 
-    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
-    :class:`signalRef`)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)), :class:`signalRef`)
 
     frame : oneOf(List(anyOf(float, :class:`signalRef`, None)), :class:`signalRef`)
 
-    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
-    :class:`signalRef`)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)), :class:`signalRef`)
 
     ignorePeers : anyOf(boolean, :class:`signalRef`)
 
-    ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
-    'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'prev_value',
-    'next_value', 'values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean',
-    'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1',
-    'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)),
-    :class:`signalRef`)
+    ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist', 'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'prev_value', 'next_value', 'values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'min', 'max', 'argmin', 'argmax'), :class:`signalRef`)), :class:`signalRef`)
 
     params : oneOf(List(anyOf(float, :class:`signalRef`, None)), :class:`signalRef`)
 

@@ -1,12 +1,17 @@
 import importlib
 import re
+import sys
 import warnings
+from os.path import abspath, dirname
 
-from docutils import nodes, utils
+from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
-from recommonmark.parser import CommonMarkParser
+from myst_parser.docutils_ import Parser
 from sphinx import addnodes
+
+sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
+from tools.schemapi.utils import fix_docstring_issues  # noqa: E402
 
 
 def type_description(schema):
@@ -121,11 +126,14 @@ def build_row(item):
     row += nodes.entry("", par_type, classes=["vl-type-def"])
 
     # Description
-    md_parser = CommonMarkParser()
+    md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
     str_descr = ""
     str_descr += propschema.get("description", " ")
-    doc_descr = utils.new_document("schema_description")
+    str_descr = fix_docstring_issues(str_descr)
+    document_settings = frontend.get_default_settings()
+    document_settings.setdefault("raw_enabled", True)
+    doc_descr = utils.new_document("schema_description", document_settings)
     md_parser.parse(str_descr, doc_descr)
 
     # row += nodes.entry('', *doc_descr.children, classes="vl-decsr")
