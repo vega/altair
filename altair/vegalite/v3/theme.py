@@ -15,7 +15,7 @@ class VegaTheme(object):
         return {
             "usermeta": {"embedOptions": {"theme": self.theme}},
             "config": {
-                "view": {"width": 400, "height": 300},
+                "view": {"width": 300, "height": 300},
                 "mark": {"tooltip": None},
             },
         }
@@ -33,7 +33,7 @@ themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 themes.register(
     "default",
     lambda: {
-        "config": {"view": {"width": 400, "height": 300}, "mark": {"tooltip": None}}
+        "config": {"view": {"width": 300, "height": 300}, "mark": {"tooltip": None}}
     },
 )
 themes.register(
@@ -41,7 +41,7 @@ themes.register(
     lambda: {
         "config": {
             "background": "white",
-            "view": {"width": 400, "height": 300},
+            "view": {"width": 300, "height": 300},
             "mark": {"tooltip": None},
         }
     },

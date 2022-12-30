@@ -15,5 +15,5 @@ def test_vega_themes(chart):
             dct = chart.to_dict()
         assert dct["usermeta"] == {"embedOptions": {"theme": theme}}
         assert dct["config"] == {
-            "view": {"continuousWidth": 400, "continuousHeight": 300}
+            "view": {"continuousWidth": 300, "continuousHeight": 300}
         }

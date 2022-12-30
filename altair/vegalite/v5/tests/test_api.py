@@ -703,13 +703,13 @@ def test_themes():
 
     with alt.themes.enable("default"):
         assert chart.to_dict()["config"] == {
-            "view": {"continuousWidth": 400, "continuousHeight": 300}
+            "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
     with alt.themes.enable("opaque"):
         assert chart.to_dict()["config"] == {
             "background": "white",
-            "view": {"continuousWidth": 400, "continuousHeight": 300},
+            "view": {"continuousWidth": 300, "continuousHeight": 300},
         }
 
     with alt.themes.enable("none"):
