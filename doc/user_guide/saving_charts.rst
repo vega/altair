@@ -90,7 +90,7 @@ javascript-enabled web browser:
     <html>
     <head>
       <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
       <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     </head>
     <body>
