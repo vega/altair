@@ -41,7 +41,7 @@ The contents of the resulting file will look something like this:
       "config": {
         "view": {
           "continuousHeight": 300,
-          "continuousWidth": 400
+          "continuousWidth": 300
         }
       },
       "data": {
@@ -101,7 +101,7 @@ javascript-enabled web browser:
           "config": {
             "view": {
               "continuousHeight": 300,
-              "continuousWidth": 400
+              "continuousWidth": 300
             }
           },
           "data": {
