@@ -164,18 +164,16 @@ for details.
 pip install -r doc/requirements.txt
 ```
 
-Furthermore, you need to install either [vl-convert-python](https://github.com/vega/vl-convert/tree/main/vl-convert-python) or [altair_saver](https://github.com/altair-viz/altair_saver/)
-so that PNG thumbnails can be generated for the example gallery.
-Unlike `altair_saver`, `vl-convert-python` does not require any external dependencies and so it is recommended
-for most users to get up and running with working on the documentation.
-However, note that `vl-convert-python` cannot create a thumbnail for the `isotype_emoji.py` example. Therefore,
-to build the documentation for deployment, you will need to install `altair_saver` and uninstall `vl-convert-python` (if both are installed, the `vl-convert-python` is used by default).
+If you want to build the documentation so it can be published on the [official Altair website](https://altair-viz.github.io), you need to
+additionally install [altair_saver](https://github.com/altair-viz/altair_saver/) and uninstall [vl-convert-python](https://github.com/vega/vl-convert/tree/main/vl-convert-python).
+These packages are used to generate PNG thumbnails for the example gallery. If both are installed, `vl-convert-python` is used by default.
+The reason for this is that `vl-convert-python` cannot create a thumbnail for the `isotype_emoji.py` example,
+which is fine for normal contributions but not when creating a new version of the official documentation.
 
 Once you have all the dependencies, you can build the documentation 
 using various commands defined in the Makefile. 
 From the `doc` folder, you can use `make help` to see all of the available commands
 which control the type of documentation you want to generate.
-
 
 Usually, you will want to run `make html` which will generate the documentation
 in a sub folder `_build/html`. You can then view the documentation by running:
