@@ -270,15 +270,15 @@ def test_save(format, engine, basic_chart):
 
     if format in ["svg", "png", "pdf", "bogus"]:
         if engine == "altair_saver":
-            if altair_saver is None:
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "altair_saver" in str(err.value)
-                return
-            elif format == "bogus":
+            if format == "bogus":
                 with pytest.raises(ValueError) as err:
                     basic_chart.save(out, format=format, engine=engine)
                 assert f"Unsupported format: '{format}'" in str(err.value)
+                return
+            elif altair_saver is None:
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert "altair_saver" in str(err.value)
                 return
             elif format not in altair_saver.available_formats():
                 with pytest.raises(ValueError) as err:
