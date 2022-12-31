@@ -33,12 +33,12 @@
 7. Commit change and push to master:
 
        git add . -u
-       git commit -m "MAINT: bump version to 2.0.0"
+       git commit -m "MAINT: bump version to 5.0.0"
        git push upstream master
 
 8. Tag the release:
 
-       git tag -a v2.0.0 -m "version 2.0.0 release"
+       git tag -a v5.0.0 -m "version 5.0.0 release"
        git push upstream v2.0.0
 
 9. Build source & wheel distributions:
