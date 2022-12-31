@@ -2,7 +2,7 @@
 __version__ = "4.3.0.dev0"
 
 from .vegalite import *
-from . import examples
+#from . import examples
 
 
 def load_ipython_extension(ipython):

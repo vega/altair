@@ -1,4 +1,4 @@
-from ..execeval import eval_block
+from altair.utils.execeval import eval_block
 
 HAS_RETURN = """
 x = 4

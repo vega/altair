@@ -2,8 +2,8 @@ import operator
 
 import pytest
 
-from ... import expr
-from .. import datum
+from altair import expr
+from altair import datum
 
 
 def test_unary_operations():

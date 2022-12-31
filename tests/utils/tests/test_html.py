@@ -1,6 +1,6 @@
 import pytest
 
-from ..html import spec_to_html
+from altair.utils.html import spec_to_html
 
 
 @pytest.fixture

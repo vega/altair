@@ -5,8 +5,8 @@ import pandas as pd
 import pytest
 
 import altair as alt
-from .. import parse_shorthand, update_nested, infer_encoding_types
-from ..core import infer_dtype
+from altair.utils.core import parse_shorthand, update_nested, infer_encoding_types
+from altair.utils.core import infer_dtype
 
 FAKE_CHANNELS_MODULE = '''
 """Fake channels module for utility tests."""

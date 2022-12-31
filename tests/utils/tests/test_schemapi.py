@@ -9,7 +9,7 @@ import pytest
 
 import numpy as np
 
-from ..schemapi import (
+from altair.utils.schemapi import (
     UndefinedType,
     SchemaBase,
     Undefined,

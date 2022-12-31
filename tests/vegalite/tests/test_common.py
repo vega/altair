@@ -4,7 +4,7 @@ import pytest
 
 import pandas as pd
 
-from .. import v3, v4, v5
+from altair.vegalite import v3, v4, v5
 
 
 @pytest.fixture

@@ -4,7 +4,7 @@ import pkgutil
 import pytest
 
 from altair.utils.execeval import eval_block
-from altair import examples
+from tests import examples
 
 try:
     import altair_saver  # noqa: F401

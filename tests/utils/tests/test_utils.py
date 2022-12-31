@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import infer_vegalite_type, sanitize_dataframe
+from altair.utils import infer_vegalite_type, sanitize_dataframe
 
 
 def test_infer_vegalite_type():

@@ -22,7 +22,7 @@ from .utils import (
     create_generic_image,
 )
 from altair.utils.execeval import eval_block
-from altair.examples import iter_examples
+from tests.examples import iter_examples
 
 
 EXAMPLE_MODULE = "altair.examples"

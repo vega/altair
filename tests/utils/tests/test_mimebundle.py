@@ -1,7 +1,7 @@
 import pytest
 
 import altair as alt
-from ..mimebundle import spec_to_mimebundle
+from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
     import altair_saver  # noqa: F401

@@ -4,7 +4,14 @@ import pytest
 import pandas as pd
 from toolz import pipe
 
-from ..data import limit_rows, MaxRowsError, sample, to_values, to_json, to_csv
+from altair.utils.data import (
+    limit_rows,
+    MaxRowsError,
+    sample,
+    to_values,
+    to_json,
+    to_csv,
+)
 
 
 def _create_dataframe(N):

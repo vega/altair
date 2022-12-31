@@ -10,7 +10,6 @@ exclude = '''
   | build
   | dist
   | doc
-  | altair/examples
   | altair/vega/v\d*/schema
   | altair/vegalite/v\d*/schema
 )/

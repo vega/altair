@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import pytest
 
-from .. import data as alt
+from altair.vegalite.v3 import data as alt
 
 
 @pytest.fixture
