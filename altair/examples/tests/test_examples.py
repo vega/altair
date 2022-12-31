@@ -1,10 +1,12 @@
 import io
+from itertools import chain
 import pkgutil
 
 import pytest
 
 from altair.utils.execeval import eval_block
 from altair import examples
+from altair.examples import attribute_syntax
 
 try:
     import altair_saver  # noqa: F401
@@ -24,7 +26,16 @@ def iter_example_filenames():
         yield modname + ".py"
 
 
-@pytest.mark.parametrize("filename", iter_example_filenames())
+def iter_attribute_syntax_filenames():
+    for importer, modname, ispkg in pkgutil.iter_modules(attribute_syntax.__path__):
+        if ispkg or modname.startswith("_"):
+            continue
+        yield modname + ".py"
+
+
+@pytest.mark.parametrize(
+    "filename", chain(iter_example_filenames(), iter_attribute_syntax_filenames())
+)
 def test_examples(filename: str):
     source = pkgutil.get_data(examples.__name__, filename)
     chart = eval_block(source)
@@ -35,7 +46,9 @@ def test_examples(filename: str):
 
 
 @pytest.mark.parametrize("engine", ["vl-convert", "altair_saver"])
-@pytest.mark.parametrize("filename", iter_example_filenames())
+@pytest.mark.parametrize(
+    "filename", chain(iter_example_filenames(), iter_attribute_syntax_filenames())
+)
 def test_render_examples_to_png(engine, filename):
     if engine == "vl-convert" and vlc is None:
         pytest.skip("vl_convert not importable; cannot run mimebundle tests")
