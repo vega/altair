@@ -174,6 +174,11 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
         pytest.skip("vl_convert not importable; cannot run mimebundle tests")
     elif engine == "altair_saver" and altair_saver is None:
         pytest.skip("altair_saver not importable; cannot run mimebundle tests")
+    elif vlc is None and altair_saver is None:
+        pytest.skip(
+            "Neither altair_saver nor vl_convert are importable;"
+            + " cannot run mimebundle tests"
+        )
 
     # temporary fix for https://github.com/vega/vega-lite/issues/7776
     def delete_none(axes):

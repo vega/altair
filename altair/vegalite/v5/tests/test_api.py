@@ -290,7 +290,7 @@ def test_save(format, engine, basic_chart):
                 return
 
         elif engine == "vl-convert":
-            if vlc is None:
+            if vlc is None and format != "bogus":
                 with pytest.raises(ValueError) as err:
                     basic_chart.save(out, format=format, engine=engine)
                 assert "vl-convert-python" in str(err.value)
