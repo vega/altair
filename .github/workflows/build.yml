@@ -26,7 +26,6 @@ jobs:
         pip install .[dev]
         pip install "selenium<4.3.0"
         pip install altair_saver vl-convert-python
-        pip install git+https://github.com/altair-viz/altair_viewer.git
     - name: Test with pytest
       run: |
         pytest --doctest-modules altair
