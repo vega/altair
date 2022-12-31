@@ -265,12 +265,12 @@ def test_save(format, basic_chart):
     if format in ["svg", "png", "pdf"]:
         if not altair_saver:
             with pytest.raises(ValueError) as err:
-                basic_chart.save(out, format=format)
-            assert "github.com/altair-viz/altair_saver" in str(err.value)
+                basic_chart.save(out, format=format, engine="altair_saver")
+            assert "altair_saver" in str(err.value)
             return
         elif format not in altair_saver.available_formats():
             with pytest.raises(ValueError) as err:
-                basic_chart.save(out, format=format)
+                basic_chart.save(out, format=format, engine="altair_saver")
             assert f"No enabled saver found that supports format='{format}'" in str(
                 err.value
             )
