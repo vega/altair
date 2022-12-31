@@ -11,27 +11,26 @@ from vega_datasets import data
 source = data.stocks()
 
 # Create a common chart object
-chart = alt.Chart(source).transform_filter(
-    alt.datum.symbol != "IBM"  # A reducation of the dataset to clarify our example. Not required.
-).encode(
-    color=alt.Color("symbol", legend=None)
+chart = (
+    alt.Chart(source)
+    .transform_filter(
+        alt.datum.symbol != "IBM"
+    )  # A reduction of the dataset to clarify our example. Not required.
+    .encode(color=alt.Color("symbol", legend=None))
 )
 
 # Draw the line
-line = chart.mark_line().encode(
-    x="date:T",
-    y="price:Q"
-)
+line = chart.mark_line().encode(x="date:T", y="price:Q")
 
 # Use the `argmax` aggregate to limit the dataset to the final value
 label = chart.encode(
-    x=alt.X('max(date):T'),
-    y=alt.Y('price:Q', aggregate=alt.ArgmaxDef(argmax='date')),
-    text='symbol'
+    x=alt.X("max(date):T"),
+    y=alt.Y("price:Q", aggregate=alt.ArgmaxDef(argmax="date")),
+    text="symbol",
 )
 
 # Create a text label
-text = label.mark_text(align='left', dx=4)
+text = label.mark_text(align="left", dx=4)
 
 # Create a circle annotation
 circle = label.mark_circle()
