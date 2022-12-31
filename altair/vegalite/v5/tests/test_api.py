@@ -258,6 +258,7 @@ def test_selection_expression():
         selection.__magic__
 
 
+@pytest.mark.save_engine
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
 @pytest.mark.parametrize("engine", ["altair_saver", "vl-convert"])
 def test_save(format, engine, basic_chart):
