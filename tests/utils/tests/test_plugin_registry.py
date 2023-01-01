@@ -26,7 +26,7 @@ def test_plugin_registry():
     assert plugins.get() is None
     assert repr(plugins) == "TypedCallableRegistry(active='', registered=[])"
 
-    plugins.register("new_plugin", lambda x: x ** 2)
+    plugins.register("new_plugin", lambda x: x**2)
     assert plugins.names() == ["new_plugin"]
     assert plugins.active == ""
     assert plugins.get() is None
@@ -46,7 +46,7 @@ def test_plugin_registry():
 def test_plugin_registry_extra_options():
     plugins = GeneralCallableRegistry()
 
-    plugins.register("metadata_plugin", lambda x, p=2: x ** p)
+    plugins.register("metadata_plugin", lambda x, p=2: x**p)
     plugins.enable("metadata_plugin")
     assert plugins.get()(3) == 9
 
@@ -86,7 +86,7 @@ def test_plugin_registry_global_settings():
 def test_plugin_registry_context():
     plugins = GeneralCallableRegistry()
 
-    plugins.register("default", lambda x, p=2: x ** p)
+    plugins.register("default", lambda x, p=2: x**p)
 
     # At first there is no plugin enabled
     assert plugins.active == ""
