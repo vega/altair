@@ -30,3 +30,15 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --doctest-modules altair
+    - name: Selected tests without vl-convert-python
+      run: |
+        pip uninstall vl-convert-python --yes
+        pytest -m save_engine --doctest-modules altair
+    - name: Selected tests without vl-convert-python and altair_saver
+      run: |
+        pip uninstall altair_saver --yes
+        pytest -m save_engine --doctest-modules altair
+    - name: Selected tests with vl-convert-python and without altair_saver
+      run: |
+        pip install vl-convert-python
+        pytest -m save_engine --doctest-modules altair

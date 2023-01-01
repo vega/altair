@@ -253,6 +253,7 @@ def test_selection_expression():
         selection.__magic__
 
 
+@pytest.mark.save_engine
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf"])
 def test_save(format, basic_chart):
     if format in ["pdf", "png"]:
