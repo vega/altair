@@ -10,6 +10,7 @@ exclude = '''
   | build
   | dist
   | doc
+  | tests/examples_arguments_syntax
   | altair/vega/v\d*/schema
   | altair/vegalite/v\d*/schema
 )/
