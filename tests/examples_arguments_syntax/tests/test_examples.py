@@ -18,7 +18,9 @@ except ImportError:
 
 
 def iter_example_filenames():
-    for importer, modname, ispkg in pkgutil.iter_modules(examples_arguments_syntax.__path__):
+    for importer, modname, ispkg in pkgutil.iter_modules(
+        examples_arguments_syntax.__path__
+    ):
         if ispkg or modname.startswith("_"):
             continue
         yield modname + ".py"
