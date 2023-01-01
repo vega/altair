@@ -36,6 +36,11 @@ def test_examples(filename: str):
     chart.to_dict()
 
 
+# We do not apply the save_engine mark to this test. This mark is used in 
+# the build GitHub Action workflow to select the tests which should be rerun
+# with some of the saving engines uninstalled. This would not make sense for this test
+# as here it is only interesting to run it with all saving engines installed. 
+# Furthermore, the runtime of this test is rather long.
 @pytest.mark.parametrize("engine", ["vl-convert", "altair_saver"])
 @pytest.mark.parametrize("filename", iter_example_filenames())
 def test_render_examples_to_png(engine, filename):
