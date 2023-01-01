@@ -22,7 +22,7 @@ from .utils import (
     create_generic_image,
 )
 from altair.utils.execeval import eval_block
-from tests.examples import iter_examples
+from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -165,7 +165,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
 def populate_examples(**kwds):
     """Iterate through Altair examples and extract code"""
 
-    examples = sorted(iter_examples(), key=itemgetter("name"))
+    examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
 
     for example in examples:
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])

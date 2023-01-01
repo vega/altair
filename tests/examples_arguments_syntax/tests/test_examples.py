@@ -4,7 +4,7 @@ import pkgutil
 import pytest
 
 from altair.utils.execeval import eval_block
-from tests import examples
+from tests import examples_arguments_syntax
 
 try:
     import altair_saver  # noqa: F401
@@ -18,7 +18,7 @@ except ImportError:
 
 
 def iter_example_filenames():
-    for importer, modname, ispkg in pkgutil.iter_modules(examples.__path__):
+    for importer, modname, ispkg in pkgutil.iter_modules(examples_arguments_syntax.__path__):
         if ispkg or modname.startswith("_"):
             continue
         yield modname + ".py"
@@ -26,7 +26,7 @@ def iter_example_filenames():
 
 @pytest.mark.parametrize("filename", iter_example_filenames())
 def test_examples(filename: str):
-    source = pkgutil.get_data(examples.__name__, filename)
+    source = pkgutil.get_data(examples_arguments_syntax.__name__, filename)
     chart = eval_block(source)
 
     if chart is None:
@@ -45,7 +45,7 @@ def test_render_examples_to_png(engine, filename):
         if "png" not in altair_saver.available_formats("vega-lite"):
             pytest.skip("altair_saver not configured to save to png")
 
-    source = pkgutil.get_data(examples.__name__, filename)
+    source = pkgutil.get_data(examples_arguments_syntax.__name__, filename)
     chart = eval_block(source)
     out = io.BytesIO()
     chart.save(out, format="png", engine=engine)
