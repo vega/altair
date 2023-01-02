@@ -2,10 +2,10 @@ import collections
 import contextlib
 import inspect
 import json
-import warnings
 from typing import Any
 
 import jsonschema
+import jsonschema.exceptions
 import numpy as np
 import pandas as pd
 
@@ -40,39 +40,22 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
-def validate_jsonschema(*args, **kwargs):
-    # We always want to use the same jsonschema validator across the whole codebase
-    validator_cls = JSONSCHEMA_VALIDATOR
-    if "cls" in kwargs:
-        warnings.warn("The cls argument will be overwritten by the default validator")
-    kwargs["cls"] = validator_cls
-
-    removed_format_checkers = []
-    try:
-        # In older versions of jsonschema this attribute did not yet exist
-        # and we do not need to disable any format checkers
-        if hasattr(validator_cls, "FORMAT_CHECKER"):
-            # The "uri-reference" checker fails for some of the Vega-Lite
-            # schemas as URIs in "$ref" are not encoded,
-            # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
-            # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
-            # it is not a valid URI reference due to the characters such as '<'.
-            # This is fine and we can disable this format check below.
-            for format_name in ["uri-reference"]:
-                try:
-                    checker = validator_cls.FORMAT_CHECKER.checkers.pop(format_name)
-                    removed_format_checkers.append((format_name, checker))
-                except KeyError:
-                    # Format checks are only set by jsonschema if it can import
-                    # the relevant dependencies
-                    continue
-        output = jsonschema.validate(*args, **kwargs)
-    finally:
-        # Restore the original set of checkers as the jsonschema package
-        # might also be used by other packages
-        for format_name, checker in removed_format_checkers:
-            validator_cls.FORMAT_CHECKER.checkers[format_name] = checker
-    return output
+def validate_jsonschema(spec, schema, resolver=None):
+    # We don't use jsonschema.validate as this would validate the schema itself.
+    # Instead, we pass the schema directly to the validator class. This is done for
+    # two reasons: The schema comes from Vega-Lite and is not based on the user
+    # input, therefore there is no need to validate it in the first place. Furthermore,
+    # the "uri-reference" format checker fails for some of the references as URIs in
+    # "$ref" are not encoded,
+    # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
+    # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
+    # it is not a valid URI reference due to the characters such as '<'.
+    validator = JSONSCHEMA_VALIDATOR(
+        schema, format_checker=JSONSCHEMA_VALIDATOR.FORMAT_CHECKER, resolver=resolver
+    )
+    error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
+    if error is not None:
+        raise error
 
 
 def _subclasses(cls):
