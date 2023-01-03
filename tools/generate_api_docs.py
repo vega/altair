@@ -97,7 +97,14 @@ def api_functions():
 
 
 def lowlevel_wrappers():
-    return sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
+    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
+    # The names of these two classes are also used for classes in alt.channels. Due to
+    # how imports are set up, these channel classes overwrite the two low-level classes
+    # in the top-level Altair namespace. Therefore, they cannot be imported as e.g.
+    # altair.Color (which gives you the Channel class) and therefore Sphinx won't
+    # be able to produce a documentation page.
+    objects = [o for o in objects if o not in ("Color", "Text")]
+    return objects
 
 
 def write_api_file():

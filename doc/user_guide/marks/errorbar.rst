@@ -5,9 +5,21 @@
 Error Bar
 ~~~~~~~~~~
 
-An error bar summarizes an error range of quantitative values using a set of summary statistics, representing by rules (and optional end ticks). Error bars in Vega-Lite can either be used to aggregate raw data or directly visualize aggregated data.
+An error bar summarizes an error range of quantitative values using a set of summary statistics,
+representing by rules (and optional end ticks). Error bars in Altair can either be used to aggregate
+raw data or directly visualize aggregated data.
 
-To create an error bar, set ``mark`` to ``"errorbar"``.
+To create an error bar, use ``mark_errorbar``.
+
+Error Bar Mark Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^
+An ``errorbar`` mark definition can contain the following properties:
+
+.. altair-object-table:: altair.ErrorBarDef
+   :properties: extent orient color opacity
+
+Besides the properties listed above, ``rule`` and ``ticks`` can be used to specify
+the underlying mark properties for different parts of the error bar as well.
 
 Using Error Bars to Aggregate Raw Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -22,56 +34,63 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar().encode(
-    x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
-    y=alt.Y('variety:N')
+        x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('variety:N')
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    x=alt.X('yield:Q', aggregate='mean'),
-    y=alt.Y('variety:N'),
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black",
+    ).encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
-    error_bars + points 
+    error_bars + points
 
 2. **Error bar showing standard deviation** can be specified by setting ``extent`` to ``"stdev"``. For this type of error bar, the length of lower and upper rules represent standard deviation. Like an error bar that shows Standard Error, the rule marks expand from the mean by default.
 
 .. altair-plot::
-   import altair as alt
+    import altair as alt
     from vega_datasets import data
 
     source = data.barley()
 
-    error_bars = alt.Chart(source).mark_errorbar(extent = 'stdev').encode(
-    x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
-    y=alt.Y('variety:N')
+    error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
+        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        y=alt.Y("variety:N"),
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    x=alt.X('yield:Q', aggregate='mean'),
-    y=alt.Y('variety:N'),
+    points = alt.Chart(source).mark_point(filled=True, color="black").encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
-    error_bars + points 
+    error_bars + points
+
 
 3. **Error bars showing interquartile range** can be specified by setting ``extent`` to ``"iqr"``. For this type of error bar, the rule marks expand from the first quartile to the third quartile.
 
 .. altair-plot::
-   import altair as alt
+    import altair as alt
     from vega_datasets import data
 
     source = data.barley()
 
-    error_bars = alt.Chart(source).mark_errorbar(extent = 'iqr').encode(
-    x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
-    y=alt.Y('variety:N')
+    error_bars = alt.Chart(source).mark_errorbar(extent="iqr").encode(
+        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        y=alt.Y("variety:N"),
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    x=alt.X('yield:Q', aggregate='mean'),
-    y=alt.Y('variety:N'),
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        x=alt.X("yield:Q", aggregate="mean"),
+        y=alt.Y("variety:N"),
     )
 
-    error_bars + points 
+    error_bars + points
 
 Using Error Bars to Visualize Aggregated Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -83,21 +102,24 @@ If the data is already pre-aggregated with low and high values of the error bars
     import pandas as pd
 
     source = pd.DataFrame({
-        'lower_yield': [23.1311, 23.9503, 24.7778, 21.7823],
-        'upper_yield': [43.5522, 38.9775, 46.9167, 48.9732],
-        'center': [32.4, 30.96667, 33.966665, 30.45],
-        'variety': ["Glabron", "Manchuria", "No. 457", "No. 462"]
+        "lower_yield": [23.1311, 23.9503, 24.7778, 21.7823],
+        "upper_yield": [43.5522, 38.9775, 46.9167, 48.9732],
+        "center": [32.4, 30.96667, 33.966665, 30.45],
+        "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
     })
 
     bar = alt.Chart(source).mark_errorbar().encode(
-        alt.X('upper_yield:Q', scale=alt.Scale(zero=False), title = 'yield'),
-        alt.X2('lower_yield:Q'),
-        alt.Y('variety:N')
+        alt.X("upper_yield:Q", scale=alt.Scale(zero=False), title="yield"),
+        alt.X2("lower_yield:Q"),
+        alt.Y("variety:N"),
     )
 
-    point = alt.Chart(source).mark_point(filled = True, color = 'black').encode(
-        alt.X('center:Q'),
-        alt.Y('variety:N')
+    point = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("center:Q"),
+        alt.Y("variety:N")
     )
 
     point + bar
@@ -110,20 +132,23 @@ If the data is already pre-aggregated with center and error values of the error 
     import pandas as pd
 
     source = pd.DataFrame({
-        'yield_error': [7.5522, 6.9775, 3.9167, 11.9732],
-        'yield_center': [32.4, 30.96667, 33.966665, 30.45],
-        'variety': ["Glabron", "Manchuria", "No. 457", "No. 462"]
+        "yield_error": [7.5522, 6.9775, 3.9167, 11.9732],
+        "yield_center": [32.4, 30.96667, 33.966665, 30.45],
+        "variety": ["Glabron", "Manchuria", "No. 457", "No. 462"],
     })
 
     bar = alt.Chart(source).mark_errorbar().encode(
-        x = alt.X('yield_center:Q', scale=alt.Scale(zero=False), title = 'yield'),
-        xError = ('yield_error:Q'),
-        y = alt.Y('variety:N')
+        x=alt.X("yield_center:Q", scale=alt.Scale(zero=False), title="yield"),
+        xError=("yield_error:Q"),
+        y=alt.Y("variety:N"),
     )
 
-    point = alt.Chart(source).mark_point(filled = True, color = 'black').encode(
-        alt.X('yield_center:Q'),
-        alt.Y('variety:N')
+    point = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("yield_center:Q"),
+        alt.Y("variety:N"),
     )
 
     point + bar
@@ -145,11 +170,14 @@ The orientation of an error bar is automatically determined by the continuous fi
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar().encode(
-    alt.Y('yield:Q', scale=alt.Scale(zero=False))
+        alt.Y("yield:Q", scale=alt.Scale(zero=False))
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    alt.Y('yield:Q', aggregate='mean')
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.Y("yield:Q", aggregate="mean")
     )
 
     error_bars + points
@@ -157,28 +185,31 @@ The orientation of an error bar is automatically determined by the continuous fi
 A **2D error bar** shows the error range of a continuous field, broken down by categories.
 
 For 2D error bars with one continuous field and one discrete field, the error bars will be horizontal if the continuous field is on the x axis. Alternatively, if the continuous field is on the y axis, the error bar will be vertical.
- 
+
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
 
     source = data.barley()
 
-    error_bars = alt.Chart(source).mark_errorbar(extent = 'stdev').encode(
-    alt.Y('yield:Q', scale=alt.Scale(zero=False)),
-    alt.X('variety:N')
+    error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
+        alt.Y("yield:Q", scale=alt.Scale(zero=False)),
+        alt.X("variety:N"),
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    alt.Y('yield:Q', aggregate='mean'),
-    alt.X('variety:N'),
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black",
+    ).encode(
+        alt.Y("yield:Q", aggregate="mean"),
+        alt.X("variety:N"),
     )
 
     error_bars + points
 
 Color, and Opacity Encoding Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can customize the color, size, and opacity of the bar in the ``errorbar`` by using the ``color`` and ``opacity`` encoding channels, which are applied to the whole errorbar.
+You can customize the color and opacity of the bars by using the ``color`` and ``opacity`` encoding channels.
 
 Here is an example of a ``errorbar`` with the ``color`` encoding channel set to ``alt.value("#4682b4")``.
 
@@ -188,15 +219,18 @@ Here is an example of a ``errorbar`` with the ``color`` encoding channel set to 
 
     source = data.barley()
 
-    error_bars = alt.Chart(source).mark_errorbar(ticks = True).encode(
-        alt.X('yield:Q', scale=alt.Scale(zero=False)),
-        alt.Y('variety:N'),
-        color = alt.value("#4682b4")
+    error_bars = alt.Chart(source).mark_errorbar(ticks=True).encode(
+        alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        alt.Y("variety:N"),
+        color=alt.value("#4682b4"),
     )
 
-    points = alt.Chart(source).mark_point(filled=True, color='black').encode(
-    alt.X('yield:Q', aggregate='mean'),
-    alt.Y('variety:N'),
+    points = alt.Chart(source).mark_point(
+        filled=True,
+        color="black"
+    ).encode(
+        alt.X("yield:Q", aggregate="mean"),
+        alt.Y("variety:N"),
     )
 
     error_bars + points
@@ -212,12 +246,7 @@ You can add custom tooltips to error bars. The custom tooltip will override the 
     source = data.barley()
 
     alt.Chart(source).mark_errorbar().encode(
-        alt.X('yield:Q', scale=alt.Scale(zero=False)),
-        alt.Y('variety:N'),
-        tooltip = 'variety:N'
+        alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        alt.Y("variety:N"),
+        tooltip="variety:N",
     )
-
-Mark Config
-^^^^^^^^^^^
-The ``errorbar`` config object sets the default properties for ``errorbar`` marks.
-

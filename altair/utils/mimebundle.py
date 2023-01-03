@@ -9,6 +9,7 @@ def spec_to_mimebundle(
     vega_version=None,
     vegaembed_version=None,
     vegalite_version=None,
+    engine=None,
     **kwargs,
 ):
     """Convert a vega/vega-lite specification to a mimebundle
@@ -30,6 +31,8 @@ def spec_to_mimebundle(
         The version of vegaembed.js to use
     vegalite_version : string
         The version of vegalite.js to use. Only required if mode=='vega-lite'
+    engine: string {'vl-convert', 'altair_saver'}
+        the conversion engine to use for 'png', 'svg', 'pdf', and 'vega' formats
     **kwargs :
         Additional arguments will be passed to the generating function
 
@@ -51,7 +54,9 @@ def spec_to_mimebundle(
             raise ValueError("Must specify vega_version")
         return {"application/vnd.vega.v{}+json".format(vega_version[0]): spec}
     if format in ["png", "svg", "pdf", "vega"]:
-        return _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs)
+        return _spec_to_mimebundle_with_engine(
+            spec, format, mode, engine=engine, **kwargs
+        )
     if format == "html":
         html = spec_to_html(
             spec,
@@ -107,9 +112,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
         vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
         # Turn off the data transformer until the following issue is resolved
         # https://github.com/vega/vl-convert/issues/31#
-        with (
-            data_transformers.enable("default") and data_transformers.disable_max_rows()
-        ):
+        with data_transformers.enable("default"), data_transformers.disable_max_rows():
             if format == "vega":
                 vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
                 return {"application/vnd.vega.v5+json": vg}

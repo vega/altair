@@ -111,7 +111,7 @@ Enhancements
 
 - New pivot transform: (see :ref:`user-guide-pivot-transform`)
 
-- Image mark (see :ref:`user-guide-image-mark`)
+- Image mark (see :ref:`user-guide-image-marks`)
 
 - New default ``html`` renderer, directly compatible with Jupyter Notebook and
   JupyterLab without the need for frontend extensions, as well as tools like
