@@ -619,13 +619,12 @@ class _PropertySetter(object):
                         f"\n\n    {altair_prop.__doc__[attribute_index:]}"
                     )
                 )
-            # For short docsstrings such as Aggregate, Stack, et
+            # For short docstrings such as Aggregate, Stack, et
             else:
                 self.__doc__ = (
                     altair_prop.__doc__.replace("    ", "") + "\n" + self.__doc__
                 )
             # Add signatures and tab completion for the method and parameter names
-            # Currently works for `alt.X.bin` but not alt.X().bin`
             self.__signature__ = inspect.signature(altair_prop)
             self.__wrapped__ = inspect.getfullargspec(altair_prop)
             self.__name__ = altair_prop.__name__
