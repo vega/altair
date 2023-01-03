@@ -6,7 +6,7 @@ install:
 test :
 	black . --check
 	flake8 . --statistics
-	python -m pytest --pyargs --doctest-modules altair
+	python -m pytest --pyargs --doctest-modules tests
 
 test-coverage:
 	python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair

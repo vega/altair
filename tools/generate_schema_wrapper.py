@@ -26,8 +26,10 @@ import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
+    # Uncomment old vega-lite versions here when there are breaking changing
+    # that we don't want to backport
     "vega": {"v5": "v5.21.0"},
-    "vega-lite": {"v3": "v3.4.0", "v4": "v4.17.0", "v5": "v5.2.0"},
+    "vega-lite": {"v5": "v5.2.0"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
@@ -145,7 +147,7 @@ class FieldChannelMixin(object):
 class ValueChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        condition = getattr(self, 'condition', Undefined)
+        condition = self._get('condition', Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
@@ -162,7 +164,7 @@ class ValueChannelMixin(object):
 class DatumChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        datum = getattr(self, 'datum', Undefined)
+        datum = self._get('datum', Undefined)
         copy = self  # don't copy unless we need to
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):
@@ -176,10 +178,13 @@ class DatumChannelMixin(object):
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(FieldChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
+
+        {method_code}
 
         {init_code}
     '''
@@ -189,10 +194,13 @@ class FieldSchemaGenerator(SchemaGenerator):
 class ValueSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(ValueChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
+
+        {method_code}
 
         {init_code}
     '''
@@ -202,10 +210,14 @@ class ValueSchemaGenerator(SchemaGenerator):
 class DatumSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
+    @with_property_setters
     class {classname}(DatumChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
         _encoding_name = "{encodingname}"
+
+        {method_code}
+
         {init_code}
     '''
     )
@@ -427,8 +439,9 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
         imports = [
             "from . import core",
             "import pandas as pd",
-            "from altair.utils.schemapi import Undefined",
+            "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
+            "from typing import overload, Type",
         ]
     contents = [HEADER]
     contents.extend(imports)
@@ -483,6 +496,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
                 rootschema=schema,
                 encodingname=prop,
                 nodefault=nodefault,
+                haspropsetters=True,
             )
             contents.append(gen.schema_class())
     return "\n".join(contents)

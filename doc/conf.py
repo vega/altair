@@ -36,9 +36,9 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.githubpages",
     "numpydoc.numpydoc",
-    "altair.sphinxext.altairplot",
-    "altair.sphinxext.altairgallery",
-    "altair.sphinxext.schematable",
+    "sphinxext.altairplot",
+    "sphinxext.altairgallery",
+    "sphinxext.schematable",
     # "sphinxext.rediraffe",
 ]
 
@@ -84,7 +84,7 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'en'
+language = "en"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -154,12 +154,10 @@ html_theme_options = {
             "type": "fontawesome",
         },
     ],
-    "header_links_before_dropdown": 6
+    "header_links_before_dropdown": 6,
 }
 
-html_context = {
-    "default_mode": "light"
-}
+html_context = {"default_mode": "light"}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
