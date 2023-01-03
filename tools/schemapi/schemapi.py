@@ -642,7 +642,9 @@ class _PropertySetter(object):
 
 
 def with_property_setters(cls):
-    """Decorator to add property setters to a Schema class."""
+    """
+    Decorator to add property setters to a Schema class.
+    """
     schema = cls.resolve_references()
     for prop, propschema in schema.get("properties", {}).items():
         setattr(cls, prop, _PropertySetter(prop, propschema))
