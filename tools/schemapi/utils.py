@@ -192,17 +192,19 @@ class SchemaInfo(object):
         else:
             return self.medium_description
 
+    _simple_types = {
+        "string": "string",
+        "number": "float",
+        "integer": "integer",
+        "object": "mapping",
+        "boolean": "boolean",
+        "array": "list",
+        "null": "None",
+    }
+
     @property
     def medium_description(self):
-        _simple_types = {
-            "string": "string",
-            "number": "float",
-            "integer": "integer",
-            "object": "mapping",
-            "boolean": "boolean",
-            "array": "list",
-            "null": "None",
-        }
+
         if self.is_list():
             return "[{0}]".format(
                 ", ".join(self.child(s).short_description for s in self.schema)
@@ -236,8 +238,8 @@ class SchemaInfo(object):
             return "Mapping(required=[{}])".format(", ".join(self.required))
         elif self.is_array():
             return "List({})".format(self.child(self.items).short_description)
-        elif self.type in _simple_types:
-            return _simple_types[self.type]
+        elif self.type in self._simple_types:
+            return self._simple_types[self.type]
         elif not self.type:
             import warnings
 
