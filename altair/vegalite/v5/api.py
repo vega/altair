@@ -584,7 +584,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def to_html(
         self,
-        base_url="https://cdn.jsdelivr.net/npm/",
+        base_url="https://cdn.jsdelivr.net/npm",
         output_div="vis",
         embed_options=None,
         json_kwds=None,

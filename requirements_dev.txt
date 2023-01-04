@@ -3,6 +3,7 @@ docutils
 ipython
 flake8
 pytest
+pytest-cov
 sphinx
 mistune<2.0.0  # necessary for m2r v0.2
 m2r

@@ -14,7 +14,7 @@ import jsonschema
 import pandas as pd
 import numpy as np
 
-from .schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase, Undefined
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
@@ -555,34 +555,6 @@ def use_signature(Obj):
         return f
 
     return decorate
-
-
-def update_subtraits(obj, attrs, **kwargs):
-    """Recursively update sub-traits without overwriting other traits"""
-    # TODO: infer keywords from args
-    if not kwargs:
-        return obj
-
-    # obj can be a SchemaBase object or a dict
-    if obj is Undefined:
-        obj = dct = {}
-    elif isinstance(obj, SchemaBase):
-        dct = obj._kwds
-    else:
-        dct = obj
-
-    if isinstance(attrs, str):
-        attrs = (attrs,)
-
-    if len(attrs) == 0:
-        dct.update(kwargs)
-    else:
-        attr = attrs[0]
-        trait = dct.get(attr, Undefined)
-        if trait is Undefined:
-            trait = dct[attr] = {}
-        dct[attr] = update_subtraits(trait, attrs[1:], **kwargs)
-    return obj
 
 
 def update_nested(original, update, copy=False):

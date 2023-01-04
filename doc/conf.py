@@ -36,9 +36,9 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.githubpages",
     "numpydoc.numpydoc",
-    "altair.sphinxext.altairplot",
-    "altair.sphinxext.altairgallery",
-    "altair.sphinxext.schematable",
+    "sphinxext.altairplot",
+    "sphinxext.altairgallery",
+    "sphinxext.schematable",
     # "sphinxext.rediraffe",
 ]
 
@@ -84,7 +84,7 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'en'
+language = "en"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -138,6 +138,7 @@ html_theme_options = {
     "navbar_start": ["navbar-logo", "navbar-project"],
     "navbar_center": ["navbar-nav"],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "primary_sidebar_end": [],
     "footer_items": [],
     "icon_links": [
         {
@@ -153,12 +154,10 @@ html_theme_options = {
             "type": "fontawesome",
         },
     ],
-    "header_links_before_dropdown": 6
+    "header_links_before_dropdown": 6,
 }
 
-html_context = {
-    "default_mode": "light"
-}
+html_context = {"default_mode": "light"}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -210,7 +209,7 @@ def setup(app):
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
     "index": [],
-    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
+    "**": ["sidebar-nav-bs"],
 }
 
 # Redirection of old page locations via the rediraffe sphinx-extension
