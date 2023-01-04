@@ -4,6 +4,7 @@ import collections
 import contextlib
 import inspect
 import json
+import textwrap
 from typing import Any
 
 import jsonschema
@@ -11,8 +12,9 @@ import jsonschema.exceptions
 import numpy as np
 import pandas as pd
 
-JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
+from altair import vegalite
 
+JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
 # larger specs, but leads to much more useful tracebacks for the user.
@@ -608,3 +610,61 @@ class _FromDict(object):
             return cls(dct)
         else:
             return cls(dct)
+
+
+class _PropertySetter(object):
+    def __init__(self, prop, schema):
+        self.prop = prop
+        self.schema = schema
+
+    def __get__(self, obj, cls):
+        self.obj = obj
+        self.cls = cls
+        # The docs from the encoding class parameter (e.g. `bin` in X, Color,
+        # etc); this provides a general description of the parameter.
+        self.__doc__ = self.schema["description"].replace("__", "**")
+        property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
+        if hasattr(vegalite, property_name):
+            altair_prop = getattr(vegalite, property_name)
+            # Add the docstring from the helper class (e.g. `BinParams`) so
+            # that all the parameter names of the helper class are included in
+            # the final docstring
+            attribute_index = altair_prop.__doc__.find("Attributes\n")
+            if attribute_index > -1:
+                self.__doc__ = (
+                    altair_prop.__doc__[:attribute_index].replace("    ", "")
+                    + self.__doc__
+                    + textwrap.dedent(
+                        f"\n\n    {altair_prop.__doc__[attribute_index:]}"
+                    )
+                )
+            # For short docstrings such as Aggregate, Stack, et
+            else:
+                self.__doc__ = (
+                    altair_prop.__doc__.replace("    ", "") + "\n" + self.__doc__
+                )
+            # Add signatures and tab completion for the method and parameter names
+            self.__signature__ = inspect.signature(altair_prop)
+            self.__wrapped__ = inspect.getfullargspec(altair_prop)
+            self.__name__ = altair_prop.__name__
+        else:
+            # It seems like bandPosition is the only parameter that doesn't
+            # have a helper class.
+            pass
+        return self
+
+    def __call__(self, *args, **kwargs):
+        obj = self.obj.copy()
+        # TODO: use schema to validate
+        obj[self.prop] = args[0] if args else kwargs
+        return obj
+
+
+def with_property_setters(cls):
+    """
+    Decorator to add property setters to a Schema class.
+    """
+    schema = cls.resolve_references()
+    for prop, propschema in schema.get("properties", {}).items():
+        setattr(cls, prop, _PropertySetter(prop, propschema))
+    return cls

@@ -3,8 +3,9 @@
 
 from . import core
 import pandas as pd
-from altair.utils.schemapi import Undefined
+from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
+from typing import overload, Type
 
 
 class FieldChannelMixin(object):
@@ -64,7 +65,7 @@ class FieldChannelMixin(object):
 class ValueChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        condition = getattr(self, 'condition', Undefined)
+        condition = self._get('condition', Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
@@ -81,7 +82,7 @@ class ValueChannelMixin(object):
 class DatumChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
-        datum = getattr(self, 'datum', Undefined)
+        datum = self._get('datum', Undefined)
         copy = self  # don't copy unless we need to
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):
@@ -91,6 +92,7 @@ class DatumChannelMixin(object):
                                                       context=context)
 
 
+@with_property_setters
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Angle schema wrapper
 
@@ -136,8 +138,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -207,8 +208,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -321,6 +323,105 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Angle':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Angle':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Angle':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -330,6 +431,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """AngleDatum schema wrapper
 
@@ -344,16 +446,14 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -447,12 +547,37 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
+
+    def bandPosition(self, _: float, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'AngleDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'AngleDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(AngleDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """AngleValue schema wrapper
 
@@ -461,8 +586,7 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -472,10 +596,24 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
+    @overload
+    def condition(self, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'AngleValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Color schema wrapper
 
@@ -521,8 +659,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -592,8 +729,9 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -706,6 +844,105 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Color':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Color':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Color':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -715,6 +952,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """ColorDatum schema wrapper
 
@@ -729,16 +967,14 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -832,12 +1068,37 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
+
+    def bandPosition(self, _: float, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'ColorDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ColorDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ColorDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """ColorValue schema wrapper
 
@@ -846,9 +1107,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -858,10 +1117,24 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
+    @overload
+    def condition(self, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ColorValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Column schema wrapper
 
@@ -959,8 +1232,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1075,6 +1349,94 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Column':
+        ...
+
+    def align(self, _: str, **kwds) -> 'Column':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Column':
+        ...
+
+    def center(self, _: bool, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def header(self, _: None, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Column':
+        ...
+
+    def spacing(self, _: float, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Column':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Column':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
@@ -1085,6 +1447,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                                      title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
@@ -1130,8 +1493,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1289,6 +1651,84 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Description':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Description':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Description':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Description':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1298,6 +1738,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """DescriptionValue schema wrapper
 
@@ -1306,9 +1747,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -1318,10 +1757,24 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
+    @overload
+    def condition(self, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'DescriptionValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(DescriptionValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """Detail schema wrapper
 
@@ -1483,6 +1936,65 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Detail':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Detail':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Detail':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -1490,6 +2002,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
                                      title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     """Facet schema wrapper
 
@@ -1623,8 +2136,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1741,6 +2255,115 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def align(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def align(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Facet':
+        ...
+
+    def bounds(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def center(self, _: bool, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def center(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    def columns(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def header(self, _: None, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def spacing(self, _: float, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def spacing(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Facet':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Facet':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, bounds=Undefined, center=Undefined,
                  columns=Undefined, field=Undefined, header=Undefined, sort=Undefined,
@@ -1751,6 +2374,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                                     spacing=spacing, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Fill schema wrapper
 
@@ -1796,8 +2420,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1867,8 +2490,9 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -1981,6 +2605,105 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Fill':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Fill':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Fill':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1990,6 +2713,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
                                    **kwds)
 
 
+@with_property_setters
 class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """FillDatum schema wrapper
 
@@ -2004,16 +2728,14 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -2107,12 +2829,37 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
+
+    def bandPosition(self, _: float, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'FillDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                         title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """FillValue schema wrapper
 
@@ -2121,9 +2868,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -2133,10 +2878,24 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
+    @overload
+    def condition(self, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """FillOpacity schema wrapper
 
@@ -2182,8 +2941,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2253,8 +3011,9 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -2367,6 +3126,105 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'FillOpacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2376,6 +3234,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """FillOpacityDatum schema wrapper
 
@@ -2390,16 +3249,14 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -2493,12 +3350,37 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'FillOpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(FillOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
                                                condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """FillOpacityValue schema wrapper
 
@@ -2507,8 +3389,7 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -2518,10 +3399,24 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
+    @overload
+    def condition(self, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'FillOpacityValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
@@ -2567,8 +3462,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2726,6 +3620,84 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Href':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Href':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Href':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Href':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2735,6 +3707,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
                                    **kwds)
 
 
+@with_property_setters
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """HrefValue schema wrapper
 
@@ -2743,9 +3716,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -2755,10 +3726,24 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
+    @overload
+    def condition(self, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'HrefValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """Key schema wrapper
 
@@ -2920,6 +3905,65 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Key':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Key':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Key':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
@@ -2927,6 +3971,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
                                   **kwds)
 
 
+@with_property_setters
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     """Latitude schema wrapper
 
@@ -3087,6 +4132,52 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Latitude':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3094,6 +4185,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """LatitudeDatum schema wrapper
 
@@ -3106,8 +4198,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -3201,11 +4292,28 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
+
+    def bandPosition(self, _: float, **kwds) -> 'LatitudeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'LatitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'LatitudeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'LatitudeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LatitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                             type=type, **kwds)
 
 
+@with_property_setters
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Latitude2 schema wrapper
 
@@ -3299,6 +4407,49 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Latitude2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3306,6 +4457,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
                                         timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """Latitude2Datum schema wrapper
 
@@ -3318,8 +4470,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -3413,11 +4564,28 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Latitude2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Latitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Latitude2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Latitude2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
 
 
+@with_property_setters
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Latitude2Value schema wrapper
 
@@ -3436,10 +4604,13 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
+    
+
     def __init__(self, value, **kwds):
         super(Latitude2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     """Longitude schema wrapper
 
@@ -3600,6 +4771,52 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Longitude':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3607,6 +4824,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """LongitudeDatum schema wrapper
 
@@ -3619,8 +4837,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -3714,11 +4931,28 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
+
+    def bandPosition(self, _: float, **kwds) -> 'LongitudeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'LongitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'LongitudeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'LongitudeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(LongitudeDatum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                              type=type, **kwds)
 
 
+@with_property_setters
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Longitude2 schema wrapper
 
@@ -3812,6 +5046,49 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Longitude2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -3819,6 +5096,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
                                          timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """Longitude2Datum schema wrapper
 
@@ -3831,8 +5109,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -3926,11 +5203,28 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Longitude2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Longitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Longitude2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Longitude2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                               type=type, **kwds)
 
 
+@with_property_setters
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Longitude2Value schema wrapper
 
@@ -3949,10 +5243,13 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
+    
+
     def __init__(self, value, **kwds):
         super(Longitude2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Opacity schema wrapper
 
@@ -3998,8 +5295,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4069,8 +5365,9 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4183,6 +5480,105 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Opacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -4192,6 +5588,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """OpacityDatum schema wrapper
 
@@ -4206,16 +5603,14 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -4309,12 +5704,37 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'OpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'OpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(OpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """OpacityValue schema wrapper
 
@@ -4323,8 +5743,7 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -4334,10 +5753,24 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
+    @overload
+    def condition(self, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OpacityValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Order(FieldChannelMixin, core.OrderFieldDef):
     """Order schema wrapper
 
@@ -4500,6 +5933,68 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Order':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Order':
+        ...
+
+    def sort(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Order':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Order':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
                  **kwds):
@@ -4508,6 +6003,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
                                     type=type, **kwds)
 
 
+@with_property_setters
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """OrderValue schema wrapper
 
@@ -4520,8 +6016,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalValueDefnumber`,
-    List(:class:`ConditionalValueDefnumber`))
+    condition : anyOf(:class:`ConditionalValueDefnumber`, List(:class:`ConditionalValueDefnumber`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4532,10 +6027,20 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'OrderValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(OrderValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     """Radius schema wrapper
 
@@ -4633,8 +6138,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -4662,8 +6168,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -4777,6 +6283,105 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Radius':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Radius':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Radius':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -4786,6 +6391,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                                      **kwds)
 
 
+@with_property_setters
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """RadiusDatum schema wrapper
 
@@ -4798,8 +6404,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -4831,8 +6436,8 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -4936,12 +6541,49 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
+
+    def bandPosition(self, _: float, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'RadiusDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'RadiusDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(RadiusDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
                                           stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """RadiusValue schema wrapper
 
@@ -4960,10 +6602,13 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
+    
+
     def __init__(self, value, **kwds):
         super(RadiusValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """Radius2 schema wrapper
 
@@ -5057,6 +6702,49 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Radius2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(Radius2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -5064,6 +6752,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """Radius2Datum schema wrapper
 
@@ -5076,8 +6765,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -5171,11 +6859,28 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Radius2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Radius2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Radius2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Radius2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Radius2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                            type=type, **kwds)
 
 
+@with_property_setters
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """Radius2Value schema wrapper
 
@@ -5194,10 +6899,13 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
+    
+
     def __init__(self, value, **kwds):
         super(Radius2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Row schema wrapper
 
@@ -5295,8 +7003,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -5411,6 +7120,94 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Row':
+        ...
+
+    def align(self, _: str, **kwds) -> 'Row':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Row':
+        ...
+
+    def center(self, _: bool, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def header(self, _: None, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Row':
+        ...
+
+    def spacing(self, _: float, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Row':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Row':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, align=Undefined,
                  bandPosition=Undefined, bin=Undefined, center=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
@@ -5421,6 +7218,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                                   title=title, type=type, **kwds)
 
 
+@with_property_setters
 class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull):
     """Shape schema wrapper
 
@@ -5466,8 +7264,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -5537,8 +7334,9 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -5651,6 +7449,105 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Shape':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Shape':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Shape':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -5660,6 +7557,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                                     **kwds)
 
 
+@with_property_setters
 class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstringnull):
     """ShapeDatum schema wrapper
 
@@ -5674,16 +7572,14 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -5777,12 +7673,37 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
+
+    def bandPosition(self, _: float, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'ShapeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ShapeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ShapeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                          title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull):
     """ShapeValue schema wrapper
 
@@ -5791,9 +7712,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -5803,10 +7722,24 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
+    @overload
+    def condition(self, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'ShapeValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Size schema wrapper
 
@@ -5852,8 +7785,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -5923,8 +7855,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -6037,6 +7970,105 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Size':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Size':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Size':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6046,6 +8078,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                                    **kwds)
 
 
+@with_property_setters
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """SizeDatum schema wrapper
 
@@ -6060,16 +8093,14 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -6163,12 +8194,37 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
+
+    def bandPosition(self, _: float, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'SizeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'SizeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(SizeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                         title=title, type=type, **kwds)
 
 
+@with_property_setters
 class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """SizeValue schema wrapper
 
@@ -6177,8 +8233,7 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -6188,10 +8243,24 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
+    @overload
+    def condition(self, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'SizeValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull):
     """Stroke schema wrapper
 
@@ -6237,8 +8306,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -6308,8 +8376,9 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -6422,6 +8491,105 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Stroke':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6431,6 +8599,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull):
     """StrokeDatum schema wrapper
 
@@ -6445,16 +8614,14 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -6548,12 +8715,37 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
                                           title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull):
     """StrokeValue schema wrapper
 
@@ -6562,9 +8754,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefGradientstringnullExprRef`,
-    List(:class:`ConditionalValueDefGradientstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -6574,10 +8764,24 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
+    @overload
+    def condition(self, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray):
     """StrokeDash schema wrapper
 
@@ -6623,8 +8827,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -6694,8 +8897,9 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -6808,6 +9012,105 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeDash':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -6817,6 +9120,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumberArray):
     """StrokeDashDatum schema wrapper
 
@@ -6831,16 +9135,14 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -6934,12 +9236,37 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeDashDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeDashDatum, self).__init__(datum=datum, bandPosition=bandPosition,
                                               condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray):
     """StrokeDashValue schema wrapper
 
@@ -6948,9 +9275,7 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberArrayExprRef`,
-    List(:class:`ConditionalValueDefnumberArrayExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(List(float), :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -6960,10 +9285,24 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
+    @overload
+    def condition(self, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeDashValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """StrokeOpacity schema wrapper
 
@@ -7009,8 +9348,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -7080,8 +9418,9 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -7194,6 +9533,105 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeOpacity':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7203,6 +9641,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
                                             timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeOpacityDatum schema wrapper
 
@@ -7217,16 +9656,14 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -7320,12 +9757,37 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeOpacityDatum, self).__init__(datum=datum, bandPosition=bandPosition,
                                                  condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """StrokeOpacityValue schema wrapper
 
@@ -7334,8 +9796,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -7345,10 +9806,24 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
+    @overload
+    def condition(self, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """StrokeWidth schema wrapper
 
@@ -7394,8 +9869,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -7465,8 +9939,9 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -7579,6 +10054,105 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeWidth':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7588,6 +10162,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
                                           timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """StrokeWidthDatum schema wrapper
 
@@ -7602,16 +10177,14 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`,
-    List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -7705,12 +10278,37 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
+
+    def bandPosition(self, _: float, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(StrokeWidthDatum, self).__init__(datum=datum, bandPosition=bandPosition,
                                                condition=condition, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber):
     """StrokeWidthValue schema wrapper
 
@@ -7719,8 +10317,7 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(float, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -7730,10 +10327,24 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
+    @overload
+    def condition(self, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'StrokeWidthValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
     """Text schema wrapper
 
@@ -7779,8 +10390,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
-    List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -7938,6 +10548,84 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Text':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Text':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Text':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Text':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -7947,6 +10635,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
                                    **kwds)
 
 
+@with_property_setters
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
     """TextDatum schema wrapper
 
@@ -7961,16 +10650,14 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : anyOf(:class:`ConditionalValueDefTextExprRef`,
-    List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -8098,6 +10785,41 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
+
+    def bandPosition(self, _: float, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'TextDatum':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'TextDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, condition=Undefined, format=Undefined,
                  formatType=Undefined, title=Undefined, type=Undefined, **kwds):
         super(TextDatum, self).__init__(datum=datum, bandPosition=bandPosition, condition=condition,
@@ -8105,6 +10827,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
                                         **kwds)
 
 
+@with_property_setters
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
     """TextValue schema wrapper
 
@@ -8113,8 +10836,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalStringFieldDef`,
-    :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
+    condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(:class:`Text`, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -8124,10 +10846,24 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
+    @overload
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TextValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     """Theta schema wrapper
 
@@ -8225,8 +10961,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -8254,8 +10991,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -8369,6 +11106,105 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Theta':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Theta':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Theta':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -8377,6 +11213,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                                     timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """ThetaDatum schema wrapper
 
@@ -8389,8 +11226,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -8422,8 +11258,8 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -8527,12 +11363,49 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
+
+    def bandPosition(self, _: float, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'ThetaDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'ThetaDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, stack=Undefined, title=Undefined,
                  type=Undefined, **kwds):
         super(ThetaDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
                                          stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """ThetaValue schema wrapper
 
@@ -8551,10 +11424,13 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
+    
+
     def __init__(self, value, **kwds):
         super(ThetaValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """Theta2 schema wrapper
 
@@ -8648,6 +11524,49 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Theta2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(Theta2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -8655,6 +11574,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """Theta2Datum schema wrapper
 
@@ -8667,8 +11587,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -8762,11 +11681,28 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Theta2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Theta2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Theta2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Theta2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Theta2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title,
                                           type=type, **kwds)
 
 
+@with_property_setters
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """Theta2Value schema wrapper
 
@@ -8785,10 +11721,13 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
+    
+
     def __init__(self, value, **kwds):
         super(Theta2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
@@ -8834,8 +11773,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -8993,6 +11931,84 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Tooltip':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Tooltip':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9002,6 +12018,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """TooltipValue schema wrapper
 
@@ -9010,9 +12027,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -9022,10 +12037,24 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
+    @overload
+    def condition(self, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'TooltipValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
@@ -9071,8 +12100,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstringExprRef`,
-    List(:class:`ConditionalValueDefstringExprRef`))
+    condition : anyOf(:class:`ConditionalValueDefstringExprRef`, List(:class:`ConditionalValueDefstringExprRef`))
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -9230,6 +12258,84 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Url':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def format(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def format(self, _: dict, **kwds) -> 'Url':
+        ...
+
+    def formatType(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Url':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Url':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  condition=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9239,6 +12345,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
                                   **kwds)
 
 
+@with_property_setters
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """UrlValue schema wrapper
 
@@ -9247,9 +12354,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`,
-    :class:`ConditionalValueDefstringnullExprRef`,
-    List(:class:`ConditionalValueDefstringnullExprRef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
     value : anyOf(string, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -9259,10 +12364,24 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
+    @overload
+    def condition(self, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, _: list, **kwds) -> 'UrlValue':
+        ...
+
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(UrlValue, self).__init__(value=value, condition=condition, **kwds)
 
 
+@with_property_setters
 class X(FieldChannelMixin, core.PositionFieldDef):
     """X schema wrapper
 
@@ -9377,8 +12496,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -9406,8 +12526,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -9521,6 +12641,121 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def axis(self, _: None, **kwds) -> 'X':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'X':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> 'X':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'X':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'X':
+        ...
+
+    def type(self, _: str, **kwds) -> 'X':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -9530,6 +12765,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                                 type=type, **kwds)
 
 
+@with_property_setters
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """XDatum schema wrapper
 
@@ -9551,8 +12787,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied. The field
@@ -9592,8 +12827,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -9697,12 +12932,65 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def axis(self, _: None, **kwds) -> 'XDatum':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'XDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XDatum':
+        ...
+
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(XDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
                                      scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XValue(ValueChannelMixin, core.PositionValueDef):
     """XValue schema wrapper
 
@@ -9721,10 +13009,13 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
+    
+
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """X2 schema wrapper
 
@@ -9818,12 +13109,56 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'X2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'X2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'X2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
                                  bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class X2Datum(DatumChannelMixin, core.DatumDef):
     """X2Datum schema wrapper
 
@@ -9836,8 +13171,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -9931,11 +13265,28 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
+
+    def bandPosition(self, _: float, **kwds) -> 'X2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'X2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'X2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'X2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(X2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
 
 
+@with_property_setters
 class X2Value(ValueChannelMixin, core.PositionValueDef):
     """X2Value schema wrapper
 
@@ -9954,10 +13305,13 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
+    
+
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
     """XError schema wrapper
 
@@ -10051,6 +13405,49 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XError':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XError':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'XError':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10058,6 +13455,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """XErrorValue schema wrapper
 
@@ -10076,10 +13474,13 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
+    
+
     def __init__(self, value, **kwds):
         super(XErrorValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     """XError2 schema wrapper
 
@@ -10173,6 +13574,49 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XError2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XError2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'XError2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -10180,6 +13624,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """XError2Value schema wrapper
 
@@ -10198,10 +13643,13 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
+    
+
     def __init__(self, value, **kwds):
         super(XError2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     """XOffset schema wrapper
 
@@ -10299,8 +13747,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -10413,6 +13862,89 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'XOffset':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -10421,6 +13953,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """XOffsetDatum schema wrapper
 
@@ -10433,8 +13966,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -10541,12 +14073,37 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
+
+    def bandPosition(self, _: float, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'XOffsetDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'XOffsetDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(XOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """XOffsetValue schema wrapper
 
@@ -10565,10 +14122,13 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
+    
+
     def __init__(self, value, **kwds):
         super(XOffsetValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Y(FieldChannelMixin, core.PositionFieldDef):
     """Y schema wrapper
 
@@ -10683,8 +14243,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -10712,8 +14273,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -10827,6 +14388,121 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def axis(self, _: None, **kwds) -> 'Y':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Y':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Y':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bandPosition=Undefined,
                  bin=Undefined, field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined,
                  stack=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -10836,6 +14512,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                                 type=type, **kwds)
 
 
+@with_property_setters
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """YDatum schema wrapper
 
@@ -10857,8 +14534,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied. The field
@@ -10898,8 +14574,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
-        - ``"center"`` - stacking with center baseline (for `streamgraph
-        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
@@ -11003,12 +14679,65 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
+
+    @overload
+    def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def axis(self, _: None, **kwds) -> 'YDatum':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: str, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: None, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def stack(self, _: bool, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'YDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YDatum':
+        ...
+
+
     def __init__(self, datum, axis=Undefined, bandPosition=Undefined, impute=Undefined, scale=Undefined,
                  stack=Undefined, title=Undefined, type=Undefined, **kwds):
         super(YDatum, self).__init__(datum=datum, axis=axis, bandPosition=bandPosition, impute=impute,
                                      scale=scale, stack=stack, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YValue(ValueChannelMixin, core.PositionValueDef):
     """YValue schema wrapper
 
@@ -11027,10 +14756,13 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
+    
+
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """Y2 schema wrapper
 
@@ -11124,12 +14856,56 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'Y2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'Y2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Y2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bandPosition=bandPosition,
                                  bin=bin, field=field, timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class Y2Datum(DatumChannelMixin, core.DatumDef):
     """Y2Datum schema wrapper
 
@@ -11142,8 +14918,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     title : anyOf(:class:`Text`, None)
         A title for the field. If ``null``, the title will be removed.
@@ -11237,11 +15012,28 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
+
+    def bandPosition(self, _: float, **kwds) -> 'Y2Datum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'Y2Datum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'Y2Datum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'Y2Datum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Y2Datum, self).__init__(datum=datum, bandPosition=bandPosition, title=title, type=type,
                                       **kwds)
 
 
+@with_property_setters
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """Y2Value schema wrapper
 
@@ -11260,10 +15052,13 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
+    
+
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YError(FieldChannelMixin, core.SecondaryFieldDef):
     """YError schema wrapper
 
@@ -11357,6 +15152,49 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YError':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YError':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'YError':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11364,6 +15202,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
                                      title=title, **kwds)
 
 
+@with_property_setters
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """YErrorValue schema wrapper
 
@@ -11382,10 +15221,13 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
+    
+
     def __init__(self, value, **kwds):
         super(YErrorValue, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     """YError2 schema wrapper
 
@@ -11479,6 +15321,49 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YError2':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YError2':
+        ...
+
+    def bin(self, _: None, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'YError2':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate,
@@ -11486,6 +15371,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
+@with_property_setters
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """YError2Value schema wrapper
 
@@ -11504,10 +15390,13 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
+    
+
     def __init__(self, value, **kwds):
         super(YError2Value, self).__init__(value=value, **kwds)
 
 
+@with_property_setters
 class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     """YOffset schema wrapper
 
@@ -11605,8 +15494,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
           <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
           sort order will obey the values in the array, followed by any unspecified values
           in their original order. For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
           insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
         * ``null`` indicating no sort.
 
@@ -11719,6 +15609,89 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
+    @overload
+    def aggregate(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmax=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def aggregate(self, argmin=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    def bandPosition(self, _: float, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, _: bool, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def bin(self, _: None, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def field(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def field(self, repeat=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: None, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'YOffset':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
                  type=Undefined, **kwds):
@@ -11727,6 +15700,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """YOffsetDatum schema wrapper
 
@@ -11739,8 +15713,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`,
-    :class:`RepeatRef`)
+    datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
@@ -11847,12 +15820,37 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    def bandPosition(self, _: float, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def title(self, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: None, **kwds) -> 'YOffsetDatum':
+        ...
+
+    def type(self, _: str, **kwds) -> 'YOffsetDatum':
+        ...
+
+
     def __init__(self, datum, bandPosition=Undefined, scale=Undefined, title=Undefined, type=Undefined,
                  **kwds):
         super(YOffsetDatum, self).__init__(datum=datum, bandPosition=bandPosition, scale=scale,
                                            title=title, type=type, **kwds)
 
 
+@with_property_setters
 class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """YOffsetValue schema wrapper
 
@@ -11870,6 +15868,8 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
+
+    
 
     def __init__(self, value, **kwds):
         super(YOffsetValue, self).__init__(value=value, **kwds)
