@@ -631,14 +631,14 @@ def test_themes():
         alt.themes.enable("default")
         assert chart.to_dict()["config"] == {
             "mark": {"tooltip": None},
-            "view": {"width": 300, "height": 300},
+            "view": {"width": 400, "height": 300},
         }
 
         alt.themes.enable("opaque")
         assert chart.to_dict()["config"] == {
             "background": "white",
             "mark": {"tooltip": None},
-            "view": {"width": 300, "height": 300},
+            "view": {"width": 400, "height": 300},
         }
 
         alt.themes.enable("none")
