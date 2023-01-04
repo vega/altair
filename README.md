@@ -101,8 +101,7 @@ For full installation instructions, please see [the documentation](https://altai
 
 ## Getting Help
 If you have a question that is not addressed in the documentation, 
-you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag
-or ask on the [Vega-Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz).
+you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag.
 For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
 
 ## Development
