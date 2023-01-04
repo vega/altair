@@ -109,7 +109,6 @@ def _prepare_data(data, context=None):
 Bin = core.BinParams
 Impute = core.ImputeParams
 Title = core.TitleParams
-Stack = core.StackOffset
 
 
 @utils.use_signature(core.LookupData)
