@@ -4,7 +4,7 @@ Getting Help
 Altair is BSD-licensed and the source is available on `GitHub`_,
 where you can also report `bugs and feature requests`_.
 For general questions, please ask on `StackOverflow`_
-using the `altair` tag or in the `Vega-Altair Google Group`_.
+using the `altair` tag.
 
 You can browse this documentation
 via the links in the top navigation panel
@@ -18,4 +18,3 @@ it can be helpful to also browse the `Vega-Lite documentation <https://vega.gith
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _bugs and feature requests: https://github.com/altair-viz/altair/issues/new/choose
 .. _StackOverflow: https://stackoverflow.com/tags/altair
-.. _Vega-Altair Google Group: https://groups.google.com/forum/#!forum/altair-viz
