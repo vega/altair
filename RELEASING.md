@@ -1,7 +1,6 @@
 1. Create a new virtual environment following the instructions in `CONTRIBUTING.md`. 
    Make sure to also install all dependencies for the documentation including `altair_saver`
-   and uninstall `vl-convert-python` (the uninstall step is not needed for normal contributions
-   to the repo, see `CONTRIBUTING.md` for details).
+   and uninstall `vl-convert-python` (this is not needed for normal contributions to the repo, see `CONTRIBUTING.md` for details).
 
 2. Make certain your branch is in sync with head
    
@@ -33,12 +32,12 @@
 7. Commit change and push to master:
 
        git add . -u
-       git commit -m "MAINT: bump version to 2.0.0"
+       git commit -m "MAINT: bump version to 5.0.0"
        git push upstream master
 
 8. Tag the release:
 
-       git tag -a v2.0.0 -m "version 2.0.0 release"
+       git tag -a v5.0.0 -m "version 5.0.0 release"
        git push upstream v2.0.0
 
 9. Build source & wheel distributions:
