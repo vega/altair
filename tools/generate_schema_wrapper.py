@@ -248,7 +248,7 @@ def download_schemafile(library, version, schemapath, skip_download=False):
 
 def copy_schemapi_util():
     """
-    Copy the schemapi utility and its test file into altair/utils/
+    Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
     """
     # copy the schemapi utility file
     source_path = abspath(join(dirname(__file__), "schemapi", "schemapi.py"))
@@ -267,7 +267,7 @@ def copy_schemapi_util():
         join(dirname(__file__), "schemapi", "tests", "test_schemapi.py")
     )
     destination_path = abspath(
-        join(dirname(__file__), "..", "altair", "utils", "tests", "test_schemapi.py")
+        join(dirname(__file__), "..", "tests", "utils", "tests", "test_schemapi.py")
     )
 
     print("Copying\n {}\n  -> {}".format(source_path, destination_path))
