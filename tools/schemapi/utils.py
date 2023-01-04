@@ -1,8 +1,6 @@
 """Utilities for working with schemas"""
 
-import json
 import keyword
-import pkgutil
 import re
 import textwrap
 import urllib
@@ -11,12 +9,6 @@ import jsonschema
 
 
 EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
-
-
-def load_metaschema():
-    schema = pkgutil.get_data("schemapi", "jsonschema-draft04.json")
-    schema = schema.decode()
-    return json.loads(schema)
 
 
 def resolve_references(schema, root=None):
@@ -144,7 +136,7 @@ class SchemaProperties(object):
 class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
 
-    def __init__(self, schema, rootschema=None, validate=False):
+    def __init__(self, schema, rootschema=None):
         if hasattr(schema, "_schema"):
             if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -152,10 +144,6 @@ class SchemaInfo(object):
                 schema, rootschema = schema._schema, schema._schema
         elif not rootschema:
             rootschema = schema
-        if validate:
-            metaschema = load_metaschema()
-            jsonschema.validate(schema, metaschema)
-            jsonschema.validate(rootschema, metaschema)
         self.raw_schema = schema
         self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
