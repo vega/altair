@@ -22,7 +22,7 @@ However, such a proliferation of options creates great difficulty for users
 as they have to wade through all of these APIs to find which of them is the
 best for the task at hand. None of these libraries are optimized for
 high-level statistical visualization, so users have to assemble their own
-using a mishmash of APIs. For individuals just learning data science, this
+using a mishmash of APIs. For individuals just learning to work with data, this
 forces them to focus on learning APIs rather than exploring their data.
 
 Another challenge is current plotting APIs require the user to write code,
@@ -62,6 +62,9 @@ We realize that a declarative API will necessarily be limited compared to the
 full programmatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design
 choice we feel is needed to simplify the user experience of exploratory
 visualization.
+
+You can find a more detailed comparison between Plotly and Altair in
+`this StackOverflow answer <https://stackoverflow.com/a/66040502>`.
 
 Whence Vega-Altair?
 -------------------
