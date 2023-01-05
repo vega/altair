@@ -1,5 +1,6 @@
 import json
 import pathlib
+import warnings
 
 from .mimebundle import spec_to_mimebundle
 
@@ -27,6 +28,7 @@ def save(
     webdriver=None,
     scale_factor=1,
     engine=None,
+    inline=False,
     **kwargs,
 ):
     """Save a chart to file in a variety of formats
@@ -64,6 +66,12 @@ def save(
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
+    inline: bool (optional)
+        If False (default), the required JavaScript libraries are loaded
+        from a CDN location in the resulting html file.
+        If True, the required JavaScript libraries are inlined into the resulting
+        html file so that it will work without an internet connection.
+        The altair_viewer package is required if True.
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
@@ -99,6 +107,9 @@ def save(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
 
+    if format != "html" and inline:
+        warnings.warn("inline argument ignored for non HTML formats.")
+
     if format == "json":
         json_spec = json.dumps(spec, **json_kwds)
         write_file_or_filename(fp, json_spec, mode="w")
@@ -111,6 +122,7 @@ def save(
             vegalite_version=vegalite_version,
             vegaembed_version=vegaembed_version,
             embed_options=embed_options,
+            template="inline" if inline else "standard",
             json_kwds=json_kwds,
             **kwargs,
         )
