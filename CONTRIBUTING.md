@@ -152,6 +152,9 @@ Some additional notes:
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
+- If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
+  then add the name of the example to the `SVG_EXAMPLES` set in 
+  `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`
 
 ### Building the Documentation Locally
 In addition to the development dependencies mentioned further above,
