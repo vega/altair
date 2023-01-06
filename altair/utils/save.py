@@ -33,7 +33,7 @@ def save(
 ):
     """Save a chart to file in a variety of formats
 
-    Supported formats are [json, html, png, svg]
+    Supported formats are [json, html, png, svg, pdf]
 
     Parameters
     ----------
