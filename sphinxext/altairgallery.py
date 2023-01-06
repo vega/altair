@@ -96,7 +96,7 @@ MINIGALLERY_TEMPLATE = jinja2.Template(
     <div id="showcase">
       <div class="examples">
       {% for example in examples %}
-      <a 
+      <a
         class="preview" href="{{ gallery_dir }}/{{ example.name }}.html"
 {% if example['use_svg'] %}
         style="background-image: url(.{{ image_dir }}/{{ example.name }}-thumb.svg)"
