@@ -42,7 +42,7 @@ def save(
     fp : string filename, pathlib.Path or file-like object
         file to which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'svg'].
+        the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
         Either 'vega' or 'vegalite'. If not specified, then infer the mode from
