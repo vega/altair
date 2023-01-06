@@ -16,4 +16,6 @@ def iter_examples_arguments_syntax():
         yield {
             "name": name,
             "filename": os.path.join(examples_arguments_syntax_dir, filename),
+            # Use SVG image previews for charts not supported by vl-convert's PNG export
+            "use_svg": name in ["isotype_emoji"]
         }

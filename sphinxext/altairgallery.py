@@ -5,6 +5,7 @@ import random
 import collections
 from operator import itemgetter
 import warnings
+import shutil
 
 import jinja2
 
@@ -59,7 +60,15 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
    <span class="gallery">
    {% for example in group %}
    <a class="imagegroup" href="{{ example.name }}.html">
-     <span class="image" alt="{{ example.title }}" style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.png);"></span>
+   <span
+        class="image" alt="{{ example.title }}"
+{% if example['use_svg'] %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.svg);"
+{% else %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.png);"
+{% endif %}
+    ></span>
+
      <span class="image-title">{{ example.title }}</span>
    </a>
    {% endfor %}
@@ -87,7 +96,14 @@ MINIGALLERY_TEMPLATE = jinja2.Template(
     <div id="showcase">
       <div class="examples">
       {% for example in examples %}
-        <a class="preview" href="{{ gallery_dir }}/{{ example.name }}.html" style="background-image: url(.{{ image_dir }}/{{ example.name }}-thumb.png)"></a>
+      <a 
+        class="preview" href="{{ gallery_dir }}/{{ example.name }}.html"
+{% if example['use_svg'] %}
+        style="background-image: url(.{{ image_dir }}/{{ example.name }}-thumb.svg)"
+{% else %}
+        style="background-image: url(.{{ image_dir }}/{{ example.name }}-thumb.png)"
+{% endif %}
+      ></a>
       {% endfor %}
       </div>
     </div>
@@ -130,7 +146,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
         hashes = {}
 
     for example in examples:
-        filename = example["name"] + ".png"
+        filename = example["name"] + (".svg" if example["use_svg"] else ".png")
         image_file = os.path.join(image_dir, filename)
 
         example_hash = hashlib.md5(example["code"].encode()).hexdigest()
@@ -154,8 +170,13 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
 
         if make_thumbnails:
             params = example.get("galleryParameters", {})
-            thumb_file = os.path.join(image_dir, example["name"] + "-thumb.png")
-            create_thumbnail(image_file, thumb_file, **params)
+            if example["use_svg"]:
+                # Thumbnail for SVG is identical to original image
+                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.svg")
+                shutil.copyfile(image_file, thumb_file)
+            else:
+                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.png")
+                create_thumbnail(image_file, thumb_file, **params)
 
     # Save hashes so we know whether we need to re-generate plots
     with open(hash_file, "w") as f:
