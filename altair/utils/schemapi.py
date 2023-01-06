@@ -139,6 +139,59 @@ class SchemaValidationError(jsonschema.ValidationError):
             contents = {key: getattr(err, key) for key in spec.args[1:]}
         return contents
 
+    @staticmethod
+    def _format_params_as_table(param_dict_keys):
+        """Format param names into a table so that they are easier to read"""
+        param_names, name_lengths = zip(
+            *[(name, len(name)) for name in param_dict_keys if name != "kwds"]
+        )
+        # Worst case scenario with the same longest param name in the same
+        # row for all columns
+        max_name_length = max(name_lengths)
+        max_column_width = 80
+        # Output a square table if not too big (since it is easier to read)
+        num_param_names = len(param_names)
+        square_columns = int(np.ceil(num_param_names**0.5))
+        columns = min(max_column_width // max_name_length, square_columns)
+
+        # Compute roughly equal column heights to evenly divide the param names
+        def split_into_equal_parts(n, p):
+            return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
+
+        column_heights = split_into_equal_parts(num_param_names, columns)
+
+        # Section the param names into columns and compute their widths
+        param_names_columns = []
+        column_max_widths = []
+        last_end_idx = 0
+        for ch in column_heights:
+            param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
+            column_max_widths.append(
+                max([len(param_name) for param_name in param_names_columns[-1]])
+            )
+            last_end_idx = ch + last_end_idx
+
+        # Transpose the param name columns into rows to facilitate looping
+        param_names_rows = []
+        for li in zip_longest(*param_names_columns, fillvalue=""):
+            param_names_rows.append(li)
+        # Build the table as a string by iterating over and formatting the rows
+        param_names_table = ""
+        for param_names_row in param_names_rows:
+            for num, param_name in enumerate(param_names_row):
+                # Set column width based on the longest param in the column
+                max_name_length_column = column_max_widths[num]
+                column_pad = 3
+                param_names_table += "{:<{}}".format(
+                    param_name, max_name_length_column + column_pad
+                )
+                # Insert newlines and spacing after the last element in each row
+                if num == (len(param_names_row) - 1):
+                    param_names_table += "\n"
+                    # 16 is the indendation of the returned multiline string below
+                    param_names_table += " " * 16
+        return param_names_table
+
     def __str__(self):
         cls = self.obj.__class__
         schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
@@ -153,59 +206,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             altair_class = "altair." + schema_path.split(".")[-1]
             vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
             param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
-
-            # Everything from here until the return statement is to format
-            # param names into a table so that they are easier to read
-            param_names, name_lengths = zip(
-                *[(name, len(name)) for name in param_dict_keys if name != "kwds"]
-            )
-            # Worst case scenario with the same longest param name in the same
-            # row for all columns
-            max_name_length = max(name_lengths)
-            max_column_width = 80
-            # Output a square table if not too big (since it is easier to read)
-            num_param_names = len(param_names)
-            square_columns = int(np.ceil(num_param_names**0.5))
-            columns = min(max_column_width // max_name_length, square_columns)
-
-            # Compute roughly equal column heights to evenly divide the param names
-            def split_into_equal_parts(n, p):
-                return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
-
-            column_heights = split_into_equal_parts(num_param_names, columns)
-
-            # Section the param names into columns and compute their widths
-            param_names_columns = []
-            column_max_widths = []
-            last_end_idx = 0
-            for ch in column_heights:
-                param_names_columns.append(
-                    param_names[last_end_idx : last_end_idx + ch]
-                )
-                column_max_widths.append(
-                    max([len(param_name) for param_name in param_names_columns[-1]])
-                )
-                last_end_idx = ch + last_end_idx
-
-            # Transpose the param name columns into rows to facilitate looping
-            param_names_rows = []
-            for li in zip_longest(*param_names_columns, fillvalue=""):
-                param_names_rows.append(li)
-            # Build the table as a string by iterating over and formatting the rows
-            param_names_table = ""
-            for param_names_row in param_names_rows:
-                for num, param_name in enumerate(param_names_row):
-                    # Set column width based on the longest param in the column
-                    max_name_length_column = column_max_widths[num]
-                    column_pad = 3
-                    param_names_table += "{:<{}}".format(
-                        param_name, max_name_length_column + column_pad
-                    )
-                    # Insert newlines and spacing after the last element in each row
-                    if num == (len(param_names_row) - 1):
-                        param_names_table += "\n"
-                        # 16 is the indendation of the returned multiline string below
-                        param_names_table += " " * 16
+            param_names_table = self._format_params_as_table(param_dict_keys)
 
             # cleandoc removes multiline string indentation in the output
             return inspect.cleandoc(
