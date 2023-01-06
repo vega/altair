@@ -1,5 +1,9 @@
 import os
 
+# Set of the names of examples that should have SVG static images.
+# This is for examples that VlConvert's PNG export does not support.
+SVG_EXAMPLES = {"isotype_emoji"}
+
 
 def iter_examples_methods_syntax():
     """Iterate over the examples in this directory.
@@ -16,4 +20,5 @@ def iter_examples_methods_syntax():
         yield {
             "name": name,
             "filename": os.path.join(examples_methods_syntax_dir, filename),
+            "use_svg": name in SVG_EXAMPLES
         }
