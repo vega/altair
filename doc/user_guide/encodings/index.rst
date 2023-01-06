@@ -320,7 +320,7 @@ Sort Option
 Some channels accept a  :class:`sort` option which determines the
 order of the scale being used for the channel.
 By default the scale is sorted in ascending alphabetical order,
-unless an `ordered pandas categorical column <https://pandas.pydata.org/docs/user_guide/categorical.html?highlight=categorical#sorting-and-order>`_ is passed
+unless an `ordered pandas categorical column <https://pandas.pydata.org/docs/user_guide/categorical.html?highlight=categorical#sorting-and-order>`_ is passed (without an explicit type specification)
 in which case Altair will use the column's inherent order to sort the scale.
 There are a number of different
 options available to change the sort order:
