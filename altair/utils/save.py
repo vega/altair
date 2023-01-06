@@ -114,6 +114,8 @@ def save(
         json_spec = json.dumps(spec, **json_kwds)
         write_file_or_filename(fp, json_spec, mode="w")
     elif format == "html":
+        if inline:
+            kwargs["template"] = "inline"
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,
@@ -122,7 +124,6 @@ def save(
             vegalite_version=vegalite_version,
             vegaembed_version=vegaembed_version,
             embed_options=embed_options,
-            template="inline" if inline else "standard",
             json_kwds=json_kwds,
             **kwargs,
         )
