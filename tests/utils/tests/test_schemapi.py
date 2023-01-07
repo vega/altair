@@ -9,6 +9,7 @@ import pytest
 
 import numpy as np
 
+from altair import load_schema
 from altair.utils.schemapi import (
     UndefinedType,
     SchemaBase,
@@ -17,6 +18,7 @@ from altair.utils.schemapi import (
     SchemaValidationError,
 )
 
+_JSONSCHEMA_DRAFT = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
 
@@ -29,6 +31,7 @@ class _TestSchema(SchemaBase):
 
 class MySchema(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "StringMapping": {
                 "type": "object",
@@ -65,6 +68,7 @@ class StringArray(_TestSchema):
 
 class Derived(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "Foo": {"type": "object", "properties": {"d": {"type": "string"}}},
             "Bar": {"type": "string", "enum": ["A", "B"]},
@@ -90,7 +94,10 @@ class Bar(_TestSchema):
 
 
 class SimpleUnion(_TestSchema):
-    _schema = {"anyOf": [{"type": "integer"}, {"type": "string"}]}
+    _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
+        "anyOf": [{"type": "integer"}, {"type": "string"}],
+    }
 
 
 class DefinitionUnion(_TestSchema):
@@ -100,6 +107,7 @@ class DefinitionUnion(_TestSchema):
 
 class SimpleArray(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "array",
         "items": {"anyOf": [{"type": "integer"}, {"type": "string"}]},
     }
@@ -107,8 +115,27 @@ class SimpleArray(_TestSchema):
 
 class InvalidProperties(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "object",
         "properties": {"for": {}, "as": {}, "vega-lite": {}, "$schema": {}},
+    }
+
+
+class Draft7Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
+    }
+
+
+class Draft202012Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft/2020-12/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
     }
 
 
@@ -219,6 +246,21 @@ def test_invalid_properties():
 
 def test_undefined_singleton():
     assert Undefined is UndefinedType()
+
+
+def test_schema_validator_selection():
+    # Tests if the correct validator class is chosen based on the $schema
+    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
+    # introduced changes to the "items" keyword, see
+    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
+    # items-and-additionalitems
+    dct = {
+        "e": ["a", "b"],
+    }
+
+    assert Draft7Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
+        Draft202012Schema.from_dict(dct)
 
 
 @pytest.fixture
