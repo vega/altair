@@ -65,6 +65,7 @@ def _deprecate(obj, name=None, message=None):
             warnings.warn(message, AltairDeprecationWarning)
             return obj(*args, **kwargs)
 
+        new_obj._deprecated = True
         return new_obj
     else:
         raise ValueError("Cannot deprecate object of type {}".format(type(obj)))
