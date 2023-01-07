@@ -4,7 +4,7 @@ install:
 	python setup.py install
 
 test :
-	black --diff --color .
+	black --diff --color --check .
 	flake8 . --statistics
 	python -m pytest --pyargs --doctest-modules tests
 
