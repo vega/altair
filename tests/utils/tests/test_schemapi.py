@@ -121,6 +121,24 @@ class InvalidProperties(_TestSchema):
     }
 
 
+class Draft7Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
+    }
+
+
+class Draft202012Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft/2020-12/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
+    }
+
+
 def test_construct_multifaceted_schema():
     dct = {
         "a": {"foo": "bar"},
@@ -228,6 +246,21 @@ def test_invalid_properties():
 
 def test_undefined_singleton():
     assert Undefined is UndefinedType()
+
+
+def test_schema_validator_selection():
+    # Tests if the correct validator class is chosen based on the $schema
+    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
+    # introduced changes to the "items" keyword, see
+    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
+    # items-and-additionalitems
+    dct = {
+        "e": ["a", "b"],
+    }
+
+    assert Draft7Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
+        Draft202012Schema.from_dict(dct)
 
 
 @pytest.fixture
