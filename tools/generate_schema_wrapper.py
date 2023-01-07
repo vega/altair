@@ -132,11 +132,8 @@ class FieldChannelMixin(object):
             # Shorthand is not a string; we pass the definition to field,
             # and do not do any parsing.
             parsed = {'field': shorthand}
+        context["parsed_shorthand"] = parsed
 
-        # Set shorthand to Undefined, because it's not part of the base schema.
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in parsed.items()
-                           if self._get(k) is Undefined})
         return super(FieldChannelMixin, self).to_dict(
             validate=validate,
             ignore=ignore,

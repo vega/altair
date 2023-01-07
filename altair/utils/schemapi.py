@@ -350,8 +350,24 @@ class SchemaBase(object):
         if self._args and not self._kwds:
             result = _todict(self._args[0], validate=sub_validate, context=context)
         elif not self._args:
+            kwds = self._kwds.copy()
+            # parsed_shorthand is added by FieldChannelMixin.
+            # It's used below to replace shorthand with its long form equivalent
+            # parsed_shorthand is removed from context if it exists so that it is
+            # not passed to child to_dict function calls
+            parsed_shorthand = context.pop("parsed_shorthand", {})
+            kwds.update(
+                {
+                    k: v
+                    for k, v in parsed_shorthand.items()
+                    if kwds.get(k, Undefined) is Undefined
+                }
+            )
+            kwds = {
+                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
+            }
             result = _todict(
-                {k: v for k, v in self._kwds.items() if k not in ignore},
+                kwds,
                 validate=sub_validate,
                 context=context,
             )
