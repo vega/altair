@@ -60,9 +60,10 @@ def validate_jsonschema(spec, schema, rootschema=None):
         # No resolver is necessary if the schema is already the full schema
         resolver = None
 
-    validator = validator_cls(
-        schema, format_checker=validator_cls.FORMAT_CHECKER, resolver=resolver
-    )
+    validator_kwargs = {"resolver": resolver}
+    if hasattr(validator_cls, "FORMAT_CHECKER"):
+        validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
+    validator = validator_cls(schema, **validator_kwargs)
     error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
     if error is not None:
         raise error
