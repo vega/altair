@@ -11,23 +11,18 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
-The altair users mailing list can be found at
-https://groups.google.com/forum/#!forum/altair-viz. If you are working on
-Altair, you can talk to other developers in the `#altair` channel of the [Vega
-slack](https://bit.ly/join-vega-slack).
-
 ## How To Contribute Code to Altair
 
 ### Setting Up Your Environment
 
-Fork the Altair repository on GitHub and clone the fork to you local
+Fork the Altair repository on GitHub and then clone the fork to you local
 machine. For more details on forking see the [GitHub
 Documentation](https://help.github.com/en/articles/fork-a-repo).
 ```
 $ git clone https://github.com/YOUR-USERNAME/altair.git
 ```
 
-To keep your fork up to date with changes in the this repo,
+To keep your fork up to date with changes in this repo,
 you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
 Now you can install the latest version of Altair locally using `pip`.
@@ -36,14 +31,11 @@ every time you open a new Python interpreter
 (instead of having to reinstall the package each time).
 ```
 $ cd altair/ 
-$ python -m pip install -e .
+$ python -m pip install -e '.[dev]'
 ```
 
-You can now install the development requirements using
-```
-$ python -m pip install -r requirements_dev.txt
-```
-
+'[dev]' indicates that pip should also install the development requirements
+which you can find in `requirements_dev.txt`
 
 ### Creating a Branch
 
@@ -55,14 +47,6 @@ $ git switch -c <branch-name>
 ```
 With this branch checked-out, make the desired changes to the package.
 
-Note that Altair code uses the [black](https://black.readthedocs.io/)
-code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter
-which you can apply to your modifications by running:
-```
-$ black --diff .  # View changes
-$ black .  # Apply changes
-$ flake8 .  --statistics  # View changes (fix manually)
-```
 
 ### Testing your Changes
 
@@ -73,6 +57,9 @@ which includes a number of tests to validate the correctness of your code:
 ```
 $ make test
 ```
+
+This also runs the [black](https://black.readthedocs.io/)
+code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter.
 
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
@@ -98,7 +85,18 @@ automatically shown in the PR.
 Hopefully your PR will be answered in a timely manner and your contribution will
 help others in the future.
 
-## Adding Examples
+## Documentation
+Altair documentation is written in [reStructuredText](http://docutils.sourceforge.net/rst.html)
+and compiled into html pages using [Sphinx](http://www.sphinx-doc.org/en/master/).
+Contributing to the documentation requires some extra dependencies and 
+we have some conventions and plugins that are used to help navigate the docs and 
+generate great Altair visualizations. 
+
+Note that the [Altair website](https://altair-viz.github.io/)
+is only updated when a new version is released so your contribution might not show
+up for a while.
+
+### Adding Examples
 
 We are always interested in new examples contributed from the community.  These
 could be everything from simple one-panel scatter and line plots, to more
@@ -154,7 +152,36 @@ Some additional notes:
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
-  
-Note that examples shown on the [Altair website](https://altair-viz.github.io/)
-are only updated when a new version is released so your new example might not show
-up there for a while. 
+
+### Building the Documentation Locally
+In addition to the development dependencies mentioned further above,
+you will also need to install the dependencies for the documentation 
+listed in  `docs/requirements.txt`. Note that `geopandas` might require you to first
+install some other dependencies, see [their installation page](https://geopandas.org/en/stable/getting_started/install.html#installation)
+for details.
+
+```
+pip install -r doc/requirements.txt
+```
+
+If you want to build the documentation so it can be published on the [official Altair website](https://altair-viz.github.io), you need to
+additionally install [altair_saver](https://github.com/altair-viz/altair_saver/) and uninstall [vl-convert-python](https://github.com/vega/vl-convert/tree/main/vl-convert-python).
+These packages are used to generate PNG thumbnails for the example gallery. If both are installed, `vl-convert-python` is used by default.
+The reason for this is that `vl-convert-python` cannot create a thumbnail for the `isotype_emoji.py` example,
+which is fine for normal contributions but not when creating a new version of the official documentation.
+
+Once you have all the dependencies, you can build the documentation 
+using various commands defined in the Makefile. 
+From the `doc` folder, you can use `make help` to see all of the available commands
+which control the type of documentation you want to generate.
+
+Usually, you will want to run `make html` which will generate the documentation
+in a sub folder `_build/html`. You can then view the documentation by running:
+
+```
+cd _build/html
+python -m http.server
+```
+
+and then opening `http://localhost:8000` in your browser.
+

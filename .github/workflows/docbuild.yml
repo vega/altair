@@ -22,6 +22,7 @@ jobs:
         pip install "selenium<4.3.0"
         pip install altair_saver
         pip install -r doc/requirements.txt
+        pip uninstall vl-convert-python --yes
         pip install git+https://github.com/altair-viz/altair_viewer.git
     - name: Run docbuild
       run: |

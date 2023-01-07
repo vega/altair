@@ -5,3 +5,4 @@ pillow
 mistune<=0.8.4
 pydata-sphinx-theme
 geopandas
+vl-convert-python

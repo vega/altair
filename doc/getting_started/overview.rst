@@ -44,3 +44,4 @@ concise grammar.
    installation
    starting
    getting_help
+   project_philosophy
