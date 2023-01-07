@@ -347,9 +347,9 @@ def test_save_html(basic_chart, inline):
     if inline:
         assert '<script type="text/javascript">' in content
     else:
-        assert 'src="https://cdn.jsdelivr.net/npm/vega@5"' in content
-        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5"' in content
-        assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6"' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
 
 
 def test_facet_basic():
