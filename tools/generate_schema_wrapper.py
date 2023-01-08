@@ -28,46 +28,17 @@ import generate_api_docs  # noqa: E402
 SCHEMA_VERSION = {
     # Uncomment old vega-lite versions here when there are breaking changing
     # that we don't want to backport
-    "vega": {"v5": "v5.21.0"},
+    "vega": {"v5": "v5.21.0"},    
     "vega-lite": {"v5": "v5.2.0"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
 
-
-class SchemaGenerator(codegen.SchemaGenerator):
-    schema_class_template = textwrap.dedent(
-        '''
-    class {classname}({basename}):
-        """{docstring}"""
-        _schema = {schema!r}
-
-        {init_code}
-    '''
-    )
-
-    def _process_description(self, description):
-        description = "".join(
-            [
-                reSpecial.sub("", d) if i % 2 else d
-                for i, d in enumerate(reLink.split(description))
-            ]
-        )  # remove formatting from links
-        description = m2r.convert(description)
-        description = description.replace(m2r.prolog, "")
-        description = description.replace(":raw-html-m2r:", ":raw-html:")
-        description = description.replace(r"\ ,", ",")
-        description = description.replace(r"\ ", " ")
-        # turn explicit references into anonymous references
-        description = description.replace(">`_", ">`__")
-        description += "\n"
-        return description.strip()
-
-
-def schema_class(*args, **kwargs):
-    return SchemaGenerator(*args, **kwargs).schema_class()
-
+HEADER = """\
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
+"""
 
 SCHEMA_URL_TEMPLATE = "https://vega.github.io/schema/" "{library}/{version}.json"
 
@@ -174,6 +145,72 @@ class DatumChannelMixin(object):
                                                       context=context)
 """
 
+MARK_METHOD = '''
+def mark_{mark}({def_arglist}):
+    """Set the chart's mark to '{mark}'
+
+    For information on additional arguments, see :class:`{mark_def}`
+    """
+    kwds = dict({dict_arglist})
+    copy = self.copy(deep=False)
+    if any(val is not Undefined for val in kwds.values()):
+        copy.mark = core.{mark_def}(type="{mark}", **kwds)
+    else:
+        copy.mark = "{mark}"
+    return copy
+'''
+
+CONFIG_METHOD = """
+@use_signature(core.{classname})
+def {method}(self, *args, **kwargs):
+    copy = self.copy(deep=False)
+    copy.config = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+CONFIG_PROP_METHOD = """
+@use_signature(core.{classname})
+def configure_{prop}(self, *args, **kwargs):
+    copy = self.copy(deep=['config'])
+    if copy.config is Undefined:
+        copy.config = core.Config()
+    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+
+class SchemaGenerator(codegen.SchemaGenerator):
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+        _schema = {schema!r}
+
+        {init_code}
+    '''
+    )
+
+    def _process_description(self, description):
+        description = "".join(
+            [
+                reSpecial.sub("", d) if i % 2 else d
+                for i, d in enumerate(reLink.split(description))
+            ]
+        )  # remove formatting from links
+        description = m2r.convert(description)
+        description = description.replace(m2r.prolog, "")
+        description = description.replace(":raw-html-m2r:", ":raw-html:")
+        description = description.replace(r"\ ,", ",")
+        description = description.replace(r"\ ", " ")
+        # turn explicit references into anonymous references
+        description = description.replace(">`_", ">`__")
+        description += "\n"
+        return description.strip()
+
+
+def schema_class(*args, **kwargs):
+    return SchemaGenerator(*args, **kwargs).schema_class()
+
 
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -221,12 +258,6 @@ class DatumSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
-
-
-HEADER = """\
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
-"""
 
 
 def schema_url(library, version):
@@ -502,22 +533,6 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     return "\n".join(contents)
 
 
-MARK_METHOD = '''
-def mark_{mark}({def_arglist}):
-    """Set the chart's mark to '{mark}'
-
-    For information on additional arguments, see :class:`{mark_def}`
-    """
-    kwds = dict({dict_arglist})
-    copy = self.copy(deep=False)
-    if any(val is not Undefined for val in kwds.values()):
-        copy.mark = core.{mark_def}(type="{mark}", **kwds)
-    else:
-        copy.mark = "{mark}"
-    return copy
-'''
-
-
 def generate_vegalite_mark_mixin(schemafile, markdefs):
     with open(schemafile, encoding="utf8") as f:
         schema = json.load(f)
@@ -561,25 +576,6 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
             code.append("\n    ".join(mark_method.splitlines()))
 
     return imports, "\n".join(code)
-
-
-CONFIG_METHOD = """
-@use_signature(core.{classname})
-def {method}(self, *args, **kwargs):
-    copy = self.copy(deep=False)
-    copy.config = core.{classname}(*args, **kwargs)
-    return copy
-"""
-
-CONFIG_PROP_METHOD = """
-@use_signature(core.{classname})
-def configure_{prop}(self, *args, **kwargs):
-    copy = self.copy(deep=['config'])
-    if copy.config is Undefined:
-        copy.config = core.Config()
-    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
-    return copy
-"""
 
 
 def generate_vegalite_config_mixin(schemafile):
