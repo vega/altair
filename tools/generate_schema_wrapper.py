@@ -26,9 +26,6 @@ import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    # Uncomment old vega-lite versions here when there are breaking changing
-    # that we don't want to backport
-    "vega": {"v5": "v5.21.0"},    
     "vega-lite": {"v5": "v5.2.0"},
 }
 
@@ -208,10 +205,6 @@ class SchemaGenerator(codegen.SchemaGenerator):
         return description.strip()
 
 
-def schema_class(*args, **kwargs):
-    return SchemaGenerator(*args, **kwargs).schema_class()
-
-
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
@@ -258,6 +251,10 @@ class DatumSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+
+
+def schema_class(*args, **kwargs):
+    return SchemaGenerator(*args, **kwargs).schema_class()
 
 
 def schema_url(library, version):
@@ -420,44 +417,6 @@ def generate_vegalite_schema_wrapper(schema_file):
     for name in toposort(graph):
         contents.append(definitions[name].schema_class())
 
-    contents.append("")  # end with newline
-    return "\n".join(contents)
-
-
-def generate_vega_schema_wrapper(schema_file):
-    """Generate a schema wrapper at the given path."""
-    # TODO: generate simple tests for each wrapper
-    basename = "VegaSchema"
-
-    with open(schema_file, encoding="utf8") as f:
-        rootschema = json.load(f)
-    contents = [
-        HEADER,
-        "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
-        LOAD_SCHEMA.format(schemafile="vega-schema.json"),
-    ]
-    contents.append(BASE_SCHEMA.format(basename=basename))
-    contents.append(
-        schema_class(
-            "Root",
-            schema=rootschema,
-            basename=basename,
-            schemarepr=CodeSnippet("{}._rootschema".format(basename)),
-        )
-    )
-    for name in rootschema["definitions"]:
-        defschema = {"$ref": f"#/definitions/{name}"}
-        defschema_repr = {"$ref": f"#/definitions/{name}"}
-        contents.append(
-            schema_class(
-                get_valid_identifier(name),
-                schema=defschema,
-                schemarepr=defschema_repr,
-                rootschema=rootschema,
-                basename=basename,
-                rootschemarepr=CodeSnippet("Root._schema"),
-            )
-        )
     contents.append("")  # end with newline
     return "\n".join(contents)
 
@@ -660,38 +619,6 @@ def vegalite_main(skip_download=False):
             f.write(config_mixin)
 
 
-def vega_main(skip_download=False):
-    library = "vega"
-
-    for version in SCHEMA_VERSION[library]:
-        path = abspath(join(dirname(__file__), "..", "altair", "vega", version))
-        schemapath = os.path.join(path, "schema")
-        schemafile = download_schemafile(
-            library=library,
-            version=version,
-            schemapath=schemapath,
-            skip_download=skip_download,
-        )
-
-        # Generate __init__.py file
-        outfile = join(schemapath, "__init__.py")
-        print("Writing {}".format(outfile))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write("# flake8: noqa\n")
-            f.write("from .core import *\n\n")
-            f.write(
-                "SCHEMA_VERSION = {!r}\n" "".format(SCHEMA_VERSION[library][version])
-            )
-            f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(library, version)))
-
-        # Generate the core schema wrappers
-        outfile = join(schemapath, "core.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        file_contents = generate_vega_schema_wrapper(schemafile)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(file_contents)
-
-
 def main():
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
@@ -702,7 +629,6 @@ def main():
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
-    vega_main(args.skip_download)
 
     generate_api_docs.write_api_file()
 
