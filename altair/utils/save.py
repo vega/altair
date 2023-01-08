@@ -101,8 +101,8 @@ def save(
         else:
             mode = "vega-lite"
 
-    if mode not in ["vega", "vega-lite"]:
-        raise ValueError("mode must be 'vega' or 'vega-lite', " "not '{}'".format(mode))
+    if mode not in ["vega-lite"]:
+        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
 
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
