@@ -41,7 +41,7 @@ The contents of the resulting file will look something like this:
       "config": {
         "view": {
           "continuousHeight": 300,
-          "continuousWidth": 400
+          "continuousWidth": 300
         }
       },
       "data": {
@@ -90,7 +90,7 @@ javascript-enabled web browser:
     <html>
     <head>
       <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
       <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     </head>
     <body>
@@ -101,7 +101,7 @@ javascript-enabled web browser:
           "config": {
             "view": {
               "continuousHeight": 300,
-              "continuousWidth": 400
+              "continuousWidth": 300
             }
           },
           "data": {
