@@ -11,8 +11,7 @@ exclude = '''
   | dist
   | doc
   | tests/examples_arguments_syntax
-  | tests/examples_methods_syntax  
-  | altair/vega/v\d*/schema
+  | tests/examples_methods_syntax
   | altair/vegalite/v\d*/schema
 )/
 '''
