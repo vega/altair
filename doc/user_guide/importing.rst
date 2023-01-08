@@ -1,14 +1,13 @@
 .. _importing:
 
-Importing Vega & Vega-Lite Versions
+Importing Vega-Lite Versions
 ===================================
 
 The main Altair API is based on version 5.X of `Vega-Lite`_. The core of the API,
 found in the ``altair.vegalite.v5.schema`` module, is programmatically generated
 from the Vega-Lite schema.
 
-Altair additionally provides wrappers for some of the previous `Vega-Lite`_ schemas
-and the current `Vega`_ schema (``altair.vega.v5``).
+Altair additionally provides wrappers for some of the previous `Vega-Lite`_ schemas.
 
 So, for example, if you would like to create Altair plots targeting Vega-Lite
 version 3, you can use::
@@ -19,15 +18,8 @@ and then proceed to use the Altair version 3 API.
 
 .. note::
 
-  We strongly recommend all users transition to Vega-Lite 5.x and Vega 5.x.
+  We strongly recommend all users transition to Vega-Lite 5.x.
   These versions support many new features, are more stable, and Altair 5
   works best with them.
 
-Because Altair has focused primarily on the vega-lite API, the vega wrappers are
-far less developed than the vega-lite wrappers, though it is possible to
-create Vega plots using a very low-level Python interface that mirrors the
-schema itself.
-
-
 .. _Vega-Lite: http://vega.github.io/vega-lite/
-.. _Vega: http://vega.github.io/vega/
