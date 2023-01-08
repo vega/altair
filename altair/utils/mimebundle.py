@@ -71,8 +71,7 @@ def spec_to_mimebundle(
     if format == "json":
         return {"application/json": spec}
     raise ValueError(
-        "format must be one of "
-        "['html', 'json', 'png', 'svg', 'pdf', 'vega-lite']"
+        "format must be one of ['html', 'json', 'png', 'svg', 'pdf', 'vega-lite']"
     )
 
 
