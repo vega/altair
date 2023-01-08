@@ -54,7 +54,7 @@ simple chart made from a dataframe with three rows of data:
 .. code-block:: none
 
     {'$schema': 'https://vega.github.io/schema/vega-lite/v2.4.1.json',
-     'config': {'view': {'height': 300, 'width': 400}},
+     'config': {'view': {'height': 300, 'width': 300}},
      'data': {'values': [{'x': 1, 'y': 2}, {'x': 2, 'y': 1}, {'x': 3, 'y': 2}]},
      'encoding': {'x': {'field': 'x', 'type': 'quantitative'},
                   'y': {'field': 'y', 'type': 'quantitative'}},
@@ -119,7 +119,7 @@ You can also persist the data to disk and then pass the path to Altair:
 .. code-block:: none
 
     {'$schema': 'https://vega.github.io/schema/vega-lite/v2.4.1.json',
-     'config': {'view': {'height': 300, 'width': 400}},
+     'config': {'view': {'height': 300, 'width': 300}},
      'data': {'url': 'data.json'},
      'encoding': {'x': {'field': 'x', 'type': 'quantitative'},
                   'y': {'field': 'y', 'type': 'quantitative'}},

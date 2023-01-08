@@ -1,5 +1,6 @@
 import json
 import pathlib
+import warnings
 
 from .mimebundle import spec_to_mimebundle
 
@@ -27,11 +28,12 @@ def save(
     webdriver=None,
     scale_factor=1,
     engine=None,
+    inline=False,
     **kwargs,
 ):
     """Save a chart to file in a variety of formats
 
-    Supported formats are [json, html, png, svg]
+    Supported formats are [json, html, png, svg, pdf]
 
     Parameters
     ----------
@@ -40,7 +42,7 @@ def save(
     fp : string filename, pathlib.Path or file-like object
         file to which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'svg'].
+        the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
         Either 'vega' or 'vegalite'. If not specified, then infer the mode from
@@ -64,6 +66,12 @@ def save(
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
+    inline: bool (optional)
+        If False (default), the required JavaScript libraries are loaded
+        from a CDN location in the resulting html file.
+        If True, the required JavaScript libraries are inlined into the resulting
+        html file so that it will work without an internet connection.
+        The altair_viewer package is required if True.
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
@@ -99,10 +107,15 @@ def save(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
 
+    if format != "html" and inline:
+        warnings.warn("inline argument ignored for non HTML formats.")
+
     if format == "json":
         json_spec = json.dumps(spec, **json_kwds)
         write_file_or_filename(fp, json_spec, mode="w")
     elif format == "html":
+        if inline:
+            kwargs["template"] = "inline"
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,

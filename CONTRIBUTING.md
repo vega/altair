@@ -152,6 +152,9 @@ Some additional notes:
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
+- If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
+  then add the name of the example to the `SVG_EXAMPLES` set in 
+  `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`
 
 ### Building the Documentation Locally
 In addition to the development dependencies mentioned further above,
@@ -163,12 +166,6 @@ for details.
 ```
 pip install -r doc/requirements.txt
 ```
-
-If you want to build the documentation so it can be published on the [official Altair website](https://altair-viz.github.io), you need to
-additionally install [altair_saver](https://github.com/altair-viz/altair_saver/) and uninstall [vl-convert-python](https://github.com/vega/vl-convert/tree/main/vl-convert-python).
-These packages are used to generate PNG thumbnails for the example gallery. If both are installed, `vl-convert-python` is used by default.
-The reason for this is that `vl-convert-python` cannot create a thumbnail for the `isotype_emoji.py` example,
-which is fine for normal contributions but not when creating a new version of the official documentation.
 
 Once you have all the dependencies, you can build the documentation 
 using various commands defined in the Makefile. 
