@@ -1,6 +1,4 @@
 # flake8: noqa
-import sys
-
 __version__ = "4.3.0.dev0"
 
 
@@ -585,7 +583,6 @@ __all__ = [
     "selection_point",
     "sequence",
     "sphere",
-    "sys",
     "theme",
     "themes",
     "to_csv",
