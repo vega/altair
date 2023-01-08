@@ -17,7 +17,6 @@ import pandas as pd
 from altair import vegalite
 
 
-JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
 # larger specs, but leads to much more useful tracebacks for the user.
