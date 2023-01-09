@@ -432,5 +432,5 @@ def test_to_dict_expand_mark_spec():
     # Test that `to_dict` correctly expands marks to a dictionary
     # without impacting the original spec which remains a string
     chart = alt.Chart().mark_bar()
-    assert chart.to_dict()['mark'] == {'type': 'bar'}
-    assert chart.mark == 'bar'
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"
