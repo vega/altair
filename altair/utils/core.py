@@ -539,7 +539,8 @@ def parse_shorthand(
             '"{}" '.format(attrs["field"].split(":")[-1])
             + "is not one of the valid encoding data types: {}.".format(
                 ", ".join(TYPECODE_MAP.values())
-            ) + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            )
+            + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
             + "(If you are trying to use a column name that contains a colon, prefix it with a backslash, \\:)"
         )
     return attrs

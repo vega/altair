@@ -266,6 +266,7 @@ def test_infer_encoding_types_with_condition(channels):
 
 
 def test_invalid_data_type():
-    with pytest.raises(ValueError, match='"\(fd " is not one of the valid encoding data types'):
-        alt.utils.core.parse_shorthand(r"blah:(fd ")
-)
+    with pytest.raises(
+        ValueError, match=r'"\(fd " is not one of the valid encoding data types'
+    ):
+        parse_shorthand(r"blah:(fd ")
