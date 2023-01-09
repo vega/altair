@@ -6,7 +6,9 @@ import pickle
 import pytest
 
 import numpy as np
+import pandas as pd
 
+import altair as alt
 from altair import load_schema
 from altair.utils.schemapi import (
     UndefinedType,
@@ -389,3 +391,36 @@ def test_serialize_numpy_types():
         "a2": {"int64": 1, "float64": 2},
         "b2": [0, 1, 2, 3],
     }
+
+
+def test_to_dict_no_side_effects():
+    # Tests that shorthands are expanded in returned dictionary when calling to_dict
+    # but that they remain untouched in the chart object. Goal is to ensure that
+    # the chart object stays unchanged when to_dict is called
+    def validate_encoding(encoding):
+        assert encoding.x["shorthand"] == "a"
+        assert encoding.x["field"] is alt.Undefined
+        assert encoding.x["type"] is alt.Undefined
+        assert encoding.y["shorthand"] == "b:Q"
+        assert encoding.y["field"] is alt.Undefined
+        assert encoding.y["type"] is alt.Undefined
+
+    data = pd.DataFrame(
+        {
+            "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+            "b": [28, 55, 43, 91, 81, 53, 19, 87, 52],
+        }
+    )
+
+    chart = alt.Chart(data).mark_bar().encode(x="a", y="b:Q")
+
+    validate_encoding(chart.encoding)
+    dct = chart.to_dict()
+    validate_encoding(chart.encoding)
+
+    assert "shorthand" not in dct["encoding"]["x"]
+    assert dct["encoding"]["x"]["field"] == "a"
+
+    assert "shorthand" not in dct["encoding"]["y"]
+    assert dct["encoding"]["y"]["field"] == "b"
+    assert dct["encoding"]["y"]["type"] == "quantitative"
