@@ -120,7 +120,7 @@ VEGALITE_SPEC = {
         "x": {"field": "category", "type": "ordinal"},
         "y": {"field": "amount", "type": "quantitative"},
     },
-    "mark": "bar",
+    "mark": {"type": "bar"},
 }
 
 

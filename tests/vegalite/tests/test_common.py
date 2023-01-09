@@ -11,7 +11,7 @@ from altair.vegalite import v3, v4, v5
 def basic_spec():
     return {
         "data": {"url": "data.csv"},
-        "mark": "line",
+        "mark": {"type": "line"},
         "encoding": {
             "color": {"type": "nominal", "field": "color"},
             "x": {"type": "quantitative", "field": "xval"},
