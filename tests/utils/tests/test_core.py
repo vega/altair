@@ -263,3 +263,9 @@ def test_infer_encoding_types_with_condition(channels):
         ),
     )
     assert infer_encoding_types(args, kwds, channels) == expected
+
+
+def test_invalid_data_type():
+    with pytest.raises(ValueError, match='"\(fd " is not one of the valid encoding data types'):
+        alt.utils.core.parse_shorthand(r"blah:(fd ")
+)
