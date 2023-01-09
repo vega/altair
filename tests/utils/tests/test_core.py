@@ -79,7 +79,7 @@ def test_parse_shorthand():
 
     # Fields alone
     check("foobar", field="foobar")
-    check("blah:(fd ", field="blah:(fd ")
+    check(r"blah\:(fd ", field=r"blah\:(fd ")
 
     # Fields with type
     check("foobar:quantitative", type="quantitative", field="foobar")
@@ -101,14 +101,14 @@ def test_parse_shorthand():
 
     # check that invalid arguments are not split-out
     check("invalid(blah)", field="invalid(blah)")
-    check("blah:invalid", field="blah:invalid")
-    check("invalid(blah):invalid", field="invalid(blah):invalid")
+    check(r"blah\:invalid", field=r"blah\:invalid")
+    check(r"invalid(blah)\:invalid", field=r"invalid(blah)\:invalid")
 
     # check parsing in presence of strange characters
     check(
-        "average(a b:(c\nd):Q",
+        r"average(a b\:(c\nd):Q",
         aggregate="average",
-        field="a b:(c\nd",
+        field=r"a b\:(c\nd",
         type="quantitative",
     )
 
