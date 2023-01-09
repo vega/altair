@@ -527,6 +527,21 @@ def parse_shorthand(
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
         if "field" in attrs and attrs["field"] in data.columns:
             attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+
+    # If an unescaped colon is still present, it's often due to an incorrect data type specification
+    # but could also be due to using a column name with ":" in it.
+    if (
+        "field" in attrs
+        and ":" in attrs["field"]
+        and attrs["field"][attrs["field"].rfind(":") - 1] != "\\"
+    ):
+        raise ValueError(
+            '"{}" '.format(attrs["field"].split(":")[-1])
+            + "is not one of the valid encoding data types: {}.".format(
+                ", ".join(TYPECODE_MAP.values())
+            ) + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            + "(If you are trying to use a column name that contains a colon, prefix it with a backslash, \\:)"
+        )
     return attrs
 
 
