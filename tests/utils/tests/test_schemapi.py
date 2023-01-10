@@ -8,7 +8,10 @@ import pickle
 import pytest
 
 import numpy as np
+import pandas as pd
 
+import altair as alt
+from altair import load_schema
 from altair.utils.schemapi import (
     UndefinedType,
     SchemaBase,
@@ -17,6 +20,7 @@ from altair.utils.schemapi import (
     SchemaValidationError,
 )
 
+_JSONSCHEMA_DRAFT = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
 
@@ -29,6 +33,7 @@ class _TestSchema(SchemaBase):
 
 class MySchema(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "StringMapping": {
                 "type": "object",
@@ -65,6 +70,7 @@ class StringArray(_TestSchema):
 
 class Derived(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "Foo": {"type": "object", "properties": {"d": {"type": "string"}}},
             "Bar": {"type": "string", "enum": ["A", "B"]},
@@ -90,7 +96,10 @@ class Bar(_TestSchema):
 
 
 class SimpleUnion(_TestSchema):
-    _schema = {"anyOf": [{"type": "integer"}, {"type": "string"}]}
+    _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
+        "anyOf": [{"type": "integer"}, {"type": "string"}],
+    }
 
 
 class DefinitionUnion(_TestSchema):
@@ -100,6 +109,7 @@ class DefinitionUnion(_TestSchema):
 
 class SimpleArray(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "array",
         "items": {"anyOf": [{"type": "integer"}, {"type": "string"}]},
     }
@@ -107,8 +117,27 @@ class SimpleArray(_TestSchema):
 
 class InvalidProperties(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "object",
         "properties": {"for": {}, "as": {}, "vega-lite": {}, "$schema": {}},
+    }
+
+
+class Draft7Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
+    }
+
+
+class Draft202012Schema(_TestSchema):
+    _schema = {
+        "$schema": "http://json-schema.org/draft/2020-12/schema#",
+        "properties": {
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
     }
 
 
@@ -219,6 +248,21 @@ def test_invalid_properties():
 
 def test_undefined_singleton():
     assert Undefined is UndefinedType()
+
+
+def test_schema_validator_selection():
+    # Tests if the correct validator class is chosen based on the $schema
+    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
+    # introduced changes to the "items" keyword, see
+    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
+    # items-and-additionalitems
+    dct = {
+        "e": ["a", "b"],
+    }
+
+    assert Draft7Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
+        Draft202012Schema.from_dict(dct)
 
 
 @pytest.fixture
@@ -349,3 +393,36 @@ def test_serialize_numpy_types():
         "a2": {"int64": 1, "float64": 2},
         "b2": [0, 1, 2, 3],
     }
+
+
+def test_to_dict_no_side_effects():
+    # Tests that shorthands are expanded in returned dictionary when calling to_dict
+    # but that they remain untouched in the chart object. Goal is to ensure that
+    # the chart object stays unchanged when to_dict is called
+    def validate_encoding(encoding):
+        assert encoding.x["shorthand"] == "a"
+        assert encoding.x["field"] is alt.Undefined
+        assert encoding.x["type"] is alt.Undefined
+        assert encoding.y["shorthand"] == "b:Q"
+        assert encoding.y["field"] is alt.Undefined
+        assert encoding.y["type"] is alt.Undefined
+
+    data = pd.DataFrame(
+        {
+            "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+            "b": [28, 55, 43, 91, 81, 53, 19, 87, 52],
+        }
+    )
+
+    chart = alt.Chart(data).mark_bar().encode(x="a", y="b:Q")
+
+    validate_encoding(chart.encoding)
+    dct = chart.to_dict()
+    validate_encoding(chart.encoding)
+
+    assert "shorthand" not in dct["encoding"]["x"]
+    assert dct["encoding"]["x"]["field"] == "a"
+
+    assert "shorthand" not in dct["encoding"]["y"]
+    assert dct["encoding"]["y"]["field"] == "b"
+    assert dct["encoding"]["y"]["type"] == "quantitative"

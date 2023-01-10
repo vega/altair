@@ -335,6 +335,23 @@ def test_save(format, engine, basic_chart):
             os.remove(fp)
 
 
+@pytest.mark.parametrize("inline", [False, True])
+def test_save_html(basic_chart, inline):
+    out = io.StringIO()
+    basic_chart.save(out, format="html", inline=inline)
+    out.seek(0)
+    content = out.read()
+
+    assert content.startswith("<!DOCTYPE html>")
+
+    if inline:
+        assert '<script type="text/javascript">' in content
+    else:
+        assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
+
+
 def test_facet_basic():
     # wrapped facet
     chart1 = (
@@ -704,13 +721,13 @@ def test_themes():
 
     with alt.themes.enable("default"):
         assert chart.to_dict()["config"] == {
-            "view": {"continuousWidth": 400, "continuousHeight": 300}
+            "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
     with alt.themes.enable("opaque"):
         assert chart.to_dict()["config"] == {
             "background": "white",
-            "view": {"continuousWidth": 400, "continuousHeight": 300},
+            "view": {"continuousWidth": 300, "continuousHeight": 300},
         }
 
     with alt.themes.enable("none"):
