@@ -46,15 +46,13 @@ def test_param_expr():
     inner_var = height_var / 2
     tick_var = (3 * height_var) / 4
 
+    height_str = height_var._to_expr()
     inner_str = inner_var._to_expr()
-    inner_ans = "(height / 2)"
-
     tick_str = tick_var._to_expr()
-    tick_ans = "((3 * height) / 4)"
 
-    assert height_var._to_expr() == "height"
-    assert inner_str == inner_ans
-    assert tick_str == tick_ans
+    assert height_str == "height"
+    assert inner_str == "(height / 2)"
+    assert tick_str == "((3 * height) / 4)"
 
     data = pd.DataFrame({"r1": [310, 0], "r2": [270, 0], "r3": [125, 225]})
 
