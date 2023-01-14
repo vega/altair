@@ -1,11 +1,8 @@
 black
-docutils
 ipython
 flake8
 pytest
 pytest-cov
-sphinx
 m2r
 vega_datasets
 altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git
-myst-parser

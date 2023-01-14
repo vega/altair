@@ -1,7 +1,9 @@
 sphinx
+docutils
 jinja2
 numpydoc
 pillow
 pydata-sphinx-theme
 geopandas
 vl-convert-python
+myst-parser
