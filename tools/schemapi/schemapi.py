@@ -513,7 +513,7 @@ class SchemaBase(object):
         )
 
     def __dir__(self):
-        return list(self._kwds.keys())
+        return sorted(super().__dir__() + list(self._kwds.keys()))
 
 
 def _passthrough(*args, **kwds):
