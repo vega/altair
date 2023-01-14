@@ -48,7 +48,7 @@ def spec_to_mimebundle(
     The png, svg, vega and pdf outputs require the vl-convert or altair_saver package
     to be installed.
     """
-    if mode is not "vega-lite":
+    if mode != "vega-lite":
         if mode == "vega":
             warnings.warn("mode 'vega' is deprecated", AltairDeprecationWarning)
         raise ValueError("mode must be 'vega-lite'")
