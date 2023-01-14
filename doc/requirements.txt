@@ -5,5 +5,4 @@ numpydoc
 pillow
 pydata-sphinx-theme
 geopandas
-vl-convert-python
 myst-parser
