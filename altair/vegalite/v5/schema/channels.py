@@ -39,12 +39,10 @@ class FieldChannelMixin(object):
             elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get('data', None), pd.DataFrame):
                     raise ValueError(
-                        '"{}" cannot be found.'.format(shorthand)
-                        + "\n- If you are trying to reference a column in the dataframe,"
-                        + " there is likely a typo in the column name."
-                        + "\n- If you are trying to reference a field from a transform,"
-                        + " there is either a typo in the field name or the data type specification is missing"
-                        + " (Altair can only infer data types from dataframe columns)."
+                        'Unable to determine data type for the field "{}";'
+                        " verify that the field name is not misspelled."
+                        " If you are referencing a field from a transform,"
+                        " also confirm that the data type is specified correctly.".format(shorthand)
                     )
                 else:
                     raise ValueError("{} encoding field is specified without a type; "
