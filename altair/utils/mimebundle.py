@@ -1,4 +1,6 @@
 from .html import spec_to_html
+import warnings
+from .deprecation import AltairDeprecationWarning
 from ..vegalite.v5.data import data_transformers
 
 
@@ -15,13 +17,13 @@ def spec_to_mimebundle(
     """Convert a vega-lite specification to a mimebundle
 
     The mimebundle type is controlled by the ``format`` argument, which can be
-    one of the following ['html', 'json', 'png', 'svg', 'pdf', 'vega-lite']
+    one of the following ['html', 'json', 'png', 'svg', 'pdf',  'vega', 'vega-lite']
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    format : string {'html', 'json', 'png', 'svg', 'pdf', 'vega-lite'}
+    format : string {'html', 'json', 'png', 'svg', 'pdf',  'vega', 'vega-lite'}
         the file format to be saved.
     mode : string {'vega-lite'}
         The rendering mode.
@@ -43,13 +45,15 @@ def spec_to_mimebundle(
 
     Note
     ----
-    The png, svg, and pdf outputs require the vl-convert or altair_saver package
+    The png, svg, vega and pdf outputs require the vl-convert or altair_saver package
     to be installed.
     """
-    if mode not in ["vega-lite"]:
+    if mode is not "vega-lite":
+        if mode == "vega":
+            warnings.warn("mode 'vega' is deprecated", AltairDeprecationWarning)
         raise ValueError("mode must be 'vega-lite'")
 
-    if format in ["png", "svg", "pdf"]:
+    if format in ["png", "svg", "pdf", "vega"]:
         return _spec_to_mimebundle_with_engine(
             spec, format, mode, engine=engine, **kwargs
         )
@@ -64,14 +68,13 @@ def spec_to_mimebundle(
         )
         return {"text/html": html}
     if format == "vega-lite":
-        assert mode == "vega-lite"  # sanity check: should never be False
         if vegalite_version is None:
             raise ValueError("Must specify vegalite_version")
         return {"application/vnd.vegalite.v{}+json".format(vegalite_version[0]): spec}
     if format == "json":
         return {"application/json": spec}
     raise ValueError(
-        "format must be one of ['html', 'json', 'png', 'svg', 'pdf', 'vega-lite']"
+        "format must be one of ['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
     )
 
 
@@ -82,7 +85,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    format : string {'png', 'svg', 'pdf'}
+    format : string {'png', 'svg', 'pdf', 'vega'}
         the format of the mimebundle to be returned
     mode : string {'vega-lite'}
         The rendering mode.
