@@ -1,6 +1,7 @@
 import json
 import pathlib
 import warnings
+from .deprecation import AltairDeprecationWarning
 
 from .mimebundle import spec_to_mimebundle
 
@@ -45,7 +46,7 @@ def save(
         the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
-        Either 'vega' or 'vegalite'. If not specified, then infer the mode from
+        Must be 'vegalite'. If not specified, then infer the mode from
         the '$schema' property of the spec, or the ``opt`` dictionary.
         If it's not specified in either of those places, then use 'vegalite'.
     vega_version : string (optional)
@@ -88,7 +89,8 @@ def save(
             format = fp.suffix.lstrip(".")
         else:
             raise ValueError(
-                "must specify file format: " "['png', 'svg', 'pdf', 'html', 'json']"
+                "must specify file format: "
+                "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
             )
 
     spec = chart.to_dict()
@@ -101,7 +103,9 @@ def save(
         else:
             mode = "vega-lite"
 
-    if mode not in ["vega-lite"]:
+    if mode != "vega-lite":
+        if mode == "vega":
+            warnings.warn("mode 'vega' is deprecated", AltairDeprecationWarning)
         raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
 
     if mode == "vega-lite" and vegalite_version is None:
@@ -128,7 +132,7 @@ def save(
             **kwargs,
         )
         write_file_or_filename(fp, mimebundle["text/html"], mode="w")
-    elif format in ["png", "svg", "pdf"]:
+    elif format in ["png", "svg", "pdf", "vega"]:
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,
