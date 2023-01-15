@@ -16,6 +16,48 @@ def write_file_or_filename(fp, content, mode="w"):
         fp.write(content)
 
 
+def set_inspect_format_argument(format, fp, inline):
+    """Inspect the format argument in the save function"""
+    if format is None:
+        if isinstance(fp, str):
+            format = fp.split(".")[-1]
+        elif isinstance(fp, pathlib.PurePath):
+            format = fp.suffix.lstrip(".")
+        else:
+            raise ValueError(
+                "must specify file format: "
+                "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
+            )
+
+    if format != "html" and inline:
+        warnings.warn("inline argument ignored for non HTML formats.")
+
+    return format
+
+
+def set_inspect_mode_argument(mode, embed_options, spec, vegalite_version):
+    """Inspect the mode argument in the save function"""
+    if mode is None:
+        if "mode" in embed_options:
+            mode = embed_options["mode"]
+        elif "$schema" in spec:
+            mode = spec["$schema"].split("/")[-2]
+        else:
+            mode = "vega-lite"
+
+    if mode != "vega-lite":
+        if mode == "vega":
+            warnings.warn(
+                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
+            )
+        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
+
+    if mode == "vega-lite" and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
+
+    return mode
+
+
 def save(
     chart,
     fp,
@@ -82,39 +124,11 @@ def save(
     if embed_options is None:
         embed_options = {}
 
-    if format is None:
-        if isinstance(fp, str):
-            format = fp.split(".")[-1]
-        elif isinstance(fp, pathlib.PurePath):
-            format = fp.suffix.lstrip(".")
-        else:
-            raise ValueError(
-                "must specify file format: "
-                "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
-            )
+    format = set_inspect_format_argument(format, fp, inline)
 
     spec = chart.to_dict()
 
-    if mode is None:
-        if "mode" in embed_options:
-            mode = embed_options["mode"]
-        elif "$schema" in spec:
-            mode = spec["$schema"].split("/")[-2]
-        else:
-            mode = "vega-lite"
-
-    if mode != "vega-lite":
-        if mode == "vega":
-            warnings.warn(
-                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
-            )
-        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
-
-    if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version")
-
-    if format != "html" and inline:
-        warnings.warn("inline argument ignored for non HTML formats.")
+    mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
 
     if format == "json":
         json_spec = json.dumps(spec, **json_kwds)
