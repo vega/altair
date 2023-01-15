@@ -50,7 +50,9 @@ def spec_to_mimebundle(
     """
     if mode != "vega-lite":
         if mode == "vega":
-            warnings.warn("mode 'vega' is deprecated", AltairDeprecationWarning)
+            warnings.warn(
+                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
+            )
         raise ValueError("mode must be 'vega-lite'")
 
     if format in ["png", "svg", "pdf", "vega"]:

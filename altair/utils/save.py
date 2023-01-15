@@ -105,7 +105,9 @@ def save(
 
     if mode != "vega-lite":
         if mode == "vega":
-            warnings.warn("mode 'vega' is deprecated", AltairDeprecationWarning)
+            warnings.warn(
+                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
+            )
         raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
 
     if mode == "vega-lite" and vegalite_version is None:
