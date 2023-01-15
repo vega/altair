@@ -1,6 +1,7 @@
 import pytest
 
 import altair as alt
+import warnings
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
@@ -215,10 +216,16 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 
 def test_spec_to_vega_mimebundle(vega_spec):
-    bundle = spec_to_mimebundle(
-        spec=vega_spec, mode="vega", format="vega", vega_version=alt.VEGA_VERSION
-    )
-    assert bundle == {"application/vnd.vega.v5+json": vega_spec}
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        with pytest.raises(ValueError):
+            with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+                spec_to_mimebundle(
+                    spec=vega_spec,
+                    mode="vega",
+                    format="vega",
+                    vega_version=alt.VEGA_VERSION,
+                )
 
 
 def test_spec_to_json_mimebundle():
