@@ -384,9 +384,13 @@ class SchemaBase(object):
                 "{} instance has both a value and properties : "
                 "cannot serialize to dict".format(self.__class__)
             )
+
         if validate:
             try:
-                self.validate(result)
+                if "top_level_data" in context and "mark" in result:
+                    self.validate({**result, "data": context["top_level_data"]})
+                else:
+                    self.validate(result)
             except jsonschema.ValidationError as err:
                 raise SchemaValidationError(self, err)
         return result

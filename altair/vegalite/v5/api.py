@@ -551,6 +551,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         if original_data is not Undefined:
             context["data"] = original_data
+            # Set top level data so that layered/concat specs don't fail
+            # because data is not present in each layer/concat
+            if isinstance(copy["data"], dict) or copy["data"] is None:
+                context["top_level_data"] = copy["data"]
+            else:
+                context["top_level_data"] = copy["data"].to_dict()
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False
