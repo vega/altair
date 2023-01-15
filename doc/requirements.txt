@@ -1,8 +1,8 @@
 sphinx
+docutils
 jinja2
 numpydoc
 pillow
-mistune<=0.8.4
 pydata-sphinx-theme
 geopandas
-vl-convert-python
+myst-parser
