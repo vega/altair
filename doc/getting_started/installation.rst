@@ -32,21 +32,8 @@ with the above installation commands:
 - Toolz_
 
 To run Altair's full test suite and build Altair's documentation requires a few
-additional dependencies:
-
-- black
-- flake8
-- pytest
-- sphinx
-- m2r
-- docutils
-- vega_datasets_
-- ipython
-- myst-parser
-- numpydoc
-- pillow
-- pydata-sphinx-theme
-- geopandas
+additional dependencies, see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`
+for the details.
 
 Development Install
 ===================
