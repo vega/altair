@@ -502,7 +502,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = {"shorthand": if_true}
+        if_true = utils.parse_shorthand(if_true)
         if_true.update(kwargs)
     condition.update(if_true)
 
@@ -512,7 +512,9 @@ def condition(predicate, if_true, if_false, **kwargs):
         selection = if_false.copy()
         selection.condition = condition
     elif isinstance(if_false, str):
-        selection = {"condition": condition, "shorthand": if_false}
+        selection = {"condition": condition}
+        if_false = utils.parse_shorthand(if_false)
+        selection.update(if_false)
         selection.update(kwargs)
     else:
         selection = dict(condition=condition, **if_false)

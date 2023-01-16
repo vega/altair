@@ -668,10 +668,6 @@ def infer_encoding_types(args, kwargs, channels):
             condition = obj["condition"]
         except (KeyError, TypeError):
             pass
-        else:
-            if condition is not Undefined:
-                obj = obj.copy()
-                obj["condition"] = _wrap_in_channel_class(condition, encoding)
 
         if isinstance(obj, SchemaBase):
             return obj
