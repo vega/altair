@@ -121,6 +121,46 @@ Global configurations should be reserved for creating themes that are applied
 just before the chart is rendered.
 
 
+Adjusting the Title
+-------------------
+By default an Altair chart does not have a title, as seen in this example.
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   iowa = data.iowa_electricity.url
+   
+   alt.Chart(iowa).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+You can add a simple title by passing the `title` keyword argument with the data.
+
+.. altair-plot::
+
+   alt.Chart(iowa, title="Iowa's green energy boom").mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+It is also possible to add a subtitle, and `configure <https://altair-viz.github.io/user_guide/configuration.html#config-title>`_ a number of other attributes, by passing in an `alt.Title` object.
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title("Iowa's green energy boom", subtitle="A growing share of the state's energy has come from renewable sources")
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
 Adjusting Axis Limits
 ---------------------
 The default axis limit used by Altair is dependent on the type of the data.
