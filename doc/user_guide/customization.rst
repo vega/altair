@@ -154,7 +154,10 @@ It is also possible to add a subtitle, and `configure <https://altair-viz.github
 
    alt.Chart(
       iowa,
-      title=alt.Title("Iowa's green energy boom", subtitle="A growing share of the state's energy has come from renewable sources")
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle="A growing share of the state's energy has come from renewable sources"
+      )
    ).mark_area().encode(
        x="year:T",
        y=alt.Y("net_generation:Q", stack="normalize"),
