@@ -148,13 +148,13 @@ You can add a simple title by passing the `title` keyword argument with the data
        color="source:N"
    )
 
-It is also possible to add a subtitle, and `configure <https://altair-viz.github.io/user_guide/configuration.html#config-title>`_ a number of other attributes, by passing in an `alt.Title` object.
+It is also possible to add a subtitle by passing in an `alt.TitleParams` object.
 
 .. altair-plot::
 
    alt.Chart(
       iowa,
-      title=alt.Title(
+      title=alt.TitleParams(
           "Iowa's green energy boom",
           subtitle="A growing share of the state's energy has come from renewable sources"
       )
@@ -163,6 +163,42 @@ It is also possible to add a subtitle, and `configure <https://altair-viz.github
        y=alt.Y("net_generation:Q", stack="normalize"),
        color="source:N"
    )
+
+The subtitle can run to two lines.
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.TitleParams(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy", "has come from renewable sources"]
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+The parameters object can also `configure <https://altair-viz.github.io/user_guide/configuration.html#config-title>`_ a number of other attributes.
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.TitleParams(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy", "has come from renewable sources"],
+          anchor='start',
+          orient='bottom',
+          offset=20
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
 
 Adjusting Axis Limits
 ---------------------
