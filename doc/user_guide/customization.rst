@@ -170,7 +170,7 @@ The subtitle can run to two lines by passing a list where each list item is a li
 
    alt.Chart(
       iowa,
-      title=alt.TitleParams(
+      title=alt.Title(
           "Iowa's green energy boom",
           subtitle=["A growing share of the state's energy", "has come from renewable sources"]
       )
