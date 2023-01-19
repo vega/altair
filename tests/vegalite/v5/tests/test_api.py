@@ -166,14 +166,14 @@ def test_chart_infer_types():
         .encode(
             alt.X("x", type="nominal"),
             alt.Y("y", type="ordinal"),
-            alt.Size("s", type="nominal", sort=None),
+            alt.Size("s", type="nominal"),
         )
     )
     dct = chart.to_dict()
     assert dct["encoding"]["x"]["type"] == "nominal"
     assert dct["encoding"]["y"]["type"] == "ordinal"
     assert dct["encoding"]["size"]["type"] == "nominal"
-    assert dct["encoding"]["size"]["sort"] is None
+    assert "sort" not in dct["encoding"]["size"]
 
 
 @pytest.mark.parametrize(
