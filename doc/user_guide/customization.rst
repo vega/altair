@@ -148,7 +148,7 @@ You can add a simple title by passing the `title` keyword argument with the data
        color="source:N"
    )
 
-It is also possible to add a subtitle by passing in an `alt.TitleParams` object.
+It is also possible to add a subtitle by passing in an `alt.Title` object.
 
 .. altair-plot::
 
