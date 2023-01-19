@@ -186,7 +186,7 @@ The parameters object can also `configure <https://altair-viz.github.io/user_gui
 
    alt.Chart(
       iowa,
-      title=alt.TitleParams(
+      title=alt.Title(
           "Iowa's green energy boom",
           subtitle=["A growing share of the state's energy", "has come from renewable sources"],
           anchor='start',
