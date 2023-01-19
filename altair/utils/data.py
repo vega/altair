@@ -85,7 +85,7 @@ def limit_rows(data, max_rows=5000):
             "browser session and corrupting your notebook if "
             "not done carefully; see "
             "https://altair-viz.github.io/user_guide/faq.html#maxrowserror-how-can-i-plot-large-datasets "
-            "for information on how to plot large datasets. "
+            "for information on how to plot large datasets."
         )
     return data
 
