@@ -80,7 +80,7 @@ def limit_rows(data, max_rows=5000):
         raise MaxRowsError(
             "The number of rows in your dataset is greater "
             f"than the maximum allowed ({max_rows}).\n\n"
-            "See https://binste.github.io/altair-docs/user_guide/large_datasets.html "
+            "See https://altair-viz.github.io/user_guide/large_datasets.html "
             "for information on how to plot large datasets, "
             "including how to install third-party data management tools and, "
             "in the right circumstance, disable the restriction"
