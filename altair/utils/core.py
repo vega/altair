@@ -14,7 +14,7 @@ import jsonschema
 import pandas as pd
 import numpy as np
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase, Undefined  # noqa: F401
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
@@ -664,15 +664,6 @@ def infer_encoding_types(args, kwargs, channels):
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
-        try:
-            condition = obj["condition"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            if condition is not Undefined:
-                obj = obj.copy()
-                obj["condition"] = _wrap_in_channel_class(condition, encoding)
-
         if isinstance(obj, SchemaBase):
             return obj
 
