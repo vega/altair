@@ -154,7 +154,7 @@ It is also possible to add a subtitle by passing in an `alt.Title` object.
 
    alt.Chart(
       iowa,
-      title=alt.TitleParams(
+      title=alt.Title(
           "Iowa's green energy boom",
           subtitle="A growing share of the state's energy has come from renewable sources"
       )
