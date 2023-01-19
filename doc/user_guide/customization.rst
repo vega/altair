@@ -164,7 +164,7 @@ It is also possible to add a subtitle by passing in an `alt.Title` object.
        color="source:N"
    )
 
-The subtitle can run to two lines.
+The subtitle can run to two lines by passing a list where each list item is a line (if you don't want to create this list manually as in the example below, you can use the ``wrap`` function from the `textwrap library https://docs.python.org/3/library/textwrap.html`_ to split a string into a list of substrings of a certain length).
 
 .. altair-plot::
 
