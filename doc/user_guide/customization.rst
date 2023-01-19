@@ -180,7 +180,7 @@ The subtitle can run to two lines by passing a list where each list item is a li
        color="source:N"
    )
 
-The parameters object can also `configure <https://altair-viz.github.io/user_guide/configuration.html#config-title>`_ a number of other attributes.
+The ``Title`` object can also configure a number of other attributes, e.g., the position of the title and subtitle (see see :ref:`user-guide-customization` for details).
 
 .. altair-plot::
 
