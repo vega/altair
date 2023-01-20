@@ -4,10 +4,11 @@ import json
 import jsonschema
 import re
 import pickle
-import pytest
+import warnings
 
 import numpy as np
 import pandas as pd
+import pytest
 from vega_datasets import data
 
 import altair as alt
@@ -413,11 +414,11 @@ def chart_example_hconcat():
 
 
 def chart_example_invalid_channel_and_condition():
-    selection = alt.selection_single()
+    selection = alt.selection_point()
     return (
-        alt.Chart(data=None)
+        alt.Chart(data.barley())
         .mark_circle()
-        .add_selection(selection)
+        .add_params(selection)
         .encode(
             color=alt.condition(selection, alt.value("red"), alt.value("green")),
             invalidChannel=None,
@@ -476,7 +477,13 @@ def chart_example_invalid_channel_and_condition():
 def test_chart_validation_errors(chart_func, expected_error_message):
     # DOTALL flag makes that a dot (.) also matches new lines
     pattern = re.compile(expected_error_message, re.DOTALL)
-    chart = chart_func()
+    # For some wrong chart specifications such as an unknown encoding channel,
+    # Altair already raises a warning before the chart specifications are validated.
+    # We can ignore these warnings as we are interested in the errors being raised
+    # during validation which is triggered by to_dict
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        chart = chart_func()
     with pytest.raises(SchemaValidationError, match=pattern):
         chart.to_dict()
 
