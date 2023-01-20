@@ -117,24 +117,8 @@ class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
     def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**self._get_contents(err))
+        super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
-
-    @staticmethod
-    def _get_contents(err):
-        """Get a dictionary with the contents of a ValidationError"""
-        try:
-            # works in jsonschema 2.3 or later
-            contents = err._contents()
-        except AttributeError:
-            try:
-                # works in Python >=3.4
-                spec = inspect.getfullargspec(err.__init__)
-            except AttributeError:
-                # works in Python <3.4
-                spec = inspect.getargspec(err.__init__)
-            contents = {key: getattr(err, key) for key in spec.args[1:]}
-        return contents
 
     def __str__(self):
         cls = self.obj.__class__
