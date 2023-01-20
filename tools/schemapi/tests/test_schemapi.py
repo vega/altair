@@ -2,11 +2,13 @@ import copy
 import io
 import json
 import jsonschema
+import re
 import pickle
 import pytest
 
 import numpy as np
 import pandas as pd
+from vega_datasets import data
 
 import altair as alt
 from altair import load_schema
@@ -376,6 +378,107 @@ def test_schema_validation_error():
     assert "test_schemapi.MySchema->a" in message
     assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
+
+
+def chart_example_layer():
+    points = (
+        alt.Chart(data.cars.url)
+        .mark_point()
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+        )
+    )
+    return (points & points).properties(width=400)
+
+
+def chart_example_hconcat():
+    source = data.cars()
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(
+            x="Horsepower",
+            y="Miles_per_Gallon",
+        )
+    )
+
+    text = (
+        alt.Chart(source)
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+    )
+
+    return points | text
+
+
+def chart_example_invalid_channel_and_condition():
+    selection = alt.selection_single()
+    return (
+        alt.Chart(data=None)
+        .mark_circle()
+        .add_selection(selection)
+        .encode(
+            color=alt.condition(selection, alt.value("red"), alt.value("green")),
+            invalidChannel=None,
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    "chart_func,expected_error_message",
+    [
+        (
+            lambda: alt.Chart(data.barley())
+            .mark_bar()
+            .encode(
+                x=alt.X("variety", unknown=2),
+                y=alt.Y("sum(yield)", stack="asdf"),
+            ),
+            r"Additional properties are not allowed \('unknown' was unexpected\)",
+        ),
+        (
+            lambda: alt.Chart(data.barley())
+            .mark_bar()
+            .encode(
+                x=alt.X("variety"),
+                y=alt.Y("sum(yield)", stack="asdf"),
+            ),
+            r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+        ),
+        (
+            chart_example_layer,
+            r"Additional properties are not allowed \('width' was unexpected\)",
+        ),
+        (
+            lambda: alt.Chart(data.barley())
+            .mark_bar()
+            .encode(
+                x="variety",
+                y=alt.Y("sum(yield)", stack="asdf"),
+                opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
+            ),
+            r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+        ),
+        (
+            chart_example_hconcat,
+            r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
+            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'array'",
+        ),
+        (
+            chart_example_invalid_channel_and_condition,
+            r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
+        ),
+    ],
+)
+def test_chart_validation_errors(chart_func, expected_error_message):
+    # DOTALL flag makes that a dot (.) also matches new lines
+    pattern = re.compile(expected_error_message, re.DOTALL)
+    chart = chart_func()
+    with pytest.raises(SchemaValidationError, match=pattern):
+        chart.to_dict()
 
 
 def test_serialize_numpy_types():

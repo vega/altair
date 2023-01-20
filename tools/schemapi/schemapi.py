@@ -3,7 +3,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any
+from typing import Any, Sequence, List
 
 import jsonschema
 import jsonschema.exceptions
@@ -64,9 +64,50 @@ def validate_jsonschema(spec, schema, rootschema=None):
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
     validator = validator_cls(schema, **validator_kwargs)
-    error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
-    if error is not None:
-        raise error
+    errors = list(validator.iter_errors(spec))
+    if errors:
+        errors = _get_most_relevant_errors(errors)
+        main_error = errors[0]
+        # They can be used to craft more helpful error messages when this error
+        # is being converted to a SchemaValidationError
+        main_error._additional_errors = errors[1:]
+        raise main_error
+
+
+def _get_most_relevant_errors(
+    errors: Sequence[jsonschema.exceptions.ValidationError],
+) -> List[jsonschema.exceptions.ValidationError]:
+    if len(errors) == 0:
+        return []
+
+    # Go to lowest level in schema where an error happened as these give
+    # the most relevant error messages
+    lowest_level = errors[0]
+    while lowest_level.context:
+        lowest_level = lowest_level.context[0]
+
+    most_relevant_errors = []
+    if lowest_level.validator == "additionalProperties":
+        # For these errors, the message is already informative enough and the other
+        # errors on the lowest level are not helpful for a user but instead contain
+        # the same information in a more verbose way
+        most_relevant_errors = [lowest_level]
+    else:
+        parent = lowest_level.parent
+        if parent is None:
+            # In this case we are still at the top level and can return all errors
+            most_relevant_errors = errors
+        else:
+            # Return all errors of the lowest level out of which
+            # we can construct more informative error messages
+            most_relevant_errors = lowest_level.parent.context
+
+    # This should never happen but might still be good to test for it as else
+    # the original error would just slip through without being raised
+    if len(most_relevant_errors) == 0:
+        raise Exception("Could not determine the most relevant errors") from errors[0]
+
+    return most_relevant_errors
 
 
 def _subclasses(cls):
@@ -117,6 +158,7 @@ class SchemaValidationError(jsonschema.ValidationError):
     def __init__(self, obj, err):
         super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
+        self._additional_errors = getattr(err, "_additional_errors", [])
 
     def __str__(self):
         cls = self.obj.__class__
@@ -127,13 +169,18 @@ class SchemaValidationError(jsonschema.ValidationError):
             for val in schema_path[:-1]
             if val not in ("properties", "additionalProperties", "patternProperties")
         )
+        message = self.message
+        if self._additional_errors:
+            message += "\n        " + "\n        ".join(
+                [e.message for e in self._additional_errors]
+            )
         return """Invalid specification
 
         {}, validating {!r}
 
         {}
         """.format(
-            schema_path, self.validator, self.message
+            schema_path, self.validator, message
         )
 
 
