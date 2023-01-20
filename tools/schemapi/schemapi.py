@@ -356,11 +356,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -382,10 +380,9 @@ class SchemaBase(object):
             context = {}
         if ignore is None:
             ignore = []
-        sub_validate = "deep" if validate == "deep" else False
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], validate=sub_validate, context=context)
+            result = _todict(self._args[0], validate=False, context=context)
         elif not self._args:
             kwds = self._kwds.copy()
             # parsed_shorthand is added by FieldChannelMixin.
@@ -405,7 +402,7 @@ class SchemaBase(object):
             }
             result = _todict(
                 kwds,
-                validate=sub_validate,
+                validate=False,
                 context=context,
             )
         else:
@@ -427,11 +424,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : string
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
