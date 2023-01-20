@@ -1,4 +1,7 @@
 # flake8: noqa
+import warnings
+from ...utils.deprecation import AltairFutureWarning
+
 from .schema import *
 from .api import *
 from ._deprecated import *
@@ -21,4 +24,10 @@ from .data import (
     to_values,
     default_data_transformer,
     data_transformers,
+)
+
+warnings.warn(
+    "This module is deprecated and will be removed in Altair 5. "
+    "Use `import altair as alt` instead of `import altair.vegalite.v3 as alt`.",
+    AltairFutureWarning,
 )

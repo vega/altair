@@ -1,6 +1,7 @@
 import os
 
 from ...utils.mimebundle import spec_to_mimebundle
+from ...utils.deprecation import deprecated
 from ..display import Displayable
 from ..display import default_renderer_base
 from ..display import json_renderer_base
@@ -129,6 +130,10 @@ class VegaLite(Displayable):
     schema_path = (__name__, "schema/vega-lite-schema.json")
 
 
+@deprecated(
+    "Rendering VegaLite 3 specifications is deprecated and will be removed in Altair 5. "
+    "Use `import altair as alt` instead of `import altair.vegalite.v3 as alt`."
+)
 def vegalite(spec, validate=True):
     """Render and optionally validate a VegaLite 3 spec.
 
