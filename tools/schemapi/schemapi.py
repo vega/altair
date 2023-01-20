@@ -4,10 +4,11 @@ import inspect
 import json
 
 import jsonschema
+import jsonschema.exceptions
 import numpy as np
 import pandas as pd
 
-
+JSONSCHEMA_VALIDATOR = jsonschema.Draft7Validator
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
 # larger specs, but leads to much more useful tracebacks for the user.
@@ -35,6 +36,24 @@ def debug_mode(arg):
         yield
     finally:
         DEBUG_MODE = original
+
+
+def validate_jsonschema(spec, schema, resolver=None):
+    # We don't use jsonschema.validate as this would validate the schema itself.
+    # Instead, we pass the schema directly to the validator class. This is done for
+    # two reasons: The schema comes from Vega-Lite and is not based on the user
+    # input, therefore there is no need to validate it in the first place. Furthermore,
+    # the "uri-reference" format checker fails for some of the references as URIs in
+    # "$ref" are not encoded,
+    # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
+    # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
+    # it is not a valid URI reference due to the characters such as '<'.
+    validator = JSONSCHEMA_VALIDATOR(
+        schema, format_checker=JSONSCHEMA_VALIDATOR.FORMAT_CHECKER, resolver=resolver
+    )
+    error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
+    if error is not None:
+        raise error
 
 
 def _subclasses(cls):
@@ -148,7 +167,7 @@ class SchemaBase(object):
     _schema = None
     _rootschema = None
     _class_is_valid_at_instantiation = True
-    _validator = jsonschema.Draft7Validator
+    _validator = JSONSCHEMA_VALIDATOR
 
     def __init__(self, *args, **kwds):
         # Two valid options for initialization, which should be handled by
@@ -438,9 +457,7 @@ class SchemaBase(object):
         if schema is None:
             schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(
-            instance, schema, cls=cls._validator, resolver=resolver
-        )
+        return validate_jsonschema(instance, schema, resolver=resolver)
 
     @classmethod
     def resolve_references(cls, schema=None):
@@ -459,7 +476,7 @@ class SchemaBase(object):
         value = _todict(value, validate=False, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
+        return validate_jsonschema(value, props.get(name, {}), resolver=resolver)
 
     def __dir__(self):
         return list(self._kwds.keys())
@@ -553,7 +570,7 @@ class _FromDict(object):
             for possible_schema in schemas:
                 resolver = jsonschema.RefResolver.from_schema(rootschema)
                 try:
-                    jsonschema.validate(dct, possible_schema, resolver=resolver)
+                    validate_jsonschema(dct, possible_schema, resolver=resolver)
                 except jsonschema.ValidationError:
                     continue
                 else:
