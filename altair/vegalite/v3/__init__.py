@@ -1,6 +1,6 @@
 # flake8: noqa
 import warnings
-from ...utils.deprecation import AltairFutureWarning
+from ...utils.deprecation import AltairDeprecationWarning
 
 from .schema import *
 from .api import *
@@ -27,7 +27,7 @@ from .data import (
 )
 
 warnings.warn(
-    "This module is deprecated and will be removed in Altair 5. "
+    "The module altair.vegalite.v3 is deprecated and will be removed in Altair 5. "
     "Use `import altair as alt` instead of `import altair.vegalite.v3 as alt`.",
-    AltairFutureWarning,
+    AltairDeprecationWarning,
 )
