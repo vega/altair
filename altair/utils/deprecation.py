@@ -5,6 +5,10 @@ import functools
 class AltairDeprecationWarning(UserWarning):
     pass
 
+class AltairFutureWarning(FutureWarning):
+    pass
+
+
 
 def deprecated(message=None):
     """Decorator to deprecate a function or class.
