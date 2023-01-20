@@ -16,7 +16,7 @@ from .data import (
 )
 
 warnings.warn(
-    "This module altair.vega.v5 module is deprecated and will be removed in Altair 5. "
+    "The module altair.vega.v5 is deprecated and will be removed in Altair 5. "
     "Use `import altair as alt` instead of `import altair.vega.v5 as alt`.",
     AltairDeprecationWarning,
 )
