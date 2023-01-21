@@ -23,6 +23,8 @@ TRepeatChart = TypeVar("TRepeatChart", bound="RepeatChart")
 TConcatChart = TypeVar("TConcatChart", bound="ConcatChart")
 THConcatChart = TypeVar("THConcatChart", bound="HConcatChart")
 TVConcatChart = TypeVar("TVConcatChart", bound="VConcatChart")
+TLayerChart = TypeVar("TLayerChart", bound="LayerChart")
+TFacetChart = TypeVar("TFacetChart", bound="FacetChart")
 
 
 # ------------------------------------------------------------------------
@@ -2680,13 +2682,13 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         copy += other
         return copy
 
-    def add_layers(self, *layers):
+    def add_layers(self: TLayerChart, *layers) -> TLayerChart:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TLayerChart, name=None, bind_x=True, bind_y=True) -> TLayerChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2715,7 +2717,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         )
         return copy
 
-    def add_params(self, *params):
+    def add_params(self: TLayerChart, *params) -> TLayerChart:
         """Add one or more parameters to the chart."""
         if not params or not self.layer:
             return self
@@ -2726,7 +2728,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: TLayerChart, *selections) -> TLayerChart:
         return self.add_params(*selections)
 
 
@@ -2755,7 +2757,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TFacetChart, name=None, bind_x=True, bind_y=True) -> TFacetChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2778,7 +2780,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params):
+    def add_params(self: TFacetChart, *params) -> TFacetChart:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -2789,7 +2791,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: TFacetChart, *selections) -> TFacetChart:
         return self.add_params(*selections)
 
 
