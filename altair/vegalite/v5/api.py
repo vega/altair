@@ -1,4 +1,5 @@
 import warnings
+from typing import TypeVar
 
 import hashlib
 import io
@@ -14,6 +15,8 @@ from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
+
+TTopLevelMixin = TypeVar("TTopLevelMixin", bound="TopLevelMixin")
 
 
 # ------------------------------------------------------------------------
@@ -529,7 +532,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     _class_is_valid_at_instantiation = False
 
-    def to_dict(self, *args, **kwargs):
+    def to_dict(self, *args, **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export"""
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
@@ -592,7 +595,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds=None,
         fullhtml=True,
         requirejs=False,
-    ):
+    ) -> str:
         return utils.spec_to_html(
             self.to_dict(),
             mode="vega-lite",
@@ -695,7 +698,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         layer=Undefined,
         columns=Undefined,
         **kwargs,
-    ):
+    ) -> "RepeatChart":
         """Return a RepeatChart built from the chart
 
         Fields within the chart can be set to correspond to the row or
@@ -744,7 +747,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         return RepeatChart(spec=self, repeat=repeat, columns=columns, **kwargs)
 
-    def properties(self, **kwargs):
+    def properties(self: TTopLevelMixin, **kwargs) -> TTopLevelMixin:
         """Set top-level properties of the Chart.
 
         Argument names and types are the same as class initialization.
@@ -763,7 +766,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     def project(
-        self,
+        self: TTopLevelMixin,
         type=Undefined,
         center=Undefined,
         clipAngle=Undefined,
@@ -784,7 +787,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         tilt=Undefined,
         translate=Undefined,
         **kwds,
-    ):
+    ) -> TTopLevelMixin:
         """Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
@@ -893,7 +896,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         copy.transform.extend(transforms)
         return copy
 
-    def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
+    def transform_aggregate(
+        self: TTopLevelMixin, aggregate=Undefined, groupby=Undefined, **kwds
+    ) -> TTopLevelMixin:
         """
         Add an AggregateTransform to the schema.
 
@@ -967,7 +972,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs):
+    def transform_bin(self: TTopLevelMixin, as_=Undefined, field=Undefined, bin=True, **kwargs) -> TTopLevelMixin:
         """
         Add a BinTransform to the schema.
 
@@ -1023,7 +1028,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs):
+    def transform_calculate(self: TTopLevelMixin, as_=Undefined, calculate=Undefined, **kwargs) -> TTopLevelMixin:
         """
         Add a CalculateTransform to the schema.
 
@@ -1086,7 +1091,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self
 
     def transform_density(
-        self,
+        self: TTopLevelMixin,
         density,
         as_=Undefined,
         bandwidth=Undefined,
@@ -1097,7 +1102,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         maxsteps=Undefined,
         minsteps=Undefined,
         steps=Undefined,
-    ):
+    ) -> TTopLevelMixin:
         """Add a DensityTransform to the spec.
 
         Attributes
@@ -1154,7 +1159,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_impute(
-        self,
+        self: TTopLevelMixin,
         impute,
         key,
         frame=Undefined,
@@ -1162,7 +1167,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         keyvals=Undefined,
         method=Undefined,
         value=Undefined,
-    ):
+    ) -> TTopLevelMixin:
         """
         Add an ImputeTransform to the schema.
 
@@ -1224,8 +1229,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_joinaggregate(
-        self, joinaggregate=Undefined, groupby=Undefined, **kwargs
-    ):
+        self: TTopLevelMixin, joinaggregate=Undefined, groupby=Undefined, **kwargs
+    ) -> TTopLevelMixin:
         """
         Add a JoinAggregateTransform to the schema.
 
@@ -1276,7 +1281,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     # TODO: Update docstring
-    def transform_filter(self, filter, **kwargs):
+    def transform_filter(self: TTopLevelMixin, filter, **kwargs) -> TTopLevelMixin:
         """
         Add a FilterTransform to the schema.
 
@@ -1309,7 +1314,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(self, flatten, as_=Undefined):
+    def transform_flatten(self: TTopLevelMixin, flatten, as_=Undefined) -> TTopLevelMixin:
         """Add a FlattenTransform to the schema.
 
         Parameters
@@ -1337,7 +1342,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.FlattenTransform(flatten=flatten, **{"as": as_})
         )
 
-    def transform_fold(self, fold, as_=Undefined):
+    def transform_fold(self: TTopLevelMixin, fold, as_=Undefined) -> TTopLevelMixin:
         """Add a FoldTransform to the spec.
 
         Parameters
@@ -1361,8 +1366,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FoldTransform(fold=fold, **{"as": as_}))
 
     def transform_loess(
-        self, on, loess, as_=Undefined, bandwidth=Undefined, groupby=Undefined
-    ):
+        self: TTopLevelMixin, on, loess, as_=Undefined, bandwidth=Undefined, groupby=Undefined
+    ) -> TTopLevelMixin:
         """Add a LoessTransform to the spec.
 
         Parameters
@@ -1398,13 +1403,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_lookup(
-        self,
+        self: TTopLevelMixin,
         lookup=Undefined,
         from_=Undefined,
         as_=Undefined,
         default=Undefined,
         **kwargs,
-    ):
+    ) -> TTopLevelMixin:
         """Add a DataLookupTransform or SelectionLookupTransform to the chart
 
         Attributes
@@ -1453,8 +1458,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.LookupTransform(**kwargs))
 
     def transform_pivot(
-        self, pivot, value, groupby=Undefined, limit=Undefined, op=Undefined
-    ):
+        self: TTopLevelMixin, pivot, value, groupby=Undefined, limit=Undefined, op=Undefined
+    ) -> TTopLevelMixin:
         """Add a pivot transform to the chart.
 
         Parameters
@@ -1494,13 +1499,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_quantile(
-        self,
+        self: TTopLevelMixin,
         quantile,
         as_=Undefined,
         groupby=Undefined,
         probs=Undefined,
         step=Undefined,
-    ):
+    ) -> TTopLevelMixin:
         """Add a quantile transform to the chart
 
         Parameters
@@ -1540,7 +1545,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_regression(
-        self,
+        self: TTopLevelMixin,
         on,
         regression,
         as_=Undefined,
@@ -1549,7 +1554,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         method=Undefined,
         order=Undefined,
         params=Undefined,
-    ):
+    ) -> TTopLevelMixin:
         """Add a RegressionTransform to the chart.
 
         Parameters
@@ -1604,7 +1609,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         )
 
-    def transform_sample(self, sample=1000):
+    def transform_sample(self: TTopLevelMixin, sample=1000) -> TTopLevelMixin:
         """
         Add a SampleTransform to the schema.
 
@@ -1624,7 +1629,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.SampleTransform(sample))
 
-    def transform_stack(self, as_, stack, groupby, offset=Undefined, sort=Undefined):
+    def transform_stack(self: TTopLevelMixin, as_, stack, groupby, offset=Undefined, sort=Undefined) -> TTopLevelMixin:
         """
         Add a StackTransform to the schema.
 
@@ -1660,8 +1665,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_timeunit(
-        self, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs
-    ):
+        self: TTopLevelMixin, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs
+    ) -> TTopLevelMixin:
         """
         Add a TimeUnitTransform to the schema.
 
@@ -1740,14 +1745,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self
 
     def transform_window(
-        self,
+        self: TTopLevelMixin,
         window=Undefined,
         frame=Undefined,
         groupby=Undefined,
         ignorePeers=Undefined,
         sort=Undefined,
         **kwargs,
-    ):
+    ) -> TTopLevelMixin:
         """Add a WindowTransform to the schema
 
         Parameters
@@ -1986,15 +1991,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs):
+    def resolve_axis(self: TTopLevelMixin, *args, **kwargs) -> TTopLevelMixin:
         return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs):
+    def resolve_legend(self: TTopLevelMixin, *args, **kwargs) -> TTopLevelMixin:
         return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs):
+    def resolve_scale(self: TTopLevelMixin, *args, **kwargs) -> TTopLevelMixin:
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
