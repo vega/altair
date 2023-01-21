@@ -20,6 +20,9 @@ TTopLevelMixin = TypeVar("TTopLevelMixin", bound="TopLevelMixin")
 TEncodingMixin = TypeVar("TEncodingMixin", bound="_EncodingMixin")
 TChart = TypeVar("TChart", bound="Chart")
 TRepeatChart = TypeVar("TRepeatChart", bound="RepeatChart")
+TConcatChart = TypeVar("TConcatChart", bound="ConcatChart")
+THConcatChart = TypeVar("THConcatChart", bound="HConcatChart")
+TVConcatChart = TypeVar("TVConcatChart", bound="VConcatChart")
 
 
 # ------------------------------------------------------------------------
@@ -2455,7 +2458,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TConcatChart, name=None, bind_x=True, bind_y=True) -> TConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2481,7 +2484,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self: TConcatChart, *params) -> TConcatChart:
         """Add one or more parameters to the chart."""
         if not params or not self.concat:
             return self
@@ -2492,7 +2495,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: TConcatChart, *selections) -> TConcatChart:
         return self.add_params(*selections)
 
 
@@ -2525,7 +2528,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: THConcatChart, name=None, bind_x=True, bind_y=True) -> THConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2551,7 +2554,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self: THConcatChart, *params) -> THConcatChart:
         """Add one or more parameters to the chart."""
         if not params or not self.hconcat:
             return self
@@ -2562,7 +2565,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: THConcatChart, *selections) -> THConcatChart:
         return self.add_params(*selections)
 
 
@@ -2595,7 +2598,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TVConcatChart, name=None, bind_x=True, bind_y=True) -> TVConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2621,7 +2624,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self: TVConcatChart, *params) -> TVConcatChart:
         """Add one or more parameters to the chart."""
         if not params or not self.vconcat:
             return self
@@ -2632,7 +2635,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: TVConcatChart, *selections) -> TVConcatChart:
         return self.add_params(*selections)
 
 
