@@ -13,8 +13,7 @@ Bug Fixes
 
 Maintenance
 ~~~~~~~~~~~
-- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega 5 wrappers.
-
+- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega v5 wrappers.
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
