@@ -1,6 +1,7 @@
 import os
 
 from ...utils import PluginRegistry
+from ...utils.deprecation import deprecated
 from ..display import Displayable
 from ..display import default_renderer_base
 from ..display import json_renderer_base
@@ -93,6 +94,9 @@ class Vega(Displayable):
     schema_path = (__name__, "schema/vega-schema.json")
 
 
+@deprecated(
+    "Rendering Vega specifications is deprecated and will be removed in Altair 5."
+)
 def vega(spec, validate=True):
     """Render and optionally validate a Vega 5 spec.
 
