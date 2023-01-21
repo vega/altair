@@ -980,7 +980,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(self: TTopLevelMixin, as_=Undefined, field=Undefined, bin=True, **kwargs) -> TTopLevelMixin:
+    def transform_bin(
+        self: TTopLevelMixin, as_=Undefined, field=Undefined, bin=True, **kwargs
+    ) -> TTopLevelMixin:
         """
         Add a BinTransform to the schema.
 
@@ -1036,7 +1038,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(self: TTopLevelMixin, as_=Undefined, calculate=Undefined, **kwargs) -> TTopLevelMixin:
+    def transform_calculate(
+        self: TTopLevelMixin, as_=Undefined, calculate=Undefined, **kwargs
+    ) -> TTopLevelMixin:
         """
         Add a CalculateTransform to the schema.
 
@@ -1322,7 +1326,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(self: TTopLevelMixin, flatten, as_=Undefined) -> TTopLevelMixin:
+    def transform_flatten(
+        self: TTopLevelMixin, flatten, as_=Undefined
+    ) -> TTopLevelMixin:
         """Add a FlattenTransform to the schema.
 
         Parameters
@@ -1374,7 +1380,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FoldTransform(fold=fold, **{"as": as_}))
 
     def transform_loess(
-        self: TTopLevelMixin, on, loess, as_=Undefined, bandwidth=Undefined, groupby=Undefined
+        self: TTopLevelMixin,
+        on,
+        loess,
+        as_=Undefined,
+        bandwidth=Undefined,
+        groupby=Undefined,
     ) -> TTopLevelMixin:
         """Add a LoessTransform to the spec.
 
@@ -1466,7 +1477,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.LookupTransform(**kwargs))
 
     def transform_pivot(
-        self: TTopLevelMixin, pivot, value, groupby=Undefined, limit=Undefined, op=Undefined
+        self: TTopLevelMixin,
+        pivot,
+        value,
+        groupby=Undefined,
+        limit=Undefined,
+        op=Undefined,
     ) -> TTopLevelMixin:
         """Add a pivot transform to the chart.
 
@@ -1637,7 +1653,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.SampleTransform(sample))
 
-    def transform_stack(self: TTopLevelMixin, as_, stack, groupby, offset=Undefined, sort=Undefined) -> TTopLevelMixin:
+    def transform_stack(
+        self: TTopLevelMixin, as_, stack, groupby, offset=Undefined, sort=Undefined
+    ) -> TTopLevelMixin:
         """
         Add a StackTransform to the schema.
 
@@ -1673,7 +1691,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_timeunit(
-        self: TTopLevelMixin, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs
+        self: TTopLevelMixin,
+        as_=Undefined,
+        field=Undefined,
+        timeUnit=Undefined,
+        **kwargs,
     ) -> TTopLevelMixin:
         """
         Add a TimeUnitTransform to the schema.
@@ -2376,7 +2398,9 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
-    def interactive(self: TRepeatChart, name=None, bind_x=True, bind_y=True) -> TRepeatChart:
+    def interactive(
+        self: TRepeatChart, name=None, bind_x=True, bind_y=True
+    ) -> TRepeatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2460,7 +2484,9 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self: TConcatChart, name=None, bind_x=True, bind_y=True) -> TConcatChart:
+    def interactive(
+        self: TConcatChart, name=None, bind_x=True, bind_y=True
+    ) -> TConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2530,7 +2556,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self: THConcatChart, name=None, bind_x=True, bind_y=True) -> THConcatChart:
+    def interactive(
+        self: THConcatChart, name=None, bind_x=True, bind_y=True
+    ) -> THConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2600,7 +2628,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def interactive(self: TVConcatChart, name=None, bind_x=True, bind_y=True) -> TVConcatChart:
+    def interactive(
+        self: TVConcatChart, name=None, bind_x=True, bind_y=True
+    ) -> TVConcatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2688,7 +2718,9 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             copy += layer
         return copy
 
-    def interactive(self: TLayerChart, name=None, bind_x=True, bind_y=True) -> TLayerChart:
+    def interactive(
+        self: TLayerChart, name=None, bind_x=True, bind_y=True
+    ) -> TLayerChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2757,7 +2789,9 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def interactive(self: TFacetChart, name=None, bind_x=True, bind_y=True) -> TFacetChart:
+    def interactive(
+        self: TFacetChart, name=None, bind_x=True, bind_y=True
+    ) -> TFacetChart:
         """Make chart axes scales interactive
 
         Parameters
