@@ -574,7 +574,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
 
 CONFIG_METHOD = """
 @use_signature(core.{classname})
-def {method}(self, *args, **kwargs):
+def {method}(self: {self_type}, *args, **kwargs) -> {self_type}:
     copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
@@ -582,7 +582,7 @@ def {method}(self, *args, **kwargs):
 
 CONFIG_PROP_METHOD = """
 @use_signature(core.{classname})
-def configure_{prop}(self, *args, **kwargs):
+def configure_{prop}(self: {self_type}, *args, **kwargs) -> {self_type}:
     copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
@@ -593,8 +593,15 @@ def configure_{prop}(self, *args, **kwargs):
 
 def generate_vegalite_config_mixin(schemafile):
     imports = ["from . import core", "from altair.utils import use_signature"]
+
+    class_name = "ConfigMethodMixin"
+    type_var_name = f"T{class_name}"
+    type_var_definition = (
+        f'{type_var_name} = TypeVar("{type_var_name}", bound="{class_name}")'
+    )
+
     code = [
-        "class ConfigMethodMixin(object):",
+        f"class {class_name}(object):",
         '    """A mixin class that defines config methods"""',
     ]
     with open(schemafile, encoding="utf8") as f:
@@ -602,16 +609,20 @@ def generate_vegalite_config_mixin(schemafile):
     info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
 
     # configure() method
-    method = CONFIG_METHOD.format(classname="Config", method="configure")
+    method = CONFIG_METHOD.format(
+        classname="Config", method="configure", self_type=type_var_name
+    )
     code.append("\n    ".join(method.splitlines()))
 
     # configure_prop() methods
     for prop, prop_info in info.properties.items():
         classname = prop_info.refname
         if classname and classname.endswith("Config"):
-            method = CONFIG_PROP_METHOD.format(classname=classname, prop=prop)
+            method = CONFIG_PROP_METHOD.format(
+                classname=classname, prop=prop, self_type=type_var_name
+            )
             code.append("\n    ".join(method.splitlines()))
-    return imports, "\n".join(code)
+    return imports, type_var_definition, "\n".join(code)
 
 
 def vegalite_main(skip_download=False):
@@ -664,9 +675,11 @@ def vegalite_main(skip_download=False):
         mark_imports, mark_type_var, mark_mixin = generate_vegalite_mark_mixin(
             schemafile, markdefs
         )
-        config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+        config_imports, config_type_var, config_mixin = generate_vegalite_config_mixin(
+            schemafile
+        )
         imports = sorted(set(mark_imports + config_imports))
-        type_vars = sorted([mark_type_var])
+        type_vars = sorted([mark_type_var, config_type_var])
         with open(outfile, "w", encoding="utf8") as f:
             f.write(HEADER)
             f.write("\n".join(imports))
