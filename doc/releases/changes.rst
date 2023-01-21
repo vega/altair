@@ -11,6 +11,10 @@ Bug Fixes
 - Disable uri-reference format check in jsonsschema (#2771)
 - Replace ``iteritems`` with ```items``` due to pandas deprecation (#2683)
 
+Maintenance
+~~~~~~~~~~~
+- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega 5 wrappers.
+
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
