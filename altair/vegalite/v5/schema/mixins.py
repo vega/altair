@@ -3,15 +3,18 @@
 from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
+from typing import TypeVar
+
+TMarkMethodMixin = TypeVar("TMarkMethodMixin", bound="MarkMethodMixin")
 
 
 class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
-    def mark_arc(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_arc(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                 ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                 bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                 clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
@@ -31,7 +34,7 @@ class MarkMethodMixin(object):
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds):
+                 **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'arc'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -67,10 +70,10 @@ class MarkMethodMixin(object):
             copy.mark = "arc"
         return copy
 
-    def mark_area(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_area(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -90,7 +93,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -126,10 +129,10 @@ class MarkMethodMixin(object):
             copy.mark = "area"
         return copy
 
-    def mark_bar(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_bar(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                 ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                 bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                 clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
@@ -149,7 +152,7 @@ class MarkMethodMixin(object):
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds):
+                 **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -185,30 +188,30 @@ class MarkMethodMixin(object):
             copy.mark = "bar"
         return copy
 
-    def mark_image(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                   yOffset=Undefined, **kwds):
+    def mark_image(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
+                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
+                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
+                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
+                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
+                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'image'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -244,10 +247,10 @@ class MarkMethodMixin(object):
             copy.mark = "image"
         return copy
 
-    def mark_line(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_line(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -267,7 +270,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -303,30 +306,30 @@ class MarkMethodMixin(object):
             copy.mark = "line"
         return copy
 
-    def mark_point(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                   yOffset=Undefined, **kwds):
+    def mark_point(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
+                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
+                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
+                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
+                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
+                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -362,10 +365,10 @@ class MarkMethodMixin(object):
             copy.mark = "point"
         return copy
 
-    def mark_rect(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_rect(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -385,7 +388,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -421,10 +424,10 @@ class MarkMethodMixin(object):
             copy.mark = "rect"
         return copy
 
-    def mark_rule(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_rule(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -444,7 +447,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -480,10 +483,10 @@ class MarkMethodMixin(object):
             copy.mark = "rule"
         return copy
 
-    def mark_text(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_text(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -503,7 +506,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -539,10 +542,10 @@ class MarkMethodMixin(object):
             copy.mark = "text"
         return copy
 
-    def mark_tick(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_tick(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -562,7 +565,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -598,30 +601,30 @@ class MarkMethodMixin(object):
             copy.mark = "tick"
         return copy
 
-    def mark_trail(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                   yOffset=Undefined, **kwds):
+    def mark_trail(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
+                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
+                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
+                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
+                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
+                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'trail'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -657,30 +660,31 @@ class MarkMethodMixin(object):
             copy.mark = "trail"
         return copy
 
-    def mark_circle(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+    def mark_circle(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                    description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                    dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                    filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                    fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                    orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                    radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
+                    radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
+                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -716,30 +720,31 @@ class MarkMethodMixin(object):
             copy.mark = "circle"
         return copy
 
-    def mark_square(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+    def mark_square(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                    description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                    dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                    filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                    fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                    orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                    radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
+                    radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
+                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -775,31 +780,31 @@ class MarkMethodMixin(object):
             copy.mark = "square"
         return copy
 
-    def mark_geoshape(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                      ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                      baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
-                      color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                      cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                      cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                      cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
-                      dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
-                      ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                      font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                      height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                      invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
-                      lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                      outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                      radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
-                      shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
-                      strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                      strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                      strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
-                      tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                      theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
-                      timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                      url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                      xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                      yOffset=Undefined, **kwds):
+    def mark_geoshape(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+                      ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
+                      bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
+                      clip=Undefined, color=Undefined, continuousBandSize=Undefined,
+                      cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                      cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
+                      cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                      description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                      dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                      filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                      fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
+                      interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
+                      lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
+                      orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
+                      radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
+                      radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
+                      stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                      strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                      strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                      theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                      thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
+                      tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                      x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                      y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -835,9 +840,9 @@ class MarkMethodMixin(object):
             copy.mark = "geoshape"
         return copy
 
-    def mark_boxplot(self, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
-                     median=Undefined, opacity=Undefined, orient=Undefined, outliers=Undefined,
-                     rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
+    def mark_boxplot(self: TMarkMethodMixin, box=Undefined, clip=Undefined, color=Undefined,
+                     extent=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
+                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'boxplot'
     
         For information on additional arguments, see :class:`BoxPlotDef`
@@ -851,9 +856,9 @@ class MarkMethodMixin(object):
             copy.mark = "boxplot"
         return copy
 
-    def mark_errorbar(self, clip=Undefined, color=Undefined, extent=Undefined, opacity=Undefined,
-                      orient=Undefined, rule=Undefined, size=Undefined, thickness=Undefined,
-                      ticks=Undefined, **kwds):
+    def mark_errorbar(self: TMarkMethodMixin, clip=Undefined, color=Undefined, extent=Undefined,
+                      opacity=Undefined, orient=Undefined, rule=Undefined, size=Undefined,
+                      thickness=Undefined, ticks=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'errorbar'
     
         For information on additional arguments, see :class:`ErrorBarDef`
@@ -867,9 +872,9 @@ class MarkMethodMixin(object):
             copy.mark = "errorbar"
         return copy
 
-    def mark_errorband(self, band=Undefined, borders=Undefined, clip=Undefined, color=Undefined,
-                       extent=Undefined, interpolate=Undefined, opacity=Undefined, orient=Undefined,
-                       tension=Undefined, **kwds):
+    def mark_errorband(self: TMarkMethodMixin, band=Undefined, borders=Undefined, clip=Undefined,
+                       color=Undefined, extent=Undefined, interpolate=Undefined, opacity=Undefined,
+                       orient=Undefined, tension=Undefined, **kwds) -> TMarkMethodMixin:
         """Set the chart's mark to 'errorband'
     
         For information on additional arguments, see :class:`ErrorBandDef`
