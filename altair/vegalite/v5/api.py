@@ -17,6 +17,7 @@ from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSIO
 from .theme import themes
 
 TTopLevelMixin = TypeVar("TTopLevelMixin", bound="TopLevelMixin")
+TEncodingMixin = TypeVar("TEncodingMixin", bound="_EncodingMixin")
 
 
 # ------------------------------------------------------------------------
@@ -2005,7 +2006,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
 class _EncodingMixin(object):
     @utils.use_signature(core.FacetedEncoding)
-    def encode(self, *args, **kwargs):
+    def encode(self: TEncodingMixin, *args, **kwargs) -> TEncodingMixin:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)
 
@@ -2028,7 +2029,7 @@ class _EncodingMixin(object):
         data=Undefined,
         columns=Undefined,
         **kwargs,
-    ):
+    ) -> "FacetChart":
         """Create a facet chart from the current chart.
 
         Faceted charts require data to be specified at the top level; if data
