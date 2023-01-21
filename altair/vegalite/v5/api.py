@@ -19,6 +19,7 @@ from .theme import themes
 TTopLevelMixin = TypeVar("TTopLevelMixin", bound="TopLevelMixin")
 TEncodingMixin = TypeVar("TEncodingMixin", bound="_EncodingMixin")
 TChart = TypeVar("TChart", bound="Chart")
+TRepeatChart = TypeVar("TRepeatChart", bound="RepeatChart")
 
 
 # ------------------------------------------------------------------------
@@ -2370,7 +2371,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TRepeatChart, name=None, bind_x=True, bind_y=True) -> TRepeatChart:
         """Make chart axes scales interactive
 
         Parameters
@@ -2393,7 +2394,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params):
+    def add_params(self: TRepeatChart, *params) -> TRepeatChart:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -2404,7 +2405,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self: TRepeatChart, *selections) -> TRepeatChart:
         return self.add_params(*selections)
 
 
