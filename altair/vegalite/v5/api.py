@@ -18,6 +18,7 @@ from .theme import themes
 
 TTopLevelMixin = TypeVar("TTopLevelMixin", bound="TopLevelMixin")
 TEncodingMixin = TypeVar("TEncodingMixin", bound="_EncodingMixin")
+TChart = TypeVar("TChart", bound="Chart")
 
 
 # ------------------------------------------------------------------------
@@ -2167,7 +2168,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True):
+    def from_dict(cls, dct, validate=True) -> "Chart":
         """Construct class from a dictionary representation
 
         Parameters
@@ -2198,7 +2199,7 @@ class Chart(
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def to_dict(self, *args, **kwargs):
+    def to_dict(self, *args, **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export."""
         context = kwargs.get("context", {})
         if self.data is Undefined and "data" not in context:
@@ -2209,7 +2210,7 @@ class Chart(
             return super(Chart, copy).to_dict(*args, **kwargs)
         return super().to_dict(*args, **kwargs)
 
-    def add_params(self, *params):
+    def add_params(self: TChart, *params) -> TChart:
         """Add one or more parameters to the chart."""
         if not params:
             return self
@@ -2224,10 +2225,10 @@ class Chart(
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *params):
+    def add_selection(self: TChart, *params) -> TChart:
         return self.add_params(*params)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self: TChart, name=None, bind_x=True, bind_y=True) -> TChart:
         """Make chart axes scales interactive
 
         Parameters
