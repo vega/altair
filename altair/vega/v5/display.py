@@ -95,8 +95,7 @@ class Vega(Displayable):
 
 
 @deprecated(
-    "Rendering Vega specifications is deprecated and will be removed in Altair 5. "
-    "Use `import altair as alt` instead of `import altair.vega.v5 as alt`."
+    "Rendering Vega specifications is deprecated and will be removed in Altair 5."
 )
 def vega(spec, validate=True):
     """Render and optionally validate a Vega 5 spec.
