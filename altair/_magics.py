@@ -11,7 +11,6 @@ from IPython.core import magic_arguments
 import pandas as pd
 from toolz import curried
 
-from altair.vegalite import v4 as vegalite_v4
 from altair.vegalite import v5 as vegalite_v5
 from altair.vega import v5 as vega_v5
 
@@ -26,7 +25,6 @@ except ImportError:
 RENDERERS = {
     "vega": {"5": vega_v5.Vega},
     "vega-lite": {
-        "4": vegalite_v4.VegaLite,
         "5": vegalite_v5.VegaLite,
     },
 }
@@ -38,7 +36,6 @@ TRANSFORMERS = {
         "5": vegalite_v5.data_transformers,
     },
     "vega-lite": {
-        "4": vegalite_v4.data_transformers,
         "5": vegalite_v5.data_transformers,
     },
 }
@@ -156,7 +153,7 @@ def vegalite(line, cell):
     if --json is passed, then input is parsed as json rather than yaml.
     """
     args = magic_arguments.parse_argstring(vegalite, line)
-    existing_versions = {"v4": "4", "v5": "5"}
+    existing_versions = {"v5": "5"}
     version = existing_versions[args.version]
     assert version in RENDERERS["vega-lite"]
     VegaLite = RENDERERS["vega-lite"][version]
