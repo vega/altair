@@ -30,7 +30,7 @@ def enable_debug_mode():
 
 def disable_debug_mode():
     global DEBUG_MODE
-    DEBUG_MODE = True
+    DEBUG_MODE = False
 
 
 @contextlib.contextmanager
