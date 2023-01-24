@@ -17,13 +17,13 @@ def spec_to_mimebundle(
     """Convert a vega-lite specification to a mimebundle
 
     The mimebundle type is controlled by the ``format`` argument, which can be
-    one of the following ['html', 'json', 'png', 'svg', 'pdf',  'vega', 'vega-lite']
+    one of the following ['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    format : string {'html', 'json', 'png', 'svg', 'pdf',  'vega', 'vega-lite'}
+    format : string {'html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite'}
         the file format to be saved.
     mode : string {'vega-lite'}
         The rendering mode.
@@ -145,7 +145,7 @@ def _validate_normalize_engine(engine, format):
 
     engine : {None, 'vl-convert', 'altair_saver'}
         the user-provided engine string
-    format : string {'png', 'svg', 'pdf'}
+    format : string {'png', 'svg', 'pdf', 'vega'}
         the format of the mimebundle to be returned
     """
     # Try to import vl_convert

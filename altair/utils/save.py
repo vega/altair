@@ -88,9 +88,9 @@ def save(
         the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
-        Must be 'vegalite'. If not specified, then infer the mode from
+        Must be 'vega-lite'. If not specified, then infer the mode from
         the '$schema' property of the spec, or the ``opt`` dictionary.
-        If it's not specified in either of those places, then use 'vegalite'.
+        If it's not specified in either of those places, then use 'vega-lite'.
     vega_version : string (optional)
         For html output, the version of vega.js to use
     vegalite_version : string (optional)
