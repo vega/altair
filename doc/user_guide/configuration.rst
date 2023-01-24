@@ -66,6 +66,20 @@ The methods are the following:
 - :meth:`Chart.configure_axisTop`
 - :meth:`Chart.configure_axisX`
 - :meth:`Chart.configure_axisY`
+- :meth:`Chart.configure_axisDiscrete`
+- :meth:`Chart.configure_axisPoint`
+- :meth:`Chart.configure_axisQuantitative`
+- :meth:`Chart.configure_axisTemporal`
+- :meth:`Chart.configure_axisXBand`
+- :meth:`Chart.configure_axisXDiscrete`
+- :meth:`Chart.configure_axisXPoint`
+- :meth:`Chart.configure_axisXQuantitative`
+- :meth:`Chart.configure_axisXTemporal`
+- :meth:`Chart.configure_axisYBand`
+- :meth:`Chart.configure_axisYDiscrete`
+- :meth:`Chart.configure_axisYPoint`
+- :meth:`Chart.configure_axisYQuantitative`
+- :meth:`Chart.configure_axisYTemporal`
 
 They have the following properties:
 
