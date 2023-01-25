@@ -1,6 +1,4 @@
 from .html import spec_to_html
-import warnings
-from .deprecation import AltairDeprecationWarning
 from ..vegalite.v5.data import data_transformers
 
 
@@ -45,14 +43,9 @@ def spec_to_mimebundle(
 
     Note
     ----
-    The png, svg, vega and pdf outputs require the vl-convert or altair_saver package
-    to be installed.
+    The png, svg, pdf, and vega outputs require the altair_saver package
     """
     if mode != "vega-lite":
-        if mode == "vega":
-            warnings.warn(
-                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
-            )
         raise ValueError("mode must be 'vega-lite'")
 
     if format in ["png", "svg", "pdf", "vega"]:
@@ -76,7 +69,8 @@ def spec_to_mimebundle(
     if format == "json":
         return {"application/json": spec}
     raise ValueError(
-        "format must be one of ['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
+        "format must be one of "
+        "['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
     )
 
 
