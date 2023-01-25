@@ -1,7 +1,6 @@
 import pytest
 
 import altair as alt
-import warnings
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
