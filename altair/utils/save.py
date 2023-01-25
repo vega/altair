@@ -1,7 +1,6 @@
 import json
 import pathlib
 import warnings
-from .deprecation import AltairDeprecationWarning
 
 from .mimebundle import spec_to_mimebundle
 
@@ -46,10 +45,6 @@ def set_inspect_mode_argument(mode, embed_options, spec, vegalite_version):
             mode = "vega-lite"
 
     if mode != "vega-lite":
-        if mode == "vega":
-            warnings.warn(
-                "mode 'vega' is deprecated, use 'vega-lite'", AltairDeprecationWarning
-            )
         raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
 
     if mode == "vega-lite" and vegalite_version is None:
