@@ -216,16 +216,14 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 
 def test_spec_to_vega_mimebundle(vega_spec):
-    with warnings.catch_warnings():
-        warnings.simplefilter("error")
-        with pytest.raises(ValueError):
-            with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
-                spec_to_mimebundle(
-                    spec=vega_spec,
-                    mode="vega",
-                    format="vega",
-                    vega_version=alt.VEGA_VERSION,
-                )
+    # ValueError: mode must be 'vega-lite'
+    with pytest.raises(ValueError):
+        spec_to_mimebundle(
+            spec=vega_spec,
+            mode="vega",
+            format="vega",
+            vega_version=alt.VEGA_VERSION,
+        )
 
 
 def test_spec_to_json_mimebundle():
