@@ -180,10 +180,15 @@ For general configuration of all mark types, use:
 
 For configurations specific to particular mark types, use:
 
+- :meth:`Chart.configure_arc`
 - :meth:`Chart.configure_area`
 - :meth:`Chart.configure_bar`
+- :meth:`Chart.configure_boxplot`
 - :meth:`Chart.configure_circle`
+- :meth:`Chart.configure_errorband`
+- :meth:`Chart.configure_errorbar`
 - :meth:`Chart.configure_geoshape`
+- :meth:`Chart.configure_image`
 - :meth:`Chart.configure_line`
 - :meth:`Chart.configure_point`
 - :meth:`Chart.configure_rect`
