@@ -21,6 +21,7 @@ These methods and their arguments will be outlined below:
 - :ref:`config-scale` :meth:`Chart.configure_scale`
 - :ref:`config-range` :meth:`Chart.configure_range`
 - :ref:`config-projection` :meth:`Chart.configure_projection`
+- :ref:`config-composition` :meth:`Chart.configure_concat`, :meth:`Chart.configure_facet`
 - :ref:`config-selection` :meth:`Chart.configure_selection`
 - :ref:`config-title` :meth:`Chart.configure_title`
 - :ref:`config-view` :meth:`Chart.configure_view`
@@ -238,6 +239,15 @@ which has the following properties:
 
 .. altair-object-table:: altair.ProjectionConfig
 
+
+.. _config-composition:
+
+Concat and Facet Configuration
+------------------------------
+Various aspects of concat and facet charts can be configured using :meth:`Chart.configure_concat`
+and :meth:`Chart.configure_facet`, which have the following properties:
+
+.. altair-object-table:: altair.CompositionConfig
 
 .. _config-selection:
 
