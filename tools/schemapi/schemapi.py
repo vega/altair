@@ -362,6 +362,14 @@ class SchemaBase(object):
             # parsed_shorthand is removed from context if it exists so that it is
             # not passed to child to_dict function calls
             parsed_shorthand = context.pop("parsed_shorthand", {})
+            # Prevent that pandas categorical data is automatically sorted
+            # when a non-ordinal data type is specifed manually
+            if "sort" in parsed_shorthand and kwds["type"] not in [
+                "ordinal",
+                Undefined,
+            ]:
+                parsed_shorthand.pop("sort")
+
             kwds.update(
                 {
                     k: v
