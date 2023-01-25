@@ -43,7 +43,7 @@ and has the following attributes:
 
 Axis Configuration
 ------------------
-Axis configuration defines default settings for axes, and can be set using
+Axis configuration defines default settings for axes and can be set using
 the :meth:`Chart.configure_axis` method.
 Properties defined here are applied to all axes in the figure.
 
@@ -90,9 +90,9 @@ They have the following properties:
 
 Header Configuration
 --------------------
-The :meth:`Chart.configure_header` method allows configuration of facet headers,
-including the font, color, size, and position of the title and labels.
-Here is an example:
+Header configuration defines default settings for headers including the font, color,
+size, and position of the title and labels and can be set using 
+the :meth:`Chart.configure_header` method. Here is an example:
 
 .. altair-plot::
 
@@ -118,7 +118,14 @@ Here is an example:
         labelFontSize=14
     )
 
-Additional properties are summarized in the following table:
+Additional property blocks can target more specific header types. The methods are the following:
+
+- :meth:`Chart.configure_header`
+- :meth:`Chart.configure_headerColumn`
+- :meth:`Chart.configure_headerFacet`
+- :meth:`Chart.configure_headerRow`
+
+They have the following properties:
 
 .. altair-object-table:: altair.HeaderConfig
 
