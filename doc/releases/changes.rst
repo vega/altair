@@ -3,17 +3,17 @@
 Altair Change Log
 =================
 
-Version 4.2.1 (released XXX XX, 2023)
+Version 4.2.1 (released Jan 26, 2023)
 -------------------------------------
 
 Bug Fixes
 ~~~~~~~~~
-- Disable uri-reference format check in jsonsschema (#2771)
-- Replace ``iteritems`` with ```items``` due to pandas deprecation (#2683)
+- Disable uri-reference format check in jsonsschema (#2771).
+- Replace ``iteritems`` with ``items`` due to pandas deprecation (#2683).
 
 Maintenance
 ~~~~~~~~~~~
-- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega v5 wrappers.
+- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega v5 wrappers (#2843).
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
