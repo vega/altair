@@ -3,7 +3,7 @@
 Altair Change Log
 =================
 
-Version 4.2.2 (released XXX YY, 2023)
+Version 4.2.2 (released Jan 27, 2023)
 -------------------------------------
 
 Bug Fixes
