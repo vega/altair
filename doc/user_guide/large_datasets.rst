@@ -166,6 +166,7 @@ that you loose all interactivity features of Altair.
 Both renderers require you to install either the `vl-convert`_ or the `altair_saver`_ package, see :ref:`saving-png`,
 whereas `vl-convert`_ is expected to provide the better performance.
 
+.. _preaggregate-and-filter:
 Preaggregate and Filter in Pandas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Another common approach is to perform data transformations such as aggregations
@@ -340,25 +341,39 @@ they include some form of aggregation.
 
 VegaFusion 1.0 provides two rendering modes that are useful in different situations.
 
-Mime renderer
+Mime Renderer
 ^^^^^^^^^^^^^
-The `VegaFusion mime renderer`_ automates the preaggregate and filter workflow described above. Right before
+The `VegaFusion mime renderer`_ is a good choice for charts that do not re-aggregate or re-filter data in response
+to selections. It is enabled with:
+
+.. code-block:: python
+
+    import vegafusion as vf
+    vf.enable()
+
+The mime renderer automates the :ref:`preaggregate-and-filter` workflow described above. Right before
 a chart is rendered, VegaFusion extracts the datasets and supported transforms and evaluates them in the
 Python kernel. It then removes any unused columns and inlines the transformed data into the chart specification
-for rendering. Charts rendered this way are self-contained and do not require the Python kernel or a custom
-notebook extension to display.
+for rendering.
 
-The mime renderer is a good choice for charts that do not re-aggregate or re-filter data in response
-to selections.
+Charts rendered this way are self-contained and do not require the Python kernel or a custom
+notebook extension to display.  They are rendered with the same frontend functionality that
+is already used to display regular Altair charts.
 
-Widget renderer
+Widget Renderer
 ^^^^^^^^^^^^^^^
-The `VegaFusion widget renderer`_ uses a Jupyter Widget extension to maintain a live connection between the displayed
+The `VegaFusion widget renderer`_ is a good choice for charts that re-aggregate or re-filter data in response
+to selections. It is enabled with:
+
+.. code-block:: python
+
+    import vegafusion as vf
+    vf.enable_widget()
+
+The widget renderer uses a Jupyter Widget extension to maintain a live connection between the displayed
 chart and the Python kernel. This makes it possible for transforms to be evaluated interactively in response to
 changes in selections. Charts rendered this way require a running Python kernel and Jupyter Widget extension to
 display.
-
-The widget renderer is a good choice for charts that re-aggregate or re-filter data in response to selections.
 
 .. _VegaFusion: https://vegafusion.io
 .. _VegaFusion mime renderer: https://vegafusion.io/mime_renderer.html
