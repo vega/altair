@@ -38,7 +38,7 @@
 8. Tag the release:
 
        git tag -a v5.0.0 -m "version 5.0.0 release"
-       git push upstream v2.0.0
+       git push upstream v5.0.0
 
 9. Build source & wheel distributions:
 
