@@ -48,7 +48,7 @@
 
 10. publish to PyPI (Requires correct PyPI owner permissions):
 
-       twine upload dist/*
+        twine upload dist/*
 
 11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
 
