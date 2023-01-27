@@ -8,7 +8,7 @@ Version 4.2.2 (released XXX YY, 2023)
 
 Bug Fixes
 ~~~~~~~~~
-- Fix incompatibility with jsonschema < 4.17 which got introduced in Altair 4.2.1 (#2860).
+- Fix incompatibility with jsonschema < 4.5 which got introduced in Altair 4.2.1 (#2860).
 
 Version 4.2.1 (released Jan 26, 2023)
 -------------------------------------
