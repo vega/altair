@@ -34,9 +34,9 @@ Bug Fixes
 ~~~~~~~~~
 
 - Displaying a chart not longer changes the shorthand syntax of the stored spec (#2813).
-- Better support for jsonschema>=4.13 by disabling the uri-reference format check (#2771) and dynamically determining the jsonschema validator (#2812).
 - Fixed ``disable_debug_mode`` (#2851).
 - Fixed issue where the webdriver was not working with Firefox's geckodriver (#2466).
+- Dynamically determine the jsonschema validator to avoid issues with recent jsonschema versions (#2812).
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,6 +44,28 @@ Backward-Incompatible Changes
 - Removed the Vega (v5) wrappers and deprecate rendering in Vega mode (save Chart as Vega format is still allowed) (#2829).
 - Removed the Vega-Lite 3 and 4 wrappers (#2847).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+
+Version 4.2.2 (released Jan 27, 2023)
+-------------------------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Fix incompatibility with jsonschema < 4.5 which got introduced in Altair 4.2.1 (#2860).
+
+Version 4.2.1 (released Jan 26, 2023)
+-------------------------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Disable uri-reference format check in jsonsschema (#2771).
+- Replace ``iteritems`` with ``items`` due to pandas deprecation (#2683).
+
+Maintenance
+~~~~~~~~~~~
+
+- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega v5 wrappers (#2843).
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
