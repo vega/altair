@@ -116,13 +116,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -637,13 +637,13 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -1170,13 +1170,13 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -1471,13 +1471,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -1797,13 +1797,13 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -2041,13 +2041,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -2398,13 +2398,13 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -2919,13 +2919,13 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -3440,13 +3440,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -3766,13 +3766,13 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -3993,13 +3993,13 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -4337,13 +4337,13 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -4632,13 +4632,13 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -4976,13 +4976,13 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5273,13 +5273,13 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5792,13 +5792,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -6062,13 +6062,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -6163,8 +6163,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -6431,8 +6432,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -6632,13 +6634,13 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -6941,13 +6943,13 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -7242,13 +7244,13 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -7763,13 +7765,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -8284,13 +8286,13 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -8805,13 +8807,13 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -9326,13 +9328,13 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -9847,13 +9849,13 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10368,13 +10370,13 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10885,13 +10887,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10986,8 +10988,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -11253,8 +11256,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -11454,13 +11458,13 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -11751,13 +11755,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -12078,13 +12082,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -12412,13 +12416,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -12521,8 +12525,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -12822,8 +12827,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -13039,13 +13045,13 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -13335,13 +13341,13 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -13504,13 +13510,13 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -13671,13 +13677,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -14159,13 +14165,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -14268,8 +14274,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -14569,8 +14576,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -14786,13 +14794,13 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -15082,13 +15090,13 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -15251,13 +15259,13 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -15418,13 +15426,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
