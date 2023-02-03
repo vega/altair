@@ -2916,7 +2916,6 @@ def _remove_duplicate_params(layer):
     found_params = []
 
     for subchart in subcharts:
-
         if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
             continue
 
@@ -2944,7 +2943,6 @@ def _remove_duplicate_params(layer):
 
 
 def _combine_subchart_params(params, subcharts):
-
     if params is Undefined:
         params = []
 
