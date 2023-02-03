@@ -140,7 +140,7 @@ class DatumChannelMixin(object):
 """
 
 MARK_METHOD = '''
-def mark_{mark}({def_arglist}):
+def mark_{mark}({def_arglist}) -> {self_type}:
     """Set the chart's mark to '{mark}'
 
     For information on additional arguments, see :class:`{mark_def}`
@@ -156,7 +156,7 @@ def mark_{mark}({def_arglist}):
 
 CONFIG_METHOD = """
 @use_signature(core.{classname})
-def {method}(self, *args, **kwargs):
+def {method}(self: {self_type}, *args, **kwargs) -> {self_type}:
     copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
@@ -164,7 +164,7 @@ def {method}(self, *args, **kwargs):
 
 CONFIG_PROP_METHOD = """
 @use_signature(core.{classname})
-def configure_{prop}(self, *args, **kwargs):
+def configure_{prop}(self: {self_type}, *args, **kwargs) -> {self_type}:
     copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
@@ -489,22 +489,6 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     return "\n".join(contents)
 
 
-MARK_METHOD = '''
-def mark_{mark}({def_arglist}) -> {self_type}:
-    """Set the chart's mark to '{mark}'
-
-    For information on additional arguments, see :class:`{mark_def}`
-    """
-    kwds = dict({dict_arglist})
-    copy = self.copy(deep=False)
-    if any(val is not Undefined for val in kwds.values()):
-        copy.mark = core.{mark_def}(type="{mark}", **kwds)
-    else:
-        copy.mark = "{mark}"
-    return copy
-'''
-
-
 def generate_vegalite_mark_mixin(schemafile, markdefs):
     with open(schemafile, encoding="utf8") as f:
         schema = json.load(f)
@@ -560,25 +544,6 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
             code.append("\n    ".join(mark_method.splitlines()))
 
     return imports, type_var_definition, "\n".join(code)
-
-
-CONFIG_METHOD = """
-@use_signature(core.{classname})
-def {method}(self: {self_type}, *args, **kwargs) -> {self_type}:
-    copy = self.copy(deep=False)
-    copy.config = core.{classname}(*args, **kwargs)
-    return copy
-"""
-
-CONFIG_PROP_METHOD = """
-@use_signature(core.{classname})
-def configure_{prop}(self: {self_type}, *args, **kwargs) -> {self_type}:
-    copy = self.copy(deep=['config'])
-    if copy.config is Undefined:
-        copy.config = core.Config()
-    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
-    return copy
-"""
 
 
 def generate_vegalite_config_mixin(schemafile):
