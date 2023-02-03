@@ -432,7 +432,7 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : string
+        validate : boolean
             If True (default), then validate the output dictionary
             against the schema.
         ignore : list
