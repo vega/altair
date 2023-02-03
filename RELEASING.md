@@ -38,7 +38,7 @@
 8. Tag the release:
 
        git tag -a v5.0.0 -m "version 5.0.0 release"
-       git push upstream v2.0.0
+       git push upstream v5.0.0
 
 9. Build source & wheel distributions:
 
@@ -48,7 +48,7 @@
 
 10. publish to PyPI (Requires correct PyPI owner permissions):
 
-       twine upload dist/*
+        twine upload dist/*
 
 11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
 
