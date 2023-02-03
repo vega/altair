@@ -123,18 +123,14 @@ def _subclasses(cls):
             yield cls
 
 
-def _todict(obj, validate, context):
+def _todict(obj, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
-        return obj.to_dict(validate=validate, context=context)
+        return obj.to_dict(validate=False, context=context)
     elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, validate, context) for v in obj]
+        return [_todict(v, context) for v in obj]
     elif isinstance(obj, dict):
-        return {
-            k: _todict(v, validate, context)
-            for k, v in obj.items()
-            if v is not Undefined
-        }
+        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
     elif hasattr(obj, "to_dict"):
         return obj.to_dict()
     elif isinstance(obj, np.number):
@@ -384,7 +380,7 @@ class SchemaBase(object):
             ignore = []
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], validate=False, context=context)
+            result = _todict(self._args[0], context=context)
         elif not self._args:
             kwds = self._kwds.copy()
             # parsed_shorthand is added by FieldChannelMixin.
@@ -412,7 +408,6 @@ class SchemaBase(object):
             }
             result = _todict(
                 kwds,
-                validate=False,
                 context=context,
             )
         else:
@@ -542,7 +537,7 @@ class SchemaBase(object):
         Validate a property against property schema in the context of the
         rootschema
         """
-        value = _todict(value, validate=False, context={})
+        value = _todict(value, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         return validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
