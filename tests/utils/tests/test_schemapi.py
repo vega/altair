@@ -428,25 +428,49 @@ def chart_example_invalid_channel_and_condition():
     )
 
 
+def chart_example_invalid_y_option():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety"),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value_with_condition():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x="variety",
+            y=alt.Y("sum(yield)", stack="asdf"),
+            opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
+        )
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func,expected_error_message",
     [
         (
-            lambda: alt.Chart(data.barley())
-            .mark_bar()
-            .encode(
-                x=alt.X("variety", unknown=2),
-                y=alt.Y("sum(yield)", stack="asdf"),
-            ),
+            chart_example_invalid_y_option,
             r"Additional properties are not allowed \('unknown' was unexpected\)",
         ),
         (
-            lambda: alt.Chart(data.barley())
-            .mark_bar()
-            .encode(
-                x=alt.X("variety"),
-                y=alt.Y("sum(yield)", stack="asdf"),
-            ),
+            chart_example_invalid_y_option_value,
             r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
             + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
         ),
@@ -455,13 +479,7 @@ def chart_example_invalid_channel_and_condition():
             r"Additional properties are not allowed \('width' was unexpected\)",
         ),
         (
-            lambda: alt.Chart(data.barley())
-            .mark_bar()
-            .encode(
-                x="variety",
-                y=alt.Y("sum(yield)", stack="asdf"),
-                opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
-            ),
+            chart_example_invalid_y_option_value_with_condition,
             r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
             + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
         ),
