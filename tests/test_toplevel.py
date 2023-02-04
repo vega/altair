@@ -5,9 +5,9 @@ def test_completeness_of_all():
     expected = sorted(
         [
             x
-            for x in alt.__dict__.keys()
+            for x in alt.__dict__
             if not getattr(getattr(alt, x), "_deprecated", False)
-            and not x.startswith("__")
+            and not x.startswith("_")
         ]
     )
 
