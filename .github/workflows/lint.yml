@@ -14,7 +14,7 @@ jobs:
         python-version: "3.10"
     - name: Check formatting with black
       run: |
-        pip install black
+        pip install "black<24"
         black --diff --color .
         black --check .
     - name: Lint with flake8

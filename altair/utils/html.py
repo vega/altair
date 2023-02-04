@@ -141,9 +141,42 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
 )
 
 
+# This is like the HTML_TEMPLATE template, but includes vega javascript inline
+# so that the resulting file is not dependent on external resources. This was
+# ported over from altair_saver.
+#
+# implies requirejs=False and full_html=True
+INLINE_HTML_TEMPLATE = jinja2.Template(
+    """\
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript">
+    // vega.js v{{ vega_version }}
+    {{ vega_script }}
+    // vega-lite.js v{{ vegalite_version }}
+    {{ vegalite_script }}
+    // vega-embed.js v{{ vegaembed_version }}
+    {{ vegaembed_script }}
+  </script>
+</head>
+<body>
+<div class="vega-visualization" id="{{ output_div }}"></div>
+<script type="text/javascript">
+  const spec = {{ spec }};
+  const embedOpt = {{ embed_options }};
+  vegaEmbed('#{{ output_div }}', spec, embedOpt).catch(console.error);
+</script>
+</body>
+</html>
+"""
+)
+
+
 TEMPLATES = {
     "standard": HTML_TEMPLATE,
     "universal": HTML_TEMPLATE_UNIVERSAL,
+    "inline": INLINE_HTML_TEMPLATE,
 }
 
 
@@ -218,6 +251,22 @@ def spec_to_html(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version for mode='vega-lite'")
 
+    render_kwargs = dict()
+    if template == "inline":
+        try:
+            from altair_viewer import get_bundled_script
+        except ImportError:
+            raise ImportError(
+                "The altair_viewer package is required to convert to HTML with inline=True"
+            )
+        render_kwargs["vega_script"] = get_bundled_script("vega", vega_version)
+        render_kwargs["vegalite_script"] = get_bundled_script(
+            "vega-lite", vegalite_version
+        )
+        render_kwargs["vegaembed_script"] = get_bundled_script(
+            "vega-embed", vegaembed_version
+        )
+
     template = TEMPLATES.get(template, template)
     if not hasattr(template, "render"):
         raise ValueError("Invalid template: {0}".format(template))
@@ -233,4 +282,5 @@ def spec_to_html(
         output_div=output_div,
         fullhtml=fullhtml,
         requirejs=requirejs,
+        **render_kwargs,
     )

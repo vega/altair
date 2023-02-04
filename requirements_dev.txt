@@ -1,11 +1,9 @@
-black
-docutils
+black<24
 ipython
 flake8
 pytest
 pytest-cov
-sphinx
-mistune<2.0.0  # necessary for m2r v0.2
 m2r
 vega_datasets
-myst-parser
+altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git
+vl-convert-python

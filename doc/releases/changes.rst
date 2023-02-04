@@ -25,6 +25,7 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+- Removed the Vega (v5) wrappers and deprecate rendering in Vega mode (save Chart as Vega format is still allowed).
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------

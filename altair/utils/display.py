@@ -125,7 +125,10 @@ class Displayable(object):
         # type: () -> None
         """Validate the spec against the schema."""
         schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
-        validate_jsonschema(self.spec, schema_dict)
+        validate_jsonschema(
+            self.spec,
+            schema_dict,
+        )
 
     def _repr_mimebundle_(self, include=None, exclude=None):
         """Return a MIME bundle for display in Jupyter frontends."""

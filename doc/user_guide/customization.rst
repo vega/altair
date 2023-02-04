@@ -121,6 +121,85 @@ Global configurations should be reserved for creating themes that are applied
 just before the chart is rendered.
 
 
+Adjusting the Title
+-------------------
+By default an Altair chart does not have a title, as seen in this example.
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   iowa = data.iowa_electricity.url
+   
+   alt.Chart(iowa).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+You can add a simple title by passing the `title` keyword argument with the data.
+
+.. altair-plot::
+
+   alt.Chart(iowa, title="Iowa's green energy boom").mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+It is also possible to add a subtitle by passing in an `alt.Title` object.
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle="A growing share of the state's energy has come from renewable sources"
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+The subtitle can run to two lines by passing a list where each list item is a line (if you don't want to create this list manually as in the example below, you can use the ``wrap`` function from the `textwrap library https://docs.python.org/3/library/textwrap.html`_ to split a string into a list of substrings of a certain length).
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy", "has come from renewable sources"]
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+The ``Title`` object can also configure a number of other attributes, e.g., the position of the title and subtitle (see see :ref:`user-guide-customization` for details).
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy", "has come from renewable sources"],
+          anchor='start',
+          orient='bottom',
+          offset=20
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q", stack="normalize"),
+       color="source:N"
+   )
+
+
 Adjusting Axis Limits
 ---------------------
 The default axis limit used by Altair is dependent on the type of the data.
@@ -582,7 +661,7 @@ For example, the default theme configures the default size of a single chart:
     >>> import altair as alt
     >>> default = alt.themes.get()
     >>> default()
-    {'config': {'view': {'continuousWidth': 400, 'continuousHeight': 300}}}
+    {'config': {'view': {'continuousWidth': 300, 'continuousHeight': 300}}}
 
 You can see that any chart you create will have this theme applied, and these configurations
 added to its specification:
@@ -673,7 +752,7 @@ fill unless otherwise specified:
             'config': {
                 'view': {
                     'height': 300,
-                    'width': 400,
+                    'width': 300,
                 },
                 'mark': {
                     'color': 'black',
