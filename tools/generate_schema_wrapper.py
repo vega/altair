@@ -12,8 +12,13 @@ from urllib import request
 
 import m2r
 
-# import schemapi from here
-sys.path.insert(0, abspath(dirname(__file__)))
+
+# Add path so that schemapi can be imported from the tools folder
+current_dir = dirname(__file__)
+sys.path.insert(0, abspath(current_dir))
+# And another path so that Altair can be imported from head. This is relevant when
+# generate_api_docs is imported in the main function
+sys.path.insert(0, abspath(join(current_dir, "..")))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
