@@ -634,6 +634,7 @@ def main():
     # Altair is imported after the generation of the new schema files so that
     # the API docs reflect the newest changes
     import generate_api_docs  # noqa: E402
+
     generate_api_docs.write_api_file()
 
 
