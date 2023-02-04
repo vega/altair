@@ -22,7 +22,6 @@ from schemapi.utils import (  # noqa: E402
     indent_arglist,
     resolve_references,
 )
-import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
@@ -627,6 +626,9 @@ def main():
     copy_schemapi_util()
     vegalite_main(args.skip_download)
 
+    # Altair is imported after the generation of the new schema files so that
+    # the API docs reflect the newest changes
+    import generate_api_docs  # noqa: E402
     generate_api_docs.write_api_file()
 
 
