@@ -2,9 +2,14 @@ import altair as alt
 
 
 def test_completeness_of_all():
-    expected = [
-        x for x in dir(alt) if not getattr(getattr(alt, x), "_deprecated", False)
-    ]
+    expected = sorted(
+        [
+            x
+            for x in alt.__dict__.keys()
+            if not getattr(getattr(alt, x), "_deprecated", False)
+            and not x.startswith("__")
+        ]
+    )
 
     # If the assert statement fails below, there are probably either new objects
     # in the top-level Altair namespace or some were removed.
