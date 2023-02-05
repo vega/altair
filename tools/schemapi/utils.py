@@ -192,7 +192,6 @@ class SchemaInfo(object):
 
     @property
     def medium_description(self):
-
         if self.is_list():
             return "[{0}]".format(
                 ", ".join(self.child(s).short_description for s in self.schema)

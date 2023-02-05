@@ -1,5 +1,6 @@
 import json
 import pathlib
+import warnings
 
 from .mimebundle import spec_to_mimebundle
 
@@ -12,6 +13,44 @@ def write_file_or_filename(fp, content, mode="w"):
             f.write(content)
     else:
         fp.write(content)
+
+
+def set_inspect_format_argument(format, fp, inline):
+    """Inspect the format argument in the save function"""
+    if format is None:
+        if isinstance(fp, str):
+            format = fp.split(".")[-1]
+        elif isinstance(fp, pathlib.PurePath):
+            format = fp.suffix.lstrip(".")
+        else:
+            raise ValueError(
+                "must specify file format: "
+                "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
+            )
+
+    if format != "html" and inline:
+        warnings.warn("inline argument ignored for non HTML formats.")
+
+    return format
+
+
+def set_inspect_mode_argument(mode, embed_options, spec, vegalite_version):
+    """Inspect the mode argument in the save function"""
+    if mode is None:
+        if "mode" in embed_options:
+            mode = embed_options["mode"]
+        elif "$schema" in spec:
+            mode = spec["$schema"].split("/")[-2]
+        else:
+            mode = "vega-lite"
+
+    if mode != "vega-lite":
+        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
+
+    if mode == "vega-lite" and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
+
+    return mode
 
 
 def save(
@@ -27,11 +66,12 @@ def save(
     webdriver=None,
     scale_factor=1,
     engine=None,
+    inline=False,
     **kwargs,
 ):
     """Save a chart to file in a variety of formats
 
-    Supported formats are [json, html, png, svg]
+    Supported formats are [json, html, png, svg, pdf]
 
     Parameters
     ----------
@@ -40,12 +80,12 @@ def save(
     fp : string filename, pathlib.Path or file-like object
         file to which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'svg'].
+        the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
-        Either 'vega' or 'vegalite'. If not specified, then infer the mode from
+        Must be 'vega-lite'. If not specified, then infer the mode from
         the '$schema' property of the spec, or the ``opt`` dictionary.
-        If it's not specified in either of those places, then use 'vegalite'.
+        If it's not specified in either of those places, then use 'vega-lite'.
     vega_version : string (optional)
         For html output, the version of vega.js to use
     vegalite_version : string (optional)
@@ -64,6 +104,12 @@ def save(
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
+    inline: bool (optional)
+        If False (default), the required JavaScript libraries are loaded
+        from a CDN location in the resulting html file.
+        If True, the required JavaScript libraries are inlined into the resulting
+        html file so that it will work without an internet connection.
+        The altair_viewer package is required if True.
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
@@ -73,36 +119,18 @@ def save(
     if embed_options is None:
         embed_options = {}
 
-    if format is None:
-        if isinstance(fp, str):
-            format = fp.split(".")[-1]
-        elif isinstance(fp, pathlib.PurePath):
-            format = fp.suffix.lstrip(".")
-        else:
-            raise ValueError(
-                "must specify file format: " "['png', 'svg', 'pdf', 'html', 'json']"
-            )
+    format = set_inspect_format_argument(format, fp, inline)
 
     spec = chart.to_dict()
 
-    if mode is None:
-        if "mode" in embed_options:
-            mode = embed_options["mode"]
-        elif "$schema" in spec:
-            mode = spec["$schema"].split("/")[-2]
-        else:
-            mode = "vega-lite"
-
-    if mode not in ["vega", "vega-lite"]:
-        raise ValueError("mode must be 'vega' or 'vega-lite', " "not '{}'".format(mode))
-
-    if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version")
+    mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
 
     if format == "json":
         json_spec = json.dumps(spec, **json_kwds)
         write_file_or_filename(fp, json_spec, mode="w")
     elif format == "html":
+        if inline:
+            kwargs["template"] = "inline"
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,
@@ -115,7 +143,7 @@ def save(
             **kwargs,
         )
         write_file_or_filename(fp, mimebundle["text/html"], mode="w")
-    elif format in ["png", "svg", "pdf"]:
+    elif format in ["png", "svg", "pdf", "vega"]:
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,

@@ -5,7 +5,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any
+from typing import Any, Sequence, List
 from itertools import zip_longest
 
 import jsonschema
@@ -32,7 +32,7 @@ def enable_debug_mode():
 
 def disable_debug_mode():
     global DEBUG_MODE
-    DEBUG_MODE = True
+    DEBUG_MODE = False
 
 
 @contextlib.contextmanager
@@ -68,9 +68,50 @@ def validate_jsonschema(spec, schema, rootschema=None):
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
     validator = validator_cls(schema, **validator_kwargs)
-    error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
-    if error is not None:
-        raise error
+    errors = list(validator.iter_errors(spec))
+    if errors:
+        errors = _get_most_relevant_errors(errors)
+        main_error = errors[0]
+        # They can be used to craft more helpful error messages when this error
+        # is being converted to a SchemaValidationError
+        main_error._additional_errors = errors[1:]
+        raise main_error
+
+
+def _get_most_relevant_errors(
+    errors: Sequence[jsonschema.exceptions.ValidationError],
+) -> List[jsonschema.exceptions.ValidationError]:
+    if len(errors) == 0:
+        return []
+
+    # Go to lowest level in schema where an error happened as these give
+    # the most relevant error messages
+    lowest_level = errors[0]
+    while lowest_level.context:
+        lowest_level = lowest_level.context[0]
+
+    most_relevant_errors = []
+    if lowest_level.validator == "additionalProperties":
+        # For these errors, the message is already informative enough and the other
+        # errors on the lowest level are not helpful for a user but instead contain
+        # the same information in a more verbose way
+        most_relevant_errors = [lowest_level]
+    else:
+        parent = lowest_level.parent
+        if parent is None:
+            # In this case we are still at the top level and can return all errors
+            most_relevant_errors = errors
+        else:
+            # Return all errors of the lowest level out of which
+            # we can construct more informative error messages
+            most_relevant_errors = lowest_level.parent.context
+
+    # This should never happen but might still be good to test for it as else
+    # the original error would just slip through without being raised
+    if len(most_relevant_errors) == 0:
+        raise Exception("Could not determine the most relevant errors") from errors[0]
+
+    return most_relevant_errors
 
 
 def _subclasses(cls):
@@ -84,18 +125,14 @@ def _subclasses(cls):
             yield cls
 
 
-def _todict(obj, validate, context):
+def _todict(obj, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
-        return obj.to_dict(validate=validate, context=context)
+        return obj.to_dict(validate=False, context=context)
     elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, validate, context) for v in obj]
+        return [_todict(v, context) for v in obj]
     elif isinstance(obj, dict):
-        return {
-            k: _todict(v, validate, context)
-            for k, v in obj.items()
-            if v is not Undefined
-        }
+        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
     elif hasattr(obj, "to_dict"):
         return obj.to_dict()
     elif isinstance(obj, np.number):
@@ -119,24 +156,9 @@ class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
     def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**self._get_contents(err))
+        super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
-
-    @staticmethod
-    def _get_contents(err):
-        """Get a dictionary with the contents of a ValidationError"""
-        try:
-            # works in jsonschema 2.3 or later
-            contents = err._contents()
-        except AttributeError:
-            try:
-                # works in Python >=3.4
-                spec = inspect.getfullargspec(err.__init__)
-            except AttributeError:
-                # works in Python <3.4
-                spec = inspect.getargspec(err.__init__)
-            contents = {key: getattr(err, key) for key in spec.args[1:]}
-        return contents
+        self._additional_errors = getattr(err, "_additional_errors", [])
 
     @staticmethod
     def _format_params_as_table(param_dict_keys):
@@ -200,6 +222,11 @@ class SchemaValidationError(jsonschema.ValidationError):
             for val in schema_path[:-1]
             if val not in ("properties", "additionalProperties", "patternProperties")
         )
+        message = self.message
+        if self._additional_errors:
+            message += "\n        " + "\n        ".join(
+                [e.message for e in self._additional_errors]
+            )
 
         if hasattr(vegalite, schema_path.split(".")[-1]):
             altair_class = "altair." + schema_path.split(".")[-1]
@@ -222,7 +249,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                     schema_path,
                     self.validator,
                     altair_class,
-                    self.message.split("('")[-1].split("'")[0],
+                    message.split("('")[-1].split("'")[0],
                     param_names_table,
                     altair_class,
                 )
@@ -233,7 +260,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             {}, validating {!r}
             {}
             """.format(
-                schema_path, self.validator, self.message
+                schema_path, self.validator, message
             )
 
 
@@ -409,11 +436,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -435,14 +460,36 @@ class SchemaBase(object):
             context = {}
         if ignore is None:
             ignore = []
-        sub_validate = "deep" if validate == "deep" else False
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], validate=sub_validate, context=context)
+            result = _todict(self._args[0], context=context)
         elif not self._args:
+            kwds = self._kwds.copy()
+            # parsed_shorthand is added by FieldChannelMixin.
+            # It's used below to replace shorthand with its long form equivalent
+            # parsed_shorthand is removed from context if it exists so that it is
+            # not passed to child to_dict function calls
+            parsed_shorthand = context.pop("parsed_shorthand", {})
+            # Prevent that pandas categorical data is automatically sorted
+            # when a non-ordinal data type is specifed manually
+            if "sort" in parsed_shorthand and kwds["type"] not in [
+                "ordinal",
+                Undefined,
+            ]:
+                parsed_shorthand.pop("sort")
+
+            kwds.update(
+                {
+                    k: v
+                    for k, v in parsed_shorthand.items()
+                    if kwds.get(k, Undefined) is Undefined
+                }
+            )
+            kwds = {
+                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
+            }
             result = _todict(
-                {k: v for k, v in self._kwds.items() if k not in ignore},
-                validate=sub_validate,
+                kwds,
                 context=context,
             )
         else:
@@ -464,11 +511,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -574,14 +619,14 @@ class SchemaBase(object):
         Validate a property against property schema in the context of the
         rootschema
         """
-        value = _todict(value, validate=False, context={})
+        value = _todict(value, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         return validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
     def __dir__(self):
-        return list(self._kwds.keys())
+        return sorted(super().__dir__() + list(self._kwds.keys()))
 
 
 def _passthrough(*args, **kwds):

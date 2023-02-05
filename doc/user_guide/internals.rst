@@ -38,7 +38,7 @@ from which we can output the JSON representation:
         color='Origin:N',
     ).configure_view(
         continuousHeight=300,
-        continuousWidth=400,
+        continuousWidth=300,
     )
 
     print(chart.to_json(indent=2))
@@ -98,7 +98,7 @@ the above chart using these low-level object types directly:
         config=alt.Config(
             view=alt.ViewConfig(
                 continuousHeight=300,
-                continuousWidth=400
+                continuousWidth=300
             )
         )
     )

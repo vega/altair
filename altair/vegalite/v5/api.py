@@ -556,17 +556,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context["top_level"] = False
         kwargs["context"] = context
 
-        try:
-            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
-        except jsonschema.ValidationError:
-            dct = None
-
-        # If we hit an error, then re-convert with validate='deep' to get
-        # a more useful traceback. We don't do this by default because it's
-        # much slower in the case that there are no errors.
-        if dct is None:
-            kwargs["validate"] = "deep"
-            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
@@ -2869,7 +2859,6 @@ def _remove_duplicate_params(layer):
     found_params = []
 
     for subchart in subcharts:
-
         if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
             continue
 
@@ -2897,7 +2886,6 @@ def _remove_duplicate_params(layer):
 
 
 def _combine_subchart_params(params, subcharts):
-
     if params is Undefined:
         params = []
 

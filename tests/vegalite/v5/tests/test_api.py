@@ -123,6 +123,7 @@ def test_chart_infer_types():
             "x": pd.date_range("2012", periods=10, freq="Y"),
             "y": range(10),
             "c": list("abcabcabca"),
+            "s": pd.Categorical([1, 2] * 5, categories=[2, 1], ordered=True),
         }
     )
 
@@ -134,32 +135,45 @@ def test_chart_infer_types():
         assert dct["encoding"]["y"]["field"] == "y"
         assert dct["encoding"]["color"]["type"] == "nominal"
         assert dct["encoding"]["color"]["field"] == "c"
+        assert dct["encoding"]["size"]["type"] == "ordinal"
+        assert dct["encoding"]["size"]["field"] == "s"
+        assert dct["encoding"]["size"]["sort"] == [2, 1]
 
     # Pass field names by keyword
-    chart = alt.Chart(data).mark_point().encode(x="x", y="y", color="c")
+    chart = alt.Chart(data).mark_point().encode(x="x", y="y", color="c", size="s")
     _check_encodings(chart)
 
     # pass Channel objects by keyword
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(x=alt.X("x"), y=alt.Y("y"), color=alt.Color("c"))
+        .encode(x=alt.X("x"), y=alt.Y("y"), color=alt.Color("c"), size=alt.Size("s"))
     )
     _check_encodings(chart)
 
     # pass Channel objects by value
-    chart = alt.Chart(data).mark_point().encode(alt.X("x"), alt.Y("y"), alt.Color("c"))
+    chart = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"))
+    )
     _check_encodings(chart)
 
     # override default types
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(alt.X("x", type="nominal"), alt.Y("y", type="ordinal"))
+        .encode(
+            alt.X("x", type="nominal"),
+            alt.Y("y", type="ordinal"),
+            alt.Size("s", type="nominal"),
+        )
     )
     dct = chart.to_dict()
     assert dct["encoding"]["x"]["type"] == "nominal"
     assert dct["encoding"]["y"]["type"] == "ordinal"
+    assert dct["encoding"]["size"]["type"] == "nominal"
+    assert "sort" not in dct["encoding"]["size"]
 
 
 @pytest.mark.parametrize(
@@ -333,6 +347,23 @@ def test_save(format, engine, basic_chart):
                 assert f.read()[:1000] == content[:1000]
         finally:
             os.remove(fp)
+
+
+@pytest.mark.parametrize("inline", [False, True])
+def test_save_html(basic_chart, inline):
+    out = io.StringIO()
+    basic_chart.save(out, format="html", inline=inline)
+    out.seek(0)
+    content = out.read()
+
+    assert content.startswith("<!DOCTYPE html>")
+
+    if inline:
+        assert '<script type="text/javascript">' in content
+    else:
+        assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
 
 
 def test_facet_basic():
@@ -704,13 +735,13 @@ def test_themes():
 
     with alt.themes.enable("default"):
         assert chart.to_dict()["config"] == {
-            "view": {"continuousWidth": 400, "continuousHeight": 300}
+            "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
     with alt.themes.enable("opaque"):
         assert chart.to_dict()["config"] == {
             "background": "white",
-            "view": {"continuousWidth": 400, "continuousHeight": 300},
+            "view": {"continuousWidth": 300, "continuousHeight": 300},
         }
 
     with alt.themes.enable("none"):

@@ -116,7 +116,6 @@ def test_sanitize_dataframe_infs():
     reason="Nullable integers not supported in pandas v{}".format(pd.__version__),
 )
 def test_sanitize_nullable_integers():
-
     df = pd.DataFrame(
         {
             "int_np": [1, 2, 3, 4, 5],
