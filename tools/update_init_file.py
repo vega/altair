@@ -38,9 +38,8 @@ def update__all__variable():
     assert first_definition_line is not None and last_definition_line is not None
 
     # Figure out which attributes are relevant
-    relevant_attributes = sorted(
-        [x for x in alt.__dict__ if _is_relevant_attribute(x)]
-    )
+    relevant_attributes = [x for x in alt.__dict__ if _is_relevant_attribute(x)]
+    relevant_attributes.sort()
     relevant_attributes_str = f"__all__ = {relevant_attributes}"
     
     # Put file back together, replacing old definition of __all__ with new one, keeping
