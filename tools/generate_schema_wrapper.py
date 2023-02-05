@@ -631,11 +631,13 @@ def main():
     copy_schemapi_util()
     vegalite_main(args.skip_download)
 
-    # Altair is imported after the generation of the new schema files so that
-    # the API docs reflect the newest changes
+    # The modules below are imported after the generation of the new schema files
+    # as these modules import Altair. This allows them to use the new changes
     import generate_api_docs  # noqa: E402
+    import update_init_file  # noqa: E402
 
     generate_api_docs.write_api_file()
+    update_init_file.update__all__variable()
 
 
 if __name__ == "__main__":

@@ -2,9 +2,8 @@
 __version__ = "4.3.0.dev0"
 
 
-# Setting __all__ and __dir__ without deprecated attributes tries to hide them
-# from code completion suggestions. There is a test in test_toplevel.py which makes
-# sure that this list is being kept up-to-date
+# The content of __all__ is automatically written by
+# tools/update_init_file.py. Do not modify directly.
 __all__ = [
     "Aggregate",
     "AggregateOp",
