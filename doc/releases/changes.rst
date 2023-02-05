@@ -13,6 +13,7 @@ Enhancements
 ~~~~~~~~~~~~
 
 - As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters. There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters (#2528).
+- Grouped bar charts and jitter are now supported using offset channels, see :ref:`gallery_grouped_bar_chart2` and :ref:`gallery_strip_plot_jitter`
 - ``vl-convert`` is now used as the default backend for saving Altair charts as svg and png files, which should simplify saving chart as it does not require external dependencies like altair_saver does (#2701).
 - The default chart width was changed from 400 to 300 (#2785).
 - Ordered pandas categorical data are now automatically encoded as sorted ordinal data (#2522)
