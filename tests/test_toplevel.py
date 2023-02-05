@@ -1,19 +1,20 @@
+import sys
+from os.path import abspath, join, dirname
+
 import altair as alt
 
+current_dir = dirname(__file__)
+sys.path.insert(0, abspath(join(current_dir, "..")))
+from tools import update_init_file
 
-def test_completeness_of_all():
-    expected = sorted(
-        [
-            x
-            for x in alt.__dict__
-            if not getattr(getattr(alt, x), "_deprecated", False)
-            and not x.startswith("_")
-        ]
-    )
+
+def test_completeness_of__all__():
+    relevant_attributes = [
+        x for x in alt.__dict__ if update_init_file._is_relevant_attribute(x)
+    ]
+    relevant_attributes.sort()
 
     # If the assert statement fails below, there are probably either new objects
     # in the top-level Altair namespace or some were removed.
-    # This can for example happen if Altair is updated to a new version of Vega-Lite.
-    # In that case, replace the list __all__ in altair/__init__.py with what is
-    # present in `expected` in this test
-    assert getattr(alt, "__all__") == expected
+    # In that case, run tools/update_init_file.py to update __all__
+    assert getattr(alt, "__all__") == relevant_attributes

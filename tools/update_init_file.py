@@ -41,7 +41,7 @@ def update__all__variable():
     relevant_attributes = [x for x in alt.__dict__ if _is_relevant_attribute(x)]
     relevant_attributes.sort()
     relevant_attributes_str = f"__all__ = {relevant_attributes}"
-    
+
     # Put file back together, replacing old definition of __all__ with new one, keeping
     # the rest of the file as is
     new_lines = (
