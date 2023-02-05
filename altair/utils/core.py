@@ -193,8 +193,6 @@ def infer_vegalite_type(data):
     # Otherwise, infer based on the dtype of the input
     typ = infer_dtype(data)
 
-    # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
-
     if typ in [
         "floating",
         "mixed-integer-float",
@@ -203,6 +201,8 @@ def infer_vegalite_type(data):
         "complex",
     ]:
         return "quantitative"
+    elif typ == "categorical" and data.cat.ordered:
+        return ("ordinal", data.cat.categories.tolist())
     elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
         return "nominal"
     elif typ in [
@@ -316,8 +316,9 @@ def sanitize_dataframe(df):  # noqa: C901
 
     for col_name, dtype in df.dtypes.items():
         if str(dtype) == "category":
-            # XXXX: work around bug in to_json for categorical types
+            # Work around bug in to_json for categorical types in older versions of pandas
             # https://github.com/pydata/pandas/issues/10778
+            # https://github.com/altair-viz/altair/pull/2170
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == "string":
@@ -527,6 +528,10 @@ def parse_shorthand(
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
         if "field" in attrs and attrs["field"] in data.columns:
             attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+            # ordered categorical dataframe columns return the type and sort order as a tuple
+            if isinstance(attrs["type"], tuple):
+                attrs["sort"] = attrs["type"][1]
+                attrs["type"] = attrs["type"][0]
 
     # If an unescaped colon is still present, it's often due to an incorrect data type specification
     # but could also be due to using a column name with ":" in it.
@@ -543,6 +548,7 @@ def parse_shorthand(
             + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
             + "(If you are trying to use a column name that contains a colon, prefix it with a backslash, \\:)"
         )
+
     return attrs
 
 

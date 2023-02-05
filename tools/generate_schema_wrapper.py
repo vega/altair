@@ -12,8 +12,13 @@ from urllib import request
 
 import m2r
 
-# import schemapi from here
-sys.path.insert(0, abspath(dirname(__file__)))
+
+# Add path so that schemapi can be imported from the tools folder
+current_dir = dirname(__file__)
+sys.path.insert(0, abspath(current_dir))
+# And another path so that Altair can be imported from head. This is relevant when
+# generate_api_docs is imported in the main function
+sys.path.insert(0, abspath(join(current_dir, "..")))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
@@ -22,52 +27,19 @@ from schemapi.utils import (  # noqa: E402
     indent_arglist,
     resolve_references,
 )
-import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    # Uncomment old vega-lite versions here when there are breaking changing
-    # that we don't want to backport
-    "vega": {"v5": "v5.21.0"},
     "vega-lite": {"v5": "v5.2.0"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
 
-
-class SchemaGenerator(codegen.SchemaGenerator):
-    schema_class_template = textwrap.dedent(
-        '''
-    class {classname}({basename}):
-        """{docstring}"""
-        _schema = {schema!r}
-
-        {init_code}
-    '''
-    )
-
-    def _process_description(self, description):
-        description = "".join(
-            [
-                reSpecial.sub("", d) if i % 2 else d
-                for i, d in enumerate(reLink.split(description))
-            ]
-        )  # remove formatting from links
-        description = m2r.convert(description)
-        description = description.replace(m2r.prolog, "")
-        description = description.replace(":raw-html-m2r:", ":raw-html:")
-        description = description.replace(r"\ ,", ",")
-        description = description.replace(r"\ ", " ")
-        # turn explicit references into anonymous references
-        description = description.replace(">`_", ">`__")
-        description += "\n"
-        return description.strip()
-
-
-def schema_class(*args, **kwargs):
-    return SchemaGenerator(*args, **kwargs).schema_class()
-
+HEADER = """\
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
+"""
 
 SCHEMA_URL_TEMPLATE = "https://vega.github.io/schema/" "{library}/{version}.json"
 
@@ -171,6 +143,68 @@ class DatumChannelMixin(object):
                                                       context=context)
 """
 
+MARK_METHOD = '''
+def mark_{mark}({def_arglist}):
+    """Set the chart's mark to '{mark}'
+
+    For information on additional arguments, see :class:`{mark_def}`
+    """
+    kwds = dict({dict_arglist})
+    copy = self.copy(deep=False)
+    if any(val is not Undefined for val in kwds.values()):
+        copy.mark = core.{mark_def}(type="{mark}", **kwds)
+    else:
+        copy.mark = "{mark}"
+    return copy
+'''
+
+CONFIG_METHOD = """
+@use_signature(core.{classname})
+def {method}(self, *args, **kwargs):
+    copy = self.copy(deep=False)
+    copy.config = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+CONFIG_PROP_METHOD = """
+@use_signature(core.{classname})
+def configure_{prop}(self, *args, **kwargs):
+    copy = self.copy(deep=['config'])
+    if copy.config is Undefined:
+        copy.config = core.Config()
+    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+
+class SchemaGenerator(codegen.SchemaGenerator):
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+        _schema = {schema!r}
+
+        {init_code}
+    '''
+    )
+
+    def _process_description(self, description):
+        description = "".join(
+            [
+                reSpecial.sub("", d) if i % 2 else d
+                for i, d in enumerate(reLink.split(description))
+            ]
+        )  # remove formatting from links
+        description = m2r.convert(description)
+        description = description.replace(m2r.prolog, "")
+        description = description.replace(":raw-html-m2r:", ":raw-html:")
+        description = description.replace(r"\ ,", ",")
+        description = description.replace(r"\ ", " ")
+        # turn explicit references into anonymous references
+        description = description.replace(">`_", ">`__")
+        description += "\n"
+        return description.strip()
+
 
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -220,10 +254,8 @@ class DatumSchemaGenerator(SchemaGenerator):
     )
 
 
-HEADER = """\
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
-"""
+def schema_class(*args, **kwargs):
+    return SchemaGenerator(*args, **kwargs).schema_class()
 
 
 def schema_url(library, version):
@@ -390,44 +422,6 @@ def generate_vegalite_schema_wrapper(schema_file):
     return "\n".join(contents)
 
 
-def generate_vega_schema_wrapper(schema_file):
-    """Generate a schema wrapper at the given path."""
-    # TODO: generate simple tests for each wrapper
-    basename = "VegaSchema"
-
-    with open(schema_file, encoding="utf8") as f:
-        rootschema = json.load(f)
-    contents = [
-        HEADER,
-        "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
-        LOAD_SCHEMA.format(schemafile="vega-schema.json"),
-    ]
-    contents.append(BASE_SCHEMA.format(basename=basename))
-    contents.append(
-        schema_class(
-            "Root",
-            schema=rootschema,
-            basename=basename,
-            schemarepr=CodeSnippet("{}._rootschema".format(basename)),
-        )
-    )
-    for name in rootschema["definitions"]:
-        defschema = {"$ref": f"#/definitions/{name}"}
-        defschema_repr = {"$ref": f"#/definitions/{name}"}
-        contents.append(
-            schema_class(
-                get_valid_identifier(name),
-                schema=defschema,
-                schemarepr=defschema_repr,
-                rootschema=rootschema,
-                basename=basename,
-                rootschemarepr=CodeSnippet("Root._schema"),
-            )
-        )
-    contents.append("")  # end with newline
-    return "\n".join(contents)
-
-
 def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     # TODO: generate __all__ for top of file
     with open(schemafile, encoding="utf8") as f:
@@ -499,22 +493,6 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     return "\n".join(contents)
 
 
-MARK_METHOD = '''
-def mark_{mark}({def_arglist}):
-    """Set the chart's mark to '{mark}'
-
-    For information on additional arguments, see :class:`{mark_def}`
-    """
-    kwds = dict({dict_arglist})
-    copy = self.copy(deep=False)
-    if any(val is not Undefined for val in kwds.values()):
-        copy.mark = core.{mark_def}(type="{mark}", **kwds)
-    else:
-        copy.mark = "{mark}"
-    return copy
-'''
-
-
 def generate_vegalite_mark_mixin(schemafile, markdefs):
     with open(schemafile, encoding="utf8") as f:
         schema = json.load(f)
@@ -558,25 +536,6 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
             code.append("\n    ".join(mark_method.splitlines()))
 
     return imports, "\n".join(code)
-
-
-CONFIG_METHOD = """
-@use_signature(core.{classname})
-def {method}(self, *args, **kwargs):
-    copy = self.copy(deep=False)
-    copy.config = core.{classname}(*args, **kwargs)
-    return copy
-"""
-
-CONFIG_PROP_METHOD = """
-@use_signature(core.{classname})
-def configure_{prop}(self, *args, **kwargs):
-    copy = self.copy(deep=['config'])
-    if copy.config is Undefined:
-        copy.config = core.Config()
-    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
-    return copy
-"""
 
 
 def generate_vegalite_config_mixin(schemafile):
@@ -661,38 +620,6 @@ def vegalite_main(skip_download=False):
             f.write(config_mixin)
 
 
-def vega_main(skip_download=False):
-    library = "vega"
-
-    for version in SCHEMA_VERSION[library]:
-        path = abspath(join(dirname(__file__), "..", "altair", "vega", version))
-        schemapath = os.path.join(path, "schema")
-        schemafile = download_schemafile(
-            library=library,
-            version=version,
-            schemapath=schemapath,
-            skip_download=skip_download,
-        )
-
-        # Generate __init__.py file
-        outfile = join(schemapath, "__init__.py")
-        print("Writing {}".format(outfile))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write("# flake8: noqa\n")
-            f.write("from .core import *\n\n")
-            f.write(
-                "SCHEMA_VERSION = {!r}\n" "".format(SCHEMA_VERSION[library][version])
-            )
-            f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(library, version)))
-
-        # Generate the core schema wrappers
-        outfile = join(schemapath, "core.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        file_contents = generate_vega_schema_wrapper(schemafile)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(file_contents)
-
-
 def main():
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
@@ -703,9 +630,14 @@ def main():
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
-    vega_main(args.skip_download)
+
+    # The modules below are imported after the generation of the new schema files
+    # as these modules import Altair. This allows them to use the new changes
+    import generate_api_docs  # noqa: E402
+    import update_init_file  # noqa: E402
 
     generate_api_docs.write_api_file()
+    update_init_file.update__all__variable()
 
 
 if __name__ == "__main__":
