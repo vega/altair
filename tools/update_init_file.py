@@ -24,7 +24,7 @@ def update__all__variable():
     init_path = alt.__file__
     with open(init_path, "r") as f:
         lines = f.readlines()
-    lines = [l.strip("\n") for l in lines]
+    lines = [line.strip("\n") for line in lines]
 
     # Find first and last line of the definition of __all__
     first_definition_line = None

@@ -5,7 +5,7 @@ import altair as alt
 
 current_dir = dirname(__file__)
 sys.path.insert(0, abspath(join(current_dir, "..")))
-from tools import update_init_file
+from tools import update_init_file  # noqa: E402
 
 
 def test_completeness_of__all__():
