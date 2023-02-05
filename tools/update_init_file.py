@@ -60,7 +60,7 @@ def update__all__variable():
 
 def _is_relevant_attribute(attr_name):
     attr = getattr(alt, attr_name)
-    if getattr(attr, "_deprecated", False) or attr_name.startswith("_"):
+    if getattr(attr, "_deprecated", False) is True or attr_name.startswith("_"):
         return False
     else:
         if inspect.ismodule(attr):

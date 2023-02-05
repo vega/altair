@@ -542,6 +542,7 @@ __all__ = [
     "data",
     "data_transformers",
     "datasets",
+    "datum",
     "default_data_transformer",
     "display",
     "expr",
