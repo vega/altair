@@ -2272,24 +2272,38 @@ def _check_if_can_be_layered(spec):
     if encoding is not Undefined:
         for channel in ["row", "column", "facet"]:
             if _get(encoding, channel) is not Undefined:
-                raise ValueError("Faceted charts cannot be layered.")
+                raise ValueError(
+                    "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+                )
     if isinstance(spec, (Chart, LayerChart)):
         return
 
     if not isinstance(spec, (core.SchemaBase, dict)):
         raise ValueError("Only chart objects can be layered.")
     if _get(spec, "facet") is not Undefined:
-        raise ValueError("Faceted charts cannot be layered.")
+        raise ValueError(
+            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        )
     if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        raise ValueError("Faceted charts cannot be layered.")
+        raise ValueError(
+            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        )
     if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        raise ValueError("Repeat charts cannot be layered.")
+        raise ValueError(
+            "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+        )
     if isinstance(spec, ConcatChart) or _get(spec, "concat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
     if isinstance(spec, HConcatChart) or _get(spec, "hconcat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
     if isinstance(spec, VConcatChart) or _get(spec, "vconcat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
 
 
 @utils.use_signature(core.TopLevelRepeatSpec)
