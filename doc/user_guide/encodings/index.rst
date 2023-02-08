@@ -318,18 +318,22 @@ Sort Option
 ~~~~~~~~~~~
 
 Some channels accept a  :class:`sort` option which determines the
-order of the scale being used for the channel. There are a number of different
-sort options available:
+order of the scale being used for the channel.
+By default the scale is sorted in ascending alphabetical order,
+unless an `ordered pandas categorical column <https://pandas.pydata.org/docs/user_guide/categorical.html?highlight=categorical#sorting-and-order>`_ is passed (without an explicit type specification)
+in which case Altair will use the column's inherent order to sort the scale.
+There are a number of different
+options available to change the sort order:
 
 - ``sort='ascending'`` (Default) will sort the field's value in ascending order.
-  for string data, this uses standard alphabetical order.
+  For string data, this uses standard alphabetical order.
 - ``sort='descending'`` will sort the field's value in descending order
-- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
+- Passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
   sorting by that channel. An optional minus prefix can be used for a descending
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
-- passing a list to ``sort`` allows you to explicitly set the order in which
+- Passing a list to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
-- passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
+- Passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
   an axis by the value of some other field in the dataset.
 
 Here is an example of applying these five different sort approaches on the
