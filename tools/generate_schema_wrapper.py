@@ -12,8 +12,13 @@ from urllib import request
 
 import m2r
 
-# import schemapi from here
-sys.path.insert(0, abspath(dirname(__file__)))
+
+# Add path so that schemapi can be imported from the tools folder
+current_dir = dirname(__file__)
+sys.path.insert(0, abspath(current_dir))
+# And another path so that Altair can be imported from head. This is relevant when
+# generate_api_docs is imported in the main function
+sys.path.insert(0, abspath(join(current_dir, "..")))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
@@ -22,7 +27,6 @@ from schemapi.utils import (  # noqa: E402
     indent_arglist,
     resolve_references,
 )
-import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
@@ -627,7 +631,13 @@ def main():
     copy_schemapi_util()
     vegalite_main(args.skip_download)
 
+    # The modules below are imported after the generation of the new schema files
+    # as these modules import Altair. This allows them to use the new changes
+    import generate_api_docs  # noqa: E402
+    import update_init_file  # noqa: E402
+
     generate_api_docs.write_api_file()
+    update_init_file.update__all__variable()
 
 
 if __name__ == "__main__":
