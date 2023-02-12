@@ -174,7 +174,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         schema_path = "->".join(
             str(val)
             for val in schema_path[:-1]
-            if val not in ("properties", "additionalProperties", "patternProperties")
+            if val not in (0, "properties", "additionalProperties", "patternProperties")
         )
         message = self.message
         if self._additional_errors:
