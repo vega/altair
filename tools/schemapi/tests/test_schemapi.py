@@ -461,7 +461,7 @@ def chart_example_invalid_y_option_value_with_condition():
 
 
 @pytest.mark.parametrize(
-    "chart_func,expected_error_message",
+    "chart_func, expected_error_message",
     [
         (
             chart_example_invalid_y_option,
