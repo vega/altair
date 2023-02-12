@@ -1,7 +1,7 @@
 """
 Heat Lane Chart
 ---------------
-This example shows how to make an alternative form of a histogram `designed at Google <https://www.smashingmagazine.com/2022/07/accessibility-first-approach-chart-visual-design/>`_ with accessibility in mind.
+This example shows how to make an alternative form of a histogram `designed at Google <https://www.smashingmagazine.com/2022/07/accessibility-first-approach-chart-visual-design/>`_ with the goal of increasing accessibility.
 """
 # category: distributions
 import altair as alt
