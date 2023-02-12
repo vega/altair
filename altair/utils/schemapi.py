@@ -163,10 +163,12 @@ class SchemaValidationError(jsonschema.ValidationError):
         # it can be displayed in the error message. This should lead to more informative
         # error messages pointing the user closer to the source of the issue.
         for prop_name in reversed(self.absolute_path):
-            potential_class_name = prop_name[0].upper() + prop_name[1:]
-            cls = getattr(vegalite, potential_class_name, None)
-            if cls is not None:
-                break
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
         else:
             # Did not find a suitable class based on traversing the path so we fall
             # back on the class of the top-level object which created
