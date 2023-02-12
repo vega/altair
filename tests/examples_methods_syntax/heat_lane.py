@@ -1,3 +1,13 @@
+"""
+Heat Lane Chart
+---------------
+This example shows how to make an alternative form of a histogram designed at Google with accessibility in mind.
+"""
+# category: distributions
+import altair as alt
+from vega_datasets import data
+
+source = data.cars.url
 
 chart = alt.Chart(source, title="Car horsepower", height=100, width=300).encode(
     x=alt.X(
