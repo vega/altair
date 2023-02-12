@@ -159,15 +159,18 @@ class SchemaValidationError(jsonschema.ValidationError):
         self._additional_errors = getattr(err, "_additional_errors", [])
 
     def __str__(self):
-        try:
-            class_name_raw = self.absolute_path[-1]
-            class_name = class_name_raw[0].upper() + class_name_raw[1:]
-            cls = getattr(vegalite, class_name)
-        except (IndexError, AttributeError):
-            # IndexError if self.absolute_path has 0 length
-            # AttributeError if vegalite does not have attribute class_name
-            # Fall back on class of top-level object which created
-            # the SchemaValidationError. Often this is altair.Chart
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(self.absolute_path):
+            potential_class_name = prop_name[0].upper() + prop_name[1:]
+            cls = getattr(vegalite, potential_class_name, None)
+            if cls is not None:
+                break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
             cls = self.obj.__class__
         schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
