@@ -498,7 +498,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
         schema = json.load(f)
 
     class_name = "MarkMethodMixin"
-    type_var_name = f"T{class_name}"
+    type_var_name = f"_T{class_name}"
 
     imports = [
         "from typing import TypeVar",
@@ -554,7 +554,7 @@ def generate_vegalite_config_mixin(schemafile):
     imports = ["from . import core", "from altair.utils import use_signature"]
 
     class_name = "ConfigMethodMixin"
-    type_var_name = f"T{class_name}"
+    type_var_name = f"_T{class_name}"
     type_var_definition = (
         f'{type_var_name} = TypeVar("{type_var_name}", bound="{class_name}")'
     )

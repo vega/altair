@@ -5,14 +5,14 @@ from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
 from typing import TypeVar
 
-TConfigMethodMixin = TypeVar("TConfigMethodMixin", bound="ConfigMethodMixin")
-TMarkMethodMixin = TypeVar("TMarkMethodMixin", bound="MarkMethodMixin")
+_TConfigMethodMixin = TypeVar("_TConfigMethodMixin", bound="ConfigMethodMixin")
+_TMarkMethodMixin = TypeVar("_TMarkMethodMixin", bound="MarkMethodMixin")
 
 
 class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
-    def mark_arc(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_arc(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -35,7 +35,7 @@ class MarkMethodMixin(object):
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds) -> TMarkMethodMixin:
+                 **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'arc'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -71,7 +71,7 @@ class MarkMethodMixin(object):
             copy.mark = "arc"
         return copy
 
-    def mark_area(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_area(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -94,7 +94,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -130,7 +130,7 @@ class MarkMethodMixin(object):
             copy.mark = "area"
         return copy
 
-    def mark_bar(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_bar(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -153,7 +153,7 @@ class MarkMethodMixin(object):
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds) -> TMarkMethodMixin:
+                 **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -189,7 +189,7 @@ class MarkMethodMixin(object):
             copy.mark = "bar"
         return copy
 
-    def mark_image(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_image(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -212,7 +212,7 @@ class MarkMethodMixin(object):
                    thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
                    timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
                    x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'image'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -248,7 +248,7 @@ class MarkMethodMixin(object):
             copy.mark = "image"
         return copy
 
-    def mark_line(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_line(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -271,7 +271,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -307,7 +307,7 @@ class MarkMethodMixin(object):
             copy.mark = "line"
         return copy
 
-    def mark_point(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_point(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -330,7 +330,7 @@ class MarkMethodMixin(object):
                    thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
                    timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
                    x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -366,7 +366,7 @@ class MarkMethodMixin(object):
             copy.mark = "point"
         return copy
 
-    def mark_rect(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_rect(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -389,7 +389,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -425,7 +425,7 @@ class MarkMethodMixin(object):
             copy.mark = "rect"
         return copy
 
-    def mark_rule(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_rule(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -448,7 +448,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -484,7 +484,7 @@ class MarkMethodMixin(object):
             copy.mark = "rule"
         return copy
 
-    def mark_text(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_text(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -507,7 +507,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -543,7 +543,7 @@ class MarkMethodMixin(object):
             copy.mark = "text"
         return copy
 
-    def mark_tick(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_tick(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                   clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -566,7 +566,7 @@ class MarkMethodMixin(object):
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -602,7 +602,7 @@ class MarkMethodMixin(object):
             copy.mark = "tick"
         return copy
 
-    def mark_trail(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_trail(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -625,7 +625,7 @@ class MarkMethodMixin(object):
                    thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
                    timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
                    x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'trail'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -661,7 +661,7 @@ class MarkMethodMixin(object):
             copy.mark = "trail"
         return copy
 
-    def mark_circle(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_circle(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                     ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                     bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                     clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -685,7 +685,7 @@ class MarkMethodMixin(object):
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -721,7 +721,7 @@ class MarkMethodMixin(object):
             copy.mark = "circle"
         return copy
 
-    def mark_square(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_square(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                     ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                     bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                     clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -745,7 +745,7 @@ class MarkMethodMixin(object):
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -781,7 +781,7 @@ class MarkMethodMixin(object):
             copy.mark = "square"
         return copy
 
-    def mark_geoshape(self: TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
+    def mark_geoshape(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
                       ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
                       bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
                       clip=Undefined, color=Undefined, continuousBandSize=Undefined,
@@ -805,7 +805,7 @@ class MarkMethodMixin(object):
                       thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                       tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                       x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                      y2Offset=Undefined, yOffset=Undefined, **kwds) -> TMarkMethodMixin:
+                      y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see :class:`MarkDef`
@@ -841,9 +841,9 @@ class MarkMethodMixin(object):
             copy.mark = "geoshape"
         return copy
 
-    def mark_boxplot(self: TMarkMethodMixin, box=Undefined, clip=Undefined, color=Undefined,
+    def mark_boxplot(self: _TMarkMethodMixin, box=Undefined, clip=Undefined, color=Undefined,
                      extent=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
-                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> TMarkMethodMixin:
+                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'boxplot'
     
         For information on additional arguments, see :class:`BoxPlotDef`
@@ -857,9 +857,9 @@ class MarkMethodMixin(object):
             copy.mark = "boxplot"
         return copy
 
-    def mark_errorbar(self: TMarkMethodMixin, clip=Undefined, color=Undefined, extent=Undefined,
+    def mark_errorbar(self: _TMarkMethodMixin, clip=Undefined, color=Undefined, extent=Undefined,
                       opacity=Undefined, orient=Undefined, rule=Undefined, size=Undefined,
-                      thickness=Undefined, ticks=Undefined, **kwds) -> TMarkMethodMixin:
+                      thickness=Undefined, ticks=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'errorbar'
     
         For information on additional arguments, see :class:`ErrorBarDef`
@@ -873,9 +873,9 @@ class MarkMethodMixin(object):
             copy.mark = "errorbar"
         return copy
 
-    def mark_errorband(self: TMarkMethodMixin, band=Undefined, borders=Undefined, clip=Undefined,
+    def mark_errorband(self: _TMarkMethodMixin, band=Undefined, borders=Undefined, clip=Undefined,
                        color=Undefined, extent=Undefined, interpolate=Undefined, opacity=Undefined,
-                       orient=Undefined, tension=Undefined, **kwds) -> TMarkMethodMixin:
+                       orient=Undefined, tension=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'errorband'
     
         For information on additional arguments, see :class:`ErrorBandDef`
@@ -894,13 +894,13 @@ class ConfigMethodMixin(object):
     """A mixin class that defines config methods"""
 
     @use_signature(core.Config)
-    def configure(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_arc(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_arc(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -908,7 +908,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AreaConfig)
-    def configure_area(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_area(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -916,7 +916,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axis(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axis(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -924,7 +924,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisBand(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -932,7 +932,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisBottom(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisBottom(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -940,7 +940,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisDiscrete(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -948,7 +948,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisLeft(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisLeft(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -956,7 +956,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisPoint(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -964,7 +964,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisQuantitative(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -972,7 +972,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisRight(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisRight(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -980,7 +980,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisTemporal(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -988,7 +988,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisTop(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisTop(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -996,7 +996,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisX(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisX(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1004,7 +1004,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXBand(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisXBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1012,7 +1012,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXDiscrete(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisXDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1020,7 +1020,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXPoint(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisXPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1028,7 +1028,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXQuantitative(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisXQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1036,7 +1036,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXTemporal(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisXTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1044,7 +1044,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisY(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisY(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1052,7 +1052,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYBand(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisYBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1060,7 +1060,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYDiscrete(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisYDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1068,7 +1068,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYPoint(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisYPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1076,7 +1076,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYQuantitative(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisYQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1084,7 +1084,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYTemporal(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_axisYTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1092,7 +1092,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.BarConfig)
-    def configure_bar(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_bar(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1100,7 +1100,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.BoxPlotConfig)
-    def configure_boxplot(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_boxplot(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1108,7 +1108,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_circle(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_circle(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1116,7 +1116,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.CompositionConfig)
-    def configure_concat(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_concat(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1124,7 +1124,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.ErrorBandConfig)
-    def configure_errorband(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_errorband(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1132,7 +1132,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.ErrorBarConfig)
-    def configure_errorbar(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_errorbar(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1140,7 +1140,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.CompositionConfig)
-    def configure_facet(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_facet(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1148,7 +1148,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_geoshape(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_geoshape(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1156,7 +1156,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_header(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_header(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1164,7 +1164,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerColumn(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_headerColumn(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1172,7 +1172,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerFacet(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_headerFacet(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1180,7 +1180,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerRow(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_headerRow(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1188,7 +1188,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_image(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_image(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1196,7 +1196,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.LegendConfig)
-    def configure_legend(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_legend(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1204,7 +1204,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.LineConfig)
-    def configure_line(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_line(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1212,7 +1212,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_mark(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_mark(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1220,7 +1220,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_point(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_point(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1228,7 +1228,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.ProjectionConfig)
-    def configure_projection(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_projection(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1236,7 +1236,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.RangeConfig)
-    def configure_range(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_range(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1244,7 +1244,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_rect(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_rect(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1252,7 +1252,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_rule(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_rule(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1260,7 +1260,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.ScaleConfig)
-    def configure_scale(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_scale(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1268,7 +1268,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.SelectionConfig)
-    def configure_selection(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_selection(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1276,7 +1276,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_square(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_square(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1284,7 +1284,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_text(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_text(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1292,7 +1292,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.TickConfig)
-    def configure_tick(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_tick(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1300,7 +1300,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.TitleConfig)
-    def configure_title(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_title(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1308,7 +1308,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.LineConfig)
-    def configure_trail(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_trail(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1316,7 +1316,7 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.ViewConfig)
-    def configure_view(self: TConfigMethodMixin, *args, **kwargs) -> TConfigMethodMixin:
+    def configure_view(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
