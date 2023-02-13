@@ -390,10 +390,10 @@ class SchemaBase(object):
             parsed_shorthand = context.pop("parsed_shorthand", {})
             # Prevent that pandas categorical data is automatically sorted
             # when a non-ordinal data type is specifed manually
-            if "sort" in parsed_shorthand and kwds["type"] not in [
-                "ordinal",
-                Undefined,
-            ]:
+            # or if the encoding channel does not support sorting
+            if "sort" in parsed_shorthand and (
+                "sort" not in kwds or kwds["type"] not in ["ordinal", Undefined]
+            ):
                 parsed_shorthand.pop("sort")
 
             kwds.update(
