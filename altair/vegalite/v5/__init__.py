@@ -22,9 +22,10 @@ from .data import (
     data_transformers,
 )
 
-class _ExprType():
+
+class _ExprType:
     def __init__(self, expr):
-         vars(self).update(expr.__dict__)
+        vars(self).update(expr.__dict__)
 
     def __call__(self, expr, **kwargs):
         return ExprRef(expr, **kwargs)

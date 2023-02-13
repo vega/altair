@@ -114,11 +114,13 @@ def test_expression_function_expr():
     assert isinstance(er, ExprRef)
     assert repr(er) == "ExprRef({\n  expr: (PI * 2)\n})"
 
+
 def test_expression_function_string():
     # expr() can only work with str
     er = expr("2 * 2")
     assert isinstance(er, ExprRef)
     assert repr(er) == "ExprRef({\n  expr: '2 * 2'\n})"
+
 
 def test_expression_function_nostring():
     # expr() can only work with str otherwise
