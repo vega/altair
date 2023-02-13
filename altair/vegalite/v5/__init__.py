@@ -21,3 +21,13 @@ from .data import (
     default_data_transformer,
     data_transformers,
 )
+
+class _ExprType():
+    def __init__(self, expr):
+         vars(self).update(expr.__dict__)
+
+    def __call__(self, expr, **kwargs):
+        return ExprRef(expr, **kwargs)
+
+
+expr = _ExprType(expr)
