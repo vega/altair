@@ -215,10 +215,14 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 
 def test_spec_to_vega_mimebundle(vega_spec):
-    bundle = spec_to_mimebundle(
-        spec=vega_spec, mode="vega", format="vega", vega_version=alt.VEGA_VERSION
-    )
-    assert bundle == {"application/vnd.vega.v5+json": vega_spec}
+    # ValueError: mode must be 'vega-lite'
+    with pytest.raises(ValueError):
+        spec_to_mimebundle(
+            spec=vega_spec,
+            mode="vega",
+            format="vega",
+            vega_version=alt.VEGA_VERSION,
+        )
 
 
 def test_spec_to_json_mimebundle():

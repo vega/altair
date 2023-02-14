@@ -110,7 +110,7 @@ We map the ``symbol`` variable to ``detail`` to use them to group lines.
 Order
 ~~~~~
 
-The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
+The ``order`` option and :class:`Order` channel can sort how marks are drawn on the chart.
 
 For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
 
@@ -144,9 +144,6 @@ The order can be reversed by changing the sort option to `descending`.
         order=alt.Order("site", sort="descending")
     )
 
-If we want to sort stacked segments in a custom order, we can `follow the approach in this issue comment <https://github.com/altair-viz/altair/issues/245#issuecomment-748443434>`_, although there might be edge cases where this is not fully supported. This also makes the order of the segments align with the order colors shows up in a legend that uses custom sorting for the color domain.
-
-
 The same approach works for other mark types, like stacked areas charts.
 
 .. altair-plot::
@@ -163,7 +160,12 @@ The same approach works for other mark types, like stacked areas charts.
         order=alt.Order("site", sort="ascending")
     )
 
-For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
+Note that unlike the ``sort`` parameter to positional encoding channels,
+the :class:`Order` channel cannot take a list of values to sort by
+and is not automatically sorted when an ordered pandas categorical column is passed.
+If we want to sort stacked segments in a custom order, we can `follow the approach in this issue comment <https://github.com/altair-viz/altair/issues/245#issuecomment-748443434>`_, although there might be edge cases where this is not fully supported. This workaround also makes the order of the segments align with the order that the colors shows up in a legend that uses custom sorting for the color domain.
+
+For line marks, the :class:`Order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
 
 .. altair-plot::
 

@@ -3,17 +3,30 @@
 Release Notes
 =============
 
-Version 4.3.0 (unreleased)
+Version 5.0.0 (unreleased)
 --------------------------
+
 - Update Vega-Lite from version 4.17.0 to version 5.2.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
-- As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters.  There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters.
+
+- As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters. There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters (#2528).
+- Grouped bar charts and jitter are now supported using offset channels, see :ref:`gallery_grouped_bar_chart2` and :ref:`gallery_strip_plot_jitter`
+- ``vl-convert`` is now used as the default backend for saving Altair charts as svg and png files, which should simplify saving chart as it does not require external dependencies like altair_saver does (#2701).
+- The default chart width was changed from 400 to 300 (#2785).
+- Ordered pandas categorical data are now automatically encoded as sorted ordinal data (#2522)
+- The ``Title`` and ``Impute`` aliases were added for ``TitleParams`` and ``ImputeParams``, respectively (#2732).
+- Saving charts with HTML inline is now supported without having altair_saver installed (#2807).
+- The documentation page has been revamped, both in terms of appearance and content.
+- More informative autocompletion by removing deprecated methods (#2814) and adding support for completion in method chains for editors that rely on type hints (e.g. VS Code) (#2846)
+- Improved error messages (#2842)
 
 Grammar Changes
 ~~~~~~~~~~~~~~~
+
+- Channel options can now be set via a method based syntax in addition to the previous helper class syntax. For example, in addition to ``alt.X(..., bin=alt.Bin(...))`` it is now possible to do ``alt.X(...).bin(...)```) (#2795). See :ref:`method-based-attribute-setting` for details.
 - ``selection_single`` and ``selection_multi`` are now deprecated; use ``selection_point`` instead.  Similarly, ``type=point`` should be used instead of ``type=single`` and ``type=multi``.
 - ``add_selection`` is deprecated; use ``add_params`` instead.
 - The ``selection`` keyword argument must in many cases be replaced by ``param`` (e.g., when specifying a filter transform).
@@ -22,17 +35,50 @@ Grammar Changes
 
 Bug Fixes
 ~~~~~~~~~
+
+- Displaying a chart not longer changes the shorthand syntax of the stored spec (#2813).
+- Fixed ``disable_debug_mode`` (#2851).
+- Fixed issue where the webdriver was not working with Firefox's geckodriver (#2466).
+- Dynamically determine the jsonschema validator to avoid issues with recent jsonschema versions (#2812).
+
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Removed the Vega (v5) wrappers and deprecate rendering in Vega mode (save Chart as Vega format is still allowed) (#2829).
+- Removed the Vega-Lite 3 and 4 wrappers (#2847).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+
+Version 4.2.2 (released Jan 27, 2023)
+-------------------------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Fix incompatibility with jsonschema < 4.5 which got introduced in Altair 4.2.1 (#2860).
+
+Version 4.2.1 (released Jan 26, 2023)
+-------------------------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Disable uri-reference format check in jsonsschema (#2771).
+- Replace ``iteritems`` with ``items`` due to pandas deprecation (#2683).
+
+Maintenance
+~~~~~~~~~~~
+
+- Add deprecation and removal warnings for Vega-Lite v3 wrappers and Vega v5 wrappers (#2843).
 
 Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
+
 - Update Vega-Lite from version 4.8.1 to version 4.17.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
+
 - Pie charts are now supported through the use of ``mark_arc``. (Examples: eg.
   :ref:`gallery_pie_chart` and :ref:`gallery_radial_chart`.)
 - Support for the ``datum`` encoding specifications from Vega-Lite; see 
@@ -46,17 +92,20 @@ Enhancements
 
 Bug Fixes
 ~~~~~~~~~
+
 - Fix ``to_dict()`` for nested selections (#2120).
 - Fix item access for expressions (#2099).
 
 Version 4.1.0 (released April 1, 2020)
 --------------------------------------
+
 - Minimum Python version is now 3.6
 - Update Vega-Lite to version 4.8.1; many new features and bug fixes from Vega-Lite
   versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
+
 - ``strokeDash`` encoding can now be used to control line styles (Example:
   `Multi Series Line Chart <https://altair-viz.github.io/gallery/multi_series_line.html>`_)
 - ``chart.save()`` now relies on `altair_saver <http://github.com/altair-viz/altair_saver>`_
@@ -67,6 +116,7 @@ Enhancements
 
 Bug Fixes
 ~~~~~~~~~
+
 - Support Python 3.8 (#1958)
 - Support multiple views in JupyterLab (#1986)
 - Support numpy types within specifications (#1914)
@@ -74,18 +124,22 @@ Bug Fixes
 
 Maintenance
 ~~~~~~~~~~~
+
 - Altair now uses `black <https://github.com/psf/black>`_ and
   `flake8 <https://gitlab.com/pycqa/flake8>`_ for maintaining code quality & consistency.
 
 Version 4.0.1 (released Jan 14, 2020)
 -------------------------------------
+
 Bug Fixes
 ~~~~~~~~~
+
 - Update Vega-Lite version to 4.0.2
 - Fix issue with duplicate chart divs in HTML renderer (#1888)
 
 Version 4.0.0 (released Dec 10, 2019)
 -------------------------------------
+
 Version 4.0.0 is based on Vega-Lite version 4.0, which you can read about at
 https://github.com/vega/vega-lite/releases/tag/v4.0.0.
 
