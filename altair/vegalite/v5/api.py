@@ -8,7 +8,6 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
-from importlib.util import find_spec
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -98,22 +97,20 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    if isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
+    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
         data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, str):
+    elif isinstance(data, str):
         data = core.UrlData(data)
+
+    elif hasattr(data, "__dataframe__"):
+        if "polars" in type(data).__module__:
+            data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
         data = _consolidate_data(data, context)
-
-    if find_spec("polars"):
-        import polars as pl
-
-        if isinstance(data, pl.DataFrame):
-            data = core.Data({"values": data.write_json(row_oriented=True)})
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):

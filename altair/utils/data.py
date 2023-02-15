@@ -76,6 +76,9 @@ def limit_rows(data, max_rows=5000):
             values = data["values"]
         else:
             return data
+    elif hasattr(data, "__dataframe__"):
+        if "polars" in type(data).__module__:
+            values = data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError(
             "The number of rows in your dataset is greater "
@@ -152,12 +155,17 @@ def to_values(data):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
         return data
+    elif hasattr(data, "__dataframe__"):
+        # only support for polars dataframe
+        if "polars" in type(data).__module__:
+            # currently no sanization on the data
+            return {"values": data.to_dicts()}
 
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(
-        data, "__geo_interface__"
+    if not isinstance(data, (dict, pd.DataFrame)) and not any(
+        hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
     ):
         raise TypeError(
             "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
