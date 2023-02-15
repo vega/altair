@@ -8,6 +8,7 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
+from importlib.util import find_spec
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -107,6 +108,11 @@ def _prepare_data(data, context=None):
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
         data = _consolidate_data(data, context)
+
+    if find_spec('polars'):
+        import polars as pl
+        if isinstance(data, pl.DataFrame):
+            data = core.Data({"values": data.write_json(row_oriented=True)})
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
