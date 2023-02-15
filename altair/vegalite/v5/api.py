@@ -109,8 +109,9 @@ def _prepare_data(data, context=None):
     if context is not None and data_transformers.consolidate_datasets:
         data = _consolidate_data(data, context)
 
-    if find_spec('polars'):
+    if find_spec("polars"):
         import polars as pl
+
         if isinstance(data, pl.DataFrame):
             data = core.Data({"values": data.write_json(row_oriented=True)})
 
