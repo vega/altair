@@ -461,7 +461,7 @@ def chart_example_invalid_y_option_value_with_condition():
 
 
 @pytest.mark.parametrize(
-    "chart_func,expected_error_message",
+    "chart_func, expected_error_message",
     [
         (
             chart_example_invalid_y_option,
@@ -552,3 +552,11 @@ def test_to_dict_no_side_effects():
     assert "shorthand" not in dct["encoding"]["y"]
     assert dct["encoding"]["y"]["field"] == "b"
     assert dct["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_to_dict_expand_mark_spec():
+    # Test that `to_dict` correctly expands marks to a dictionary
+    # without impacting the original spec which remains a string
+    chart = alt.Chart().mark_bar()
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"

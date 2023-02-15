@@ -406,6 +406,8 @@ class SchemaBase(object):
             kwds = {
                 k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
             }
+            if "mark" in kwds and isinstance(kwds["mark"], str):
+                kwds["mark"] = {"type": kwds["mark"]}
             result = _todict(
                 kwds,
                 context=context,
