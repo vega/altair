@@ -156,9 +156,12 @@ def to_values(data):
             raise KeyError("values expected in data dict, but not present.")
         return data
     elif hasattr(data, "__dataframe__"):
-        # only support for polars dataframe
+        # here we like to provide agnostic dataframe support
+        # we start with experimental support for polars dataframe
         if "polars" in type(data).__module__:
-            # currently no sanization on the data
+            # currently the polars function .to_dicts() is used to retrieve the data
+            # but here we would like to explore options using the .__dataframe__()
+            # currently no sanitization on the data
             return {"values": data.to_dicts()}
 
 
