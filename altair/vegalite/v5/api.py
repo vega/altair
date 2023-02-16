@@ -105,8 +105,7 @@ def _prepare_data(data, context=None):
         data = core.UrlData(data)
 
     elif hasattr(data, "__dataframe__"):
-        if "polars" in type(data).__module__:
-            data = _pipe(data, data_transformers.get())
+        data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
