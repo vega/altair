@@ -35,9 +35,17 @@ def test_render_examples_to_chart(syntax_module):
 
         if chart is None:
             raise ValueError(
-                "Example file should define chart in its final " "statement."
+                f"Example file {filename} should define chart in its final "
+                "statement."
             )
-        assert isinstance(chart.to_dict(), dict)
+
+        try:
+            assert isinstance(chart.to_dict(), dict)
+        except Exception as e:
+            raise AssertionError(
+                f"Example file {filename} raised an exception when "
+                f"converting to a dict: {e}"
+            )
 
 
 # We do not apply the save_engine mark to this test. This mark is used in

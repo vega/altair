@@ -32,7 +32,7 @@ def vegalite_spec():
                 {"a": "I", "b": 52},
             ]
         },
-        "mark": "bar",
+        "mark": {"type": "bar"},
         "encoding": {
             "x": {"field": "a", "type": "ordinal"},
             "y": {"field": "b", "type": "quantitative"},

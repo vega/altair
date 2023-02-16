@@ -461,34 +461,40 @@ def chart_example_invalid_y_option_value_with_condition():
 
 
 @pytest.mark.parametrize(
-    "chart_func,expected_error_message",
+    "chart_func, expected_error_message",
     [
         (
             chart_example_invalid_y_option,
-            r"Additional properties are not allowed \('unknown' was unexpected\)",
+            r"schema.channels.X.*"
+            + r"Additional properties are not allowed \('unknown' was unexpected\)",
         ),
         (
             chart_example_invalid_y_option_value,
-            r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            r"schema.channels.Y.*"
+            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
             + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
         ),
         (
             chart_example_layer,
-            r"Additional properties are not allowed \('width' was unexpected\)",
+            r"api.VConcatChart.*"
+            + r"Additional properties are not allowed \('width' was unexpected\)",
         ),
         (
             chart_example_invalid_y_option_value_with_condition,
-            r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            r"schema.channels.Y.*"
+            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
             + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
         ),
         (
             chart_example_hconcat,
-            r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
+            r"schema.core.TitleParams.*"
+            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
             + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'array'",
         ),
         (
             chart_example_invalid_channel_and_condition,
-            r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
+            r"schema.core.Encoding->encoding.*"
+            + r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
         ),
     ],
 )
@@ -552,3 +558,11 @@ def test_to_dict_no_side_effects():
     assert "shorthand" not in dct["encoding"]["y"]
     assert dct["encoding"]["y"]["field"] == "b"
     assert dct["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_to_dict_expand_mark_spec():
+    # Test that `to_dict` correctly expands marks to a dictionary
+    # without impacting the original spec which remains a string
+    chart = alt.Chart().mark_bar()
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"
