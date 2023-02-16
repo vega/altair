@@ -235,6 +235,7 @@ def _data_to_csv_string(data):
         pi = import_pyarrow_interchange()
         import pyarrow as pa
         import pyarrow.csv as pa_csv
+
         pa_table = pi.from_dataframe(data)
         csv_buffer = pa.BufferOutputStream()
         pa_csv.write_csv(pa_table, csv_buffer)
@@ -271,17 +272,22 @@ def curry(*args, **kwargs):
     )
     return curried.curry(*args, **kwargs)
 
+
 def import_pyarrow_interchange():
     import pkg_resources
+
     try:
         pkg_resources.require("pyarrow>=11.0.0")
         # The package is installed and meets the minimum version requirement
         import pyarrow.interchange as pi
+
         return pi
     except pkg_resources.DistributionNotFound:
         # The package is not installed
         raise ImportError("The package 'pyarrow' is required, but not installed")
     except pkg_resources.VersionConflict:
         # The package is installed but does not meet the minimum version requirement
-        raise ImportError("The installed version of 'pyarrow' does not meet "
-                          "the minimum requirement of version 11.0.0.")
+        raise ImportError(
+            "The installed version of 'pyarrow' does not meet "
+            "the minimum requirement of version 11.0.0."
+        )
