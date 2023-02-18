@@ -300,7 +300,16 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self.raw_schema.get("description", self.schema.get("description", ""))
+        return self._get_description()
+
+    def _get_description(self, include_sublevels: bool = True):
+        desc = self.raw_schema.get("description", self.schema.get("description", ""))
+        if not desc and include_sublevels:
+            for item in self.anyOf:
+                desc = item._get_description(include_sublevels=False)
+                if desc:
+                    break
+        return desc
 
     def is_list(self):
         return isinstance(self.schema, list)
