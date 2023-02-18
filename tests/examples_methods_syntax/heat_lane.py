@@ -12,7 +12,7 @@ source = data.cars.url
 chart = alt.Chart(source, title="Car horsepower", height=100, width=300).encode(
     alt.X("bin_Horsepower_start:Q")
         .title("Horsepower")
-        .axis(grid=False),
+        .axis((grid=False),
     alt.X2("bin_Horsepower_end:Q"),
     alt.Y("y:O").axis(None),
     alt.Y2("y2"),
