@@ -238,9 +238,12 @@ class SchemaValidationError(jsonschema.ValidationError):
         )
         message = self.message
         if self._additional_errors:
-            message += "\n        " + "\n        ".join(
-                [e.message for e in self._additional_errors]
-            )
+            # The indentation here must match that of `cleandoc` below
+            additional_errors = "\n                ".join([e.message for e in self._additional_errors])
+            message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
+
+                {message}
+                {additional_errors}"""
 
         # Output all existing parameters when an unknown parameter is specified
         if hasattr(vegalite, schema_path.split(".")[-1]) and self.validator == 'additionalProperties':
