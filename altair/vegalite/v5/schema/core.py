@@ -164,7 +164,7 @@ class AreaConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -1593,7 +1593,7 @@ class BarConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -8011,7 +8011,7 @@ class LineConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -8553,7 +8553,7 @@ class MarkConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -8980,7 +8980,7 @@ class MarkDef(AnyMark):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
@@ -10988,7 +10988,7 @@ class OverlayMarkDef(VegaLiteSchema):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
@@ -13393,7 +13393,7 @@ class RectConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -18068,7 +18068,7 @@ class TickConfig(AnyMarkConfig):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value: ``"source-over"``
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 

@@ -202,6 +202,8 @@ class SchemaGenerator(codegen.SchemaGenerator):
         description = description.replace(r"\ ", " ")
         # turn explicit references into anonymous references
         description = description.replace(">`_", ">`__")
+        # Some entries in the Vega-Lite schema miss the second occurence of '__'
+        description = description.replace("__Default value: ", "__Default value:__ ")
         description += "\n"
         return description.strip()
 
