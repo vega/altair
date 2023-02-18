@@ -140,7 +140,7 @@ def test_chart_infer_types():
         assert dct["encoding"]["size"]["sort"] == [2, 1]
         assert dct["encoding"]["tooltip"]["type"] == "ordinal"
         assert dct["encoding"]["tooltip"]["field"] == "s"
-        # Sort should be removed for channels that don't support it
+        # "sort" should be removed for channels that don't support it
         assert "sort" not in dct["encoding"]["tooltip"]
 
     # Pass field names by keyword
