@@ -162,7 +162,11 @@ class SchemaValidationError(jsonschema.ValidationError):
     def _format_params_as_table(param_dict_keys):
         """Format param names into a table so that they are easier to read"""
         param_names, name_lengths = zip(
-            *[(name, len(name)) for name in param_dict_keys if name != "kwds"]
+            *[
+                (name, len(name))
+                for name in param_dict_keys
+                if name not in ["kwds", "self"]
+            ]
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
@@ -234,45 +238,52 @@ class SchemaValidationError(jsonschema.ValidationError):
             for val in schema_path[:-1]
             if val not in (0, "properties", "additionalProperties", "patternProperties")
         )
-        message = self.message
-        if self._additional_errors:
-            message += "\n        " + "\n        ".join(
-                [e.message for e in self._additional_errors]
-            )
 
-        if hasattr(vegalite, schema_path.split(".")[-1]):
-            altair_class = "altair." + schema_path.split(".")[-1]
+        # Output all existing parameters when an unknown parameter is specified
+        if (
+            hasattr(vegalite, schema_path.split(".")[-1])
+            and self.validator == "additionalProperties"
+        ):
+            altair_class = schema_path.split(".")[-1]
             vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
             param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
-            # cleandoc removes multiline string indentation in the output
+            # `cleandoc` removes multiline string indentation in the output
             return inspect.cleandoc(
-                """Invalid specification
-
-                {}, validating {!r}
-
-                {} has no parameter named {!r}
+                """`{}` has no parameter named {!r}
 
                 Existing parameter names are:
                 {}
-                See the help for {} to read the full description of these parameters
+                See the help for `{}` to read the full description of these parameters
                 """.format(
-                    schema_path,
-                    self.validator,
                     altair_class,
-                    message.split("('")[-1].split("'")[0],
+                    self.message.split("('")[-1].split("'")[0],
                     param_names_table,
                     altair_class,
                 )
             )
-        # Fall back on the less informative error message
+        # Use the default error message for all other cases than unknown parameter errors
         else:
-            return """Invalid specification
-            {}, validating {!r}
-            {}
-            """.format(
-                schema_path, self.validator, message
+            message = self.message
+            # Add a summary line when parameters are passed an invalid value
+            # For example: "'asdf' is an invalid value for `stack`
+            if hasattr(vegalite, schema_path.split(".")[-1]) and self.absolute_path:
+                # The indentation here must match that of `cleandoc` below
+                message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
+
+                {message}"""
+
+            if self._additional_errors:
+                message += "\n                " + "\n                ".join(
+                    [e.message for e in self._additional_errors]
+                )
+
+            return inspect.cleandoc(
+                """{}
+                """.format(
+                    message
+                )
             )
 
 
