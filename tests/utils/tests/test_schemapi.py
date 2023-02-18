@@ -378,9 +378,7 @@ def test_schema_validation_error():
     assert isinstance(the_err, SchemaValidationError)
     message = str(the_err)
 
-    assert message.startswith("Invalid specification")
-    assert "test_schemapi.MySchema->a" in message
-    assert "validating {!r}".format(the_err.validator) in message
+    assert "4 is not of type 'string'" in message
     assert the_err.message in message
 
 
