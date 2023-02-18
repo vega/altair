@@ -10,12 +10,14 @@ from vega_datasets import data
 source = data.cars.url
 
 chart = alt.Chart(source, title="Car horsepower", height=100, width=300).encode(
-    alt.X("bin_Horsepower_start:Q")
-        .title("Horsepower")
-        .axis((grid=False),
-    alt.X2("bin_Horsepower_end:Q"),
-    alt.Y("y:O").axis(None),
-    alt.Y2("y2"),
+    x=alt.X(
+        "bin_Horsepower_start:Q",
+        title="Horsepower",
+        axis=alt.Axis(grid=False)
+    ),
+    x2="bin_Horsepower_end:Q",
+    y=alt.Y("y:O", axis=None),
+    y2="y2",
 ).transform_bin(
     ["bin_Horsepower_start", "bin_Horsepower_end"],
     field='Horsepower'
@@ -33,12 +35,10 @@ chart = alt.Chart(source, title="Car horsepower", height=100, width=300).encode(
 )
 
 layer1 = chart.mark_bar(xOffset=1, x2Offset=-1, cornerRadius=3).encode(
-    alt.Color("max_bin_count_end:O")
-        .title("Number of models")
-        .scale(scheme="lighttealblue")
+    color=alt.Color("max_bin_count_end:O", scale=alt.Scale(scheme="lighttealblue"), title="Number of models")
 )
 layer2 = chart.mark_bar(xOffset=1, x2Offset=-1, yOffset=-3, y2Offset=3).encode(
-    alt.Color("bin_count_end:O").title("Number of models")
+    color=alt.Color("bin_count_end:O", title="Number of models")
 )
 
 layer1 + layer2
