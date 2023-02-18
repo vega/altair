@@ -484,10 +484,10 @@ def chart_example_invalid_y_option_value_with_condition():
                 r"""`VConcatChart` has no parameter named 'width'
 
                 Existing parameter names are:
-                self         bounds   datasets      params    title       
-                vconcat      center   description   resolve   transform   
-                autosize     config   name          spacing   usermeta    
-                background   data     padding                             
+                vconcat      center     description   params    title       
+                autosize     config     name          resolve   transform   
+                background   data       padding       spacing   usermeta    
+                bounds       datasets                                       
 
                 See the help for `VConcatChart` to read the full description of these parameters"""
             ),
