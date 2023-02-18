@@ -5757,8 +5757,6 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
     """FieldOrDatumDefWithConditionStringFieldDefstring schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9450,8 +9448,6 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
     """FieldOrDatumDefWithConditionDatumDefGradientstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9574,8 +9570,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
     """FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9974,8 +9968,6 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
     """FieldOrDatumDefWithConditionDatumDefnumberArray schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10097,8 +10089,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10353,8 +10343,6 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
     """FieldOrDatumDefWithConditionDatumDefnumber schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10476,8 +10464,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumber schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -15509,8 +15495,6 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
     """FieldOrDatumDefWithConditionDatumDefstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -15632,8 +15616,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
     """FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -17264,8 +17246,6 @@ class StringFieldDefWithCondition(VegaLiteSchema):
     """StringFieldDefWithCondition schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -17634,8 +17614,6 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
     """FieldOrDatumDefWithConditionStringDatumDefText schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -17793,8 +17771,6 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     """FieldOrDatumDefWithConditionStringFieldDefText schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------

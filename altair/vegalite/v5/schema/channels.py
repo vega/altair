@@ -94,8 +94,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Angle schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -433,8 +431,6 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """AngleDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -615,8 +611,6 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Color schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -954,8 +948,6 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """ColorDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -1449,8 +1441,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -2376,8 +2366,6 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     """Fill schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -2715,8 +2703,6 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """FillDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -2897,8 +2883,6 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """FillOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -3236,8 +3220,6 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """FillOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -3418,8 +3400,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -5251,8 +5231,6 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     """Opacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -5590,8 +5568,6 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """OpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -7220,8 +7196,6 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Shape schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -7559,8 +7533,6 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """ShapeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -7741,8 +7713,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     """Size schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -8080,8 +8050,6 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """SizeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -8262,8 +8230,6 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     """Stroke schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -8601,8 +8567,6 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """StrokeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -8783,8 +8747,6 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     """StrokeDash schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9122,8 +9084,6 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """StrokeDashDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9304,8 +9264,6 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     """StrokeOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9643,8 +9601,6 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """StrokeOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -9825,8 +9781,6 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """StrokeWidth schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10164,8 +10118,6 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """StrokeWidthDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10346,8 +10298,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     """Text schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -10637,8 +10587,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     """TextDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -11729,8 +11677,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
@@ -12056,8 +12002,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
     Attributes
     ----------
