@@ -159,13 +159,27 @@ class SchemaValidationError(jsonschema.ValidationError):
         self._additional_errors = getattr(err, "_additional_errors", [])
 
     def __str__(self):
-        cls = self.obj.__class__
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(self.absolute_path):
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
+            cls = self.obj.__class__
         schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
         schema_path = "->".join(
             str(val)
             for val in schema_path[:-1]
-            if val not in ("properties", "additionalProperties", "patternProperties")
+            if val not in (0, "properties", "additionalProperties", "patternProperties")
         )
         message = self.message
         if self._additional_errors:
@@ -406,6 +420,8 @@ class SchemaBase(object):
             kwds = {
                 k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
             }
+            if "mark" in kwds and isinstance(kwds["mark"], str):
+                kwds["mark"] = {"type": kwds["mark"]}
             result = _todict(
                 kwds,
                 context=context,

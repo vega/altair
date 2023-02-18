@@ -962,16 +962,32 @@ def test_layer_errors():
     )
 
     with pytest.raises(ValueError) as err:
+        alt.hconcat(simple_chart) + simple_chart
+    assert (
+        str(err.value)
+        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+    )
+
+    with pytest.raises(ValueError) as err:
         repeat_chart + simple_chart
-    assert str(err.value) == "Repeat charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+    )
 
     with pytest.raises(ValueError) as err:
         facet_chart1 + simple_chart
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
     with pytest.raises(ValueError) as err:
         alt.layer(simple_chart) + facet_chart2
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
 
 @pytest.mark.parametrize(

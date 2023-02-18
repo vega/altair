@@ -155,6 +155,7 @@ html_theme_options = {
         },
     ],
     "header_links_before_dropdown": 6,
+    "announcement": "This website is for Vega-Altair v5 (release candidate). Visit the <a href='https://altair-viz.github.io/altair-viz-v4/'>Vega-Altair v4 homepage</a> for previous release documentation.",
 }
 
 html_context = {"default_mode": "light"}

@@ -7,7 +7,7 @@ from altair.utils.html import spec_to_html
 def spec():
     return {
         "data": {"url": "data.json"},
-        "mark": "point",
+        "mark": {"type": "point"},
         "encoding": {
             "x": {"field": "x", "type": "quantitative"},
             "y": {"field": "y", "type": "quantitative"},
