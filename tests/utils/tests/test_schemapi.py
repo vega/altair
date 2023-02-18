@@ -2,6 +2,7 @@
 # tools/generate_schema_wrapper.py. Do not modify directly.
 import copy
 import io
+import inspect
 import json
 import jsonschema
 import re
@@ -467,58 +468,60 @@ def chart_example_invalid_y_option_value_with_condition():
     [
         (
             chart_example_invalid_y_option,
-r"""Invalid specification
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'unknown'
 
-altair.vegalite.v.?.schema.channels.X, validating 'additionalProperties'
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
 
-altair.X has no parameter named 'unknown'
-
-Existing parameter names are:
-shorthand      bin      scale   timeUnit   
-aggregate      field    sort    title      
-axis           impute   stack   type       
-bandPosition                               
-
-See the help for altair.X to read the full description of these parameters"""
+                See the help for `X` to read the full description of these parameters"""
+            ),
         ),
         (
             chart_example_invalid_y_option_value,
-            r"schema.channels.Y.*"
+            r"'asdf' is an invalid value for `stack`.*"
             + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
             + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
         ),
         (
             chart_example_layer,
-r"""Invalid specification
+            inspect.cleandoc(
+                r"""`VConcatChart` has no parameter named 'width'
 
-altair.vegalite.v.?.api.VConcatChart, validating 'additionalProperties'
+                Existing parameter names are:
+                self         bounds   datasets      params    title       
+                vconcat      center   description   resolve   transform   
+                autosize     config   name          spacing   usermeta    
+                background   data     padding                             
 
-altair.VConcatChart has no parameter named 'width'
-
-Existing parameter names are:
-self         bounds   datasets      params    title       
-vconcat      center   description   resolve   transform   
-autosize     config   name          spacing   usermeta    
-background   data     padding                             
-
-See the help for altair.VConcatChart to read the full description of these parameters"""
+                See the help for `VConcatChart` to read the full description of these parameters"""
+            ),
         ),
         (
             chart_example_invalid_y_option_value_with_condition,
-            r"schema.channels.Y.*"
-            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
-            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
         ),
         (
             chart_example_hconcat,
-            r"schema.core.TitleParams.*"
-            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
-            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'array'",
+            inspect.cleandoc(
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
+
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'"""
+            ),
         ),
         (
             chart_example_invalid_channel_and_condition,
-            r"schema.core.Encoding->encoding.*"
-            + r"Additional properties are not allowed \('invalidChannel' was unexpected\).*",
+            r"Additional properties are not allowed \('invalidChannel' was unexpected\)\n",
         ),
     ],
 )
