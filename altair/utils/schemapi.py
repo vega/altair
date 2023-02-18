@@ -164,7 +164,11 @@ class SchemaValidationError(jsonschema.ValidationError):
     def _format_params_as_table(param_dict_keys):
         """Format param names into a table so that they are easier to read"""
         param_names, name_lengths = zip(
-            *[(name, len(name)) for name in param_dict_keys if name not in ["kwds", "self"]]
+            *[
+                (name, len(name))
+                for name in param_dict_keys
+                if name not in ["kwds", "self"]
+            ]
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
