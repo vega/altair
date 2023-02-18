@@ -479,12 +479,6 @@ def chart_example_invalid_y_option_value_with_condition():
             ),
         ),
         (
-            chart_example_invalid_y_option_value,
-            r"'asdf' is an invalid value for `stack`.*"
-            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
-            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
-        ),
-        (
             chart_example_layer,
             inspect.cleandoc(
                 r"""`VConcatChart` has no parameter named 'width'
@@ -496,6 +490,16 @@ def chart_example_invalid_y_option_value_with_condition():
                 background   data     padding                             
 
                 See the help for `VConcatChart` to read the full description of these parameters"""
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
             ),
         ),
         (
