@@ -240,16 +240,6 @@ class SchemaValidationError(jsonschema.ValidationError):
             for val in schema_path[:-1]
             if val not in (0, "properties", "additionalProperties", "patternProperties")
         )
-        message = self.message
-        if self._additional_errors:
-            # The indentation here must match that of `cleandoc` below
-            additional_errors = "\n                ".join(
-                [e.message for e in self._additional_errors]
-            )
-            message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
-
-                {message}
-                {additional_errors}"""
 
         # Output all existing parameters when an unknown parameter is specified
         if (
@@ -270,13 +260,27 @@ class SchemaValidationError(jsonschema.ValidationError):
                 See the help for `{}` to read the full description of these parameters
                 """.format(
                     altair_class,
-                    message.split("('")[-1].split("'")[0],
+                    self.message.split("('")[-1].split("'")[0],
                     param_names_table,
                     altair_class,
                 )
             )
         # Use the default error message for all other cases than unknown parameter errors
         else:
+            message = self.message
+            # Add a summary line when parameters are passed an invalid value
+            # For example: "'asdf' is an invalid value for `stack`
+            if hasattr(vegalite, schema_path.split(".")[-1]) and self.absolute_path:
+                # The indentation here must match that of `cleandoc` below
+                message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
+
+                {message}"""
+
+            if self._additional_errors:
+                message += "\n                " + "\n                ".join(
+                    [e.message for e in self._additional_errors]
+                )
+
             return inspect.cleandoc(
                 """{}
                 """.format(
