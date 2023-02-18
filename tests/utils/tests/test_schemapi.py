@@ -475,7 +475,7 @@ def chart_example_invalid_y_option_value_with_condition():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters"""
+                See the help for `X` to read the full description of these parameters"""  # noqa: W291
             ),
         ),
         (
@@ -489,7 +489,7 @@ def chart_example_invalid_y_option_value_with_condition():
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters"""
+                See the help for `VConcatChart` to read the full description of these parameters"""  # noqa: W291
             ),
         ),
         (
