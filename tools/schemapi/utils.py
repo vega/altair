@@ -310,9 +310,16 @@ class SchemaInfo(object):
         desc = self.raw_schema.get("description", self.schema.get("description", ""))
         if not desc and include_sublevels:
             for item in self.anyOf:
-                desc = item._get_description(include_sublevels=False)
-                if desc:
-                    break
+                sub_desc = item._get_description(include_sublevels=False)
+                if desc and sub_desc:
+                    raise ValueError(
+                        "There are multiple potential descriptions which could"
+                        + " be used for the currently inspected schema. You'll need to"
+                        + " clarify which one is the correct one.\n"
+                        + str(self.schema)
+                    )
+                if sub_desc:
+                    desc = sub_desc
         return desc
 
     def is_list(self):
