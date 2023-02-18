@@ -244,25 +244,19 @@ class SchemaValidationError(jsonschema.ValidationError):
 
         # Output all existing parameters when an unknown parameter is specified
         if hasattr(vegalite, schema_path.split(".")[-1]) and self.validator == 'additionalProperties':
-            altair_class = "altair." + schema_path.split(".")[-1]
+            altair_class = schema_path.split(".")[-1]
             vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
             param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
-            # cleandoc removes multiline string indentation in the output
+            # `cleandoc` removes multiline string indentation in the output
             return inspect.cleandoc(
-                """Invalid specification
-
-                {}, validating {!r}
-
-                {} has no parameter named {!r}
+                """`{}` has no parameter named {!r}
 
                 Existing parameter names are:
                 {}
-                See the help for {} to read the full description of these parameters
+                See the help for `{}` to read the full description of these parameters
                 """.format(
-                    schema_path,
-                    self.validator,
                     altair_class,
                     message.split("('")[-1].split("'")[0],
                     param_names_table,
@@ -271,11 +265,11 @@ class SchemaValidationError(jsonschema.ValidationError):
             )
         # Use the default error message for all other cases than unknown parameter errors
         else:
-            return """Invalid specification
-            {}, validating {!r}
-            {}
-            """.format(
-                schema_path, self.validator, message
+            return inspect.cleandoc(
+                """{}
+                """.format(
+                    message
+                )
             )
 
 
