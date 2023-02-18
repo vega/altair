@@ -97,12 +97,15 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    if isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
+    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
         data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, str):
+    elif isinstance(data, str):
         data = core.UrlData(data)
+
+    elif hasattr(data, "__dataframe__"):
+        data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
