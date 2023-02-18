@@ -138,16 +138,30 @@ def test_chart_infer_types():
         assert dct["encoding"]["size"]["type"] == "ordinal"
         assert dct["encoding"]["size"]["field"] == "s"
         assert dct["encoding"]["size"]["sort"] == [2, 1]
+        assert dct["encoding"]["tooltip"]["type"] == "ordinal"
+        assert dct["encoding"]["tooltip"]["field"] == "s"
+        # "sort" should be removed for channels that don't support it
+        assert "sort" not in dct["encoding"]["tooltip"]
 
     # Pass field names by keyword
-    chart = alt.Chart(data).mark_point().encode(x="x", y="y", color="c", size="s")
+    chart = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(x="x", y="y", color="c", size="s", tooltip="s")
+    )
     _check_encodings(chart)
 
     # pass Channel objects by keyword
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(x=alt.X("x"), y=alt.Y("y"), color=alt.Color("c"), size=alt.Size("s"))
+        .encode(
+            x=alt.X("x"),
+            y=alt.Y("y"),
+            color=alt.Color("c"),
+            size=alt.Size("s"),
+            tooltip=alt.Tooltip("s"),
+        )
     )
     _check_encodings(chart)
 
@@ -155,7 +169,7 @@ def test_chart_infer_types():
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"))
+        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"), alt.Tooltip("s"))
     )
     _check_encodings(chart)
 
@@ -167,6 +181,7 @@ def test_chart_infer_types():
             alt.X("x", type="nominal"),
             alt.Y("y", type="ordinal"),
             alt.Size("s", type="nominal"),
+            alt.Tooltip("s", type="nominal"),
         )
     )
     dct = chart.to_dict()
@@ -174,6 +189,8 @@ def test_chart_infer_types():
     assert dct["encoding"]["y"]["type"] == "ordinal"
     assert dct["encoding"]["size"]["type"] == "nominal"
     assert "sort" not in dct["encoding"]["size"]
+    assert dct["encoding"]["tooltip"]["type"] == "nominal"
+    assert "sort" not in dct["encoding"]["tooltip"]
 
 
 @pytest.mark.parametrize(
