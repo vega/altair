@@ -242,7 +242,8 @@ class SchemaValidationError(jsonschema.ValidationError):
                 [e.message for e in self._additional_errors]
             )
 
-        if hasattr(vegalite, schema_path.split(".")[-1]):
+        # Output all existing parameters when an unknown parameter is specified
+        if hasattr(vegalite, schema_path.split(".")[-1]) and self.validator == 'additionalProperties':
             altair_class = "altair." + schema_path.split(".")[-1]
             vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
             param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
@@ -268,7 +269,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                     altair_class,
                 )
             )
-        # Fall back on the less informative error message
+        # Use the default error message for all other cases than unknown parameter errors
         else:
             return """Invalid specification
             {}, validating {!r}
