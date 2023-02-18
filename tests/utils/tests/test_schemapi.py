@@ -467,8 +467,19 @@ def chart_example_invalid_y_option_value_with_condition():
     [
         (
             chart_example_invalid_y_option,
-            r"schema.channels.X.*"
-            + r"Additional properties are not allowed \('unknown' was unexpected\)",
+r"""Invalid specification
+
+altair.vegalite.v.?.schema.channels.X, validating 'additionalProperties'
+
+altair.X has no parameter named 'unknown'
+
+Existing parameter names are:
+shorthand      bin      scale   timeUnit   
+aggregate      field    sort    title      
+axis           impute   stack   type       
+bandPosition                               
+
+See the help for altair.X to read the full description of these parameters"""
         ),
         (
             chart_example_invalid_y_option_value,
@@ -478,8 +489,19 @@ def chart_example_invalid_y_option_value_with_condition():
         ),
         (
             chart_example_layer,
-            r"api.VConcatChart.*"
-            + r"Additional properties are not allowed \('width' was unexpected\)",
+r"""Invalid specification
+
+altair.vegalite.v.?.api.VConcatChart, validating 'additionalProperties'
+
+altair.VConcatChart has no parameter named 'width'
+
+Existing parameter names are:
+self         bounds   datasets      params    title       
+vconcat      center   description   resolve   transform   
+autosize     config   name          spacing   usermeta    
+background   data     padding                             
+
+See the help for altair.VConcatChart to read the full description of these parameters"""
         ),
         (
             chart_example_invalid_y_option_value_with_condition,
@@ -496,7 +518,7 @@ def chart_example_invalid_y_option_value_with_condition():
         (
             chart_example_invalid_channel_and_condition,
             r"schema.core.Encoding->encoding.*"
-            + r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
+            + r"Additional properties are not allowed \('invalidChannel' was unexpected\).*",
         ),
     ],
 )
