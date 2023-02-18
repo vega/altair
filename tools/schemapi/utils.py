@@ -300,9 +300,13 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self._get_description()
+        return self._get_description(include_sublevels=False)
 
-    def _get_description(self, include_sublevels: bool = True):
+    @property
+    def deep_description(self):
+        return self._get_description(include_sublevels=True)
+
+    def _get_description(self, include_sublevels: bool = False):
         desc = self.raw_schema.get("description", self.schema.get("description", ""))
         if not desc and include_sublevels:
             for item in self.anyOf:

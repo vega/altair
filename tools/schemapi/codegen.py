@@ -173,7 +173,9 @@ class SchemaGenerator(object):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
-                    "    {}".format(self._process_description(propinfo.description)),
+                    "    {}".format(
+                        self._process_description(propinfo.deep_description)
+                    ),
                 ]
         if len(doc) > 1:
             doc += [""]

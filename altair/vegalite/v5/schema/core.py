@@ -96,7 +96,6 @@ class AnyMark(VegaLiteSchema):
     """AnyMark schema wrapper
 
     anyOf(:class:`CompositeMark`, :class:`CompositeMarkDef`, :class:`Mark`, :class:`MarkDef`)
-    All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/AnyMark'}
 
@@ -2441,8 +2440,6 @@ class ColorDef(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/ColorDef'}
 
@@ -5573,7 +5570,6 @@ class Field(VegaLiteSchema):
     """Field schema wrapper
 
     anyOf(:class:`FieldName`, :class:`RepeatRef`)
-    Reference to a repeated value.
     """
     _schema = {'$ref': '#/definitions/Field'}
 
@@ -9443,8 +9439,6 @@ class MarkPropDefGradientstringnull(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/MarkPropDef<(Gradient|string|null)>'}
 
@@ -9826,8 +9820,6 @@ class MarkPropDefnumber(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/MarkPropDef<number>'}
 
@@ -9841,8 +9833,6 @@ class MarkPropDefnumberArray(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/MarkPropDef<number[]>'}
 
@@ -9856,8 +9846,6 @@ class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/MarkPropDef<(string|null),TypeForShape>'}
 
@@ -9975,8 +9963,6 @@ class NumericArrayMarkPropDef(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/NumericArrayMarkPropDef'}
 
@@ -10356,8 +10342,6 @@ class NumericMarkPropDef(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/NumericMarkPropDef'}
 
@@ -10734,8 +10718,6 @@ class OffsetDef(VegaLiteSchema):
     """OffsetDef schema wrapper
 
     anyOf(:class:`ScaleFieldDef`, :class:`ScaleDatumDef`, :class:`ValueDefnumber`)
-    Definition object for a constant value (primitive value or gradient definition) of an
-    encoding channel.
     """
     _schema = {'$ref': '#/definitions/OffsetDef'}
 
@@ -11683,8 +11665,6 @@ class PolarDef(VegaLiteSchema):
 
     anyOf(:class:`PositionFieldDefBase`, :class:`PositionDatumDefBase`,
     :class:`PositionValueDef`)
-    Definition object for a constant value (primitive value or gradient definition) of an
-    encoding channel.
     """
     _schema = {'$ref': '#/definitions/PolarDef'}
 
@@ -11696,8 +11676,6 @@ class Position2Def(VegaLiteSchema):
     """Position2Def schema wrapper
 
     anyOf(:class:`SecondaryFieldDef`, :class:`DatumDef`, :class:`PositionValueDef`)
-    A field definition of a secondary channel that shares a scale with another primary channel.
-    For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
     """
     _schema = {'$ref': '#/definitions/Position2Def'}
 
@@ -11975,8 +11953,6 @@ class PositionDef(VegaLiteSchema):
     """PositionDef schema wrapper
 
     anyOf(:class:`PositionFieldDef`, :class:`PositionDatumDef`, :class:`PositionValueDef`)
-    Definition object for a constant value (primitive value or gradient definition) of an
-    encoding channel.
     """
     _schema = {'$ref': '#/definitions/PositionDef'}
 
@@ -15233,9 +15209,6 @@ class SelectionInit(VegaLiteSchema):
     """SelectionInit schema wrapper
 
     anyOf(:class:`PrimitiveValue`, :class:`DateTime`)
-    Object for defining datetime in Vega-Lite Filter. If both month and quarter are provided,
-    month has higher precedence. ``day`` cannot be combined with other date. We accept string
-    for month and day names.
     """
     _schema = {'$ref': '#/definitions/SelectionInit'}
 
@@ -15525,8 +15498,6 @@ class ShapeDef(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/ShapeDef'}
 
@@ -16047,7 +16018,6 @@ class Sort(VegaLiteSchema):
 
     anyOf(:class:`SortArray`, :class:`AllSortString`, :class:`EncodingSortField`,
     :class:`SortByEncoding`, None)
-    A sort definition for sorting a discrete scale in an encoding field definition.
     """
     _schema = {'$ref': '#/definitions/Sort'}
 
@@ -16706,7 +16676,6 @@ class RepeatSpec(Spec, NonNormalizedSpec):
     """RepeatSpec schema wrapper
 
     anyOf(:class:`NonLayerRepeatSpec`, :class:`LayerRepeatSpec`)
-    Base interface for a repeat specification.
     """
     _schema = {'$ref': '#/definitions/RepeatSpec'}
 
@@ -17654,8 +17623,6 @@ class TextDef(VegaLiteSchema):
     anyOf(:class:`FieldOrDatumDefWithConditionStringFieldDefText`,
     :class:`FieldOrDatumDefWithConditionStringDatumDefText`,
     :class:`ValueDefWithConditionStringFieldDefText`)
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
     """
     _schema = {'$ref': '#/definitions/TextDef'}
 
