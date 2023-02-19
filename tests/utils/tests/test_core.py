@@ -249,17 +249,35 @@ def test_infer_encoding_types(channels):
     assert infer_encoding_types(args, kwds, channels) == expected
 
 
-def test_infer_encoding_types_with_condition(channels):
+def test_infer_encoding_types_with_condition():
+    channels = alt.channels
+
     args, kwds = _getargs(
-        x=alt.condition("pred1", alt.value(1), alt.value(2)),
-        y=alt.condition("pred2", alt.value(1), "yval"),
-        strokeWidth=alt.condition("pred3", "sval", alt.value(2)),
+        size=alt.condition("pred1", alt.value(1), alt.value(2)),
+        color=alt.condition("pred2", alt.value("red"), "cfield:N"),
+        opacity=alt.condition("pred3", "ofield:N", alt.value(0.2)),
     )
+
     expected = dict(
-        x=channels.XValue(2, condition=channels.XValue(1, test="pred1")),
-        y=channels.Y("yval", condition=channels.YValue(1, test="pred2")),
-        strokeWidth=channels.StrokeWidthValue(
-            2, condition=channels.StrokeWidth("sval", test="pred3")
+        size=channels.SizeValue(
+            2,
+            condition=alt.ConditionalPredicateValueDefnumberExprRef(
+                value=1, test=alt.Predicate("pred1")
+            ),
+        ),
+        color=channels.Color(
+            "cfield:N",
+            condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
+                value="red", test=alt.Predicate("pred2")
+            ),
+        ),
+        opacity=channels.OpacityValue(
+            0.2,
+            condition=alt.ConditionalPredicateMarkPropFieldOrDatumDef(
+                field=alt.FieldName("ofield"),
+                test=alt.Predicate("pred3"),
+                type=alt.StandardType("nominal"),
+            ),
         ),
     )
     assert infer_encoding_types(args, kwds, channels) == expected

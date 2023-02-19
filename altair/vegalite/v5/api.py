@@ -97,12 +97,15 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    if isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
+    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
         data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, str):
+    elif isinstance(data, str):
         data = core.UrlData(data)
+
+    elif hasattr(data, "__dataframe__"):
+        data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
@@ -513,7 +516,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = {"shorthand": if_true}
+        if_true = utils.parse_shorthand(if_true)
         if_true.update(kwargs)
     condition.update(if_true)
 
@@ -796,7 +799,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular',
         'gnomonic', 'identity', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
 
-        Attributes
+        Parameters
         ----------
         type : ProjectionType
             The cartographic projection to use. This value is case-insensitive, for example
@@ -1107,7 +1110,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     ) -> _TTopLevelMixin:
         """Add a DensityTransform to the spec.
 
-        Attributes
+        Parameters
         ----------
         density : str
             The data field for which to perform density estimation.
@@ -1421,7 +1424,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     ) -> _TTopLevelMixin:
         """Add a DataLookupTransform or SelectionLookupTransform to the chart
 
-        Attributes
+        Parameters
         ----------
         lookup : string
             Key in primary data source.
@@ -2112,7 +2115,7 @@ class Chart(
     ``transform_filter()``, ``properties()``, etc. See Altair's documentation
     for details and examples: http://altair-viz.github.io/.
 
-    Attributes
+    Parameters
     ----------
     data : Data
         An object describing the data source

@@ -62,7 +62,7 @@ class AggregatedFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : :class:`AggregateOp`
@@ -120,7 +120,7 @@ class AreaConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -129,15 +129,25 @@ class AreaConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -150,7 +160,11 @@ class AreaConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -165,36 +179,61 @@ class AreaConfig(AnyMarkConfig):
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -206,24 +245,48 @@ class AreaConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -234,7 +297,10 @@ class AreaConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
@@ -247,9 +313,11 @@ class AreaConfig(AnyMarkConfig):
 
         **Default value:** ``false``.
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -275,7 +343,7 @@ class AreaConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
@@ -303,7 +371,20 @@ class AreaConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -322,34 +403,48 @@ class AreaConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -383,9 +478,9 @@ class AreaConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -464,7 +559,7 @@ class ArgmaxDef(Aggregate):
 
     Mapping(required=[argmax])
 
-    Attributes
+    Parameters
     ----------
 
     argmax : :class:`FieldName`
@@ -481,7 +576,7 @@ class ArgminDef(Aggregate):
 
     Mapping(required=[argmin])
 
-    Attributes
+    Parameters
     ----------
 
     argmin : :class:`FieldName`
@@ -498,7 +593,7 @@ class AutoSizeParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     contains : enum('content', 'padding')
@@ -545,32 +640,53 @@ class Axis(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the axis from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     bandPosition : anyOf(float, :class:`ExprRef`)
+        An interpolation fraction indicating where, for ``band`` scales, axis ticks should
+        be positioned. A value of ``0`` places ticks at the left edge of their bands. A
+        value of ``0.5`` places ticks in the middle of their bands.
 
+        **Default value:** ``0.5``
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of this axis for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
+        will be set to this description. If the description is unspecified it will be
+        automatically generated.
     domain : boolean
         A boolean flag indicating if the domain (the axis baseline) should be included as
         part of the axis.
 
         **Default value:** ``true``
     domainCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for the domain line's ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     domainColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        Color of axis domain line.
 
+        **Default value:** ``"gray"``.
     domainDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The pixel offset at which to start drawing with the domain dash array.
     domainOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the axis domain line.
     domainWidth : anyOf(float, :class:`ExprRef`)
+        Stroke width of axis domain line
 
+        **Default value:** ``1``
     format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
@@ -612,27 +728,49 @@ class Axis(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
     gridCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for grid lines' ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
+        Color of gridlines.
 
+        **Default value:** ``"lightGray"``.
     gridDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
-
+        An array of alternating [stroke, space] lengths for dashed grid lines.
     gridDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The pixel offset at which to start drawing with the grid dash array.
     gridOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The stroke opacity of grid (value between [0,1])
 
+        **Default value:** ``1``
     gridWidth : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The grid width, in pixels.
 
+        **Default value:** ``1``
     labelAlign : anyOf(:class:`Align`, :class:`ExprRef`, :class:`ConditionalAxisLabelAlign`)
-
+        Horizontal text alignment of axis tick labels, overriding the default setting for
+        the current axis orientation.
     labelAngle : anyOf(float, :class:`ExprRef`)
+        The rotation angle of the axis labels.
 
+        **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
     labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`, :class:`ConditionalAxisLabelBaseline`)
-
+        Vertical text baseline of axis tick labels, overriding the default setting for the
+        current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
+        ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
+        and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
+        are calculated relative to the *lineHeight* rather than *fontSize* alone.
     labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
+        Indicates if labels should be hidden if they exceed the axis range. If ``false``
+        (the default) no bounds overlap analysis is performed. If ``true``, labels will be
+        hidden if they exceed the axis range by more than 1 pixel. If this property is a
+        number, it specifies the pixel tolerance: the maximum amount by which a label
+        bounding box may exceed the axis range.
 
+        **Default value:** ``false``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
-
+        The color of the tick label, can be in hex color code or regular color name.
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
@@ -651,23 +789,33 @@ class Axis(VegaLiteSchema):
 
         **Default value:** ``true`` for axis of a continuous x-scale. Otherwise, ``false``.
     labelFlushOffset : anyOf(float, :class:`ExprRef`)
+        Indicates the number of pixels by which to offset flush-adjusted labels. For
+        example, a value of ``2`` will push flush-adjusted labels 2 pixels outward from the
+        center of the axis. Offsets can help the labels better visually group with
+        corresponding axis ticks.
 
+        **Default value:** ``0``.
     labelFont : anyOf(string, :class:`ExprRef`, :class:`ConditionalAxisString`)
-
+        The font of the tick label.
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The font size of the label, in pixels.
     labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`)
-
+        Font style of the title.
     labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`)
-
+        Font weight of axis tick labels.
     labelLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of axis tick labels.
 
+        **Default value:** ``180``
     labelLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line label text or label text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     labelOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        Position offset in pixels to apply to labels, in addition to tickOffset.
 
+        **Default value:** ``0``
     labelOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The opacity of the labels.
     labelOverlap : anyOf(:class:`LabelOverlap`, :class:`ExprRef`)
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
         default), no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
@@ -679,17 +827,27 @@ class Axis(VegaLiteSchema):
         **Default value:** ``true`` for non-nominal fields with non-log scales; ``"greedy"``
         for log scales; otherwise ``false``.
     labelPadding : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The padding in pixels between labels and ticks.
 
+        **Default value:** ``2``
     labelSeparation : anyOf(float, :class:`ExprRef`)
-
+        The minimum separation that must be between label bounding boxes for them to be
+        considered non-overlapping (default ``0`` ). This property is ignored if
+        *labelOverlap* resolution is not enabled.
     labels : boolean
         A boolean flag indicating if labels should be included as part of the axis.
 
         **Default value:** ``true``.
     maxExtent : anyOf(float, :class:`ExprRef`)
+        The maximum extent in pixels that axis ticks and labels should use. This determines
+        a maximum offset value for axis titles.
 
+        **Default value:** ``undefined``.
     minExtent : anyOf(float, :class:`ExprRef`)
+        The minimum extent in pixels that axis ticks and labels should use. This determines
+        a minimum offset value for axis titles.
 
+        **Default value:** ``30`` for y-axis; ``undefined`` for x-axis.
     offset : anyOf(float, :class:`ExprRef`)
         The offset, in pixels, by which to displace the axis from the edge of the enclosing
         group or data rectangle.
@@ -719,11 +877,17 @@ class Axis(VegaLiteSchema):
         style. For example, an x-axis mark with ``"style": "foo"`` will use ``config.axisX``
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand : anyOf(enum('center', 'extent'), :class:`ExprRef`)
-
+        For band scales, indicates if ticks and grid lines should be placed at the
+        ``"center"`` of a band (default) or at the band ``"extent"`` s to indicate intervals
     tickCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
+        The color of the axis's tick.
 
+        **Default value:** ``"gray"``
     tickCount : anyOf(float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
@@ -739,9 +903,9 @@ class Axis(VegaLiteSchema):
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
     tickDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
-
+        An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
@@ -753,18 +917,22 @@ class Axis(VegaLiteSchema):
         If ``tickMinStep`` is specified, the ``tickCount`` value will be adjusted, if
         necessary, to enforce the minimum step value.
     tickOffset : anyOf(float, :class:`ExprRef`)
-
+        Position offset in pixels to apply to ticks, labels, and gridlines.
     tickOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        Opacity of the ticks.
     tickRound : boolean
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
         **Default value:** ``true``
     tickSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The size in pixels of axis ticks.
 
+        **Default value:** ``5``
     tickWidth : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The width, in pixels, of ticks.
 
+        **Default value:** ``1``
     ticks : boolean
         Boolean value that determines whether the axis should include ticks.
 
@@ -790,37 +958,50 @@ class Axis(VegaLiteSchema):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     titleAlign : anyOf(:class:`Align`, :class:`ExprRef`)
-
+        Horizontal text alignment of axis titles.
     titleAnchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        Text anchor position for placing axis titles.
     titleAngle : anyOf(float, :class:`ExprRef`)
-
+        Angle in degrees of axis titles.
     titleBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
-
+        Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
+        ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
+        ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
+        ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
+        alone.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Color of the title, can be in hex color code or regular color name.
     titleFont : anyOf(string, :class:`ExprRef`)
-
+        Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size of the title.
     titleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style of the title.
     titleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight of the title. This can be either a string (e.g ``"bold"``, ``"normal"``
+        ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400``
+        and ``"bold"`` = ``700`` ).
     titleLimit : anyOf(float, :class:`ExprRef`)
-
+        Maximum allowed pixel width of axis titles.
     titleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     titleOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the axis title.
     titlePadding : anyOf(float, :class:`ExprRef`)
-
+        The padding, in pixels, between title and axis.
     titleX : anyOf(float, :class:`ExprRef`)
-
+        X-coordinate of the axis title relative to the axis group.
     titleY : anyOf(float, :class:`ExprRef`)
-
+        Y-coordinate of the axis title relative to the axis group.
     translate : anyOf(float, :class:`ExprRef`)
+        Coordinate space translation offset for axis layout. By default, axes are translated
+        by a 0.5 pixel offset for both the x and y coordinates in order to align stroked
+        lines with the pixel grid. However, for vector graphics output these pixel-specific
+        adjustments may be undesirable, in which case translate can be changed (for example,
+        to zero).
 
+        **Default value:** ``0.5``
     values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
@@ -894,15 +1075,29 @@ class AxisConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the axis from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     bandPosition : anyOf(float, :class:`ExprRef`)
+        An interpolation fraction indicating where, for ``band`` scales, axis ticks should
+        be positioned. A value of ``0`` places ticks at the left edge of their bands. A
+        value of ``0.5`` places ticks in the middle of their bands.
 
+        **Default value:** ``0.5``
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of this axis for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
+        will be set to this description. If the description is unspecified it will be
+        automatically generated.
     disable : boolean
         Disable axis by default.
     domain : boolean
@@ -911,17 +1106,24 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value:** ``true``
     domainCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for the domain line's ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     domainColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        Color of axis domain line.
 
+        **Default value:** ``"gray"``.
     domainDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The pixel offset at which to start drawing with the domain dash array.
     domainOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the axis domain line.
     domainWidth : anyOf(float, :class:`ExprRef`)
+        Stroke width of axis domain line
 
+        **Default value:** ``1``
     format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
@@ -963,27 +1165,49 @@ class AxisConfig(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
     gridCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for grid lines' ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
+        Color of gridlines.
 
+        **Default value:** ``"lightGray"``.
     gridDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
-
+        An array of alternating [stroke, space] lengths for dashed grid lines.
     gridDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The pixel offset at which to start drawing with the grid dash array.
     gridOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The stroke opacity of grid (value between [0,1])
 
+        **Default value:** ``1``
     gridWidth : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The grid width, in pixels.
 
+        **Default value:** ``1``
     labelAlign : anyOf(:class:`Align`, :class:`ExprRef`, :class:`ConditionalAxisLabelAlign`)
-
+        Horizontal text alignment of axis tick labels, overriding the default setting for
+        the current axis orientation.
     labelAngle : anyOf(float, :class:`ExprRef`)
+        The rotation angle of the axis labels.
 
+        **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
     labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`, :class:`ConditionalAxisLabelBaseline`)
-
+        Vertical text baseline of axis tick labels, overriding the default setting for the
+        current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
+        ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
+        and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
+        are calculated relative to the *lineHeight* rather than *fontSize* alone.
     labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
+        Indicates if labels should be hidden if they exceed the axis range. If ``false``
+        (the default) no bounds overlap analysis is performed. If ``true``, labels will be
+        hidden if they exceed the axis range by more than 1 pixel. If this property is a
+        number, it specifies the pixel tolerance: the maximum amount by which a label
+        bounding box may exceed the axis range.
 
+        **Default value:** ``false``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
-
+        The color of the tick label, can be in hex color code or regular color name.
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
@@ -1002,23 +1226,33 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value:** ``true`` for axis of a continuous x-scale. Otherwise, ``false``.
     labelFlushOffset : anyOf(float, :class:`ExprRef`)
+        Indicates the number of pixels by which to offset flush-adjusted labels. For
+        example, a value of ``2`` will push flush-adjusted labels 2 pixels outward from the
+        center of the axis. Offsets can help the labels better visually group with
+        corresponding axis ticks.
 
+        **Default value:** ``0``.
     labelFont : anyOf(string, :class:`ExprRef`, :class:`ConditionalAxisString`)
-
+        The font of the tick label.
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The font size of the label, in pixels.
     labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`)
-
+        Font style of the title.
     labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`)
-
+        Font weight of axis tick labels.
     labelLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of axis tick labels.
 
+        **Default value:** ``180``
     labelLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line label text or label text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     labelOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        Position offset in pixels to apply to labels, in addition to tickOffset.
 
+        **Default value:** ``0``
     labelOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The opacity of the labels.
     labelOverlap : anyOf(:class:`LabelOverlap`, :class:`ExprRef`)
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
         default), no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
@@ -1030,17 +1264,27 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** ``true`` for non-nominal fields with non-log scales; ``"greedy"``
         for log scales; otherwise ``false``.
     labelPadding : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The padding in pixels between labels and ticks.
 
+        **Default value:** ``2``
     labelSeparation : anyOf(float, :class:`ExprRef`)
-
+        The minimum separation that must be between label bounding boxes for them to be
+        considered non-overlapping (default ``0`` ). This property is ignored if
+        *labelOverlap* resolution is not enabled.
     labels : boolean
         A boolean flag indicating if labels should be included as part of the axis.
 
         **Default value:** ``true``.
     maxExtent : anyOf(float, :class:`ExprRef`)
+        The maximum extent in pixels that axis ticks and labels should use. This determines
+        a maximum offset value for axis titles.
 
+        **Default value:** ``undefined``.
     minExtent : anyOf(float, :class:`ExprRef`)
+        The minimum extent in pixels that axis ticks and labels should use. This determines
+        a minimum offset value for axis titles.
 
+        **Default value:** ``30`` for y-axis; ``undefined`` for x-axis.
     offset : anyOf(float, :class:`ExprRef`)
         The offset, in pixels, by which to displace the axis from the edge of the enclosing
         group or data rectangle.
@@ -1070,11 +1314,17 @@ class AxisConfig(VegaLiteSchema):
         style. For example, an x-axis mark with ``"style": "foo"`` will use ``config.axisX``
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand : anyOf(enum('center', 'extent'), :class:`ExprRef`)
-
+        For band scales, indicates if ticks and grid lines should be placed at the
+        ``"center"`` of a band (default) or at the band ``"extent"`` s to indicate intervals
     tickCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
+        The color of the axis's tick.
 
+        **Default value:** ``"gray"``
     tickCount : anyOf(float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
@@ -1090,9 +1340,9 @@ class AxisConfig(VegaLiteSchema):
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
     tickDash : anyOf(List(float), :class:`ExprRef`, :class:`ConditionalAxisNumberArray`)
-
+        An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
@@ -1104,18 +1354,22 @@ class AxisConfig(VegaLiteSchema):
         If ``tickMinStep`` is specified, the ``tickCount`` value will be adjusted, if
         necessary, to enforce the minimum step value.
     tickOffset : anyOf(float, :class:`ExprRef`)
-
+        Position offset in pixels to apply to ticks, labels, and gridlines.
     tickOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
-
+        Opacity of the ticks.
     tickRound : boolean
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
         **Default value:** ``true``
     tickSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The size in pixels of axis ticks.
 
+        **Default value:** ``5``
     tickWidth : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
+        The width, in pixels, of ticks.
 
+        **Default value:** ``1``
     ticks : boolean
         Boolean value that determines whether the axis should include ticks.
 
@@ -1141,37 +1395,50 @@ class AxisConfig(VegaLiteSchema):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     titleAlign : anyOf(:class:`Align`, :class:`ExprRef`)
-
+        Horizontal text alignment of axis titles.
     titleAnchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        Text anchor position for placing axis titles.
     titleAngle : anyOf(float, :class:`ExprRef`)
-
+        Angle in degrees of axis titles.
     titleBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
-
+        Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
+        ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
+        ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
+        ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
+        alone.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Color of the title, can be in hex color code or regular color name.
     titleFont : anyOf(string, :class:`ExprRef`)
-
+        Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size of the title.
     titleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style of the title.
     titleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight of the title. This can be either a string (e.g ``"bold"``, ``"normal"``
+        ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400``
+        and ``"bold"`` = ``700`` ).
     titleLimit : anyOf(float, :class:`ExprRef`)
-
+        Maximum allowed pixel width of axis titles.
     titleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     titleOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the axis title.
     titlePadding : anyOf(float, :class:`ExprRef`)
-
+        The padding, in pixels, between title and axis.
     titleX : anyOf(float, :class:`ExprRef`)
-
+        X-coordinate of the axis title relative to the axis group.
     titleY : anyOf(float, :class:`ExprRef`)
-
+        Y-coordinate of the axis title relative to the axis group.
     translate : anyOf(float, :class:`ExprRef`)
+        Coordinate space translation offset for axis layout. By default, axes are translated
+        by a 0.5 pixel offset for both the x and y coordinates in order to align stroked
+        lines with the pixel grid. However, for vector graphics output these pixel-specific
+        adjustments may be undesirable, in which case translate can be changed (for example,
+        to zero).
 
+        **Default value:** ``0.5``
     values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
@@ -1258,7 +1525,7 @@ class AxisResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     x : :class:`ResolveMode`
@@ -1277,7 +1544,7 @@ class BarConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -1286,15 +1553,25 @@ class BarConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -1312,7 +1589,11 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``1``
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -1331,43 +1612,68 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``5``
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusEnd : anyOf(float, :class:`ExprRef`)
         For vertical bars, top-left and top-right corner radius.
 
         For horizontal bars, top-right and bottom-right corner radius.
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     discreteBandSize : anyOf(float, :class:`RelativeBandSize`)
         The default size of the bars with discrete dimensions. If unspecified, the default
         size is  ``step-2``, which provides 2 pixel offset between bars.
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -1379,24 +1685,48 @@ class BarConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -1407,11 +1737,16 @@ class BarConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -1437,7 +1772,7 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     radius : anyOf(float, :class:`ExprRef`)
         For arc mark, the primary (outer) radius in pixels.
 
@@ -1450,7 +1785,20 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -1469,34 +1817,48 @@ class BarConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -1530,9 +1892,9 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -1615,18 +1977,25 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : :class:`Align`
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
         ``"right"``.
     anchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        The anchor position for placing the title and subtitle text. One of ``"start"``,
+        ``"middle"``, or ``"end"``. For example, with an orientation of top these anchor
+        positions map to a left-, center-, or right-aligned title.
     angle : anyOf(float, :class:`ExprRef`)
-
+        Angle in degrees of title and subtitle text.
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the title from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     baseline : :class:`TextBaseline`
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
@@ -1634,45 +2003,56 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
     color : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for title text.
     dx : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text y-coordinate.
     font : anyOf(string, :class:`ExprRef`)
-
+        Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for title text.
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for title text.
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for title text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
-
+        The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
+        to the full bounding box) or ``"group"`` (to anchor relative to the group width or
+        height).
     limit : anyOf(float, :class:`ExprRef`)
-
+        The maximum allowed length in pixels of title and subtitle text.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     offset : anyOf(float, :class:`ExprRef`)
-
+        The orthogonal offset in pixels by which to displace the title group from its
+        position along the edge of the chart.
     orient : anyOf(:class:`TitleOrient`, :class:`ExprRef`)
-
+        Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for subtitle text.
     subtitleFont : anyOf(string, :class:`ExprRef`)
-
+        Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for subtitle text.
     subtitleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for subtitle text.
     subtitleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     subtitleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line subtitle text.
     subtitlePadding : anyOf(float, :class:`ExprRef`)
-
+        The padding in pixels between title and subtitle text.
     zindex : anyOf(float, :class:`ExprRef`)
+        The integer z-index indicating the layering of the title group relative to other
+        axis, mark, and legend groups.
 
+        **Default value:** ``0``.
     """
     _schema = {'$ref': '#/definitions/BaseTitleNoValueRefs'}
 
@@ -1715,7 +2095,7 @@ class BinParams(VegaLiteSchema):
     Mapping(required=[])
     Binning properties or boolean flag for determining whether to bin data or not.
 
-    Attributes
+    Parameters
     ----------
 
     anchor : float
@@ -1785,7 +2165,7 @@ class BindCheckbox(Binding):
 
     Mapping(required=[input])
 
-    Attributes
+    Parameters
     ----------
 
     input : string
@@ -1813,7 +2193,7 @@ class BindDirect(Binding):
 
     Mapping(required=[element])
 
-    Attributes
+    Parameters
     ----------
 
     element : anyOf(:class:`Element`, Mapping(required=[]))
@@ -1841,7 +2221,7 @@ class BindInput(Binding):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     autocomplete : string
@@ -1878,7 +2258,7 @@ class BindRadioSelect(Binding):
 
     Mapping(required=[input, options])
 
-    Attributes
+    Parameters
     ----------
 
     input : enum('radio', 'select')
@@ -1912,7 +2292,7 @@ class BindRange(Binding):
 
     Mapping(required=[input])
 
-    Attributes
+    Parameters
     ----------
 
     input : string
@@ -1963,7 +2343,7 @@ class BoxPlotConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     box : anyOf(boolean, :class:`MarkConfig`)
@@ -2004,7 +2384,7 @@ class BrushConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     cursor : :class:`Cursor`
@@ -2162,7 +2542,7 @@ class BoxPlotDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`BoxPlot`
@@ -2233,7 +2613,7 @@ class CompositionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     columns : float
@@ -2603,7 +2983,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
     Mapping(required=[param])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -2810,7 +3190,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
     Mapping(required=[test])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3026,7 +3406,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3052,7 +3432,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3086,7 +3466,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3111,7 +3491,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3144,7 +3524,7 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3169,7 +3549,7 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3202,7 +3582,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3227,7 +3607,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3261,7 +3641,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3286,7 +3666,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3319,7 +3699,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3344,7 +3724,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3377,7 +3757,7 @@ class ConditionalParameterValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3402,7 +3782,7 @@ class ConditionalPredicateValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3424,7 +3804,7 @@ class Config(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     arc : :class:`RectConfig`
@@ -3746,7 +4126,7 @@ class CsvDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     parse : anyOf(:class:`Parse`, None)
@@ -3890,7 +4270,7 @@ class DomainUnionWith(VegaLiteSchema):
 
     Mapping(required=[unionWith])
 
-    Attributes
+    Parameters
     ----------
 
     unionWith : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
@@ -3908,7 +4288,7 @@ class DsvDataFormat(DataFormat):
 
     Mapping(required=[delimiter])
 
-    Attributes
+    Parameters
     ----------
 
     delimiter : string
@@ -3959,7 +4339,7 @@ class Encoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`NumericMarkPropDef`
@@ -4191,7 +4571,7 @@ class ErrorBandConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     band : anyOf(boolean, :class:`MarkConfig`)
@@ -4249,7 +4629,7 @@ class ErrorBandDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`ErrorBand`
@@ -4345,7 +4725,7 @@ class ErrorBarConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     extent : :class:`ErrorBarExtent`
@@ -4382,7 +4762,7 @@ class ErrorBarDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`ErrorBar`
@@ -4468,7 +4848,7 @@ class ExprRef(VegaLiteSchema):
 
     Mapping(required=[expr])
 
-    Attributes
+    Parameters
     ----------
 
     expr : string
@@ -4485,7 +4865,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -4745,7 +5125,7 @@ class FacetFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -4939,7 +5319,7 @@ class FacetMapping(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : :class:`FacetFieldDef`
@@ -4958,7 +5338,7 @@ class FacetedEncoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`NumericMarkPropDef`
@@ -5203,7 +5583,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
     Mapping(required=[])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5377,10 +5757,8 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
     """FieldOrDatumDefWithConditionStringFieldDefstring schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5593,7 +5971,7 @@ class FieldRange(VegaLiteSchema):
 
     Mapping(required=[field])
 
-    Attributes
+    Parameters
     ----------
 
     field : string
@@ -5656,7 +6034,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     Mapping(required=[mark])
     Base interface for a unit (single-view) specification.
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -5735,7 +6113,7 @@ class GradientStop(VegaLiteSchema):
 
     Mapping(required=[offset, color])
 
-    Attributes
+    Parameters
     ----------
 
     color : :class:`Color`
@@ -5754,7 +6132,7 @@ class GraticuleGenerator(Generator):
 
     Mapping(required=[graticule])
 
-    Attributes
+    Parameters
     ----------
 
     graticule : anyOf(boolean, :class:`GraticuleParams`)
@@ -5773,7 +6151,7 @@ class GraticuleParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     extent : :class:`Vector2Vector2number`
@@ -5812,7 +6190,7 @@ class Header(VegaLiteSchema):
     Mapping(required=[])
     Headers of row / column channels for faceted plots.
 
-    Attributes
+    Parameters
     ----------
 
     format : anyOf(string, :class:`Dict`)
@@ -6004,7 +6382,7 @@ class HeaderConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     format : anyOf(string, :class:`Dict`)
@@ -6200,7 +6578,7 @@ class ImputeParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     frame : List(anyOf(None, float))
@@ -6244,7 +6622,7 @@ class ImputeSequence(VegaLiteSchema):
 
     Mapping(required=[stop])
 
-    Attributes
+    Parameters
     ----------
 
     stop : float
@@ -6266,7 +6644,7 @@ class InlineData(DataSource):
 
     Mapping(required=[values])
 
-    Attributes
+    Parameters
     ----------
 
     values : :class:`InlineDataset`
@@ -6314,7 +6692,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : string
@@ -6418,7 +6796,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clear : anyOf(:class:`Stream`, string, boolean)
@@ -6514,7 +6892,7 @@ class JoinAggregateFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : :class:`AggregateOp`
@@ -6538,7 +6916,7 @@ class JsonDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     parse : anyOf(:class:`Parse`, None)
@@ -6601,7 +6979,7 @@ class LatLongFieldDef(LatLongDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -6765,7 +7143,7 @@ class LayerRepeatMapping(VegaLiteSchema):
 
     Mapping(required=[layer])
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(string)
@@ -6798,21 +7176,34 @@ class Legend(VegaLiteSchema):
     Mapping(required=[])
     Properties of a legend or boolean flag for determining whether to show it.
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the legend from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     clipHeight : anyOf(float, :class:`ExprRef`)
-
+        The height in pixels to clip symbol legend entries and limit their size.
     columnPadding : anyOf(float, :class:`ExprRef`)
+        The horizontal padding in pixels between symbol legend entries.
 
+        **Default value:** ``10``.
     columns : anyOf(float, :class:`ExprRef`)
-
+        The number of columns in which to arrange symbol legend entries. A value of ``0`` or
+        lower indicates a single row with one column per entry.
     cornerRadius : anyOf(float, :class:`ExprRef`)
-
+        Corner radius for the full legend.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of this legend for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
+        will be set to this description. If the description is unspecified it will be
+        automatically generated.
     direction : :class:`Orientation`
         The direction of the legend, one of ``"vertical"`` or ``"horizontal"``.
 
@@ -6824,7 +7215,7 @@ class Legend(VegaLiteSchema):
         * For top/bottom-left/right- ``orient`` ed legends, ``"horizontal"`` for gradient
           legends and ``"vertical"`` for symbol legends.
     fillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Background fill color for the full legend.
     format : anyOf(string, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
@@ -6860,23 +7251,40 @@ class Legend(VegaLiteSchema):
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     gradientLength : anyOf(float, :class:`ExprRef`)
+        The length in pixels of the primary axis of a color gradient. This value corresponds
+        to the height of a vertical gradient or the width of a horizontal gradient.
 
+        **Default value:** ``200``.
     gradientOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the color gradient.
     gradientStrokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        The color of the gradient stroke, can be in hex color code or regular color name.
 
+        **Default value:** ``"lightGray"``.
     gradientStrokeWidth : anyOf(float, :class:`ExprRef`)
+        The width of the gradient stroke, in pixels.
 
+        **Default value:** ``0``.
     gradientThickness : anyOf(float, :class:`ExprRef`)
+        The thickness in pixels of the color gradient. This value corresponds to the width
+        of a vertical gradient or the height of a horizontal gradient.
 
+        **Default value:** ``16``.
     gridAlign : anyOf(:class:`LayoutAlign`, :class:`ExprRef`)
+        The alignment to apply to symbol legends rows and columns. The supported string
+        values are ``"all"``, ``"each"`` (the default), and ``none``. For more information,
+        see the `grid layout documentation <https://vega.github.io/vega/docs/layout>`__.
 
+        **Default value:** ``"each"``.
     labelAlign : anyOf(:class:`Align`, :class:`ExprRef`)
-
+        The alignment of the legend label, can be left, center, or right.
     labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
+        The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
+        ``"bottom"``, or ``"alphabetic"``.
 
+        **Default value:** ``"middle"``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend label, can be in hex color code or regular color name.
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
@@ -6884,31 +7292,48 @@ class Legend(VegaLiteSchema):
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the legend's backing ``datum`` object.
     labelFont : anyOf(string, :class:`ExprRef`)
-
+        The font of the legend label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
+        The font size of legend label.
 
+        **Default value:** ``10``.
     labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style of legend label.
     labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight of legend label.
     labelLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of legend tick labels.
 
+        **Default value:** ``160``.
     labelOffset : anyOf(float, :class:`ExprRef`)
+        The offset of the legend label.
 
+        **Default value:** ``4``.
     labelOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of labels.
     labelOverlap : anyOf(:class:`LabelOverlap`, :class:`ExprRef`)
+        The strategy to use for resolving overlap of labels in gradient legends. If
+        ``false``, no overlap reduction is attempted. If set to ``true`` (default) or
+        ``"parity"``, a strategy of removing every other label is used. If set to
+        ``"greedy"``, a linear scan of the labels is performed, removing any label that
+        overlaps with the last visible label (this often works better for log-scaled axes).
 
+        **Default value:** ``true``.
     labelPadding : anyOf(float, :class:`ExprRef`)
-
+        Padding in pixels between the legend and legend labels.
     labelSeparation : anyOf(float, :class:`ExprRef`)
-
+        The minimum separation that must be between label bounding boxes for them to be
+        considered non-overlapping (default ``0`` ). This property is ignored if
+        *labelOverlap* resolution is not enabled.
     legendX : anyOf(float, :class:`ExprRef`)
-
+        Custom x-position for legend with orient "none".
     legendY : anyOf(float, :class:`ExprRef`)
-
+        Custom y-position for legend with orient "none".
     offset : anyOf(float, :class:`ExprRef`)
+        The offset in pixels by which to displace the legend from the data rectangle and
+        axes.
 
+        **Default value:** ``18``.
     orient : :class:`LegendOrient`
         The orientation of the legend, which determines how the legend is positioned within
         the scene. One of ``"left"``, ``"right"``, ``"top"``, ``"bottom"``, ``"top-left"``,
@@ -6916,33 +7341,53 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``"right"``
     padding : anyOf(float, :class:`ExprRef`)
+        The padding between the border and content of the legend group.
 
+        **Default value:** ``0``.
     rowPadding : anyOf(float, :class:`ExprRef`)
+        The vertical padding in pixels between symbol legend entries.
 
+        **Default value:** ``2``.
     strokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Border stroke color for the full legend.
     symbolDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The pixel offset at which to start drawing with the symbol stroke dash array.
     symbolFillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend symbol,
     symbolLimit : anyOf(float, :class:`ExprRef`)
-
+        The maximum number of allowed entries for a symbol legend. Additional entries will
+        be dropped.
     symbolOffset : anyOf(float, :class:`ExprRef`)
+        Horizontal pixel offset for legend symbols.
 
+        **Default value:** ``0``.
     symbolOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the legend symbols.
     symbolSize : anyOf(float, :class:`ExprRef`)
+        The size of the legend symbol, in pixels.
 
+        **Default value:** ``100``.
     symbolStrokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Stroke color for legend symbols.
     symbolStrokeWidth : anyOf(float, :class:`ExprRef`)
+        The width of the symbol's stroke.
 
+        **Default value:** ``1.5``.
     symbolType : anyOf(:class:`SymbolShape`, :class:`ExprRef`)
+        The symbol shape. One of the plotting shapes ``circle`` (default), ``square``,
+        ``cross``, ``diamond``, ``triangle-up``, ``triangle-down``, ``triangle-right``, or
+        ``triangle-left``, the line symbol ``stroke``, or one of the centered directional
+        shapes ``arrow``, ``wedge``, or ``triangle``. Alternatively, a custom `SVG path
+        string <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ can be
+        provided. For correct sizing, custom shape paths should be defined within a square
+        bounding box with coordinates ranging from -1 to 1 along both the x and y
+        dimensions.
 
+        **Default value:** ``"circle"``.
     tickCount : anyOf(:class:`TickCount`, :class:`ExprRef`)
-
+        The desired number of tick values for quantitative legends.
     tickMinStep : anyOf(float, :class:`ExprRef`)
         The minimum desired step between legend ticks, in terms of scale domain values. For
         example, a value of ``1`` indicates that ticks should not be less than 1 unit apart.
@@ -6971,31 +7416,46 @@ class Legend(VegaLiteSchema):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     titleAlign : anyOf(:class:`Align`, :class:`ExprRef`)
+        Horizontal text alignment for legend titles.
 
+        **Default value:** ``"left"``.
     titleAnchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        Text anchor position for placing legend titles.
     titleBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
+        Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
+        ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
+        ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
+        ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
+        alone.
 
+        **Default value:** ``"top"``.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend title, can be in hex color code or regular color name.
     titleFont : anyOf(string, :class:`ExprRef`)
-
+        The font of the legend title.
     titleFontSize : anyOf(float, :class:`ExprRef`)
-
+        The font size of the legend title.
     titleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style of the legend title.
     titleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight of the legend title. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     titleLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of legend titles.
 
+        **Default value:** ``180``.
     titleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     titleOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the legend title.
     titleOrient : anyOf(:class:`Orient`, :class:`ExprRef`)
-
+        Orientation of the legend title.
     titlePadding : anyOf(float, :class:`ExprRef`)
+        The padding, in pixels, between title and legend.
 
+        **Default value:** ``5``.
     type : enum('symbol', 'gradient')
         The type of the legend. Use ``"symbol"`` to create a discrete legend and
         ``"gradient"`` for a continuous color gradient.
@@ -7080,21 +7540,34 @@ class LegendConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the legend from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     clipHeight : anyOf(float, :class:`ExprRef`)
-
+        The height in pixels to clip symbol legend entries and limit their size.
     columnPadding : anyOf(float, :class:`ExprRef`)
+        The horizontal padding in pixels between symbol legend entries.
 
+        **Default value:** ``10``.
     columns : anyOf(float, :class:`ExprRef`)
-
+        The number of columns in which to arrange symbol legend entries. A value of ``0`` or
+        lower indicates a single row with one column per entry.
     cornerRadius : anyOf(float, :class:`ExprRef`)
-
+        Corner radius for the full legend.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of this legend for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
+        will be set to this description. If the description is unspecified it will be
+        automatically generated.
     direction : :class:`Orientation`
         The direction of the legend, one of ``"vertical"`` or ``"horizontal"``.
 
@@ -7108,9 +7581,11 @@ class LegendConfig(VegaLiteSchema):
     disable : boolean
         Disable legend by default
     fillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Background fill color for the full legend.
     gradientDirection : anyOf(:class:`Orientation`, :class:`ExprRef`)
+        The default direction ( ``"horizontal"`` or ``"vertical"`` ) for gradient legends.
 
+        **Default value:** ``"vertical"``.
     gradientHorizontalMaxLength : float
         Max legend length for a horizontal gradient when ``config.legend.gradientLength`` is
         undefined.
@@ -7122,19 +7597,31 @@ class LegendConfig(VegaLiteSchema):
 
         **Default value:** ``100``
     gradientLabelLimit : anyOf(float, :class:`ExprRef`)
-
+        The maximum allowed length in pixels of color ramp gradient labels.
     gradientLabelOffset : anyOf(float, :class:`ExprRef`)
+        Vertical offset in pixels for color ramp gradient labels.
 
+        **Default value:** ``2``.
     gradientLength : anyOf(float, :class:`ExprRef`)
+        The length in pixels of the primary axis of a color gradient. This value corresponds
+        to the height of a vertical gradient or the width of a horizontal gradient.
 
+        **Default value:** ``200``.
     gradientOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the color gradient.
     gradientStrokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        The color of the gradient stroke, can be in hex color code or regular color name.
 
+        **Default value:** ``"lightGray"``.
     gradientStrokeWidth : anyOf(float, :class:`ExprRef`)
+        The width of the gradient stroke, in pixels.
 
+        **Default value:** ``0``.
     gradientThickness : anyOf(float, :class:`ExprRef`)
+        The thickness in pixels of the color gradient. This value corresponds to the width
+        of a vertical gradient or the height of a horizontal gradient.
 
+        **Default value:** ``16``.
     gradientVerticalMaxLength : float
         Max legend length for a vertical gradient when ``config.legend.gradientLength`` is
         undefined.
@@ -7146,27 +7633,40 @@ class LegendConfig(VegaLiteSchema):
 
         **Default value:** ``100``
     gridAlign : anyOf(:class:`LayoutAlign`, :class:`ExprRef`)
+        The alignment to apply to symbol legends rows and columns. The supported string
+        values are ``"all"``, ``"each"`` (the default), and ``none``. For more information,
+        see the `grid layout documentation <https://vega.github.io/vega/docs/layout>`__.
 
+        **Default value:** ``"each"``.
     labelAlign : anyOf(:class:`Align`, :class:`ExprRef`)
-
+        The alignment of the legend label, can be left, center, or right.
     labelBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
+        The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
+        ``"bottom"``, or ``"alphabetic"``.
 
+        **Default value:** ``"middle"``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend label, can be in hex color code or regular color name.
     labelFont : anyOf(string, :class:`ExprRef`)
-
+        The font of the legend label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
+        The font size of legend label.
 
+        **Default value:** ``10``.
     labelFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style of legend label.
     labelFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight of legend label.
     labelLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of legend tick labels.
 
+        **Default value:** ``160``.
     labelOffset : anyOf(float, :class:`ExprRef`)
+        The offset of the legend label.
 
+        **Default value:** ``4``.
     labelOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of labels.
     labelOverlap : anyOf(:class:`LabelOverlap`, :class:`ExprRef`)
         The strategy to use for resolving overlap of labels in gradient legends. If
         ``false``, no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
@@ -7176,17 +7676,22 @@ class LegendConfig(VegaLiteSchema):
 
         **Default value:** ``"greedy"`` for ``log scales otherwise`` true`.
     labelPadding : anyOf(float, :class:`ExprRef`)
-
+        Padding in pixels between the legend and legend labels.
     labelSeparation : anyOf(float, :class:`ExprRef`)
-
+        The minimum separation that must be between label bounding boxes for them to be
+        considered non-overlapping (default ``0`` ). This property is ignored if
+        *labelOverlap* resolution is not enabled.
     layout : :class:`ExprRef`
 
     legendX : anyOf(float, :class:`ExprRef`)
-
+        Custom x-position for legend with orient "none".
     legendY : anyOf(float, :class:`ExprRef`)
-
+        Custom y-position for legend with orient "none".
     offset : anyOf(float, :class:`ExprRef`)
+        The offset in pixels by which to displace the legend from the data rectangle and
+        axes.
 
+        **Default value:** ``18``.
     orient : :class:`LegendOrient`
         The orientation of the legend, which determines how the legend is positioned within
         the scene. One of ``"left"``, ``"right"``, ``"top"``, ``"bottom"``, ``"top-left"``,
@@ -7194,77 +7699,121 @@ class LegendConfig(VegaLiteSchema):
 
         **Default value:** ``"right"``
     padding : anyOf(float, :class:`ExprRef`)
+        The padding between the border and content of the legend group.
 
+        **Default value:** ``0``.
     rowPadding : anyOf(float, :class:`ExprRef`)
+        The vertical padding in pixels between symbol legend entries.
 
+        **Default value:** ``2``.
     strokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Border stroke color for the full legend.
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        Border stroke dash pattern for the full legend.
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        Border stroke width for the full legend.
     symbolBaseFillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        Default fill color for legend symbols. Only applied if there is no ``"fill"`` scale
+        color encoding for the legend.
 
+        **Default value:** ``"transparent"``.
     symbolBaseStrokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
+        Default stroke color for legend symbols. Only applied if there is no ``"fill"``
+        scale color encoding for the legend.
 
+        **Default value:** ``"gray"``.
     symbolDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The pixel offset at which to start drawing with the symbol stroke dash array.
     symbolDirection : anyOf(:class:`Orientation`, :class:`ExprRef`)
+        The default direction ( ``"horizontal"`` or ``"vertical"`` ) for symbol legends.
 
+        **Default value:** ``"vertical"``.
     symbolFillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend symbol,
     symbolLimit : anyOf(float, :class:`ExprRef`)
-
+        The maximum number of allowed entries for a symbol legend. Additional entries will
+        be dropped.
     symbolOffset : anyOf(float, :class:`ExprRef`)
+        Horizontal pixel offset for legend symbols.
 
+        **Default value:** ``0``.
     symbolOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the legend symbols.
     symbolSize : anyOf(float, :class:`ExprRef`)
+        The size of the legend symbol, in pixels.
 
+        **Default value:** ``100``.
     symbolStrokeColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Stroke color for legend symbols.
     symbolStrokeWidth : anyOf(float, :class:`ExprRef`)
+        The width of the symbol's stroke.
 
+        **Default value:** ``1.5``.
     symbolType : anyOf(:class:`SymbolShape`, :class:`ExprRef`)
+        The symbol shape. One of the plotting shapes ``circle`` (default), ``square``,
+        ``cross``, ``diamond``, ``triangle-up``, ``triangle-down``, ``triangle-right``, or
+        ``triangle-left``, the line symbol ``stroke``, or one of the centered directional
+        shapes ``arrow``, ``wedge``, or ``triangle``. Alternatively, a custom `SVG path
+        string <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ can be
+        provided. For correct sizing, custom shape paths should be defined within a square
+        bounding box with coordinates ranging from -1 to 1 along both the x and y
+        dimensions.
 
+        **Default value:** ``"circle"``.
     tickCount : anyOf(:class:`TickCount`, :class:`ExprRef`)
-
+        The desired number of tick values for quantitative legends.
     title : None
         Set to null to disable title for the axis, legend, or header.
     titleAlign : anyOf(:class:`Align`, :class:`ExprRef`)
+        Horizontal text alignment for legend titles.
 
+        **Default value:** ``"left"``.
     titleAnchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        Text anchor position for placing legend titles.
     titleBaseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
+        Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
+        ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
+        ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
+        ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
+        alone.
 
+        **Default value:** ``"top"``.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        The color of the legend title, can be in hex color code or regular color name.
     titleFont : anyOf(string, :class:`ExprRef`)
-
+        The font of the legend title.
     titleFontSize : anyOf(float, :class:`ExprRef`)
-
+        The font size of the legend title.
     titleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style of the legend title.
     titleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight of the legend title. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     titleLimit : anyOf(float, :class:`ExprRef`)
+        Maximum allowed pixel width of legend titles.
 
+        **Default value:** ``180``.
     titleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     titleOpacity : anyOf(float, :class:`ExprRef`)
-
+        Opacity of the legend title.
     titleOrient : anyOf(:class:`Orient`, :class:`ExprRef`)
-
+        Orientation of the legend title.
     titlePadding : anyOf(float, :class:`ExprRef`)
+        The padding, in pixels, between title and legend.
 
+        **Default value:** ``5``.
     unselectedOpacity : float
         The opacity of unselected legend entries.
 
         **Default value:** 0.35.
     zindex : anyOf(float, :class:`ExprRef`)
-
+        The integer z-index indicating the layering of the legend group relative to other
+        axis, mark, and legend groups.
     """
     _schema = {'$ref': '#/definitions/LegendConfig'}
 
@@ -7356,7 +7905,7 @@ class LegendResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`ResolveMode`
@@ -7399,7 +7948,7 @@ class LegendStreamBinding(LegendBinding):
 
     Mapping(required=[legend])
 
-    Attributes
+    Parameters
     ----------
 
     legend : anyOf(string, :class:`Stream`)
@@ -7416,7 +7965,7 @@ class LineConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -7425,15 +7974,25 @@ class LineConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -7446,7 +8005,11 @@ class LineConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -7461,36 +8024,61 @@ class LineConfig(AnyMarkConfig):
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -7502,24 +8090,48 @@ class LineConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -7530,11 +8142,16 @@ class LineConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -7560,7 +8177,7 @@ class LineConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
@@ -7588,7 +8205,20 @@ class LineConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -7607,34 +8237,48 @@ class LineConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -7668,9 +8312,9 @@ class LineConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -7748,7 +8392,7 @@ class LinearGradient(Gradient):
 
     Mapping(required=[gradient, stops])
 
-    Attributes
+    Parameters
     ----------
 
     gradient : string
@@ -7787,7 +8431,7 @@ class Locale(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     number : :class:`NumberLocale`
@@ -7806,7 +8450,7 @@ class LookupData(VegaLiteSchema):
 
     Mapping(required=[data, key])
 
-    Attributes
+    Parameters
     ----------
 
     data : :class:`Data`
@@ -7828,7 +8472,7 @@ class LookupSelection(VegaLiteSchema):
 
     Mapping(required=[key, param])
 
-    Attributes
+    Parameters
     ----------
 
     key : :class:`FieldName`
@@ -7863,7 +8507,7 @@ class MarkConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -7872,15 +8516,25 @@ class MarkConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -7893,7 +8547,11 @@ class MarkConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -7908,36 +8566,61 @@ class MarkConfig(AnyMarkConfig):
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -7949,24 +8632,48 @@ class MarkConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -7977,11 +8684,16 @@ class MarkConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -8007,7 +8719,7 @@ class MarkConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     radius : anyOf(float, :class:`ExprRef`)
         For arc mark, the primary (outer) radius in pixels.
 
@@ -8020,7 +8732,20 @@ class MarkConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -8039,34 +8764,48 @@ class MarkConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -8100,9 +8839,9 @@ class MarkConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -8180,7 +8919,7 @@ class MarkDef(AnyMark):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`Mark`
@@ -8194,15 +8933,25 @@ class MarkDef(AnyMark):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
 
@@ -8225,7 +8974,11 @@ class MarkDef(AnyMark):
 
         **Default value:** ``1``
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
@@ -8246,41 +8999,65 @@ class MarkDef(AnyMark):
 
         **Default value:** ``5``
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusEnd : anyOf(float, :class:`ExprRef`)
         For vertical bars, top-left and top-right corner radius.
 
         For horizontal bars, top-right and bottom-right corner radius.
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     discreteBandSize : anyOf(float, :class:`RelativeBandSize`)
         The default size of the bars with discrete dimensions. If unspecified, the default
         size is  ``step-2``, which provides 2 pixel offset between bars.
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -8292,13 +9069,17 @@ class MarkDef(AnyMark):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`, :class:`RelativeBandSize`)
         Height of the marks.  One of:
 
@@ -8308,14 +9089,34 @@ class MarkDef(AnyMark):
         A relative band size definition.  For example, ``{band: 0.5}`` represents half of
         the band
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -8326,7 +9127,10 @@ class MarkDef(AnyMark):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     line : anyOf(boolean, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
@@ -8339,9 +9143,11 @@ class MarkDef(AnyMark):
 
         **Default value:** ``false``.
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -8367,7 +9173,7 @@ class MarkDef(AnyMark):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     point : anyOf(boolean, :class:`OverlayMarkDef`, string)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
@@ -8399,7 +9205,20 @@ class MarkDef(AnyMark):
     radiusOffset : anyOf(float, :class:`ExprRef`)
         Offset for radius.
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -8418,28 +9237,40 @@ class MarkDef(AnyMark):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
@@ -8455,9 +9286,10 @@ class MarkDef(AnyMark):
         ``config.style.bar`` and ``config.style.foo`` (the specified style ``"foo"`` has
         higher precedence).
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -8499,7 +9331,7 @@ class MarkDef(AnyMark):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`, :class:`RelativeBandSize`)
         Width of the marks.  One of:
 
@@ -8616,10 +9448,8 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
     """FieldOrDatumDefWithConditionDatumDefGradientstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -8740,10 +9570,8 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
     """FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -9047,7 +9875,7 @@ class NamedData(DataSource):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : string
@@ -9094,7 +9922,7 @@ class NumberLocale(VegaLiteSchema):
     Mapping(required=[decimal, thousands, grouping, currency])
     Locale definition for formatting numbers.
 
-    Attributes
+    Parameters
     ----------
 
     currency : :class:`Vector2string`
@@ -9140,10 +9968,8 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
     """FieldOrDatumDefWithConditionDatumDefnumberArray schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -9263,10 +10089,8 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -9519,10 +10343,8 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
     """FieldOrDatumDefWithConditionDatumDefnumber schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -9642,10 +10464,8 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumber schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -9896,7 +10716,7 @@ class OrderFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -10062,7 +10882,7 @@ class OrderValueDef(VegaLiteSchema):
 
     Mapping(required=[value])
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, :class:`ExprRef`)
@@ -10110,7 +10930,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -10119,15 +10939,25 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -10140,7 +10970,11 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Note:** Expression reference is *not* supported for range marks.
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
@@ -10157,36 +10991,61 @@ class OverlayMarkDef(VegaLiteSchema):
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -10198,24 +11057,48 @@ class OverlayMarkDef(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -10226,11 +11109,16 @@ class OverlayMarkDef(VegaLiteSchema):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -10256,7 +11144,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     radius : anyOf(float, :class:`ExprRef`)
         For arc mark, the primary (outer) radius in pixels.
 
@@ -10273,7 +11161,20 @@ class OverlayMarkDef(VegaLiteSchema):
     radiusOffset : anyOf(float, :class:`ExprRef`)
         Offset for radius.
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -10292,30 +11193,43 @@ class OverlayMarkDef(VegaLiteSchema):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
@@ -10331,9 +11245,10 @@ class OverlayMarkDef(VegaLiteSchema):
         ``config.style.bar`` and ``config.style.foo`` (the specified style ``"foo"`` has
         higher precedence).
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -10371,9 +11286,9 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -10522,7 +11437,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : string
@@ -10633,7 +11548,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clear : anyOf(:class:`Stream`, string, boolean)
@@ -10759,7 +11674,7 @@ class DatumDef(LatLongDef, Position2Def):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -10870,7 +11785,7 @@ class PositionDatumDefBase(PolarDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -11036,7 +11951,7 @@ class PositionDatumDef(PositionDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     axis : anyOf(:class:`Axis`, None)
@@ -11209,7 +12124,7 @@ class PositionFieldDef(PositionDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -11474,7 +12389,7 @@ class PositionFieldDefBase(PolarDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -11724,7 +12639,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -11755,7 +12670,7 @@ class LogicalAndPredicate(PredicateComposition):
 
     Mapping(required=[and])
 
-    Attributes
+    Parameters
     ----------
 
     and : List(:class:`PredicateComposition`)
@@ -11772,7 +12687,7 @@ class LogicalNotPredicate(PredicateComposition):
 
     Mapping(required=[not])
 
-    Attributes
+    Parameters
     ----------
 
     not : :class:`PredicateComposition`
@@ -11789,7 +12704,7 @@ class LogicalOrPredicate(PredicateComposition):
 
     Mapping(required=[or])
 
-    Attributes
+    Parameters
     ----------
 
     or : List(:class:`PredicateComposition`)
@@ -11820,7 +12735,7 @@ class FieldEqualPredicate(Predicate):
 
     Mapping(required=[equal, field])
 
-    Attributes
+    Parameters
     ----------
 
     equal : anyOf(string, float, boolean, :class:`DateTime`, :class:`ExprRef`)
@@ -11841,7 +12756,7 @@ class FieldGTEPredicate(Predicate):
 
     Mapping(required=[field, gte])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11862,7 +12777,7 @@ class FieldGTPredicate(Predicate):
 
     Mapping(required=[field, gt])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11883,7 +12798,7 @@ class FieldLTEPredicate(Predicate):
 
     Mapping(required=[field, lte])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11904,7 +12819,7 @@ class FieldLTPredicate(Predicate):
 
     Mapping(required=[field, lt])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11925,7 +12840,7 @@ class FieldOneOfPredicate(Predicate):
 
     Mapping(required=[field, oneOf])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11947,7 +12862,7 @@ class FieldRangePredicate(Predicate):
 
     Mapping(required=[field, range])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11969,7 +12884,7 @@ class FieldValidPredicate(Predicate):
 
     Mapping(required=[field, valid])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -11992,7 +12907,7 @@ class ParameterPredicate(Predicate):
 
     Mapping(required=[param])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -12012,56 +12927,100 @@ class Projection(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     center : anyOf(:class:`Vector2number`, :class:`ExprRef`)
+        The projection's center, a two-element array of longitude and latitude in degrees.
 
+        **Default value:** ``[0, 0]``
     clipAngle : anyOf(float, :class:`ExprRef`)
-
+        The projection's clipping circle radius to the specified angle in degrees. If
+        ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
+        rather than small-circle clipping.
     clipExtent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
-
+        The projection's viewport clip extent to the specified bounds in pixels. The extent
+        bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
+        left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
+        bottom. If ``null``, no viewport clipping is performed.
     coefficient : anyOf(float, :class:`ExprRef`)
+        The coefficient parameter for the ``hammer`` projection.
 
+        **Default value:** ``2``
     distance : anyOf(float, :class:`ExprRef`)
+        For the ``satellite`` projection, the distance from the center of the sphere to the
+        point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+        angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
+        is also applied, then more conservative clipping may be necessary.
 
+        **Default value:** ``2.0``
     extent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
 
     fit : anyOf(List(:class:`GeoJsonFeature`), List(:class:`Fit`), :class:`ExprRef`)
 
     fraction : anyOf(float, :class:`ExprRef`)
+        The fraction parameter for the ``bottomley`` projection.
 
+        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
     lobes : anyOf(float, :class:`ExprRef`)
-
+        The number of lobes in projections that support multi-lobe views: ``berghaus``,
+        ``gingery``, or ``healpix``. The default value varies based on the projection type.
     parallel : anyOf(float, :class:`ExprRef`)
-
+        The parallel parameter for projections that support it: ``armadillo``, ``bonne``,
+        ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
+        ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
+        value varies based on the projection type.
     parallels : anyOf(List(float), :class:`ExprRef`)
-
+        For conic projections, the `two standard parallels
+        <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
+        The default depends on the specific conic projection used.
     pointRadius : anyOf(float, :class:`ExprRef`)
+        The default radius (in pixels) to use when drawing GeoJSON ``Point`` and
+        ``MultiPoint`` geometries. This parameter sets a constant default value. To modify
+        the point radius in response to data, see the corresponding parameter of the GeoPath
+        and GeoShape transforms.
 
+        **Default value:** ``4.5``
     precision : anyOf(float, :class:`ExprRef`)
-
+        The threshold for the projection's `adaptive resampling
+        <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
+        value corresponds to the `Douglas–Peucker distance
+        <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
+        If precision is not specified, returns the projection's current resampling precision
+        which defaults to ``√0.5 ≅ 0.70710…``.
     radius : anyOf(float, :class:`ExprRef`)
-
+        The radius parameter for the ``airy`` or ``gingery`` projection. The default value
+        varies based on the projection type.
     ratio : anyOf(float, :class:`ExprRef`)
-
+        The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
+        default value varies based on the projection type.
     reflectX : anyOf(boolean, :class:`ExprRef`)
-
+        Sets whether or not the x-dimension is reflected (negated) in the output.
     reflectY : anyOf(boolean, :class:`ExprRef`)
-
+        Sets whether or not the y-dimension is reflected (negated) in the output.
     rotate : anyOf(anyOf(:class:`Vector2number`, :class:`Vector3number`), :class:`ExprRef`)
+        The projection's three-axis rotation to the specified angles, which must be a two-
+        or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
+        rotation angles in degrees about each spherical axis. (These correspond to yaw,
+        pitch and roll.)
 
+        **Default value:** ``[0, 0, 0]``
     scale : anyOf(float, :class:`ExprRef`)
         The projection’s scale (zoom) factor, overriding automatic fitting. The default
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
     size : anyOf(:class:`Vector2number`, :class:`ExprRef`)
-
+        Used in conjunction with fit, provides the width and height in pixels of the area to
+        which the projection should be automatically fit.
     spacing : anyOf(float, :class:`ExprRef`)
+        The spacing parameter for the ``lagrange`` projection.
 
+        **Default value:** ``0.5``
     tilt : anyOf(float, :class:`ExprRef`)
+        The tilt angle (in degrees) for the ``satellite`` projection.
 
+        **Default value:** ``0``.
     translate : anyOf(:class:`Vector2number`, :class:`ExprRef`)
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : anyOf(:class:`ProjectionType`, :class:`ExprRef`)
@@ -12096,56 +13055,100 @@ class ProjectionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     center : anyOf(:class:`Vector2number`, :class:`ExprRef`)
+        The projection's center, a two-element array of longitude and latitude in degrees.
 
+        **Default value:** ``[0, 0]``
     clipAngle : anyOf(float, :class:`ExprRef`)
-
+        The projection's clipping circle radius to the specified angle in degrees. If
+        ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
+        rather than small-circle clipping.
     clipExtent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
-
+        The projection's viewport clip extent to the specified bounds in pixels. The extent
+        bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
+        left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
+        bottom. If ``null``, no viewport clipping is performed.
     coefficient : anyOf(float, :class:`ExprRef`)
+        The coefficient parameter for the ``hammer`` projection.
 
+        **Default value:** ``2``
     distance : anyOf(float, :class:`ExprRef`)
+        For the ``satellite`` projection, the distance from the center of the sphere to the
+        point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+        angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
+        is also applied, then more conservative clipping may be necessary.
 
+        **Default value:** ``2.0``
     extent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
 
     fit : anyOf(List(:class:`GeoJsonFeature`), List(:class:`Fit`), :class:`ExprRef`)
 
     fraction : anyOf(float, :class:`ExprRef`)
+        The fraction parameter for the ``bottomley`` projection.
 
+        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
     lobes : anyOf(float, :class:`ExprRef`)
-
+        The number of lobes in projections that support multi-lobe views: ``berghaus``,
+        ``gingery``, or ``healpix``. The default value varies based on the projection type.
     parallel : anyOf(float, :class:`ExprRef`)
-
+        The parallel parameter for projections that support it: ``armadillo``, ``bonne``,
+        ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
+        ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
+        value varies based on the projection type.
     parallels : anyOf(List(float), :class:`ExprRef`)
-
+        For conic projections, the `two standard parallels
+        <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
+        The default depends on the specific conic projection used.
     pointRadius : anyOf(float, :class:`ExprRef`)
+        The default radius (in pixels) to use when drawing GeoJSON ``Point`` and
+        ``MultiPoint`` geometries. This parameter sets a constant default value. To modify
+        the point radius in response to data, see the corresponding parameter of the GeoPath
+        and GeoShape transforms.
 
+        **Default value:** ``4.5``
     precision : anyOf(float, :class:`ExprRef`)
-
+        The threshold for the projection's `adaptive resampling
+        <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
+        value corresponds to the `Douglas–Peucker distance
+        <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
+        If precision is not specified, returns the projection's current resampling precision
+        which defaults to ``√0.5 ≅ 0.70710…``.
     radius : anyOf(float, :class:`ExprRef`)
-
+        The radius parameter for the ``airy`` or ``gingery`` projection. The default value
+        varies based on the projection type.
     ratio : anyOf(float, :class:`ExprRef`)
-
+        The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
+        default value varies based on the projection type.
     reflectX : anyOf(boolean, :class:`ExprRef`)
-
+        Sets whether or not the x-dimension is reflected (negated) in the output.
     reflectY : anyOf(boolean, :class:`ExprRef`)
-
+        Sets whether or not the y-dimension is reflected (negated) in the output.
     rotate : anyOf(anyOf(:class:`Vector2number`, :class:`Vector3number`), :class:`ExprRef`)
+        The projection's three-axis rotation to the specified angles, which must be a two-
+        or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
+        rotation angles in degrees about each spherical axis. (These correspond to yaw,
+        pitch and roll.)
 
+        **Default value:** ``[0, 0, 0]``
     scale : anyOf(float, :class:`ExprRef`)
         The projection’s scale (zoom) factor, overriding automatic fitting. The default
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
     size : anyOf(:class:`Vector2number`, :class:`ExprRef`)
-
+        Used in conjunction with fit, provides the width and height in pixels of the area to
+        which the projection should be automatically fit.
     spacing : anyOf(float, :class:`ExprRef`)
+        The spacing parameter for the ``lagrange`` projection.
 
+        **Default value:** ``0.5``
     tilt : anyOf(float, :class:`ExprRef`)
+        The tilt angle (in degrees) for the ``satellite`` projection.
 
+        **Default value:** ``0``.
     translate : anyOf(:class:`Vector2number`, :class:`ExprRef`)
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : anyOf(:class:`ProjectionType`, :class:`ExprRef`)
@@ -12195,7 +13198,7 @@ class RadialGradient(Gradient):
 
     Mapping(required=[gradient, stops])
 
-    Attributes
+    Parameters
     ----------
 
     gradient : string
@@ -12248,7 +13251,7 @@ class RangeConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     category : anyOf(:class:`RangeScheme`, List(:class:`Color`))
@@ -12327,7 +13330,7 @@ class RectConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -12336,15 +13339,25 @@ class RectConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
@@ -12362,7 +13375,11 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``1``
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -12381,39 +13398,64 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``5``
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     discreteBandSize : anyOf(float, :class:`RelativeBandSize`)
         The default size of the bars with discrete dimensions. If unspecified, the default
         size is  ``step-2``, which provides 2 pixel offset between bars.
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -12425,24 +13467,48 @@ class RectConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -12453,11 +13519,16 @@ class RectConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -12483,7 +13554,7 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     radius : anyOf(float, :class:`ExprRef`)
         For arc mark, the primary (outer) radius in pixels.
 
@@ -12496,7 +13567,20 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -12515,34 +13599,48 @@ class RectConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -12576,9 +13674,9 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -12659,7 +13757,7 @@ class RelativeBandSize(VegaLiteSchema):
 
     Mapping(required=[band])
 
-    Attributes
+    Parameters
     ----------
 
     band : float
@@ -12677,7 +13775,7 @@ class RepeatMapping(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : List(string)
@@ -12697,7 +13795,7 @@ class RepeatRef(Field):
     Mapping(required=[repeat])
     Reference to a repeated value.
 
-    Attributes
+    Parameters
     ----------
 
     repeat : enum('row', 'column', 'repeat', 'layer')
@@ -12717,7 +13815,7 @@ class Resolve(VegaLiteSchema):
     mapping from ``scale``, ``axis``, and ``legend`` to a mapping from channels to resolutions.
     Scales and guides can be resolved to be ``"independent"`` or ``"shared"``.
 
-    Attributes
+    Parameters
     ----------
 
     axis : :class:`AxisResolveMap`
@@ -12749,7 +13847,7 @@ class RowColLayoutAlign(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : :class:`LayoutAlign`
@@ -12768,7 +13866,7 @@ class RowColboolean(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : boolean
@@ -12787,7 +13885,7 @@ class RowColnumber(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : float
@@ -12806,7 +13904,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -13027,7 +14125,7 @@ class Scale(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(float, :class:`ExprRef`)
@@ -13313,7 +14411,7 @@ class ScaleBinParams(ScaleBins):
 
     Mapping(required=[step])
 
-    Attributes
+    Parameters
     ----------
 
     step : float
@@ -13338,7 +14436,7 @@ class ScaleConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPaddingInner : anyOf(float, :class:`ExprRef`)
@@ -13502,7 +14600,7 @@ class ScaleDatumDef(OffsetDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -13627,7 +14725,7 @@ class ScaleFieldDef(OffsetDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -13855,7 +14953,7 @@ class ScaleInterpolateParams(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : enum('rgb', 'cubehelix', 'cubehelix-long')
@@ -13874,7 +14972,7 @@ class ScaleResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`ResolveMode`
@@ -13943,7 +15041,7 @@ class SchemeParams(VegaLiteSchema):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : string
@@ -13973,7 +15071,7 @@ class SecondaryFieldDef(Position2Def):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -14067,7 +15165,7 @@ class SelectionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     interval : :class:`IntervalSelectionConfigWithoutType`
@@ -14112,7 +15210,7 @@ class DateTime(SelectionInit):
     month has higher precedence. ``day`` cannot be combined with other date. We accept string
     for month and day names.
 
-    Attributes
+    Parameters
     ----------
 
     date : float
@@ -14204,7 +15302,7 @@ class SelectionParameter(VegaLiteSchema):
 
     Mapping(required=[name, select])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -14278,7 +15376,7 @@ class SequenceGenerator(Generator):
 
     Mapping(required=[sequence])
 
-    Attributes
+    Parameters
     ----------
 
     sequence : :class:`SequenceParams`
@@ -14297,7 +15395,7 @@ class SequenceParams(VegaLiteSchema):
 
     Mapping(required=[start, stop])
 
-    Attributes
+    Parameters
     ----------
 
     start : float
@@ -14397,10 +15495,8 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
     """FieldOrDatumDefWithConditionDatumDefstringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -14520,10 +15616,8 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
     """FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -14765,7 +15859,7 @@ class SharedEncoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : Mapping(required=[])
@@ -14930,7 +16024,7 @@ class EncodingSortField(Sort):
     Mapping(required=[])
     A sort definition for sorting a discrete scale in an encoding field definition.
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`Field`
@@ -15000,7 +16094,7 @@ class SortByEncoding(Sort):
 
     Mapping(required=[encoding])
 
-    Attributes
+    Parameters
     ----------
 
     encoding : :class:`SortByChannel`
@@ -15023,7 +16117,7 @@ class SortField(VegaLiteSchema):
     Mapping(required=[field])
     A sort definition for transform
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -15069,7 +16163,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[concat])
     Base interface for a generalized concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     concat : List(:class:`Spec`)
@@ -15169,7 +16263,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
     Mapping(required=[facet, spec])
     Base interface for a facet specification.
 
-    Attributes
+    Parameters
     ----------
 
     facet : anyOf(:class:`FacetFieldDef`, :class:`FacetMapping`)
@@ -15276,7 +16370,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
     Unit spec that can have a composite mark and row or column channels (shorthand for a facet
     spec).
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -15417,7 +16511,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[hconcat])
     Base interface for a horizontal concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     hconcat : List(:class:`Spec`)
@@ -15475,7 +16569,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     A full layered plot specification, which may contains ``encoding`` and ``projection``
     properties that will be applied to underlying unit (single-view) specifications.
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
@@ -15576,7 +16670,7 @@ class LayerRepeatSpec(RepeatSpec):
 
     Mapping(required=[repeat, spec])
 
-    Attributes
+    Parameters
     ----------
 
     repeat : :class:`LayerRepeatMapping`
@@ -15684,7 +16778,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     Mapping(required=[repeat, spec])
     Base interface for a repeat specification.
 
-    Attributes
+    Parameters
     ----------
 
     repeat : anyOf(List(string), :class:`RepeatMapping`)
@@ -15792,7 +16886,7 @@ class SphereGenerator(Generator):
 
     Mapping(required=[sphere])
 
-    Attributes
+    Parameters
     ----------
 
     sphere : anyOf(boolean, Mapping(required=[]))
@@ -15833,7 +16927,7 @@ class Step(VegaLiteSchema):
 
     Mapping(required=[step])
 
-    Attributes
+    Parameters
     ----------
 
     step : float
@@ -15875,7 +16969,7 @@ class DerivedStream(Stream):
 
     Mapping(required=[stream])
 
-    Attributes
+    Parameters
     ----------
 
     stream : :class:`Stream`
@@ -15920,7 +17014,7 @@ class MergedStream(Stream):
 
     Mapping(required=[merge])
 
-    Attributes
+    Parameters
     ----------
 
     merge : List(:class:`Stream`)
@@ -15954,7 +17048,7 @@ class StringFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -16152,10 +17246,8 @@ class StringFieldDefWithCondition(VegaLiteSchema):
     """StringFieldDefWithCondition schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -16364,7 +17456,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -16407,7 +17499,7 @@ class StyleConfigIndex(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     arc : :class:`RectConfig`
@@ -16522,10 +17614,8 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
     """FieldOrDatumDefWithConditionStringDatumDefText schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -16681,10 +17771,8 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     """FieldOrDatumDefWithConditionStringFieldDefText schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -16907,7 +17995,7 @@ class TickConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -16916,15 +18004,25 @@ class TickConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
-
+        The rotation angle of the text, in degrees.
     aria : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG element, removing the mark item from the ARIA accessibility tree.
     ariaRole : anyOf(string, :class:`ExprRef`)
-
+        Sets the type of user interface element of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "role" attribute. Warning: this
+        property is experimental and may be changed in the future.
     ariaRoleDescription : anyOf(string, :class:`ExprRef`)
-
+        A human-readable, author-localized description for the role of the mark item for
+        `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the "aria-roledescription" attribute.
+        Warning: this property is experimental and may be changed in the future.
     aspect : anyOf(boolean, :class:`ExprRef`)
-
+        Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
 
@@ -16942,7 +18040,11 @@ class TickConfig(AnyMarkConfig):
 
         **Note:** Expression reference is *not* supported for range marks.
     blend : anyOf(:class:`Blend`, :class:`ExprRef`)
+        The color blend mode for drawing an item on its current background. Any valid `CSS
+        mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
+        value can be used.
 
+        __Default value:__ ``"source-over"``
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
 
@@ -16957,36 +18059,61 @@ class TickConfig(AnyMarkConfig):
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cornerRadiusBottomLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom left corner.
 
+        **Default value:** ``0``
     cornerRadiusBottomRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' bottom right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopLeft : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top right corner.
 
+        **Default value:** ``0``
     cornerRadiusTopRight : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles' top left corner.
 
+        **Default value:** ``0``
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
-
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : anyOf(string, :class:`ExprRef`)
-
+        A text description of the mark item for `ARIA accessibility
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
+        only). If specified, this property determines the `"aria-label" attribute
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
     dir : anyOf(:class:`TextDirection`, :class:`ExprRef`)
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
 
+        **Default value:** ``"ltr"``
     dx : anyOf(float, :class:`ExprRef`)
-
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     dy : anyOf(float, :class:`ExprRef`)
-
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
     ellipsis : anyOf(string, :class:`ExprRef`)
+        The ellipsis string for text truncated in response to the limit parameter.
 
+        **Default value:** ``"…"``
     endAngle : anyOf(float, :class:`ExprRef`)
-
+        The end angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     fill : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
         **Default value:** (None)
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
 
@@ -16998,24 +18125,48 @@ class TickConfig(AnyMarkConfig):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
     font : anyOf(string, :class:`ExprRef`)
-
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
+        The font size, in pixels.
 
+        **Default value:** ``11``
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        The font style (e.g., ``"italic"`` ).
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
     height : anyOf(float, :class:`ExprRef`)
-
+        Height of the marks.
     href : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     innerRadius : anyOf(float, :class:`ExprRef`)
         The inner radius in pixels of arc marks. ``innerRadius`` is an alias for
         ``radius2``.
 
         **Default value:** ``0``
     interpolate : anyOf(:class:`Interpolate`, :class:`ExprRef`)
+        The line interpolation method to use for line and area marks. One of the following:
 
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     invalid : enum('filter', None)
         Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
         ).
@@ -17026,11 +18177,16 @@ class TickConfig(AnyMarkConfig):
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
     limit : anyOf(float, :class:`ExprRef`)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
 
+        **Default value:** ``0`` -- indicating no limit
     lineBreak : anyOf(string, :class:`ExprRef`)
-
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        The line height in pixels (the spacing between subsequent lines of text) for
+        multi-line text marks.
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -17056,7 +18212,7 @@ class TickConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
-
+        The angular padding applied to sides of the arc, in radians.
     radius : anyOf(float, :class:`ExprRef`)
         For arc mark, the primary (outer) radius in pixels.
 
@@ -17069,7 +18225,20 @@ class TickConfig(AnyMarkConfig):
 
         **Default value:** ``0``
     shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+        Shape of the point marks. Supported values include:
 
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
     size : anyOf(float, :class:`ExprRef`)
         Default size for marks.
 
@@ -17088,34 +18257,48 @@ class TickConfig(AnyMarkConfig):
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
     smooth : anyOf(boolean, :class:`ExprRef`)
-
+        A boolean flag (default true) indicating if the image should be smoothed when
+        resized. If false, individual pixels should be scaled directly rather than
+        interpolated with smoothing. For SVG rendering, this option may not work in some
+        browsers due to lack of standardization.
     startAngle : anyOf(float, :class:`ExprRef`)
-
+        The start angle in radians for arc marks. A value of ``0`` indicates up (north),
+        increasing values proceed clockwise.
     stroke : anyOf(:class:`Color`, :class:`Gradient`, None, :class:`ExprRef`)
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset in pixels at which to draw the group stroke and fill. If unspecified, the
+        default behavior is to dynamically offset stroked groups such that 1 pixel stroke
+        widths align with the pixel grid.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     tension : anyOf(float, :class:`ExprRef`)
-
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
     text : anyOf(:class:`Text`, :class:`ExprRef`)
-
+        Placeholder text if the ``text`` channel is not specified
     theta : anyOf(float, :class:`ExprRef`)
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
@@ -17153,9 +18336,9 @@ class TickConfig(AnyMarkConfig):
 
         **Default value:** ``null``
     url : anyOf(:class:`URI`, :class:`ExprRef`)
-
+        The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
-
+        Width of the marks.
     x : anyOf(float, string, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
@@ -17255,7 +18438,7 @@ class TimeIntervalStep(TickCount):
 
     Mapping(required=[interval, step])
 
-    Attributes
+    Parameters
     ----------
 
     interval : :class:`TimeInterval`
@@ -17275,7 +18458,7 @@ class TimeLocale(VegaLiteSchema):
     Mapping(required=[dateTime, date, time, periods, days, shortDays, months, shortMonths])
     Locale definition for formatting dates and times.
 
-    Attributes
+    Parameters
     ----------
 
     date : string
@@ -17371,7 +18554,7 @@ class TimeUnitParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     maxbins : float
@@ -17405,18 +18588,25 @@ class TitleConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : :class:`Align`
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
         ``"right"``.
     anchor : anyOf(:class:`TitleAnchor`, :class:`ExprRef`)
-
+        The anchor position for placing the title and subtitle text. One of ``"start"``,
+        ``"middle"``, or ``"end"``. For example, with an orientation of top these anchor
+        positions map to a left-, center-, or right-aligned title.
     angle : anyOf(float, :class:`ExprRef`)
-
+        Angle in degrees of title and subtitle text.
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the title from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     baseline : :class:`TextBaseline`
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
@@ -17424,45 +18614,56 @@ class TitleConfig(VegaLiteSchema):
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
     color : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for title text.
     dx : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text y-coordinate.
     font : anyOf(string, :class:`ExprRef`)
-
+        Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for title text.
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for title text.
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for title text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
-
+        The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
+        to the full bounding box) or ``"group"`` (to anchor relative to the group width or
+        height).
     limit : anyOf(float, :class:`ExprRef`)
-
+        The maximum allowed length in pixels of title and subtitle text.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     offset : anyOf(float, :class:`ExprRef`)
-
+        The orthogonal offset in pixels by which to displace the title group from its
+        position along the edge of the chart.
     orient : anyOf(:class:`TitleOrient`, :class:`ExprRef`)
-
+        Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for subtitle text.
     subtitleFont : anyOf(string, :class:`ExprRef`)
-
+        Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for subtitle text.
     subtitleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for subtitle text.
     subtitleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     subtitleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line subtitle text.
     subtitlePadding : anyOf(float, :class:`ExprRef`)
-
+        The padding in pixels between title and subtitle text.
     zindex : anyOf(float, :class:`ExprRef`)
+        The integer z-index indicating the layering of the title group relative to other
+        axis, mark, and legend groups.
 
+        **Default value:** ``0``.
     """
     _schema = {'$ref': '#/definitions/TitleConfig'}
 
@@ -17512,7 +18713,7 @@ class TitleParams(VegaLiteSchema):
 
     Mapping(required=[text])
 
-    Attributes
+    Parameters
     ----------
 
     text : anyOf(:class:`Text`, :class:`ExprRef`)
@@ -17536,9 +18737,14 @@ class TitleParams(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/layer.html>`__ views. For other composite
         views, ``anchor`` is always ``"start"``.
     angle : anyOf(float, :class:`ExprRef`)
-
+        Angle in degrees of title and subtitle text.
     aria : anyOf(boolean, :class:`ExprRef`)
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the title from the ARIA accessibility tree.
 
+        **Default value:** ``true``
     baseline : :class:`TextBaseline`
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
@@ -17546,29 +18752,35 @@ class TitleParams(VegaLiteSchema):
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
     color : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for title text.
     dx : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
-
+        Delta offset for title and subtitle text y-coordinate.
     font : anyOf(string, :class:`ExprRef`)
-
+        Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for title text.
     fontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for title text.
     fontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for title text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
-
+        The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
+        to the full bounding box) or ``"group"`` (to anchor relative to the group width or
+        height).
     limit : anyOf(float, :class:`ExprRef`)
-
+        The maximum allowed length in pixels of title and subtitle text.
     lineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
     offset : anyOf(float, :class:`ExprRef`)
-
+        The orthogonal offset in pixels by which to displace the title group from its
+        position along the edge of the chart.
     orient : anyOf(:class:`TitleOrient`, :class:`ExprRef`)
-
+        Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     style : anyOf(string, List(string))
         A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`__
         to apply to the title text mark.
@@ -17577,19 +18789,21 @@ class TitleParams(VegaLiteSchema):
     subtitle : :class:`Text`
         The subtitle Text.
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
-
+        Text color for subtitle text.
     subtitleFont : anyOf(string, :class:`ExprRef`)
-
+        Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
-
+        Font size in pixels for subtitle text.
     subtitleFontStyle : anyOf(:class:`FontStyle`, :class:`ExprRef`)
-
+        Font style for subtitle text.
     subtitleFontWeight : anyOf(:class:`FontWeight`, :class:`ExprRef`)
-
+        Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
     subtitleLineHeight : anyOf(float, :class:`ExprRef`)
-
+        Line height in pixels for multi-line subtitle text.
     subtitlePadding : anyOf(float, :class:`ExprRef`)
-
+        The padding in pixels between title and subtitle text.
     zindex : float
         The integer z-index indicating the layering of the title group relative to other
         axis, mark and legend groups.
@@ -17624,7 +18838,7 @@ class TooltipContent(VegaLiteSchema):
 
     Mapping(required=[content])
 
-    Attributes
+    Parameters
     ----------
 
     content : enum('encoding', 'data')
@@ -17641,7 +18855,7 @@ class TopLevelSelectionParameter(VegaLiteSchema):
 
     Mapping(required=[name, select])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -17713,7 +18927,7 @@ class TopLevelConcatSpec(TopLevelSpec):
 
     Mapping(required=[concat])
 
-    Attributes
+    Parameters
     ----------
 
     concat : List(:class:`NonNormalizedSpec`)
@@ -17851,7 +19065,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     Mapping(required=[data, facet, spec])
 
-    Attributes
+    Parameters
     ----------
 
     data : anyOf(:class:`Data`, None)
@@ -17995,7 +19209,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
 
     Mapping(required=[hconcat])
 
-    Attributes
+    Parameters
     ----------
 
     hconcat : List(:class:`NonNormalizedSpec`)
@@ -18091,7 +19305,7 @@ class TopLevelLayerSpec(TopLevelSpec):
 
     Mapping(required=[layer])
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
@@ -18232,7 +19446,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     Mapping(required=[data, mark])
 
-    Attributes
+    Parameters
     ----------
 
     data : anyOf(:class:`Data`, None)
@@ -18408,7 +19622,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
 
     Mapping(required=[vconcat])
 
-    Attributes
+    Parameters
     ----------
 
     vconcat : List(:class:`NonNormalizedSpec`)
@@ -18504,7 +19718,7 @@ class TopoDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     feature : string
@@ -18568,7 +19782,7 @@ class AggregateTransform(Transform):
 
     Mapping(required=[aggregate])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : List(:class:`AggregatedFieldDef`)
@@ -18588,7 +19802,7 @@ class BinTransform(Transform):
 
     Mapping(required=[bin, field, as])
 
-    Attributes
+    Parameters
     ----------
 
     bin : anyOf(boolean, :class:`BinParams`)
@@ -18613,7 +19827,7 @@ class CalculateTransform(Transform):
 
     Mapping(required=[calculate, as])
 
-    Attributes
+    Parameters
     ----------
 
     calculate : string
@@ -18633,7 +19847,7 @@ class DensityTransform(Transform):
 
     Mapping(required=[density])
 
-    Attributes
+    Parameters
     ----------
 
     density : :class:`FieldName`
@@ -18694,7 +19908,7 @@ class FilterTransform(Transform):
 
     Mapping(required=[filter])
 
-    Attributes
+    Parameters
     ----------
 
     filter : :class:`PredicateComposition`
@@ -18737,7 +19951,7 @@ class FlattenTransform(Transform):
 
     Mapping(required=[flatten])
 
-    Attributes
+    Parameters
     ----------
 
     flatten : List(:class:`FieldName`)
@@ -18761,7 +19975,7 @@ class FoldTransform(Transform):
 
     Mapping(required=[fold])
 
-    Attributes
+    Parameters
     ----------
 
     fold : List(:class:`FieldName`)
@@ -18781,7 +19995,7 @@ class ImputeTransform(Transform):
 
     Mapping(required=[impute, key])
 
-    Attributes
+    Parameters
     ----------
 
     impute : :class:`FieldName`
@@ -18834,7 +20048,7 @@ class JoinAggregateTransform(Transform):
 
     Mapping(required=[joinaggregate])
 
-    Attributes
+    Parameters
     ----------
 
     joinaggregate : List(:class:`JoinAggregateFieldDef`)
@@ -18855,7 +20069,7 @@ class LoessTransform(Transform):
 
     Mapping(required=[loess, on])
 
-    Attributes
+    Parameters
     ----------
 
     loess : :class:`FieldName`
@@ -18887,7 +20101,7 @@ class LookupTransform(Transform):
 
     Mapping(required=[lookup, from])
 
-    Attributes
+    Parameters
     ----------
 
     lookup : string
@@ -18920,7 +20134,7 @@ class PivotTransform(Transform):
 
     Mapping(required=[pivot, value])
 
-    Attributes
+    Parameters
     ----------
 
     pivot : :class:`FieldName`
@@ -18953,7 +20167,7 @@ class QuantileTransform(Transform):
 
     Mapping(required=[quantile])
 
-    Attributes
+    Parameters
     ----------
 
     quantile : :class:`FieldName`
@@ -18985,7 +20199,7 @@ class RegressionTransform(Transform):
 
     Mapping(required=[regression, on])
 
-    Attributes
+    Parameters
     ----------
 
     on : :class:`FieldName`
@@ -19035,7 +20249,7 @@ class SampleTransform(Transform):
 
     Mapping(required=[sample])
 
-    Attributes
+    Parameters
     ----------
 
     sample : float
@@ -19054,7 +20268,7 @@ class StackTransform(Transform):
 
     Mapping(required=[stack, groupby, as])
 
-    Attributes
+    Parameters
     ----------
 
     groupby : List(:class:`FieldName`)
@@ -19088,7 +20302,7 @@ class TimeUnitTransform(Transform):
 
     Mapping(required=[timeUnit, field, as])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -19133,7 +20347,7 @@ class TypedFieldDef(VegaLiteSchema):
     Mapping(required=[])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -19309,7 +20523,7 @@ class UnitSpec(VegaLiteSchema):
     Mapping(required=[mark])
     Base interface for a unit (single-view) specification.
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -19353,7 +20567,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
     Mapping(required=[mark])
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -19442,7 +20656,7 @@ class UrlData(DataSource):
 
     Mapping(required=[url])
 
-    Attributes
+    Parameters
     ----------
 
     url : string
@@ -19496,7 +20710,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[vconcat])
     Base interface for a vertical concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     vconcat : List(:class:`Spec`)
@@ -19552,7 +20766,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, M
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
@@ -19575,7 +20789,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPro
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -19598,7 +20812,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(MarkPropDefnumber, Nume
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -19620,7 +20834,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(MarkPropDefnumberA
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
@@ -19643,7 +20857,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -19665,7 +20879,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
@@ -19689,7 +20903,7 @@ class ValueDefnumber(OffsetDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -19710,7 +20924,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -19729,7 +20943,7 @@ class VariableParameter(VegaLiteSchema):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -19860,11 +21074,13 @@ class ViewBackground(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cursor : :class:`Cursor`
         The mouse cursor used over the view. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
@@ -19873,7 +21089,9 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``undefined``
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -19884,19 +21102,26 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``"#ddd"``
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom styles to apply to the
         view background. A style is a named collection of mark property defaults defined
@@ -19927,7 +21152,7 @@ class ViewConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clip : boolean
@@ -19943,7 +21168,9 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** ``200``
     cornerRadius : anyOf(float, :class:`ExprRef`)
+        The radius in pixels of rounded rectangles or arcs' corners.
 
+        **Default value:** ``0``
     cursor : :class:`Cursor`
         The mouse cursor used over the view. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
@@ -19964,7 +21191,9 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** ``undefined``
     fillOpacity : anyOf(float, :class:`ExprRef`)
+        The fill opacity (value between [0,1]).
 
+        **Default value:** ``1``
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -19977,19 +21206,26 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** ``"#ddd"``
     strokeCap : anyOf(:class:`StrokeCap`, :class:`ExprRef`)
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
 
+        **Default value:** ``"butt"``
     strokeDash : anyOf(List(float), :class:`ExprRef`)
-
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : anyOf(float, :class:`ExprRef`)
-
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : anyOf(:class:`StrokeJoin`, :class:`ExprRef`)
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
+        **Default value:** ``"miter"``
     strokeMiterLimit : anyOf(float, :class:`ExprRef`)
-
+        The miter limit at which to bevel a line join.
     strokeOpacity : anyOf(float, :class:`ExprRef`)
+        The stroke opacity (value between [0,1]).
 
+        **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
-
+        The stroke width, in pixels.
     """
     _schema = {'$ref': '#/definitions/ViewConfig'}
 
@@ -20039,7 +21275,7 @@ class WindowFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : anyOf(:class:`AggregateOp`, :class:`WindowOnlyOp`)
@@ -20082,7 +21318,7 @@ class WindowTransform(Transform):
 
     Mapping(required=[window])
 
-    Attributes
+    Parameters
     ----------
 
     window : List(:class:`WindowFieldDef`)

@@ -1,3 +1,4 @@
+import sys
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 
@@ -121,7 +122,11 @@ class PluginRegistry(Generic[PluginType]):
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
-        more_exts = [ep.name for ep in entry_points().get(self.entry_point_group, [])]
+        if sys.version_info.major == 3 and sys.version_info.minor < 10:
+            e_points = entry_points().get(self.entry_point_group, [])
+        else:
+            e_points = entry_points(group=self.entry_point_group)
+        more_exts = [ep.name for ep in e_points]
         exts.extend(more_exts)
         return sorted(set(exts))
 

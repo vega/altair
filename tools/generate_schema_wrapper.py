@@ -124,7 +124,7 @@ class ValueChannelMixin(object):
             elif 'field' in condition and 'type' not in condition:
                 kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy(deep=['condition'])
-                copy.condition.update(kwds)
+                copy['condition'].update(kwds)
         return super(ValueChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
                                                       context=context)
@@ -202,6 +202,8 @@ class SchemaGenerator(codegen.SchemaGenerator):
         description = description.replace(r"\ ", " ")
         # turn explicit references into anonymous references
         description = description.replace(">`_", ">`__")
+        # Some entries in the Vega-Lite schema miss the second occurence of '__'
+        description = description.replace("__Default value: ", "__Default value:__ ")
         description += "\n"
         return description.strip()
 
