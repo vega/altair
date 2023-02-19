@@ -300,7 +300,27 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self.raw_schema.get("description", self.schema.get("description", ""))
+        return self._get_description(include_sublevels=False)
+
+    @property
+    def deep_description(self):
+        return self._get_description(include_sublevels=True)
+
+    def _get_description(self, include_sublevels: bool = False):
+        desc = self.raw_schema.get("description", self.schema.get("description", ""))
+        if not desc and include_sublevels:
+            for item in self.anyOf:
+                sub_desc = item._get_description(include_sublevels=False)
+                if desc and sub_desc:
+                    raise ValueError(
+                        "There are multiple potential descriptions which could"
+                        + " be used for the currently inspected schema. You'll need to"
+                        + " clarify which one is the correct one.\n"
+                        + str(self.schema)
+                    )
+                if sub_desc:
+                    desc = sub_desc
+        return desc
 
     def is_list(self):
         return isinstance(self.schema, list)
