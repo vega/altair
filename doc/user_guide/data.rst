@@ -21,6 +21,7 @@ there are many different ways of specifying a dataset:
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
+- as a DataFrame that supports the DataFrame Interchange Protocol (contains a `__dataframe__` attribute). This is experimental.
 
 When data is specified as a DataFrame, the encoding is quite simple, as Altair
 uses the data type information provided by pandas to automatically determine
