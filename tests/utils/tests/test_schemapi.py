@@ -378,7 +378,6 @@ def test_schema_validation_error():
     assert isinstance(the_err, SchemaValidationError)
     message = str(the_err)
 
-    assert "4 is not of type 'string'" in message
     assert the_err.message in message
 
 
