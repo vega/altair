@@ -173,7 +173,7 @@ class SchemaGenerator(object):
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
-            doc += ["", "Attributes", "----------", ""]
+            doc += ["", "Parameters", "----------", ""]
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += [

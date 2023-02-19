@@ -62,7 +62,7 @@ class AggregatedFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : :class:`AggregateOp`
@@ -120,7 +120,7 @@ class AreaConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -559,7 +559,7 @@ class ArgmaxDef(Aggregate):
 
     Mapping(required=[argmax])
 
-    Attributes
+    Parameters
     ----------
 
     argmax : :class:`FieldName`
@@ -576,7 +576,7 @@ class ArgminDef(Aggregate):
 
     Mapping(required=[argmin])
 
-    Attributes
+    Parameters
     ----------
 
     argmin : :class:`FieldName`
@@ -593,7 +593,7 @@ class AutoSizeParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     contains : enum('content', 'padding')
@@ -640,7 +640,7 @@ class Axis(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
@@ -1075,7 +1075,7 @@ class AxisConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
@@ -1525,7 +1525,7 @@ class AxisResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     x : :class:`ResolveMode`
@@ -1544,7 +1544,7 @@ class BarConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -1977,7 +1977,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : :class:`Align`
@@ -2095,7 +2095,7 @@ class BinParams(VegaLiteSchema):
     Mapping(required=[])
     Binning properties or boolean flag for determining whether to bin data or not.
 
-    Attributes
+    Parameters
     ----------
 
     anchor : float
@@ -2165,7 +2165,7 @@ class BindCheckbox(Binding):
 
     Mapping(required=[input])
 
-    Attributes
+    Parameters
     ----------
 
     input : string
@@ -2193,7 +2193,7 @@ class BindDirect(Binding):
 
     Mapping(required=[element])
 
-    Attributes
+    Parameters
     ----------
 
     element : anyOf(:class:`Element`, Mapping(required=[]))
@@ -2221,7 +2221,7 @@ class BindInput(Binding):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     autocomplete : string
@@ -2258,7 +2258,7 @@ class BindRadioSelect(Binding):
 
     Mapping(required=[input, options])
 
-    Attributes
+    Parameters
     ----------
 
     input : enum('radio', 'select')
@@ -2292,7 +2292,7 @@ class BindRange(Binding):
 
     Mapping(required=[input])
 
-    Attributes
+    Parameters
     ----------
 
     input : string
@@ -2343,7 +2343,7 @@ class BoxPlotConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     box : anyOf(boolean, :class:`MarkConfig`)
@@ -2384,7 +2384,7 @@ class BrushConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     cursor : :class:`Cursor`
@@ -2542,7 +2542,7 @@ class BoxPlotDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`BoxPlot`
@@ -2613,7 +2613,7 @@ class CompositionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     columns : float
@@ -2983,7 +2983,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
     Mapping(required=[param])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3190,7 +3190,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
     Mapping(required=[test])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3406,7 +3406,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3432,7 +3432,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3466,7 +3466,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3491,7 +3491,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3524,7 +3524,7 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3549,7 +3549,7 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3582,7 +3582,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3607,7 +3607,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3641,7 +3641,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3666,7 +3666,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3699,7 +3699,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3724,7 +3724,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3757,7 +3757,7 @@ class ConditionalParameterValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     Mapping(required=[param, value])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -3782,7 +3782,7 @@ class ConditionalPredicateValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     Mapping(required=[test, value])
 
-    Attributes
+    Parameters
     ----------
 
     test : :class:`PredicateComposition`
@@ -3804,7 +3804,7 @@ class Config(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     arc : :class:`RectConfig`
@@ -4126,7 +4126,7 @@ class CsvDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     parse : anyOf(:class:`Parse`, None)
@@ -4270,7 +4270,7 @@ class DomainUnionWith(VegaLiteSchema):
 
     Mapping(required=[unionWith])
 
-    Attributes
+    Parameters
     ----------
 
     unionWith : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
@@ -4288,7 +4288,7 @@ class DsvDataFormat(DataFormat):
 
     Mapping(required=[delimiter])
 
-    Attributes
+    Parameters
     ----------
 
     delimiter : string
@@ -4339,7 +4339,7 @@ class Encoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`NumericMarkPropDef`
@@ -4571,7 +4571,7 @@ class ErrorBandConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     band : anyOf(boolean, :class:`MarkConfig`)
@@ -4629,7 +4629,7 @@ class ErrorBandDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`ErrorBand`
@@ -4725,7 +4725,7 @@ class ErrorBarConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     extent : :class:`ErrorBarExtent`
@@ -4762,7 +4762,7 @@ class ErrorBarDef(CompositeMarkDef):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`ErrorBar`
@@ -4848,7 +4848,7 @@ class ExprRef(VegaLiteSchema):
 
     Mapping(required=[expr])
 
-    Attributes
+    Parameters
     ----------
 
     expr : string
@@ -4865,7 +4865,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5125,7 +5125,7 @@ class FacetFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5319,7 +5319,7 @@ class FacetMapping(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : :class:`FacetFieldDef`
@@ -5338,7 +5338,7 @@ class FacetedEncoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`NumericMarkPropDef`
@@ -5583,7 +5583,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
     Mapping(required=[])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5758,7 +5758,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -5971,7 +5971,7 @@ class FieldRange(VegaLiteSchema):
 
     Mapping(required=[field])
 
-    Attributes
+    Parameters
     ----------
 
     field : string
@@ -6034,7 +6034,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     Mapping(required=[mark])
     Base interface for a unit (single-view) specification.
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -6113,7 +6113,7 @@ class GradientStop(VegaLiteSchema):
 
     Mapping(required=[offset, color])
 
-    Attributes
+    Parameters
     ----------
 
     color : :class:`Color`
@@ -6132,7 +6132,7 @@ class GraticuleGenerator(Generator):
 
     Mapping(required=[graticule])
 
-    Attributes
+    Parameters
     ----------
 
     graticule : anyOf(boolean, :class:`GraticuleParams`)
@@ -6151,7 +6151,7 @@ class GraticuleParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     extent : :class:`Vector2Vector2number`
@@ -6190,7 +6190,7 @@ class Header(VegaLiteSchema):
     Mapping(required=[])
     Headers of row / column channels for faceted plots.
 
-    Attributes
+    Parameters
     ----------
 
     format : anyOf(string, :class:`Dict`)
@@ -6382,7 +6382,7 @@ class HeaderConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     format : anyOf(string, :class:`Dict`)
@@ -6578,7 +6578,7 @@ class ImputeParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     frame : List(anyOf(None, float))
@@ -6622,7 +6622,7 @@ class ImputeSequence(VegaLiteSchema):
 
     Mapping(required=[stop])
 
-    Attributes
+    Parameters
     ----------
 
     stop : float
@@ -6644,7 +6644,7 @@ class InlineData(DataSource):
 
     Mapping(required=[values])
 
-    Attributes
+    Parameters
     ----------
 
     values : :class:`InlineDataset`
@@ -6692,7 +6692,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : string
@@ -6796,7 +6796,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clear : anyOf(:class:`Stream`, string, boolean)
@@ -6892,7 +6892,7 @@ class JoinAggregateFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : :class:`AggregateOp`
@@ -6916,7 +6916,7 @@ class JsonDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     parse : anyOf(:class:`Parse`, None)
@@ -6979,7 +6979,7 @@ class LatLongFieldDef(LatLongDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -7143,7 +7143,7 @@ class LayerRepeatMapping(VegaLiteSchema):
 
     Mapping(required=[layer])
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(string)
@@ -7176,7 +7176,7 @@ class Legend(VegaLiteSchema):
     Mapping(required=[])
     Properties of a legend or boolean flag for determining whether to show it.
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
@@ -7540,7 +7540,7 @@ class LegendConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aria : anyOf(boolean, :class:`ExprRef`)
@@ -7905,7 +7905,7 @@ class LegendResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`ResolveMode`
@@ -7948,7 +7948,7 @@ class LegendStreamBinding(LegendBinding):
 
     Mapping(required=[legend])
 
-    Attributes
+    Parameters
     ----------
 
     legend : anyOf(string, :class:`Stream`)
@@ -7965,7 +7965,7 @@ class LineConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -8392,7 +8392,7 @@ class LinearGradient(Gradient):
 
     Mapping(required=[gradient, stops])
 
-    Attributes
+    Parameters
     ----------
 
     gradient : string
@@ -8431,7 +8431,7 @@ class Locale(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     number : :class:`NumberLocale`
@@ -8450,7 +8450,7 @@ class LookupData(VegaLiteSchema):
 
     Mapping(required=[data, key])
 
-    Attributes
+    Parameters
     ----------
 
     data : :class:`Data`
@@ -8472,7 +8472,7 @@ class LookupSelection(VegaLiteSchema):
 
     Mapping(required=[key, param])
 
-    Attributes
+    Parameters
     ----------
 
     key : :class:`FieldName`
@@ -8507,7 +8507,7 @@ class MarkConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -8919,7 +8919,7 @@ class MarkDef(AnyMark):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : :class:`Mark`
@@ -9449,7 +9449,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -9571,7 +9571,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -9875,7 +9875,7 @@ class NamedData(DataSource):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : string
@@ -9922,7 +9922,7 @@ class NumberLocale(VegaLiteSchema):
     Mapping(required=[decimal, thousands, grouping, currency])
     Locale definition for formatting numbers.
 
-    Attributes
+    Parameters
     ----------
 
     currency : :class:`Vector2string`
@@ -9969,7 +9969,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -10090,7 +10090,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -10344,7 +10344,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -10465,7 +10465,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -10716,7 +10716,7 @@ class OrderFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -10882,7 +10882,7 @@ class OrderValueDef(VegaLiteSchema):
 
     Mapping(required=[value])
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, :class:`ExprRef`)
@@ -10930,7 +10930,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -11437,7 +11437,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : string
@@ -11548,7 +11548,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clear : anyOf(:class:`Stream`, string, boolean)
@@ -11674,7 +11674,7 @@ class DatumDef(LatLongDef, Position2Def):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -11785,7 +11785,7 @@ class PositionDatumDefBase(PolarDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -11951,7 +11951,7 @@ class PositionDatumDef(PositionDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     axis : anyOf(:class:`Axis`, None)
@@ -12124,7 +12124,7 @@ class PositionFieldDef(PositionDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -12389,7 +12389,7 @@ class PositionFieldDefBase(PolarDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -12639,7 +12639,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -12670,7 +12670,7 @@ class LogicalAndPredicate(PredicateComposition):
 
     Mapping(required=[and])
 
-    Attributes
+    Parameters
     ----------
 
     and : List(:class:`PredicateComposition`)
@@ -12687,7 +12687,7 @@ class LogicalNotPredicate(PredicateComposition):
 
     Mapping(required=[not])
 
-    Attributes
+    Parameters
     ----------
 
     not : :class:`PredicateComposition`
@@ -12704,7 +12704,7 @@ class LogicalOrPredicate(PredicateComposition):
 
     Mapping(required=[or])
 
-    Attributes
+    Parameters
     ----------
 
     or : List(:class:`PredicateComposition`)
@@ -12735,7 +12735,7 @@ class FieldEqualPredicate(Predicate):
 
     Mapping(required=[equal, field])
 
-    Attributes
+    Parameters
     ----------
 
     equal : anyOf(string, float, boolean, :class:`DateTime`, :class:`ExprRef`)
@@ -12756,7 +12756,7 @@ class FieldGTEPredicate(Predicate):
 
     Mapping(required=[field, gte])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12777,7 +12777,7 @@ class FieldGTPredicate(Predicate):
 
     Mapping(required=[field, gt])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12798,7 +12798,7 @@ class FieldLTEPredicate(Predicate):
 
     Mapping(required=[field, lte])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12819,7 +12819,7 @@ class FieldLTPredicate(Predicate):
 
     Mapping(required=[field, lt])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12840,7 +12840,7 @@ class FieldOneOfPredicate(Predicate):
 
     Mapping(required=[field, oneOf])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12862,7 +12862,7 @@ class FieldRangePredicate(Predicate):
 
     Mapping(required=[field, range])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12884,7 +12884,7 @@ class FieldValidPredicate(Predicate):
 
     Mapping(required=[field, valid])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -12907,7 +12907,7 @@ class ParameterPredicate(Predicate):
 
     Mapping(required=[param])
 
-    Attributes
+    Parameters
     ----------
 
     param : :class:`ParameterName`
@@ -12927,7 +12927,7 @@ class Projection(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     center : anyOf(:class:`Vector2number`, :class:`ExprRef`)
@@ -13055,7 +13055,7 @@ class ProjectionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     center : anyOf(:class:`Vector2number`, :class:`ExprRef`)
@@ -13198,7 +13198,7 @@ class RadialGradient(Gradient):
 
     Mapping(required=[gradient, stops])
 
-    Attributes
+    Parameters
     ----------
 
     gradient : string
@@ -13251,7 +13251,7 @@ class RangeConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     category : anyOf(:class:`RangeScheme`, List(:class:`Color`))
@@ -13330,7 +13330,7 @@ class RectConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -13757,7 +13757,7 @@ class RelativeBandSize(VegaLiteSchema):
 
     Mapping(required=[band])
 
-    Attributes
+    Parameters
     ----------
 
     band : float
@@ -13775,7 +13775,7 @@ class RepeatMapping(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : List(string)
@@ -13795,7 +13795,7 @@ class RepeatRef(Field):
     Mapping(required=[repeat])
     Reference to a repeated value.
 
-    Attributes
+    Parameters
     ----------
 
     repeat : enum('row', 'column', 'repeat', 'layer')
@@ -13815,7 +13815,7 @@ class Resolve(VegaLiteSchema):
     mapping from ``scale``, ``axis``, and ``legend`` to a mapping from channels to resolutions.
     Scales and guides can be resolved to be ``"independent"`` or ``"shared"``.
 
-    Attributes
+    Parameters
     ----------
 
     axis : :class:`AxisResolveMap`
@@ -13847,7 +13847,7 @@ class RowColLayoutAlign(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : :class:`LayoutAlign`
@@ -13866,7 +13866,7 @@ class RowColboolean(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : boolean
@@ -13885,7 +13885,7 @@ class RowColnumber(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     column : float
@@ -13904,7 +13904,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -14125,7 +14125,7 @@ class Scale(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(float, :class:`ExprRef`)
@@ -14411,7 +14411,7 @@ class ScaleBinParams(ScaleBins):
 
     Mapping(required=[step])
 
-    Attributes
+    Parameters
     ----------
 
     step : float
@@ -14436,7 +14436,7 @@ class ScaleConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPaddingInner : anyOf(float, :class:`ExprRef`)
@@ -14600,7 +14600,7 @@ class ScaleDatumDef(OffsetDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -14725,7 +14725,7 @@ class ScaleFieldDef(OffsetDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -14953,7 +14953,7 @@ class ScaleInterpolateParams(VegaLiteSchema):
 
     Mapping(required=[type])
 
-    Attributes
+    Parameters
     ----------
 
     type : enum('rgb', 'cubehelix', 'cubehelix-long')
@@ -14972,7 +14972,7 @@ class ScaleResolveMap(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : :class:`ResolveMode`
@@ -15041,7 +15041,7 @@ class SchemeParams(VegaLiteSchema):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : string
@@ -15071,7 +15071,7 @@ class SecondaryFieldDef(Position2Def):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -15165,7 +15165,7 @@ class SelectionConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     interval : :class:`IntervalSelectionConfigWithoutType`
@@ -15210,7 +15210,7 @@ class DateTime(SelectionInit):
     month has higher precedence. ``day`` cannot be combined with other date. We accept string
     for month and day names.
 
-    Attributes
+    Parameters
     ----------
 
     date : float
@@ -15302,7 +15302,7 @@ class SelectionParameter(VegaLiteSchema):
 
     Mapping(required=[name, select])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -15376,7 +15376,7 @@ class SequenceGenerator(Generator):
 
     Mapping(required=[sequence])
 
-    Attributes
+    Parameters
     ----------
 
     sequence : :class:`SequenceParams`
@@ -15395,7 +15395,7 @@ class SequenceParams(VegaLiteSchema):
 
     Mapping(required=[start, stop])
 
-    Attributes
+    Parameters
     ----------
 
     start : float
@@ -15496,7 +15496,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -15617,7 +15617,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -15859,7 +15859,7 @@ class SharedEncoding(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     angle : Mapping(required=[])
@@ -16024,7 +16024,7 @@ class EncodingSortField(Sort):
     Mapping(required=[])
     A sort definition for sorting a discrete scale in an encoding field definition.
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`Field`
@@ -16094,7 +16094,7 @@ class SortByEncoding(Sort):
 
     Mapping(required=[encoding])
 
-    Attributes
+    Parameters
     ----------
 
     encoding : :class:`SortByChannel`
@@ -16117,7 +16117,7 @@ class SortField(VegaLiteSchema):
     Mapping(required=[field])
     A sort definition for transform
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -16163,7 +16163,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[concat])
     Base interface for a generalized concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     concat : List(:class:`Spec`)
@@ -16263,7 +16263,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
     Mapping(required=[facet, spec])
     Base interface for a facet specification.
 
-    Attributes
+    Parameters
     ----------
 
     facet : anyOf(:class:`FacetFieldDef`, :class:`FacetMapping`)
@@ -16370,7 +16370,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
     Unit spec that can have a composite mark and row or column channels (shorthand for a facet
     spec).
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -16511,7 +16511,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[hconcat])
     Base interface for a horizontal concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     hconcat : List(:class:`Spec`)
@@ -16569,7 +16569,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     A full layered plot specification, which may contains ``encoding`` and ``projection``
     properties that will be applied to underlying unit (single-view) specifications.
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
@@ -16670,7 +16670,7 @@ class LayerRepeatSpec(RepeatSpec):
 
     Mapping(required=[repeat, spec])
 
-    Attributes
+    Parameters
     ----------
 
     repeat : :class:`LayerRepeatMapping`
@@ -16778,7 +16778,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     Mapping(required=[repeat, spec])
     Base interface for a repeat specification.
 
-    Attributes
+    Parameters
     ----------
 
     repeat : anyOf(List(string), :class:`RepeatMapping`)
@@ -16886,7 +16886,7 @@ class SphereGenerator(Generator):
 
     Mapping(required=[sphere])
 
-    Attributes
+    Parameters
     ----------
 
     sphere : anyOf(boolean, Mapping(required=[]))
@@ -16927,7 +16927,7 @@ class Step(VegaLiteSchema):
 
     Mapping(required=[step])
 
-    Attributes
+    Parameters
     ----------
 
     step : float
@@ -16969,7 +16969,7 @@ class DerivedStream(Stream):
 
     Mapping(required=[stream])
 
-    Attributes
+    Parameters
     ----------
 
     stream : :class:`Stream`
@@ -17014,7 +17014,7 @@ class MergedStream(Stream):
 
     Mapping(required=[merge])
 
-    Attributes
+    Parameters
     ----------
 
     merge : List(:class:`Stream`)
@@ -17048,7 +17048,7 @@ class StringFieldDef(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -17247,7 +17247,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -17456,7 +17456,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -17499,7 +17499,7 @@ class StyleConfigIndex(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     arc : :class:`RectConfig`
@@ -17615,7 +17615,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -17772,7 +17772,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -17995,7 +17995,7 @@ class TickConfig(AnyMarkConfig):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : anyOf(:class:`Align`, :class:`ExprRef`)
@@ -18438,7 +18438,7 @@ class TimeIntervalStep(TickCount):
 
     Mapping(required=[interval, step])
 
-    Attributes
+    Parameters
     ----------
 
     interval : :class:`TimeInterval`
@@ -18458,7 +18458,7 @@ class TimeLocale(VegaLiteSchema):
     Mapping(required=[dateTime, date, time, periods, days, shortDays, months, shortMonths])
     Locale definition for formatting dates and times.
 
-    Attributes
+    Parameters
     ----------
 
     date : string
@@ -18554,7 +18554,7 @@ class TimeUnitParams(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     maxbins : float
@@ -18588,7 +18588,7 @@ class TitleConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     align : :class:`Align`
@@ -18713,7 +18713,7 @@ class TitleParams(VegaLiteSchema):
 
     Mapping(required=[text])
 
-    Attributes
+    Parameters
     ----------
 
     text : anyOf(:class:`Text`, :class:`ExprRef`)
@@ -18838,7 +18838,7 @@ class TooltipContent(VegaLiteSchema):
 
     Mapping(required=[content])
 
-    Attributes
+    Parameters
     ----------
 
     content : enum('encoding', 'data')
@@ -18855,7 +18855,7 @@ class TopLevelSelectionParameter(VegaLiteSchema):
 
     Mapping(required=[name, select])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -18927,7 +18927,7 @@ class TopLevelConcatSpec(TopLevelSpec):
 
     Mapping(required=[concat])
 
-    Attributes
+    Parameters
     ----------
 
     concat : List(:class:`NonNormalizedSpec`)
@@ -19065,7 +19065,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     Mapping(required=[data, facet, spec])
 
-    Attributes
+    Parameters
     ----------
 
     data : anyOf(:class:`Data`, None)
@@ -19209,7 +19209,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
 
     Mapping(required=[hconcat])
 
-    Attributes
+    Parameters
     ----------
 
     hconcat : List(:class:`NonNormalizedSpec`)
@@ -19305,7 +19305,7 @@ class TopLevelLayerSpec(TopLevelSpec):
 
     Mapping(required=[layer])
 
-    Attributes
+    Parameters
     ----------
 
     layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
@@ -19446,7 +19446,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     Mapping(required=[data, mark])
 
-    Attributes
+    Parameters
     ----------
 
     data : anyOf(:class:`Data`, None)
@@ -19622,7 +19622,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
 
     Mapping(required=[vconcat])
 
-    Attributes
+    Parameters
     ----------
 
     vconcat : List(:class:`NonNormalizedSpec`)
@@ -19718,7 +19718,7 @@ class TopoDataFormat(DataFormat):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     feature : string
@@ -19782,7 +19782,7 @@ class AggregateTransform(Transform):
 
     Mapping(required=[aggregate])
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : List(:class:`AggregatedFieldDef`)
@@ -19802,7 +19802,7 @@ class BinTransform(Transform):
 
     Mapping(required=[bin, field, as])
 
-    Attributes
+    Parameters
     ----------
 
     bin : anyOf(boolean, :class:`BinParams`)
@@ -19827,7 +19827,7 @@ class CalculateTransform(Transform):
 
     Mapping(required=[calculate, as])
 
-    Attributes
+    Parameters
     ----------
 
     calculate : string
@@ -19847,7 +19847,7 @@ class DensityTransform(Transform):
 
     Mapping(required=[density])
 
-    Attributes
+    Parameters
     ----------
 
     density : :class:`FieldName`
@@ -19908,7 +19908,7 @@ class FilterTransform(Transform):
 
     Mapping(required=[filter])
 
-    Attributes
+    Parameters
     ----------
 
     filter : :class:`PredicateComposition`
@@ -19951,7 +19951,7 @@ class FlattenTransform(Transform):
 
     Mapping(required=[flatten])
 
-    Attributes
+    Parameters
     ----------
 
     flatten : List(:class:`FieldName`)
@@ -19975,7 +19975,7 @@ class FoldTransform(Transform):
 
     Mapping(required=[fold])
 
-    Attributes
+    Parameters
     ----------
 
     fold : List(:class:`FieldName`)
@@ -19995,7 +19995,7 @@ class ImputeTransform(Transform):
 
     Mapping(required=[impute, key])
 
-    Attributes
+    Parameters
     ----------
 
     impute : :class:`FieldName`
@@ -20048,7 +20048,7 @@ class JoinAggregateTransform(Transform):
 
     Mapping(required=[joinaggregate])
 
-    Attributes
+    Parameters
     ----------
 
     joinaggregate : List(:class:`JoinAggregateFieldDef`)
@@ -20069,7 +20069,7 @@ class LoessTransform(Transform):
 
     Mapping(required=[loess, on])
 
-    Attributes
+    Parameters
     ----------
 
     loess : :class:`FieldName`
@@ -20101,7 +20101,7 @@ class LookupTransform(Transform):
 
     Mapping(required=[lookup, from])
 
-    Attributes
+    Parameters
     ----------
 
     lookup : string
@@ -20134,7 +20134,7 @@ class PivotTransform(Transform):
 
     Mapping(required=[pivot, value])
 
-    Attributes
+    Parameters
     ----------
 
     pivot : :class:`FieldName`
@@ -20167,7 +20167,7 @@ class QuantileTransform(Transform):
 
     Mapping(required=[quantile])
 
-    Attributes
+    Parameters
     ----------
 
     quantile : :class:`FieldName`
@@ -20199,7 +20199,7 @@ class RegressionTransform(Transform):
 
     Mapping(required=[regression, on])
 
-    Attributes
+    Parameters
     ----------
 
     on : :class:`FieldName`
@@ -20249,7 +20249,7 @@ class SampleTransform(Transform):
 
     Mapping(required=[sample])
 
-    Attributes
+    Parameters
     ----------
 
     sample : float
@@ -20268,7 +20268,7 @@ class StackTransform(Transform):
 
     Mapping(required=[stack, groupby, as])
 
-    Attributes
+    Parameters
     ----------
 
     groupby : List(:class:`FieldName`)
@@ -20302,7 +20302,7 @@ class TimeUnitTransform(Transform):
 
     Mapping(required=[timeUnit, field, as])
 
-    Attributes
+    Parameters
     ----------
 
     field : :class:`FieldName`
@@ -20347,7 +20347,7 @@ class TypedFieldDef(VegaLiteSchema):
     Mapping(required=[])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     aggregate : :class:`Aggregate`
@@ -20523,7 +20523,7 @@ class UnitSpec(VegaLiteSchema):
     Mapping(required=[mark])
     Base interface for a unit (single-view) specification.
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -20567,7 +20567,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
     Mapping(required=[mark])
 
-    Attributes
+    Parameters
     ----------
 
     mark : :class:`AnyMark`
@@ -20656,7 +20656,7 @@ class UrlData(DataSource):
 
     Mapping(required=[url])
 
-    Attributes
+    Parameters
     ----------
 
     url : string
@@ -20710,7 +20710,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Mapping(required=[vconcat])
     Base interface for a vertical concatenation specification.
 
-    Attributes
+    Parameters
     ----------
 
     vconcat : List(:class:`Spec`)
@@ -20766,7 +20766,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, M
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
@@ -20789,7 +20789,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPro
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -20812,7 +20812,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(MarkPropDefnumber, Nume
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -20834,7 +20834,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(MarkPropDefnumberA
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
@@ -20857,7 +20857,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -20879,7 +20879,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
@@ -20903,7 +20903,7 @@ class ValueDefnumber(OffsetDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -20924,7 +20924,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -20943,7 +20943,7 @@ class VariableParameter(VegaLiteSchema):
 
     Mapping(required=[name])
 
-    Attributes
+    Parameters
     ----------
 
     name : :class:`ParameterName`
@@ -21074,7 +21074,7 @@ class ViewBackground(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     cornerRadius : anyOf(float, :class:`ExprRef`)
@@ -21152,7 +21152,7 @@ class ViewConfig(VegaLiteSchema):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     clip : boolean
@@ -21275,7 +21275,7 @@ class WindowFieldDef(VegaLiteSchema):
 
     Mapping(required=[op, as])
 
-    Attributes
+    Parameters
     ----------
 
     op : anyOf(:class:`AggregateOp`, :class:`WindowOnlyOp`)
@@ -21318,7 +21318,7 @@ class WindowTransform(Transform):
 
     Mapping(required=[window])
 
-    Attributes
+    Parameters
     ----------
 
     window : List(:class:`WindowFieldDef`)
