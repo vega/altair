@@ -231,22 +231,10 @@ class SchemaValidationError(jsonschema.ValidationError):
             # back on the class of the top-level object which created
             # the SchemaValidationError
             cls = self.obj.__class__
-        schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
-        schema_path.extend(self.schema_path)
-        schema_path = "->".join(
-            str(val)
-            for val in schema_path[:-1]
-            if val not in (0, "properties", "additionalProperties", "patternProperties")
-        )
 
         # Output all existing parameters when an unknown parameter is specified
-        if (
-            hasattr(vegalite, schema_path.split(".")[-1])
-            and self.validator == "additionalProperties"
-        ):
-            altair_class = schema_path.split(".")[-1]
-            vegalite_core_class = getattr(vegalite, schema_path.split(".")[-1])
-            param_dict_keys = inspect.signature(vegalite_core_class).parameters.keys()
+        if self.validator == "additionalProperties":
+            param_dict_keys = inspect.signature(cls).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
             # `cleandoc` removes multiline string indentation in the output
@@ -257,10 +245,10 @@ class SchemaValidationError(jsonschema.ValidationError):
                 {}
                 See the help for `{}` to read the full description of these parameters
                 """.format(
-                    altair_class,
+                    cls.__name__,
                     self.message.split("('")[-1].split("'")[0],
                     param_names_table,
-                    altair_class,
+                    cls.__name__,
                 )
             )
         # Use the default error message for all other cases than unknown parameter errors
@@ -268,7 +256,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             message = self.message
             # Add a summary line when parameters are passed an invalid value
             # For example: "'asdf' is an invalid value for `stack`
-            if hasattr(vegalite, schema_path.split(".")[-1]) and self.absolute_path:
+            if self.absolute_path:
                 # The indentation here must match that of `cleandoc` below
                 message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
 
