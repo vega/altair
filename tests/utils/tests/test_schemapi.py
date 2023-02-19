@@ -523,7 +523,20 @@ def chart_example_invalid_y_option_value_with_condition():
         ),
         (
             chart_example_invalid_channel_and_condition,
-            r"Additional properties are not allowed \('invalidChannel' was unexpected\)\n",
+            inspect.cleandoc(
+                r"""`Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters"""  # noqa: W291
+            ),
         ),
     ],
 )
