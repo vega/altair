@@ -121,7 +121,7 @@ class PluginRegistry(Generic[PluginType]):
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
-        more_exts = [ep.name for ep in entry_points().get(self.entry_point_group, [])]
+        more_exts = [ep.name for ep in entry_points(group=self.entry_point_group)]
         exts.extend(more_exts)
         return sorted(set(exts))
 
