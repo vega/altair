@@ -167,6 +167,7 @@ Both renderers require you to install either the `vl-convert`_ or the `altair_sa
 whereas `vl-convert`_ is expected to provide the better performance.
 
 .. _preaggregate-and-filter:
+
 Preaggregate and Filter in Pandas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Another common approach is to perform data transformations such as aggregations
