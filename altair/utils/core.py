@@ -14,7 +14,7 @@ import jsonschema
 import pandas as pd
 import numpy as np
 
-from altair.utils.schemapi import SchemaBase, Undefined  # noqa: F401
+from altair.utils.schemapi import SchemaBase
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
