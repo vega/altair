@@ -168,8 +168,8 @@ class SchemaGenerator(object):
         # Remove lines which contain the "raw-html" directive which cannot be processed
         # by Sphinx at this level of the docstring. It works for descriptions
         # of attributes which is why we do not do the same below. The removed
-        # lines are anyway non-descriptive for a user. 
-        doc = [l for l in doc if not ":raw-html:" in l]
+        # lines are anyway non-descriptive for a user.
+        doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
