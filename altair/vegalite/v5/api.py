@@ -516,7 +516,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = {"shorthand": if_true}
+        if_true = utils.parse_shorthand(if_true)
         if_true.update(kwargs)
     condition.update(if_true)
 
