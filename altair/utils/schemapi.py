@@ -197,7 +197,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
 
 class UndefinedType(object):
-    """A singleton object for marking undefined attributes"""
+    """A singleton object for marking undefined parameters"""
 
     __instance = None
 
@@ -699,13 +699,13 @@ class _PropertySetter(object):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
-            attribute_index = altair_prop.__doc__.find("Attributes\n")
-            if attribute_index > -1:
+            parameter_index = altair_prop.__doc__.find("Parameters\n")
+            if parameter_index > -1:
                 self.__doc__ = (
-                    altair_prop.__doc__[:attribute_index].replace("    ", "")
+                    altair_prop.__doc__[:parameter_index].replace("    ", "")
                     + self.__doc__
                     + textwrap.dedent(
-                        f"\n\n    {altair_prop.__doc__[attribute_index:]}"
+                        f"\n\n    {altair_prop.__doc__[parameter_index:]}"
                     )
                 )
             # For short docstrings such as Aggregate, Stack, et

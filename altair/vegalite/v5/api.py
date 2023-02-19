@@ -799,7 +799,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular',
         'gnomonic', 'identity', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
 
-        Attributes
+        Parameters
         ----------
         type : ProjectionType
             The cartographic projection to use. This value is case-insensitive, for example
@@ -1110,7 +1110,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     ) -> _TTopLevelMixin:
         """Add a DensityTransform to the spec.
 
-        Attributes
+        Parameters
         ----------
         density : str
             The data field for which to perform density estimation.
@@ -1424,7 +1424,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     ) -> _TTopLevelMixin:
         """Add a DataLookupTransform or SelectionLookupTransform to the chart
 
-        Attributes
+        Parameters
         ----------
         lookup : string
             Key in primary data source.
@@ -2115,7 +2115,7 @@ class Chart(
     ``transform_filter()``, ``properties()``, etc. See Altair's documentation
     for details and examples: http://altair-viz.github.io/.
 
-    Attributes
+    Parameters
     ----------
     data : Data
         An object describing the data source
