@@ -3,7 +3,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any
+from typing import Any, Sequence, List
 
 import jsonschema
 import jsonschema.exceptions
@@ -64,9 +64,50 @@ def validate_jsonschema(spec, schema, rootschema=None):
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
     validator = validator_cls(schema, **validator_kwargs)
-    error = jsonschema.exceptions.best_match(validator.iter_errors(spec))
-    if error is not None:
-        raise error
+    errors = list(validator.iter_errors(spec))
+    if errors:
+        errors = _get_most_relevant_errors(errors)
+        main_error = errors[0]
+        # They can be used to craft more helpful error messages when this error
+        # is being converted to a SchemaValidationError
+        main_error._additional_errors = errors[1:]
+        raise main_error
+
+
+def _get_most_relevant_errors(
+    errors: Sequence[jsonschema.exceptions.ValidationError],
+) -> List[jsonschema.exceptions.ValidationError]:
+    if len(errors) == 0:
+        return []
+
+    # Go to lowest level in schema where an error happened as these give
+    # the most relevant error messages
+    lowest_level = errors[0]
+    while lowest_level.context:
+        lowest_level = lowest_level.context[0]
+
+    most_relevant_errors = []
+    if lowest_level.validator == "additionalProperties":
+        # For these errors, the message is already informative enough and the other
+        # errors on the lowest level are not helpful for a user but instead contain
+        # the same information in a more verbose way
+        most_relevant_errors = [lowest_level]
+    else:
+        parent = lowest_level.parent
+        if parent is None:
+            # In this case we are still at the top level and can return all errors
+            most_relevant_errors = errors
+        else:
+            # Return all errors of the lowest level out of which
+            # we can construct more informative error messages
+            most_relevant_errors = lowest_level.parent.context
+
+    # This should never happen but might still be good to test for it as else
+    # the original error would just slip through without being raised
+    if len(most_relevant_errors) == 0:
+        raise Exception("Could not determine the most relevant errors") from errors[0]
+
+    return most_relevant_errors
 
 
 def _subclasses(cls):
@@ -80,18 +121,14 @@ def _subclasses(cls):
             yield cls
 
 
-def _todict(obj, validate, context):
+def _todict(obj, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
-        return obj.to_dict(validate=validate, context=context)
+        return obj.to_dict(validate=False, context=context)
     elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, validate, context) for v in obj]
+        return [_todict(v, context) for v in obj]
     elif isinstance(obj, dict):
-        return {
-            k: _todict(v, validate, context)
-            for k, v in obj.items()
-            if v is not Undefined
-        }
+        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
     elif hasattr(obj, "to_dict"):
         return obj.to_dict()
     elif isinstance(obj, np.number):
@@ -115,46 +152,50 @@ class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
     def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**self._get_contents(err))
+        super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
-
-    @staticmethod
-    def _get_contents(err):
-        """Get a dictionary with the contents of a ValidationError"""
-        try:
-            # works in jsonschema 2.3 or later
-            contents = err._contents()
-        except AttributeError:
-            try:
-                # works in Python >=3.4
-                spec = inspect.getfullargspec(err.__init__)
-            except AttributeError:
-                # works in Python <3.4
-                spec = inspect.getargspec(err.__init__)
-            contents = {key: getattr(err, key) for key in spec.args[1:]}
-        return contents
+        self._additional_errors = getattr(err, "_additional_errors", [])
 
     def __str__(self):
-        cls = self.obj.__class__
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(self.absolute_path):
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
+            cls = self.obj.__class__
         schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
         schema_path = "->".join(
             str(val)
             for val in schema_path[:-1]
-            if val not in ("properties", "additionalProperties", "patternProperties")
+            if val not in (0, "properties", "additionalProperties", "patternProperties")
         )
+        message = self.message
+        if self._additional_errors:
+            message += "\n        " + "\n        ".join(
+                [e.message for e in self._additional_errors]
+            )
         return """Invalid specification
 
         {}, validating {!r}
 
         {}
         """.format(
-            schema_path, self.validator, self.message
+            schema_path, self.validator, message
         )
 
 
 class UndefinedType(object):
-    """A singleton object for marking undefined attributes"""
+    """A singleton object for marking undefined parameters"""
 
     __instance = None
 
@@ -325,11 +366,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -351,10 +390,9 @@ class SchemaBase(object):
             context = {}
         if ignore is None:
             ignore = []
-        sub_validate = "deep" if validate == "deep" else False
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], validate=sub_validate, context=context)
+            result = _todict(self._args[0], context=context)
         elif not self._args:
             kwds = self._kwds.copy()
             # parsed_shorthand is added by FieldChannelMixin.
@@ -364,10 +402,10 @@ class SchemaBase(object):
             parsed_shorthand = context.pop("parsed_shorthand", {})
             # Prevent that pandas categorical data is automatically sorted
             # when a non-ordinal data type is specifed manually
-            if "sort" in parsed_shorthand and kwds["type"] not in [
-                "ordinal",
-                Undefined,
-            ]:
+            # or if the encoding channel does not support sorting
+            if "sort" in parsed_shorthand and (
+                "sort" not in kwds or kwds["type"] not in ["ordinal", Undefined]
+            ):
                 parsed_shorthand.pop("sort")
 
             kwds.update(
@@ -380,9 +418,10 @@ class SchemaBase(object):
             kwds = {
                 k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
             }
+            if "mark" in kwds and isinstance(kwds["mark"], str):
+                kwds["mark"] = {"type": kwds["mark"]}
             result = _todict(
                 kwds,
-                validate=sub_validate,
                 context=context,
             )
         else:
@@ -404,11 +443,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -514,7 +551,7 @@ class SchemaBase(object):
         Validate a property against property schema in the context of the
         rootschema
         """
-        value = _todict(value, validate=False, context={})
+        value = _todict(value, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         return validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
@@ -660,13 +697,13 @@ class _PropertySetter(object):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
-            attribute_index = altair_prop.__doc__.find("Attributes\n")
-            if attribute_index > -1:
+            parameter_index = altair_prop.__doc__.find("Parameters\n")
+            if parameter_index > -1:
                 self.__doc__ = (
-                    altair_prop.__doc__[:attribute_index].replace("    ", "")
+                    altair_prop.__doc__[:parameter_index].replace("    ", "")
                     + self.__doc__
                     + textwrap.dedent(
-                        f"\n\n    {altair_prop.__doc__[attribute_index:]}"
+                        f"\n\n    {altair_prop.__doc__[parameter_index:]}"
                     )
                 )
             # For short docstrings such as Aggregate, Stack, et

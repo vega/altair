@@ -21,6 +21,8 @@ Enhancements
 - Saving charts with HTML inline is now supported without having altair_saver installed (#2807).
 - The documentation page has been revamped, both in terms of appearance and content.
 - More informative autocompletion by removing deprecated methods (#2814) and adding support for completion in method chains for editors that rely on type hints (e.g. VS Code) (#2846)
+- Improved error messages (#2842)
+- Include experimental support for the DataFrame Interchange Protocol (through `__dataframe__` attribute). This requires `pyarrow>=11.0.0` (#2888).
 
 Grammar Changes
 ~~~~~~~~~~~~~~~

@@ -76,6 +76,8 @@ def limit_rows(data, max_rows=5000):
             values = data["values"]
         else:
             return data
+    elif hasattr(data, "__dataframe__"):
+        values = data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError(
             "The number of rows in your dataset is greater "
@@ -98,6 +100,13 @@ def sample(data, n=None, frac=None):
             n = n if n else int(frac * len(values))
             values = random.sample(values, n)
             return {"values": values}
+    elif hasattr(data, "__dataframe__"):
+        # experimental interchange dataframe support
+        pi = import_pyarrow_interchange()
+        pa_table = pi.from_dataframe(data)
+        n = n if n else int(frac * len(pa_table))
+        indices = random.sample(range(len(pa_table)), n)
+        return pa_table.take(indices)
 
 
 @curried.curry
@@ -152,12 +161,17 @@ def to_values(data):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
         return data
+    elif hasattr(data, "__dataframe__"):
+        # experimental interchange dataframe support
+        pi = import_pyarrow_interchange()
+        pa_table = pi.from_dataframe(data)
+        return {"values": pa_table.to_pylist()}
 
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(
-        data, "__geo_interface__"
+    if not isinstance(data, (dict, pd.DataFrame)) and not any(
+        hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
     ):
         raise TypeError(
             "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
@@ -190,6 +204,11 @@ def _data_to_json_string(data):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
         return json.dumps(data["values"], sort_keys=True)
+    elif hasattr(data, "__dataframe__"):
+        # experimental interchange dataframe support
+        pi = import_pyarrow_interchange()
+        pa_table = pi.from_dataframe(data)
+        return json.dumps(pa_table.to_pylist())
     else:
         raise NotImplementedError(
             "to_json only works with data expressed as " "a DataFrame or as a dict"
@@ -211,6 +230,16 @@ def _data_to_csv_string(data):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present")
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
+    elif hasattr(data, "__dataframe__"):
+        # experimental interchange dataframe support
+        pi = import_pyarrow_interchange()
+        import pyarrow as pa
+        import pyarrow.csv as pa_csv
+
+        pa_table = pi.from_dataframe(data)
+        csv_buffer = pa.BufferOutputStream()
+        pa_csv.write_csv(pa_table, csv_buffer)
+        return csv_buffer.getvalue().to_pybytes().decode()
     else:
         raise NotImplementedError(
             "to_csv only works with data expressed as " "a DataFrame or as a dict"
@@ -242,3 +271,25 @@ def curry(*args, **kwargs):
         AltairDeprecationWarning,
     )
     return curried.curry(*args, **kwargs)
+
+
+def import_pyarrow_interchange():
+    import pkg_resources
+
+    try:
+        pkg_resources.require("pyarrow>=11.0.0")
+        # The package is installed and meets the minimum version requirement
+        import pyarrow.interchange as pi
+
+        return pi
+    except pkg_resources.DistributionNotFound:
+        # The package is not installed
+        raise ImportError(
+            "Usage of the DataFrame Interchange Protocol requires the package 'pyarrow', but it is not installed."
+        )
+    except pkg_resources.VersionConflict:
+        # The package is installed but does not meet the minimum version requirement
+        raise ImportError(
+            "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
+            "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
+        )

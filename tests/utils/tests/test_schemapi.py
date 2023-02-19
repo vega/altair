@@ -4,11 +4,14 @@ import copy
 import io
 import json
 import jsonschema
+import re
 import pickle
-import pytest
+import warnings
 
 import numpy as np
 import pandas as pd
+import pytest
+from vega_datasets import data
 
 import altair as alt
 from altair import load_schema
@@ -134,7 +137,7 @@ class Draft7Schema(_TestSchema):
 
 class Draft202012Schema(_TestSchema):
     _schema = {
-        "$schema": "http://json-schema.org/draft/2020-12/schema#",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
         "properties": {
             "e": {"items": [{"type": "string"}, {"type": "string"}]},
         },
@@ -380,6 +383,137 @@ def test_schema_validation_error():
     assert the_err.message in message
 
 
+def chart_example_layer():
+    points = (
+        alt.Chart(data.cars.url)
+        .mark_point()
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+        )
+    )
+    return (points & points).properties(width=400)
+
+
+def chart_example_hconcat():
+    source = data.cars()
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(
+            x="Horsepower",
+            y="Miles_per_Gallon",
+        )
+    )
+
+    text = (
+        alt.Chart(source)
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+    )
+
+    return points | text
+
+
+def chart_example_invalid_channel_and_condition():
+    selection = alt.selection_point()
+    return (
+        alt.Chart(data.barley())
+        .mark_circle()
+        .add_params(selection)
+        .encode(
+            color=alt.condition(selection, alt.value("red"), alt.value("green")),
+            invalidChannel=None,
+        )
+    )
+
+
+def chart_example_invalid_y_option():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety"),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value_with_condition():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x="variety",
+            y=alt.Y("sum(yield)", stack="asdf"),
+            opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    "chart_func, expected_error_message",
+    [
+        (
+            chart_example_invalid_y_option,
+            r"schema.channels.X.*"
+            + r"Additional properties are not allowed \('unknown' was unexpected\)",
+        ),
+        (
+            chart_example_invalid_y_option_value,
+            r"schema.channels.Y.*"
+            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+        ),
+        (
+            chart_example_layer,
+            r"api.VConcatChart.*"
+            + r"Additional properties are not allowed \('width' was unexpected\)",
+        ),
+        (
+            chart_example_invalid_y_option_value_with_condition,
+            r"schema.channels.Y.*"
+            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
+            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+        ),
+        (
+            chart_example_hconcat,
+            r"schema.core.TitleParams.*"
+            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
+            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'array'",
+        ),
+        (
+            chart_example_invalid_channel_and_condition,
+            r"schema.core.Encoding->encoding.*"
+            + r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
+        ),
+    ],
+)
+def test_chart_validation_errors(chart_func, expected_error_message):
+    # DOTALL flag makes that a dot (.) also matches new lines
+    pattern = re.compile(expected_error_message, re.DOTALL)
+    # For some wrong chart specifications such as an unknown encoding channel,
+    # Altair already raises a warning before the chart specifications are validated.
+    # We can ignore these warnings as we are interested in the errors being raised
+    # during validation which is triggered by to_dict
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        chart = chart_func()
+    with pytest.raises(SchemaValidationError, match=pattern):
+        chart.to_dict()
+
+
 def test_serialize_numpy_types():
     m = MySchema(
         a={"date": np.datetime64("2019-01-01")},
@@ -426,3 +560,11 @@ def test_to_dict_no_side_effects():
     assert "shorthand" not in dct["encoding"]["y"]
     assert dct["encoding"]["y"]["field"] == "b"
     assert dct["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_to_dict_expand_mark_spec():
+    # Test that `to_dict` correctly expands marks to a dictionary
+    # without impacting the original spec which remains a string
+    chart = alt.Chart().mark_bar()
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"
