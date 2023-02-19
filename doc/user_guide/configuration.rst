@@ -35,7 +35,7 @@ For more discussion of approaches to chart customization, see
 Chart Configuration
 -------------------
 The :meth:`Chart.configure` method adds a :class:`Config` instance to the chart,
-and accepts the following arguments:
+and accepts the following parameters:
 
 .. altair-object-table:: altair.Config
 
