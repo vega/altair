@@ -23,6 +23,7 @@ Enhancements
 - More informative autocompletion by removing deprecated methods (#2814) and adding support for completion in method chains for editors that rely on type hints (e.g. VS Code) (#2846)
 - Improved error messages (#2842)
 - Include experimental support for the DataFrame Interchange Protocol (through `__dataframe__` attribute). This requires `pyarrow>=11.0.0` (#2888).
+- Support data type inference for columns with special characters (#2905).
 
 Grammar Changes
 ~~~~~~~~~~~~~~~
