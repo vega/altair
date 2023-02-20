@@ -303,29 +303,17 @@ def value(value, **kwargs):
     return dict(value=value, **kwargs)
 
 
-def param(name=None, select=None, **kwds):
-    """Create a named parameter.
-
-    Parameters
-    ----------
-    name : string (optional)
-        The name of the parameter. If not specified, a unique name will be
-        created.
-    **kwds :
-        additional keywords will be used to construct a parameter.  If 'select'
-        is among the keywords, then a SelectionParameter will be created.
-        Otherwise, a VariableParameter will be created.
-
-    Returns
-    -------
-    parameter: Parameter
-        The parameter object that can be used in chart creation.
-    """
-
+def param(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    **kwds,
+):
     parameter = Parameter(name)
 
-    if "empty" in kwds:
-        parameter.empty = kwds.pop("empty")
+    if empty is not Undefined:
+        parameter.empty = empty
         if parameter.empty == "none":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
@@ -348,50 +336,97 @@ def param(name=None, select=None, **kwds):
             """Use 'value' instead of 'init'.""",
             utils.AltairDeprecationWarning,
         )
-        if "value" not in kwds:
+        if value is Undefined:
             kwds["value"] = kwds.pop("init")
         else:
             # If both 'value' and 'init' are set, we ignore 'init'.
             kwds.pop("init")
 
-    if select is None:
-        parameter.param = core.VariableParameter(name=parameter.name, **kwds)
+    if "select" not in kwds:
+        parameter.param = core.VariableParameter(
+            name=parameter.name, bind=bind, value=value, **kwds
+        )
         parameter.param_type = "variable"
     elif "views" in kwds:
         parameter.param = core.TopLevelSelectionParameter(
-            name=parameter.name, select=select, **kwds
+            name=parameter.name, bind=bind, value=value, **kwds
         )
         parameter.param_type = "selection"
     else:
         parameter.param = core.SelectionParameter(
-            name=parameter.name, select=select, **kwds
+            name=parameter.name, bind=bind, value=value, **kwds
         )
         parameter.param_type = "selection"
 
     return parameter
 
 
-# TODO: Update the docstring
-def selection(type=Undefined, **kwds):
-    """Create a selection.
+_top_params_doc = """name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'."""
+
+_select_params_doc = """encodings : List[str] (optional)
+        A list of encoding channels. The corresponding data field values
+        must match for a data tuple to fall within the selection.
+    fields : List[str] (optional)
+        A list of field names whose values must match for a data tuple to
+        fall within the selection.
+    on : string (optional)
+        A Vega event stream (object or selector) that triggers the selection.
+        For interval selections, the event stream must specify a start and end.
+    clear : string or boolean (optional)
+        Clears the selection, emptying it of all values. This property can
+        be an Event Stream or False to disable clear.  Default is 'dblclick'.
+    resolve : enum('global', 'union', 'intersect') (optional)
+        With layered and multi-view displays, a strategy that determines
+        how selections' data queries are resolved when applied in a filter
+        transform, conditional encoding rule, or scale domain.
+        One of:
+        * 'global' - only one brush exists for the entire SPLOM. When the
+            user begins to drag, any previous brushes are cleared, and a
+            new one is constructed.
+        * 'union' - each cell contains its own brush, and points are
+            highlighted if they lie within any of these individual brushes.
+        * 'intersect' - each cell contains its own brush, and points are
+            highlighted only if they fall within all of these individual
+            brushes.
+        The default is 'global'."""
+
+_return_param_doc = """
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
+"""
+
+param.__doc__ = f"""Create a named parameter.  See https://altair-viz.github.io/user_guide/interactions.html for examples.  Although both variable parameters and selection parameters can be created using this 'param' function, to create a selection parameter, it is recommended to use either 'selection_point' or 'selection_interval' instead.
 
     Parameters
     ----------
-    type : string
-        The type of the selection: either "interval" or "point"]
+    {_top_params_doc}
     **kwds :
-        additional keywords to control the selection.
-
-    Returns
-    -------
-    Parameter
-        The Parameter object that can be used in chart creation.
+        additional keywords will be used to construct a parameter.  If 'select'
+        is among the keywords, then a selection parameter will be created.
+        Otherwise, a variable parameter will be created.
+    {_return_param_doc}
     """
 
+
+def _selection(type=Undefined, **kwds):
     # We separate out the parameter keywords from the selection keywords
     param_kwds = {}
 
-    for kwd in {"name", "value", "bind", "empty", "init", "views"}:
+    for kwd in {"name", "bind", "value", "empty", "init", "views"}:
         if kwd in kwds:
             param_kwds[kwd] = kwds.pop(kwd)
 
@@ -412,16 +447,161 @@ def selection(type=Undefined, **kwds):
     return param(select=select, **param_kwds)
 
 
-@utils.use_signature(core.IntervalSelectionConfig)
-def selection_interval(**kwargs):
-    """Create a selection parameter with type='interval'"""
-    return selection(type="interval", **kwargs)
+@utils.deprecation.deprecated(
+    message="""'selection' is deprecated.
+    Although it is possible to create a point selection using 'selection(type="point")' and an interval selection using 'selection(type="interval")', for consistency, it is recommended to use 'selection_point()' or 'selection_interval()' instead."""
+)
+def selection(type=Undefined, **kwds):
+    """Create a selection parameter.  Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+
+    Parameters
+    ----------
+    type : enum('point', 'interval') (required)
+        Determines the default event processing and data query for the
+        selection. Vega-Lite currently supports two selection types:
+        * "point" - to select multiple discrete data values; the first
+        value is selected on click and additional values toggled on
+        shift-click.
+        * "interval" - to select a continuous range of data values on
+        drag.
+    **kwds :
+        additional keywords to control the selection.
+    """
+
+    return _selection(type=type, **kwds)
 
 
-@utils.use_signature(core.PointSelectionConfig)
-def selection_point(**kwargs):
-    """Create a selection with type='point'"""
-    return selection(type="point", **kwargs)
+def selection_interval(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    encodings=Undefined,
+    on=Undefined,
+    clear=Undefined,
+    resolve=Undefined,
+    mark=Undefined,
+    translate=Undefined,
+    zoom=Undefined,
+    **kwds,
+):
+    return _selection(
+        type="interval",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        encodings=encodings,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        mark=mark,
+        translate=translate,
+        zoom=zoom,
+        **kwds,
+    )
+
+
+selection_interval.__doc__ = f"""Create a selection parameter with `type='interval'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='interval'` are used to select a continuous range of data values on drag.  (The current alternative is `type='point'`, which is used to select multiple discrete data values, and which is created using 'selection_point'.)
+
+    Parameters
+    ----------
+    {_top_params_doc}
+    {_select_params_doc}
+    mark : :class:`Mark` (optional)
+        An interval selection also adds a rectangle mark to depict the
+        extents of the interval. The mark property can be used to
+        customize the appearance of the mark.
+    translate : string or boolean (optional)
+        When truthy, allows a user to interactively move an interval
+        selection back-and-forth. Can be True, False (to disable panning),
+        or a Vega event stream definition which must include a start and
+        end event to trigger continuous panning. Discrete panning (e.g.,
+        pressing the left/right arrow keys) will be supported in future
+        versions.
+        The default value is True, which corresponds to
+        [mousedown, window:mouseup] > window:mousemove!
+        This default allows users to click and drag within an interval
+        selection to reposition it.
+    zoom : string or boolean (optional)
+        When truthy, allows a user to interactively resize an interval
+        selection. Can be True, False (to disable zooming), or a Vega
+        event stream definition. Currently, only wheel events are supported,
+        but custom event streams can still be used to specify filters,
+        debouncing, and throttling. Future versions will expand the set of
+        events that can trigger this transformation.
+        The default value is True, which corresponds to wheel!. This
+        default allows users to use the mouse wheel to resize an interval
+        selection.
+    **kwds :
+        additional keywords to control the selection.
+    {_return_param_doc}
+    """
+
+
+def selection_point(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    encodings=Undefined,
+    on=Undefined,
+    clear=Undefined,
+    resolve=Undefined,
+    toggle=Undefined,
+    nearest=Undefined,
+    **kwds,
+):
+    return _selection(
+        type="point",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        encodings=encodings,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        toggle=toggle,
+        nearest=nearest,
+        **kwds,
+    )
+
+
+selection_point.__doc__ = f"""Create a selection parameter with `type='point'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='point'` are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. (The current alternative is `type='interval'`, which is used to select select a continuous range of data values on drag, and which is created using 'selection_interval'.)
+
+    Parameters
+    ----------
+    {_top_params_doc}
+    {_select_params_doc}
+    toggle : string or boolean (optional)
+        Controls whether data values should be toggled (inserted or
+        removed from a point selection) or only ever inserted into
+        point selections.
+        One of:
+        * True - the default behavior, which corresponds to
+            "event.shiftKey". As a result, data values are toggled
+            when the user interacts with the shift-key pressed.
+        * False - disables toggling behaviour; the selection will
+            only ever contain a single data value corresponding
+            to the most recent interaction.
+        * A Vega expression which is re-evaluated as the user interacts.
+            If the expression evaluates to True, the data value is
+            toggled into or out of the point selection. If the expression
+            evaluates to False, the point selection is first cleared, and
+            the data value is then inserted. For example, setting the
+            value to the Vega expression True will toggle data values
+            without the user pressing the shift-key.
+    nearest : boolean (optional)
+        When true, an invisible voronoi diagram is computed to accelerate
+        discrete selection. The data value nearest the mouse cursor is
+        added to the selection.  The default is False, which means that
+        data values must be interacted with directly (e.g., clicked on)
+        to be added to the selection.
+    **kwds :
+        additional keywords to control the selection.
+    {_return_param_doc}
+    """
 
 
 @utils.deprecation.deprecated(
@@ -429,7 +609,7 @@ def selection_point(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
-    return selection(type="point", **kwargs)
+    return _selection(type="point", **kwargs)
 
 
 @utils.deprecation.deprecated(
@@ -437,7 +617,7 @@ def selection_multi(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
-    return selection(type="point", **kwargs)
+    return _selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
@@ -634,7 +814,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format : string (optional)
             the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
             If not specified, the format will be determined from the filename.
-        override_data_transformer : boolean (optional)
+        override_data_transformer : `boolean` (optional)
             If True (default), then the save action will be done with
             the MaxRowsError disabled. If False, then do not change the data
             transformer.
