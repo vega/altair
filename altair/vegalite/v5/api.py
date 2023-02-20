@@ -308,6 +308,7 @@ def param(
     value=Undefined,
     bind=Undefined,
     empty=Undefined,
+    expr=Undefined,
     **kwds,
 ):
     parameter = Parameter(name)
@@ -344,17 +345,17 @@ def param(
 
     if "select" not in kwds:
         parameter.param = core.VariableParameter(
-            name=parameter.name, bind=bind, value=value, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
         )
         parameter.param_type = "variable"
     elif "views" in kwds:
         parameter.param = core.TopLevelSelectionParameter(
-            name=parameter.name, bind=bind, value=value, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
         )
         parameter.param_type = "selection"
     else:
         parameter.param = core.SelectionParameter(
-            name=parameter.name, bind=bind, value=value, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
         )
         parameter.param_type = "selection"
 
@@ -373,7 +374,11 @@ _top_params_doc = """name : string (optional)
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
-        'empty=False'."""
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes."""
 
 _select_params_doc = """encodings : List[str] (optional)
         A list of encoding channels. The corresponding data field values
@@ -476,6 +481,7 @@ def selection_interval(
     value=Undefined,
     bind=Undefined,
     empty=Undefined,
+    expr=Undefined,
     encodings=Undefined,
     on=Undefined,
     clear=Undefined,
@@ -491,6 +497,7 @@ def selection_interval(
         value=value,
         bind=bind,
         empty=empty,
+        expr=expr,
         encodings=encodings,
         on=on,
         clear=clear,
@@ -544,6 +551,7 @@ def selection_point(
     value=Undefined,
     bind=Undefined,
     empty=Undefined,
+    expr=Undefined,
     encodings=Undefined,
     on=Undefined,
     clear=Undefined,
@@ -558,6 +566,7 @@ def selection_point(
         value=value,
         bind=bind,
         empty=empty,
+        expr=expr,
         encodings=encodings,
         on=on,
         clear=clear,
