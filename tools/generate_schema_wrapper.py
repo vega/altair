@@ -145,9 +145,7 @@ class DatumChannelMixin(object):
 
 MARK_METHOD = '''
 def mark_{mark}({def_arglist}) -> {self_type}:
-    """Set the chart's mark to '{mark}'
-
-    For information on additional arguments, see :class:`{mark_def}`
+    """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
     """
     kwds = dict({dict_arglist})
     copy = self.copy(deep=False)

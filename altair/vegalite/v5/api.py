@@ -901,7 +901,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self: _TTopLevelMixin, aggregate=Undefined, groupby=Undefined, **kwds
     ) -> _TTopLevelMixin:
         """
-        Add an AggregateTransform to the schema.
+        Add an :class:`AggregateTransform` to the schema.
 
         Parameters
         ----------
@@ -977,7 +977,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self: _TTopLevelMixin, as_=Undefined, field=Undefined, bin=True, **kwargs
     ) -> _TTopLevelMixin:
         """
-        Add a BinTransform to the schema.
+        Add a :class:`BinTransform` to the schema.
 
         Parameters
         ----------
@@ -1035,7 +1035,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self: _TTopLevelMixin, as_=Undefined, calculate=Undefined, **kwargs
     ) -> _TTopLevelMixin:
         """
-        Add a CalculateTransform to the schema.
+        Add a :class:`CalculateTransform` to the schema.
 
         Parameters
         ----------
@@ -1108,7 +1108,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         minsteps=Undefined,
         steps=Undefined,
     ) -> _TTopLevelMixin:
-        """Add a DensityTransform to the spec.
+        """Add a :class:`DensityTransform` to the spec.
 
         Parameters
         ----------
@@ -1174,7 +1174,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         value=Undefined,
     ) -> _TTopLevelMixin:
         """
-        Add an ImputeTransform to the schema.
+        Add an :class:`ImputeTransform` to the schema.
 
         Parameters
         ----------
@@ -1237,7 +1237,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self: _TTopLevelMixin, joinaggregate=Undefined, groupby=Undefined, **kwargs
     ) -> _TTopLevelMixin:
         """
-        Add a JoinAggregateTransform to the schema.
+        Add a :class:`JoinAggregateTransform` to the schema.
 
         Parameters
         ----------
@@ -1288,7 +1288,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     # TODO: Update docstring
     def transform_filter(self: _TTopLevelMixin, filter, **kwargs) -> _TTopLevelMixin:
         """
-        Add a FilterTransform to the schema.
+        Add a :class:`FilterTransform` to the schema.
 
         Parameters
         ----------
@@ -1322,7 +1322,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_flatten(
         self: _TTopLevelMixin, flatten, as_=Undefined
     ) -> _TTopLevelMixin:
-        """Add a FlattenTransform to the schema.
+        """Add a :class:`FlattenTransform` to the schema.
 
         Parameters
         ----------
@@ -1350,7 +1350,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_fold(self: _TTopLevelMixin, fold, as_=Undefined) -> _TTopLevelMixin:
-        """Add a FoldTransform to the spec.
+        """Add a :class:`FoldTransform` to the spec.
 
         Parameters
         ----------
@@ -1380,7 +1380,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         bandwidth=Undefined,
         groupby=Undefined,
     ) -> _TTopLevelMixin:
-        """Add a LoessTransform to the spec.
+        """Add a :class:`LoessTransform` to the spec.
 
         Parameters
         ----------
@@ -1422,7 +1422,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         default=Undefined,
         **kwargs,
     ) -> _TTopLevelMixin:
-        """Add a DataLookupTransform or SelectionLookupTransform to the chart
+        """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
 
         Parameters
         ----------
@@ -1477,7 +1477,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         limit=Undefined,
         op=Undefined,
     ) -> _TTopLevelMixin:
-        """Add a pivot transform to the chart.
+        """Add a :class:`PivotTransform` to the chart.
 
         Parameters
         ----------
@@ -1523,7 +1523,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         probs=Undefined,
         step=Undefined,
     ) -> _TTopLevelMixin:
-        """Add a quantile transform to the chart
+        """Add a :class:`QuantileTransform` to the chart
 
         Parameters
         ----------
@@ -1572,7 +1572,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         order=Undefined,
         params=Undefined,
     ) -> _TTopLevelMixin:
-        """Add a RegressionTransform to the chart.
+        """Add a :class:`RegressionTransform` to the chart.
 
         Parameters
         ----------
@@ -1628,7 +1628,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_sample(self: _TTopLevelMixin, sample=1000) -> _TTopLevelMixin:
         """
-        Add a SampleTransform to the schema.
+        Add a :class:`SampleTransform` to the schema.
 
         Parameters
         ----------
@@ -1650,7 +1650,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self: _TTopLevelMixin, as_, stack, groupby, offset=Undefined, sort=Undefined
     ) -> _TTopLevelMixin:
         """
-        Add a StackTransform to the schema.
+        Add a :class:`StackTransform` to the schema.
 
         Parameters
         ----------
@@ -1691,7 +1691,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs,
     ) -> _TTopLevelMixin:
         """
-        Add a TimeUnitTransform to the schema.
+        Add a :class:`TimeUnitTransform` to the schema.
 
         Parameters
         ----------
@@ -1776,7 +1776,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         sort=Undefined,
         **kwargs,
     ) -> _TTopLevelMixin:
-        """Add a WindowTransform to the schema
+        """Add a :class:`WindowTransform` to the schema
 
         Parameters
         ----------
