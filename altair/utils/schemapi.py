@@ -6,6 +6,7 @@ import inspect
 import json
 import textwrap
 from typing import Any, Sequence, List
+from itertools import zip_longest
 
 import jsonschema
 import jsonschema.exceptions
@@ -14,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from altair import vegalite
+
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for
@@ -158,6 +160,63 @@ class SchemaValidationError(jsonschema.ValidationError):
         self.obj = obj
         self._additional_errors = getattr(err, "_additional_errors", [])
 
+    @staticmethod
+    def _format_params_as_table(param_dict_keys):
+        """Format param names into a table so that they are easier to read"""
+        param_names, name_lengths = zip(
+            *[
+                (name, len(name))
+                for name in param_dict_keys
+                if name not in ["kwds", "self"]
+            ]
+        )
+        # Worst case scenario with the same longest param name in the same
+        # row for all columns
+        max_name_length = max(name_lengths)
+        max_column_width = 80
+        # Output a square table if not too big (since it is easier to read)
+        num_param_names = len(param_names)
+        square_columns = int(np.ceil(num_param_names**0.5))
+        columns = min(max_column_width // max_name_length, square_columns)
+
+        # Compute roughly equal column heights to evenly divide the param names
+        def split_into_equal_parts(n, p):
+            return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
+
+        column_heights = split_into_equal_parts(num_param_names, columns)
+
+        # Section the param names into columns and compute their widths
+        param_names_columns = []
+        column_max_widths = []
+        last_end_idx = 0
+        for ch in column_heights:
+            param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
+            column_max_widths.append(
+                max([len(param_name) for param_name in param_names_columns[-1]])
+            )
+            last_end_idx = ch + last_end_idx
+
+        # Transpose the param name columns into rows to facilitate looping
+        param_names_rows = []
+        for li in zip_longest(*param_names_columns, fillvalue=""):
+            param_names_rows.append(li)
+        # Build the table as a string by iterating over and formatting the rows
+        param_names_table = ""
+        for param_names_row in param_names_rows:
+            for num, param_name in enumerate(param_names_row):
+                # Set column width based on the longest param in the column
+                max_name_length_column = column_max_widths[num]
+                column_pad = 3
+                param_names_table += "{:<{}}".format(
+                    param_name, max_name_length_column + column_pad
+                )
+                # Insert newlines and spacing after the last element in each row
+                if num == (len(param_names_row) - 1):
+                    param_names_table += "\n"
+                    # 16 is the indendation of the returned multiline string below
+                    param_names_table += " " * 16
+        return param_names_table
+
     def __str__(self):
         # Try to get the lowest class possible in the chart hierarchy so
         # it can be displayed in the error message. This should lead to more informative
@@ -174,26 +233,48 @@ class SchemaValidationError(jsonschema.ValidationError):
             # back on the class of the top-level object which created
             # the SchemaValidationError
             cls = self.obj.__class__
-        schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
-        schema_path.extend(self.schema_path)
-        schema_path = "->".join(
-            str(val)
-            for val in schema_path[:-1]
-            if val not in (0, "properties", "additionalProperties", "patternProperties")
-        )
-        message = self.message
-        if self._additional_errors:
-            message += "\n        " + "\n        ".join(
-                [e.message for e in self._additional_errors]
+
+        # Output all existing parameters when an unknown parameter is specified
+        if self.validator == "additionalProperties":
+            param_dict_keys = inspect.signature(cls).parameters.keys()
+            param_names_table = self._format_params_as_table(param_dict_keys)
+
+            # `cleandoc` removes multiline string indentation in the output
+            return inspect.cleandoc(
+                """`{}` has no parameter named {!r}
+
+                Existing parameter names are:
+                {}
+                See the help for `{}` to read the full description of these parameters
+                """.format(
+                    cls.__name__,
+                    self.message.split("('")[-1].split("'")[0],
+                    param_names_table,
+                    cls.__name__,
+                )
             )
-        return """Invalid specification
+        # Use the default error message for all other cases than unknown parameter errors
+        else:
+            message = self.message
+            # Add a summary line when parameters are passed an invalid value
+            # For example: "'asdf' is an invalid value for `stack`
+            if self.absolute_path:
+                # The indentation here must match that of `cleandoc` below
+                message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
 
-        {}, validating {!r}
+                {message}"""
 
-        {}
-        """.format(
-            schema_path, self.validator, message
-        )
+            if self._additional_errors:
+                message += "\n                " + "\n                ".join(
+                    [e.message for e in self._additional_errors]
+                )
+
+            return inspect.cleandoc(
+                """{}
+                """.format(
+                    message
+                )
+            )
 
 
 class UndefinedType(object):
