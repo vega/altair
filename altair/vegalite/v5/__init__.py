@@ -4,8 +4,7 @@ from .api import *
 
 from ...datasets import list_datasets, load_dataset
 
-from ...expr import expr
-from ...expr import datum
+from ...expr import datum, expr
 
 from .display import VegaLite, renderers
 
