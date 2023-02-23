@@ -59,13 +59,11 @@ Encoding Channels
    Latitude2Datum
    Latitude2Value
    LatitudeDatum
-   LatitudeValue
    Longitude
    Longitude2
    Longitude2Datum
    Longitude2Value
    LongitudeDatum
-   LongitudeValue
    Opacity
    OpacityDatum
    OpacityValue
@@ -118,6 +116,9 @@ Encoding Channels
    XError2
    XError2Value
    XErrorValue
+   XOffset
+   XOffsetDatum
+   XOffsetValue
    XValue
    Y
    Y2
@@ -128,6 +129,9 @@ Encoding Channels
    YError2
    YError2Value
    YErrorValue
+   YOffset
+   YOffsetDatum
+   YOffsetValue
    YValue
 
 API Functions
@@ -143,15 +147,18 @@ API Functions
    binding_radio
    binding_range
    binding_select
+   check_fields_and_encodings
    concat
    condition
    graticule
    hconcat
    layer
+   param
    repeat
    selection
    selection_interval
    selection_multi
+   selection_point
    selection_single
    sequence
    sphere
@@ -191,6 +198,8 @@ Low-Level Schema Wrappers
    BinParams
    BinTransform
    BindCheckbox
+   BindDirect
+   BindInput
    BindRadioSelect
    BindRange
    Binding
@@ -226,6 +235,16 @@ Low-Level Schema Wrappers
    ConditionalAxisString
    ConditionalMarkPropFieldOrDatumDef
    ConditionalMarkPropFieldOrDatumDefTypeForShape
+   ConditionalParameterMarkPropFieldOrDatumDef
+   ConditionalParameterMarkPropFieldOrDatumDefTypeForShape
+   ConditionalParameterStringFieldDef
+   ConditionalParameterValueDefGradientstringnullExprRef
+   ConditionalParameterValueDefTextExprRef
+   ConditionalParameterValueDefnumber
+   ConditionalParameterValueDefnumberArrayExprRef
+   ConditionalParameterValueDefnumberExprRef
+   ConditionalParameterValueDefstringExprRef
+   ConditionalParameterValueDefstringnullExprRef
    ConditionalPredicateMarkPropFieldOrDatumDef
    ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape
    ConditionalPredicateStringFieldDef
@@ -243,16 +262,6 @@ Low-Level Schema Wrappers
    ConditionalPredicateValueDefnumbernullExprRef
    ConditionalPredicateValueDefstringExprRef
    ConditionalPredicateValueDefstringnullExprRef
-   ConditionalSelectionMarkPropFieldOrDatumDef
-   ConditionalSelectionMarkPropFieldOrDatumDefTypeForShape
-   ConditionalSelectionStringFieldDef
-   ConditionalSelectionValueDefGradientstringnullExprRef
-   ConditionalSelectionValueDefTextExprRef
-   ConditionalSelectionValueDefnumber
-   ConditionalSelectionValueDefnumberArrayExprRef
-   ConditionalSelectionValueDefnumberExprRef
-   ConditionalSelectionValueDefstringExprRef
-   ConditionalSelectionValueDefstringnullExprRef
    ConditionalStringFieldDef
    ConditionalValueDefGradientstringnullExprRef
    ConditionalValueDefTextExprRef
@@ -274,17 +283,16 @@ Low-Level Schema Wrappers
    Day
    DensityTransform
    DerivedStream
+   Dict
    DictInlineDataset
    DictSelectionInit
    DictSelectionInitInterval
-   Dictunknown
    Diverging
    DomainUnionWith
    DsvDataFormat
    Element
    Encoding
    EncodingSortField
-   EncodingSortFieldFieldName
    ErrorBand
    ErrorBandConfig
    ErrorBandDef
@@ -295,13 +303,10 @@ Low-Level Schema Wrappers
    EventStream
    EventType
    Expr
-   ExprOrSignalRef
    ExprRef
    FacetEncodingFieldDef
    FacetFieldDef
-   FacetFieldDefFieldName
    FacetMapping
-   FacetMappingFieldName
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
@@ -325,6 +330,7 @@ Low-Level Schema Wrappers
    FieldOrDatumDefWithConditionStringDatumDefText
    FieldOrDatumDefWithConditionStringFieldDefText
    FieldOrDatumDefWithConditionStringFieldDefstring
+   FieldRange
    FieldRangePredicate
    FieldValidPredicate
    FilterTransform
@@ -334,6 +340,7 @@ Low-Level Schema Wrappers
    FontStyle
    FontWeight
    Generator
+   GenericUnitSpecEncodingAnyMark
    GeoJsonFeature
    GeoJsonFeatureCollection
    Gradient
@@ -350,10 +357,9 @@ Low-Level Schema Wrappers
    ImputeTransform
    InlineData
    InlineDataset
-   InputBinding
    Interpolate
-   IntervalSelection
    IntervalSelectionConfig
+   IntervalSelectionConfigWithoutType
    JoinAggregateFieldDef
    JoinAggregateTransform
    JsonDataFormat
@@ -374,6 +380,7 @@ Low-Level Schema Wrappers
    LinearGradient
    LocalMultiTimeUnit
    LocalSingleTimeUnit
+   Locale
    LoessTransform
    LogicalAndPredicate
    LogicalNotPredicate
@@ -383,7 +390,6 @@ Low-Level Schema Wrappers
    LookupTransform
    Mark
    MarkConfig
-   MarkConfigExprOrSignalRef
    MarkDef
    MarkPropDefGradientstringnull
    MarkPropDefnumber
@@ -392,30 +398,29 @@ Low-Level Schema Wrappers
    MarkType
    MergedStream
    Month
-   MultiSelection
-   MultiSelectionConfig
    MultiTimeUnit
    NamedData
    NonArgAggregateOp
    NonLayerRepeatSpec
-   NormalizedConcatSpecGenericSpec
-   NormalizedFacetSpec
-   NormalizedHConcatSpecGenericSpec
-   NormalizedSpec
-   NormalizedVConcatSpecGenericSpec
+   NonNormalizedSpec
+   NumberLocale
    NumericArrayMarkPropDef
    NumericMarkPropDef
-   NumericValueDef
+   OffsetDef
    OrderFieldDef
    OrderValueDef
    Orient
    Orientation
    OverlayMarkDef
    Padding
-   Parameter
+   ParameterExtent
+   ParameterName
+   ParameterPredicate
    Parse
    ParseValue
    PivotTransform
+   PointSelectionConfig
+   PointSelectionConfigWithoutType
    PolarDef
    Position2Def
    PositionDatumDef
@@ -439,6 +444,7 @@ Low-Level Schema Wrappers
    RangeScheme
    RectConfig
    RegressionTransform
+   RelativeBandSize
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -454,6 +460,8 @@ Low-Level Schema Wrappers
    ScaleBinParams
    ScaleBins
    ScaleConfig
+   ScaleDatumDef
+   ScaleFieldDef
    ScaleInterpolateEnum
    ScaleInterpolateParams
    ScaleResolveMap
@@ -461,19 +469,14 @@ Low-Level Schema Wrappers
    SchemaBase
    SchemeParams
    SecondaryFieldDef
-   SelectionAnd
-   SelectionComposition
    SelectionConfig
-   SelectionDef
-   SelectionExtent
    SelectionInit
    SelectionInitInterval
    SelectionInitIntervalMapping
    SelectionInitMapping
-   SelectionNot
-   SelectionOr
-   SelectionPredicate
+   SelectionParameter
    SelectionResolution
+   SelectionType
    SequenceGenerator
    SequenceParams
    SequentialMultiHue
@@ -481,8 +484,6 @@ Low-Level Schema Wrappers
    ShapeDef
    SharedEncoding
    SingleDefUnitChannel
-   SingleSelection
-   SingleSelectionConfig
    SingleTimeUnit
    Sort
    SortArray
@@ -497,6 +498,7 @@ Low-Level Schema Wrappers
    StackTransform
    StandardType
    Step
+   StepFor
    Stream
    StringFieldDef
    StringFieldDefWithCondition
@@ -512,6 +514,7 @@ Low-Level Schema Wrappers
    TickCount
    TimeInterval
    TimeIntervalStep
+   TimeLocale
    TimeUnit
    TimeUnitParams
    TimeUnitTransform
@@ -521,14 +524,16 @@ Low-Level Schema Wrappers
    TitleOrient
    TitleParams
    TooltipContent
+   TopLevelConcatSpec
    TopLevelFacetSpec
+   TopLevelHConcatSpec
    TopLevelLayerSpec
-   TopLevelNormalizedConcatSpecGenericSpec
-   TopLevelNormalizedHConcatSpecGenericSpec
-   TopLevelNormalizedVConcatSpecGenericSpec
+   TopLevelParameter
    TopLevelRepeatSpec
+   TopLevelSelectionParameter
    TopLevelSpec
    TopLevelUnitSpec
+   TopLevelVConcatSpec
    TopoDataFormat
    Transform
    Type
@@ -548,14 +553,17 @@ Low-Level Schema Wrappers
    ValueDefWithConditionMarkPropFieldOrDatumDefstringnull
    ValueDefWithConditionStringFieldDefText
    ValueDefnumber
-   ValueDefnumberExprRef
    ValueDefnumberwidthheightExprRef
+   VariableParameter
+   Vector10string
+   Vector12string
    Vector2DateTime
    Vector2Vector2number
    Vector2boolean
    Vector2number
    Vector2string
    Vector3number
+   Vector7string
    VegaLiteSchema
    ViewBackground
    ViewConfig

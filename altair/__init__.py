@@ -450,6 +450,7 @@ __all__ = [
     "TopLevelHConcatSpec",
     "TopLevelLayerSpec",
     "TopLevelMixin",
+    "TopLevelParameter",
     "TopLevelRepeatSpec",
     "TopLevelSelectionParameter",
     "TopLevelSpec",
