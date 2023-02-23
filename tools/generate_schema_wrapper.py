@@ -26,7 +26,7 @@ import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    "vega-lite": {"v5": "v5.6.0"},
+    "vega-lite": {"v5": "v5.6.1"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
