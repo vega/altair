@@ -92,9 +92,12 @@ class FieldChannelMixin(object):
                 parsed.pop('type', None)
             elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(shorthand))
+                    raise ValueError(
+                        'Unable to determine data type for the field "{}";'
+                        " verify that the field name is not misspelled."
+                        " If you are referencing a field from a transform,"
+                        " also confirm that the data type is specified correctly.".format(shorthand)
+                    )
                 else:
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
