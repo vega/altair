@@ -20,7 +20,7 @@ Enhancements
 - The ``Title`` and ``Impute`` aliases were added for ``TitleParams`` and ``ImputeParams``, respectively (#2732).
 - Saving charts with HTML inline is now supported without having altair_saver installed (#2807).
 - The documentation page has been revamped, both in terms of appearance and content.
-- More informative autocompletion by removing deprecated methods (#2814) and adding support for completion in method chains for editors that rely on type hints (e.g. VS Code) (#2846)
+- More informative autocompletion by removing deprecated methods (#2814) and for editors that rely on type hints (e.g. VS Code) we added support for completion in method chains (#2846) and extended keyword completion to cover additional methods (#2920).
 - Substantially improved error handling. Both in terms of finding the more relevant error (#2842), and in terms of improving the formatting and clarity of the error messages (#2824, #2568).
 - Include experimental support for the DataFrame Interchange Protocol (through `__dataframe__` attribute). This requires `pyarrow>=11.0.0` (#2888).
 
