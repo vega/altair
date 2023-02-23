@@ -311,6 +311,37 @@ def param(
     expr=Undefined,
     **kwds,
 ):
+    """Create a named parameter.  See https://altair-viz.github.io/user_guide/interactions.html for examples.  Although both variable parameters and selection parameters can be created using this 'param' function, to create a selection parameter, it is recommended to use either 'selection_point' or 'selection_interval' instead.
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    **kwds :
+        additional keywords will be used to construct a parameter.  If 'select'
+        is among the keywords, then a selection parameter will be created.
+        Otherwise, a variable parameter will be created.
+
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
+    """
     parameter = Parameter(name)
 
     if empty is not Undefined:
@@ -360,71 +391,6 @@ def param(
         parameter.param_type = "selection"
 
     return parameter
-
-
-_top_params_doc = """name : string (optional)
-        The name of the parameter. If not specified, a unique name will be
-        created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
-    value : any (optional)
-        The default value of the parameter. If not specified, the parameter
-        will be created without a default value.
-    empty : boolean (optional)
-        For selection parameters, the predicate of empty selections returns
-        True by default. Override this behavior, by setting this property
-        'empty=False'.
-    expr : :class:`Expr` (optional)
-        An expression for the value of the parameter. This expression may
-        include other parameters, in which case the parameter will
-        automatically update in response to upstream parameter changes."""
-
-_select_params_doc = """encodings : List[str] (optional)
-        A list of encoding channels. The corresponding data field values
-        must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
-        A list of field names whose values must match for a data tuple to
-        fall within the selection.
-    on : string (optional)
-        A Vega event stream (object or selector) that triggers the selection.
-        For interval selections, the event stream must specify a start and end.
-    clear : string or boolean (optional)
-        Clears the selection, emptying it of all values. This property can
-        be an Event Stream or False to disable clear.  Default is 'dblclick'.
-    resolve : enum('global', 'union', 'intersect') (optional)
-        With layered and multi-view displays, a strategy that determines
-        how selections' data queries are resolved when applied in a filter
-        transform, conditional encoding rule, or scale domain.
-        One of:
-        * 'global' - only one brush exists for the entire SPLOM. When the
-            user begins to drag, any previous brushes are cleared, and a
-            new one is constructed.
-        * 'union' - each cell contains its own brush, and points are
-            highlighted if they lie within any of these individual brushes.
-        * 'intersect' - each cell contains its own brush, and points are
-            highlighted only if they fall within all of these individual
-            brushes.
-        The default is 'global'."""
-
-_return_param_doc = """
-    Returns
-    -------
-    parameter: Parameter
-        The parameter object that can be used in chart creation.
-"""
-
-param.__doc__ = f"""Create a named parameter.  See https://altair-viz.github.io/user_guide/interactions.html for examples.  Although both variable parameters and selection parameters can be created using this 'param' function, to create a selection parameter, it is recommended to use either 'selection_point' or 'selection_interval' instead.
-
-    Parameters
-    ----------
-    {_top_params_doc}
-    **kwds :
-        additional keywords will be used to construct a parameter.  If 'select'
-        is among the keywords, then a selection parameter will be created.
-        Otherwise, a variable parameter will be created.
-    {_return_param_doc}
-    """
 
 
 def _selection(type=Undefined, **kwds):
@@ -487,30 +453,53 @@ def selection_interval(
     zoom=Undefined,
     **kwds,
 ):
-    return _selection(
-        type="interval",
-        name=name,
-        value=value,
-        bind=bind,
-        empty=empty,
-        expr=expr,
-        encodings=encodings,
-        on=on,
-        clear=clear,
-        resolve=resolve,
-        mark=mark,
-        translate=translate,
-        zoom=zoom,
-        **kwds,
-    )
-
-
-selection_interval.__doc__ = f"""Create a selection parameter with `type='interval'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='interval'` are used to select a continuous range of data values on drag.  (The current alternative is `type='point'`, which is used to select multiple discrete data values, and which is created using 'selection_point'.)
+    """Create a selection parameter with `type='interval'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='interval'` are used to select a continuous range of data values on drag.  (The current alternative is `type='point'`, which is used to select multiple discrete data values, and which is created using 'selection_point'.)
 
     Parameters
     ----------
-    {_top_params_doc}
-    {_select_params_doc}
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    encodings : List[str] (optional)
+        A list of encoding channels. The corresponding data field values
+        must match for a data tuple to fall within the selection.
+    fields : List[str] (optional)
+        A list of field names whose values must match for a data tuple to
+        fall within the selection.
+    on : string (optional)
+        A Vega event stream (object or selector) that triggers the selection.
+        For interval selections, the event stream must specify a start and end.
+    clear : string or boolean (optional)
+        Clears the selection, emptying it of all values. This property can
+        be an Event Stream or False to disable clear.  Default is 'dblclick'.
+    resolve : enum('global', 'union', 'intersect') (optional)
+        With layered and multi-view displays, a strategy that determines
+        how selections' data queries are resolved when applied in a filter
+        transform, conditional encoding rule, or scale domain.
+        One of:
+        * 'global' - only one brush exists for the entire SPLOM. When the
+            user begins to drag, any previous brushes are cleared, and a
+            new one is constructed.
+        * 'union' - each cell contains its own brush, and points are
+            highlighted if they lie within any of these individual brushes.
+        * 'intersect' - each cell contains its own brush, and points are
+            highlighted only if they fall within all of these individual
+            brushes.
+        The default is 'global'.
     mark : :class:`Mark` (optional)
         An interval selection also adds a rectangle mark to depict the
         extents of the interval. The mark property can be used to
@@ -538,8 +527,28 @@ selection_interval.__doc__ = f"""Create a selection parameter with `type='interv
         selection.
     **kwds :
         additional keywords to control the selection.
-    {_return_param_doc}
+    
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
     """
+    return _selection(
+        type="interval",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        encodings=encodings,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        mark=mark,
+        translate=translate,
+        zoom=zoom,
+        **kwds,
+    )
 
 
 def selection_point(
@@ -556,29 +565,53 @@ def selection_point(
     nearest=Undefined,
     **kwds,
 ):
-    return _selection(
-        type="point",
-        name=name,
-        value=value,
-        bind=bind,
-        empty=empty,
-        expr=expr,
-        encodings=encodings,
-        on=on,
-        clear=clear,
-        resolve=resolve,
-        toggle=toggle,
-        nearest=nearest,
-        **kwds,
-    )
-
-
-selection_point.__doc__ = f"""Create a selection parameter with `type='point'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='point'` are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. (The current alternative is `type='interval'`, which is used to select select a continuous range of data values on drag, and which is created using 'selection_interval'.)
+    """Create a selection parameter with `type='point'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='point'` are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. (The current alternative is `type='interval'`, which is used to select select a continuous range of data values on drag, and which is created using 'selection_interval'.)
 
     Parameters
     ----------
-    {_top_params_doc}
-    {_select_params_doc}
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    encodings : List[str] (optional)
+        A list of encoding channels. The corresponding data field values
+        must match for a data tuple to fall within the selection.
+    fields : List[str] (optional)
+        A list of field names whose values must match for a data tuple to
+        fall within the selection.
+    on : string (optional)
+        A Vega event stream (object or selector) that triggers the selection.
+        For interval selections, the event stream must specify a start and end.
+    clear : string or boolean (optional)
+        Clears the selection, emptying it of all values. This property can
+        be an Event Stream or False to disable clear.  Default is 'dblclick'.
+    resolve : enum('global', 'union', 'intersect') (optional)
+        With layered and multi-view displays, a strategy that determines
+        how selections' data queries are resolved when applied in a filter
+        transform, conditional encoding rule, or scale domain.
+        One of:
+        * 'global' - only one brush exists for the entire SPLOM. When the
+            user begins to drag, any previous brushes are cleared, and a
+            new one is constructed.
+        * 'union' - each cell contains its own brush, and points are
+            highlighted if they lie within any of these individual brushes.
+        * 'intersect' - each cell contains its own brush, and points are
+            highlighted only if they fall within all of these individual
+            brushes.
+        The default is 'global'.
     toggle : string or boolean (optional)
         Controls whether data values should be toggled (inserted or
         removed from a point selection) or only ever inserted into
@@ -605,8 +638,27 @@ selection_point.__doc__ = f"""Create a selection parameter with `type='point'`. 
         to be added to the selection.
     **kwds :
         additional keywords to control the selection.
-    {_return_param_doc}
+    
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
     """
+    return _selection(
+        type="point",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        encodings=encodings,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        toggle=toggle,
+        nearest=nearest,
+        **kwds,
+    )
 
 
 @utils.deprecation.deprecated(
