@@ -527,7 +527,7 @@ def selection_interval(
         selection.
     **kwds :
         additional keywords to control the selection.
-    
+
     Returns
     -------
     parameter: Parameter
@@ -638,7 +638,7 @@ def selection_point(
         to be added to the selection.
     **kwds :
         additional keywords to control the selection.
-    
+
     Returns
     -------
     parameter: Parameter
