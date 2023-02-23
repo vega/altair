@@ -1966,7 +1966,7 @@ class BoxPlotConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    box : anyOf(boolean, :class:`MarkConfig`)
+    box : anyOf(boolean, :class:`AnyMarkConfig`)
 
     extent : anyOf(string, float)
         The extent of the whiskers. Available options include:
@@ -1980,15 +1980,15 @@ class BoxPlotConfig(VegaLiteSchema):
           range ( *Q3-Q1* ).
 
         **Default value:** ``1.5``.
-    median : anyOf(boolean, :class:`MarkConfig`)
+    median : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    outliers : anyOf(boolean, :class:`MarkConfig`)
+    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotConfig'}
@@ -2170,7 +2170,7 @@ class BoxPlotDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    box : anyOf(boolean, :class:`MarkConfig`)
+    box : anyOf(boolean, :class:`AnyMarkConfig`)
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
@@ -2208,7 +2208,7 @@ class BoxPlotDef(CompositeMarkDef):
           (for line, trail, and area marks) or filtered (for other marks).
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
-    median : anyOf(boolean, :class:`MarkConfig`)
+    median : anyOf(boolean, :class:`AnyMarkConfig`)
 
     opacity : float
         The opacity (value between [0,1]) of the mark.
@@ -2218,13 +2218,13 @@ class BoxPlotDef(CompositeMarkDef):
         when the orientation is ambiguous.
 
         **Default value:** ``"vertical"``.
-    outliers : anyOf(boolean, :class:`MarkConfig`)
+    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotDef'}
@@ -2756,7 +2756,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -2960,7 +2960,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -4252,9 +4252,9 @@ class ErrorBandConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    band : anyOf(boolean, :class:`MarkConfig`)
+    band : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`MarkConfig`)
+    borders : anyOf(boolean, :class:`AnyMarkConfig`)
 
     extent : :class:`ErrorBarExtent`
         The extent of the band. Available options include:
@@ -4315,9 +4315,9 @@ class ErrorBandDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    band : anyOf(boolean, :class:`MarkConfig`)
+    band : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`MarkConfig`)
+    borders : anyOf(boolean, :class:`AnyMarkConfig`)
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
@@ -4418,13 +4418,13 @@ class ErrorBarConfig(VegaLiteSchema):
         * ``"iqr"`` : Extend the rule to the q1 and q3.
 
         **Default value:** ``"stderr"``.
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarConfig'}
@@ -4480,13 +4480,13 @@ class ErrorBarDef(CompositeMarkDef):
     orient : :class:`Orientation`
         Orientation of the error bar. This is normally automatically determined, but can be
         specified when the orientation is ambiguous and cannot be automatically determined.
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarDef'}
@@ -4740,7 +4740,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -4937,7 +4937,7 @@ class FacetFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -5366,7 +5366,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -5584,7 +5584,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -6764,7 +6764,7 @@ class LatLongFieldDef(LatLongDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -8738,7 +8738,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -8974,7 +8974,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9267,7 +9267,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9502,7 +9502,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9646,7 +9646,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9881,7 +9881,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10066,7 +10066,7 @@ class OrderFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10876,7 +10876,7 @@ class DatumDef(LatLongDef, Position2Def):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11031,7 +11031,7 @@ class PositionDatumDefBase(PolarDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11215,7 +11215,7 @@ class PositionDatumDef(PositionDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11479,7 +11479,7 @@ class PositionFieldDef(PositionDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11728,7 +11728,7 @@ class PositionFieldDefBase(PolarDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -13032,7 +13032,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -13642,7 +13642,7 @@ class ScaleDatumDef(OffsetDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -13857,7 +13857,7 @@ class ScaleFieldDef(OffsetDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -14534,7 +14534,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -14769,7 +14769,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -16166,7 +16166,7 @@ class StringFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -16374,7 +16374,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -16693,7 +16693,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -16903,7 +16903,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -19322,7 +19322,7 @@ class TypedFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
