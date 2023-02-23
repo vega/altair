@@ -14,13 +14,13 @@ FAKE_CHANNELS_MODULE = '''
 from altair.utils import schemapi
 
 
-class FieldChannel(object):
+class FieldChannel:
     def __init__(self, shorthand, **kwargs):
         kwargs['shorthand'] = shorthand
         return super(FieldChannel, self).__init__(**kwargs)
 
 
-class ValueChannel(object):
+class ValueChannel:
     def __init__(self, value, **kwargs):
         kwargs['value'] = value
         return super(ValueChannel, self).__init__(**kwargs)
@@ -79,7 +79,7 @@ def test_parse_shorthand():
 
     # Fields alone
     check("foobar", field="foobar")
-    check("blah:(fd ", field="blah:(fd ")
+    check(r"blah\:(fd ", field=r"blah\:(fd ")
 
     # Fields with type
     check("foobar:quantitative", type="quantitative", field="foobar")
@@ -101,14 +101,14 @@ def test_parse_shorthand():
 
     # check that invalid arguments are not split-out
     check("invalid(blah)", field="invalid(blah)")
-    check("blah:invalid", field="blah:invalid")
-    check("invalid(blah):invalid", field="invalid(blah):invalid")
+    check(r"blah\:invalid", field=r"blah\:invalid")
+    check(r"invalid(blah)\:invalid", field=r"invalid(blah)\:invalid")
 
     # check parsing in presence of strange characters
     check(
-        "average(a b:(c\nd):Q",
+        r"average(a b\:(c\nd):Q",
         aggregate="average",
-        field="a b:(c\nd",
+        field=r"a b\:(c\nd",
         type="quantitative",
     )
 
@@ -249,17 +249,42 @@ def test_infer_encoding_types(channels):
     assert infer_encoding_types(args, kwds, channels) == expected
 
 
-def test_infer_encoding_types_with_condition(channels):
+def test_infer_encoding_types_with_condition():
+    channels = alt.channels
+
     args, kwds = _getargs(
-        x=alt.condition("pred1", alt.value(1), alt.value(2)),
-        y=alt.condition("pred2", alt.value(1), "yval"),
-        strokeWidth=alt.condition("pred3", "sval", alt.value(2)),
+        size=alt.condition("pred1", alt.value(1), alt.value(2)),
+        color=alt.condition("pred2", alt.value("red"), "cfield:N"),
+        opacity=alt.condition("pred3", "ofield:N", alt.value(0.2)),
     )
+
     expected = dict(
-        x=channels.XValue(2, condition=channels.XValue(1, test="pred1")),
-        y=channels.Y("yval", condition=channels.YValue(1, test="pred2")),
-        strokeWidth=channels.StrokeWidthValue(
-            2, condition=channels.StrokeWidth("sval", test="pred3")
+        size=channels.SizeValue(
+            2,
+            condition=alt.ConditionalPredicateValueDefnumberExprRef(
+                value=1, test=alt.Predicate("pred1")
+            ),
+        ),
+        color=channels.Color(
+            "cfield:N",
+            condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
+                value="red", test=alt.Predicate("pred2")
+            ),
+        ),
+        opacity=channels.OpacityValue(
+            0.2,
+            condition=alt.ConditionalPredicateMarkPropFieldOrDatumDef(
+                field=alt.FieldName("ofield"),
+                test=alt.Predicate("pred3"),
+                type=alt.StandardType("nominal"),
+            ),
         ),
     )
     assert infer_encoding_types(args, kwds, channels) == expected
+
+
+def test_invalid_data_type():
+    with pytest.raises(
+        ValueError, match=r'"\(fd " is not one of the valid encoding data types'
+    ):
+        parse_shorthand(r"blah:(fd ")

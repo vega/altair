@@ -1,4 +1,4 @@
-black
+black<24
 ipython
 flake8
 pytest

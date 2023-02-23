@@ -14,7 +14,7 @@ import jsonschema
 import pandas as pd
 import numpy as np
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
@@ -532,6 +532,23 @@ def parse_shorthand(
             if isinstance(attrs["type"], tuple):
                 attrs["sort"] = attrs["type"][1]
                 attrs["type"] = attrs["type"][0]
+
+    # If an unescaped colon is still present, it's often due to an incorrect data type specification
+    # but could also be due to using a column name with ":" in it.
+    if (
+        "field" in attrs
+        and ":" in attrs["field"]
+        and attrs["field"][attrs["field"].rfind(":") - 1] != "\\"
+    ):
+        raise ValueError(
+            '"{}" '.format(attrs["field"].split(":")[-1])
+            + "is not one of the valid encoding data types: {}.".format(
+                ", ".join(TYPECODE_MAP.values())
+            )
+            + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            + "If you are trying to use a column name that contains a colon, "
+            + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
+        )
     return attrs
 
 
@@ -546,7 +563,11 @@ def use_signature(Obj):
 
         # Supplement the docstring of f with information from Obj
         if Obj.__doc__:
+            # Patch in a reference to the class this docstring is copied from,
+            # to generate a hyperlink.
             doclines = Obj.__doc__.splitlines()
+            doclines[0] = f"Refer to :class:`{Obj.__name__}`"
+
             if f.__doc__:
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
@@ -669,15 +690,6 @@ def infer_encoding_types(args, kwargs, channels):
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
-        try:
-            condition = obj["condition"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            if condition is not Undefined:
-                obj = obj.copy()
-                obj["condition"] = _wrap_in_channel_class(condition, encoding)
-
         if isinstance(obj, SchemaBase):
             return obj
 

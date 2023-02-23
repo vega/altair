@@ -3,7 +3,7 @@ import altair.vegalite.v5 as alt
 
 
 def geom_obj(geom):
-    class Geom(object):
+    class Geom:
         pass
 
     geom_obj = Geom()

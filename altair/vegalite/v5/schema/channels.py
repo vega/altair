@@ -8,7 +8,7 @@ from altair.utils import parse_shorthand
 from typing import overload, Type
 
 
-class FieldChannelMixin(object):
+class FieldChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         shorthand = self._get('shorthand')
@@ -38,9 +38,12 @@ class FieldChannelMixin(object):
                 parsed.pop('type', None)
             elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(shorthand))
+                    raise ValueError(
+                        'Unable to determine data type for the field "{}";'
+                        " verify that the field name is not misspelled."
+                        " If you are referencing a field from a transform,"
+                        " also confirm that the data type is specified correctly.".format(shorthand)
+                    )
                 else:
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
@@ -59,7 +62,7 @@ class FieldChannelMixin(object):
         )
 
 
-class ValueChannelMixin(object):
+class ValueChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         condition = self._get('condition', Undefined)
@@ -70,13 +73,13 @@ class ValueChannelMixin(object):
             elif 'field' in condition and 'type' not in condition:
                 kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy(deep=['condition'])
-                copy.condition.update(kwds)
+                copy['condition'].update(kwds)
         return super(ValueChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
                                                       context=context)
 
 
-class DatumChannelMixin(object):
+class DatumChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         datum = self._get('datum', Undefined)
@@ -94,10 +97,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Angle schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -433,10 +434,8 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     """AngleDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -580,7 +579,7 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -615,10 +614,8 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Color schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -954,10 +951,8 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     """ColorDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -1101,7 +1096,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
@@ -1137,7 +1132,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -1449,10 +1444,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -1741,7 +1734,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -1778,7 +1771,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -2005,7 +1998,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -2376,10 +2369,8 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     """Fill schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -2715,10 +2706,8 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     """FillDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -2862,7 +2851,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
@@ -2897,10 +2886,8 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """FillOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -3236,10 +3223,8 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """FillOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -3383,7 +3368,7 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -3418,10 +3403,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -3710,7 +3693,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -3747,7 +3730,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -3974,7 +3957,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -4188,7 +4171,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -4318,7 +4301,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -4460,7 +4443,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -4590,7 +4573,7 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -4613,7 +4596,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -4827,7 +4810,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -4957,7 +4940,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -5099,7 +5082,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -5229,7 +5212,7 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -5251,10 +5234,8 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     """Opacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -5590,10 +5571,8 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     """OpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -5737,7 +5716,7 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -5773,7 +5752,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -6006,7 +5985,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
 
     Mapping(required=[value])
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, :class:`ExprRef`)
@@ -6043,7 +6022,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -6395,7 +6374,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -6590,7 +6569,7 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -6615,7 +6594,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -6757,7 +6736,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -6887,7 +6866,7 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -6910,7 +6889,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -7222,10 +7201,8 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     """Shape schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -7561,10 +7538,8 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     """ShapeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -7708,7 +7683,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -7743,10 +7718,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     """Size schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -8082,10 +8055,8 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     """SizeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -8229,7 +8200,7 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -8264,10 +8235,8 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     """Stroke schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -8603,10 +8572,8 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     """StrokeDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -8750,7 +8717,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
@@ -8785,10 +8752,8 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     """StrokeDash schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -9124,10 +9089,8 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     """StrokeDashDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -9271,7 +9234,7 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, List(:class:`ConditionalValueDefnumberArrayExprRef`))
@@ -9306,10 +9269,8 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     """StrokeOpacity schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -9645,10 +9606,8 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     """StrokeOpacityDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -9792,7 +9751,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -9827,10 +9786,8 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     """StrokeWidth schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -10166,10 +10123,8 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     """StrokeWidthDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -10313,7 +10268,7 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberExprRef`, List(:class:`ConditionalValueDefnumberExprRef`))
@@ -10348,10 +10303,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     """Text schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -10639,10 +10592,8 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     """TextDatum schema wrapper
 
     Mapping(required=[])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -10832,7 +10783,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List(:class:`ConditionalValueDefTextExprRef`))
@@ -10868,7 +10819,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -11219,7 +11170,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -11414,7 +11365,7 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -11439,7 +11390,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -11581,7 +11532,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -11711,7 +11662,7 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -11733,10 +11684,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -12025,7 +11974,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -12060,10 +12009,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
     Mapping(required=[shorthand])
-    A FieldDef with Condition :raw-html:`<ValueDef>` {   condition: {value: ...},   field: ...,
-    ... }
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -12352,7 +12299,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
@@ -12388,7 +12335,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -12773,7 +12720,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     axis : anyOf(:class:`Axis`, None)
@@ -13001,7 +12948,7 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -13026,7 +12973,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -13167,7 +13114,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -13297,7 +13244,7 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -13322,7 +13269,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -13466,7 +13413,7 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -13491,7 +13438,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -13635,7 +13582,7 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -13658,7 +13605,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -13962,7 +13909,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -14114,7 +14061,7 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -14137,7 +14084,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -14522,7 +14469,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     axis : anyOf(:class:`Axis`, None)
@@ -14750,7 +14697,7 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -14775,7 +14722,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -14916,7 +14863,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -15046,7 +14993,7 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : anyOf(float, string, string, :class:`ExprRef`)
@@ -15071,7 +15018,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -15215,7 +15162,7 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -15240,7 +15187,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -15384,7 +15331,7 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float
@@ -15407,7 +15354,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     Mapping(required=[shorthand])
 
-    Attributes
+    Parameters
     ----------
 
     shorthand : string
@@ -15711,7 +15658,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
     Mapping(required=[])
 
-    Attributes
+    Parameters
     ----------
 
     bandPosition : float
@@ -15863,7 +15810,7 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
-    Attributes
+    Parameters
     ----------
 
     value : float

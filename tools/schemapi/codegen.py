@@ -5,7 +5,7 @@ import textwrap
 import re
 
 
-class CodeSnippet(object):
+class CodeSnippet:
     """Object whose repr() is a string of code"""
 
     def __init__(self, code):
@@ -56,7 +56,7 @@ def _get_args(info):
     return (nonkeyword, required, kwds, invalid_kwds, additional)
 
 
-class SchemaGenerator(object):
+class SchemaGenerator:
     """Class that defines methods for generating code from schemas
 
     Parameters
@@ -165,15 +165,22 @@ class SchemaGenerator(object):
             doc += self._process_description(  # remove condition description
                 re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
             ).splitlines()
+        # Remove lines which contain the "raw-html" directive which cannot be processed
+        # by Sphinx at this level of the docstring. It works for descriptions
+        # of attributes which is why we do not do the same below. The removed
+        # lines are anyway non-descriptive for a user.
+        doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
-            doc += ["", "Attributes", "----------", ""]
+            doc += ["", "Parameters", "----------", ""]
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
-                    "    {}".format(self._process_description(propinfo.description)),
+                    "    {}".format(
+                        self._process_description(propinfo.deep_description)
+                    ),
                 ]
         if len(doc) > 1:
             doc += [""]

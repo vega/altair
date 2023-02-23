@@ -97,7 +97,7 @@ class RendererRegistry(PluginRegistry[RendererType]):
 # ==============================================================================
 
 
-class Displayable(object):
+class Displayable:
     """A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
@@ -165,7 +165,7 @@ def json_renderer_base(spec, str_repr, **options):
     )
 
 
-class HTMLRenderer(object):
+class HTMLRenderer:
     """Object to render charts as HTML, with a unique output div each time"""
 
     def __init__(self, output_div="altair-viz-{}", **kwargs):
