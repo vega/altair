@@ -8,7 +8,7 @@ from altair.utils import parse_shorthand
 from typing import overload, Type
 
 
-class FieldChannelMixin(object):
+class FieldChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         shorthand = self._get('shorthand')
@@ -62,7 +62,7 @@ class FieldChannelMixin(object):
         )
 
 
-class ValueChannelMixin(object):
+class ValueChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         condition = self._get('condition', Undefined)
@@ -79,7 +79,7 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
-class DatumChannelMixin(object):
+class DatumChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         datum = self._get('datum', Undefined)

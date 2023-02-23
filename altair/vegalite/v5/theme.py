@@ -13,7 +13,7 @@ VEGA_THEMES = [
 ]
 
 
-class VegaTheme(object):
+class VegaTheme:
     """Implementation of a builtin vega theme."""
 
     def __init__(self, theme):

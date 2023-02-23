@@ -1,7 +1,7 @@
 from ..utils import SchemaBase
 
 
-class DatumType(object):
+class DatumType:
     """An object to assist in building Vega-Lite Expressions"""
 
     def __repr__(self):
@@ -38,7 +38,7 @@ def _js_repr(val):
 
 
 # Designed to work with Expression and VariableParameter
-class OperatorMixin(object):
+class OperatorMixin:
     def _to_expr(self):
         return repr(self)
 

@@ -62,7 +62,7 @@ def load_schema():
 
 
 CHANNEL_MIXINS = """
-class FieldChannelMixin(object):
+class FieldChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         shorthand = self._get('shorthand')
@@ -116,7 +116,7 @@ class FieldChannelMixin(object):
         )
 
 
-class ValueChannelMixin(object):
+class ValueChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         condition = self._get('condition', Undefined)
@@ -133,7 +133,7 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
-class DatumChannelMixin(object):
+class DatumChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         datum = self._get('datum', Undefined)
@@ -514,7 +514,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
     )
 
     code = [
-        f"class {class_name}(object):",
+        f"class {class_name}:",
         '    """A mixin class that defines mark methods"""',
     ]
 
@@ -563,7 +563,7 @@ def generate_vegalite_config_mixin(schemafile):
     )
 
     code = [
-        f"class {class_name}(object):",
+        f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
     with open(schemafile, encoding="utf8") as f:

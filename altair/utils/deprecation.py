@@ -40,7 +40,7 @@ def _deprecate(obj, name=None, message=None):
 
     Examples
     --------
-    >>> class Foo(object): pass
+    >>> class Foo: pass
     >>> OldFoo = _deprecate(Foo, "OldFoo")
     >>> f = OldFoo()  # doctest: +SKIP
     AltairDeprecationWarning: alt.OldFoo is deprecated. Use alt.Foo instead.
