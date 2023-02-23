@@ -9,13 +9,19 @@ import re
 import sys
 import traceback
 import warnings
-from typing import ParamSpec, Callable, TypeVar, Any
+from typing import Callable, TypeVar, Any
 
 import jsonschema
 import pandas as pd
 import numpy as np
 
 from altair.utils.schemapi import SchemaBase
+
+try:
+    from typing import ParamSpec
+except ImportError:
+    # ParamSpec was introduced in typing in Python 3.10
+    from typing_extensions import ParamSpec
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype

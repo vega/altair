@@ -24,12 +24,13 @@ Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
 - python 3.6 or newer
-- importlib_metadata_ (python<3.8)
 - jinja2
 - jsonschema_
 - NumPy_
 - Pandas_
 - Toolz_
+- importlib_metadata_ (python<3.8)
+- typing_extensions_ (python<3.11)
 
 To run Altair's full test suite and build Altair's documentation requires a few
 additional dependencies, see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`
@@ -68,6 +69,7 @@ development version directly from GitHub using:
 .. _IPython: https://github.com/ipython/ipython
 
 .. _importlib_metadata: https://github.com/python/importlib_metadata
+.. _typing_extensions: https://github.com/python/typing_extensions
 .. _jsonschema: https://github.com/Julian/jsonschema
 .. _NumPy: http://www.numpy.org/
 .. _Pandas: http://pandas.pydata.org
