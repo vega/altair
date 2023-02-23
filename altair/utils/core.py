@@ -9,6 +9,7 @@ import re
 import sys
 import traceback
 import warnings
+from typing import ParamSpec, Callable, TypeVar, Any
 
 import jsonschema
 import pandas as pd
@@ -21,6 +22,9 @@ try:
 except ImportError:
     # Import for pandas < 0.20.0
     from pandas.lib import infer_dtype as _infer_dtype
+
+_V = TypeVar("_V")
+_P = ParamSpec("_P")
 
 
 def infer_dtype(value):
@@ -552,10 +556,10 @@ def parse_shorthand(
     return attrs
 
 
-def use_signature(Obj):
+def use_signature(Obj: Callable[_P, Any]):
     """Apply call signature and documentation of Obj to the decorated method"""
 
-    def decorate(f):
+    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__
