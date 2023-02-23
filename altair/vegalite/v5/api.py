@@ -974,9 +974,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(
-        self, as_=Undefined, field=Undefined, bin=True, **kwargs
-    ) -> Self:
+    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs) -> Self:
         """
         Add a :class:`BinTransform` to the schema.
 
@@ -1032,9 +1030,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(
-        self, as_=Undefined, calculate=Undefined, **kwargs
-    ) -> Self:
+    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
 
@@ -1320,9 +1316,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(
-        self, flatten, as_=Undefined
-    ) -> Self:
+    def transform_flatten(self, flatten, as_=Undefined) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
         Parameters
@@ -2406,9 +2400,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2492,9 +2484,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2564,9 +2554,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2636,9 +2624,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2726,9 +2712,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             copy += layer
         return copy
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2797,9 +2781,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def interactive(
-        self, name=None, bind_x=True, bind_y=True
-    ) -> Self:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
