@@ -10,6 +10,12 @@ from typing import TypeVar
 
 import black
 
+try:
+    from typing import Self
+except ImportError:
+    # Self was introduced in typing in Python 3.11
+    from typing_extensions import Self
+
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
@@ -64,6 +70,7 @@ def _is_relevant_attribute(attr_name):
         getattr(attr, "_deprecated", False) is True
         or attr_name.startswith("_")
         or attr is TypeVar
+        or attr is Self
     ):
         return False
     else:
