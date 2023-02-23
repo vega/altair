@@ -120,8 +120,11 @@ Impute = core.ImputeParams
 Title = core.TitleParams
 
 
-@utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
+    @utils.use_signature(core.LookupData)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
@@ -129,9 +132,12 @@ class LookupData(core.LookupData):
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
-@utils.use_signature(core.FacetMapping)
 class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
+
+    @utils.use_signature(core.FacetMapping)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def to_dict(self, *args, **kwargs):
         copy = self.copy(deep=False)
@@ -2339,13 +2345,13 @@ def _check_if_can_be_layered(spec):
         )
 
 
-@utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
 
     # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
     # we set the arguments explicitly here.
     # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
         repeat=Undefined,
@@ -2460,10 +2466,10 @@ def repeat(repeater="repeat"):
     return core.RepeatRef(repeat=repeater)
 
 
-@utils.use_signature(core.TopLevelConcatSpec)
 class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelConcatSpec)
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
         for spec in concat:
@@ -2534,10 +2540,10 @@ def concat(*charts, **kwargs):
     return ConcatChart(concat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelHConcatSpec)
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
@@ -2606,10 +2612,10 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelVConcatSpec)
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
@@ -2678,10 +2684,10 @@ def vconcat(*charts, **kwargs):
     return VConcatChart(vconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelLayerSpec)
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
@@ -2771,10 +2777,10 @@ def layer(*charts, **kwargs):
     return LayerChart(layer=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
         self,
         data=Undefined,
