@@ -5,7 +5,7 @@ import textwrap
 import re
 
 
-class CodeSnippet(object):
+class CodeSnippet:
     """Object whose repr() is a string of code"""
 
     def __init__(self, code):
@@ -56,7 +56,7 @@ def _get_args(info):
     return (nonkeyword, required, kwds, invalid_kwds, additional)
 
 
-class SchemaGenerator(object):
+class SchemaGenerator:
     """Class that defines methods for generating code from schemas
 
     Parameters

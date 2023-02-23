@@ -2026,7 +2026,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
-class _EncodingMixin(object):
+class _EncodingMixin:
     @utils.use_signature(core.FacetedEncoding)
     def encode(self: _TEncodingMixin, *args, **kwargs) -> _TEncodingMixin:
         # Convert args to kwargs based on their types.

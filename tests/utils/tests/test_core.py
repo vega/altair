@@ -14,13 +14,13 @@ FAKE_CHANNELS_MODULE = '''
 from altair.utils import schemapi
 
 
-class FieldChannel(object):
+class FieldChannel:
     def __init__(self, shorthand, **kwargs):
         kwargs['shorthand'] = shorthand
         return super(FieldChannel, self).__init__(**kwargs)
 
 
-class ValueChannel(object):
+class ValueChannel:
     def __init__(self, value, **kwargs):
         kwargs['value'] = value
         return super(ValueChannel, self).__init__(**kwargs)

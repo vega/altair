@@ -22,7 +22,7 @@ class NoSuchEntryPoint(Exception):
         return f"No {self.name!r} entry point found in group {self.group!r}"
 
 
-class PluginEnabler(object):
+class PluginEnabler:
     """Context manager for enabling plugins
 
     This object lets you use enable() as a context manager to

@@ -275,7 +275,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             )
 
 
-class UndefinedType(object):
+class UndefinedType:
     """A singleton object for marking undefined parameters"""
 
     __instance = None
@@ -296,7 +296,7 @@ class UndefinedType(object):
 Undefined: Any = UndefinedType()
 
 
-class SchemaBase(object):
+class SchemaBase:
     """Base class for schema wrappers.
 
     Each derived class should set the _schema class attribute (and optionally
@@ -646,7 +646,7 @@ def _passthrough(*args, **kwds):
     return args[0] if args else kwds
 
 
-class _FromDict(object):
+class _FromDict:
     """Class used to construct SchemaBase class hierarchies from a dict
 
     The primary purpose of using this class is to be able to build a hash table
@@ -761,7 +761,7 @@ class _FromDict(object):
             return cls(dct)
 
 
-class _PropertySetter(object):
+class _PropertySetter:
     def __init__(self, prop, schema):
         self.prop = prop
         self.schema = schema

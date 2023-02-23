@@ -9,7 +9,7 @@ _TConfigMethodMixin = TypeVar("_TConfigMethodMixin", bound="ConfigMethodMixin")
 _TMarkMethodMixin = TypeVar("_TMarkMethodMixin", bound="MarkMethodMixin")
 
 
-class MarkMethodMixin(object):
+class MarkMethodMixin:
     """A mixin class that defines mark methods"""
 
     def mark_arc(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
@@ -856,7 +856,7 @@ class MarkMethodMixin(object):
         return copy
 
 
-class ConfigMethodMixin(object):
+class ConfigMethodMixin:
     """A mixin class that defines config methods"""
 
     @use_signature(core.Config)
