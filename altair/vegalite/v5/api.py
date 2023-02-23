@@ -452,10 +452,6 @@ def _selection(type=Undefined, **kwds):
     return param(select=select, **param_kwds)
 
 
-@utils.deprecation.deprecated(
-    message="""'selection' is deprecated.
-    Although it is possible to create a point selection using 'selection(type="point")' and an interval selection using 'selection(type="interval")', for consistency, it is recommended to use 'selection_point()' or 'selection_interval()' instead."""
-)
 def selection(type=Undefined, **kwds):
     """Create a selection parameter.  Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
 
