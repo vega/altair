@@ -95,4 +95,4 @@ budget_sizing = base.add_params(
     size=size_checkbox_condition
 ).properties(title="Checkbox Formatting")
 
-( filter_year | filter_genres) &  (highlight_ratings | budget_sizing  )
+(filter_year | filter_genres) & (highlight_ratings)  # | budget_sizing)
