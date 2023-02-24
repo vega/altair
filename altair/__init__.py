@@ -562,7 +562,6 @@ __all__ = [
     "repeat",
     "sample",
     "schema",
-    "selection",
     "selection_interval",
     "selection_point",
     "sequence",

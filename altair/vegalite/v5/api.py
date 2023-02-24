@@ -418,6 +418,10 @@ def _selection(type=Undefined, **kwds):
     return param(select=select, **param_kwds)
 
 
+@utils.deprecation.deprecated(
+    message="""'selection' is deprecated.
+   Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
+)
 def selection(type=Undefined, **kwds):
     """Create a selection parameter.  Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
 
