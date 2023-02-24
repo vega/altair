@@ -600,6 +600,31 @@ Bindings and input elements can also be used to filter data on the client side. 
         selection
     )
 
+So far we have seen the use of selections to match values in our data.
+When using checkbox bindings,
+we want to instead use the state of the checkbox as a True/False condition
+and execute some action depending on whether it is checked or not.
+When we are using a checkbox as a toggle like this,
+we need to use `alt.param` instead of `alt.selection_point`,
+since we don't want to check if there are True/False values in our data,
+just if the value of the check box is True (checked) or False (unchecked):
+
+.. altair-plot::
+
+    bind_checkbox = alt.binding_checkbox(name='Scale point size by "Acceleration": ')
+    param_checkbox = alt.param(bind=bind_checkbox)
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        size=alt.condition(
+            param_checkbox,
+            alt.Size('Acceleration:Q'),
+            alt.value(25)
+        )
+    ).add_params(
+        param_checkbox
+    )
 
 Scale Binding
 ^^^^^^^^^^^^^
