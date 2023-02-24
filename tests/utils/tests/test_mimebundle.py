@@ -180,7 +180,6 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
             + " cannot run mimebundle tests"
         )
 
-
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
