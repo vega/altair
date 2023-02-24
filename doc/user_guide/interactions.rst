@@ -540,17 +540,17 @@ With an understanding of the selection types and conditions, you can now add dat
 
 Input Element Binding
 ^^^^^^^^^^^^^^^^^^^^^
-With point selections, an input element can be added to the chart to establish a binding between the input and the selection.
-
-For instance, using our example from above a dropdown can be used to highlight cars from a specific ``origin`` :
+With point selections, an input element can be added to the chart to establish a binding between the input and the selection. For instance, using our example from above, a dropdown can be used to highlight cars from a specific ``origin``:
 
 .. altair-plot::
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
-    color = alt.condition(selection,
-                        alt.Color('Origin:N', legend=None),
-                        alt.value('lightgray'))
+    color = alt.condition(
+        selection,
+        alt.Color('Origin:N', legend=None),
+        alt.value('lightgray')
+    )
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -562,12 +562,9 @@ For instance, using our example from above a dropdown can be used to highlight c
     )
 
 
+The above example shows all three elements at work. We  ``bind`` the ``input_dropdown`` to the ``selection`` which is called from the ``condition`` encoded through the data.
 
-
-The above example shows all three elements at work. The ``input_dropdown`` is ``bind`` to the ``selection`` which is called from the ``condition`` encoded through the data.
-
-The following are the input elements supported in vega-lite:
-
+The following are the input elements supported in Vega-Lite:
 
 ========================= ===========================================================================  ===============================================
 Input Element             Description                                                                   Example
@@ -583,13 +580,19 @@ Bindings and input elements can also be used to filter data on the client side. 
 
 .. altair-plot::
 
-    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
+    # Make radio button less cramped by adding a space after each label
+    options = ['Europe', 'Japan', 'USA']
+    labels = [option + ' ' for option in options]
+
+    input_dropdown = alt.binding_radio(options=options, labels=labels, name='Region: ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color='Origin:N',
+        # We need to set a constant domain to preserve the colors
+        # when only one region is shown at a time
+        color=alt.Color('Origin:N', scale=alt.Scale(domain=options)),
         tooltip='Name:N'
     ).add_params(
         selection
