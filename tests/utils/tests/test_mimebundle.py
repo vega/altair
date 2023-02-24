@@ -125,7 +125,7 @@ def vega_spec():
                             "signal": '"a: " + (isValid(datum["a"]) ? datum["a"] : ""+datum["a"]) + "; b: " + (format(datum["b"], ""))'
                         },
                         "fill": {"value": "#4c78a8"},
-                        "width": {"band": 1, "scale": "x"},
+                        "width": {"signal": "max(0.25, bandwidth('x'))"},
                         "x": {"field": "a", "scale": "x"},
                         "y": {"field": "b_end", "scale": "y"},
                         "y2": {"field": "b_start", "scale": "y"},
@@ -180,14 +180,6 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
             + " cannot run mimebundle tests"
         )
 
-    # temporary fix for https://github.com/vega/vega-lite/issues/7776
-    def delete_none(axes):
-        for axis in axes:
-            for key, value in list(axis.items()):
-                if value is None:
-                    del axis[key]
-        return axes
-
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
@@ -198,9 +190,6 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
         engine=engine,
     )
 
-    bundle["application/vnd.vega.v5+json"]["axes"] = delete_none(
-        bundle["application/vnd.vega.v5+json"]["axes"]
-    )
     assert bundle == {"application/vnd.vega.v5+json": vega_spec}
 
 

@@ -814,12 +814,14 @@ class MarkMethodMixin:
         return copy
 
     def mark_boxplot(self: _TMarkMethodMixin, box=Undefined, clip=Undefined, color=Undefined,
-                     extent=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
-                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> _TMarkMethodMixin:
+                     extent=Undefined, invalid=Undefined, median=Undefined, opacity=Undefined,
+                     orient=Undefined, outliers=Undefined, rule=Undefined, size=Undefined,
+                     ticks=Undefined, **kwds) -> _TMarkMethodMixin:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)
         """
-        kwds = dict(box=box, clip=clip, color=color, extent=extent, median=median, opacity=opacity,
-                    orient=orient, outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
+        kwds = dict(box=box, clip=clip, color=color, extent=extent, invalid=invalid, median=median,
+                    opacity=opacity, orient=orient, outliers=outliers, rule=rule, size=size,
+                    ticks=ticks, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.BoxPlotDef(type="boxplot", **kwds)
