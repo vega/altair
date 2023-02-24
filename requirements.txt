@@ -1,5 +1,4 @@
 importlib_metadata; python_version < "3.8"
-# typing_extensions.Self requires at least 4.0.1
 typing_extensions>=4.0.1; python_version < "3.11"
 jinja2
 jsonschema>=3.0
