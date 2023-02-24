@@ -1,13 +1,14 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
+import sys
+
 from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
 
-try:
+if sys.version_info >= (3, 11):
     from typing import Self
-except ImportError:
-    # Self was introduced in typing in Python 3.11
+else:
     from typing_extensions import Self
 
 

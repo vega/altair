@@ -17,10 +17,9 @@ import numpy as np
 
 from altair.utils.schemapi import SchemaBase
 
-try:
+if sys.version_info >= (3, 10):
     from typing import ParamSpec
-except ImportError:
-    # ParamSpec was introduced in typing in Python 3.10
+else:
     from typing_extensions import ParamSpec
 
 try:

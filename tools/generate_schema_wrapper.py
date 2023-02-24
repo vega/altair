@@ -622,15 +622,17 @@ def vegalite_main(skip_download=False):
         mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
         config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
         try_except_imports = [
-            "try:",
+            "if sys.version_info >= (3, 11):",
             "    from typing import Self",
-            "except ImportError:",
-            "    # Self was introduced in typing in Python 3.11",
+            "else:",
             "    from typing_extensions import Self",
         ]
+        stdlib_imports = ["import sys"]
         imports = sorted(set(mark_imports + config_imports))
         with open(outfile, "w", encoding="utf8") as f:
             f.write(HEADER)
+            f.write("\n".join(stdlib_imports))
+            f.write("\n\n")
             f.write("\n".join(imports))
             f.write("\n\n")
             f.write("\n".join(try_except_imports))

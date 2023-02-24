@@ -10,10 +10,9 @@ from typing import TypeVar
 
 import black
 
-try:
+if sys.version_info >= (3, 11):
     from typing import Self
-except ImportError:
-    # Self was introduced in typing in Python 3.11
+else:
     from typing_extensions import Self
 
 # Import Altair from head

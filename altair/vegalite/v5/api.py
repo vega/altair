@@ -7,6 +7,7 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
+import sys
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -15,10 +16,9 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 
-try:
+if sys.version_info >= (3, 11):
     from typing import Self
-except ImportError:
-    # Self was introduced in typing in Python 3.11
+else:
     from typing_extensions import Self
 
 
