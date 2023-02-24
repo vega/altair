@@ -30,7 +30,7 @@ from schemapi.utils import (  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    "vega-lite": {"v5": "v5.2.0"},
+    "vega-lite": {"v5": "v5.6.1"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)

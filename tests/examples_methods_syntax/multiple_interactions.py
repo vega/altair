@@ -40,13 +40,8 @@ base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transfor
 )
 
 # A slider filter
-year_slider = alt.binding_range(min=1969, max=2018, step=1)
-slider_selection = alt.selection_point(
-    bind=year_slider,
-    fields=['Release_Year'],
-    name="Release Year_"
-)
-
+year_slider = alt.binding_range(min=1969, max=2018, step=1, name="Release Year")
+slider_selection = alt.selection_point(bind=year_slider, fields=['Release_Year'])
 
 filter_year = base.add_params(
     slider_selection
@@ -55,8 +50,8 @@ filter_year = base.add_params(
 ).properties(title="Slider Filtering")
 
 # A dropdown filter
-genre_dropdown = alt.binding_select(options=genres)
-genre_select = alt.selection_point(fields=['Major_Genre'], bind=genre_dropdown, name="Genre")
+genre_dropdown = alt.binding_select(options=genres, name="Genre")
+genre_select = alt.selection_point(fields=['Major_Genre'], bind=genre_dropdown)
 
 filter_genres = base.add_params(
     genre_select
@@ -65,9 +60,9 @@ filter_genres = base.add_params(
 ).properties(title="Dropdown Filtering")
 
 #color changing marks
-rating_radio = alt.binding_radio(options=ratings)
+rating_radio = alt.binding_radio(options=ratings, name="Rating")
+rating_select = alt.selection_point(fields=['MPAA_Rating'], bind=rating_radio)
 
-rating_select = alt.selection_point(fields=['MPAA_Rating'], bind=rating_radio, name="Rating")
 rating_color_condition = alt.condition(
     rating_select,
     alt.Color('MPAA_Rating:N').legend(None),
@@ -81,8 +76,8 @@ highlight_ratings = base.add_params(
 ).properties(title="Radio Button Highlighting")
 
 # Boolean selection for format changes
-input_checkbox = alt.binding_checkbox()
-checkbox_selection = alt.selection_point(bind=input_checkbox, name="Big Budget Films")
+input_checkbox = alt.binding_checkbox(name="Big Budget Films")
+checkbox_selection = alt.param(bind=input_checkbox)
 
 size_checkbox_condition = alt.condition(checkbox_selection,
                                         alt.SizeValue(25),
@@ -95,4 +90,4 @@ budget_sizing = base.add_params(
     size=size_checkbox_condition
 ).properties(title="Checkbox Formatting")
 
-( filter_year | filter_genres) &  (highlight_ratings | budget_sizing  )
+(filter_year | filter_genres) & (highlight_ratings | budget_sizing)

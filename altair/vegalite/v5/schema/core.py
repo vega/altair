@@ -2346,7 +2346,7 @@ class BoxPlotConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    box : anyOf(boolean, :class:`MarkConfig`)
+    box : anyOf(boolean, :class:`AnyMarkConfig`)
 
     extent : anyOf(string, float)
         The extent of the whiskers. Available options include:
@@ -2360,15 +2360,15 @@ class BoxPlotConfig(VegaLiteSchema):
           range ( *Q3-Q1* ).
 
         **Default value:** ``1.5``.
-    median : anyOf(boolean, :class:`MarkConfig`)
+    median : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    outliers : anyOf(boolean, :class:`MarkConfig`)
+    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotConfig'}
@@ -2550,7 +2550,7 @@ class BoxPlotDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    box : anyOf(boolean, :class:`MarkConfig`)
+    box : anyOf(boolean, :class:`AnyMarkConfig`)
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
@@ -2579,7 +2579,16 @@ class BoxPlotDef(CompositeMarkDef):
           range ( *Q3-Q1* ).
 
         **Default value:** ``1.5``.
-    median : anyOf(boolean, :class:`MarkConfig`)
+    invalid : enum('filter', None)
+        Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
+        ).
+
+
+        * If set to ``"filter"`` (default), all data items with null values will be skipped
+          (for line, trail, and area marks) or filtered (for other marks).
+        * If ``null``, all data items are included. In this case, invalid values will be
+          interpreted as zeroes.
+    median : anyOf(boolean, :class:`AnyMarkConfig`)
 
     opacity : float
         The opacity (value between [0,1]) of the mark.
@@ -2589,22 +2598,22 @@ class BoxPlotDef(CompositeMarkDef):
         when the orientation is ambiguous.
 
         **Default value:** ``"vertical"``.
-    outliers : anyOf(boolean, :class:`MarkConfig`)
+    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotDef'}
 
     def __init__(self, type=Undefined, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
-                 median=Undefined, opacity=Undefined, orient=Undefined, outliers=Undefined,
-                 rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
+                 invalid=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
+                 outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
         super(BoxPlotDef, self).__init__(type=type, box=box, clip=clip, color=color, extent=extent,
-                                         median=median, opacity=opacity, orient=orient,
+                                         invalid=invalid, median=median, opacity=opacity, orient=orient,
                                          outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
 
 
@@ -3002,13 +3011,13 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -3127,7 +3136,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -3209,13 +3218,13 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -3331,7 +3340,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -3963,9 +3972,43 @@ class Config(VegaLiteSchema):
         option.
     mark : :class:`MarkConfig`
         Mark Config
+    normalizedNumberFormat : string
+        If normalizedNumberFormatType is not specified, D3 number format for axis labels,
+        text marks, and tooltips of normalized stacked fields (fields with ``stack:
+        "normalize"`` ). For example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.normalizedNumberFormatType`` is specified and
+        ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
+        alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
+        value:** ``%``
+    normalizedNumberFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.normalizedNumberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
     numberFormat : string
-        D3 Number format for guide labels and text marks. For example ``"s"`` for SI units.
-        Use `D3's number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        If numberFormatType is not specified, D3 number format for guide labels, text marks,
+        and tooltips of non-normalized fields (fields *without* ``stack: "normalize"`` ).
+        For example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
+        ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
+        ``config.numberFormatType`` function.
+    numberFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.numberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
@@ -3973,7 +4016,7 @@ class Config(VegaLiteSchema):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     point : :class:`MarkConfig`
         Point-Specific Config
@@ -4017,6 +4060,16 @@ class Config(VegaLiteSchema):
 
         **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
         for each label automatically so this config does not affect axes.
+    timeFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.timeFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-time-format,
+        which is exposed as `timeFormat in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#timeFormat>`__. **Note:** You must
+        also set ``customFormatTypes`` to ``true`` and there must *not* be a ``timeUnit``
+        defined to use this feature.
     title : :class:`TitleConfig`
         Title configuration, which determines default properties for all `titles
         <https://vega.github.io/vega-lite/docs/title.html>`__. For a full list of title
@@ -4043,11 +4096,13 @@ class Config(VegaLiteSchema):
                  errorbar=Undefined, facet=Undefined, fieldTitle=Undefined, font=Undefined,
                  geoshape=Undefined, header=Undefined, headerColumn=Undefined, headerFacet=Undefined,
                  headerRow=Undefined, image=Undefined, legend=Undefined, line=Undefined,
-                 lineBreak=Undefined, locale=Undefined, mark=Undefined, numberFormat=Undefined,
-                 padding=Undefined, params=Undefined, point=Undefined, projection=Undefined,
-                 range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined,
-                 square=Undefined, style=Undefined, text=Undefined, tick=Undefined,
-                 timeFormat=Undefined, title=Undefined, trail=Undefined, view=Undefined, **kwds):
+                 lineBreak=Undefined, locale=Undefined, mark=Undefined,
+                 normalizedNumberFormat=Undefined, normalizedNumberFormatType=Undefined,
+                 numberFormat=Undefined, numberFormatType=Undefined, padding=Undefined,
+                 params=Undefined, point=Undefined, projection=Undefined, range=Undefined,
+                 rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined, square=Undefined,
+                 style=Undefined, text=Undefined, tick=Undefined, timeFormat=Undefined,
+                 timeFormatType=Undefined, title=Undefined, trail=Undefined, view=Undefined, **kwds):
         super(Config, self).__init__(arc=arc, area=area, aria=aria, autosize=autosize, axis=axis,
                                      axisBand=axisBand, axisBottom=axisBottom,
                                      axisDiscrete=axisDiscrete, axisLeft=axisLeft, axisPoint=axisPoint,
@@ -4065,11 +4120,14 @@ class Config(VegaLiteSchema):
                                      geoshape=geoshape, header=header, headerColumn=headerColumn,
                                      headerFacet=headerFacet, headerRow=headerRow, image=image,
                                      legend=legend, line=line, lineBreak=lineBreak, locale=locale,
-                                     mark=mark, numberFormat=numberFormat, padding=padding,
-                                     params=params, point=point, projection=projection, range=range,
-                                     rect=rect, rule=rule, scale=scale, selection=selection,
-                                     square=square, style=style, text=text, tick=tick,
-                                     timeFormat=timeFormat, title=title, trail=trail, view=view, **kwds)
+                                     mark=mark, normalizedNumberFormat=normalizedNumberFormat,
+                                     normalizedNumberFormatType=normalizedNumberFormatType,
+                                     numberFormat=numberFormat, numberFormatType=numberFormatType,
+                                     padding=padding, params=params, point=point, projection=projection,
+                                     range=range, rect=rect, rule=rule, scale=scale,
+                                     selection=selection, square=square, style=style, text=text,
+                                     tick=tick, timeFormat=timeFormat, timeFormatType=timeFormatType,
+                                     title=title, trail=trail, view=view, **kwds)
 
 
 class Cursor(VegaLiteSchema):
@@ -4574,9 +4632,9 @@ class ErrorBandConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    band : anyOf(boolean, :class:`MarkConfig`)
+    band : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`MarkConfig`)
+    borders : anyOf(boolean, :class:`AnyMarkConfig`)
 
     extent : :class:`ErrorBarExtent`
         The extent of the band. Available options include:
@@ -4637,9 +4695,9 @@ class ErrorBandDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    band : anyOf(boolean, :class:`MarkConfig`)
+    band : anyOf(boolean, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`MarkConfig`)
+    borders : anyOf(boolean, :class:`AnyMarkConfig`)
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
@@ -4740,13 +4798,13 @@ class ErrorBarConfig(VegaLiteSchema):
         * ``"iqr"`` : Extend the rule to the q1 and q3.
 
         **Default value:** ``"stderr"``.
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarConfig'}
@@ -4802,13 +4860,13 @@ class ErrorBarDef(CompositeMarkDef):
     orient : :class:`Orientation`
         Orientation of the error bar. This is normally automatically determined, but can be
         specified when the orientation is ambiguous and cannot be automatically determined.
-    rule : anyOf(boolean, :class:`MarkConfig`)
+    rule : anyOf(boolean, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`MarkConfig`)
+    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarDef'}
@@ -4899,13 +4957,13 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5062,7 +5120,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -5142,13 +5200,13 @@ class FacetFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5259,7 +5317,7 @@ class FacetFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -5600,13 +5658,13 @@ class FieldDefWithoutScale(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5688,7 +5746,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -5775,13 +5833,13 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -5904,7 +5962,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -6051,7 +6109,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         A key-value mapping between encoding channels and definition of fields.
     name : string
         Name of the visualization for later reference.
-    params : List(anyOf(:class:`VariableParameter`, :class:`SelectionParameter`))
+    params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : :class:`Projection`
@@ -6996,13 +7054,13 @@ class LatLongFieldDef(LatLongDef):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -7084,7 +7142,7 @@ class LatLongFieldDef(LatLongDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9510,7 +9568,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9588,13 +9646,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -9744,7 +9802,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -9880,6 +9938,11 @@ class NamedData(DataSource):
 
     name : string
         Provide a placeholder name and bind data at runtime.
+
+        New data may change the layout but Vega does not always resize the chart. To update
+        the layout when the data updates, set `autosize
+        <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ or explicitly use
+        `view.resize <https://vega.github.io/vega/docs/api/view/#view_resize>`__.
     format : :class:`DataFormat`
         An object that specifies the format for parsing the data.
     """
@@ -10030,7 +10093,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10107,13 +10170,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10263,7 +10326,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10405,7 +10468,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10482,13 +10545,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10638,7 +10701,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -10733,13 +10796,13 @@ class OrderFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -10823,7 +10886,7 @@ class OrderFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11511,7 +11574,7 @@ class PointSelectionConfig(VegaLiteSchema):
         documentation.
     toggle : anyOf(string, boolean)
         Controls whether data values should be toggled (inserted or removed from a point
-        selection) or only ever inserted into multi selections.
+        selection) or only ever inserted into point selections.
 
         One of:
 
@@ -11519,13 +11582,13 @@ class PointSelectionConfig(VegaLiteSchema):
         * ``true`` -- the default behavior, which corresponds to ``"event.shiftKey"``.  As a
           result, data values are toggled when the user interacts with the shift-key
           pressed.
-        * ``false`` -- disables toggling behaviour; as the user interacts, data values are
-          only inserted into the multi selection and never removed.
+        * ``false`` -- disables toggling behaviour; the selection will only ever contain a
+          single data value corresponding to the most recent interaction.
         * A `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ which is
           re-evaluated as the user interacts. If the expression evaluates to ``true``, the
-          data value is toggled into or out of the multi selection. If the expression
-          evaluates to ``false``, the multi selection is first clear, and the data value is
-          then inserted. For example, setting the value to the Vega expression ``"true"``
+          data value is toggled into or out of the point selection. If the expression
+          evaluates to ``false``, the point selection is first cleared, and the data value
+          is then inserted. For example, setting the value to the Vega expression ``"true"``
           will toggle data values without the user pressing the shift-key.
 
         **Default value:** ``true``
@@ -11614,7 +11677,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         documentation.
     toggle : anyOf(string, boolean)
         Controls whether data values should be toggled (inserted or removed from a point
-        selection) or only ever inserted into multi selections.
+        selection) or only ever inserted into point selections.
 
         One of:
 
@@ -11622,13 +11685,13 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         * ``true`` -- the default behavior, which corresponds to ``"event.shiftKey"``.  As a
           result, data values are toggled when the user interacts with the shift-key
           pressed.
-        * ``false`` -- disables toggling behaviour; as the user interacts, data values are
-          only inserted into the multi selection and never removed.
+        * ``false`` -- disables toggling behaviour; the selection will only ever contain a
+          single data value corresponding to the most recent interaction.
         * A `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ which is
           re-evaluated as the user interacts. If the expression evaluates to ``true``, the
-          data value is toggled into or out of the multi selection. If the expression
-          evaluates to ``false``, the multi selection is first clear, and the data value is
-          then inserted. For example, setting the value to the Vega expression ``"true"``
+          data value is toggled into or out of the point selection. If the expression
+          evaluates to ``false``, the point selection is first cleared, and the data value
+          is then inserted. For example, setting the value to the Vega expression ``"true"``
           will toggle data values without the user pressing the shift-key.
 
         **Default value:** ``true``
@@ -11728,7 +11791,7 @@ class DatumDef(LatLongDef, Position2Def):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -11822,8 +11885,9 @@ class PositionDatumDefBase(PolarDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -11882,7 +11946,7 @@ class PositionDatumDefBase(PolarDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -12005,8 +12069,9 @@ class PositionDatumDef(PositionDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -12065,7 +12130,7 @@ class PositionDatumDef(PositionDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -12150,13 +12215,13 @@ class PositionFieldDef(PositionDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -12259,8 +12324,9 @@ class PositionFieldDef(PositionDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -12328,7 +12394,7 @@ class PositionFieldDef(PositionDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -12406,13 +12472,13 @@ class PositionFieldDefBase(PolarDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -12507,8 +12573,9 @@ class PositionFieldDefBase(PolarDef):
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
-          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
-          :raw-html:`<br/>`
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
+          `with percentage tooltip
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
         * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
@@ -12576,7 +12643,7 @@ class PositionFieldDefBase(PolarDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -13935,13 +14002,13 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -14063,7 +14130,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -14562,6 +14629,12 @@ class ScaleConfig(VegaLiteSchema):
         **Default value:** ``false``
     xReverse : anyOf(boolean, :class:`ExprRef`)
         Reverse x-scale by default (useful for right-to-left charts).
+    zero : boolean
+        Default ``scale.zero`` for `continuous
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ scales except for
+        (1) x/y-scales of non-ranged bar or area charts and (2) size scales.
+
+        **Default value:** ``true``
     """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
 
@@ -14574,7 +14647,7 @@ class ScaleConfig(VegaLiteSchema):
                  offsetBandPaddingInner=Undefined, offsetBandPaddingOuter=Undefined,
                  pointPadding=Undefined, quantileCount=Undefined, quantizeCount=Undefined,
                  rectBandPaddingInner=Undefined, round=Undefined, useUnaggregatedDomain=Undefined,
-                 xReverse=Undefined, **kwds):
+                 xReverse=Undefined, zero=Undefined, **kwds):
         super(ScaleConfig, self).__init__(bandPaddingInner=bandPaddingInner,
                                           bandPaddingOuter=bandPaddingOuter,
                                           bandWithNestedOffsetPaddingInner=bandWithNestedOffsetPaddingInner,
@@ -14592,7 +14665,7 @@ class ScaleConfig(VegaLiteSchema):
                                           quantizeCount=quantizeCount,
                                           rectBandPaddingInner=rectBandPaddingInner, round=round,
                                           useUnaggregatedDomain=useUnaggregatedDomain,
-                                          xReverse=xReverse, **kwds)
+                                          xReverse=xReverse, zero=zero, **kwds)
 
 
 class ScaleDatumDef(OffsetDef):
@@ -14667,7 +14740,7 @@ class ScaleDatumDef(OffsetDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -14742,13 +14815,13 @@ class ScaleFieldDef(OffsetDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -14882,7 +14955,7 @@ class ScaleFieldDef(OffsetDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -15088,13 +15161,13 @@ class SecondaryFieldDef(Position2Def):
         and at the middle of the band if set to ``0.5``.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -15557,7 +15630,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -15634,13 +15707,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -15790,7 +15863,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -16444,7 +16517,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         documentation.
     name : string
         Name of the visualization for later reference.
-    params : List(anyOf(:class:`VariableParameter`, :class:`SelectionParameter`))
+    params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : :class:`Projection`
@@ -17065,13 +17138,13 @@ class StringFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -17187,7 +17260,7 @@ class StringFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -17264,13 +17337,13 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -17393,7 +17466,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -17710,7 +17783,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -17789,13 +17862,13 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -17918,7 +17991,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -18850,7 +18923,18 @@ class TooltipContent(VegaLiteSchema):
         super(TooltipContent, self).__init__(content=content, **kwds)
 
 
-class TopLevelSelectionParameter(VegaLiteSchema):
+class TopLevelParameter(VegaLiteSchema):
+    """TopLevelParameter schema wrapper
+
+    anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`)
+    """
+    _schema = {'$ref': '#/definitions/TopLevelParameter'}
+
+    def __init__(self, *args, **kwds):
+        super(TopLevelParameter, self).__init__(*args, **kwds)
+
+
+class TopLevelSelectionParameter(TopLevelParameter):
     """TopLevelSelectionParameter schema wrapper
 
     Mapping(required=[name, select])
@@ -19018,7 +19102,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -19162,7 +19246,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -19262,7 +19346,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -19369,7 +19453,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     projection : :class:`Projection`
         An object defining properties of the geographic projection shared by underlying
@@ -19544,7 +19628,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`SelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : :class:`Projection`
@@ -19675,7 +19759,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List(anyOf(:class:`VariableParameter`, :class:`TopLevelSelectionParameter`))
+    params : List(:class:`TopLevelParameter`)
         Dynamic variables or selections that parameterize a visualization.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -20364,13 +20448,13 @@ class TypedFieldDef(VegaLiteSchema):
         and at the middle of the band if set to ``0.5``.
     bin : anyOf(boolean, :class:`BinParams`, string, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite ( ``"binned"`` ).
 
 
         If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
 
         If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
         already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
@@ -20452,7 +20536,7 @@ class TypedFieldDef(VegaLiteSchema):
           quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
         * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
           or (2) the specified scale type is a time or utc scale
-        * ``ordinal""`` is the default type if (1) the encoded field contains a `custom sort
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
           order
           <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
@@ -20540,7 +20624,7 @@ class UnitSpec(VegaLiteSchema):
         A key-value mapping between encoding channels and definition of fields.
     name : string
         Name of the visualization for later reference.
-    params : List(anyOf(:class:`VariableParameter`, :class:`SelectionParameter`))
+    params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : :class:`Projection`
@@ -20604,7 +20688,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         documentation.
     name : string
         Name of the visualization for later reference.
-    params : List(anyOf(:class:`VariableParameter`, :class:`SelectionParameter`))
+    params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : :class:`Projection`
@@ -20938,7 +21022,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
         super(ValueDefnumberwidthheightExprRef, self).__init__(value=value, **kwds)
 
 
-class VariableParameter(VegaLiteSchema):
+class VariableParameter(TopLevelParameter):
     """VariableParameter schema wrapper
 
     Mapping(required=[name])
