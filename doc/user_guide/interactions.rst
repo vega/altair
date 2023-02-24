@@ -26,11 +26,11 @@ Interactive charts can use one or more of these elements to create rich interact
 Parameters: Building Blocks of Interaction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Interactivity in Altair is built around *parameters*, of which there are two types: variables and selections.  We introduce these concepts through a series examples.
+Interactivity in Altair is built around *parameters*, of which there are two types: *variables* and *selections*.  We introduce these concepts through a series examples.
 
 .. note::
 
-   This material was changed considerably with the release of Altair 5.  In particular, Altair 4 had selections but not variables, and the term ``parameter`` first appeared in Altair 5.
+   This material was changed considerably with the release of Altair 5.  In particular, Altair 4 had selections but not variables, and the term "parameter" first appeared in Altair 5.
 
 .. _basic variable:
 
