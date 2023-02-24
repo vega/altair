@@ -512,7 +512,7 @@ depending on the size and position of the selection in the scatter plot.
 
     brush = alt.selection_interval()
 
-    points = alt.Chart(cars).mark_circle().encode(
+    points = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'
