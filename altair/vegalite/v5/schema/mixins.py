@@ -11,7 +11,7 @@ except ImportError:
     from typing_extensions import Self
 
 
-class MarkMethodMixin(object):
+class MarkMethodMixin:
     """A mixin class that defines mark methods"""
 
     def mark_arc(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
@@ -856,7 +856,7 @@ class MarkMethodMixin(object):
         return copy
 
 
-class ConfigMethodMixin(object):
+class ConfigMethodMixin:
     """A mixin class that defines config methods"""
 
     @use_signature(core.Config)

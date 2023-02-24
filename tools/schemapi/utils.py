@@ -94,7 +94,7 @@ def is_valid_identifier(var, allow_unicode=False):
     return is_valid and not keyword.iskeyword(var)
 
 
-class SchemaProperties(object):
+class SchemaProperties:
     """A wrapper for properties within a schema"""
 
     def __init__(self, properties, schema, rootschema=None):
@@ -133,7 +133,7 @@ class SchemaProperties(object):
         return (self[key] for key in self)
 
 
-class SchemaInfo(object):
+class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
     def __init__(self, schema, rootschema=None):

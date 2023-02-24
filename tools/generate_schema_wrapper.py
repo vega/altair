@@ -62,7 +62,7 @@ def load_schema():
 
 
 CHANNEL_MIXINS = """
-class FieldChannelMixin(object):
+class FieldChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         shorthand = self._get('shorthand')
@@ -92,9 +92,12 @@ class FieldChannelMixin(object):
                 parsed.pop('type', None)
             elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(shorthand))
+                    raise ValueError(
+                        'Unable to determine data type for the field "{}";'
+                        " verify that the field name is not misspelled."
+                        " If you are referencing a field from a transform,"
+                        " also confirm that the data type is specified correctly.".format(shorthand)
+                    )
                 else:
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
@@ -113,7 +116,7 @@ class FieldChannelMixin(object):
         )
 
 
-class ValueChannelMixin(object):
+class ValueChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         condition = self._get('condition', Undefined)
@@ -130,7 +133,7 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
-class DatumChannelMixin(object):
+class DatumChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
         datum = self._get('datum', Undefined)
@@ -505,7 +508,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
     ]
 
     code = [
-        f"class {class_name}(object):",
+        f"class {class_name}:",
         '    """A mixin class that defines mark methods"""',
     ]
 
@@ -549,7 +552,7 @@ def generate_vegalite_config_mixin(schemafile):
     class_name = "ConfigMethodMixin"
 
     code = [
-        f"class {class_name}(object):",
+        f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
     with open(schemafile, encoding="utf8") as f:
