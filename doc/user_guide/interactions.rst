@@ -687,6 +687,60 @@ since they can also be accessed in expression strings:
        selector
     )
 
+Expressions for Interaction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Altair allows custom interactions by utilizing the expression language of Vega for writing basic formulas. A Vega expression string is a well-defined set of JavaScript-style operations.
+To simplify building these expressions in Python, Altair provides the ``altair.expr`` module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression.
+
+In the following example, we define a range connected to a parameter named `width`. We then assign two expressions within the ``alt.param()`` using both JavaScript and Python-syntax.
+Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below 200, then the color is ``red``; otherwise, the color is ``blue``.
+
+.. altair-plot::
+
+    bind_range = alt.binding_range(min=100, max=300, name='my chart width ')
+    param_width = alt.param(name='width', bind=bind_range)
+
+    param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'blue'")
+    param_color_py_expr = alt.param(expr=alt.expr.if_(param_width < 200, 'red', 'blue'))
+
+    chart = alt.Chart(df).mark_point(color='black').encode(
+        x=alt.X('xval').axis(titleColor=param_color_js_expr),
+        y=alt.Y('yval').axis(titleColor=param_color_py_expr)
+    ).add_params(
+        param_width, 
+        param_color_js_expr, 
+        param_color_py_expr
+    )
+    chart
+
+In this example, we use a JavaScript-style ternary operator ``f"{param_width.name} < 200 ? 'red' : 'blue'"`` which is equivalent to the Python function ``alt.expr.if_(param_width < 200, 'red', 'blue')``.
+The expressions defined as parameters also need to be added to the chart within ``.add_params()`` to be usable within the chart. The ``alt.expr()`` utility function can be used directly inline.
+
+Expressions can be included within a chart specification using two approaches. One approach is to assign an expression within a parameter definition, as shown above. The second approach is to use an inline expression using the ``altair.expr()`` utility function.
+
+Here, we modify the chart above to change the color of the points based on an inline expression, using JavaScript-style syntax:
+
+.. altair-plot::
+
+    chart = chart.mark_point(color=alt.expr(f"{param_width.name} < 200 ? 'red' : 'blue'"))
+    chart
+
+We apply the expression here to style the mark properties ``color`` based on the width. 
+Inline expressions defined by ``alt.expr(...)`` are not a parameter and, therefore, do not need to be added within the `.add_params()`.
+
+Another option to include an expression within a chart specification is as a value definition within ``alt.value()``. Here, we expand the chart from above to change the size of the point based on the width of the chart. If the width is below ``200``, then the size has a value of ``40``; otherwise, it is ``600``:
+
+.. altair-plot::
+
+    chart.encode(size=alt.value(alt.expr(f"{param_width.name} < 200 ? 40 : 600")))
+
+To summarize expressions:
+- Altair can utilize the expression language of Vega for writing basic formulas to enable custom interactions.
+- Both JavaScript-style syntax and Python-style syntax are supported in Altair to define expressions.
+- Altair provides the ``altair.expr`` module which allows expressions to be constructed with Python syntax.
+- Expressions can be included within a chart specification using two approaches: through a ``alt.param(expr=...)`` parameter definition or inline using the ``alt.expr(...)`` utility function.
+- Expressions can be defined in three locations within a chart specification: mark properties, encoding channel options, and within a value definition for an encoding channel.
 
 Further Examples
 ~~~~~~~~~~~~~~~~
