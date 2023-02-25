@@ -693,8 +693,8 @@ Expressions for Interaction
 Altair allows custom interactions by utilizing the expression language of Vega for writing basic formulas. A Vega expression string is a well-defined set of JavaScript-style operations.
 To simplify building these expressions in Python, Altair provides the ``altair.expr`` module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression.
 
-In the following example, we define a range connected to a parameter named `width`. We then assign two expressions within the ``alt.param()`` using both JavaScript and Python-syntax.
-Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below 200, then the color is ``red``; otherwise, the color is ``blue``.
+In the following example, we define a range connected to a parameter named ``width``. We then assign two expressions within the ``alt.param()`` using both JavaScript and Python-syntax.
+Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below ``200``, then the color is ``red``; otherwise, the color is ``blue``.
 
 .. altair-plot::
 
@@ -728,7 +728,7 @@ Here, we modify the chart above to change the color of the points based on an in
     chart
 
 We apply the expression here to style the mark properties ``color`` based on the width. 
-Inline expressions defined by ``alt.expr(...)`` are not a parameter and, therefore, do not need to be added within the `.add_params()`.
+Inline expressions defined by ``alt.expr(...)`` are not a parameter and, therefore, do not need to be added within the ``.add_params()``.
 
 Another option to include an expression within a chart specification is as a value definition within ``alt.value()``. Here, we expand the chart from above to change the size of the point based on the width of the chart. If the width is below ``200``, then the size has a value of ``40``; otherwise, it is ``600``:
 
