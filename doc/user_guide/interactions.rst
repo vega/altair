@@ -715,9 +715,10 @@ Using these two expressions defined as a parameter, we can connect them to an en
     chart
 
 In this example, we use a JavaScript-style ternary operator ``f"{param_width.name} < 200 ? 'red' : 'blue'"`` which is equivalent to the Python function ``alt.expr.if_(param_width < 200, 'red', 'blue')``.
-The expressions defined as parameters also need to be added to the chart within ``.add_params()`` to be usable within the chart. The ``alt.expr()`` utility function can be used directly inline.
+The expressions defined as parameters also need to be added to the chart within ``.add_params()`` to be usable within the chart.
 
-Expressions can be included within a chart specification using two approaches. One approach is to assign an expression within a parameter definition, as shown above. The second approach is to use an inline expression using the ``altair.expr()`` utility function.
+Expressions can be included within a chart specification using two approaches. One approach is to assign an expression within a parameter definition, as shown above.
+The second approach is to use an inline expression using the ``altair.expr()`` utility function.
 
 Here, we modify the chart above to change the color of the points based on an inline expression, using JavaScript-style syntax:
 
