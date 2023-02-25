@@ -76,13 +76,14 @@ highlight_ratings = base.add_params(
 ).properties(title="Radio Button Highlighting")
 
 # Boolean selection for format changes
-input_checkbox = alt.binding_checkbox(name="Big Budget Films")
+input_checkbox = alt.binding_checkbox(name="Big Budget Films ")
 checkbox_selection = alt.param(bind=input_checkbox)
 
-size_checkbox_condition = alt.condition(checkbox_selection,
-                                        alt.SizeValue(25),
-                                        alt.Size('Hundred_Million_Production:Q')
-                                       )
+size_checkbox_condition = alt.condition(
+    checkbox_selection,
+    alt.Size('Hundred_Million_Production:Q'),
+    alt.SizeValue(25)
+)
 
 budget_sizing = base.add_params(
     checkbox_selection
