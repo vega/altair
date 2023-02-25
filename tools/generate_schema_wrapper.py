@@ -147,7 +147,7 @@ class DatumChannelMixin:
 """
 
 MARK_METHOD = '''
-def mark_{mark}({def_arglist}) -> {self_type}:
+def mark_{mark}({def_arglist}) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
     """
     kwds = dict({dict_arglist})
@@ -161,7 +161,7 @@ def mark_{mark}({def_arglist}) -> {self_type}:
 
 CONFIG_METHOD = """
 @use_signature(core.{classname})
-def {method}(self: {self_type}, *args, **kwargs) -> {self_type}:
+def {method}(self, *args, **kwargs) -> Self:
     copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
@@ -169,7 +169,7 @@ def {method}(self: {self_type}, *args, **kwargs) -> {self_type}:
 
 CONFIG_PROP_METHOD = """
 @use_signature(core.{classname})
-def configure_{prop}(self: {self_type}, *args, **kwargs) -> {self_type}:
+def configure_{prop}(self, *args, **kwargs) -> Self:
     copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
@@ -501,17 +501,11 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
         schema = json.load(f)
 
     class_name = "MarkMethodMixin"
-    type_var_name = f"_T{class_name}"
 
     imports = [
-        "from typing import TypeVar",
         "from altair.utils.schemapi import Undefined",
         "from . import core",
     ]
-
-    type_var_definition = (
-        f'{type_var_name} = TypeVar("{type_var_name}", bound="{class_name}")'
-    )
 
     code = [
         f"class {class_name}:",
@@ -530,7 +524,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
         required -= {"type"}
         kwds -= {"type"}
 
-        def_args = [f"self: {type_var_name}"] + [
+        def_args = ["self"] + [
             "{}=Undefined".format(p) for p in (sorted(required) + sorted(kwds))
         ]
         dict_args = ["{0}={0}".format(p) for p in (sorted(required) + sorted(kwds))]
@@ -546,21 +540,16 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
                 mark_def=mark_def,
                 def_arglist=indent_arglist(def_args, indent_level=10 + len(mark)),
                 dict_arglist=indent_arglist(dict_args, indent_level=16),
-                self_type=type_var_name,
             )
             code.append("\n    ".join(mark_method.splitlines()))
 
-    return imports, type_var_definition, "\n".join(code)
+    return imports, "\n".join(code)
 
 
 def generate_vegalite_config_mixin(schemafile):
     imports = ["from . import core", "from altair.utils import use_signature"]
 
     class_name = "ConfigMethodMixin"
-    type_var_name = f"_T{class_name}"
-    type_var_definition = (
-        f'{type_var_name} = TypeVar("{type_var_name}", bound="{class_name}")'
-    )
 
     code = [
         f"class {class_name}:",
@@ -571,20 +560,16 @@ def generate_vegalite_config_mixin(schemafile):
     info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
 
     # configure() method
-    method = CONFIG_METHOD.format(
-        classname="Config", method="configure", self_type=type_var_name
-    )
+    method = CONFIG_METHOD.format(classname="Config", method="configure")
     code.append("\n    ".join(method.splitlines()))
 
     # configure_prop() methods
     for prop, prop_info in info.properties.items():
         classname = prop_info.refname
         if classname and classname.endswith("Config"):
-            method = CONFIG_PROP_METHOD.format(
-                classname=classname, prop=prop, self_type=type_var_name
-            )
+            method = CONFIG_PROP_METHOD.format(classname=classname, prop=prop)
             code.append("\n    ".join(method.splitlines()))
-    return imports, type_var_definition, "\n".join(code)
+    return imports, "\n".join(code)
 
 
 def vegalite_main(skip_download=False):
@@ -634,19 +619,23 @@ def vegalite_main(skip_download=False):
             }
         outfile = join(schemapath, "mixins.py")
         print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        mark_imports, mark_type_var, mark_mixin = generate_vegalite_mark_mixin(
-            schemafile, markdefs
-        )
-        config_imports, config_type_var, config_mixin = generate_vegalite_config_mixin(
-            schemafile
-        )
+        mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+        config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+        try_except_imports = [
+            "if sys.version_info >= (3, 11):",
+            "    from typing import Self",
+            "else:",
+            "    from typing_extensions import Self",
+        ]
+        stdlib_imports = ["import sys"]
         imports = sorted(set(mark_imports + config_imports))
-        type_vars = sorted([mark_type_var, config_type_var])
         with open(outfile, "w", encoding="utf8") as f:
             f.write(HEADER)
+            f.write("\n".join(stdlib_imports))
+            f.write("\n\n")
             f.write("\n".join(imports))
             f.write("\n\n")
-            f.write("\n".join(type_vars))
+            f.write("\n".join(try_except_imports))
             f.write("\n\n\n")
             f.write(mark_mixin)
             f.write("\n\n\n")
