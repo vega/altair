@@ -819,8 +819,9 @@ class MarkMethodMixin:
                      rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)
         """
-        kwds = dict(box=box, clip=clip, color=color, extent=extent, median=median, opacity=opacity,
-                    orient=orient, outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
+        kwds = dict(box=box, clip=clip, color=color, extent=extent, invalid=invalid, median=median,
+                    opacity=opacity, orient=orient, outliers=outliers, rule=rule, size=size,
+                    ticks=ticks, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.BoxPlotDef(type="boxplot", **kwds)
