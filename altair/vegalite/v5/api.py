@@ -461,7 +461,7 @@ def selection_interval(
     zoom=Undefined,
     **kwds,
 ):
-    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point seleection parameters (`selection_point`) are used to select multiple discrete data values.)
+    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
 
     Parameters
     ----------
