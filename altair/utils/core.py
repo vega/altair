@@ -9,6 +9,7 @@ import re
 import sys
 import traceback
 import warnings
+from typing import Callable, TypeVar, Any
 
 import jsonschema
 import pandas as pd
@@ -16,11 +17,19 @@ import numpy as np
 
 from altair.utils.schemapi import SchemaBase
 
+if sys.version_info >= (3, 10):
+    from typing import ParamSpec
+else:
+    from typing_extensions import ParamSpec
+
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
     # Import for pandas < 0.20.0
     from pandas.lib import infer_dtype as _infer_dtype
+
+_V = TypeVar("_V")
+_P = ParamSpec("_P")
 
 
 def infer_dtype(value):
@@ -526,8 +535,9 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
-        if "field" in attrs and attrs["field"] in data.columns:
-            attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+        # Remove escape sequences so that types can be inferred for columns with special characters
+        if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
+            attrs["type"] = infer_vegalite_type(data[attrs["field"].replace("\\", "")])
             # ordered categorical dataframe columns return the type and sort order as a tuple
             if isinstance(attrs["type"], tuple):
                 attrs["sort"] = attrs["type"][1]
@@ -552,10 +562,10 @@ def parse_shorthand(
     return attrs
 
 
-def use_signature(Obj):
+def use_signature(Obj: Callable[_P, Any]):
     """Apply call signature and documentation of Obj to the decorated method"""
 
-    def decorate(f):
+    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__

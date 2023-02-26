@@ -1,21 +1,24 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
+import sys
+
 from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
-from typing import TypeVar
 
-_TConfigMethodMixin = TypeVar("_TConfigMethodMixin", bound="ConfigMethodMixin")
-_TMarkMethodMixin = TypeVar("_TMarkMethodMixin", bound="MarkMethodMixin")
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 class MarkMethodMixin:
     """A mixin class that defines mark methods"""
 
-    def mark_arc(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                 ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                 bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                 clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_arc(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
@@ -35,7 +38,7 @@ class MarkMethodMixin:
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds) -> _TMarkMethodMixin:
+                 **kwds) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -69,10 +72,10 @@ class MarkMethodMixin:
             copy.mark = "arc"
         return copy
 
-    def mark_area(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_area(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -92,7 +95,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -126,10 +129,10 @@ class MarkMethodMixin:
             copy.mark = "area"
         return copy
 
-    def mark_bar(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                 ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                 bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                 clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_bar(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                 baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                  cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                  cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
@@ -149,7 +152,7 @@ class MarkMethodMixin:
                  timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
                  url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds) -> _TMarkMethodMixin:
+                 **kwds) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -183,30 +186,30 @@ class MarkMethodMixin:
             copy.mark = "bar"
         return copy
 
-    def mark_image(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
-                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
-                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
-                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
-                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_image(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -240,10 +243,10 @@ class MarkMethodMixin:
             copy.mark = "image"
         return copy
 
-    def mark_line(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_line(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -263,7 +266,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -297,30 +300,30 @@ class MarkMethodMixin:
             copy.mark = "line"
         return copy
 
-    def mark_point(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
-                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
-                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
-                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
-                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_point(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -354,10 +357,10 @@ class MarkMethodMixin:
             copy.mark = "point"
         return copy
 
-    def mark_rect(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_rect(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -377,7 +380,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -411,10 +414,10 @@ class MarkMethodMixin:
             copy.mark = "rect"
         return copy
 
-    def mark_rule(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_rule(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -434,7 +437,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -468,10 +471,10 @@ class MarkMethodMixin:
             copy.mark = "rule"
         return copy
 
-    def mark_text(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_text(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -491,7 +494,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -525,10 +528,10 @@ class MarkMethodMixin:
             copy.mark = "text"
         return copy
 
-    def mark_tick(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                  ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                  bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                  clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+    def mark_tick(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                  ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                  baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
@@ -548,7 +551,7 @@ class MarkMethodMixin:
                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                  yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -582,30 +585,30 @@ class MarkMethodMixin:
             copy.mark = "tick"
         return copy
 
-    def mark_trail(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                   ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                   bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                   clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                   description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                   dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                   filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                   fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                   interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                   lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                   orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                   radius=Undefined, radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
-                   shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
-                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, theta2=Undefined, theta2Offset=Undefined,
-                   thetaOffset=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
-                   timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                   x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                   y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_trail(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                   ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                   baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                   color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                   cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                   dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                   ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                   font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                   height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                   invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                   lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                   outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                   radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                   size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                   strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                   strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                   thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
+                   tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                   x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -639,31 +642,30 @@ class MarkMethodMixin:
             copy.mark = "trail"
         return copy
 
-    def mark_circle(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                    description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                    dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                    filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                    fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                    orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                    radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
-                    radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                    theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+    def mark_circle(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -697,31 +699,30 @@ class MarkMethodMixin:
             copy.mark = "circle"
         return copy
 
-    def mark_square(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                    ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                    bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                    clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                    description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                    dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                    filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                    fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                    interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                    lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                    orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                    radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
-                    radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                    theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+    def mark_square(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                    ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                    baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                    color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                    cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                    dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                    ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                    font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                    height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                    invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                    lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                    outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                    radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                    size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                    strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                    strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                    strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                    theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
                     thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
                     tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
                     x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+                    y2Offset=Undefined, yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -755,31 +756,31 @@ class MarkMethodMixin:
             copy.mark = "square"
         return copy
 
-    def mark_geoshape(self: _TMarkMethodMixin, align=Undefined, angle=Undefined, aria=Undefined,
-                      ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                      bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                      clip=Undefined, color=Undefined, continuousBandSize=Undefined,
-                      cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                      cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                      cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                      description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                      dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                      filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                      fontWeight=Undefined, height=Undefined, href=Undefined, innerRadius=Undefined,
-                      interpolate=Undefined, invalid=Undefined, limit=Undefined, line=Undefined,
-                      lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                      orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                      radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
-                      radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                      stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                      strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                      strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                      theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                      thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                      tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                      x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                      y2Offset=Undefined, yOffset=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_geoshape(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
+                      ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
+                      baseline=Undefined, binSpacing=Undefined, blend=Undefined, clip=Undefined,
+                      color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                      cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                      cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
+                      cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined,
+                      dir=Undefined, discreteBandSize=Undefined, dx=Undefined, dy=Undefined,
+                      ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                      font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                      height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
+                      invalid=Undefined, limit=Undefined, line=Undefined, lineBreak=Undefined,
+                      lineHeight=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                      outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                      radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined,
+                      shape=Undefined, size=Undefined, smooth=Undefined, stroke=Undefined,
+                      strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                      strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                      strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
+                      tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
+                      theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
+                      timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
+                      url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                      xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                      yOffset=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)
         """
         kwds = dict(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
@@ -813,13 +814,14 @@ class MarkMethodMixin:
             copy.mark = "geoshape"
         return copy
 
-    def mark_boxplot(self: _TMarkMethodMixin, box=Undefined, clip=Undefined, color=Undefined,
-                     extent=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
-                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_boxplot(self, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
+                     invalid=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
+                     outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)
         """
-        kwds = dict(box=box, clip=clip, color=color, extent=extent, median=median, opacity=opacity,
-                    orient=orient, outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
+        kwds = dict(box=box, clip=clip, color=color, extent=extent, invalid=invalid, median=median,
+                    opacity=opacity, orient=orient, outliers=outliers, rule=rule, size=size,
+                    ticks=ticks, **kwds)
         copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.BoxPlotDef(type="boxplot", **kwds)
@@ -827,9 +829,9 @@ class MarkMethodMixin:
             copy.mark = "boxplot"
         return copy
 
-    def mark_errorbar(self: _TMarkMethodMixin, clip=Undefined, color=Undefined, extent=Undefined,
-                      opacity=Undefined, orient=Undefined, rule=Undefined, size=Undefined,
-                      thickness=Undefined, ticks=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_errorbar(self, clip=Undefined, color=Undefined, extent=Undefined, opacity=Undefined,
+                      orient=Undefined, rule=Undefined, size=Undefined, thickness=Undefined,
+                      ticks=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)
         """
         kwds = dict(clip=clip, color=color, extent=extent, opacity=opacity, orient=orient, rule=rule,
@@ -841,9 +843,9 @@ class MarkMethodMixin:
             copy.mark = "errorbar"
         return copy
 
-    def mark_errorband(self: _TMarkMethodMixin, band=Undefined, borders=Undefined, clip=Undefined,
-                       color=Undefined, extent=Undefined, interpolate=Undefined, opacity=Undefined,
-                       orient=Undefined, tension=Undefined, **kwds) -> _TMarkMethodMixin:
+    def mark_errorband(self, band=Undefined, borders=Undefined, clip=Undefined, color=Undefined,
+                       extent=Undefined, interpolate=Undefined, opacity=Undefined, orient=Undefined,
+                       tension=Undefined, **kwds) -> Self:
         """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)
         """
         kwds = dict(band=band, borders=borders, clip=clip, color=color, extent=extent,
@@ -860,13 +862,13 @@ class ConfigMethodMixin:
     """A mixin class that defines config methods"""
 
     @use_signature(core.Config)
-    def configure(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_arc(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_arc(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -874,7 +876,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AreaConfig)
-    def configure_area(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_area(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -882,7 +884,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axis(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axis(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -890,7 +892,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisBand(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -898,7 +900,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisBottom(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisBottom(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -906,7 +908,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisDiscrete(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -914,7 +916,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisLeft(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisLeft(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -922,7 +924,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisPoint(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -930,7 +932,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisQuantitative(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -938,7 +940,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisRight(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisRight(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -946,7 +948,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisTemporal(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -954,7 +956,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisTop(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisTop(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -962,7 +964,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisX(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisX(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -970,7 +972,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisXBand(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -978,7 +980,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisXDiscrete(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -986,7 +988,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisXPoint(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -994,7 +996,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisXQuantitative(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1002,7 +1004,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisXTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisXTemporal(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1010,7 +1012,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisY(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisY(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1018,7 +1020,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYBand(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisYBand(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1026,7 +1028,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYDiscrete(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisYDiscrete(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1034,7 +1036,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYPoint(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisYPoint(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1042,7 +1044,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYQuantitative(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisYQuantitative(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1050,7 +1052,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.AxisConfig)
-    def configure_axisYTemporal(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_axisYTemporal(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1058,7 +1060,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.BarConfig)
-    def configure_bar(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_bar(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1066,7 +1068,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.BoxPlotConfig)
-    def configure_boxplot(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_boxplot(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1074,7 +1076,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_circle(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_circle(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1082,7 +1084,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.CompositionConfig)
-    def configure_concat(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_concat(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1090,7 +1092,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.ErrorBandConfig)
-    def configure_errorband(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_errorband(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1098,7 +1100,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.ErrorBarConfig)
-    def configure_errorbar(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_errorbar(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1106,7 +1108,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.CompositionConfig)
-    def configure_facet(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_facet(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1114,7 +1116,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_geoshape(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_geoshape(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1122,7 +1124,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_header(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_header(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1130,7 +1132,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerColumn(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_headerColumn(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1138,7 +1140,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerFacet(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_headerFacet(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1146,7 +1148,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.HeaderConfig)
-    def configure_headerRow(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_headerRow(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1154,7 +1156,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_image(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_image(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1162,7 +1164,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.LegendConfig)
-    def configure_legend(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_legend(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1170,7 +1172,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.LineConfig)
-    def configure_line(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_line(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1178,7 +1180,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_mark(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_mark(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1186,7 +1188,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_point(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_point(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1194,7 +1196,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.ProjectionConfig)
-    def configure_projection(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_projection(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1202,7 +1204,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.RangeConfig)
-    def configure_range(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_range(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1210,7 +1212,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.RectConfig)
-    def configure_rect(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_rect(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1218,7 +1220,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_rule(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_rule(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1226,7 +1228,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.ScaleConfig)
-    def configure_scale(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_scale(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1234,7 +1236,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.SelectionConfig)
-    def configure_selection(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_selection(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1242,7 +1244,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_square(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_square(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1250,7 +1252,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_text(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_text(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1258,7 +1260,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.TickConfig)
-    def configure_tick(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_tick(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1266,7 +1268,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.TitleConfig)
-    def configure_title(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_title(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1274,7 +1276,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.LineConfig)
-    def configure_trail(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_trail(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
@@ -1282,7 +1284,7 @@ class ConfigMethodMixin:
         return copy
 
     @use_signature(core.ViewConfig)
-    def configure_view(self: _TConfigMethodMixin, *args, **kwargs) -> _TConfigMethodMixin:
+    def configure_view(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()

@@ -72,7 +72,7 @@ The following examples applies these approaches to focus on continental Africa:
         translate=[160, 160]  # lon, lat
     )
 
-3. Specify ``fit`` (extent) within the ``project`` method & ``clip=True`` in the mark properties:
+4. Specify ``fit`` (extent) within the ``project`` method & ``clip=True`` in the mark properties:
 
 .. altair-plot::
 
@@ -288,14 +288,14 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
     from vega_datasets import data
     import geopandas as gpd
 
-    def classify(type, breaks=None, nice=False, title=None):
+    def classify(type, domain=None, nice=False, title=None):
         # define data
         us_counties = alt.topo_feature(data.us_10m.url, "counties")
         us_unemp = data.unemployment.url
 
         # define choropleth scale
         if "threshold" in type:
-            scale = alt.Scale(type=type, domain=breaks, scheme="inferno")
+            scale = alt.Scale(type=type, domain=domain, scheme="inferno")
         else:
             scale = alt.Scale(type=type, nice=nice, scheme="inferno")
 
@@ -357,7 +357,7 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify(type='quantize', title=['quantile', 'equal range'])
+    classify(type='quantize', title=['quantize', 'equal range'])
 
 
 The ``quantize`` method can also be used in combination with ``nice``. This will `"nice"` the domain before applying quantization. As such:
@@ -376,13 +376,13 @@ And applied in our utility function:
 
 .. code:: python
 
-    alt.Scale(type='threshold', breaks=[0.05, 0.20])
+    alt.Scale(type='threshold', domain=[0.05, 0.20])
 
 And applied in our utility function:
 
 .. altair-plot::
 
-    classify(type='threshold', breaks=[0.05, 0.20])
+    classify(type='threshold', domain=[0.05, 0.20])
 
 The definition above will create 3 classes. One class with values below `0.05`, one
 class with values from `0.05` to `0.20` and one class with values higher than `0.20`.
@@ -409,7 +409,7 @@ And applied in our utility function:
 
 .. altair-plot::
 
-    classify(type='threshold', breaks=[0.061, 0.088, 0.116, 0.161],
+    classify(type='threshold', domain=[0.061, 0.088, 0.116, 0.161],
             title=['threshold Jenks','natural breaks'])
 
 Caveats:
@@ -573,9 +573,8 @@ We use here an elegant way to access the nested point coordinates from the geome
     gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
 
     # define parameters
-    range0 = alt.binding_range(min=-180, max=180, step=5)
-    rotate0 = alt.param(value=120, bind=range0, name='rotate0')
-    rotate_param = alt.param(expr=f"[{rotate0.name}, 0, 0]")
+    range0 = alt.binding_range(min=-180, max=180, step=5, name='rotate longitude ')
+    rotate0 = alt.param(value=120, bind=range0)
     hover = alt.selection_point(on="mouseover", clear="mouseout")
 
     # world disk
@@ -617,10 +616,9 @@ We use here an elegant way to access the nested point coordinates from the geome
     )
 
     # define projection and add the rotation param for all layers
-    comb = (
-        alt.layer(sphere, world, quakes)
-        .project("orthographic", rotate=rotate_param)
-        .add_params(rotate_param)
+    comb = alt.layer(sphere, world, quakes).project(
+        type="orthographic",
+        rotate=alt.expr(f"[{rotate0.name}, 0, 0]")
     )
     comb
 

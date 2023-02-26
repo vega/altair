@@ -1,5 +1,4 @@
 import warnings
-from typing import TypeVar
 
 import hashlib
 import io
@@ -8,6 +7,7 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
+import sys
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -16,15 +16,10 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 
-_TTopLevelMixin = TypeVar("_TTopLevelMixin", bound="TopLevelMixin")
-_TEncodingMixin = TypeVar("_TEncodingMixin", bound="_EncodingMixin")
-_TChart = TypeVar("_TChart", bound="Chart")
-_TRepeatChart = TypeVar("_TRepeatChart", bound="RepeatChart")
-_TConcatChart = TypeVar("_TConcatChart", bound="ConcatChart")
-_THConcatChart = TypeVar("_THConcatChart", bound="HConcatChart")
-_TVConcatChart = TypeVar("_TVConcatChart", bound="VConcatChart")
-_TLayerChart = TypeVar("_TLayerChart", bound="LayerChart")
-_TFacetChart = TypeVar("_TFacetChart", bound="FacetChart")
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 # ------------------------------------------------------------------------
@@ -125,8 +120,11 @@ Impute = core.ImputeParams
 Title = core.TitleParams
 
 
-@utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
+    @utils.use_signature(core.LookupData)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
@@ -134,9 +132,12 @@ class LookupData(core.LookupData):
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
-@utils.use_signature(core.FacetMapping)
 class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
+
+    @utils.use_signature(core.FacetMapping)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def to_dict(self, *args, **kwargs):
         copy = self.copy(deep=False)
@@ -409,7 +410,7 @@ def _selection(type=Undefined, **kwds):
         select = core.PointSelectionConfig(type="point", **kwds)
         warnings.warn(
             """The types 'single' and 'multi' are now
-        combined and should be specified using "type='point'".""",
+        combined and should be specified using "selection_point()".""",
             utils.AltairDeprecationWarning,
         )
     else:
@@ -418,8 +419,15 @@ def _selection(type=Undefined, **kwds):
     return param(select=select, **param_kwds)
 
 
+@utils.deprecation.deprecated(
+    message="""'selection' is deprecated.
+   Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
+)
 def selection(type=Undefined, **kwds):
-    """Create a selection parameter.  Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+    """
+    Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+
+    Create a selection parameter.
 
     Parameters
     ----------
@@ -453,7 +461,7 @@ def selection_interval(
     zoom=Undefined,
     **kwds,
 ):
-    """Create a selection parameter with `type='interval'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='interval'` are used to select a continuous range of data values on drag.  (The current alternative is `type='point'`, which is used to select multiple discrete data values, and which is created using 'selection_point'.)
+    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
 
     Parameters
     ----------
@@ -565,7 +573,7 @@ def selection_point(
     nearest=Undefined,
     **kwds,
 ):
-    """Create a selection parameter with `type='point'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='point'` are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. (The current alternative is `type='interval'`, which is used to select select a continuous range of data values on drag, and which is created using 'selection_interval'.)
+    """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
 
     Parameters
     ----------
@@ -666,6 +674,7 @@ def selection_point(
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
+    """'selection_multi' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
 
 
@@ -674,6 +683,7 @@ def selection_multi(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
+    """'selection_single' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
 
 
@@ -985,7 +995,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         return RepeatChart(spec=self, repeat=repeat, columns=columns, **kwargs)
 
-    def properties(self: _TTopLevelMixin, **kwargs) -> _TTopLevelMixin:
+    def properties(self, **kwargs) -> Self:
         """Set top-level properties of the Chart.
 
         Argument names and types are the same as class initialization.
@@ -1004,7 +1014,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     def project(
-        self: _TTopLevelMixin,
+        self,
         type=Undefined,
         center=Undefined,
         clipAngle=Undefined,
@@ -1025,7 +1035,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         tilt=Undefined,
         translate=Undefined,
         **kwds,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
@@ -1135,8 +1145,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     def transform_aggregate(
-        self: _TTopLevelMixin, aggregate=Undefined, groupby=Undefined, **kwds
-    ) -> _TTopLevelMixin:
+        self, aggregate=Undefined, groupby=Undefined, **kwds
+    ) -> Self:
         """
         Add an :class:`AggregateTransform` to the schema.
 
@@ -1210,9 +1220,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(
-        self: _TTopLevelMixin, as_=Undefined, field=Undefined, bin=True, **kwargs
-    ) -> _TTopLevelMixin:
+    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs) -> Self:
         """
         Add a :class:`BinTransform` to the schema.
 
@@ -1268,9 +1276,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(
-        self: _TTopLevelMixin, as_=Undefined, calculate=Undefined, **kwargs
-    ) -> _TTopLevelMixin:
+    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
 
@@ -1333,7 +1339,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self
 
     def transform_density(
-        self: _TTopLevelMixin,
+        self,
         density,
         as_=Undefined,
         bandwidth=Undefined,
@@ -1344,7 +1350,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         maxsteps=Undefined,
         minsteps=Undefined,
         steps=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`DensityTransform` to the spec.
 
         Parameters
@@ -1401,7 +1407,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_impute(
-        self: _TTopLevelMixin,
+        self,
         impute,
         key,
         frame=Undefined,
@@ -1409,7 +1415,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         keyvals=Undefined,
         method=Undefined,
         value=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """
         Add an :class:`ImputeTransform` to the schema.
 
@@ -1471,8 +1477,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_joinaggregate(
-        self: _TTopLevelMixin, joinaggregate=Undefined, groupby=Undefined, **kwargs
-    ) -> _TTopLevelMixin:
+        self, joinaggregate=Undefined, groupby=Undefined, **kwargs
+    ) -> Self:
         """
         Add a :class:`JoinAggregateTransform` to the schema.
 
@@ -1523,7 +1529,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     # TODO: Update docstring
-    def transform_filter(self: _TTopLevelMixin, filter, **kwargs) -> _TTopLevelMixin:
+    def transform_filter(self, filter, **kwargs) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
 
@@ -1556,9 +1562,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(
-        self: _TTopLevelMixin, flatten, as_=Undefined
-    ) -> _TTopLevelMixin:
+    def transform_flatten(self, flatten, as_=Undefined) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
         Parameters
@@ -1586,7 +1590,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.FlattenTransform(flatten=flatten, **{"as": as_})
         )
 
-    def transform_fold(self: _TTopLevelMixin, fold, as_=Undefined) -> _TTopLevelMixin:
+    def transform_fold(self, fold, as_=Undefined) -> Self:
         """Add a :class:`FoldTransform` to the spec.
 
         Parameters
@@ -1610,13 +1614,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FoldTransform(fold=fold, **{"as": as_}))
 
     def transform_loess(
-        self: _TTopLevelMixin,
+        self,
         on,
         loess,
         as_=Undefined,
         bandwidth=Undefined,
         groupby=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`LoessTransform` to the spec.
 
         Parameters
@@ -1652,13 +1656,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_lookup(
-        self: _TTopLevelMixin,
+        self,
         lookup=Undefined,
         from_=Undefined,
         as_=Undefined,
         default=Undefined,
         **kwargs,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
 
         Parameters
@@ -1707,13 +1711,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.LookupTransform(**kwargs))
 
     def transform_pivot(
-        self: _TTopLevelMixin,
+        self,
         pivot,
         value,
         groupby=Undefined,
         limit=Undefined,
         op=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
         Parameters
@@ -1753,13 +1757,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_quantile(
-        self: _TTopLevelMixin,
+        self,
         quantile,
         as_=Undefined,
         groupby=Undefined,
         probs=Undefined,
         step=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`QuantileTransform` to the chart
 
         Parameters
@@ -1799,7 +1803,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_regression(
-        self: _TTopLevelMixin,
+        self,
         on,
         regression,
         as_=Undefined,
@@ -1808,7 +1812,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         method=Undefined,
         order=Undefined,
         params=Undefined,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`RegressionTransform` to the chart.
 
         Parameters
@@ -1863,7 +1867,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         )
 
-    def transform_sample(self: _TTopLevelMixin, sample=1000) -> _TTopLevelMixin:
+    def transform_sample(self, sample=1000) -> Self:
         """
         Add a :class:`SampleTransform` to the schema.
 
@@ -1884,8 +1888,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.SampleTransform(sample))
 
     def transform_stack(
-        self: _TTopLevelMixin, as_, stack, groupby, offset=Undefined, sort=Undefined
-    ) -> _TTopLevelMixin:
+        self, as_, stack, groupby, offset=Undefined, sort=Undefined
+    ) -> Self:
         """
         Add a :class:`StackTransform` to the schema.
 
@@ -1921,12 +1925,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_timeunit(
-        self: _TTopLevelMixin,
+        self,
         as_=Undefined,
         field=Undefined,
         timeUnit=Undefined,
         **kwargs,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """
         Add a :class:`TimeUnitTransform` to the schema.
 
@@ -2005,14 +2009,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self
 
     def transform_window(
-        self: _TTopLevelMixin,
+        self,
         window=Undefined,
         frame=Undefined,
         groupby=Undefined,
         ignorePeers=Undefined,
         sort=Undefined,
         **kwargs,
-    ) -> _TTopLevelMixin:
+    ) -> Self:
         """Add a :class:`WindowTransform` to the schema
 
         Parameters
@@ -2169,7 +2173,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         http_server=None,
         **kwargs,
     ):
-        """Open a browser window and display a rendering of the chart
+        """
+        'serve' is deprecated. Use 'show' instead.
+
+        Open a browser window and display a rendering of the chart
 
         Parameters
         ----------
@@ -2251,21 +2258,21 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self: _TTopLevelMixin, *args, **kwargs) -> _TTopLevelMixin:
+    def resolve_axis(self, *args, **kwargs) -> Self:
         return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self: _TTopLevelMixin, *args, **kwargs) -> _TTopLevelMixin:
+    def resolve_legend(self, *args, **kwargs) -> Self:
         return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self: _TTopLevelMixin, *args, **kwargs) -> _TTopLevelMixin:
+    def resolve_scale(self, *args, **kwargs) -> Self:
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
 class _EncodingMixin:
     @utils.use_signature(core.FacetedEncoding)
-    def encode(self: _TEncodingMixin, *args, **kwargs) -> _TEncodingMixin:
+    def encode(self, *args, **kwargs) -> Self:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)
 
@@ -2468,7 +2475,7 @@ class Chart(
             return super(Chart, copy).to_dict(*args, **kwargs)
         return super().to_dict(*args, **kwargs)
 
-    def add_params(self: _TChart, *params) -> _TChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params:
             return self
@@ -2483,10 +2490,11 @@ class Chart(
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TChart, *params) -> _TChart:
+    def add_selection(self, *params) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
-    def interactive(self: _TChart, name=None, bind_x=True, bind_y=True) -> _TChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2581,13 +2589,13 @@ def _check_if_can_be_layered(spec):
         )
 
 
-@utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
 
     # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
     # we set the arguments explicitly here.
     # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
         repeat=Undefined,
@@ -2642,9 +2650,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
-    def interactive(
-        self: _TRepeatChart, name=None, bind_x=True, bind_y=True
-    ) -> _TRepeatChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2667,7 +2673,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self: _TRepeatChart, *params) -> _TRepeatChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -2678,7 +2684,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TRepeatChart, *selections) -> _TRepeatChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2702,10 +2709,10 @@ def repeat(repeater="repeat"):
     return core.RepeatRef(repeat=repeater)
 
 
-@utils.use_signature(core.TopLevelConcatSpec)
 class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelConcatSpec)
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
         for spec in concat:
@@ -2728,9 +2735,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def interactive(
-        self: _TConcatChart, name=None, bind_x=True, bind_y=True
-    ) -> _TConcatChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2756,7 +2761,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self: _TConcatChart, *params) -> _TConcatChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.concat:
             return self
@@ -2767,7 +2772,8 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TConcatChart, *selections) -> _TConcatChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2776,10 +2782,10 @@ def concat(*charts, **kwargs):
     return ConcatChart(concat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelHConcatSpec)
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
@@ -2800,9 +2806,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def interactive(
-        self: _THConcatChart, name=None, bind_x=True, bind_y=True
-    ) -> _THConcatChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2828,7 +2832,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self: _THConcatChart, *params) -> _THConcatChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.hconcat:
             return self
@@ -2839,7 +2843,8 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _THConcatChart, *selections) -> _THConcatChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2848,10 +2853,10 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelVConcatSpec)
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
@@ -2872,9 +2877,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def interactive(
-        self: _TVConcatChart, name=None, bind_x=True, bind_y=True
-    ) -> _TVConcatChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2900,7 +2903,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self: _TVConcatChart, *params) -> _TVConcatChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.vconcat:
             return self
@@ -2911,7 +2914,8 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TVConcatChart, *selections) -> _TVConcatChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2920,10 +2924,10 @@ def vconcat(*charts, **kwargs):
     return VConcatChart(vconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelLayerSpec)
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
@@ -2956,15 +2960,13 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         copy += other
         return copy
 
-    def add_layers(self: _TLayerChart, *layers) -> _TLayerChart:
+    def add_layers(self, *layers) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
         return copy
 
-    def interactive(
-        self: _TLayerChart, name=None, bind_x=True, bind_y=True
-    ) -> _TLayerChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2993,7 +2995,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         )
         return copy
 
-    def add_params(self: _TLayerChart, *params) -> _TLayerChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.layer:
             return self
@@ -3004,7 +3006,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TLayerChart, *selections) -> _TLayerChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -3013,10 +3016,10 @@ def layer(*charts, **kwargs):
     return LayerChart(layer=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
         self,
         data=Undefined,
@@ -3033,9 +3036,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def interactive(
-        self: _TFacetChart, name=None, bind_x=True, bind_y=True
-    ) -> _TFacetChart:
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3058,7 +3059,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self: _TFacetChart, *params) -> _TFacetChart:
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -3069,7 +3070,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self: _TFacetChart, *selections) -> _TFacetChart:
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
