@@ -269,6 +269,11 @@ indicating the data type is optional
 just as for columns without escaped characters.
 Note that the axes titles include the backslashes by default
 and you will need to manually set the title strings to remove them.
+If you are using the long form syntax for encodings,
+you do not need to escape colons as the type is explicit,
+e.g. ``alt.X('col:colon', type='quantitative')``
+(but periods and brackets still need to be escaped
+in the long form syntax unless they are used to index nested data structures).
 
 
 .. _encoding-aggregates:
