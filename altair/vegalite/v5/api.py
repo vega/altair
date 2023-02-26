@@ -426,7 +426,7 @@ def _selection(type=Undefined, **kwds):
 def selection(type=Undefined, **kwds):
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
-    
+
     Create a selection parameter.
 
     Parameters
