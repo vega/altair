@@ -2,8 +2,10 @@
 # tools/generate_schema_wrapper.py. Do not modify directly.
 import copy
 import io
+import inspect
 import json
 import jsonschema
+import jsonschema.exceptions
 import re
 import pickle
 import warnings
@@ -126,20 +128,27 @@ class InvalidProperties(_TestSchema):
     }
 
 
-class Draft7Schema(_TestSchema):
+_validation_selection_schema = {
+    "properties": {
+        "e": {"type": "number", "exclusiveMinimum": 10},
+    },
+}
+
+
+class Draft4Schema(_TestSchema):
     _schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-04/schema#",
         },
     }
 
 
-class Draft202012Schema(_TestSchema):
+class Draft6Schema(_TestSchema):
     _schema = {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-06/schema#",
         },
     }
 
@@ -255,17 +264,23 @@ def test_undefined_singleton():
 
 def test_schema_validator_selection():
     # Tests if the correct validator class is chosen based on the $schema
-    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
-    # introduced changes to the "items" keyword, see
-    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
-    # items-and-additionalitems
+    # property in the schema. This uses a backwards-incompatible change
+    # in Draft 6 which introduced exclusiveMinimum as a number instead of a boolean.
+    # Therefore, with Draft 4 there is no actual minimum set as a number and validating
+    # the dictionary below passes. With Draft 6, it correctly checks if the number is
+    # > 10 and raises a ValidationError. See
+    # https://json-schema.org/draft-06/json-schema-release-notes.html#q-what-are-
+    # the-changes-between-draft-04-and-draft-06 for more details
     dct = {
-        "e": ["a", "b"],
+        "e": 9,
     }
 
-    assert Draft7Schema.from_dict(dct).to_dict() == dct
-    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
-        Draft202012Schema.from_dict(dct)
+    assert Draft4Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError,
+        match="9 is less than or equal to the minimum of 10",
+    ):
+        Draft6Schema.from_dict(dct)
 
 
 @pytest.fixture
@@ -377,9 +392,6 @@ def test_schema_validation_error():
     assert isinstance(the_err, SchemaValidationError)
     message = str(the_err)
 
-    assert message.startswith("Invalid specification")
-    assert "test_schemapi.MySchema->a" in message
-    assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
 
 
@@ -467,36 +479,77 @@ def chart_example_invalid_y_option_value_with_condition():
     [
         (
             chart_example_invalid_y_option,
-            r"schema.channels.X.*"
-            + r"Additional properties are not allowed \('unknown' was unexpected\)",
-        ),
-        (
-            chart_example_invalid_y_option_value,
-            r"schema.channels.Y.*"
-            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
-            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'unknown'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `X` to read the full description of these parameters"""  # noqa: W291
+            ),
         ),
         (
             chart_example_layer,
-            r"api.VConcatChart.*"
-            + r"Additional properties are not allowed \('width' was unexpected\)",
+            inspect.cleandoc(
+                r"""`VConcatChart` has no parameter named 'width'
+
+                Existing parameter names are:
+                vconcat      center     description   params    title       
+                autosize     config     name          resolve   transform   
+                background   data       padding       spacing   usermeta    
+                bounds       datasets                                       
+
+                See the help for `VConcatChart` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
         ),
         (
             chart_example_invalid_y_option_value_with_condition,
-            r"schema.channels.Y.*"
-            + r"'asdf' is not one of \['zero', 'center', 'normalize'\].*"
-            + r"'asdf' is not of type 'null'.*'asdf' is not of type 'boolean'",
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
         ),
         (
             chart_example_hconcat,
-            r"schema.core.TitleParams.*"
-            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'string'.*"
-            + r"\{'text': 'Horsepower', 'align': 'right'\} is not of type 'array'",
+            inspect.cleandoc(
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
+
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'"""
+            ),
         ),
         (
             chart_example_invalid_channel_and_condition,
-            r"schema.core.Encoding->encoding.*"
-            + r"Additional properties are not allowed \('invalidChannel' was unexpected\)",
+            inspect.cleandoc(
+                r"""`Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters"""  # noqa: W291
+            ),
         ),
     ],
 )

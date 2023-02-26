@@ -179,7 +179,7 @@ with a ``brush`` selection to add interaction:
 
     source = data.sp500.url
 
-    brush = alt.selection(type='interval', encodings=['x'])
+    brush = alt.selection_interval(encodings=['x'])
 
     base = alt.Chart(source).mark_area().encode(
         x = 'date:T',

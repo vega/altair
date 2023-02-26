@@ -10,7 +10,7 @@ import altair as alt
 from vega_datasets import data
 
 source = data.seattle_weather()
-brush = alt.selection(type='interval', encodings=['x'])
+brush = alt.selection_interval(encodings=['x'])
 
 bars = alt.Chart().mark_bar().encode(
     x='month(date):O',

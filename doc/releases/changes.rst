@@ -6,7 +6,7 @@ Release Notes
 Version 5.0.0 (unreleased)
 --------------------------
 
-- Update Vega-Lite from version 4.17.0 to version 5.2.0;
+- Update Vega-Lite from version 4.17.0 to version 5.6.1;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
@@ -20,8 +20,8 @@ Enhancements
 - The ``Title`` and ``Impute`` aliases were added for ``TitleParams`` and ``ImputeParams``, respectively (#2732).
 - Saving charts with HTML inline is now supported without having altair_saver installed (#2807).
 - The documentation page has been revamped, both in terms of appearance and content.
-- More informative autocompletion by removing deprecated methods (#2814) and adding support for completion in method chains for editors that rely on type hints (e.g. VS Code) (#2846)
-- Improved error messages (#2842)
+- More informative autocompletion by removing deprecated methods (#2814) and for editors that rely on type hints (e.g. VS Code) we added support for completion in method chains (#2846) and extended keyword completion to cover additional methods (#2920).
+- Substantially improved error handling. Both in terms of finding the more relevant error (#2842), and in terms of improving the formatting and clarity of the error messages (#2824, #2568).
 - Include experimental support for the DataFrame Interchange Protocol (through `__dataframe__` attribute). This requires `pyarrow>=11.0.0` (#2888).
 - Support data type inference for columns with special characters (#2905).
 
@@ -46,6 +46,7 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- Colons in column names must now be escaped to remove any ambiguity with encoding types. You now need to write ``"column\:name"`` instead of ``"column:name"`` (#2824).
 - Removed the Vega (v5) wrappers and deprecate rendering in Vega mode (save Chart as Vega format is still allowed) (#2829).
 - Removed the Vega-Lite 3 and 4 wrappers (#2847).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.

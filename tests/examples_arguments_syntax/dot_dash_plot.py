@@ -11,7 +11,7 @@ from vega_datasets import data
 source = data.cars()
 
 # Configure the options common to all layers
-brush = alt.selection(type='interval')
+brush = alt.selection_interval()
 base = alt.Chart(source).add_params(brush)
 
 # Configure the points

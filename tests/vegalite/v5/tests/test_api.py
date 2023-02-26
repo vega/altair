@@ -255,7 +255,7 @@ def test_chart_operations():
 
 
 def test_selection_to_dict():
-    brush = alt.selection(type="interval")
+    brush = alt.selection_interval()
 
     # test some value selections
     # Note: X and Y cannot have conditions

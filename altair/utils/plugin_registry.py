@@ -1,4 +1,3 @@
-import sys
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 
@@ -22,7 +21,7 @@ class NoSuchEntryPoint(Exception):
         return f"No {self.name!r} entry point found in group {self.group!r}"
 
 
-class PluginEnabler(object):
+class PluginEnabler:
     """Context manager for enabling plugins
 
     This object lets you use enable() as a context manager to
@@ -122,10 +121,7 @@ class PluginRegistry(Generic[PluginType]):
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
-        if sys.version_info.major == 3 and sys.version_info.minor < 10:
-            e_points = entry_points().get(self.entry_point_group, [])
-        else:
-            e_points = entry_points(group=self.entry_point_group)
+        e_points = importlib_metadata_get(self.entry_point_group)
         more_exts = [ep.name for ep in e_points]
         exts.extend(more_exts)
         return sorted(set(exts))
@@ -157,7 +153,7 @@ class PluginRegistry(Generic[PluginType]):
             try:
                 (ep,) = [
                     ep
-                    for ep in entry_points().get(self.entry_point_group, [])
+                    for ep in importlib_metadata_get(self.entry_point_group)
                     if ep.name == name
                 ]
             except ValueError:
@@ -217,3 +213,15 @@ class PluginRegistry(Generic[PluginType]):
         return "{}(active={!r}, registered={!r})" "".format(
             self.__class__.__name__, self._active_name, list(self.names())
         )
+
+
+def importlib_metadata_get(group):
+    ep = entry_points()
+    # 'select' was introduced in Python 3.10 and 'get' got deprecated
+    # We don't check for Python version here as by checking with hasattr we
+    # also get compatibility with the importlib_metadata package which had a different
+    # deprecation cycle for 'get'
+    if hasattr(ep, "select"):
+        return ep.select(group=group)
+    else:
+        return ep.get(group, [])
