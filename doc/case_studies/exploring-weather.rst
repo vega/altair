@@ -225,7 +225,7 @@ of the selection (for more information on selections, see
 
 .. altair-plot::
 
-    brush = alt.selection(type='interval')
+    brush = alt.selection_interval()
 
     points = alt.Chart().mark_point().encode(
         alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),

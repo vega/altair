@@ -12,7 +12,7 @@ from vega_datasets import data
 source = data.cars()
 
 # Brush for selection
-brush = alt.selection(type='interval')
+brush = alt.selection_interval()
 
 # Scatter Plot
 points = alt.Chart(source).mark_point().encode(
