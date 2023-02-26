@@ -424,7 +424,10 @@ def _selection(type=Undefined, **kwds):
    Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
 )
 def selection(type=Undefined, **kwds):
-    """Create a selection parameter.  Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+    """
+    Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+
+    Create a selection parameter.
 
     Parameters
     ----------
@@ -671,6 +674,7 @@ def selection_point(
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
+    """'selection_multi' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
 
 
@@ -679,6 +683,7 @@ def selection_multi(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
+    """'selection_single' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
 
 
@@ -2168,7 +2173,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         http_server=None,
         **kwargs,
     ):
-        """Open a browser window and display a rendering of the chart
+        """
+        'serve' is deprecated. Use 'show' instead.
+
+        Open a browser window and display a rendering of the chart
 
         Parameters
         ----------
@@ -2483,6 +2491,7 @@ class Chart(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *params) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
@@ -2676,6 +2685,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2763,6 +2773,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2833,6 +2844,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2903,6 +2915,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2994,6 +3007,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -3057,6 +3071,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
     def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
