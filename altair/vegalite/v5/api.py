@@ -410,7 +410,7 @@ def _selection(type=Undefined, **kwds):
         select = core.PointSelectionConfig(type="point", **kwds)
         warnings.warn(
             """The types 'single' and 'multi' are now
-        combined and should be specified using "type='point'".""",
+        combined and should be specified using "selection_point()".""",
             utils.AltairDeprecationWarning,
         )
     else:
@@ -461,7 +461,7 @@ def selection_interval(
     zoom=Undefined,
     **kwds,
 ):
-    """Create a selection parameter with `type='interval'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='interval'` are used to select a continuous range of data values on drag.  (The current alternative is `type='point'`, which is used to select multiple discrete data values, and which is created using 'selection_point'.)
+    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point seleection parameters (`selection_point`) are used to select multiple discrete data values.)
 
     Parameters
     ----------
@@ -573,7 +573,7 @@ def selection_point(
     nearest=Undefined,
     **kwds,
 ):
-    """Create a selection parameter with `type='point'`.  Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Selection parameters with `type='point'` are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. (The current alternative is `type='interval'`, which is used to select select a continuous range of data values on drag, and which is created using 'selection_interval'.)
+    """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
 
     Parameters
     ----------
