@@ -19,6 +19,8 @@ For example, here we will visualize the cars dataset using four of the available
 
    import altair as alt
    from vega_datasets import data
+
+
    cars = data.cars()
 
    alt.Chart(cars).mark_point().encode(
@@ -223,6 +225,55 @@ Shorthand            Equivalent long-form
 ``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
 ``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
 ===================  =======================================================
+
+Escaping special characters in column names
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Seeing that Altair uses ``:`` as a special character
+to indicate the encoding data type,
+you might wonder what happens
+when the column name in your data includes a colon.
+When this is the case
+you will need to either rename the column or escape the colon.
+This is also true for other special characters
+such as ``.`` and ``[]`` which are used to access nested attributes
+in some data structures.
+
+The recommended thing to do when you have special characters in a column name
+is to rename your columns.
+For example, in Pandas you could replace ``:`` with ``_``
+via ``df.rename(columns = lambda x: x.replace(':', '_'))``.
+If you don't want to rename your columns
+you will need to escape the special characters using a backslash:
+
+.. altair-plot::
+
+    import pandas as pd
+
+    source = pd.DataFrame({
+        'col:colon': [1, 2, 3],
+        'col.period': ['A', 'B', 'C'],
+        'col[brackets]': range(3),
+    })
+
+    alt.Chart(source).mark_bar().encode(
+        x='col\:colon',
+        # Remove the backslash in the title
+        y=alt.Y('col\.period', title='col.period'),
+        # Specify the data type
+        color='col\[brackets\]:N',
+    )
+
+As can be seen above,
+indicating the data type is optional
+just as for columns without escaped characters.
+Note that the axes titles include the backslashes by default
+and you will need to manually set the title strings to remove them.
+If you are using the long form syntax for encodings,
+you do not need to escape colons as the type is explicit,
+e.g. ``alt.X(field='col:colon', type='quantitative')``
+(but periods and brackets still need to be escaped
+in the long form syntax unless they are used to index nested data structures).
 
 
 .. _encoding-aggregates:

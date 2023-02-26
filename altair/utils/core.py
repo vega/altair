@@ -535,8 +535,9 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
-        if "field" in attrs and attrs["field"] in data.columns:
-            attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+        # Remove escape sequences so that types can be inferred for columns with special characters
+        if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
+            attrs["type"] = infer_vegalite_type(data[attrs["field"].replace("\\", "")])
             # ordered categorical dataframe columns return the type and sort order as a tuple
             if isinstance(attrs["type"], tuple):
                 attrs["sort"] = attrs["type"][1]
