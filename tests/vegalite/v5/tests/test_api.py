@@ -123,6 +123,7 @@ def test_chart_infer_types():
             "x": pd.date_range("2012", periods=10, freq="Y"),
             "y": range(10),
             "c": list("abcabcabca"),
+            "s": pd.Categorical([1, 2] * 5, categories=[2, 1], ordered=True),
         }
     )
 
@@ -134,32 +135,62 @@ def test_chart_infer_types():
         assert dct["encoding"]["y"]["field"] == "y"
         assert dct["encoding"]["color"]["type"] == "nominal"
         assert dct["encoding"]["color"]["field"] == "c"
+        assert dct["encoding"]["size"]["type"] == "ordinal"
+        assert dct["encoding"]["size"]["field"] == "s"
+        assert dct["encoding"]["size"]["sort"] == [2, 1]
+        assert dct["encoding"]["tooltip"]["type"] == "ordinal"
+        assert dct["encoding"]["tooltip"]["field"] == "s"
+        # "sort" should be removed for channels that don't support it
+        assert "sort" not in dct["encoding"]["tooltip"]
 
     # Pass field names by keyword
-    chart = alt.Chart(data).mark_point().encode(x="x", y="y", color="c")
+    chart = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(x="x", y="y", color="c", size="s", tooltip="s")
+    )
     _check_encodings(chart)
 
     # pass Channel objects by keyword
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(x=alt.X("x"), y=alt.Y("y"), color=alt.Color("c"))
+        .encode(
+            x=alt.X("x"),
+            y=alt.Y("y"),
+            color=alt.Color("c"),
+            size=alt.Size("s"),
+            tooltip=alt.Tooltip("s"),
+        )
     )
     _check_encodings(chart)
 
     # pass Channel objects by value
-    chart = alt.Chart(data).mark_point().encode(alt.X("x"), alt.Y("y"), alt.Color("c"))
+    chart = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"), alt.Tooltip("s"))
+    )
     _check_encodings(chart)
 
     # override default types
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(alt.X("x", type="nominal"), alt.Y("y", type="ordinal"))
+        .encode(
+            alt.X("x", type="nominal"),
+            alt.Y("y", type="ordinal"),
+            alt.Size("s", type="nominal"),
+            alt.Tooltip("s", type="nominal"),
+        )
     )
     dct = chart.to_dict()
     assert dct["encoding"]["x"]["type"] == "nominal"
     assert dct["encoding"]["y"]["type"] == "ordinal"
+    assert dct["encoding"]["size"]["type"] == "nominal"
+    assert "sort" not in dct["encoding"]["size"]
+    assert dct["encoding"]["tooltip"]["type"] == "nominal"
+    assert "sort" not in dct["encoding"]["tooltip"]
 
 
 @pytest.mark.parametrize(
@@ -224,7 +255,7 @@ def test_chart_operations():
 
 
 def test_selection_to_dict():
-    brush = alt.selection(type="interval")
+    brush = alt.selection_interval()
 
     # test some value selections
     # Note: X and Y cannot have conditions
@@ -931,16 +962,32 @@ def test_layer_errors():
     )
 
     with pytest.raises(ValueError) as err:
+        alt.hconcat(simple_chart) + simple_chart
+    assert (
+        str(err.value)
+        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+    )
+
+    with pytest.raises(ValueError) as err:
         repeat_chart + simple_chart
-    assert str(err.value) == "Repeat charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+    )
 
     with pytest.raises(ValueError) as err:
         facet_chart1 + simple_chart
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
     with pytest.raises(ValueError) as err:
         alt.layer(simple_chart) + facet_chart2
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
 
 @pytest.mark.parametrize(

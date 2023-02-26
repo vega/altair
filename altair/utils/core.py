@@ -9,18 +9,27 @@ import re
 import sys
 import traceback
 import warnings
+from typing import Callable, TypeVar, Any
 
 import jsonschema
 import pandas as pd
 import numpy as np
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase
+
+if sys.version_info >= (3, 10):
+    from typing import ParamSpec
+else:
+    from typing_extensions import ParamSpec
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
     # Import for pandas < 0.20.0
     from pandas.lib import infer_dtype as _infer_dtype
+
+_V = TypeVar("_V")
+_P = ParamSpec("_P")
 
 
 def infer_dtype(value):
@@ -193,8 +202,6 @@ def infer_vegalite_type(data):
     # Otherwise, infer based on the dtype of the input
     typ = infer_dtype(data)
 
-    # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
-
     if typ in [
         "floating",
         "mixed-integer-float",
@@ -203,6 +210,8 @@ def infer_vegalite_type(data):
         "complex",
     ]:
         return "quantitative"
+    elif typ == "categorical" and data.cat.ordered:
+        return ("ordinal", data.cat.categories.tolist())
     elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
         return "nominal"
     elif typ in [
@@ -316,8 +325,9 @@ def sanitize_dataframe(df):  # noqa: C901
 
     for col_name, dtype in df.dtypes.items():
         if str(dtype) == "category":
-            # XXXX: work around bug in to_json for categorical types
+            # Work around bug in to_json for categorical types in older versions of pandas
             # https://github.com/pydata/pandas/issues/10778
+            # https://github.com/altair-viz/altair/pull/2170
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == "string":
@@ -527,13 +537,34 @@ def parse_shorthand(
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
         if "field" in attrs and attrs["field"] in data.columns:
             attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+            # ordered categorical dataframe columns return the type and sort order as a tuple
+            if isinstance(attrs["type"], tuple):
+                attrs["sort"] = attrs["type"][1]
+                attrs["type"] = attrs["type"][0]
+
+    # If an unescaped colon is still present, it's often due to an incorrect data type specification
+    # but could also be due to using a column name with ":" in it.
+    if (
+        "field" in attrs
+        and ":" in attrs["field"]
+        and attrs["field"][attrs["field"].rfind(":") - 1] != "\\"
+    ):
+        raise ValueError(
+            '"{}" '.format(attrs["field"].split(":")[-1])
+            + "is not one of the valid encoding data types: {}.".format(
+                ", ".join(TYPECODE_MAP.values())
+            )
+            + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            + "If you are trying to use a column name that contains a colon, "
+            + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
+        )
     return attrs
 
 
-def use_signature(Obj):
+def use_signature(Obj: Callable[_P, Any]):
     """Apply call signature and documentation of Obj to the decorated method"""
 
-    def decorate(f):
+    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__
@@ -541,7 +572,11 @@ def use_signature(Obj):
 
         # Supplement the docstring of f with information from Obj
         if Obj.__doc__:
+            # Patch in a reference to the class this docstring is copied from,
+            # to generate a hyperlink.
             doclines = Obj.__doc__.splitlines()
+            doclines[0] = f"Refer to :class:`{Obj.__name__}`"
+
             if f.__doc__:
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
@@ -664,15 +699,6 @@ def infer_encoding_types(args, kwargs, channels):
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
-        try:
-            condition = obj["condition"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            if condition is not Undefined:
-                obj = obj.copy()
-                obj["condition"] = _wrap_in_channel_class(condition, encoding)
-
         if isinstance(obj, SchemaBase):
             return obj
 

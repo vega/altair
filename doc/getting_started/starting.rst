@@ -192,7 +192,7 @@ column as well:
     y = alt.Y('average(b):Q')
     print(y.to_json())
 
-This short-hand is equivalent to spelling-out the attributes by name:
+This short-hand is equivalent to spelling-out the parameters by name:
 
 .. altair-plot::
     :output: repr

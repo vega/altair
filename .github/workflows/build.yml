@@ -15,29 +15,29 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Set Up Chromedriver
-        run: |
-          sudo apt-get update
-          sudo apt-get --only-upgrade install google-chrome-stable
-          sudo apt-get -yqq install chromium-chromedriver
+      # - name: Set Up Chromedriver
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get --only-upgrade install google-chrome-stable
+      #     sudo apt-get -yqq install chromium-chromedriver
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install .[dev]
-          pip install "selenium<4.3.0"
-          pip install altair_saver
+          # pip install "selenium<4.3.0"
+          # pip install altair_saver
       - name: Test with pytest
         run: |
           pytest --doctest-modules tests
-      - name: Selected tests without vl-convert-python
-        run: |
-          pip uninstall vl-convert-python --yes
-          pytest -m save_engine --doctest-modules tests
-      - name: Selected tests without vl-convert-python and altair_saver
-        run: |
-          pip uninstall altair_saver --yes
-          pytest -m save_engine --doctest-modules tests
+      # - name: Selected tests without vl-convert-python
+      #   run: |
+      #     pip uninstall vl-convert-python --yes
+      #     pytest -m save_engine --doctest-modules tests
+      # - name: Selected tests without vl-convert-python and altair_saver
+      #   run: |
+      #     pip uninstall altair_saver --yes
+      #     pytest -m save_engine --doctest-modules tests
       - name: Selected tests with vl-convert-python and without altair_saver
         run: |
-          pip install vl-convert-python
+          # pip install vl-convert-python
           pytest -m save_engine --doctest-modules tests

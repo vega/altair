@@ -21,6 +21,7 @@ These methods and their arguments will be outlined below:
 - :ref:`config-scale` :meth:`Chart.configure_scale`
 - :ref:`config-range` :meth:`Chart.configure_range`
 - :ref:`config-projection` :meth:`Chart.configure_projection`
+- :ref:`config-composition` :meth:`Chart.configure_concat`, :meth:`Chart.configure_facet`
 - :ref:`config-selection` :meth:`Chart.configure_selection`
 - :ref:`config-title` :meth:`Chart.configure_title`
 - :ref:`config-view` :meth:`Chart.configure_view`
@@ -34,7 +35,7 @@ For more discussion of approaches to chart customization, see
 Chart Configuration
 -------------------
 The :meth:`Chart.configure` method adds a :class:`Config` instance to the chart,
-and has the following attributes:
+and accepts the following parameters:
 
 .. altair-object-table:: altair.Config
 
@@ -43,7 +44,7 @@ and has the following attributes:
 
 Axis Configuration
 ------------------
-Axis configuration defines default settings for axes, and can be set using
+Axis configuration defines default settings for axes and can be set using
 the :meth:`Chart.configure_axis` method.
 Properties defined here are applied to all axes in the figure.
 
@@ -66,6 +67,20 @@ The methods are the following:
 - :meth:`Chart.configure_axisTop`
 - :meth:`Chart.configure_axisX`
 - :meth:`Chart.configure_axisY`
+- :meth:`Chart.configure_axisDiscrete`
+- :meth:`Chart.configure_axisPoint`
+- :meth:`Chart.configure_axisQuantitative`
+- :meth:`Chart.configure_axisTemporal`
+- :meth:`Chart.configure_axisXBand`
+- :meth:`Chart.configure_axisXDiscrete`
+- :meth:`Chart.configure_axisXPoint`
+- :meth:`Chart.configure_axisXQuantitative`
+- :meth:`Chart.configure_axisXTemporal`
+- :meth:`Chart.configure_axisYBand`
+- :meth:`Chart.configure_axisYDiscrete`
+- :meth:`Chart.configure_axisYPoint`
+- :meth:`Chart.configure_axisYQuantitative`
+- :meth:`Chart.configure_axisYTemporal`
 
 They have the following properties:
 
@@ -76,9 +91,9 @@ They have the following properties:
 
 Header Configuration
 --------------------
-The :meth:`Chart.configure_header` method allows configuration of facet headers,
-including the font, color, size, and position of the title and labels.
-Here is an example:
+Header configuration defines default settings for headers including the font, color,
+size, and position of the title and labels and can be set using 
+the :meth:`Chart.configure_header` method. Here is an example:
 
 .. altair-plot::
 
@@ -104,7 +119,14 @@ Here is an example:
         labelFontSize=14
     )
 
-Additional properties are summarized in the following table:
+Additional property blocks can target more specific header types. The methods are the following:
+
+- :meth:`Chart.configure_header`
+- :meth:`Chart.configure_headerColumn`
+- :meth:`Chart.configure_headerFacet`
+- :meth:`Chart.configure_headerRow`
+
+They have the following properties:
 
 .. altair-object-table:: altair.HeaderConfig
 
@@ -159,10 +181,15 @@ For general configuration of all mark types, use:
 
 For configurations specific to particular mark types, use:
 
+- :meth:`Chart.configure_arc`
 - :meth:`Chart.configure_area`
 - :meth:`Chart.configure_bar`
+- :meth:`Chart.configure_boxplot`
 - :meth:`Chart.configure_circle`
+- :meth:`Chart.configure_errorband`
+- :meth:`Chart.configure_errorbar`
 - :meth:`Chart.configure_geoshape`
+- :meth:`Chart.configure_image`
 - :meth:`Chart.configure_line`
 - :meth:`Chart.configure_point`
 - :meth:`Chart.configure_rect`
@@ -212,6 +239,15 @@ which has the following properties:
 
 .. altair-object-table:: altair.ProjectionConfig
 
+
+.. _config-composition:
+
+Concat and Facet Configuration
+------------------------------
+Various aspects of concat and facet charts can be configured using :meth:`Chart.configure_concat`
+and :meth:`Chart.configure_facet`, which have the following properties:
+
+.. altair-object-table:: altair.CompositionConfig
 
 .. _config-selection:
 

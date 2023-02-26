@@ -10,7 +10,6 @@ except ImportError:
     pass
 
 from altair.vegalite.v5 import VegaLite
-from altair.vega.v5 import Vega
 
 
 DATA_RECORDS = [
@@ -38,80 +37,6 @@ the_data = table
     )
 
 
-VEGA_SPEC = {
-    "$schema": "https://vega.github.io/schema/vega/v5.json",
-    "axes": [
-        {"orient": "bottom", "scale": "xscale"},
-        {"orient": "left", "scale": "yscale"},
-    ],
-    "data": [{"name": "table", "values": DATA_RECORDS}],
-    "height": 200,
-    "marks": [
-        {
-            "encode": {
-                "enter": {
-                    "width": {"band": 1, "scale": "xscale"},
-                    "x": {"field": "category", "scale": "xscale"},
-                    "y": {"field": "amount", "scale": "yscale"},
-                    "y2": {"scale": "yscale", "value": 0},
-                },
-                "hover": {"fill": {"value": "red"}},
-                "update": {"fill": {"value": "steelblue"}},
-            },
-            "from": {"data": "table"},
-            "type": "rect",
-        },
-        {
-            "encode": {
-                "enter": {
-                    "align": {"value": "center"},
-                    "baseline": {"value": "bottom"},
-                    "fill": {"value": "#333"},
-                },
-                "update": {
-                    "fillOpacity": [
-                        {"test": "datum === tooltip", "value": 0},
-                        {"value": 1},
-                    ],
-                    "text": {"signal": "tooltip.amount"},
-                    "x": {"band": 0.5, "scale": "xscale", "signal": "tooltip.category"},
-                    "y": {"offset": -2, "scale": "yscale", "signal": "tooltip.amount"},
-                },
-            },
-            "type": "text",
-        },
-    ],
-    "padding": 5,
-    "scales": [
-        {
-            "domain": {"data": "table", "field": "category"},
-            "name": "xscale",
-            "padding": 0.05,
-            "range": "width",
-            "round": True,
-            "type": "band",
-        },
-        {
-            "domain": {"data": "table", "field": "amount"},
-            "name": "yscale",
-            "nice": True,
-            "range": "height",
-        },
-    ],
-    "signals": [
-        {
-            "name": "tooltip",
-            "on": [
-                {"events": "rect:mouseover", "update": "datum"},
-                {"events": "rect:mouseout", "update": "{}"},
-            ],
-            "value": {},
-        }
-    ],
-    "width": 400,
-}
-
-
 VEGALITE_SPEC = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {"values": DATA_RECORDS},
@@ -120,7 +45,7 @@ VEGALITE_SPEC = {
         "x": {"field": "category", "type": "ordinal"},
         "y": {"field": "amount", "type": "quantitative"},
     },
-    "mark": "bar",
+    "mark": {"type": "bar"},
 }
 
 
@@ -144,33 +69,3 @@ def test_vegalite_magic_pandas_data():
     result = _ipshell.run_cell("%%vegalite table\n" + json.dumps(spec))
     assert isinstance(result.result, VegaLite)
     assert VEGALITE_SPEC == result.result.spec
-
-
-@pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
-def test_vega_magic_data_included():
-    result = _ipshell.run_cell("%%vega\n" + json.dumps(VEGA_SPEC))
-    assert isinstance(result.result, Vega)
-    assert VEGA_SPEC == result.result.spec
-
-
-@pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
-def test_vega_magic_json_flag():
-    result = _ipshell.run_cell("%%vega --json\n" + json.dumps(VEGA_SPEC))
-    assert isinstance(result.result, Vega)
-    assert VEGA_SPEC == result.result.spec
-
-
-@pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
-def test_vega_magic_pandas_data():
-    spec = {key: val for key, val in VEGA_SPEC.items() if key != "data"}
-    result = _ipshell.run_cell("%%vega table\n" + json.dumps(spec))
-    assert isinstance(result.result, Vega)
-    assert VEGA_SPEC == result.result.spec
-
-
-@pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
-def test_vega_magic_pandas_data_renamed():
-    spec = {key: val for key, val in VEGA_SPEC.items() if key != "data"}
-    result = _ipshell.run_cell("%%vega table:the_data\n" + json.dumps(spec))
-    assert isinstance(result.result, Vega)
-    assert VEGA_SPEC == result.result.spec

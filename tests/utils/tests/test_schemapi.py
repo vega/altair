@@ -2,13 +2,18 @@
 # tools/generate_schema_wrapper.py. Do not modify directly.
 import copy
 import io
+import inspect
 import json
 import jsonschema
+import jsonschema.exceptions
+import re
 import pickle
-import pytest
+import warnings
 
 import numpy as np
 import pandas as pd
+import pytest
+from vega_datasets import data
 
 import altair as alt
 from altair import load_schema
@@ -123,20 +128,27 @@ class InvalidProperties(_TestSchema):
     }
 
 
-class Draft7Schema(_TestSchema):
+_validation_selection_schema = {
+    "properties": {
+        "e": {"type": "number", "exclusiveMinimum": 10},
+    },
+}
+
+
+class Draft4Schema(_TestSchema):
     _schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-04/schema#",
         },
     }
 
 
-class Draft202012Schema(_TestSchema):
+class Draft6Schema(_TestSchema):
     _schema = {
-        "$schema": "http://json-schema.org/draft/2020-12/schema#",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-06/schema#",
         },
     }
 
@@ -252,17 +264,23 @@ def test_undefined_singleton():
 
 def test_schema_validator_selection():
     # Tests if the correct validator class is chosen based on the $schema
-    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
-    # introduced changes to the "items" keyword, see
-    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
-    # items-and-additionalitems
+    # property in the schema. This uses a backwards-incompatible change
+    # in Draft 6 which introduced exclusiveMinimum as a number instead of a boolean.
+    # Therefore, with Draft 4 there is no actual minimum set as a number and validating
+    # the dictionary below passes. With Draft 6, it correctly checks if the number is
+    # > 10 and raises a ValidationError. See
+    # https://json-schema.org/draft-06/json-schema-release-notes.html#q-what-are-
+    # the-changes-between-draft-04-and-draft-06 for more details
     dct = {
-        "e": ["a", "b"],
+        "e": 9,
     }
 
-    assert Draft7Schema.from_dict(dct).to_dict() == dct
-    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
-        Draft202012Schema.from_dict(dct)
+    assert Draft4Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError,
+        match="9 is less than or equal to the minimum of 10",
+    ):
+        Draft6Schema.from_dict(dct)
 
 
 @pytest.fixture
@@ -374,10 +392,179 @@ def test_schema_validation_error():
     assert isinstance(the_err, SchemaValidationError)
     message = str(the_err)
 
-    assert message.startswith("Invalid specification")
-    assert "test_schemapi.MySchema->a" in message
-    assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
+
+
+def chart_example_layer():
+    points = (
+        alt.Chart(data.cars.url)
+        .mark_point()
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+        )
+    )
+    return (points & points).properties(width=400)
+
+
+def chart_example_hconcat():
+    source = data.cars()
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(
+            x="Horsepower",
+            y="Miles_per_Gallon",
+        )
+    )
+
+    text = (
+        alt.Chart(source)
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+    )
+
+    return points | text
+
+
+def chart_example_invalid_channel_and_condition():
+    selection = alt.selection_point()
+    return (
+        alt.Chart(data.barley())
+        .mark_circle()
+        .add_params(selection)
+        .encode(
+            color=alt.condition(selection, alt.value("red"), alt.value("green")),
+            invalidChannel=None,
+        )
+    )
+
+
+def chart_example_invalid_y_option():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety"),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value_with_condition():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x="variety",
+            y=alt.Y("sum(yield)", stack="asdf"),
+            opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    "chart_func, expected_error_message",
+    [
+        (
+            chart_example_invalid_y_option,
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'unknown'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `X` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_example_layer,
+            inspect.cleandoc(
+                r"""`VConcatChart` has no parameter named 'width'
+
+                Existing parameter names are:
+                vconcat      center     description   params    title       
+                autosize     config     name          resolve   transform   
+                background   data       padding       spacing   usermeta    
+                bounds       datasets                                       
+
+                See the help for `VConcatChart` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value_with_condition,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
+        ),
+        (
+            chart_example_hconcat,
+            inspect.cleandoc(
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
+
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'"""
+            ),
+        ),
+        (
+            chart_example_invalid_channel_and_condition,
+            inspect.cleandoc(
+                r"""`Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+    ],
+)
+def test_chart_validation_errors(chart_func, expected_error_message):
+    # DOTALL flag makes that a dot (.) also matches new lines
+    pattern = re.compile(expected_error_message, re.DOTALL)
+    # For some wrong chart specifications such as an unknown encoding channel,
+    # Altair already raises a warning before the chart specifications are validated.
+    # We can ignore these warnings as we are interested in the errors being raised
+    # during validation which is triggered by to_dict
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        chart = chart_func()
+    with pytest.raises(SchemaValidationError, match=pattern):
+        chart.to_dict()
 
 
 def test_serialize_numpy_types():
@@ -426,3 +613,11 @@ def test_to_dict_no_side_effects():
     assert "shorthand" not in dct["encoding"]["y"]
     assert dct["encoding"]["y"]["field"] == "b"
     assert dct["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_to_dict_expand_mark_spec():
+    # Test that `to_dict` correctly expands marks to a dictionary
+    # without impacting the original spec which remains a string
+    chart = alt.Chart().mark_bar()
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"
