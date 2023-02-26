@@ -154,7 +154,7 @@ class PluginRegistry(Generic[PluginType]):
             try:
                 (ep,) = [
                     ep
-                    for ep in entry_points().get(self.entry_point_group, [])
+                    for ep in importlib_metadata_get(self.entry_point_group)
                     if ep.name == name
                 ]
             except ValueError:
