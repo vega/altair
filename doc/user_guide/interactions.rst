@@ -695,7 +695,7 @@ often provides a more convenient syntax
 for simple interactions like this one
 since they can also be accessed in expression strings
 as we saw above.
-Selections and parameters can be used anywhere that expressions are valid, for
+Selections and parameters can be used anywhere where expressions are valid, for
 example, in a :ref:`user-guide-calculate-transform` or a
 :ref:`user-guide-filter-transform` transform.
 
