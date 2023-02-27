@@ -636,9 +636,10 @@ we can use `param` like so:
 .. altair-plot::
 
     import numpy as np
+    import pandas as pd
+
 
     rand = np.random.RandomState(42)
-
     df = pd.DataFrame({
         'xval': range(100),
         'yval': rand.randn(100).cumsum()
@@ -694,9 +695,9 @@ often provides a more convenient syntax
 for simple interactions like this one
 since they can also be accessed in expression strings
 as we saw above.
-Selections and parameters can be used anywhere that expressions are valid, for
+Selections and parameters can be used anywhere where expressions are valid, for
 example, in a :ref:`user-guide-calculate-transform` or a
-:ref:`user-guide-filter-transform`.
+:ref:`user-guide-filter-transform` transform.
 
 Scale Binding
 ^^^^^^^^^^^^^
