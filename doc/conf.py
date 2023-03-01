@@ -155,7 +155,7 @@ html_theme_options = {
         },
     ],
     "header_links_before_dropdown": 6,
-    "announcement": """This website is for the release candidate of version 5 <code class="docutils literal notranslate"><span class="pre">pip install altair==5.0.0rc1</span></code>. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
+    "announcement": """This website is for the release candidate of version 5 <code class="docutils literal notranslate"><span class="pre">pip install altair==5.0.0rc1</span></code> <span class="pre">(more info <a href='https://github.com/altair-viz/altair/issues/2937'>#2937</a>)</span>. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
 }
 
 html_context = {"default_mode": "light"}
