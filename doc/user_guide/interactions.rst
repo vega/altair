@@ -762,6 +762,7 @@ Another option to include an expression within a chart specification is as a val
 .. altair-plot::
 
     chart.encode(size=alt.value(alt.expr(param_width.name)))
+
 `Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart. In the example below, we also modify the chart title to show the value of the parameter:
 
 .. altair-plot::

@@ -499,14 +499,16 @@ def selection_interval(
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
         One of:
-        * 'global' - only one brush exists for the entire SPLOM. When the
-            user begins to drag, any previous brushes are cleared, and a
-            new one is constructed.
-        * 'union' - each cell contains its own brush, and points are
-            highlighted if they lie within any of these individual brushes.
-        * 'intersect' - each cell contains its own brush, and points are
-            highlighted only if they fall within all of these individual
-            brushes.
+
+        * 'global': only one brush exists for the entire SPLOM. When the
+          user begins to drag, any previous brushes are cleared, and a
+          new one is constructed.
+        * 'union': each cell contains its own brush, and points are
+          highlighted if they lie within any of these individual brushes.
+        * 'intersect': each cell contains its own brush, and points are
+          highlighted only if they fall within all of these individual
+          brushes.
+
         The default is 'global'.
     mark : :class:`Mark` (optional)
         An interval selection also adds a rectangle mark to depict the
@@ -611,33 +613,37 @@ def selection_point(
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
         One of:
-        * 'global' - only one brush exists for the entire SPLOM. When the
-            user begins to drag, any previous brushes are cleared, and a
-            new one is constructed.
-        * 'union' - each cell contains its own brush, and points are
-            highlighted if they lie within any of these individual brushes.
-        * 'intersect' - each cell contains its own brush, and points are
-            highlighted only if they fall within all of these individual
-            brushes.
+
+        * 'global': only one brush exists for the entire SPLOM. When the
+          user begins to drag, any previous brushes are cleared, and a
+          new one is constructed.
+        * 'union': each cell contains its own brush, and points are
+          highlighted if they lie within any of these individual brushes.
+        * 'intersect': each cell contains its own brush, and points are
+          highlighted only if they fall within all of these individual
+          brushes.
+
         The default is 'global'.
     toggle : string or boolean (optional)
         Controls whether data values should be toggled (inserted or
         removed from a point selection) or only ever inserted into
         point selections.
         One of:
-        * True - the default behavior, which corresponds to
-            "event.shiftKey". As a result, data values are toggled
-            when the user interacts with the shift-key pressed.
-        * False - disables toggling behaviour; the selection will
-            only ever contain a single data value corresponding
-            to the most recent interaction.
+
+        * True (default): the toggle behavior, which corresponds to
+          "event.shiftKey". As a result, data values are toggled
+          when the user interacts with the shift-key pressed.
+        * False: disables toggling behaviour; the selection will
+          only ever contain a single data value corresponding
+          to the most recent interaction.
         * A Vega expression which is re-evaluated as the user interacts.
-            If the expression evaluates to True, the data value is
-            toggled into or out of the point selection. If the expression
-            evaluates to False, the point selection is first cleared, and
-            the data value is then inserted. For example, setting the
-            value to the Vega expression True will toggle data values
-            without the user pressing the shift-key.
+          If the expression evaluates to True, the data value is
+          toggled into or out of the point selection. If the expression
+          evaluates to False, the point selection is first cleared, and
+          the data value is then inserted. For example, setting the
+          value to the Vega expression True will toggle data values
+          without the user pressing the shift-key.
+
     nearest : boolean (optional)
         When true, an invisible voronoi diagram is computed to accelerate
         discrete selection. The data value nearest the mouse cursor is
