@@ -1,5 +1,5 @@
 # flake8: noqa
-__version__ = "4.3.0.dev0"
+__version__ = "5.0.0rc1"
 
 
 # The content of __all__ is automatically written by
