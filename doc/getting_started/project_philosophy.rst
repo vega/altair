@@ -64,7 +64,7 @@ choice we feel is needed to simplify the user experience of exploratory
 visualization.
 
 You can find a more detailed comparison between Plotly and Altair in
-`this StackOverflow answer <https://stackoverflow.com/a/66040502>`.
+`this StackOverflow answer <https://stackoverflow.com/a/66040502>`_.
 
 Whence Vega-Altair?
 -------------------
