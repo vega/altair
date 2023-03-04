@@ -3,6 +3,7 @@ import io
 import inspect
 import json
 import jsonschema
+import jsonschema.exceptions
 import re
 import pickle
 import warnings
@@ -125,20 +126,27 @@ class InvalidProperties(_TestSchema):
     }
 
 
-class Draft7Schema(_TestSchema):
+_validation_selection_schema = {
+    "properties": {
+        "e": {"type": "number", "exclusiveMinimum": 10},
+    },
+}
+
+
+class Draft4Schema(_TestSchema):
     _schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-04/schema#",
         },
     }
 
 
-class Draft202012Schema(_TestSchema):
+class Draft6Schema(_TestSchema):
     _schema = {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "properties": {
-            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-06/schema#",
         },
     }
 
@@ -254,17 +262,23 @@ def test_undefined_singleton():
 
 def test_schema_validator_selection():
     # Tests if the correct validator class is chosen based on the $schema
-    # property in the schema. Reason for the AttributeError below is, that Draft 2020-12
-    # introduced changes to the "items" keyword, see
-    # https://json-schema.org/draft/2020-12/release-notes.html#changes-to-
-    # items-and-additionalitems
+    # property in the schema. This uses a backwards-incompatible change
+    # in Draft 6 which introduced exclusiveMinimum as a number instead of a boolean.
+    # Therefore, with Draft 4 there is no actual minimum set as a number and validating
+    # the dictionary below passes. With Draft 6, it correctly checks if the number is
+    # > 10 and raises a ValidationError. See
+    # https://json-schema.org/draft-06/json-schema-release-notes.html#q-what-are-
+    # the-changes-between-draft-04-and-draft-06 for more details
     dct = {
-        "e": ["a", "b"],
+        "e": 9,
     }
 
-    assert Draft7Schema.from_dict(dct).to_dict() == dct
-    with pytest.raises(AttributeError, match="'list' object has no attribute 'get'"):
-        Draft202012Schema.from_dict(dct)
+    assert Draft4Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError,
+        match="9 is less than or equal to the minimum of 10",
+    ):
+        Draft6Schema.from_dict(dct)
 
 
 @pytest.fixture
