@@ -72,6 +72,14 @@ The higher-level visualization grammar that Altair implements in Python.
 .. List of links.
 .. _Vega-Lite: https://vega.github.io/vega-lite
 
+vl-convert_
+~~~~~~~~~~~
+
+Python library for converting Altair/Vega-Lite chart specifications into static images (SVG or PNG) or Vega chart specifications without any external dependencies.
+
+.. List of links.
+.. _vl-convert: https://github.com/vega/vl-convert
+
 altair_saver_
 ~~~~~~~~~~~~~
 
