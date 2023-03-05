@@ -1,9 +1,9 @@
-black
-docutils
+black<24
 ipython
 flake8
 pytest
-sphinx
+pytest-cov
 m2r
 vega_datasets
-recommonmark
+altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git
+vl-convert-python

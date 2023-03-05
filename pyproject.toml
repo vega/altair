@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 88
-target-version = ['py36', 'py37', 'py38']
+target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -10,12 +10,19 @@ exclude = '''
   | build
   | dist
   | doc
-  | altair/examples
-  | altair/vega/v\d*/schema
+  | tests/examples_arguments_syntax
+  | tests/examples_methods_syntax
   | altair/vegalite/v\d*/schema
 )/
 '''
 
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel"]
+# Reason for setuptools version restriction to <64 can be found at
+# https://github.com/altair-viz/altair/pull/2758#issuecomment-1358091909
+requires = ["setuptools >= 40.6.0, <64", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+markers = [
+    "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",
+]

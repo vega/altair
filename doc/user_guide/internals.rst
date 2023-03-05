@@ -2,8 +2,8 @@
 
 .. _user-guide-internals:
 
-Altair Internals: Understanding the Library
-===========================================
+Altair Internals
+================
 This section will provide some details about how the Altair API relates to the
 Vega-Lite visualization specification, and how you can use that knowledge to
 use the package more effectively.
@@ -18,7 +18,7 @@ That's it. In order to take those specifications and turn them into actual
 visualizations requires a frontend that is correctly set up, but strictly
 speaking that rendering is generally not controlled by the Altair package.
 
-Altair chart to Vega-Lite Spec
+Altair Chart to Vega-Lite Spec
 ------------------------------
 Since Altair is fundamentally about constructing chart specifications, the central
 functionality of any chart object are the :meth:`~Chart.to_dict` and
@@ -38,7 +38,7 @@ from which we can output the JSON representation:
         color='Origin:N',
     ).configure_view(
         continuousHeight=300,
-        continuousWidth=400,
+        continuousWidth=300,
     )
 
     print(chart.to_json(indent=2))
@@ -98,7 +98,7 @@ the above chart using these low-level object types directly:
         config=alt.Config(
             view=alt.ViewConfig(
                 continuousHeight=300,
-                continuousWidth=400
+                continuousWidth=300
             )
         )
     )
@@ -127,7 +127,7 @@ For example, consider the
 from the Vega-Lite documentation, which has the following JSON specification::
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
@@ -136,7 +136,7 @@ from the Vega-Lite documentation, which has the following JSON specification::
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}
@@ -152,7 +152,7 @@ construct an Altair chart object from this string of Vega-Lite JSON:
 
     alt.Chart.from_json("""
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
@@ -161,7 +161,7 @@ construct an Altair chart object from this string of Vega-Lite JSON:
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}
@@ -177,7 +177,7 @@ you can use the :meth:`~Chart.from_dict` method to construct the chart object:
     import altair as alt
 
     alt.Chart.from_dict({
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
@@ -186,7 +186,7 @@ you can use the :meth:`~Chart.from_dict` method to construct the chart object:
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}

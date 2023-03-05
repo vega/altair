@@ -1,14 +1,27 @@
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 
-import entrypoints
+try:
+    from importlib.metadata import entry_points
+except ImportError:
+    from importlib_metadata import entry_points
+
 from toolz import curry
 
 
 PluginType = TypeVar("PluginType")
 
 
-class PluginEnabler(object):
+class NoSuchEntryPoint(Exception):
+    def __init__(self, group, name):
+        self.group = group
+        self.name = name
+
+    def __str__(self):
+        return f"No {self.name!r} entry point found in group {self.group!r}"
+
+
+class PluginEnabler:
     """Context manager for enabling plugins
 
     This object lets you use enable() as a context manager to
@@ -108,9 +121,8 @@ class PluginRegistry(Generic[PluginType]):
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
-        more_exts = [
-            ep.name for ep in entrypoints.get_group_all(self.entry_point_group)
-        ]
+        e_points = importlib_metadata_get(self.entry_point_group)
+        more_exts = [ep.name for ep in e_points]
         exts.extend(more_exts)
         return sorted(set(exts))
 
@@ -139,12 +151,16 @@ class PluginRegistry(Generic[PluginType]):
     def _enable(self, name: str, **options) -> None:
         if name not in self._plugins:
             try:
-                ep = entrypoints.get_single(self.entry_point_group, name)
-            except entrypoints.NoSuchEntryPoint:
+                (ep,) = [
+                    ep
+                    for ep in importlib_metadata_get(self.entry_point_group)
+                    if ep.name == name
+                ]
+            except ValueError:
                 if name in self.entrypoint_err_messages:
                     raise ValueError(self.entrypoint_err_messages[name])
                 else:
-                    raise
+                    raise NoSuchEntryPoint(self.entry_point_group, name)
             value = cast(PluginType, ep.load())
             self.register(name, value)
         self._active_name = name
@@ -197,3 +213,15 @@ class PluginRegistry(Generic[PluginType]):
         return "{}(active={!r}, registered={!r})" "".format(
             self.__class__.__name__, self._active_name, list(self.names())
         )
+
+
+def importlib_metadata_get(group):
+    ep = entry_points()
+    # 'select' was introduced in Python 3.10 and 'get' got deprecated
+    # We don't check for Python version here as by checking with hasattr we
+    # also get compatibility with the importlib_metadata package which had a different
+    # deprecation cycle for 'get'
+    if hasattr(ep, "select"):
+        return ep.select(group=group)
+    else:
+        return ep.get(group, [])

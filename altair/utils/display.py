@@ -4,10 +4,9 @@ import textwrap
 from typing import Callable, Dict
 import uuid
 
-from jsonschema import validate
-
 from .plugin_registry import PluginRegistry
 from .mimebundle import spec_to_mimebundle
+from .schemapi import validate_jsonschema
 
 
 # ==============================================================================
@@ -98,7 +97,7 @@ class RendererRegistry(PluginRegistry[RendererType]):
 # ==============================================================================
 
 
-class Displayable(object):
+class Displayable:
     """A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
@@ -126,7 +125,10 @@ class Displayable(object):
         # type: () -> None
         """Validate the spec against the schema."""
         schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
-        validate(self.spec, schema_dict)
+        validate_jsonschema(
+            self.spec,
+            schema_dict,
+        )
 
     def _repr_mimebundle_(self, include=None, exclude=None):
         """Return a MIME bundle for display in Jupyter frontends."""
@@ -163,7 +165,7 @@ def json_renderer_base(spec, str_repr, **options):
     )
 
 
-class HTMLRenderer(object):
+class HTMLRenderer:
     """Object to render charts as HTML, with a unique output div each time"""
 
     def __init__(self, output_div="altair-viz-{}", **kwargs):

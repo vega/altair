@@ -2,8 +2,8 @@
 
 .. _user-guide-compound:
 
-Compound Charts: Layer, HConcat, VConcat, Repeat, Facet
--------------------------------------------------------
+Layered and Multi-View Charts
+-----------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
 and repeated charts. They are summarized in the following tables:
@@ -82,8 +82,8 @@ heat-map:
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB Rating:Q', bin=True),
-        alt.Y('Rotten Tomatoes Rating:Q', bin=True),
+        alt.X('IMDB_Rating:Q', bin=True),
+        alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
         alt.Color('count()', scale=alt.Scale(scheme='greenblue'))
     )
 
@@ -91,8 +91,8 @@ heat-map:
         color='black',
         size=5,
     ).encode(
-        x='IMDB Rating:Q',
-        y='Rotten Tomatoes Rating:Q',
+        x='IMDB_Rating:Q',
+        y='Rotten_Tomatoes_Rating:Q',
     )
 
     heatmap + points
@@ -179,7 +179,7 @@ with a ``brush`` selection to add interaction:
 
     source = data.sp500.url
 
-    brush = alt.selection(type='interval', encodings=['x'])
+    brush = alt.selection_interval(encodings=['x'])
 
     base = alt.Chart(source).mark_area().encode(
         x = 'date:T',
@@ -195,7 +195,7 @@ with a ``brush`` selection to add interaction:
 
     lower = base.properties(
         height=60
-    ).add_selection(brush)
+    ).add_params(brush)
 
     alt.vconcat(upper, lower)
 
@@ -270,8 +270,24 @@ The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
 encodings for the row and/or column which can be referred to in the chart's
 encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
-Currently ``repeat`` can only be specified for rows and column (not, e.g., for
-layers) and the target can only be encodings (not, e.g., data transforms)
+Another option to use the ``repeat`` method is for layering. Here below the
+columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
+using ``alt.repeat('layer')``: 
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.movies()
+
+    alt.Chart(source).mark_line().encode(
+        x=alt.X("IMDB_Rating", bin=True),
+        y=alt.Y(alt.repeat('layer'), aggregate='mean', title="Mean of US and Worldwide Gross"),
+        color=alt.ColorDatum(alt.repeat('layer'))
+    ).repeat(layer=["US_Gross", "Worldwide_Gross"])
+
+Currently ``repeat`` can only be encodings (not, e.g., data transforms)
 but there is discussion within the Vega-Lite community about making this pattern
 more general in the future.
 
@@ -346,7 +362,7 @@ layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
+    hover = alt.selection_point(on='mouseover', nearest=True, empty=False)
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',
@@ -357,7 +373,7 @@ layered chart with a hover selection:
         height=180,
     )
 
-    points = base.mark_point().add_selection(
+    points = base.mark_point().add_params(
         hover
     )
 

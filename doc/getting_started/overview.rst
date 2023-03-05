@@ -35,3 +35,15 @@ This documentation serves as the main reference for learning about Altair, and a
 
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Getting Started
+   :hidden:
+
+   self
+   installation
+   starting
+   getting_help
+   project_philosophy

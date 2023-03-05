@@ -11,61 +11,69 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
-The altair users mailing list can be found at
-https://groups.google.com/forum/#!forum/altair-viz. If you are working on
-Altair, you can talk to other developers in the `#altair` channel of the [Vega
-slack](https://bit.ly/join-vega-slack).
-
-## How To Contribute Code to Alatir
+## How To Contribute Code to Altair
 
 ### Setting Up Your Environment
 
-Install the latest version of Altair locally using 
-```
-$ pip install git+https://github.com/altair-viz/altair/
-```
-Next step is to fork the repository on GitHub and clone the fork to you local
+Fork the Altair repository on GitHub and then clone the fork to you local
 machine. For more details on forking see the [GitHub
 Documentation](https://help.github.com/en/articles/fork-a-repo).
 ```
 $ git clone https://github.com/YOUR-USERNAME/altair.git
 ```
-You can have a single clone of the repository that points to both your fork and
-the main package repository. These pointers to GitHub are called "remotes" .
-On your local clone you should run:
+
+To keep your fork up to date with changes in this repo,
+you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
+
+Now you can install the latest version of Altair locally using `pip`.
+The `-e` flag indicates that your local changes will be reflected
+every time you open a new Python interpreter
+(instead of having to reinstall the package each time).
 ```
-$ git remote add upstream https://github.com/altair-viz/altair.git
-$ git checkout master
-$ git pull upstream master
+$ cd altair/ 
+$ python -m pip install -e '.[dev]'
 ```
-And then you'll have all the updates in the master branch of your local fork.
-Note that git will complain if you've committed changes to your local master
-branch that are not on upstream (this is one reason it's good practice to **never**
-work directly on your master branch).
+
+'[dev]' indicates that pip should also install the development requirements
+which you can find in `requirements_dev.txt`
 
 ### Creating a Branch
 
-Once your local environment is up-to-date, you can create a new git branch which will
-contain your contribution:
+Once your local environment is up-to-date, you can create a new git branch
+which will contain your contribution
+(always create a new branch instead of making changes to the master branch):
 ```
-$ git checkout -b <branch-name>
+$ git switch -c <branch-name>
 ```
 With this branch checked-out, make the desired changes to the package.
-Note that Altair code uses the [black](https://black.readthedocs.io/)
-code formatter, which you can apply to your modifications by installing
-and running black on the local directory:
+
+
+### Testing your Changes
+
+Before suggesting your contributing your changing to the main Altair repository,
+it is recommended that you run the Altair test suite,
+which includes a number of tests to validate the correctness of your code:
+
 ```
-$ pip install black
-$ black .
+$ make test
 ```
-When you are happy with your changes, you can commit them to your branch by runing
+
+This also runs the [black](https://black.readthedocs.io/)
+code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter.
+
+Study the output of any failed tests and try to fix the issues
+before proceeding to the next section.
+
+### Creating a Pull Request
+
+When you are happy with your changes, you can commit them to your branch by running
 ```
 $ git add <modified-file>
 $ git commit -m "Some descriptive message about your change"
 $ git push origin <branch-name>
 ```
-Finally you will need to submit a pull request (PR) on GitHub asking to merge
-your example branch into altair master. For details on creating a PR see GitHub
+You will then need to submit a pull request (PR) on GitHub asking to merge
+your example branch into the main Altair repository. For details on creating a PR see GitHub
 documentation [Creating a pull
 request](https://help.github.com/en/articles/creating-a-pull-request). You can
 add more details about your example in the PR such as motivation for the
@@ -77,21 +85,18 @@ automatically shown in the PR.
 Hopefully your PR will be answered in a timely manner and your contribution will
 help others in the future.
 
-### Testing your Changes
+## Documentation
+Altair documentation is written in [reStructuredText](http://docutils.sourceforge.net/rst.html)
+and compiled into html pages using [Sphinx](http://www.sphinx-doc.org/en/master/).
+Contributing to the documentation requires some extra dependencies and 
+we have some conventions and plugins that are used to help navigate the docs and 
+generate great Altair visualizations. 
 
-When you submit a pull request, Altair's continuous integration test suite will
-run a number of tests to validate the correctness of your code. It can be helpful
-when debugging to run those tests locally; to do this first install Altair's
-development requirements:
-```
-$ pip install -r requirements_dev.txt
-```
-and then run the test suite with:
-```
-$ make test
-```
+Note that the [Altair website](https://altair-viz.github.io/)
+is only updated when a new version is released so your contribution might not show
+up for a while.
 
-## Adding Examples
+### Adding Examples
 
 We are always interested in new examples contributed from the community.  These
 could be everything from simple one-panel scatter and line plots, to more
@@ -116,7 +121,7 @@ Every example should:
 
 The easiest way to get started would be to adapt examples from the [Vega-Lite
 example gallery](https://vega.github.io/vega-lite/examples/) which are missing
-in the altair gallery. Or you can feel free to be creative and build your own
+in the Altair gallery. Or you can feel free to be creative and build your own
 visualizations.
 
 Often it is convenient to draft an example outside of the main repository, such
@@ -134,8 +139,7 @@ Some additional notes:
   a title in the docstring underlined with `---`, and be sure that the size of
   the underline exactly matches the size of the title text.
 - If your example fits into a chart type but involves significant configuration
-  it should be in the `case studies` category. If your example doesn't fit well
-  into any category then it can be included in the `other charts` category.
+  it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the
   variable `source`. Then `source` is passed to the `alt.Chart` object. See
   other examples for guidance. 
@@ -148,7 +152,33 @@ Some additional notes:
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
-  
-Note that examples shown on the [altair website](https://altair-viz.github.io/)
-are only updated when a new version is released so your new example might not show
-up there for a while. 
+- If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
+  then add the name of the example to the `SVG_EXAMPLES` set in 
+  `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`
+
+### Building the Documentation Locally
+In addition to the development dependencies mentioned further above,
+you will also need to install the dependencies for the documentation 
+listed in  `docs/requirements.txt`. Note that `geopandas` might require you to first
+install some other dependencies, see [their installation page](https://geopandas.org/en/stable/getting_started/install.html#installation)
+for details.
+
+```
+pip install -r doc/requirements.txt
+```
+
+Once you have all the dependencies, you can build the documentation 
+using various commands defined in the Makefile. 
+From the `doc` folder, you can use `make help` to see all of the available commands
+which control the type of documentation you want to generate.
+
+Usually, you will want to run `make html` which will generate the documentation
+in a sub folder `_build/html`. You can then view the documentation by running:
+
+```
+cd _build/html
+python -m http.server
+```
+
+and then opening `http://localhost:8000` in your browser.
+

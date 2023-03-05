@@ -2,8 +2,8 @@
 
 .. _user-guide-filter-transform:
 
-Filter Transform
-~~~~~~~~~~~~~~~~
+Filter
+~~~~~~
 The filter transform removes objects from a data stream based on a provided
 filter expression, selection, or other filter predicate. A filter can be
 added at the top level of a chart using the :meth:`Chart.transform_filter`
@@ -133,7 +133,7 @@ to select the data to be shown in the top chart:
     from vega_datasets import data
     pop = data.population.url
 
-    selection = alt.selection_multi(fields=['year'])
+    selection = alt.selection_point(fields=['year'])
 
     top = alt.Chart().mark_line().encode(
         x='age:O',
@@ -151,7 +151,7 @@ to select the data to be shown in the top chart:
         color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
     ).properties(
         width=600, height=100
-    ).add_selection(
+    ).add_params(
         selection
     )
 
@@ -189,7 +189,7 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
     ).properties(
         width=600, height=200
     ).transform_filter(
-        {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
+        {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     )
 
 Transform Options

@@ -4,15 +4,14 @@ from .core import (
     sanitize_dataframe,
     parse_shorthand,
     use_signature,
-    update_subtraits,
     update_nested,
     display_traceback,
     SchemaBase,
-    Undefined,
 )
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
 from .deprecation import AltairDeprecationWarning
+from .schemapi import Undefined
 
 
 __all__ = (
@@ -22,7 +21,6 @@ __all__ = (
     "spec_to_html",
     "parse_shorthand",
     "use_signature",
-    "update_subtraits",
     "update_nested",
     "display_traceback",
     "AltairDeprecationWarning",

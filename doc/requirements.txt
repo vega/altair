@@ -1,5 +1,8 @@
 sphinx
+docutils
 jinja2
 numpydoc
 pillow
-sphinx_rtd_theme
+pydata-sphinx-theme
+geopandas
+myst-parser

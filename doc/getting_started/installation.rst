@@ -4,7 +4,7 @@
 
 Installation
 ============
-Altair can be installed, along with the example datastes in vega_datasets_, using::
+Altair can be installed, along with the example datasets in vega_datasets_, using::
 
     $ pip install altair vega_datasets
 
@@ -24,23 +24,17 @@ Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
 - python 3.6 or newer
-- entrypoints_
+- jinja2
 - jsonschema_
 - NumPy_
 - Pandas_
 - Toolz_
+- importlib_metadata_ (python<3.8)
+- typing_extensions_ (python<3.11)
 
 To run Altair's full test suite and build Altair's documentation requires a few
-additional dependencies:
-
-- flake8
-- pytest
-- jinja2
-- sphinx
-- m2r
-- docutils
-- vega_datasets_
-- ipython
+additional dependencies, see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`_
+for the details.
 
 Development Install
 ===================
@@ -74,7 +68,8 @@ development version directly from GitHub using:
 .. _Zeppelin: https://zeppelin.apache.org/
 .. _IPython: https://github.com/ipython/ipython
 
-.. _entrypoints: https://github.com/takluyver/entrypoints
+.. _importlib_metadata: https://github.com/python/importlib_metadata
+.. _typing_extensions: https://github.com/python/typing_extensions
 .. _jsonschema: https://github.com/Julian/jsonschema
 .. _NumPy: http://www.numpy.org/
 .. _Pandas: http://pandas.pydata.org

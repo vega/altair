@@ -5,10 +5,7 @@
 
 The core Python API for Altair can be found in the following locations:
 
-- ``altair/vegalite/v2/schema/``
-- ``altair/vegalite/v1/schema/``
-- ``altair/vega/v3/schema/``
-- ``altair/vega/v2/schema/``
+- ``altair/vegalite/v5/schema/``
 
 All the files within these directories are created automatically by running
 the following script from the root of the repository:
@@ -19,7 +16,7 @@ $ python tools/generate_schema_wrapper.py
 
 This script does a couple things:
 
-- downloads the appropriate schema files from the specified vega and vega-lite
+- downloads the appropriate schema files from the specified vega-lite
   release versions & copies the JSON file to the appropriate ``schema``
   directory
 - generates basic low-level schemapi wrappers from the definitions within
@@ -27,11 +24,11 @@ This script does a couple things:
 - generates a second layer of higher level wrappers for some vega-lite
   functionality; this is put in ``schema/channels.py`` and ``schema/mixins.py``
 
-The script output is designed to be deterministic; if vega/vega-lite versions
-are not changed, then running the script should overwrite the schema wrappers
+The script output is designed to be deterministic; if the vega-lite version
+is not changed, then running the script should overwrite the schema wrappers
 with identical copies.
 
-## Updating the Vega & Vega-Lite versions
+## Updating the Vega-Lite version
 
 The vega & vega-lite versions for the Python code can be updated by manually
 changing the ``SCHEMA_VERSION`` definition within
@@ -40,7 +37,7 @@ changing the ``SCHEMA_VERSION`` definition within
 This will update all of the automatically-generated files in the ``schema``
 directory for each version, but please note that it will *not* update other
 pieces (for example, the core of the Altair API, including methods and
-doc strings within ``altair/vegalite/v2/api.py``.
+doc strings within ``altair/vegalite/v5/api.py``.
 These additional methods have fairly good test coverage, so running the test
 suite should identify any inconsistencies:
 ```

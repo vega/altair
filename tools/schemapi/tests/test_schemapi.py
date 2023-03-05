@@ -1,13 +1,21 @@
 import copy
 import io
+import inspect
 import json
 import jsonschema
+import jsonschema.exceptions
+import re
 import pickle
-import pytest
+import warnings
 
 import numpy as np
+import pandas as pd
+import pytest
+from vega_datasets import data
 
-from ..schemapi import (
+import altair as alt
+from altair import load_schema
+from altair.utils.schemapi import (
     UndefinedType,
     SchemaBase,
     Undefined,
@@ -15,6 +23,7 @@ from ..schemapi import (
     SchemaValidationError,
 )
 
+_JSONSCHEMA_DRAFT = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
 
@@ -27,6 +36,7 @@ class _TestSchema(SchemaBase):
 
 class MySchema(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "StringMapping": {
                 "type": "object",
@@ -63,6 +73,7 @@ class StringArray(_TestSchema):
 
 class Derived(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "definitions": {
             "Foo": {"type": "object", "properties": {"d": {"type": "string"}}},
             "Bar": {"type": "string", "enum": ["A", "B"]},
@@ -88,7 +99,10 @@ class Bar(_TestSchema):
 
 
 class SimpleUnion(_TestSchema):
-    _schema = {"anyOf": [{"type": "integer"}, {"type": "string"}]}
+    _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
+        "anyOf": [{"type": "integer"}, {"type": "string"}],
+    }
 
 
 class DefinitionUnion(_TestSchema):
@@ -98,6 +112,7 @@ class DefinitionUnion(_TestSchema):
 
 class SimpleArray(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "array",
         "items": {"anyOf": [{"type": "integer"}, {"type": "string"}]},
     }
@@ -105,8 +120,34 @@ class SimpleArray(_TestSchema):
 
 class InvalidProperties(_TestSchema):
     _schema = {
+        "$schema": _JSONSCHEMA_DRAFT,
         "type": "object",
         "properties": {"for": {}, "as": {}, "vega-lite": {}, "$schema": {}},
+    }
+
+
+_validation_selection_schema = {
+    "properties": {
+        "e": {"type": "number", "exclusiveMinimum": 10},
+    },
+}
+
+
+class Draft4Schema(_TestSchema):
+    _schema = {
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-04/schema#",
+        },
+    }
+
+
+class Draft6Schema(_TestSchema):
+    _schema = {
+        **_validation_selection_schema,
+        **{
+            "$schema": "http://json-schema.org/draft-06/schema#",
+        },
     }
 
 
@@ -219,6 +260,27 @@ def test_undefined_singleton():
     assert Undefined is UndefinedType()
 
 
+def test_schema_validator_selection():
+    # Tests if the correct validator class is chosen based on the $schema
+    # property in the schema. This uses a backwards-incompatible change
+    # in Draft 6 which introduced exclusiveMinimum as a number instead of a boolean.
+    # Therefore, with Draft 4 there is no actual minimum set as a number and validating
+    # the dictionary below passes. With Draft 6, it correctly checks if the number is
+    # > 10 and raises a ValidationError. See
+    # https://json-schema.org/draft-06/json-schema-release-notes.html#q-what-are-
+    # the-changes-between-draft-04-and-draft-06 for more details
+    dct = {
+        "e": 9,
+    }
+
+    assert Draft4Schema.from_dict(dct).to_dict() == dct
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError,
+        match="9 is less than or equal to the minimum of 10",
+    ):
+        Draft6Schema.from_dict(dct)
+
+
 @pytest.fixture
 def dct():
     return {
@@ -328,10 +390,179 @@ def test_schema_validation_error():
     assert isinstance(the_err, SchemaValidationError)
     message = str(the_err)
 
-    assert message.startswith("Invalid specification")
-    assert "test_schemapi.MySchema->a" in message
-    assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
+
+
+def chart_example_layer():
+    points = (
+        alt.Chart(data.cars.url)
+        .mark_point()
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+        )
+    )
+    return (points & points).properties(width=400)
+
+
+def chart_example_hconcat():
+    source = data.cars()
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(
+            x="Horsepower",
+            y="Miles_per_Gallon",
+        )
+    )
+
+    text = (
+        alt.Chart(source)
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+    )
+
+    return points | text
+
+
+def chart_example_invalid_channel_and_condition():
+    selection = alt.selection_point()
+    return (
+        alt.Chart(data.barley())
+        .mark_circle()
+        .add_params(selection)
+        .encode(
+            color=alt.condition(selection, alt.value("red"), alt.value("green")),
+            invalidChannel=None,
+        )
+    )
+
+
+def chart_example_invalid_y_option():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety"),
+            y=alt.Y("sum(yield)", stack="asdf"),
+        )
+    )
+
+
+def chart_example_invalid_y_option_value_with_condition():
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x="variety",
+            y=alt.Y("sum(yield)", stack="asdf"),
+            opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    "chart_func, expected_error_message",
+    [
+        (
+            chart_example_invalid_y_option,
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'unknown'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `X` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_example_layer,
+            inspect.cleandoc(
+                r"""`VConcatChart` has no parameter named 'width'
+
+                Existing parameter names are:
+                vconcat      center     description   params    title       
+                autosize     config     name          resolve   transform   
+                background   data       padding       spacing   usermeta    
+                bounds       datasets                                       
+
+                See the help for `VConcatChart` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
+        ),
+        (
+            chart_example_invalid_y_option_value_with_condition,
+            inspect.cleandoc(
+                r"""'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'"""
+            ),
+        ),
+        (
+            chart_example_hconcat,
+            inspect.cleandoc(
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
+
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'"""
+            ),
+        ),
+        (
+            chart_example_invalid_channel_and_condition,
+            inspect.cleandoc(
+                r"""`Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters"""  # noqa: W291
+            ),
+        ),
+    ],
+)
+def test_chart_validation_errors(chart_func, expected_error_message):
+    # DOTALL flag makes that a dot (.) also matches new lines
+    pattern = re.compile(expected_error_message, re.DOTALL)
+    # For some wrong chart specifications such as an unknown encoding channel,
+    # Altair already raises a warning before the chart specifications are validated.
+    # We can ignore these warnings as we are interested in the errors being raised
+    # during validation which is triggered by to_dict
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        chart = chart_func()
+    with pytest.raises(SchemaValidationError, match=pattern):
+        chart.to_dict()
 
 
 def test_serialize_numpy_types():
@@ -347,3 +578,44 @@ def test_serialize_numpy_types():
         "a2": {"int64": 1, "float64": 2},
         "b2": [0, 1, 2, 3],
     }
+
+
+def test_to_dict_no_side_effects():
+    # Tests that shorthands are expanded in returned dictionary when calling to_dict
+    # but that they remain untouched in the chart object. Goal is to ensure that
+    # the chart object stays unchanged when to_dict is called
+    def validate_encoding(encoding):
+        assert encoding.x["shorthand"] == "a"
+        assert encoding.x["field"] is alt.Undefined
+        assert encoding.x["type"] is alt.Undefined
+        assert encoding.y["shorthand"] == "b:Q"
+        assert encoding.y["field"] is alt.Undefined
+        assert encoding.y["type"] is alt.Undefined
+
+    data = pd.DataFrame(
+        {
+            "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+            "b": [28, 55, 43, 91, 81, 53, 19, 87, 52],
+        }
+    )
+
+    chart = alt.Chart(data).mark_bar().encode(x="a", y="b:Q")
+
+    validate_encoding(chart.encoding)
+    dct = chart.to_dict()
+    validate_encoding(chart.encoding)
+
+    assert "shorthand" not in dct["encoding"]["x"]
+    assert dct["encoding"]["x"]["field"] == "a"
+
+    assert "shorthand" not in dct["encoding"]["y"]
+    assert dct["encoding"]["y"]["field"] == "b"
+    assert dct["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_to_dict_expand_mark_spec():
+    # Test that `to_dict` correctly expands marks to a dictionary
+    # without impacting the original spec which remains a string
+    chart = alt.Chart().mark_bar()
+    assert chart.to_dict()["mark"] == {"type": "bar"}
+    assert chart.mark == "bar"

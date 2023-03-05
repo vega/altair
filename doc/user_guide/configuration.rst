@@ -21,6 +21,7 @@ These methods and their arguments will be outlined below:
 - :ref:`config-scale` :meth:`Chart.configure_scale`
 - :ref:`config-range` :meth:`Chart.configure_range`
 - :ref:`config-projection` :meth:`Chart.configure_projection`
+- :ref:`config-composition` :meth:`Chart.configure_concat`, :meth:`Chart.configure_facet`
 - :ref:`config-selection` :meth:`Chart.configure_selection`
 - :ref:`config-title` :meth:`Chart.configure_title`
 - :ref:`config-view` :meth:`Chart.configure_view`
@@ -34,7 +35,7 @@ For more discussion of approaches to chart customization, see
 Chart Configuration
 -------------------
 The :meth:`Chart.configure` method adds a :class:`Config` instance to the chart,
-and has the following attributes:
+and accepts the following parameters:
 
 .. altair-object-table:: altair.Config
 
@@ -43,7 +44,7 @@ and has the following attributes:
 
 Axis Configuration
 ------------------
-Axis configuration defines default settings for axes, and can be set using
+Axis configuration defines default settings for axes and can be set using
 the :meth:`Chart.configure_axis` method.
 Properties defined here are applied to all axes in the figure.
 
@@ -66,6 +67,20 @@ The methods are the following:
 - :meth:`Chart.configure_axisTop`
 - :meth:`Chart.configure_axisX`
 - :meth:`Chart.configure_axisY`
+- :meth:`Chart.configure_axisDiscrete`
+- :meth:`Chart.configure_axisPoint`
+- :meth:`Chart.configure_axisQuantitative`
+- :meth:`Chart.configure_axisTemporal`
+- :meth:`Chart.configure_axisXBand`
+- :meth:`Chart.configure_axisXDiscrete`
+- :meth:`Chart.configure_axisXPoint`
+- :meth:`Chart.configure_axisXQuantitative`
+- :meth:`Chart.configure_axisXTemporal`
+- :meth:`Chart.configure_axisYBand`
+- :meth:`Chart.configure_axisYDiscrete`
+- :meth:`Chart.configure_axisYPoint`
+- :meth:`Chart.configure_axisYQuantitative`
+- :meth:`Chart.configure_axisYTemporal`
 
 They have the following properties:
 
@@ -76,9 +91,9 @@ They have the following properties:
 
 Header Configuration
 --------------------
-The :meth:`Chart.configure_header` method allows configuration of facet headers,
-including the font, color, size, and position of the title and labels.
-Here is an example:
+Header configuration defines default settings for headers including the font, color,
+size, and position of the title and labels and can be set using 
+the :meth:`Chart.configure_header` method. Here is an example:
 
 .. altair-plot::
 
@@ -103,6 +118,15 @@ Here is an example:
         labelColor='red',
         labelFontSize=14
     )
+
+Additional property blocks can target more specific header types. The methods are the following:
+
+- :meth:`Chart.configure_header`
+- :meth:`Chart.configure_headerColumn`
+- :meth:`Chart.configure_headerFacet`
+- :meth:`Chart.configure_headerRow`
+
+They have the following properties:
 
 .. altair-object-table:: altair.HeaderConfig
 
@@ -157,10 +181,15 @@ For general configuration of all mark types, use:
 
 For configurations specific to particular mark types, use:
 
+- :meth:`Chart.configure_arc`
 - :meth:`Chart.configure_area`
 - :meth:`Chart.configure_bar`
+- :meth:`Chart.configure_boxplot`
 - :meth:`Chart.configure_circle`
+- :meth:`Chart.configure_errorband`
+- :meth:`Chart.configure_errorbar`
 - :meth:`Chart.configure_geoshape`
+- :meth:`Chart.configure_image`
 - :meth:`Chart.configure_line`
 - :meth:`Chart.configure_point`
 - :meth:`Chart.configure_rect`
@@ -205,16 +234,27 @@ the following properties:
 
 Projection Configuration
 ------------------------
-:meth:`Chart.configure_projection`
+Projections can be configured using :meth:`Chart.configure_projection`,
+which has the following properties:
 
 .. altair-object-table:: altair.ProjectionConfig
 
+
+.. _config-composition:
+
+Concat and Facet Configuration
+------------------------------
+Various aspects of concat and facet charts can be configured using :meth:`Chart.configure_concat`
+and :meth:`Chart.configure_facet`, which have the following properties:
+
+.. altair-object-table:: altair.CompositionConfig
 
 .. _config-selection:
 
 Selection Configuration
 -----------------------
-:meth:`Chart.configure_selection`
+Selections can be configured using :meth:`Chart.configure_selection`, 
+which has the following properties:
 
 .. altair-object-table:: altair.SelectionConfig
 
@@ -286,144 +326,3 @@ Additional properties are summarized in the following table:
 
 .. altair-object-table:: altair.ViewConfig
 
-
-.. _chart-themes:
-
-Altair Themes
--------------
-Altair makes available a theme registry that lets users apply chart configurations
-globally within any Python session. This is done via the ``alt.themes`` object.
-
-The themes registry consists of functions which define a specification dictionary
-that will be added to every created chart.
-For example, the default theme configures the default size of a single chart:
-
-    >>> import altair as alt
-    >>> default = alt.themes.get()
-    >>> default()
-    {'config': {'view': {'continuousWidth': 400, 'continuousHeight': 300}}}
-
-You can see that any chart you create will have this theme applied, and these configurations
-added to its specification:
-
-.. altair-plot::
-    :output: repr
-
-    import altair as alt
-    from vega_datasets import data
-
-    chart = alt.Chart(data.cars.url).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
-
-    chart.to_dict()
-
-The rendered chart will then reflect these configurations:
-
-.. altair-plot::
-
-    chart
-
-Changing the Theme
-~~~~~~~~~~~~~~~~~~
-If you would like to enable any other theme for the length of your Python session,
-you can call ``alt.themes.enable(theme_name)``.
-For example, Altair includes a theme in which the chart background is opaque
-rather than transparent:
-
-.. altair-plot::
-    :output: repr
-
-    alt.themes.enable('opaque')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Notice that the background color of the chart is now set to white.
-If you would like no theme applied to your chart, you can use the
-theme named ``'none'``:
-
-.. altair-plot::
-    :output: repr
-
-    alt.themes.enable('none')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Because the view configuration is not set, the chart is smaller
-than the default rendering.
-
-If you would like to use any theme just for a single chart, you can use the
-``with`` statement to enable a temporary theme:
-
-.. altair-plot::
-   :output: none
-
-   with alt.themes.enable('default'):
-       spec = chart.to_json()
-
-Currently Altair does not offer many built-in themes, but we plan to add
-more options in the future.
-
-Defining a Custom Theme
-~~~~~~~~~~~~~~~~~~~~~~~
-The theme registry also allows defining and registering custom themes.
-A theme is simply a function that returns a dictionary of default values
-to be added to the chart specification at rendering time, which is then
-registered and activated.
-
-For example, here we define a theme in which all marks are drawn with black
-fill unless otherwise specified:
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    # define the theme by returning the dictionary of configurations
-    def black_marks():
-        return {
-            'config': {
-                'view': {
-                    'height': 300,
-                    'width': 400,
-                },
-                'mark': {
-                    'color': 'black',
-                    'fill': 'black'
-                }
-            }
-        }
-
-    # register the custom theme under a chosen name
-    alt.themes.register('black_marks', black_marks)
-
-    # enable the newly registered theme
-    alt.themes.enable('black_marks')
-
-    # draw the chart
-    cars = data.cars.url
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
-
-
-If you want to restore the default theme, use:
-
-.. altair-plot::
-   :output: none
-
-   alt.themes.enable('default')
-
-
-For more ideas on themes, see the `Vega Themes`_ repository.
-
-
-.. _Vega Themes: https://github.com/vega/vega-themes/

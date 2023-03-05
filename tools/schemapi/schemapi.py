@@ -2,10 +2,17 @@ import collections
 import contextlib
 import inspect
 import json
+import textwrap
+from typing import Any, Sequence, List
+from itertools import zip_longest
 
 import jsonschema
+import jsonschema.exceptions
+import jsonschema.validators
 import numpy as np
 import pandas as pd
+
+from altair import vegalite
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -23,7 +30,7 @@ def enable_debug_mode():
 
 def disable_debug_mode():
     global DEBUG_MODE
-    DEBUG_MODE = True
+    DEBUG_MODE = False
 
 
 @contextlib.contextmanager
@@ -37,6 +44,74 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
+def validate_jsonschema(spec, schema, rootschema=None):
+    # We don't use jsonschema.validate as this would validate the schema itself.
+    # Instead, we pass the schema directly to the validator class. This is done for
+    # two reasons: The schema comes from Vega-Lite and is not based on the user
+    # input, therefore there is no need to validate it in the first place. Furthermore,
+    # the "uri-reference" format checker fails for some of the references as URIs in
+    # "$ref" are not encoded,
+    # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
+    # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
+    # it is not a valid URI reference due to the characters such as '<'.
+    if rootschema is not None:
+        validator_cls = jsonschema.validators.validator_for(rootschema)
+        resolver = jsonschema.RefResolver.from_schema(rootschema)
+    else:
+        validator_cls = jsonschema.validators.validator_for(schema)
+        # No resolver is necessary if the schema is already the full schema
+        resolver = None
+
+    validator_kwargs = {"resolver": resolver}
+    if hasattr(validator_cls, "FORMAT_CHECKER"):
+        validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
+    validator = validator_cls(schema, **validator_kwargs)
+    errors = list(validator.iter_errors(spec))
+    if errors:
+        errors = _get_most_relevant_errors(errors)
+        main_error = errors[0]
+        # They can be used to craft more helpful error messages when this error
+        # is being converted to a SchemaValidationError
+        main_error._additional_errors = errors[1:]
+        raise main_error
+
+
+def _get_most_relevant_errors(
+    errors: Sequence[jsonschema.exceptions.ValidationError],
+) -> List[jsonschema.exceptions.ValidationError]:
+    if len(errors) == 0:
+        return []
+
+    # Go to lowest level in schema where an error happened as these give
+    # the most relevant error messages
+    lowest_level = errors[0]
+    while lowest_level.context:
+        lowest_level = lowest_level.context[0]
+
+    most_relevant_errors = []
+    if lowest_level.validator == "additionalProperties":
+        # For these errors, the message is already informative enough and the other
+        # errors on the lowest level are not helpful for a user but instead contain
+        # the same information in a more verbose way
+        most_relevant_errors = [lowest_level]
+    else:
+        parent = lowest_level.parent
+        if parent is None:
+            # In this case we are still at the top level and can return all errors
+            most_relevant_errors = errors
+        else:
+            # Return all errors of the lowest level out of which
+            # we can construct more informative error messages
+            most_relevant_errors = lowest_level.parent.context
+
+    # This should never happen but might still be good to test for it as else
+    # the original error would just slip through without being raised
+    if len(most_relevant_errors) == 0:
+        raise Exception("Could not determine the most relevant errors") from errors[0]
+
+    return most_relevant_errors
+
+
 def _subclasses(cls):
     """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
@@ -48,18 +123,14 @@ def _subclasses(cls):
             yield cls
 
 
-def _todict(obj, validate, context):
+def _todict(obj, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
-        return obj.to_dict(validate=validate, context=context)
+        return obj.to_dict(validate=False, context=context)
     elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, validate, context) for v in obj]
+        return [_todict(v, context) for v in obj]
     elif isinstance(obj, dict):
-        return {
-            k: _todict(v, validate, context)
-            for k, v in obj.items()
-            if v is not Undefined
-        }
+        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
     elif hasattr(obj, "to_dict"):
         return obj.to_dict()
     elif isinstance(obj, np.number):
@@ -83,46 +154,129 @@ class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
     def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**self._get_contents(err))
+        super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
+        self._additional_errors = getattr(err, "_additional_errors", [])
 
     @staticmethod
-    def _get_contents(err):
-        """Get a dictionary with the contents of a ValidationError"""
-        try:
-            # works in jsonschema 2.3 or later
-            contents = err._contents()
-        except AttributeError:
-            try:
-                # works in Python >=3.4
-                spec = inspect.getfullargspec(err.__init__)
-            except AttributeError:
-                # works in Python <3.4
-                spec = inspect.getargspec(err.__init__)
-            contents = {key: getattr(err, key) for key in spec.args[1:]}
-        return contents
+    def _format_params_as_table(param_dict_keys):
+        """Format param names into a table so that they are easier to read"""
+        param_names, name_lengths = zip(
+            *[
+                (name, len(name))
+                for name in param_dict_keys
+                if name not in ["kwds", "self"]
+            ]
+        )
+        # Worst case scenario with the same longest param name in the same
+        # row for all columns
+        max_name_length = max(name_lengths)
+        max_column_width = 80
+        # Output a square table if not too big (since it is easier to read)
+        num_param_names = len(param_names)
+        square_columns = int(np.ceil(num_param_names**0.5))
+        columns = min(max_column_width // max_name_length, square_columns)
+
+        # Compute roughly equal column heights to evenly divide the param names
+        def split_into_equal_parts(n, p):
+            return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
+
+        column_heights = split_into_equal_parts(num_param_names, columns)
+
+        # Section the param names into columns and compute their widths
+        param_names_columns = []
+        column_max_widths = []
+        last_end_idx = 0
+        for ch in column_heights:
+            param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
+            column_max_widths.append(
+                max([len(param_name) for param_name in param_names_columns[-1]])
+            )
+            last_end_idx = ch + last_end_idx
+
+        # Transpose the param name columns into rows to facilitate looping
+        param_names_rows = []
+        for li in zip_longest(*param_names_columns, fillvalue=""):
+            param_names_rows.append(li)
+        # Build the table as a string by iterating over and formatting the rows
+        param_names_table = ""
+        for param_names_row in param_names_rows:
+            for num, param_name in enumerate(param_names_row):
+                # Set column width based on the longest param in the column
+                max_name_length_column = column_max_widths[num]
+                column_pad = 3
+                param_names_table += "{:<{}}".format(
+                    param_name, max_name_length_column + column_pad
+                )
+                # Insert newlines and spacing after the last element in each row
+                if num == (len(param_names_row) - 1):
+                    param_names_table += "\n"
+                    # 16 is the indendation of the returned multiline string below
+                    param_names_table += " " * 16
+        return param_names_table
 
     def __str__(self):
-        cls = self.obj.__class__
-        schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
-        schema_path.extend(self.schema_path)
-        schema_path = "->".join(
-            str(val)
-            for val in schema_path[:-1]
-            if val not in ("properties", "additionalProperties", "patternProperties")
-        )
-        return """Invalid specification
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(self.absolute_path):
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
+            cls = self.obj.__class__
 
-        {}, validating {!r}
+        # Output all existing parameters when an unknown parameter is specified
+        if self.validator == "additionalProperties":
+            param_dict_keys = inspect.signature(cls).parameters.keys()
+            param_names_table = self._format_params_as_table(param_dict_keys)
 
-        {}
-        """.format(
-            schema_path, self.validator, self.message
-        )
+            # `cleandoc` removes multiline string indentation in the output
+            return inspect.cleandoc(
+                """`{}` has no parameter named {!r}
+
+                Existing parameter names are:
+                {}
+                See the help for `{}` to read the full description of these parameters
+                """.format(
+                    cls.__name__,
+                    self.message.split("('")[-1].split("'")[0],
+                    param_names_table,
+                    cls.__name__,
+                )
+            )
+        # Use the default error message for all other cases than unknown parameter errors
+        else:
+            message = self.message
+            # Add a summary line when parameters are passed an invalid value
+            # For example: "'asdf' is an invalid value for `stack`
+            if self.absolute_path:
+                # The indentation here must match that of `cleandoc` below
+                message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
+
+                {message}"""
+
+            if self._additional_errors:
+                message += "\n                " + "\n                ".join(
+                    [e.message for e in self._additional_errors]
+                )
+
+            return inspect.cleandoc(
+                """{}
+                """.format(
+                    message
+                )
+            )
 
 
-class UndefinedType(object):
-    """A singleton object for marking undefined attributes"""
+class UndefinedType:
+    """A singleton object for marking undefined parameters"""
 
     __instance = None
 
@@ -135,10 +289,14 @@ class UndefinedType(object):
         return "Undefined"
 
 
-Undefined = UndefinedType()
+# In the future Altair may implement a more complete set of type hints.
+# But for now, we'll add an annotation to indicate that the type checker
+# should permit any value passed to a function argument whose default
+# value is Undefined.
+Undefined: Any = UndefinedType()
 
 
-class SchemaBase(object):
+class SchemaBase:
     """Base class for schema wrappers.
 
     Each derived class should set the _schema class attribute (and optionally
@@ -289,11 +447,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -315,14 +471,38 @@ class SchemaBase(object):
             context = {}
         if ignore is None:
             ignore = []
-        sub_validate = "deep" if validate == "deep" else False
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], validate=sub_validate, context=context)
+            result = _todict(self._args[0], context=context)
         elif not self._args:
+            kwds = self._kwds.copy()
+            # parsed_shorthand is added by FieldChannelMixin.
+            # It's used below to replace shorthand with its long form equivalent
+            # parsed_shorthand is removed from context if it exists so that it is
+            # not passed to child to_dict function calls
+            parsed_shorthand = context.pop("parsed_shorthand", {})
+            # Prevent that pandas categorical data is automatically sorted
+            # when a non-ordinal data type is specifed manually
+            # or if the encoding channel does not support sorting
+            if "sort" in parsed_shorthand and (
+                "sort" not in kwds or kwds["type"] not in ["ordinal", Undefined]
+            ):
+                parsed_shorthand.pop("sort")
+
+            kwds.update(
+                {
+                    k: v
+                    for k, v in parsed_shorthand.items()
+                    if kwds.get(k, Undefined) is Undefined
+                }
+            )
+            kwds = {
+                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
+            }
+            if "mark" in kwds and isinstance(kwds["mark"], str):
+                kwds["mark"] = {"type": kwds["mark"]}
             result = _todict(
-                {k: v for k, v in self._kwds.items() if k not in ignore},
-                validate=sub_validate,
+                kwds,
                 context=context,
             )
         else:
@@ -344,11 +524,9 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean or string
+        validate : boolean
             If True (default), then validate the output dictionary
-            against the schema. If "deep" then recursively validate
-            all objects in the spec. This takes much more time, but
-            it results in friendlier tracebacks for large objects.
+            against the schema.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -436,8 +614,9 @@ class SchemaBase(object):
         """
         if schema is None:
             schema = cls._schema
-        resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(instance, schema, resolver=resolver)
+        return validate_jsonschema(
+            instance, schema, rootschema=cls._rootschema or cls._schema
+        )
 
     @classmethod
     def resolve_references(cls, schema=None):
@@ -453,16 +632,21 @@ class SchemaBase(object):
         Validate a property against property schema in the context of the
         rootschema
         """
-        value = _todict(value, validate=False, context={})
+        value = _todict(value, context={})
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
+        return validate_jsonschema(
+            value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
+        )
 
     def __dir__(self):
-        return list(self._kwds.keys())
+        return sorted(super().__dir__() + list(self._kwds.keys()))
 
 
-class _FromDict(object):
+def _passthrough(*args, **kwds):
+    return args[0] if args else kwds
+
+
+class _FromDict:
     """Class used to construct SchemaBase class hierarchies from a dict
 
     The primary purpose of using this class is to be able to build a hash table
@@ -516,7 +700,9 @@ class _FromDict(object):
 
             return hash(_freeze(schema))
 
-    def from_dict(self, dct, cls=None, schema=None, rootschema=None):
+    def from_dict(
+        self, dct, cls=None, schema=None, rootschema=None, default_class=_passthrough
+    ):
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
             raise ValueError("Must provide either cls or schema, but not both.")
@@ -524,9 +710,6 @@ class _FromDict(object):
             schema = schema or cls._schema
             rootschema = rootschema or cls._rootschema
         rootschema = rootschema or schema
-
-        def _passthrough(*args, **kwds):
-            return args[0] if args else kwds
 
         if isinstance(dct, SchemaBase):
             return dct
@@ -536,15 +719,17 @@ class _FromDict(object):
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[0] if matches else _passthrough
+            if matches:
+                cls = matches[0]
+            else:
+                cls = default_class
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:
             schemas = schema.get("anyOf", []) + schema.get("oneOf", [])
             for possible_schema in schemas:
-                resolver = jsonschema.RefResolver.from_schema(rootschema)
                 try:
-                    jsonschema.validate(dct, possible_schema, resolver=resolver)
+                    validate_jsonschema(dct, possible_schema, rootschema=rootschema)
                 except jsonschema.ValidationError:
                     continue
                 else:
@@ -552,6 +737,7 @@ class _FromDict(object):
                         dct,
                         schema=possible_schema,
                         rootschema=rootschema,
+                        default_class=cls,
                     )
 
         if isinstance(dct, dict):
@@ -573,3 +759,61 @@ class _FromDict(object):
             return cls(dct)
         else:
             return cls(dct)
+
+
+class _PropertySetter:
+    def __init__(self, prop, schema):
+        self.prop = prop
+        self.schema = schema
+
+    def __get__(self, obj, cls):
+        self.obj = obj
+        self.cls = cls
+        # The docs from the encoding class parameter (e.g. `bin` in X, Color,
+        # etc); this provides a general description of the parameter.
+        self.__doc__ = self.schema["description"].replace("__", "**")
+        property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
+        if hasattr(vegalite, property_name):
+            altair_prop = getattr(vegalite, property_name)
+            # Add the docstring from the helper class (e.g. `BinParams`) so
+            # that all the parameter names of the helper class are included in
+            # the final docstring
+            parameter_index = altair_prop.__doc__.find("Parameters\n")
+            if parameter_index > -1:
+                self.__doc__ = (
+                    altair_prop.__doc__[:parameter_index].replace("    ", "")
+                    + self.__doc__
+                    + textwrap.dedent(
+                        f"\n\n    {altair_prop.__doc__[parameter_index:]}"
+                    )
+                )
+            # For short docstrings such as Aggregate, Stack, et
+            else:
+                self.__doc__ = (
+                    altair_prop.__doc__.replace("    ", "") + "\n" + self.__doc__
+                )
+            # Add signatures and tab completion for the method and parameter names
+            self.__signature__ = inspect.signature(altair_prop)
+            self.__wrapped__ = inspect.getfullargspec(altair_prop)
+            self.__name__ = altair_prop.__name__
+        else:
+            # It seems like bandPosition is the only parameter that doesn't
+            # have a helper class.
+            pass
+        return self
+
+    def __call__(self, *args, **kwargs):
+        obj = self.obj.copy()
+        # TODO: use schema to validate
+        obj[self.prop] = args[0] if args else kwargs
+        return obj
+
+
+def with_property_setters(cls):
+    """
+    Decorator to add property setters to a Schema class.
+    """
+    schema = cls.resolve_references()
+    for prop, propschema in schema.get("properties", {}).items():
+        setattr(cls, prop, _PropertySetter(prop, propschema))
+    return cls

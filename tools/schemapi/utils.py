@@ -1,8 +1,6 @@
 """Utilities for working with schemas"""
 
-import json
 import keyword
-import pkgutil
 import re
 import textwrap
 import urllib
@@ -11,12 +9,6 @@ import jsonschema
 
 
 EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
-
-
-def load_metaschema():
-    schema = pkgutil.get_data("schemapi", "jsonschema-draft04.json")
-    schema = schema.decode()
-    return json.loads(schema)
 
 
 def resolve_references(schema, root=None):
@@ -65,6 +57,9 @@ def get_valid_identifier(
     if url_decode:
         prop = urllib.parse.unquote(prop)
 
+    # Deal with []
+    prop = prop.replace("[]", "Array")
+
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
     valid = re.sub(r"\W", replacement_character, prop, flags=flags)
@@ -99,7 +94,7 @@ def is_valid_identifier(var, allow_unicode=False):
     return is_valid and not keyword.iskeyword(var)
 
 
-class SchemaProperties(object):
+class SchemaProperties:
     """A wrapper for properties within a schema"""
 
     def __init__(self, properties, schema, rootschema=None):
@@ -138,10 +133,10 @@ class SchemaProperties(object):
         return (self[key] for key in self)
 
 
-class SchemaInfo(object):
+class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
-    def __init__(self, schema, rootschema=None, validate=False):
+    def __init__(self, schema, rootschema=None):
         if hasattr(schema, "_schema"):
             if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -149,10 +144,6 @@ class SchemaInfo(object):
                 schema, rootschema = schema._schema, schema._schema
         elif not rootschema:
             rootschema = schema
-        if validate:
-            metaschema = load_metaschema()
-            jsonschema.validate(schema, metaschema)
-            jsonschema.validate(rootschema, metaschema)
         self.raw_schema = schema
         self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
@@ -189,17 +180,18 @@ class SchemaInfo(object):
         else:
             return self.medium_description
 
+    _simple_types = {
+        "string": "string",
+        "number": "float",
+        "integer": "integer",
+        "object": "mapping",
+        "boolean": "boolean",
+        "array": "list",
+        "null": "None",
+    }
+
     @property
     def medium_description(self):
-        _simple_types = {
-            "string": "string",
-            "number": "float",
-            "integer": "integer",
-            "object": "mapping",
-            "boolean": "boolean",
-            "array": "list",
-            "null": "None",
-        }
         if self.is_list():
             return "[{0}]".format(
                 ", ".join(self.child(s).short_description for s in self.schema)
@@ -233,8 +225,8 @@ class SchemaInfo(object):
             return "Mapping(required=[{}])".format(", ".join(self.required))
         elif self.is_array():
             return "List({})".format(self.child(self.items).short_description)
-        elif self.type in _simple_types:
-            return _simple_types[self.type]
+        elif self.type in self._simple_types:
+            return self._simple_types[self.type]
         elif not self.type:
             import warnings
 
@@ -308,7 +300,27 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self.raw_schema.get("description", self.schema.get("description", ""))
+        return self._get_description(include_sublevels=False)
+
+    @property
+    def deep_description(self):
+        return self._get_description(include_sublevels=True)
+
+    def _get_description(self, include_sublevels: bool = False):
+        desc = self.raw_schema.get("description", self.schema.get("description", ""))
+        if not desc and include_sublevels:
+            for item in self.anyOf:
+                sub_desc = item._get_description(include_sublevels=False)
+                if desc and sub_desc:
+                    raise ValueError(
+                        "There are multiple potential descriptions which could"
+                        + " be used for the currently inspected schema. You'll need to"
+                        + " clarify which one is the correct one.\n"
+                        + str(self.schema)
+                    )
+                if sub_desc:
+                    desc = sub_desc
+        return desc
 
     def is_list(self):
         return isinstance(self.schema, list)
@@ -425,12 +437,21 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
                 drop_whitespace=True,
             )
             for line in stripped.split("\n"):
-                if line == "":
+                line_stripped = line.lstrip()
+                line_stripped = fix_docstring_issues(line_stripped)
+                if line_stripped == "":
                     final_lines.append("")
-                elif line.startswith("* "):
-                    final_lines.extend(list_wrapper.wrap(line[2:]))
+                elif line_stripped.startswith("* "):
+                    final_lines.extend(list_wrapper.wrap(line_stripped[2:]))
+                # Matches lines where an attribute is mentioned followed by the accepted
+                # types (lines starting with a character sequence that
+                # does not contain white spaces or '*' followed by ' : ').
+                # It therefore matches 'condition : anyOf(...' but not '**Notes** : ...'
+                # These lines should not be wrapped at all but appear on one line
+                elif re.match(r"[^\s*]+ : ", line_stripped):
+                    final_lines.append(indent * " " + line_stripped)
                 else:
-                    final_lines.extend(wrapper.wrap(line.lstrip()))
+                    final_lines.extend(wrapper.wrap(line_stripped))
 
         # If this is the last line, put in an indent
         elif i + 1 == len(lines):
@@ -450,3 +471,30 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
     if lstrip:
         wrapped = wrapped.lstrip()
     return wrapped
+
+
+def fix_docstring_issues(docstring):
+    # All lists should start with '*' followed by a whitespace. Fixes the ones
+    # which either do not have a whitespace or/and start with '-' by first replacing
+    # "-" with "*" and then adding a whitespace where necessary
+    docstring = re.sub(
+        r"^-(?=[ `\"a-z])",
+        "*",
+        docstring,
+        flags=re.MULTILINE,
+    )
+    # Now add a whitespace where an asterisk is followed by one of the characters
+    # in the square brackets of the regex pattern
+    docstring = re.sub(
+        r"^\*(?=[`\"a-z])",
+        "* ",
+        docstring,
+        flags=re.MULTILINE,
+    )
+
+    # Links to the vega-lite documentation cannot be relative but instead need to
+    # contain the full URL.
+    docstring = docstring.replace(
+        "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
+    )
+    return docstring

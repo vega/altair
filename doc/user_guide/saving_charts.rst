@@ -37,11 +37,11 @@ The contents of the resulting file will look something like this:
 .. code-block:: json
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "config": {
         "view": {
           "continuousHeight": 300,
-          "continuousWidth": 400
+          "continuousWidth": 300
         }
       },
       "data": {
@@ -61,7 +61,7 @@ The contents of the resulting file will look something like this:
           "type": "quantitative"
         }
       },
-      "mark": "point"
+      "mark": {"type": "point"}
     }
 
 This JSON can then be inserted into any web page using the vegaEmbed_ library.
@@ -90,18 +90,18 @@ javascript-enabled web browser:
     <html>
     <head>
       <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
       <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     </head>
     <body>
       <div id="vis"></div>
       <script type="text/javascript">
         var spec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "config": {
             "view": {
               "continuousHeight": 300,
-              "continuousWidth": 400
+              "continuousWidth": 300
             }
           },
           "data": {
@@ -121,7 +121,7 @@ javascript-enabled web browser:
               "type": "quantitative"
             }
           },
-          "mark": "point"
+          "mark": {"type": "point"}
         };
         var opt = {"renderer": "canvas", "actions": false};
         vegaEmbed("#vis", spec, opt);
@@ -158,9 +158,23 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
 
 However, saving these images requires some additional extensions to run the
 javascript code necessary to interpret the Vega-Lite specification and output
-it in the form of an image.
+it in the form of an image. There are two packages that can be used to enable
+image export: vl-convert_ or altair_saver_.
 
-Altair can do this via the altair_saver_ package, which can be installed with::
+vl-convert
+^^^^^^^^^^
+The vl-convert_ package can be installed with::
+
+    $ pip install vl-convert-python
+
+Unlike altair_saver_, vl-convert_ does not require any external dependencies.
+However, it only supports saving charts to PNG and SVG formats. To save directly to
+PDF, altair_saver_ is still required. See the vl-convert documentation for information
+on other `limitations <https://github.com/vega/vl-convert#limitations>`_.
+
+altair_saver
+^^^^^^^^^^^^
+The altair_saver_ package can be installed with::
 
     $ conda install altair_saver
 
@@ -170,6 +184,16 @@ or::
 
 See the altair_saver_ documentation for information about additional installation
 requirements.
+
+Engine Argument
+^^^^^^^^^^^^^^^
+If both vl-convert and altair_saver are installed, vl-convert will take precedence.
+The engine argument to :meth:`Chart.save` can be used to override this default
+behavior. For example, to use altair_saver for PNG export when vl-convert is also
+installed you can use::
+
+    chart.save('chart.png', engine="altair_saver")
+
 
 Figure Size/Resolution
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -183,5 +207,6 @@ This can be done with the ``scale_factor`` argument, which defaults to 1.0::
     chart.save('chart.png', scale_factor=2.0)
 
 
+.. _vl-convert: https://github.com/vega/vl-convert
 .. _altair_saver: http://github.com/altair-viz/altair_saver/
 .. _vegaEmbed: https://github.com/vega/vega-embed

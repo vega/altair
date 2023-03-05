@@ -1,7 +1,7 @@
 .. _exploring-weather:
 
 Exploring Seattle Weather
-=========================
+-------------------------
 
 (This tutorial is adapted from `Vega-Lite's documentation
 <http://vega.github.io/vega-lite/tutorials/explore.html>`_)
@@ -225,7 +225,7 @@ of the selection (for more information on selections, see
 
 .. altair-plot::
 
-    brush = alt.selection(type='interval')
+    brush = alt.selection_interval()
 
     points = alt.Chart().mark_point().encode(
         alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),
@@ -237,7 +237,7 @@ of the selection (for more information on selections, see
     ).properties(
         width=600,
         height=400
-    ).add_selection(
+    ).add_params(
         brush
     )
 
@@ -266,3 +266,10 @@ If you want to further customize your charts, you can refer to Altair's
 :ref:`API`.
 
 .. _Pandas: http://pandas.pydata.org/
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   self

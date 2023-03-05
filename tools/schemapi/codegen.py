@@ -5,7 +5,7 @@ import textwrap
 import re
 
 
-class CodeSnippet(object):
+class CodeSnippet:
     """Object whose repr() is a string of code"""
 
     def __init__(self, code):
@@ -56,7 +56,7 @@ def _get_args(info):
     return (nonkeyword, required, kwds, invalid_kwds, additional)
 
 
-class SchemaGenerator(object):
+class SchemaGenerator:
     """Class that defines methods for generating code from schemas
 
     Parameters
@@ -111,6 +111,7 @@ class SchemaGenerator(object):
         schemarepr=None,
         rootschemarepr=None,
         nodefault=(),
+        haspropsetters=False,
         **kwargs,
     ):
         self.classname = classname
@@ -120,6 +121,7 @@ class SchemaGenerator(object):
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault
+        self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
     def subclasses(self):
@@ -148,6 +150,7 @@ class SchemaGenerator(object):
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),
             init_code=self.init_code(indent=4),
+            method_code=self.method_code(indent=4),
             **self.kwargs,
         )
 
@@ -162,22 +165,29 @@ class SchemaGenerator(object):
             doc += self._process_description(  # remove condition description
                 re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
             ).splitlines()
+        # Remove lines which contain the "raw-html" directive which cannot be processed
+        # by Sphinx at this level of the docstring. It works for descriptions
+        # of attributes which is why we do not do the same below. The removed
+        # lines are anyway non-descriptive for a user.
+        doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
-            doc += ["", "Attributes", "----------", ""]
+            doc += ["", "Parameters", "----------", ""]
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
-                    "    {}".format(self._process_description(propinfo.description)),
+                    "    {}".format(
+                        self._process_description(propinfo.deep_description)
+                    ),
                 ]
         if len(doc) > 1:
             doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent=0):
-        """Return code suitablde for the __init__ function of a Schema class"""
+        """Return code suitable for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
         nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
 
@@ -187,6 +197,8 @@ class SchemaGenerator(object):
 
         args = ["self"]
         super_args = []
+
+        self.init_kwds = sorted(kwds)
 
         if nodefault:
             args.extend(sorted(nodefault))
@@ -217,3 +229,61 @@ class SchemaGenerator(object):
         if indent:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
+
+    _equiv_python_types = {
+        "string": "str",
+        "number": "float",
+        "integer": "int",
+        "object": "dict",
+        "boolean": "bool",
+        "array": "list",
+        "null": "None",
+    }
+
+    def get_args(self, si):
+        contents = ["self"]
+        props = []
+        # TODO: do we need to specialize the anyOf code?
+        if si.is_anyOf():
+            props = sorted(list({p for si_sub in si.anyOf for p in si_sub.properties}))
+        elif si.properties:
+            props = si.properties
+
+        if props:
+            contents.extend([p + "=Undefined" for p in props])
+        elif si.type:
+            py_type = self._equiv_python_types[si.type]
+            contents.append(f"_: {py_type}")
+
+        contents.append("**kwds")
+
+        return contents
+
+    def get_signature(self, attr, sub_si, indent, has_overload=False):
+        lines = []
+        if has_overload:
+            lines.append("@overload")
+        args = ", ".join(self.get_args(sub_si))
+        lines.append(f"def {attr}({args}) -> '{self.classname}':")
+        lines.append(indent * " " + "...\n")
+        return lines
+
+    def setter_hint(self, attr, indent):
+        si = SchemaInfo(self.schema, self.rootschema).properties[attr]
+        if si.is_anyOf():
+            signatures = [
+                self.get_signature(attr, sub_si, indent, has_overload=True)
+                for sub_si in si.anyOf
+            ]
+            return [line for sig in signatures for line in sig]
+        else:
+            return self.get_signature(attr, si, indent)
+
+    def method_code(self, indent=0):
+        """Return code to assist setter methods"""
+        if not self.haspropsetters:
+            return None
+        args = self.init_kwds
+        type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
+
+        return ("\n" + indent * " ").join(type_hints)
