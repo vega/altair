@@ -75,10 +75,14 @@ The higher-level visualization grammar that Altair implements in Python.
 vl-convert_
 ~~~~~~~~~~~
 
-Python library for converting Altair/Vega-Lite chart specifications into static images (SVG or PNG) or Vega chart specifications without any external dependencies.
+
+VegaFusion_
+~~~~~~~~~~~
+
+VegaFusion provides server-side scaling for Altair charts, which can accelerate interactive charts, extract transformed data, and perform data-intensive aggregations on the server and prune unused columns from the source datase yielding smaller size visualizations
 
 .. List of links.
-.. _vl-convert: https://github.com/vega/vl-convert
+.. _VegaFusion: https://vegafusion.io/
 
 altair_saver_
 ~~~~~~~~~~~~~
