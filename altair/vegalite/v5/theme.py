@@ -10,6 +10,9 @@ VEGA_THEMES = [
     "dark",
     "latimes",
     "urbaninstitute",
+    "excel",
+    "googlecharts",
+    "powerbi",
 ]
 
 

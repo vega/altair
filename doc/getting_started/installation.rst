@@ -33,7 +33,7 @@ with the above installation commands:
 - typing_extensions_ (python<3.11)
 
 To run Altair's full test suite and build Altair's documentation requires a few
-additional dependencies, see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`
+additional dependencies, see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`_
 for the details.
 
 Development Install

@@ -26,6 +26,28 @@ jobs:
           pip install .[dev]
           # pip install "selenium<4.3.0"
           # pip install altair_saver
+      - name: Test that schema generation has no effect
+        run: |
+          python tools/generate_schema_wrapper.py
+          # This gets the paths of all files which were either deleted, modified
+          # or are not yet tracked by Git
+          files=`git ls-files --deleted --modified --others --exclude-standard`
+          # Depending on the shell it can happen that 'files' contains empty
+          # lines which are filtered out in the for loop below
+          files_cleaned=()
+          for i in "${files[@]}"; do
+            # Skip empty items
+            if [ -z "$i" ]; then
+              continue
+            fi
+            # Add the rest of the elements to a new array
+            files_cleaned+=("${i}")
+          done
+          if [ ${#files_cleaned[@]} -gt 0 ]; then
+              echo "The code generation modified the following files:"
+              echo $files
+              exit 1
+          fi
       - name: Test with pytest
         run: |
           pytest --doctest-modules tests
