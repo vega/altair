@@ -259,7 +259,12 @@ class SchemaGenerator:
                 item_vl_type = si.items.get("type", None)
                 if item_vl_type is not None:
                     item_type = self._equiv_python_types[item_vl_type]
-                    py_type = f"List[{item_type}]"
+                else:
+                    item_si = SchemaInfo(si.items, self.rootschema)
+                    assert item_si.is_reference()
+                    altair_class_name = item_si.title
+                    item_type = f"core.{altair_class_name}"
+                py_type = f"List[{item_type}]"
             elif si.is_enum():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable

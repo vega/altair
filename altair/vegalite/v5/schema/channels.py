@@ -363,7 +363,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Angle':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -403,7 +403,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Angle':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -602,7 +602,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'AngleDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleDatum':
         ...
 
     @overload
@@ -671,7 +671,7 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'AngleValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleValue':
         ...
 
 
@@ -944,7 +944,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Color':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Color':
         ...
 
     @overload
@@ -984,7 +984,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Color':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Color':
         ...
 
     @overload
@@ -1183,7 +1183,7 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ColorDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorDatum':
         ...
 
     @overload
@@ -1252,7 +1252,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ColorValue':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorValue':
         ...
 
 
@@ -1537,7 +1537,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Column':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Column':
         ...
 
     @overload
@@ -1843,7 +1843,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Description':
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Description':
         ...
 
     @overload
@@ -1954,7 +1954,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'DescriptionValue':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'DescriptionValue':
         ...
 
 
@@ -2537,7 +2537,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Facet':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2871,7 +2871,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Fill':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2911,7 +2911,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Fill':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -3110,7 +3110,7 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillDatum':
         ...
 
     @overload
@@ -3179,7 +3179,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillValue':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillValue':
         ...
 
 
@@ -3452,7 +3452,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacity':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3492,7 +3492,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'FillOpacity':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3691,7 +3691,7 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityDatum':
         ...
 
     @overload
@@ -3760,7 +3760,7 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacityValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityValue':
         ...
 
 
@@ -4010,7 +4010,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Href':
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Href':
         ...
 
     @overload
@@ -4121,7 +4121,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'HrefValue':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'HrefValue':
         ...
 
 
@@ -5996,7 +5996,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Opacity':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -6036,7 +6036,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Opacity':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -6235,7 +6235,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityDatum':
         ...
 
     @overload
@@ -6304,7 +6304,7 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OpacityValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityValue':
         ...
 
 
@@ -6594,7 +6594,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OrderValue':
+    def condition(self, _: List[core.ConditionalValueDefnumber], **kwds) -> 'OrderValue':
         ...
 
 
@@ -6906,7 +6906,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Radius':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Radius':
         ...
 
     @overload
@@ -7806,7 +7806,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Row':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Row':
         ...
 
     @overload
@@ -8135,7 +8135,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Shape':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -8175,7 +8175,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Shape':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -8374,7 +8374,7 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ShapeDatum':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeDatum':
         ...
 
     @overload
@@ -8443,7 +8443,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ShapeValue':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeValue':
         ...
 
 
@@ -8716,7 +8716,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Size':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Size':
         ...
 
     @overload
@@ -8756,7 +8756,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Size':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Size':
         ...
 
     @overload
@@ -8955,7 +8955,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'SizeDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeDatum':
         ...
 
     @overload
@@ -9024,7 +9024,7 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'SizeValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeValue':
         ...
 
 
@@ -9297,7 +9297,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Stroke':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -9337,7 +9337,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Stroke':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -9536,7 +9536,7 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeDatum':
         ...
 
     @overload
@@ -9605,7 +9605,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeValue':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeValue':
         ...
 
 
@@ -9878,7 +9878,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDash':
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9918,7 +9918,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'StrokeDash':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -10117,7 +10117,7 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDashDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashDatum':
         ...
 
     @overload
@@ -10186,7 +10186,7 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDashValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashValue':
         ...
 
 
@@ -10459,7 +10459,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacity':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -10499,7 +10499,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'StrokeOpacity':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -10698,7 +10698,7 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityDatum':
         ...
 
     @overload
@@ -10767,7 +10767,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacityValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityValue':
         ...
 
 
@@ -11040,7 +11040,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidth':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -11080,7 +11080,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'StrokeWidth':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -11279,7 +11279,7 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidthDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthDatum':
         ...
 
     @overload
@@ -11348,7 +11348,7 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidthValue':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthValue':
         ...
 
 
@@ -11598,7 +11598,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Text':
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'Text':
         ...
 
     @overload
@@ -11826,7 +11826,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TextDatum':
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextDatum':
         ...
 
     @overload
@@ -11899,7 +11899,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TextValue':
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextValue':
         ...
 
 
@@ -12211,7 +12211,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Theta':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Theta':
         ...
 
     @overload
@@ -13075,7 +13075,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Tooltip':
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Tooltip':
         ...
 
     @overload
@@ -13186,7 +13186,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TooltipValue':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'TooltipValue':
         ...
 
 
@@ -13436,7 +13436,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Url':
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Url':
         ...
 
     @overload
@@ -13547,7 +13547,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'UrlValue':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'UrlValue':
         ...
 
 
@@ -13892,7 +13892,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'X':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'X':
         ...
 
     @overload
@@ -15186,7 +15186,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'XOffset':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -15773,7 +15773,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'Y':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Y':
         ...
 
     @overload
@@ -17067,7 +17067,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, _: list, **kwds) -> 'YOffset':
+    def sort(self, _: List[core.DateTime], **kwds) -> 'YOffset':
         ...
 
     @overload
