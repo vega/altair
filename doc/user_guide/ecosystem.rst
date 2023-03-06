@@ -1,9 +1,9 @@
 .. _ecosystem:
 
-Resources & Ecosystem
-=====================
+Resources
+=========
 
-We hope to make it easier to find these packages and learning resources by listing them here. If you know of a project that should be added, please let us know by opening an `Issue on GitHub <https://github.com/altair-viz/altair/issues>`_.
+We hope to make it easier to find learning resources and projects related to Altair by listing them here. If you know of a project that should be added, please let us know by opening an `Issue on GitHub <https://github.com/altair-viz/altair/issues>`_.
 
 .. _learning-resources:
 
@@ -56,7 +56,7 @@ Calmcode provides a few videos that give a brief overview of the Altair library.
 
 .. _altair-ecosystem:
 
-Altair Ecosystem
+Related Projects
 ----------------
 
 This is a list of projects which are directly related to Altair. There are many other packages that can be used in tandem with Altair, e.g. `dashboard packages which you can read more about in the answers to this StackOverflow question`_.
