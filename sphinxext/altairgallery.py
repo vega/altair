@@ -46,7 +46,7 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
    python -m pip install vega_datasets
 
-If you can't fint the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
+If you can't find the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
 
 {% for grouper, group in examples %}
 
