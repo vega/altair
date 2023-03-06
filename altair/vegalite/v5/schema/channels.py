@@ -321,98 +321,98 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Angle':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Angle':
         ...
 
@@ -547,19 +547,19 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def bandPosition(self, _: float, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'AngleDatum':
         ...
 
@@ -592,15 +592,15 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'AngleValue':
         ...
 
@@ -838,98 +838,98 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Color':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Color':
         ...
 
@@ -1064,19 +1064,19 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     def bandPosition(self, _: float, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ColorDatum':
         ...
 
@@ -1109,15 +1109,15 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'ColorValue':
         ...
 
@@ -1341,15 +1341,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Column':
         ...
 
@@ -1359,69 +1359,69 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Column':
         ...
 
     def center(self, _: bool, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: str, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Column':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Column':
         ...
 
@@ -1641,77 +1641,77 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Description':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Description':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Description':
         ...
 
@@ -1747,15 +1747,15 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'DescriptionValue':
         ...
 
@@ -1926,58 +1926,58 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Detail':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Detail':
         ...
 
@@ -2245,108 +2245,108 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def align(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def align(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Facet':
         ...
 
     def bounds(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def center(self, _: bool, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def center(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
     def columns(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Facet':
         ...
 
@@ -2593,98 +2593,98 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Fill':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Fill':
         ...
 
@@ -2819,19 +2819,19 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     def bandPosition(self, _: float, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillDatum':
         ...
 
@@ -2864,15 +2864,15 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'FillValue':
         ...
 
@@ -3110,98 +3110,98 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'FillOpacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
@@ -3336,19 +3336,19 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     def bandPosition(self, _: float, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillOpacityDatum':
         ...
 
@@ -3381,15 +3381,15 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'FillOpacityValue':
         ...
 
@@ -3600,77 +3600,77 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Href':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Href':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Href':
         ...
 
@@ -3706,15 +3706,15 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'HrefValue':
         ...
 
@@ -3885,58 +3885,58 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Key':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Key':
         ...
 
@@ -4112,15 +4112,15 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude':
         ...
 
@@ -4130,27 +4130,27 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def bin(self, _: None, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude':
         ...
 
@@ -4276,11 +4276,11 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'LatitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'LatitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'LatitudeDatum':
         ...
 
@@ -4387,15 +4387,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude2':
         ...
 
@@ -4405,27 +4405,27 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude2':
         ...
 
@@ -4548,11 +4548,11 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Latitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Latitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude2Datum':
         ...
 
@@ -4751,15 +4751,15 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude':
         ...
 
@@ -4769,27 +4769,27 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def bin(self, _: None, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude':
         ...
 
@@ -4915,11 +4915,11 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'LongitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'LongitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'LongitudeDatum':
         ...
 
@@ -5026,15 +5026,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude2':
         ...
 
@@ -5044,27 +5044,27 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude2':
         ...
 
@@ -5187,11 +5187,11 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Longitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Longitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude2Datum':
         ...
 
@@ -5458,98 +5458,98 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Opacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Opacity':
         ...
 
@@ -5684,19 +5684,19 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def bandPosition(self, _: float, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'OpacityDatum':
         ...
 
@@ -5729,15 +5729,15 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'OpacityValue':
         ...
 
@@ -5909,61 +5909,61 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Order':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Order':
         ...
 
     def sort(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Order':
         ...
 
@@ -6003,11 +6003,11 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'OrderValue':
         ...
 
@@ -6260,98 +6260,98 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Radius':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius':
         ...
 
@@ -6523,31 +6523,31 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
@@ -6680,15 +6680,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Radius2':
         ...
 
@@ -6698,27 +6698,27 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius2':
         ...
 
@@ -6841,11 +6841,11 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Radius2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Radius2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius2Datum':
         ...
 
@@ -7098,15 +7098,15 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Row':
         ...
 
@@ -7116,69 +7116,69 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Row':
         ...
 
     def center(self, _: bool, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: str, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Row':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Row':
         ...
 
@@ -7425,98 +7425,98 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Shape':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Shape':
         ...
 
@@ -7651,19 +7651,19 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     def bandPosition(self, _: float, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ShapeDatum':
         ...
 
@@ -7696,15 +7696,15 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'ShapeValue':
         ...
 
@@ -7942,98 +7942,98 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Size':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Size':
         ...
 
@@ -8168,19 +8168,19 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def bandPosition(self, _: float, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'SizeDatum':
         ...
 
@@ -8213,15 +8213,15 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'SizeValue':
         ...
 
@@ -8459,98 +8459,98 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Stroke':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Stroke':
         ...
 
@@ -8685,19 +8685,19 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     def bandPosition(self, _: float, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDatum':
         ...
 
@@ -8730,15 +8730,15 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeValue':
         ...
 
@@ -8976,98 +8976,98 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeDash':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
@@ -9202,19 +9202,19 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     def bandPosition(self, _: float, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDashDatum':
         ...
 
@@ -9247,15 +9247,15 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeDashValue':
         ...
 
@@ -9493,98 +9493,98 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
@@ -9719,19 +9719,19 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     def bandPosition(self, _: float, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeOpacityDatum':
         ...
 
@@ -9764,15 +9764,15 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeOpacityValue':
         ...
 
@@ -10010,98 +10010,98 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
@@ -10236,19 +10236,19 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     def bandPosition(self, _: float, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeWidthDatum':
         ...
 
@@ -10281,15 +10281,15 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'StrokeWidthValue':
         ...
 
@@ -10500,77 +10500,77 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Text':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Text':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Text':
         ...
 
@@ -10739,30 +10739,30 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def bandPosition(self, _: float, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'TextDatum':
         ...
 
     def formatType(self, _: str, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'TextDatum':
         ...
 
@@ -10796,15 +10796,15 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'TextValue':
         ...
 
@@ -11057,98 +11057,98 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Theta':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta':
         ...
 
@@ -11319,31 +11319,31 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
@@ -11476,15 +11476,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Theta2':
         ...
 
@@ -11494,27 +11494,27 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta2':
         ...
 
@@ -11637,11 +11637,11 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Theta2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Theta2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta2Datum':
         ...
 
@@ -11881,77 +11881,77 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Tooltip':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Tooltip':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Tooltip':
         ...
 
@@ -11987,15 +11987,15 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'TooltipValue':
         ...
 
@@ -12206,77 +12206,77 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Url':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Url':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Url':
         ...
 
@@ -12312,15 +12312,15 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: list, **kwds) -> 'UrlValue':
         ...
 
@@ -12590,114 +12590,114 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'X':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X':
         ...
 
@@ -12883,50 +12883,50 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'XDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XDatum':
         ...
 
@@ -13059,15 +13059,15 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'X2':
         ...
 
@@ -13077,27 +13077,27 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X2':
         ...
 
@@ -13219,11 +13219,11 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'X2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'X2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X2Datum':
         ...
 
@@ -13355,15 +13355,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XError':
         ...
 
@@ -13373,27 +13373,27 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XError':
         ...
 
@@ -13524,15 +13524,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XError2':
         ...
 
@@ -13542,27 +13542,27 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XError2':
         ...
 
@@ -13812,82 +13812,82 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XOffset':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XOffset':
         ...
 
@@ -14027,19 +14027,19 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
@@ -14339,114 +14339,114 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'Y':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y':
         ...
 
@@ -14632,50 +14632,50 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'YDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: str, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YDatum':
         ...
 
@@ -14808,15 +14808,15 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Y2':
         ...
 
@@ -14826,27 +14826,27 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y2':
         ...
 
@@ -14968,11 +14968,11 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Y2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'Y2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y2Datum':
         ...
 
@@ -15104,15 +15104,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YError':
         ...
 
@@ -15122,27 +15122,27 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YError':
         ...
 
@@ -15273,15 +15273,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YError2':
         ...
 
@@ -15291,27 +15291,27 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YError2':
         ...
 
@@ -15561,82 +15561,82 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: str, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YOffset':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YOffset':
         ...
 
@@ -15776,19 +15776,19 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
