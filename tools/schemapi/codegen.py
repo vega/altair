@@ -253,6 +253,18 @@ class SchemaGenerator:
             contents.extend([p + "=Undefined" for p in props])
         elif si.type:
             py_type = self._equiv_python_types[si.type]
+            if py_type == "list":
+                # Try to get a type hint like "List[str]" which is more specific
+                # then just "list"
+                item_vl_type = si.items.get("type", None)
+                if item_vl_type is not None:
+                    item_type = self._equiv_python_types[item_vl_type]
+                    py_type = f"List[{item_type}]"
+            elif si.is_enum():
+                # If it's an enum, we can type hint it as a Literal which tells
+                # a type checker that only the values in enum are acceptable
+                enum_values = [f'"{v}"' for v in si.enum]
+                py_type = f"Literal[{', '.join(enum_values)}]"
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
@@ -271,13 +283,21 @@ class SchemaGenerator:
     def setter_hint(self, attr, indent):
         si = SchemaInfo(self.schema, self.rootschema).properties[attr]
         if si.is_anyOf():
-            signatures = [
-                self.get_signature(attr, sub_si, indent, has_overload=True)
-                for sub_si in si.anyOf
-            ]
-            return [line for sig in signatures for line in sig]
+            return self._get_signature_any_of(si, attr, indent)
         else:
             return self.get_signature(attr, si, indent)
+
+    def _get_signature_any_of(self, si: SchemaInfo, attr, indent):
+        signatures = []
+        for sub_si in si.anyOf:
+            if sub_si.is_anyOf():
+                # Recursively call method again to go a level deeper
+                signatures.extend(self._get_signature_any_of(sub_si, attr, indent))
+            else:
+                signatures.extend(
+                    self.get_signature(attr, sub_si, indent, has_overload=True)
+                )
+        return list(flatten(signatures))
 
     def method_code(self, indent=0):
         """Return code to assist setter methods"""
@@ -287,3 +307,16 @@ class SchemaGenerator:
         type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
 
         return ("\n" + indent * " ").join(type_hints)
+
+
+def flatten(container):
+    """Flatten arbitrarily flattened list
+
+    From https://stackoverflow.com/a/10824420
+    """
+    for i in container:
+        if isinstance(i, (list, tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i

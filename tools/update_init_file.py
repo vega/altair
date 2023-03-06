@@ -6,7 +6,7 @@ import inspect
 import sys
 from pathlib import Path
 from os.path import abspath, dirname, join
-from typing import TypeVar
+from typing import TypeVar, List
 
 import black
 
@@ -14,6 +14,11 @@ if sys.version_info >= (3, 11):
     from typing import Self
 else:
     from typing_extensions import Self
+
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
 
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
@@ -70,6 +75,8 @@ def _is_relevant_attribute(attr_name):
         or attr_name.startswith("_")
         or attr is TypeVar
         or attr is Self
+        or attr is List
+        or attr is Literal
     ):
         return False
     else:

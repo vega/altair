@@ -431,11 +431,17 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
         schema = json.load(f)
     if imports is None:
         imports = [
+            "import sys",
             "from . import core",
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
-            "from typing import overload, Type",
+            "from typing import overload, List",
+            "",
+            "if sys.version_info >= (3, 8):",
+            "    from typing import Literal",
+            "else:",
+            "    from typing_extensions import Literal",
         ]
     contents = [HEADER]
     contents.extend(imports)
