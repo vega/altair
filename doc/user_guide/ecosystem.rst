@@ -3,14 +3,14 @@
 Resources & Ecosystem
 =====================
 
-We hope to make it easier to find these packages and learning resources by listing them here. If you know of a project that should be added, please let us know.
+We hope to make it easier to find these packages and learning resources by listing them here. If you know of a project that should be added, please let us know by opening an `Issue on GitHub <https://github.com/altair-viz/altair/issues>`_.
 
 .. _learning-resources:
 
 Learning Resources
 ------------------
 
-This is a list of a resources that complements the official documentation and can help you learn more about how to use Altair.
+This is a list of resources that complements the official documentation and can help you learn more about how to use Altair.
 
 `Visualization Curriculum`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,7 +23,7 @@ A data visualization curriculum from the UW data group that developed Vega-Lite.
 `Jupyter Notebook Tutorials`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Jupyter Notebooks tutorials and examples from the Altair authors.
+Jupyter Notebook tutorials and examples from the Altair authors.
 
 .. List of links.
 .. _`Jupyter Notebook Tutorials`: https://github.com/altair-viz/altair_notebooks
@@ -31,7 +31,7 @@ Jupyter Notebooks tutorials and examples from the Altair authors.
 `Pycon Tutorial`_
 ~~~~~~~~~~~~~~~~~
 
-Altair tutorial given at PyCon 2018 by the Altair authors.
+Altair tutorial given at PyCon 2018 by the Altair author Jake VanderPlas.
 
 .. List of links.
 .. _`Pycon tutorial`: https://altair-viz.github.io/altair-tutorial
@@ -59,7 +59,7 @@ Calmcode provides a few videos that give a brief overview of the Altair library.
 Altair Ecosystem
 ----------------
 
-This is a list of projects directs related to Altair. There are many other packages that can be used in tandem with Altair, e.g. `dashboard packages which you can read more about in the answers to this StackOverflow question`_.
+This is a list of projects which are directly related to Altair. There are many other packages that can be used in tandem with Altair, e.g. `dashboard packages which you can read more about in the answers to this StackOverflow question`_.
 
 .. List of links.
 .. _`dashboard packages which you can read more about in the answers to this StackOverflow question`: https://stackoverflow.com/questions/49833866/making-dashboards-using-altair
@@ -75,11 +75,15 @@ The higher-level visualization grammar that Altair implements in Python.
 vl-convert_
 ~~~~~~~~~~~
 
+Python library for converting Altair/Vega-Lite chart specifications into static images (SVG or PNG) or Vega chart specifications without any external dependencies.
+
+.. List of links.
+.. _vl-convert: https://github.com/vega/vl-convert
 
 VegaFusion_
 ~~~~~~~~~~~
 
-VegaFusion provides server-side scaling for Altair charts, which can accelerate interactive charts, extract transformed data, and perform data-intensive aggregations on the server and prune unused columns from the source datase yielding smaller size visualizations
+VegaFusion provides server-side scaling for Altair charts, which can accelerate interactive charts, extract transformed data, and perform data-intensive aggregations on the server and prune unused columns from the source dataset yielding smaller size visualizations.
 
 .. List of links.
 .. _VegaFusion: https://vegafusion.io/
