@@ -21,3 +21,7 @@ jobs:
       run: |
         pip install flake8
         flake8 .  --statistics
+    - name: Lint with mypy
+      run: |
+        pip install mypy pandas-stubs types-jsonschema types-setuptools
+        mypy altair tests

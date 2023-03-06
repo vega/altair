@@ -262,7 +262,7 @@ class SchemaGenerator:
     def get_signature(self, attr, sub_si, indent, has_overload=False):
         lines = []
         if has_overload:
-            lines.append("@overload")
+            lines.append("@overload  # type: ignore[no-overload-impl]")
         args = ", ".join(self.get_args(sub_si))
         lines.append(f"def {attr}({args}) -> '{self.classname}':")
         lines.append(indent * " " + "...\n")

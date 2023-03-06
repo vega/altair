@@ -1,9 +1,10 @@
+import sys
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 
-try:
+if sys.version_info >= (3, 8):
     from importlib.metadata import entry_points
-except ImportError:
+else:
     from importlib_metadata import entry_points
 
 from toolz import curry
