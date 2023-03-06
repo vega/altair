@@ -7,10 +7,10 @@ We hope to make it easier to find learning resources and projects related to Alt
 
 .. _learning-resources:
 
-Learning Resources
-------------------
+Learning Material
+-----------------
 
-This is a list of resources that complements the official documentation and can help you learn more about how to use Altair.
+This is a list of learning material that complements the official documentation and can help you learn more about how to use Altair.
 
 `Visualization Curriculum`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
