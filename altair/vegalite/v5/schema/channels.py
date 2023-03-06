@@ -5,7 +5,7 @@ from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
-from typing import overload, Type
+from typing import overload
 
 
 class FieldChannelMixin:

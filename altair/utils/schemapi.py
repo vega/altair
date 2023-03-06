@@ -5,7 +5,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any, Sequence, List
+from typing import Any, Sequence, List, Dict, Optional
 from itertools import zip_longest
 
 import jsonschema
@@ -100,11 +100,11 @@ def _get_most_relevant_errors(
         parent = lowest_level.parent
         if parent is None:
             # In this case we are still at the top level and can return all errors
-            most_relevant_errors = errors
+            most_relevant_errors = list(errors)
         else:
             # Return all errors of the lowest level out of which
             # we can construct more informative error messages
-            most_relevant_errors = lowest_level.parent.context
+            most_relevant_errors = parent.context or []
 
     # This should never happen but might still be good to test for it as else
     # the original error would just slip through without being raised
@@ -305,8 +305,8 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
-    _schema = None
-    _rootschema = None
+    _schema: Optional[Dict[str, Any]] = None
+    _rootschema: Optional[Dict[str, Any]] = None
     _class_is_valid_at_instantiation = True
 
     def __init__(self, *args, **kwds):

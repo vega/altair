@@ -8,6 +8,9 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
+from typing import cast
+# Have to rename it here as else it overlaps with schema.core.Type
+from typing import Type as TypingType
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -812,7 +815,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
-        copy = self.copy(deep=False)
+        # TopLevelMixin instance does not necessarily have copy defined but due to how
+        # Altair is set up this should hold. Too complex to type hint right now
+        copy = self.copy(deep=False)  # type: ignore[attr-defined]
         original_data = getattr(copy, "data", Undefined)
         copy.data = _prepare_data(original_data, context)
 
@@ -823,7 +828,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context["top_level"] = False
         kwargs["context"] = context
 
-        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+        # TopLevelMixin instance does not necessarily have to_dict defined
+        # but due to how Altair is set up this should hold. 
+        # Too complex to type hint right now
+        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
@@ -833,6 +841,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             # apply theme from theme registry
             the_theme = themes.get()
+            # Use assert to tell type checkers that it is not None. Holds true
+            # as there is always a default theme set when importing Altair
+            assert the_theme is not None
             dct = utils.update_nested(the_theme(), dct, copy=True)
 
             # update datasets
@@ -1006,7 +1017,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Argument names and types are the same as class initialization.
         """
-        copy = self.copy(deep=False)
+        # ignore type as copy comes from another class for subclasses of TopLevelMixin
+        copy = self.copy(deep=False)  # type: ignore[attr-defined]
         for key, val in kwargs.items():
             if key == "selection" and isinstance(val, Parameter):
                 # TODO: Can this be removed
@@ -1015,7 +1027,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             else:
                 # Don't validate data, because it hasn't been processed.
                 if key != "data":
-                    self.validate_property(key, val)
+                    # ignore type as validate_property comes from SchemaBase,
+                    # not from TopLevelMixin
+                    self.validate_property(key, val)  # type: ignore[attr-defined]
                 setattr(copy, key, val)
         return copy
 
@@ -2283,7 +2297,8 @@ class _EncodingMixin:
         kwargs = utils.infer_encoding_types(args, kwargs, channels)
 
         # get a copy of the dict representation of the previous encoding
-        copy = self.copy(deep=["encoding"])
+        # ignore type as copy method comes from SchemaBase
+        copy = self.copy(deep=["encoding"])  # type: ignore[attr-defined]
         encoding = copy._get("encoding", {})
         if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items() if v is not Undefined}
@@ -2338,13 +2353,17 @@ class _EncodingMixin:
                 "facet argument cannot be combined with row/column argument."
             )
 
-        if data is Undefined:
-            if self.data is Undefined:
+        # Remove "ignore" statement once Undefined is no longer typed as Any
+        if data is Undefined:  # type: ignore
+            # Remove "ignore" statement once Undefined is no longer typed as Any
+            if self.data is Undefined:  # type: ignore
                 raise ValueError(
                     "Facet charts require data to be specified at the top level."
                 )
-            self = self.copy(deep=False)
-            data, self.data = self.data, Undefined
+            # ignore type as copy comes from another class
+            self = self.copy(deep=False)  # type: ignore[attr-defined]
+            # Remove "ignore" statement once Undefined is no longer typed as Any
+            data, self.data = self.data, Undefined  # type: ignore
 
         if facet_specified:
             if isinstance(facet, str):
@@ -2439,7 +2458,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True) -> "Chart":
+    def from_dict(cls, dct, validate=True) -> "Chart":  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters
@@ -2461,9 +2480,12 @@ class Chart(
         """
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                class_ = super(Chart, cls)
+                class_ = cast(TypingType[TopLevelMixin], super(Chart, cls))
             try:
-                return class_.from_dict(dct, validate=validate)
+                # TopLevelMixin classes don't necessarily have from_dict defined
+                # but all classes which are used here have due to how Altair is
+                # designed. Too complex to type check right now.
+                return class_.from_dict(dct, validate=validate)  # type: ignore[attr-defined]
             except jsonschema.ValidationError:
                 pass
 

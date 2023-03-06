@@ -115,7 +115,7 @@ class PluginRegistry(Generic[PluginType]):
         if value is None:
             return self._plugins.pop(name, None)
         else:
-            assert isinstance(value, self.plugin_type)
+            assert isinstance(value, self.plugin_type)  # type: ignore[arg-type]  # Should ideally be fixed by better annotating plugin_type
             self._plugins[name] = value
             return value
 

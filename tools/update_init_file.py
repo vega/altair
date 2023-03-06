@@ -6,7 +6,7 @@ import inspect
 import sys
 from pathlib import Path
 from os.path import abspath, dirname, join
-from typing import TypeVar
+from typing import TypeVar, Type, cast
 
 import black
 
@@ -70,6 +70,8 @@ def _is_relevant_attribute(attr_name):
         or attr_name.startswith("_")
         or attr is TypeVar
         or attr is Self
+        or attr is Type
+        or attr is cast
     ):
         return False
     else:
