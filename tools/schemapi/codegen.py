@@ -243,7 +243,6 @@ class SchemaGenerator:
     def get_args(self, si):
         contents = ["self"]
         props = []
-        # TODO: do we need to specialize the anyOf code?
         if si.is_anyOf():
             props = sorted(list({p for si_sub in si.anyOf for p in si_sub.properties}))
         elif si.properties:
