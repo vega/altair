@@ -32,6 +32,10 @@ module = [
     "vega_datasets.*",
     "toolz.*",
     "altair_viewer.*",
-    "pyarrow.*"
+    "altair_saver.*",
+    "pyarrow.*",
+    "yaml.*",
+    "vl_convert.*",
+    "pandas.lib.*"
 ]
 ignore_missing_imports = true
