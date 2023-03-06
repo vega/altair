@@ -128,16 +128,6 @@ altair_recipes provides a collection of ready-made statistical graphics for Alta
 .. List of links.
 .. _altair_recipes: https://github.com/piccolbo/altair_recipes
 
-gpdvega_
-~~~~~~~~
-
-gpdvega is a bridge between GeoPandas_, a geospatial extension of Pandas_, and Altair which allows to seamlessly chart geospatial data using altair. See the `docs <https://iliatimofeev.github.io/gpdvega/>`__.
-
-.. List of links.
-.. _gpdvega: https://github.com/iliatimofeev/gpdvega
-.. _GeoPandas: http://geopandas.org/
-.. _Pandas: https://pandas.pydata.org/
-
 nx_altair_
 ~~~~~~~~~~
 
