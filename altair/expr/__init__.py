@@ -1,5 +1,7 @@
 """Tools for creating transform & filter expressions with a python syntax"""
 # flake8: noqa
+from typing import Any
+
 from .core import datum, Expression
 from .funcs import *
 from .consts import *
@@ -14,4 +16,4 @@ class _ExprType:
         return _ExprRef(expr, **kwargs)
 
 
-expr = _ExprType(globals())
+expr: Any = _ExprType(globals())

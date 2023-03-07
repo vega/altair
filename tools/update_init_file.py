@@ -6,7 +6,7 @@ import inspect
 import sys
 from pathlib import Path
 from os.path import abspath, dirname, join
-from typing import TypeVar, Type, cast
+from typing import TypeVar, Type, cast, List, Any
 
 import black
 
@@ -72,6 +72,8 @@ def _is_relevant_attribute(attr_name):
         or attr is Self
         or attr is Type
         or attr is cast
+        or attr is List
+        or attr is Any
     ):
         return False
     else:

@@ -5,6 +5,7 @@ This example is a reproduction of the Falkensee plot found in the Vega-Lite exam
 """
 # category: case studies
 import altair as alt
+import pandas as pd
 
 source = [
     {"year": "1875", "population": 1309},
@@ -53,18 +54,18 @@ source2 = [
 ]
 
 
-source = alt.pd.DataFrame(source)
-source2 = alt.pd.DataFrame(source2)
+source_df = pd.DataFrame(source)
+source2_df = pd.DataFrame(source2)
 
 
-line = alt.Chart(source).mark_line(color="#333").encode(
+line = alt.Chart(source_df).mark_line(color="#333").encode(
     x=alt.X("year:T", axis=alt.Axis(format="%Y"), title="Year"),
     y=alt.Y("population", title="Population"),
 )
 
 point = line.mark_point(color="#333")
 
-rect = alt.Chart(source2).mark_rect().encode(
+rect = alt.Chart(source2_df).mark_rect().encode(
     x="start:T",
     x2="end:T",
     color=alt.Color("event:N", title="Event")
