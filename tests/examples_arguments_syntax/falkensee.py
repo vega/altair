@@ -72,7 +72,7 @@ rect = alt.Chart(source2_df).mark_rect().encode(
 )
 
 (rect + line + point).properties(
-      title="Population of Falkensee from 1875 to 2014",
-      width=500,
-      height=300
+    title="Population of Falkensee from 1875 to 2014",
+    width=500,
+    height=300
 )
