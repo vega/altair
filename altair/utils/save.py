@@ -3,6 +3,7 @@ import pathlib
 import warnings
 
 from .mimebundle import spec_to_mimebundle
+from ..vegalite.v5.data import data_transformers
 
 
 def write_file_or_filename(fp, content, mode="w"):
@@ -121,46 +122,52 @@ def save(
 
     format = set_inspect_format_argument(format, fp, inline)
 
-    spec = chart.to_dict()
+    # Temporarily turn off any data transformers so that all data is inlined
+    # when calling chart.to_dict. This is relevant for vl-convert which cannot access
+    # local json files which could be created by a json data transformer. Furthermore,
+    # we don't exit the with statement until this function completed due to the issue
+    # described at https://github.com/vega/vl-convert/issues/31
+    with data_transformers.enable("default"), data_transformers.disable_max_rows():
+        spec = chart.to_dict()
 
-    mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
+        mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
 
-    if format == "json":
-        json_spec = json.dumps(spec, **json_kwds)
-        write_file_or_filename(fp, json_spec, mode="w")
-    elif format == "html":
-        if inline:
-            kwargs["template"] = "inline"
-        mimebundle = spec_to_mimebundle(
-            spec=spec,
-            format=format,
-            mode=mode,
-            vega_version=vega_version,
-            vegalite_version=vegalite_version,
-            vegaembed_version=vegaembed_version,
-            embed_options=embed_options,
-            json_kwds=json_kwds,
-            **kwargs,
-        )
-        write_file_or_filename(fp, mimebundle["text/html"], mode="w")
-    elif format in ["png", "svg", "pdf", "vega"]:
-        mimebundle = spec_to_mimebundle(
-            spec=spec,
-            format=format,
-            mode=mode,
-            vega_version=vega_version,
-            vegalite_version=vegalite_version,
-            vegaembed_version=vegaembed_version,
-            webdriver=webdriver,
-            scale_factor=scale_factor,
-            engine=engine,
-            **kwargs,
-        )
-        if format == "png":
-            write_file_or_filename(fp, mimebundle["image/png"], mode="wb")
-        elif format == "pdf":
-            write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
+        if format == "json":
+            json_spec = json.dumps(spec, **json_kwds)
+            write_file_or_filename(fp, json_spec, mode="w")
+        elif format == "html":
+            if inline:
+                kwargs["template"] = "inline"
+            mimebundle = spec_to_mimebundle(
+                spec=spec,
+                format=format,
+                mode=mode,
+                vega_version=vega_version,
+                vegalite_version=vegalite_version,
+                vegaembed_version=vegaembed_version,
+                embed_options=embed_options,
+                json_kwds=json_kwds,
+                **kwargs,
+            )
+            write_file_or_filename(fp, mimebundle["text/html"], mode="w")
+        elif format in ["png", "svg", "pdf", "vega"]:
+            mimebundle = spec_to_mimebundle(
+                spec=spec,
+                format=format,
+                mode=mode,
+                vega_version=vega_version,
+                vegalite_version=vegalite_version,
+                vegaembed_version=vegaembed_version,
+                webdriver=webdriver,
+                scale_factor=scale_factor,
+                engine=engine,
+                **kwargs,
+            )
+            if format == "png":
+                write_file_or_filename(fp, mimebundle["image/png"], mode="wb")
+            elif format == "pdf":
+                write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
+            else:
+                write_file_or_filename(fp, mimebundle["image/svg+xml"], mode="w")
         else:
-            write_file_or_filename(fp, mimebundle["image/svg+xml"], mode="w")
-    else:
-        raise ValueError("Unsupported format: '{}'".format(format))
+            raise ValueError("Unsupported format: '{}'".format(format))
