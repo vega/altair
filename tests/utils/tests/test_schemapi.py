@@ -1,5 +1,3 @@
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
 import copy
 import io
 import inspect

@@ -294,20 +294,6 @@ def copy_schemapi_util():
             dest.write(HEADER)
             dest.writelines(source.readlines())
 
-    # Copy the schemapi test file
-    source_path = abspath(
-        join(dirname(__file__), "schemapi", "tests", "test_schemapi.py")
-    )
-    destination_path = abspath(
-        join(dirname(__file__), "..", "tests", "utils", "tests", "test_schemapi.py")
-    )
-
-    print("Copying\n {}\n  -> {}".format(source_path, destination_path))
-    with open(source_path, "r", encoding="utf8") as source:
-        with open(destination_path, "w", encoding="utf8") as dest:
-            dest.write(HEADER)
-            dest.writelines(source.readlines())
-
 
 def recursive_dict_update(schema, root, def_dict):
     if "$ref" in schema:
