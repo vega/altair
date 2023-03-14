@@ -1,11 +1,17 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+import sys
 from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
-from typing import overload, Type
+from typing import overload, List
+
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
 
 
 class FieldChannelMixin:
@@ -322,7 +328,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _encoding_name = "angle"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Angle':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -349,11 +355,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Angle':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Angle':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Angle':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -381,11 +391,31 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Angle':
+    def sort(self, _: List[float], **kwds) -> 'Angle':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Angle':
+    def sort(self, _: List[str], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -401,7 +431,19 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Angle':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Angle':
         ...
 
     @overload
@@ -409,14 +451,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, **kwds) -> 'Angle':
+    def title(self, _: str, **kwds) -> 'Angle':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Angle':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Angle':
         ...
 
-    def type(self, _: str, **kwds) -> 'Angle':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Angle':
         ...
 
 
@@ -548,22 +594,30 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'AngleDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'AngleDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'AngleDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'AngleDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'AngleDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'AngleDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'AngleDatum':
         ...
 
 
@@ -593,15 +647,31 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _encoding_name = "angle"
 
     @overload
-    def condition(self, **kwds) -> 'AngleValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'AngleValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'AngleValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleValue':
         ...
 
 
@@ -839,7 +909,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _encoding_name = "color"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Color':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Color':
         ...
 
     @overload
@@ -866,11 +936,15 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Color':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Color':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Color':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Color':
         ...
 
     @overload
@@ -898,11 +972,31 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Color':
+    def sort(self, _: List[float], **kwds) -> 'Color':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Color':
+    def sort(self, _: List[str], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Color':
         ...
 
     @overload
@@ -918,7 +1012,19 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Color':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Color':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Color':
         ...
 
     @overload
@@ -926,14 +1032,18 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, **kwds) -> 'Color':
+    def title(self, _: str, **kwds) -> 'Color':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Color':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Color':
         ...
 
-    def type(self, _: str, **kwds) -> 'Color':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Color':
         ...
 
 
@@ -1065,22 +1175,30 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ColorDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'ColorDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'ColorDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'ColorDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'ColorDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'ColorDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'ColorDatum':
         ...
 
 
@@ -1110,15 +1228,31 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _encoding_name = "color"
 
     @overload
-    def condition(self, **kwds) -> 'ColorValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ColorValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ColorValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorValue':
         ...
 
 
@@ -1342,7 +1476,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "column"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Column':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Column':
         ...
 
     @overload
@@ -1353,7 +1487,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> 'Column':
         ...
 
-    def align(self, _: str, **kwds) -> 'Column':
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> 'Column':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Column':
@@ -1391,11 +1525,23 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Column':
+    def sort(self, _: List[float], **kwds) -> 'Column':
         ...
 
     @overload
-    def sort(self, _: str, **kwds) -> 'Column':
+    def sort(self, _: List[str], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Column':
         ...
 
     @overload
@@ -1410,7 +1556,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Column':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Column':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Column':
         ...
 
     @overload
@@ -1418,14 +1576,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Column':
+    def title(self, _: str, **kwds) -> 'Column':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Column':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Column':
         ...
 
-    def type(self, _: str, **kwds) -> 'Column':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Column':
         ...
 
 
@@ -1642,7 +1804,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "description"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Description':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Description':
         ...
 
     @overload
@@ -1673,11 +1835,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Description':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Description':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Description':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Description':
         ...
 
     @overload
@@ -1700,7 +1866,19 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Description':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Description':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Description':
         ...
 
     @overload
@@ -1708,14 +1886,18 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Description':
+    def title(self, _: str, **kwds) -> 'Description':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Description':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Description':
         ...
 
-    def type(self, _: str, **kwds) -> 'Description':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Description':
         ...
 
 
@@ -1748,15 +1930,31 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _encoding_name = "description"
 
     @overload
-    def condition(self, **kwds) -> 'DescriptionValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'DescriptionValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'DescriptionValue':
         ...
 
 
@@ -1927,7 +2125,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "detail"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Detail':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Detail':
         ...
 
     @overload
@@ -1966,7 +2164,19 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Detail':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Detail':
         ...
 
     @overload
@@ -1974,14 +2184,18 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Detail':
+    def title(self, _: str, **kwds) -> 'Detail':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Detail':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Detail':
         ...
 
-    def type(self, _: str, **kwds) -> 'Detail':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Detail':
         ...
 
 
@@ -2246,7 +2460,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _encoding_name = "facet"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Facet':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2258,7 +2472,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def align(self, _: str, **kwds) -> 'Facet':
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2280,7 +2494,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def bin(self, _: None, **kwds) -> 'Facet':
         ...
 
-    def bounds(self, _: str, **kwds) -> 'Facet':
+    def bounds(self, _: Literal["full", "flush"], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2311,11 +2525,23 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Facet':
+    def sort(self, _: List[float], **kwds) -> 'Facet':
         ...
 
     @overload
-    def sort(self, _: str, **kwds) -> 'Facet':
+    def sort(self, _: List[str], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2335,7 +2561,19 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Facet':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Facet':
         ...
 
     @overload
@@ -2343,14 +2581,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Facet':
+    def title(self, _: str, **kwds) -> 'Facet':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Facet':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Facet':
         ...
 
-    def type(self, _: str, **kwds) -> 'Facet':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Facet':
         ...
 
 
@@ -2594,7 +2836,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _encoding_name = "fill"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Fill':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2621,11 +2863,15 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Fill':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Fill':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Fill':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2653,11 +2899,31 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Fill':
+    def sort(self, _: List[float], **kwds) -> 'Fill':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Fill':
+    def sort(self, _: List[str], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2673,7 +2939,19 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Fill':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Fill':
         ...
 
     @overload
@@ -2681,14 +2959,18 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload
-    def title(self, **kwds) -> 'Fill':
+    def title(self, _: str, **kwds) -> 'Fill':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Fill':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Fill':
         ...
 
-    def type(self, _: str, **kwds) -> 'Fill':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Fill':
         ...
 
 
@@ -2820,22 +3102,30 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'FillDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'FillDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'FillDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'FillDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'FillDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'FillDatum':
         ...
 
 
@@ -2865,15 +3155,31 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _encoding_name = "fill"
 
     @overload
-    def condition(self, **kwds) -> 'FillValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillValue':
         ...
 
 
@@ -3111,7 +3417,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _encoding_name = "fillOpacity"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'FillOpacity':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3138,11 +3444,15 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacity':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3170,11 +3480,31 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, **kwds) -> 'FillOpacity':
+    def sort(self, _: List[float], **kwds) -> 'FillOpacity':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'FillOpacity':
+    def sort(self, _: List[str], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3190,7 +3520,19 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'FillOpacity':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'FillOpacity':
         ...
 
     @overload
@@ -3198,14 +3540,18 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def title(self, **kwds) -> 'FillOpacity':
+    def title(self, _: str, **kwds) -> 'FillOpacity':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'FillOpacity':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    def type(self, _: str, **kwds) -> 'FillOpacity':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'FillOpacity':
         ...
 
 
@@ -3337,22 +3683,30 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacityDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'FillOpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'FillOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'FillOpacityDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'FillOpacityDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'FillOpacityDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'FillOpacityDatum':
         ...
 
 
@@ -3382,15 +3736,31 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _encoding_name = "fillOpacity"
 
     @overload
-    def condition(self, **kwds) -> 'FillOpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'FillOpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityValue':
         ...
 
 
@@ -3601,7 +3971,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "href"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Href':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Href':
         ...
 
     @overload
@@ -3632,11 +4002,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Href':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Href':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Href':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Href':
         ...
 
     @overload
@@ -3659,7 +4033,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Href':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Href':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Href':
         ...
 
     @overload
@@ -3667,14 +4053,18 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Href':
+    def title(self, _: str, **kwds) -> 'Href':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Href':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Href':
         ...
 
-    def type(self, _: str, **kwds) -> 'Href':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Href':
         ...
 
 
@@ -3707,15 +4097,31 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _encoding_name = "href"
 
     @overload
-    def condition(self, **kwds) -> 'HrefValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'HrefValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'HrefValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'HrefValue':
         ...
 
 
@@ -3886,7 +4292,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "key"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Key':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Key':
         ...
 
     @overload
@@ -3925,7 +4331,19 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Key':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Key':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Key':
         ...
 
     @overload
@@ -3933,14 +4351,18 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Key':
+    def title(self, _: str, **kwds) -> 'Key':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Key':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Key':
         ...
 
-    def type(self, _: str, **kwds) -> 'Key':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Key':
         ...
 
 
@@ -4113,7 +4535,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "latitude"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Latitude':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Latitude':
         ...
 
     @overload
@@ -4139,7 +4561,19 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Latitude':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Latitude':
         ...
 
     @overload
@@ -4147,7 +4581,11 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Latitude':
+    def title(self, _: str, **kwds) -> 'Latitude':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Latitude':
         ...
 
     @overload
@@ -4277,14 +4715,18 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'LatitudeDatum':
+    def title(self, _: str, **kwds) -> 'LatitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'LatitudeDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'LatitudeDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'LatitudeDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'LatitudeDatum':
         ...
 
 
@@ -4388,7 +4830,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "latitude2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Latitude2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Latitude2':
         ...
 
     @overload
@@ -4414,7 +4856,19 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Latitude2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Latitude2':
         ...
 
     @overload
@@ -4422,7 +4876,11 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Latitude2':
+    def title(self, _: str, **kwds) -> 'Latitude2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Latitude2':
         ...
 
     @overload
@@ -4549,14 +5007,18 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Latitude2Datum':
+    def title(self, _: str, **kwds) -> 'Latitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Latitude2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Latitude2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'Latitude2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'Latitude2Datum':
         ...
 
 
@@ -4752,7 +5214,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "longitude"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Longitude':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Longitude':
         ...
 
     @overload
@@ -4778,7 +5240,19 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Longitude':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Longitude':
         ...
 
     @overload
@@ -4786,7 +5260,11 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Longitude':
+    def title(self, _: str, **kwds) -> 'Longitude':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Longitude':
         ...
 
     @overload
@@ -4916,14 +5394,18 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'LongitudeDatum':
+    def title(self, _: str, **kwds) -> 'LongitudeDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'LongitudeDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'LongitudeDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'LongitudeDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'LongitudeDatum':
         ...
 
 
@@ -5027,7 +5509,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "longitude2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Longitude2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Longitude2':
         ...
 
     @overload
@@ -5053,7 +5535,19 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Longitude2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Longitude2':
         ...
 
     @overload
@@ -5061,7 +5555,11 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Longitude2':
+    def title(self, _: str, **kwds) -> 'Longitude2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Longitude2':
         ...
 
     @overload
@@ -5188,14 +5686,18 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Longitude2Datum':
+    def title(self, _: str, **kwds) -> 'Longitude2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Longitude2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Longitude2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'Longitude2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'Longitude2Datum':
         ...
 
 
@@ -5459,7 +5961,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _encoding_name = "opacity"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Opacity':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5486,11 +5988,15 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Opacity':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5518,11 +6024,31 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Opacity':
+    def sort(self, _: List[float], **kwds) -> 'Opacity':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Opacity':
+    def sort(self, _: List[str], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5538,7 +6064,19 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Opacity':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Opacity':
         ...
 
     @overload
@@ -5546,14 +6084,18 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload
-    def title(self, **kwds) -> 'Opacity':
+    def title(self, _: str, **kwds) -> 'Opacity':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Opacity':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    def type(self, _: str, **kwds) -> 'Opacity':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Opacity':
         ...
 
 
@@ -5685,22 +6227,30 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OpacityDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'OpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'OpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'OpacityDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'OpacityDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'OpacityDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'OpacityDatum':
         ...
 
 
@@ -5730,15 +6280,31 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     _encoding_name = "opacity"
 
     @overload
-    def condition(self, **kwds) -> 'OpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityValue':
         ...
 
 
@@ -5910,7 +6476,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _encoding_name = "order"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Order':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Order':
         ...
 
     @overload
@@ -5948,11 +6514,23 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def field(self, repeat=Undefined, **kwds) -> 'Order':
         ...
 
-    def sort(self, _: str, **kwds) -> 'Order':
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Order':
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Order':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Order':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Order':
         ...
 
     @overload
@@ -5960,14 +6538,18 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Order':
+    def title(self, _: str, **kwds) -> 'Order':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Order':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Order':
         ...
 
-    def type(self, _: str, **kwds) -> 'Order':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Order':
         ...
 
 
@@ -6004,11 +6586,15 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _encoding_name = "order"
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'OrderValue':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OrderValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumber], **kwds) -> 'OrderValue':
         ...
 
 
@@ -6261,7 +6847,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "radius"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Radius':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6308,11 +6894,31 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Radius':
+    def sort(self, _: List[float], **kwds) -> 'Radius':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Radius':
+    def sort(self, _: List[str], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6328,7 +6934,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'Radius':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6340,7 +6946,19 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Radius':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Radius':
         ...
 
     @overload
@@ -6348,14 +6966,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Radius':
+    def title(self, _: str, **kwds) -> 'Radius':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Radius':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Radius':
         ...
 
-    def type(self, _: str, **kwds) -> 'Radius':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Radius':
         ...
 
 
@@ -6532,7 +7154,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'RadiusDatum':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'RadiusDatum':
         ...
 
     @overload
@@ -6544,14 +7166,18 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def title(self, **kwds) -> 'RadiusDatum':
+    def title(self, _: str, **kwds) -> 'RadiusDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'RadiusDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'RadiusDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'RadiusDatum':
         ...
 
 
@@ -6681,7 +7307,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "radius2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Radius2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Radius2':
         ...
 
     @overload
@@ -6707,7 +7333,19 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Radius2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Radius2':
         ...
 
     @overload
@@ -6715,7 +7353,11 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Radius2':
+    def title(self, _: str, **kwds) -> 'Radius2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Radius2':
         ...
 
     @overload
@@ -6842,14 +7484,18 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Radius2Datum':
+    def title(self, _: str, **kwds) -> 'Radius2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Radius2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Radius2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'Radius2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'Radius2Datum':
         ...
 
 
@@ -7099,7 +7745,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "row"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Row':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Row':
         ...
 
     @overload
@@ -7110,7 +7756,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> 'Row':
         ...
 
-    def align(self, _: str, **kwds) -> 'Row':
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> 'Row':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Row':
@@ -7148,11 +7794,23 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Row':
+    def sort(self, _: List[float], **kwds) -> 'Row':
         ...
 
     @overload
-    def sort(self, _: str, **kwds) -> 'Row':
+    def sort(self, _: List[str], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Row':
         ...
 
     @overload
@@ -7167,7 +7825,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Row':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Row':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Row':
         ...
 
     @overload
@@ -7175,14 +7845,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Row':
+    def title(self, _: str, **kwds) -> 'Row':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Row':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Row':
         ...
 
-    def type(self, _: str, **kwds) -> 'Row':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Row':
         ...
 
 
@@ -7426,7 +8100,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _encoding_name = "shape"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Shape':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7453,11 +8127,15 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Shape':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Shape':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Shape':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7485,11 +8163,31 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Shape':
+    def sort(self, _: List[float], **kwds) -> 'Shape':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Shape':
+    def sort(self, _: List[str], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7505,7 +8203,19 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Shape':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Shape':
         ...
 
     @overload
@@ -7513,14 +8223,18 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload
-    def title(self, **kwds) -> 'Shape':
+    def title(self, _: str, **kwds) -> 'Shape':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Shape':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Shape':
         ...
 
-    def type(self, _: str, **kwds) -> 'Shape':
+    def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> 'Shape':
         ...
 
 
@@ -7652,22 +8366,30 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ShapeDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'ShapeDatum':
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'ShapeDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'ShapeDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'ShapeDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'ShapeDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'ShapeDatum':
         ...
 
 
@@ -7697,15 +8419,31 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _encoding_name = "shape"
 
     @overload
-    def condition(self, **kwds) -> 'ShapeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'ShapeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeValue':
         ...
 
 
@@ -7943,7 +8681,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _encoding_name = "size"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Size':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Size':
         ...
 
     @overload
@@ -7970,11 +8708,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Size':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Size':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Size':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Size':
         ...
 
     @overload
@@ -8002,11 +8744,31 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Size':
+    def sort(self, _: List[float], **kwds) -> 'Size':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Size':
+    def sort(self, _: List[str], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Size':
         ...
 
     @overload
@@ -8022,7 +8784,19 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Size':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Size':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Size':
         ...
 
     @overload
@@ -8030,14 +8804,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload
-    def title(self, **kwds) -> 'Size':
+    def title(self, _: str, **kwds) -> 'Size':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Size':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Size':
         ...
 
-    def type(self, _: str, **kwds) -> 'Size':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Size':
         ...
 
 
@@ -8169,22 +8947,30 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'SizeDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'SizeDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'SizeDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'SizeDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'SizeDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'SizeDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'SizeDatum':
         ...
 
 
@@ -8214,15 +9000,31 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _encoding_name = "size"
 
     @overload
-    def condition(self, **kwds) -> 'SizeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'SizeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'SizeValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeValue':
         ...
 
 
@@ -8460,7 +9262,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _encoding_name = "stroke"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Stroke':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8487,11 +9289,15 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Stroke':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8519,11 +9325,31 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Stroke':
+    def sort(self, _: List[float], **kwds) -> 'Stroke':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Stroke':
+    def sort(self, _: List[str], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8539,7 +9365,19 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Stroke':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Stroke':
         ...
 
     @overload
@@ -8547,14 +9385,18 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload
-    def title(self, **kwds) -> 'Stroke':
+    def title(self, _: str, **kwds) -> 'Stroke':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Stroke':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    def type(self, _: str, **kwds) -> 'Stroke':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Stroke':
         ...
 
 
@@ -8686,22 +9528,30 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeDatum':
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'StrokeDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'StrokeDatum':
         ...
 
 
@@ -8731,15 +9581,31 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     _encoding_name = "stroke"
 
     @overload
-    def condition(self, **kwds) -> 'StrokeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeValue':
         ...
 
 
@@ -8977,7 +9843,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _encoding_name = "strokeDash"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'StrokeDash':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9004,11 +9870,15 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDash':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9036,11 +9906,31 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeDash':
+    def sort(self, _: List[float], **kwds) -> 'StrokeDash':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeDash':
+    def sort(self, _: List[str], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9056,7 +9946,19 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'StrokeDash':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeDash':
         ...
 
     @overload
@@ -9064,14 +9966,18 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeDash':
+    def title(self, _: str, **kwds) -> 'StrokeDash':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeDash':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeDash':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'StrokeDash':
         ...
 
 
@@ -9203,22 +10109,30 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDashDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeDashDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'StrokeDashDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeDashDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeDashDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeDashDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'StrokeDashDatum':
         ...
 
 
@@ -9248,15 +10162,31 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _encoding_name = "strokeDash"
 
     @overload
-    def condition(self, **kwds) -> 'StrokeDashValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeDashValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashValue':
         ...
 
 
@@ -9494,7 +10424,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _encoding_name = "strokeOpacity"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'StrokeOpacity':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9521,11 +10451,15 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacity':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9553,11 +10487,31 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeOpacity':
+    def sort(self, _: List[float], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeOpacity':
+    def sort(self, _: List[str], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9573,7 +10527,19 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'StrokeOpacity':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
@@ -9581,14 +10547,18 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeOpacity':
+    def title(self, _: str, **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeOpacity':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeOpacity':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'StrokeOpacity':
         ...
 
 
@@ -9720,22 +10690,30 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacityDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeOpacityDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'StrokeOpacityDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeOpacityDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeOpacityDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'StrokeOpacityDatum':
         ...
 
 
@@ -9765,15 +10743,31 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     _encoding_name = "strokeOpacity"
 
     @overload
-    def condition(self, **kwds) -> 'StrokeOpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeOpacityValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityValue':
         ...
 
 
@@ -10011,7 +11005,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _encoding_name = "strokeWidth"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'StrokeWidth':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10038,11 +11032,15 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidth':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10070,11 +11068,31 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeWidth':
+    def sort(self, _: List[float], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'StrokeWidth':
+    def sort(self, _: List[str], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10090,7 +11108,19 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'StrokeWidth':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
@@ -10098,14 +11128,18 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeWidth':
+    def title(self, _: str, **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeWidth':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeWidth':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'StrokeWidth':
         ...
 
 
@@ -10237,22 +11271,30 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidthDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
         ...
 
     @overload
-    def title(self, **kwds) -> 'StrokeWidthDatum':
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, _: str, **kwds) -> 'StrokeWidthDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'StrokeWidthDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'StrokeWidthDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'StrokeWidthDatum':
         ...
 
 
@@ -10282,15 +11324,31 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _encoding_name = "strokeWidth"
 
     @overload
-    def condition(self, **kwds) -> 'StrokeWidthValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'StrokeWidthValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthValue':
         ...
 
 
@@ -10501,7 +11559,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _encoding_name = "text"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Text':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Text':
         ...
 
     @overload
@@ -10532,11 +11590,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Text':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Text':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Text':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'Text':
         ...
 
     @overload
@@ -10559,7 +11621,19 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Text':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Text':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Text':
         ...
 
     @overload
@@ -10567,14 +11641,18 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload
-    def title(self, **kwds) -> 'Text':
+    def title(self, _: str, **kwds) -> 'Text':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Text':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Text':
         ...
 
-    def type(self, _: str, **kwds) -> 'Text':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Text':
         ...
 
 
@@ -10740,11 +11818,15 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TextDatum':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextDatum':
         ...
 
     @overload
@@ -10759,14 +11841,18 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ...
 
     @overload
-    def title(self, **kwds) -> 'TextDatum':
+    def title(self, _: str, **kwds) -> 'TextDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'TextDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'TextDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'TextDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'TextDatum':
         ...
 
 
@@ -10797,15 +11883,23 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     _encoding_name = "text"
 
     @overload
-    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, format=Undefined, formatType=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TextValue':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TextValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextValue':
         ...
 
 
@@ -11058,7 +12152,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "theta"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Theta':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11105,11 +12199,31 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Theta':
+    def sort(self, _: List[float], **kwds) -> 'Theta':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Theta':
+    def sort(self, _: List[str], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11125,7 +12239,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'Theta':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11137,7 +12251,19 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Theta':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Theta':
         ...
 
     @overload
@@ -11145,14 +12271,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Theta':
+    def title(self, _: str, **kwds) -> 'Theta':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Theta':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Theta':
         ...
 
-    def type(self, _: str, **kwds) -> 'Theta':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Theta':
         ...
 
 
@@ -11328,7 +12458,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'ThetaDatum':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'ThetaDatum':
         ...
 
     @overload
@@ -11340,14 +12470,18 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload
-    def title(self, **kwds) -> 'ThetaDatum':
+    def title(self, _: str, **kwds) -> 'ThetaDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'ThetaDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'ThetaDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'ThetaDatum':
         ...
 
 
@@ -11477,7 +12611,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "theta2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Theta2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Theta2':
         ...
 
     @overload
@@ -11503,7 +12637,19 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Theta2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Theta2':
         ...
 
     @overload
@@ -11511,7 +12657,11 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Theta2':
+    def title(self, _: str, **kwds) -> 'Theta2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Theta2':
         ...
 
     @overload
@@ -11638,14 +12788,18 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Theta2Datum':
+    def title(self, _: str, **kwds) -> 'Theta2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Theta2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Theta2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'Theta2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'Theta2Datum':
         ...
 
 
@@ -11882,7 +13036,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "tooltip"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Tooltip':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Tooltip':
         ...
 
     @overload
@@ -11913,11 +13067,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Tooltip':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Tooltip':
         ...
 
     @overload
@@ -11940,7 +13098,19 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Tooltip':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Tooltip':
         ...
 
     @overload
@@ -11948,14 +13118,18 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Tooltip':
+    def title(self, _: str, **kwds) -> 'Tooltip':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Tooltip':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Tooltip':
         ...
 
-    def type(self, _: str, **kwds) -> 'Tooltip':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Tooltip':
         ...
 
 
@@ -11988,15 +13162,31 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _encoding_name = "tooltip"
 
     @overload
-    def condition(self, **kwds) -> 'TooltipValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'TooltipValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'TooltipValue':
         ...
 
 
@@ -12207,7 +13397,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "url"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Url':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Url':
         ...
 
     @overload
@@ -12238,11 +13428,15 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'Url':
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Url':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'Url':
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Url':
         ...
 
     @overload
@@ -12265,7 +13459,19 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Url':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Url':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Url':
         ...
 
     @overload
@@ -12273,14 +13479,18 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Url':
+    def title(self, _: str, **kwds) -> 'Url':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Url':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Url':
         ...
 
-    def type(self, _: str, **kwds) -> 'Url':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Url':
         ...
 
 
@@ -12313,15 +13523,31 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _encoding_name = "url"
 
     @overload
-    def condition(self, **kwds) -> 'UrlValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
     @overload
-    def condition(self, empty=Undefined, param=Undefined, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
+    def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
     @overload
-    def condition(self, _: list, **kwds) -> 'UrlValue':
+    def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'UrlValue':
+        ...
+
+    @overload
+    def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'UrlValue':
         ...
 
 
@@ -12591,7 +13817,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "x"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'X':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'X':
         ...
 
     @overload
@@ -12654,11 +13880,31 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'X':
+    def sort(self, _: List[float], **kwds) -> 'X':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'X':
+    def sort(self, _: List[str], **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'X':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'X':
         ...
 
     @overload
@@ -12674,7 +13920,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'X':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'X':
         ...
 
     @overload
@@ -12686,7 +13932,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'X':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'X':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'X':
         ...
 
     @overload
@@ -12694,14 +13952,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'X':
+    def title(self, _: str, **kwds) -> 'X':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'X':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'X':
         ...
 
-    def type(self, _: str, **kwds) -> 'X':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'X':
         ...
 
 
@@ -12911,7 +14173,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'XDatum':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'XDatum':
         ...
 
     @overload
@@ -12923,14 +14185,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'XDatum':
+    def title(self, _: str, **kwds) -> 'XDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'XDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'XDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'XDatum':
         ...
 
 
@@ -13060,7 +14326,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "x2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'X2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'X2':
         ...
 
     @overload
@@ -13086,7 +14352,19 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'X2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'X2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'X2':
         ...
 
     @overload
@@ -13094,7 +14372,11 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'X2':
+    def title(self, _: str, **kwds) -> 'X2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'X2':
         ...
 
     @overload
@@ -13220,14 +14502,18 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'X2Datum':
+    def title(self, _: str, **kwds) -> 'X2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'X2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'X2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'X2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'X2Datum':
         ...
 
 
@@ -13356,7 +14642,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'XError':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XError':
         ...
 
     @overload
@@ -13382,7 +14668,19 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'XError':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XError':
         ...
 
     @overload
@@ -13390,7 +14688,11 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'XError':
+    def title(self, _: str, **kwds) -> 'XError':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'XError':
         ...
 
     @overload
@@ -13525,7 +14827,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'XError2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XError2':
         ...
 
     @overload
@@ -13551,7 +14853,19 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'XError2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XError2':
         ...
 
     @overload
@@ -13559,7 +14873,11 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'XError2':
+    def title(self, _: str, **kwds) -> 'XError2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'XError2':
         ...
 
     @overload
@@ -13813,7 +15131,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "xOffset"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'XOffset':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13856,11 +15174,31 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'XOffset':
+    def sort(self, _: List[float], **kwds) -> 'XOffset':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'XOffset':
+    def sort(self, _: List[str], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13876,7 +15214,19 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'XOffset':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XOffset':
         ...
 
     @overload
@@ -13884,14 +15234,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'XOffset':
+    def title(self, _: str, **kwds) -> 'XOffset':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'XOffset':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    def type(self, _: str, **kwds) -> 'XOffset':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'XOffset':
         ...
 
 
@@ -14036,14 +15390,18 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'XOffsetDatum':
+    def title(self, _: str, **kwds) -> 'XOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'XOffsetDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'XOffsetDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'XOffsetDatum':
         ...
 
 
@@ -14340,7 +15698,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "y"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Y':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Y':
         ...
 
     @overload
@@ -14403,11 +15761,31 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Y':
+    def sort(self, _: List[float], **kwds) -> 'Y':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'Y':
+    def sort(self, _: List[str], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Y':
         ...
 
     @overload
@@ -14423,7 +15801,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'Y':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Y':
         ...
 
     @overload
@@ -14435,7 +15813,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Y':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Y':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Y':
         ...
 
     @overload
@@ -14443,14 +15833,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Y':
+    def title(self, _: str, **kwds) -> 'Y':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Y':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Y':
         ...
 
-    def type(self, _: str, **kwds) -> 'Y':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'Y':
         ...
 
 
@@ -14660,7 +16054,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def stack(self, _: str, **kwds) -> 'YDatum':
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'YDatum':
         ...
 
     @overload
@@ -14672,14 +16066,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'YDatum':
+    def title(self, _: str, **kwds) -> 'YDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'YDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'YDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'YDatum':
         ...
 
 
@@ -14809,7 +16207,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "y2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'Y2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Y2':
         ...
 
     @overload
@@ -14835,7 +16233,19 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'Y2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Y2':
         ...
 
     @overload
@@ -14843,7 +16253,11 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Y2':
+    def title(self, _: str, **kwds) -> 'Y2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Y2':
         ...
 
     @overload
@@ -14969,14 +16383,18 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'Y2Datum':
+    def title(self, _: str, **kwds) -> 'Y2Datum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'Y2Datum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'Y2Datum':
         ...
 
-    def type(self, _: str, **kwds) -> 'Y2Datum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'Y2Datum':
         ...
 
 
@@ -15105,7 +16523,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'YError':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YError':
         ...
 
     @overload
@@ -15131,7 +16549,19 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'YError':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YError':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YError':
         ...
 
     @overload
@@ -15139,7 +16569,11 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'YError':
+    def title(self, _: str, **kwds) -> 'YError':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'YError':
         ...
 
     @overload
@@ -15274,7 +16708,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError2"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'YError2':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YError2':
         ...
 
     @overload
@@ -15300,7 +16734,19 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'YError2':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YError2':
         ...
 
     @overload
@@ -15308,7 +16754,11 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'YError2':
+    def title(self, _: str, **kwds) -> 'YError2':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'YError2':
         ...
 
     @overload
@@ -15562,7 +17012,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "yOffset"
 
     @overload
-    def aggregate(self, _: str, **kwds) -> 'YOffset':
+    def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15605,11 +17055,31 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def sort(self, **kwds) -> 'YOffset':
+    def sort(self, _: List[float], **kwds) -> 'YOffset':
         ...
 
     @overload
-    def sort(self, **kwds) -> 'YOffset':
+    def sort(self, _: List[str], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: List[bool], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: List[core.DateTime], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15625,7 +17095,19 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def timeUnit(self, **kwds) -> 'YOffset':
+    def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YOffset':
         ...
 
     @overload
@@ -15633,14 +17115,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'YOffset':
+    def title(self, _: str, **kwds) -> 'YOffset':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'YOffset':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    def type(self, _: str, **kwds) -> 'YOffset':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds) -> 'YOffset':
         ...
 
 
@@ -15785,14 +17271,18 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload
-    def title(self, **kwds) -> 'YOffsetDatum':
+    def title(self, _: str, **kwds) -> 'YOffsetDatum':
+        ...
+
+    @overload
+    def title(self, _: List[str], **kwds) -> 'YOffsetDatum':
         ...
 
     @overload
     def title(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
-    def type(self, _: str, **kwds) -> 'YOffsetDatum':
+    def type(self, _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"], **kwds) -> 'YOffsetDatum':
         ...
 
 
