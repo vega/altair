@@ -82,9 +82,14 @@ def _get_most_relevant_errors(
     if len(errors) == 0:
         return []
 
+    # Start from the first error on the top-level as we want to show
+    # an error message for one specific error only even if the chart
+    # specification might have multiple issues
+    top_level_error = errors[0]
+
     # Go to lowest level in schema where an error happened as these give
-    # the most relevant error messages
-    lowest_level = errors[0]
+    # the most relevant error messages.
+    lowest_level = top_level_error
     while lowest_level.context:
         lowest_level = lowest_level.context[0]
 
@@ -100,9 +105,25 @@ def _get_most_relevant_errors(
             # In this case we are still at the top level and can return all errors
             most_relevant_errors = errors
         else:
-            # Return all errors of the lowest level out of which
+            # Use all errors of the lowest level out of which
             # we can construct more informative error messages
             most_relevant_errors = lowest_level.parent.context
+            if lowest_level.validator == "enum":
+                # There might be other possible enums which are allowed, e.g. for
+                # the "timeUnit" property of the "Angle" encoding channel. These do not
+                # necessarily need to be in the same branch of this tree of errors that
+                # we traversed down to the lowest level. We therefore gather
+                # all enums in the leaves of the error tree.
+                enum_errors = _get_all_lowest_errors_with_validator(
+                    top_level_error, validator="enum"
+                )
+                # Remove errors which already exist in enum_errors
+                enum_errors = [
+                    err
+                    for err in enum_errors
+                    if err.message not in [e.message for e in most_relevant_errors]
+                ]
+                most_relevant_errors = most_relevant_errors + enum_errors
 
     # This should never happen but might still be good to test for it as else
     # the original error would just slip through without being raised
@@ -110,6 +131,19 @@ def _get_most_relevant_errors(
         raise Exception("Could not determine the most relevant errors") from errors[0]
 
     return most_relevant_errors
+
+
+def _get_all_lowest_errors_with_validator(
+    error: jsonschema.ValidationError, validator: str
+) -> List[jsonschema.ValidationError]:
+    matches: List[jsonschema.ValidationError] = []
+    if error.context:
+        for err in error.context:
+            if err.context:
+                matches.extend(_get_all_lowest_errors_with_validator(err, validator))
+            elif err.validator == validator:
+                matches.append(err)
+    return matches
 
 
 def _subclasses(cls):
