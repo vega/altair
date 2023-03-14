@@ -6,11 +6,15 @@ Installation
 ============
 Altair can be installed, along with the example datasets in vega_datasets_, using::
 
-    $ pip install altair vega_datasets
+.. code-block:: bash
+
+    pip install altair vega_datasets
 
 If you are using the conda_ package manager, the equivalent is::
 
-    $ conda install -c conda-forge altair vega_datasets
+.. code-block:: bash
+
+    conda install -c conda-forge altair vega_datasets
 
 At this point, you should be able to open `Jupyter Notebook`_ or `JupyterLab`_
 and execute any of the code from the :ref:`example-gallery`.
@@ -45,20 +49,20 @@ from the root of the repository to install the master version of Altair:
 
 .. code-block:: bash
 
-    $ pip install -e .
+    pip install -e .
 
 To install development dependencies as well, run
 
 .. code-block:: bash
 
-    $ pip install -e .[dev]
+    pip install -e .[dev]
 
 If you do not wish to clone the source repository, you can install the
 development version directly from GitHub using:
 
 .. code-block:: bash
 
-    $ pip install -e git+https://github.com/altair-viz/altair.git
+    pip install -e git+https://github.com/altair-viz/altair.git
 
 
 .. _conda: https://docs.conda.io/
