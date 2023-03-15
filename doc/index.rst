@@ -13,12 +13,10 @@ Vega-Altair: Declarative Visualization in Python
 Vega-Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_.
 
-*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
+Its simple, friendly and consistent API, built on top of the
+powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
 
-With Vega-Altair, you can spend more time understanding your data and its meaning.
-Altair's API is simple, friendly and consistent and built on top of the
-powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
-beautiful and effective visualizations with a minimal amount of code.
+*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
 You can browse this documentation
 via the links in the top navigation panel.
