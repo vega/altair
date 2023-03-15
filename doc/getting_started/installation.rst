@@ -22,8 +22,8 @@ and execute any of the code from the :ref:`example-gallery`.
 For more information on how to display charts in various notebook environments
 and non-notebook IDEs, see :ref:`displaying-charts`.
 
-Install source code
-===================
+Development Installation
+========================
 
 The `Altair source repository`_ is available on GitHub. Once you have cloned the
 repository and installed all the above dependencies, run the following command
