@@ -2,8 +2,8 @@
 
 .. _installation:
 
-Install package
-===============
+Installation
+============
 
 Altair can be installed, along with the example datasets in vega_datasets_, using::
 
