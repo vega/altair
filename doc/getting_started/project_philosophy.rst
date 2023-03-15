@@ -65,12 +65,3 @@ visualization.
 
 You can find a more detailed comparison between Plotly and Altair in
 `this StackOverflow answer <https://stackoverflow.com/a/66040502>`_.
-
-Whence Vega-Altair?
--------------------
-
-The Vega project was named after the brightest star in the constellation Lyra;
-nearby Altair is the `brightest star <https://en.wikipedia.org/wiki/Altair>`_ 
-in the constellation Aquila, and along with Deneb and Vega forms 
-the northern-hemisphere asterism known as
-the `Summer Triangle <https://en.wikipedia.org/wiki/Summer_Triangle>`_.
