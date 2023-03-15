@@ -46,6 +46,8 @@ development version directly from GitHub using:
 
     pip install -e git+https://github.com/altair-viz/altair.git
 
+Please see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`_
+for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
 .. _Vega-Lite: http://vega.github.io/vega-lite
