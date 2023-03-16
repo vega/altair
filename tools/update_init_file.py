@@ -15,6 +15,11 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
+
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
@@ -74,6 +79,7 @@ def _is_relevant_attribute(attr_name):
         or attr is cast
         or attr is List
         or attr is Any
+        or attr is Literal
     ):
         return False
     else:
