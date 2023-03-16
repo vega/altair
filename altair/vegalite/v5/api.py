@@ -9,6 +9,7 @@ from toolz.curried import pipe as _pipe
 import itertools
 import sys
 from typing import cast
+
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
 
@@ -829,7 +830,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["context"] = context
 
         # TopLevelMixin instance does not necessarily have to_dict defined
-        # but due to how Altair is set up this should hold. 
+        # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
         dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
 
