@@ -6,6 +6,7 @@ install:
 test :
 	black --diff --color --check .
 	flake8 . --statistics
+	mypy altair tests
 	python -m pytest --pyargs --doctest-modules tests
 
 test-coverage:

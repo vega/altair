@@ -1,9 +1,10 @@
+import sys
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 
-try:
+if sys.version_info >= (3, 8):
     from importlib.metadata import entry_points
-except ImportError:
+else:
     from importlib_metadata import entry_points
 
 from toolz import curry
@@ -114,7 +115,7 @@ class PluginRegistry(Generic[PluginType]):
         if value is None:
             return self._plugins.pop(name, None)
         else:
-            assert isinstance(value, self.plugin_type)
+            assert isinstance(value, self.plugin_type)  # type: ignore[arg-type]  # Should ideally be fixed by better annotating plugin_type
             self._plugins[name] = value
             return value
 

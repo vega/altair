@@ -1,3 +1,5 @@
+from typing import Dict
+
 from .core import ConstExpression
 
 
@@ -13,7 +15,7 @@ CONST_LISTING = {
     "PI": "the transcendental number pi (alias to Math.PI)",
 }
 
-NAME_MAP = {}
+NAME_MAP: Dict[str, str] = {}
 
 
 def _populate_namespace():
