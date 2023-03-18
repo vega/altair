@@ -1,4 +1,6 @@
 import json
+from typing import Optional, Dict
+
 import jinja2
 
 
@@ -173,7 +175,7 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 )
 
 
-TEMPLATES = {
+TEMPLATES: Dict[str, jinja2.Template] = {
     "standard": HTML_TEMPLATE,
     "universal": HTML_TEMPLATE_UNIVERSAL,
     "inline": INLINE_HTML_TEMPLATE,
@@ -181,19 +183,19 @@ TEMPLATES = {
 
 
 def spec_to_html(
-    spec,
-    mode,
-    vega_version,
-    vegaembed_version,
-    vegalite_version=None,
-    base_url="https://cdn.jsdelivr.net/npm",
-    output_div="vis",
-    embed_options=None,
-    json_kwds=None,
-    fullhtml=True,
-    requirejs=False,
-    template="standard",
-):
+    spec: dict,
+    mode: str,
+    vega_version: str,
+    vegaembed_version: str,
+    vegalite_version: Optional[str] = None,
+    base_url: str = "https://cdn.jsdelivr.net/npm",
+    output_div: str = "vis",
+    embed_options: Optional[dict] = None,
+    json_kwds: Optional[dict] = None,
+    fullhtml: bool = True,
+    requirejs: bool = False,
+    template: str = "standard",
+) -> str:
     """Embed a Vega/Vega-Lite spec into an HTML page
 
     Parameters
@@ -267,11 +269,11 @@ def spec_to_html(
             "vega-embed", vegaembed_version
         )
 
-    template = TEMPLATES.get(template, template)
-    if not hasattr(template, "render"):
-        raise ValueError("Invalid template: {0}".format(template))
+    jinja_template = TEMPLATES.get(template, template)
+    if not hasattr(jinja_template, "render"):
+        raise ValueError("Invalid template: {0}".format(jinja_template))
 
-    return template.render(
+    return jinja_template.render(
         spec=json.dumps(spec, **json_kwds),
         embed_options=json.dumps(embed_options),
         mode=mode,
