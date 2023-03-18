@@ -34,7 +34,7 @@ class VegaTheme:
 
 
 # The entry point group that can be used by other packages to declare other
-# renderers that will be auto-detected. Explicit registration is also
+# themes that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
 ENTRY_POINT_GROUP = "altair.vegalite.v5.theme"
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
