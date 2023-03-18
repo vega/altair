@@ -300,9 +300,11 @@ class SchemaValidationError(jsonschema.ValidationError):
 
             if self._additional_errors:
                 # Deduplicate error messages and only include them if they are
-                # different then the main error message stored in self.message
+                # different then the main error message stored in self.message.
+                # Using dict instead of set to keep the original order in case it was
+                # chosen intentionally to move more relevant error messages to the top
                 additional_error_messages = list(
-                    set(
+                    dict.fromkeys(
                         [
                             e.message
                             for e in self._additional_errors
