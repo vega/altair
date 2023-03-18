@@ -20,9 +20,7 @@ from ..data import (
 ENTRY_POINT_GROUP = "altair.vegalite.v5.data_transformer"
 
 
-data_transformers = DataTransformerRegistry(
-    entry_point_group=ENTRY_POINT_GROUP
-)
+data_transformers = DataTransformerRegistry(entry_point_group=ENTRY_POINT_GROUP)
 data_transformers.register("default", default_data_transformer)
 data_transformers.register("json", to_json)
 data_transformers.register("csv", to_csv)
