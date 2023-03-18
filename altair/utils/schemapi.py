@@ -5,7 +5,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any, Sequence, List
+from typing import Any, Sequence, List, Dict, Optional
 from itertools import zip_longest
 
 import jsonschema
@@ -84,9 +84,14 @@ def _get_most_relevant_errors(
     if len(errors) == 0:
         return []
 
+    # Start from the first error on the top-level as we want to show
+    # an error message for one specific error only even if the chart
+    # specification might have multiple issues
+    top_level_error = errors[0]
+
     # Go to lowest level in schema where an error happened as these give
-    # the most relevant error messages
-    lowest_level = errors[0]
+    # the most relevant error messages.
+    lowest_level = top_level_error
     while lowest_level.context:
         lowest_level = lowest_level.context[0]
 
@@ -100,11 +105,27 @@ def _get_most_relevant_errors(
         parent = lowest_level.parent
         if parent is None:
             # In this case we are still at the top level and can return all errors
-            most_relevant_errors = errors
+            most_relevant_errors = list(errors)
         else:
-            # Return all errors of the lowest level out of which
+            # Use all errors of the lowest level out of which
             # we can construct more informative error messages
-            most_relevant_errors = lowest_level.parent.context
+            most_relevant_errors = parent.context or []
+            if lowest_level.validator == "enum":
+                # There might be other possible enums which are allowed, e.g. for
+                # the "timeUnit" property of the "Angle" encoding channel. These do not
+                # necessarily need to be in the same branch of this tree of errors that
+                # we traversed down to the lowest level. We therefore gather
+                # all enums in the leaves of the error tree.
+                enum_errors = _get_all_lowest_errors_with_validator(
+                    top_level_error, validator="enum"
+                )
+                # Remove errors which already exist in enum_errors
+                enum_errors = [
+                    err
+                    for err in enum_errors
+                    if err.message not in [e.message for e in most_relevant_errors]
+                ]
+                most_relevant_errors = most_relevant_errors + enum_errors
 
     # This should never happen but might still be good to test for it as else
     # the original error would just slip through without being raised
@@ -112,6 +133,19 @@ def _get_most_relevant_errors(
         raise Exception("Could not determine the most relevant errors") from errors[0]
 
     return most_relevant_errors
+
+
+def _get_all_lowest_errors_with_validator(
+    error: jsonschema.ValidationError, validator: str
+) -> List[jsonschema.ValidationError]:
+    matches: List[jsonschema.ValidationError] = []
+    if error.context:
+        for err in error.context:
+            if err.context:
+                matches.extend(_get_all_lowest_errors_with_validator(err, validator))
+            elif err.validator == validator:
+                matches.append(err)
+    return matches
 
 
 def _subclasses(cls):
@@ -265,9 +299,23 @@ class SchemaValidationError(jsonschema.ValidationError):
                 {message}"""
 
             if self._additional_errors:
-                message += "\n                " + "\n                ".join(
-                    [e.message for e in self._additional_errors]
+                # Deduplicate error messages and only include them if they are
+                # different then the main error message stored in self.message.
+                # Using dict instead of set to keep the original order in case it was
+                # chosen intentionally to move more relevant error messages to the top
+                additional_error_messages = list(
+                    dict.fromkeys(
+                        [
+                            e.message
+                            for e in self._additional_errors
+                            if e.message != self.message
+                        ]
+                    )
                 )
+                if additional_error_messages:
+                    message += "\n                " + "\n                ".join(
+                        additional_error_messages
+                    )
 
             return inspect.cleandoc(
                 """{}
@@ -305,8 +353,8 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
-    _schema = None
-    _rootschema = None
+    _schema: Optional[Dict[str, Any]] = None
+    _rootschema: Optional[Dict[str, Any]] = None
     _class_is_valid_at_instantiation = True
 
     def __init__(self, *args, **kwds):

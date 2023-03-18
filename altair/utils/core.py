@@ -26,7 +26,7 @@ try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
     # Import for pandas < 0.20.0
-    from pandas.lib import infer_dtype as _infer_dtype
+    from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
@@ -568,8 +568,8 @@ def use_signature(Obj: Callable[_P, Any]):
     def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
-        f.__wrapped__ = Obj.__init__
-        f._uses_signature = Obj
+        f.__wrapped__ = Obj.__init__  # type: ignore
+        f._uses_signature = Obj  # type: ignore
 
         # Supplement the docstring of f with information from Obj
         if Obj.__doc__:
