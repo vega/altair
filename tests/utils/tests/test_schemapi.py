@@ -4,7 +4,6 @@ import inspect
 import json
 import jsonschema
 import jsonschema.exceptions
-import re
 import pickle
 import warnings
 
@@ -476,6 +475,18 @@ def chart_example_invalid_timeunit_value():
     return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
 
 
+def chart_example_invalid_sort_value():
+    return alt.Chart().encode(alt.Angle().sort("invalid_value"))
+
+
+def chart_example_invalid_bandposition_value():
+    return (
+        alt.Chart(data.cars())
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", bandPosition="4"))
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -490,7 +501,7 @@ def chart_example_invalid_timeunit_value():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters"""  # noqa: W291
+                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
@@ -504,7 +515,7 @@ def chart_example_invalid_timeunit_value():
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters"""  # noqa: W291
+                See the help for `VConcatChart` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
@@ -514,7 +525,7 @@ def chart_example_invalid_timeunit_value():
 
                 'asdf' is not one of \['zero', 'center', 'normalize'\]
                 'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'"""
+                'asdf' is not of type 'boolean'$"""
             ),
         ),
         (
@@ -524,7 +535,7 @@ def chart_example_invalid_timeunit_value():
 
                 'asdf' is not one of \['zero', 'center', 'normalize'\]
                 'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'"""
+                'asdf' is not of type 'boolean'$"""
             ),
         ),
         (
@@ -533,7 +544,7 @@ def chart_example_invalid_timeunit_value():
                 r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
 
                 {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'"""
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'$"""
             ),
         ),
         (
@@ -550,7 +561,7 @@ def chart_example_invalid_timeunit_value():
                 fillOpacity   opacity      stroke    theta2          xError2   yOffset   
                 href                                                                     
 
-                See the help for `Encoding` to read the full description of these parameters"""  # noqa: W291
+                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
@@ -561,14 +572,33 @@ def chart_example_invalid_timeunit_value():
                 'invalid_value' is not one of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
                 'invalid_value' is not one of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
                 'invalid_value' is not one of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
-                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]"""
+                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]$"""
+            ),
+        ),
+        (
+            chart_example_invalid_sort_value,
+            # Previuosly, the line
+            # "'invalid_value' is not of type 'array'" appeared multiple times in
+            # the error message. This test should prevent a regression.
+            inspect.cleandoc(
+                r"""'invalid_value' is an invalid value for `sort`:
+
+                'invalid_value' is not of type 'array'$"""
+            ),
+        ),
+        (
+            chart_example_invalid_bandposition_value,
+            inspect.cleandoc(
+                r"""'4' is an invalid value for `bandPosition`:
+
+                '4' is not of type 'number'
+                Additional properties are not allowed \('field' was unexpected\)
+                Additional properties are not allowed \('bandPosition', 'field', 'type' were unexpected\)$"""
             ),
         ),
     ],
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
-    # DOTALL flag makes that a dot (.) also matches new lines
-    pattern = re.compile(expected_error_message, re.DOTALL)
     # For some wrong chart specifications such as an unknown encoding channel,
     # Altair already raises a warning before the chart specifications are validated.
     # We can ignore these warnings as we are interested in the errors being raised
@@ -576,7 +606,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         chart = chart_func()
-    with pytest.raises(SchemaValidationError, match=pattern):
+    with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
 
 

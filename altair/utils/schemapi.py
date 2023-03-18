@@ -299,9 +299,23 @@ class SchemaValidationError(jsonschema.ValidationError):
                 {message}"""
 
             if self._additional_errors:
-                message += "\n                " + "\n                ".join(
-                    [e.message for e in self._additional_errors]
+                # Deduplicate error messages and only include them if they are
+                # different then the main error message stored in self.message.
+                # Using dict instead of set to keep the original order in case it was
+                # chosen intentionally to move more relevant error messages to the top
+                additional_error_messages = list(
+                    dict.fromkeys(
+                        [
+                            e.message
+                            for e in self._additional_errors
+                            if e.message != self.message
+                        ]
+                    )
                 )
+                if additional_error_messages:
+                    message += "\n                " + "\n                ".join(
+                        additional_error_messages
+                    )
 
             return inspect.cleandoc(
                 """{}
