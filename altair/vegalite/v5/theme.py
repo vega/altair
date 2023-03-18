@@ -1,4 +1,5 @@
 """Tools for enabling and registering chart themes"""
+from typing import Dict, Union
 
 from ...utils.theme import ThemeRegistry
 
@@ -19,23 +20,23 @@ VEGA_THEMES = [
 class VegaTheme:
     """Implementation of a builtin vega theme."""
 
-    def __init__(self, theme):
+    def __init__(self, theme: str) -> None:
         self.theme = theme
 
-    def __call__(self):
+    def __call__(self) -> Dict[str, Dict[str, Dict[str, Union[str, int]]]]:
         return {
             "usermeta": {"embedOptions": {"theme": self.theme}},
             "config": {"view": {"continuousWidth": 300, "continuousHeight": 300}},
         }
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "VegaTheme({!r})".format(self.theme)
 
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v5.theme"  # type: str
+ENTRY_POINT_GROUP = "altair.vegalite.v5.theme"
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 themes.register(
