@@ -9,7 +9,8 @@ import re
 import sys
 import traceback
 import warnings
-from typing import Callable, TypeVar, Any
+from typing import Callable, TypeVar, Any, Union, Dict, Optional, Tuple, Sequence, Type
+from types import ModuleType
 
 import jsonschema
 import pandas as pd
@@ -190,7 +191,9 @@ TIMEUNITS = [
 ]
 
 
-def infer_vegalite_type(data):
+def infer_vegalite_type(
+    data: Union[np.ndarray, pd.Series]
+) -> Union[str, Tuple[str, list]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -210,8 +213,10 @@ def infer_vegalite_type(data):
         "complex",
     ]:
         return "quantitative"
-    elif typ == "categorical" and data.cat.ordered:
-        return ("ordinal", data.cat.categories.tolist())
+    # Can ignore error that np.ndarray has no attribute cat as in this case
+    # it should always be a pd.DataFrame anyway
+    elif typ == "categorical" and data.cat.ordered:  # type: ignore[union-attr]
+        return ("ordinal", data.cat.categories.tolist())  # type: ignore[union-attr]
     elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
         return "nominal"
     elif typ in [
@@ -232,7 +237,7 @@ def infer_vegalite_type(data):
         return "nominal"
 
 
-def merge_props_geom(feat):
+def merge_props_geom(feat: dict) -> dict:
     """
     Merge properties with geometry
     * Overwrites 'type' and 'geometry' entries if existing
@@ -397,13 +402,13 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
 
 def parse_shorthand(
-    shorthand,
-    data=None,
-    parse_aggregates=True,
-    parse_window_ops=False,
-    parse_timeunits=True,
-    parse_types=True,
-):
+    shorthand: Union[Dict[str, Any], str],
+    data: Optional[pd.DataFrame] = None,
+    parse_aggregates: bool = True,
+    parse_window_ops: bool = False,
+    parse_timeunits: bool = True,
+    parse_types: bool = True,
+) -> Dict[str, Any]:
     """General tool to parse shorthand values
 
     These are of the form:
@@ -518,7 +523,9 @@ def parse_shorthand(
         attrs = shorthand
     else:
         attrs = next(
-            exp.match(shorthand).groupdict() for exp in regexps if exp.match(shorthand)
+            exp.match(shorthand).groupdict()  # type: ignore[union-attr]
+            for exp in regexps
+            if exp.match(shorthand) is not None
         )
 
     # Handle short form of the type expression
@@ -593,21 +600,23 @@ def use_signature(Obj: Callable[_P, Any]):
     return decorate
 
 
-def update_nested(original, update, copy=False):
+def update_nested(
+    original: MutableMapping, update: Mapping, copy: bool = False
+) -> MutableMapping:
     """Update nested dictionaries
 
     Parameters
     ----------
-    original : dict
+    original : MutableMapping
         the original (nested) dictionary, which will be updated in-place
-    update : dict
+    update : Mapping
         the nested dictionary of updates
     copy : bool, default False
         if True, then copy the original dictionary rather than modifying it
 
     Returns
     -------
-    original : dict
+    original : MutableMapping
         a reference to the (modified) original dict
 
     Examples
@@ -624,7 +633,7 @@ def update_nested(original, update, copy=False):
     for key, val in update.items():
         if isinstance(val, Mapping):
             orig_val = original.get(key, {})
-            if isinstance(orig_val, Mapping):
+            if isinstance(orig_val, MutableMapping):
                 original[key] = update_nested(orig_val, val)
             else:
                 original[key] = val
@@ -633,7 +642,7 @@ def update_nested(original, update, copy=False):
     return original
 
 
-def display_traceback(in_ipython=True):
+def display_traceback(in_ipython: bool = True):
     exc_info = sys.exc_info()
 
     if in_ipython:
@@ -649,16 +658,16 @@ def display_traceback(in_ipython=True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args, kwargs, channels):
+def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
     """Infer typed keyword arguments for args and kwargs
 
     Parameters
     ----------
-    args : tuple
-        List of function args
-    kwargs : dict
+    args : Sequence
+        Sequence of function args
+    kwargs : MutableMapping
         Dict of function kwargs
-    channels : module
+    channels : ModuleType
         The module containing all altair encoding channel classes.
 
     Returns
@@ -673,8 +682,10 @@ def infer_encoding_types(args, kwargs, channels):
     channel_objs = (
         c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
     )
-    channel_to_name = {c: c._encoding_name for c in channel_objs}
-    name_to_channel = {}
+    channel_to_name: Dict[Type[SchemaBase], str] = {
+        c: c._encoding_name for c in channel_objs
+    }
+    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
         if chan.__name__.endswith("Datum"):
