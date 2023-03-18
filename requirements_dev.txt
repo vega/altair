@@ -11,3 +11,4 @@ mypy
 pandas-stubs
 types-jsonschema
 types-setuptools
+pyarrow

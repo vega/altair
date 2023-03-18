@@ -2,17 +2,41 @@ import json
 import os
 import random
 import hashlib
+import sys
 import warnings
+from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
 
 import pandas as pd
 from toolz import curried
-from typing import Callable
+from typing import Callable, TypeVar
 
 from .core import sanitize_dataframe
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
+
+if sys.version_info >= (3, 8):
+    from typing import Protocol
+else:
+    from typing_extensions import Protocol
+
+
+if TYPE_CHECKING:
+    import pyarrow.lib
+
+
+class SupportsGeoInterface(Protocol):
+    __geo_interface__: MutableMapping
+
+
+class SupportsDataframe(Protocol):
+    def __dataframe__(self, *args, **kwargs):
+        ...
+
+
+DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, SupportsDataframe]
+TDataType = TypeVar("TDataType", bound=DataType)
 
 # ==============================================================================
 # Data transformer registry
@@ -24,11 +48,11 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
     _global_settings = {"consolidate_datasets": True}
 
     @property
-    def consolidate_datasets(self):
+    def consolidate_datasets(self) -> bool:
         return self._global_settings["consolidate_datasets"]
 
     @consolidate_datasets.setter
-    def consolidate_datasets(self, value):
+    def consolidate_datasets(self, value: bool) -> None:
         self._global_settings["consolidate_datasets"] = value
 
 
@@ -58,7 +82,7 @@ class MaxRowsError(Exception):
 
 
 @curried.curry
-def limit_rows(data, max_rows=5000):
+def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
@@ -75,7 +99,9 @@ def limit_rows(data, max_rows=5000):
         if "values" in data:
             values = data["values"]
         else:
-            return data
+            # mypy gets confused as it doesn't see Dict[Any, Any]
+            # as equivalent to TDataType
+            return data  # type: ignore[return-value]
     elif hasattr(data, "__dataframe__"):
         values = data
     if max_rows is not None and len(values) > max_rows:
@@ -91,7 +117,9 @@ def limit_rows(data, max_rows=5000):
 
 
 @curried.curry
-def sample(data, n=None, frac=None):
+def sample(
+    data: DataType, n: Optional[int] = None, frac: Optional[float] = None
+) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
     """Reduce the size of the data model by sampling without replacement."""
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
@@ -99,26 +127,43 @@ def sample(data, n=None, frac=None):
     elif isinstance(data, dict):
         if "values" in data:
             values = data["values"]
-            n = n if n else int(frac * len(values))
+            if not n:
+                if frac is None:
+                    raise ValueError(
+                        "frac cannot be None if n is None and data is a dictionary"
+                    )
+                n = int(frac * len(values))
             values = random.sample(values, n)
             return {"values": values}
+        else:
+            # Maybe this should raise an error or return something useful?
+            return None
     elif hasattr(data, "__dataframe__"):
         # experimental interchange dataframe support
         pi = import_pyarrow_interchange()
         pa_table = pi.from_dataframe(data)
-        n = n if n else int(frac * len(pa_table))
+        if not n:
+            if frac is None:
+                raise ValueError(
+                    "frac cannot be None if n is None with this data input type"
+                )
+            n = int(frac * len(pa_table))
         indices = random.sample(range(len(pa_table)), n)
         return pa_table.take(indices)
+    else:
+        # Maybe this should raise an error or return something useful? Currently,
+        # if data is of type SupportsGeoInterface it lands here
+        return None
 
 
 @curried.curry
 def to_json(
-    data,
-    prefix="altair-data",
-    extension="json",
-    filename="{prefix}-{hash}.{extension}",
-    urlpath="",
-):
+    data: DataType,
+    prefix: str = "altair-data",
+    extension: str = "json",
+    filename: str = "{prefix}-{hash}.{extension}",
+    urlpath: str = "",
+) -> Dict[str, Union[str, Dict[str, str]]]:
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -132,12 +177,12 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data,
-    prefix="altair-data",
-    extension="csv",
-    filename="{prefix}-{hash}.{extension}",
-    urlpath="",
-):
+    data: Union[dict, pd.DataFrame, SupportsDataframe],
+    prefix: str = "altair-data",
+    extension: str = "csv",
+    filename: str = "{prefix}-{hash}.{extension}",
+    urlpath: str = "",
+) -> Dict[str, Union[str, Dict[str, str]]]:
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
@@ -148,14 +193,16 @@ def to_csv(
 
 
 @curried.curry
-def to_values(data):
+def to_values(data: DataType) -> Optional[Dict[str, Union[dict, List[dict]]]]:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
-        data = sanitize_geo_interface(data.__geo_interface__)
-        return {"values": data}
+        # Maybe the type could be further clarified here that it is
+        # SupportGeoInterface and then the ignore statement is not needed?
+        data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
+        return {"values": data_sanitized}
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
@@ -168,9 +215,12 @@ def to_values(data):
         pi = import_pyarrow_interchange()
         pa_table = pi.from_dataframe(data)
         return {"values": pa_table.to_pylist()}
+    else:
+        # Should this raise an error?
+        return None
 
 
-def check_data_type(data):
+def check_data_type(data: DataType) -> None:
     """Raise if the data is not a dict or DataFrame."""
     if not isinstance(data, (dict, pd.DataFrame)) and not any(
         hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
@@ -187,17 +237,19 @@ def check_data_type(data):
 # ==============================================================================
 
 
-def _compute_data_hash(data_str):
+def _compute_data_hash(data_str: str) -> str:
     return hashlib.md5(data_str.encode()).hexdigest()
 
 
-def _data_to_json_string(data):
+def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
-        data = sanitize_geo_interface(data.__geo_interface__)
+        # Maybe the type could be further clarified here that it is
+        # SupportGeoInterface and then the ignore statement is not needed?
+        data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return json.dumps(data)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
@@ -217,7 +269,7 @@ def _data_to_json_string(data):
         )
 
 
-def _data_to_csv_string(data):
+def _data_to_csv_string(data: Union[dict, pd.DataFrame, SupportsDataframe]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
