@@ -476,6 +476,16 @@ def chart_example_invalid_timeunit_value():
     return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
 
 
+def chart_example_invalid_sort_value():
+    return alt.Chart().encode(alt.Angle().sort("invalid_value"))
+
+
+def chart_example_invalid_bandposition_value():
+    return alt.Chart(data.cars()).mark_text(align="right").encode(
+        alt.Text("Horsepower:N", bandPosition='4')
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -564,6 +574,28 @@ def chart_example_invalid_timeunit_value():
                 'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]"""
             ),
         ),
+        (
+            chart_example_invalid_sort_value,
+            # Previuosly, the line
+            # "'invalid_value' is not of type 'array'" appeared multiple times in
+            # the error message. This test should prevent a regression.
+            inspect.cleandoc(
+                r"""'invalid_value' is an invalid value for `sort`:
+
+                'invalid_value' is not of type 'array'$"""
+            )
+        ),
+        (
+            chart_example_invalid_bandposition_value,
+            inspect.cleandoc(
+                r"""'4' is an invalid value for `bandPosition`:
+
+                '4' is not of type 'number'
+                Additional properties are not allowed \('field' was unexpected\)
+                Additional properties are not allowed \('bandPosition', 'field', 'type' were unexpected\)$"""
+            )
+            
+        )
     ],
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
