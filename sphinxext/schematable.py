@@ -11,7 +11,7 @@ from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
 sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
-from tools.schemapi.utils import fix_docstring_issues  # noqa: E402
+from tools.schemapi.utils import fix_docstring_issues, SchemaInfo  # noqa: E402
 
 
 def type_description(schema):
@@ -99,7 +99,7 @@ def add_text(node, text):
     return node
 
 
-def build_row(item):
+def build_row(item, rootschema):
     """Return nodes.row with property description"""
 
     prop, propschema, required = item
@@ -128,8 +128,10 @@ def build_row(item):
     # Description
     md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
+    description = SchemaInfo(propschema, rootschema).deep_description
+    description = description if description else " "
     str_descr = ""
-    str_descr += propschema.get("description", " ")
+    str_descr += description
     str_descr = fix_docstring_issues(str_descr)
     document_settings = frontend.get_default_settings()
     document_settings.setdefault("raw_enabled", True)
@@ -142,13 +144,13 @@ def build_row(item):
     return row
 
 
-def build_schema_table(items):
+def build_schema_table(items, rootschema):
     """Return schema table of items (iterator of prop, schema.item, required)"""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
     )
     for item in items:
-        tbody += build_row(item)
+        tbody += build_row(item, rootschema)
 
     return table
 
@@ -168,9 +170,9 @@ def select_items_from_schema(schema, props=None):
                 raise Exception(f"Can't find property: {prop}") from err
 
 
-def prepare_schema_table(schema, props=None):
+def prepare_schema_table(schema, rootschema, props=None):
     items = select_items_from_schema(schema, props)
-    return build_schema_table(items)
+    return build_schema_table(items, rootschema)
 
 
 def validate_properties(properties):
@@ -208,7 +210,7 @@ class AltairObjectTableDirective(Directive):
             raw_html = nodes.raw("", html, format="html")
             result += [raw_html]
         # create the table from the object
-        result.append(prepare_schema_table(schema, props=properties))
+        result.append(prepare_schema_table(schema, cls._rootschema, props=properties))
 
         if not dont_collapse_table:
             html = "</details>"
