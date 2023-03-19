@@ -3,10 +3,10 @@
 Overview
 ========
 
-Altair is a declarative statistical visualization library for Python, based on
+Vega-Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_.
 
-Altair offers a powerful and concise grammar that enables you to quickly build
+It offers a powerful and concise grammar that enables you to quickly build
 a wide range of statistical visualizations. Here is an example of using the
 API to visualize a dataset with
 an interactive scatter plot:
@@ -32,6 +32,9 @@ channels*, such as the x-axis, y-axis and color. The rest of the plot details ar
 handled automatically. Building on this declarative system, a surprising range
 of plots, from simple to sophisticated, can be created using a
 concise grammar.
+
+The project is named after the `brightest star <https://en.wikipedia.org/wiki/Altair>`_ 
+in the constellation Aquila. From Earth's sky Altair appears close to Vega, the star from which our parent project drew its name.
 
 This documentation serves as the main reference for learning about Altair. Additional learning material and tutorials can be found in the :ref:`learning-resources` section.
 

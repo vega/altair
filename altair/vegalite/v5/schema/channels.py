@@ -327,138 +327,138 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Angle':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Angle':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Angle':
         ...
 
@@ -593,27 +593,27 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def bandPosition(self, _: float, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'AngleDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'AngleDatum':
         ...
 
@@ -646,31 +646,31 @@ class AngleValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'AngleValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'AngleValue':
         ...
 
@@ -908,138 +908,138 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Color':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Color':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Color':
         ...
 
@@ -1174,27 +1174,27 @@ class ColorDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGra
     def bandPosition(self, _: float, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'ColorDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ColorDatum':
         ...
 
@@ -1227,31 +1227,31 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ColorValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'ColorValue':
         ...
 
@@ -1475,15 +1475,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Column':
         ...
 
@@ -1493,97 +1493,97 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Column':
         ...
 
     def center(self, _: bool, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Column':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Column':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Column':
         ...
 
@@ -1803,97 +1803,97 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Description':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Description':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Description':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Description':
         ...
 
@@ -1929,31 +1929,31 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'DescriptionValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'DescriptionValue':
         ...
 
@@ -2124,74 +2124,74 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Detail':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Detail':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Detail':
         ...
 
@@ -2459,136 +2459,136 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def align(self, _: Literal["all", "each", "none"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def align(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Facet':
         ...
 
     def bounds(self, _: Literal["full", "flush"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def center(self, _: bool, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def center(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
     def columns(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, _: float, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, column=Undefined, row=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Facet':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Facet':
         ...
 
@@ -2835,138 +2835,138 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Fill':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Fill':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Fill':
         ...
 
@@ -3101,27 +3101,27 @@ class FillDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGrad
     def bandPosition(self, _: float, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'FillDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillDatum':
         ...
 
@@ -3154,31 +3154,31 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'FillValue':
         ...
 
@@ -3416,138 +3416,138 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'FillOpacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'FillOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillOpacity':
         ...
 
@@ -3682,27 +3682,27 @@ class FillOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     def bandPosition(self, _: float, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'FillOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'FillOpacityDatum':
         ...
 
@@ -3735,31 +3735,31 @@ class FillOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'FillOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'FillOpacityValue':
         ...
 
@@ -3970,97 +3970,97 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Href':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Href':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Href':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Href':
         ...
 
@@ -4096,31 +4096,31 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'HrefValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'HrefValue':
         ...
 
@@ -4291,74 +4291,74 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Key':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Key':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Key':
         ...
 
@@ -4534,15 +4534,15 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude':
         ...
 
@@ -4552,43 +4552,43 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def bin(self, _: None, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Latitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude':
         ...
 
@@ -4714,15 +4714,15 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'LatitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'LatitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'LatitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'LatitudeDatum':
         ...
 
@@ -4829,15 +4829,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Latitude2':
         ...
 
@@ -4847,43 +4847,43 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Latitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude2':
         ...
 
@@ -5006,15 +5006,15 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Latitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Latitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Latitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Latitude2Datum':
         ...
 
@@ -5213,15 +5213,15 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude':
         ...
 
@@ -5231,43 +5231,43 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def bin(self, _: None, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Longitude':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude':
         ...
 
@@ -5393,15 +5393,15 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'LongitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'LongitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'LongitudeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'LongitudeDatum':
         ...
 
@@ -5508,15 +5508,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Longitude2':
         ...
 
@@ -5526,43 +5526,43 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Longitude2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude2':
         ...
 
@@ -5685,15 +5685,15 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Longitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Longitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Longitude2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Longitude2Datum':
         ...
 
@@ -5960,138 +5960,138 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Opacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Opacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Opacity':
         ...
 
@@ -6226,27 +6226,27 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def bandPosition(self, _: float, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'OpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'OpacityDatum':
         ...
 
@@ -6279,31 +6279,31 @@ class OpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrD
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'OpacityValue':
         ...
 
@@ -6475,77 +6475,77 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Order':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Order':
         ...
 
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Order':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Order':
         ...
 
@@ -6585,15 +6585,15 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'OrderValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'OrderValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumber], **kwds) -> 'OrderValue':
         ...
 
@@ -6846,134 +6846,134 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Radius':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Radius':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius':
         ...
 
@@ -7145,35 +7145,35 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'RadiusDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'RadiusDatum':
         ...
 
@@ -7306,15 +7306,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Radius2':
         ...
 
@@ -7324,43 +7324,43 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Radius2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius2':
         ...
 
@@ -7483,15 +7483,15 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Radius2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Radius2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Radius2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Radius2Datum':
         ...
 
@@ -7744,15 +7744,15 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Row':
         ...
 
@@ -7762,97 +7762,97 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Row':
         ...
 
     def center(self, _: bool, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, format=Undefined, formatType=Undefined, labelAlign=Undefined, labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def header(self, _: None, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Row':
         ...
 
     def spacing(self, _: float, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Row':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Row':
         ...
 
@@ -8099,138 +8099,138 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Shape':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Shape':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Shape':
         ...
 
@@ -8365,27 +8365,27 @@ class ShapeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstr
     def bandPosition(self, _: float, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'ShapeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ShapeDatum':
         ...
 
@@ -8418,31 +8418,31 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'ShapeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'ShapeValue':
         ...
 
@@ -8680,138 +8680,138 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Size':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Size':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Size':
         ...
 
@@ -8946,27 +8946,27 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def bandPosition(self, _: float, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'SizeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'SizeDatum':
         ...
 
@@ -8999,31 +8999,31 @@ class SizeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'SizeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'SizeValue':
         ...
 
@@ -9261,138 +9261,138 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Stroke':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Stroke':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Stroke':
         ...
 
@@ -9527,27 +9527,27 @@ class StrokeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGr
     def bandPosition(self, _: float, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDatum':
         ...
 
@@ -9580,31 +9580,31 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds) -> 'StrokeValue':
         ...
 
@@ -9842,138 +9842,138 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeDash':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeDash':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDash':
         ...
 
@@ -10108,27 +10108,27 @@ class StrokeDashDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumD
     def bandPosition(self, _: float, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeDashDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeDashDatum':
         ...
 
@@ -10161,31 +10161,31 @@ class StrokeDashValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropField
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeDashValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds) -> 'StrokeDashValue':
         ...
 
@@ -10423,138 +10423,138 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeOpacity':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeOpacity':
         ...
 
@@ -10689,27 +10689,27 @@ class StrokeOpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDat
     def bandPosition(self, _: float, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeOpacityDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeOpacityDatum':
         ...
 
@@ -10742,31 +10742,31 @@ class StrokeOpacityValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeOpacityValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeOpacityValue':
         ...
 
@@ -11004,138 +11004,138 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined, cornerRadius=Undefined, description=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined, legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def legend(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeWidth':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeWidth':
         ...
 
@@ -11270,27 +11270,27 @@ class StrokeWidthDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatum
     def bandPosition(self, _: float, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'StrokeWidthDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'StrokeWidthDatum':
         ...
 
@@ -11323,31 +11323,31 @@ class StrokeWidthValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFiel
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'StrokeWidthValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefnumberExprRef], **kwds) -> 'StrokeWidthValue':
         ...
 
@@ -11558,97 +11558,97 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Text':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Text':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Text':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Text':
         ...
 
@@ -11817,38 +11817,38 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def bandPosition(self, _: float, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'TextDatum':
         ...
 
     def formatType(self, _: str, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'TextDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'TextDatum':
         ...
 
@@ -11882,23 +11882,23 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, format=Undefined, formatType=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined, param=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TextValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> 'TextValue':
         ...
 
@@ -12151,134 +12151,134 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Theta':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Theta':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta':
         ...
 
@@ -12449,35 +12449,35 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'ThetaDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'ThetaDatum':
         ...
 
@@ -12610,15 +12610,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Theta2':
         ...
 
@@ -12628,43 +12628,43 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Theta2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta2':
         ...
 
@@ -12787,15 +12787,15 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Theta2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Theta2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Theta2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Theta2Datum':
         ...
 
@@ -13035,97 +13035,97 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Tooltip':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Tooltip':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Tooltip':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Tooltip':
         ...
 
@@ -13161,31 +13161,31 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'TooltipValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'TooltipValue':
         ...
 
@@ -13396,97 +13396,97 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Url':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringExprRef], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def format(self, _: dict, **kwds) -> 'Url':
         ...
 
     def formatType(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Url':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Url':
         ...
 
@@ -13522,31 +13522,31 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, test=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, legend=Undefined, scale=Undefined, test=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, empty=Undefined, field=Undefined, legend=Undefined, param=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, bandPosition=Undefined, datum=Undefined, empty=Undefined, legend=Undefined, param=Undefined, scale=Undefined, title=Undefined, type=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, test=Undefined, value=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, empty=Undefined, param=Undefined, value=Undefined, **kwds) -> 'UrlValue':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def condition(self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds) -> 'UrlValue':
         ...
 
@@ -13816,150 +13816,150 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'X':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'X':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X':
         ...
 
@@ -14145,54 +14145,54 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'XDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'XDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XDatum':
         ...
 
@@ -14325,15 +14325,15 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'X2':
         ...
 
@@ -14343,43 +14343,43 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'X2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X2':
         ...
 
@@ -14501,15 +14501,15 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'X2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'X2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'X2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'X2Datum':
         ...
 
@@ -14641,15 +14641,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XError':
         ...
 
@@ -14659,43 +14659,43 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'XError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XError':
         ...
 
@@ -14826,15 +14826,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XError2':
         ...
 
@@ -14844,43 +14844,43 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'XError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XError2':
         ...
 
@@ -15130,118 +15130,118 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'XOffset':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'XOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XOffset':
         ...
 
@@ -15381,23 +15381,23 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'XOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'XOffsetDatum':
         ...
 
@@ -15697,150 +15697,150 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'Y':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Y':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y':
         ...
 
@@ -16026,54 +16026,54 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined, gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined, labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined, position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined, zindex=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def axis(self, _: None, **kwds) -> 'YDatum':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def impute(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: None, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def stack(self, _: bool, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'YDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YDatum':
         ...
 
@@ -16206,15 +16206,15 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'Y2':
         ...
 
@@ -16224,43 +16224,43 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Y2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y2':
         ...
 
@@ -16382,15 +16382,15 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> 'Y2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'Y2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'Y2Datum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'Y2Datum':
         ...
 
@@ -16522,15 +16522,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YError':
         ...
 
@@ -16540,43 +16540,43 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'YError':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YError':
         ...
 
@@ -16707,15 +16707,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YError2':
         ...
 
@@ -16725,43 +16725,43 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def bin(self, _: None, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'YError2':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YError2':
         ...
 
@@ -17011,118 +17011,118 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, _: Literal["average", "count", "distinct", "max", "mean", "median", "min", "missing", "product", "q1", "q3", "ci0", "ci1", "stderr", "stdev", "stdevp", "sum", "valid", "values", "variance", "variancep"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmax=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def aggregate(self, argmin=Undefined, **kwds) -> 'YOffset':
         ...
 
     def bandPosition(self, _: float, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: bool, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, _: str, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def field(self, repeat=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[float], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[str], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[bool], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: List[core.DateTime], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["x", "y", "color", "fill", "stroke", "strokeWidth", "size", "shape", "fillOpacity", "strokeOpacity", "opacity", "text"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["-x", "-y", "-color", "-fill", "-stroke", "-strokeWidth", "-size", "-shape", "-fillOpacity", "-strokeOpacity", "-opacity", "-text"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, encoding=Undefined, order=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: None, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["year", "quarter", "month", "week", "day", "dayofyear", "date", "hours", "minutes", "seconds", "milliseconds"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyear", "utcquarter", "utcmonth", "utcweek", "utcday", "utcdayofyear", "utcdate", "utchours", "utcminutes", "utcseconds", "utcmilliseconds"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["yearquarter", "yearquartermonth", "yearmonth", "yearmonthdate", "yearmonthdatehours", "yearmonthdatehoursminutes", "yearmonthdatehoursminutesseconds", "yearweek", "yearweekday", "yearweekdayhours", "yearweekdayhoursminutes", "yearweekdayhoursminutesseconds", "yeardayofyear", "quartermonth", "monthdate", "monthdatehours", "monthdatehoursminutes", "monthdatehoursminutesseconds", "weekday", "weeksdayhours", "weekdayhoursminutes", "weekdayhoursminutesseconds", "dayhours", "dayhoursminutes", "dayhoursminutesseconds", "hoursminutes", "hoursminutesseconds", "minutesseconds", "secondsmilliseconds"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, _: Literal["utcyearquarter", "utcyearquartermonth", "utcyearmonth", "utcyearmonthdate", "utcyearmonthdatehours", "utcyearmonthdatehoursminutes", "utcyearmonthdatehoursminutesseconds", "utcyearweek", "utcyearweekday", "utcyearweekdayhours", "utcyearweekdayhoursminutes", "utcyearweekdayhoursminutesseconds", "utcyeardayofyear", "utcquartermonth", "utcmonthdate", "utcmonthdatehours", "utcmonthdatehoursminutes", "utcmonthdatehoursminutesseconds", "utcweekday", "utcweeksdayhours", "utcweekdayhoursminutes", "utcweekdayhoursminutesseconds", "utcdayhours", "utcdayhoursminutes", "utcdayhoursminutesseconds", "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds", "utcsecondsmilliseconds"], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'YOffset':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YOffset':
         ...
 
@@ -17262,23 +17262,23 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def scale(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: str, **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: List[str], **kwds) -> 'YOffsetDatum':
         ...
 
-    @overload
+    @overload  # type: ignore[no-overload-impl]
     def title(self, _: None, **kwds) -> 'YOffsetDatum':
         ...
 

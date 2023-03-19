@@ -1,7 +1,7 @@
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Dict
+from typing import Callable, Dict, Optional
 import uuid
 
 from .plugin_registry import PluginRegistry
@@ -112,7 +112,7 @@ class Displayable:
     through appropriate data model transformers.
     """
 
-    renderers = None
+    renderers: Optional[RendererRegistry] = None
     schema_path = ("altair", "")
 
     def __init__(self, spec, validate=False):
@@ -124,7 +124,9 @@ class Displayable:
     def _validate(self):
         # type: () -> None
         """Validate the spec against the schema."""
-        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
+        data = pkgutil.get_data(*self.schema_path)
+        assert data is not None
+        schema_dict = json.loads(data.decode("utf-8"))
         validate_jsonschema(
             self.spec,
             schema_dict,

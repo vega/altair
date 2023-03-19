@@ -10,17 +10,13 @@ Vega-Altair: Declarative Visualization in Python
    :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
    :size: 15
 
-Vega-Altair is a declarative statistical visualization library for Python.
+Vega-Altair is a declarative statistical visualization library for Python. 
 
-Its simple, friendly and consistent API, built on top of the
-powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
+Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
 
-*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
+You can browse this site via the links in the top navigation panel. It can also be helpful to browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
-You can browse this documentation
-via the links in the top navigation panel.
-In addition to reading this documentation page,
-it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
+*The Vega-Altair open-source project is not affiliated with Altair Engineering, Inc.*
 
 .. toctree::
    :maxdepth: 1
