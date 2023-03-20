@@ -619,7 +619,7 @@ def test_multiple_field_strings_in_condition():
             .mark_circle()
             .add_params(selection)
             .encode(
-                color=alt.condition(selection, 'Origin', 'Origin'),
+                color=alt.condition(selection, "Origin", "Origin"),
             )
         ).to_dict()
 
