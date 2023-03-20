@@ -24,6 +24,7 @@ Enhancements
 - Substantially improved error handling. Both in terms of finding the more relevant error (#2842), and in terms of improving the formatting and clarity of the error messages (#2824, #2568).
 - Include experimental support for the DataFrame Interchange Protocol (through ``__dataframe__`` attribute). This requires ``pyarrow>=11.0.0`` (#2888).
 - Support data type inference for columns with special characters (#2905).
+- Changed error message to be more informative when two field strings are using in a condition (#2979).
 
 Grammar Changes
 ~~~~~~~~~~~~~~~
