@@ -105,18 +105,16 @@ Now we can dynamically change the opacity of the points in our chart using the s
 
     A noteworthy aspect of Altair's interactivity is that these effects are controlled entirely within the web browser. This means that you can save charts as HTML files and share them with your colleagues who can access the interactivity via their browser without the need to install Python.
 
-Selections: Capturing Inputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Selections: Capturing Inputs to Query Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Selections parameters capture inputs such as mouse clicks and they can be *bound* to
-particular charts or sub-charts in your visualization, then referenced
-in other parts of the visualization.
+Selection parameters define data queries that are driven by direct manipulation user input (e.g., mouse clicks or drags).
 There are two types of selections:
 :func:`selection_interval` and :func:`selection_point`.
 
 Here we will create a simple chart and then add an selection interval to it.
-We could create a selection interval via ``alt.param(select="interval")``,
-but it is more convenient to use the shorter ``alt.selection_interval``
+We could create a selection interval via ``param(select="interval")``,
+but it is more convenient to use the shorter ``selection_interval``
 (and this also matches the syntax that was used in Altair 4).
 
 Here is a simple scatter-plot created from the ``cars`` dataset:
@@ -135,15 +133,14 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
     )
 
 First we'll create an interval selection using the :func:`selection_interval`
-function:
+function (and interval selection is also referred to as a "brush"):
 
 .. altair-plot::
     :output: none
 
-    brush = alt.selection_interval()  # selection of type "interval"
+    brush = alt.selection_interval()
 
-We can now bind this brush to our chart by setting the ``selection``
-property:
+We can now add this selection interval to our chart via ``add_params``:
 
 .. altair-plot::
 
@@ -161,13 +158,17 @@ a selection region, and to move this region once the region is created.
 So far this example is very similar to what we did in the :ref:`variable example <basic variable>`:
 we created a selection parameter using ``brush = alt.selection_interval()``,
 and we attached that parameter to the chart using ``add_params``.
+One difference is that here we have not defined how the chart should respond to the selection; you will learn this in the next section.
 
-Conditions: Making the Chart Respond
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Conditions & Filters
+~~~~~~~~~~~~~~~~~~~~
 
-The example above is neat, but the selection doesn't actually *do* anything yet.
-To use this selection, we need to reference it in some way within
-the chart. Here, we will use the :func:`condition` function to create
+Conditional Encodings
+^^^^^^^^^^^^^^^^^^^^^
+
+The example above is neat, but the selection interval doesn't actually *do* anything yet.
+To make the chart respond to this selection, we need to reference the selection in within
+the chart specification. Here, we will use the :func:`condition` function to create
 a conditional color encoding: we'll tie the color to the ``"Origin"``
 column for points in the selection, and set the color to ``"lightgray"``
 for points outside the selection:
@@ -182,10 +183,8 @@ for points outside the selection:
         brush
     )
 
-As you can see, with this simple change, the color of the points responds
-to the selection.
-In the sample above,
-we are using the selection parameter ``brush`` as a *predicate*
+As you can see, the color of the points now changes depending on whether they are inside or outside the selection.
+Above we are using the selection parameter ``brush`` as a *predicate*
 (something that evaluates as `True` or `False`).
 This is controlled by the line ``color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))``.
 Data points which fall within the selection evaluate as ``True``,
