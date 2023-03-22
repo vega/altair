@@ -680,9 +680,42 @@ often provides a more convenient syntax
 for simple interactions like this one
 since they can also be accessed in expression strings
 as we saw above.
-Selections and parameters can be used anywhere where expressions are valid, for
-example, in a :ref:`user-guide-calculate-transform` or a
-:ref:`user-guide-filter-transform` transform.
+
+In addition to the widgets listed in the table above,
+Altair has access to `any html widget <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input>`_
+via the more general ``binding`` function.
+In the example below,
+we use a search input to filter points that match the search string exactly.
+You can hover over the points to see the car names
+and try typing one into the search box, e.g. ``vw pickup``
+to see the point highlighted.
+
+.. altair-plot::
+
+    search_input = alt.param(
+        value='',
+        bind=alt.binding(
+            input='search',
+            placeholder="Car model",
+            name='Search ',
+        )
+    )
+    alt.Chart(data.cars.url).mark_point(size=60).encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        tooltip='Name:N',
+        opacity=alt.condition(
+            alt.datum.Name == search_input,
+            # f"datum.Name == {search_input.name}", # Equivalent alternative
+            alt.value(0.8),
+            alt.value(0.1)
+        )
+    ).add_params(
+        search_input
+    )
+
+It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regexes.
+
 
 Scale Binding
 ^^^^^^^^^^^^^
@@ -763,6 +796,44 @@ Another option to include an expression within a chart specification is as a val
     ).add_params(
         param_width,
     )
+
+Now that we know the basics of expressions,
+let's see how we can improve on our search input example
+and make the search string match via a regex pattern.
+To do this we need to use ``expr.regex`` to define the regex string,
+and ``expr.test`` to test it against another string
+(in this case the string in the ``Name`` column).
+The ``i`` option makes the regex case insensitive.
+To try this out, you can write ``mazda|ford`` in the search input box.
+
+.. altair-plot::
+
+    search_input = alt.param(
+        value='',
+        bind=alt.binding(
+            input='search',
+            placeholder="Car model",
+            name='Search ',
+        )
+    )
+    alt.Chart(data.cars.url).mark_point(size=60).encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        tooltip='Name:N',
+        opacity=alt.condition(
+            alt.expr.test(alt.expr.regexp(search_input, 'i'), alt.datum.Name),
+            # f"test(regexp({search_input.name}, 'i'), datum.Name)",  # Equivalent js alternative
+            alt.value(0.8),
+            alt.value(0.1)
+        )
+    ).add_params(
+        search_input
+    )
+
+And remember, all this interactivity is client side.
+You can save this chart as an HTML file or put it on a static site generator such as GitHub/GitLab pages
+and anyone can interact with it without having to install Python.
+Quite powerful!
 
 To summarize expressions:
 
