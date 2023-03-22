@@ -575,13 +575,49 @@ after a selection has been made in a radio button or drop-down
         selection
     )
 
+In addition to the widgets listed in the table above,
+Altair has access to `any html widget <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input>`_
+via the more general ``binding`` function.
+In the example below,
+we use a search input to filter points that match the search string exactly.
+You can hover over the points to see the car names
+and try typing one into the search box, e.g. ``vw pickup``
+to see the point highlighted.
+
+.. altair-plot::
+
+    search_input = alt.selection_point(
+        value='',
+        fields=['Name'],
+        bind=alt.binding(
+            input='search',
+            placeholder="Car model",
+            name='Search ',
+        )
+    )
+    alt.Chart(data.cars.url).mark_point(size=60).encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        tooltip='Name:N',
+        opacity=alt.condition(
+            search_input,
+            alt.value(0.8),
+            alt.value(0.1)
+        )
+    ).add_params(
+        search_input
+    )
+
+It is not always useful to require an exact match to the search syntax,and when we will be learning about :ref:`expressions`, we will see how we can match partial strings via a regex instead.
+
 Logic-Driven Widgets
 --------------------
 
-So far we have seen the use of selections to match and lookup values in our data.
-In other cases,
-we might want to make a logic comparison directly in the conditional statement,
-For example, for a checkbox widget,
+So far we have seen the use of selections to match and lookup exact values in our data.
+This is often useful,
+but sometimes we might want to make a logic comparison
+directly in the conditional statement instead.
+For example, for a checkbox widget
 we want to check if the state of the checkbox is True or False
 and execute some action depending on whether it is checked or not.
 When we are using a checkbox as a toggle like this,
@@ -681,43 +717,16 @@ often provides a more convenient syntax
 for simple interactions like this one
 since they can also be accessed in expression strings
 as we saw above.
+Similarly,
+it is often possible to use equality logic statements
+such as ``alt.datum.xval == selector`` to lookup exact values
+via the logic driven widget syntax,
+but it is often more convenient to switch to a selection
+and specifying a field/encoding to lookup exact values.
 
-In addition to the widgets listed in the table above,
-Altair has access to `any html widget <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input>`_
-via the more general ``binding`` function.
-In the example below,
-we use a search input to filter points that match the search string exactly.
-You can hover over the points to see the car names
-and try typing one into the search box, e.g. ``vw pickup``
-to see the point highlighted.
-
-.. altair-plot::
-
-    search_input = alt.param(
-        value='',
-        bind=alt.binding(
-            input='search',
-            placeholder="Car model",
-            name='Search ',
-        )
-    )
-    alt.Chart(data.cars.url).mark_point(size=60).encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        tooltip='Name:N',
-        opacity=alt.condition(
-            alt.datum.Name == search_input,
-            # f"datum.Name == {search_input.name}", # Equivalent alternative
-            alt.value(0.8),
-            alt.value(0.1)
-        )
-    ).add_params(
-        search_input
-    )
-
-It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`expressions`, we will see how we can match partial strings via regex.
-
-Another interesting use of the ``binding`` function is to introduce a color picker
+For logic-driven widgets,
+an interesting use of the more general ``binding`` function
+is to introduce a color picker
 where the user can choose the colors of the chart interactively:
 
 .. altair-plot::
@@ -919,8 +928,11 @@ and make the search string match via a regex pattern.
 To do this we need to use ``expr.regex`` to define the regex string,
 and ``expr.test`` to test it against another string
 (in this case the string in the ``Name`` column).
-The ``i`` option makes the regex case insensitive.
-To try this out, you can write ``mazda|ford`` in the search input box.
+The ``i`` option makes the regex case insensitive,
+and you can see that we have switched to using ``param`` instead of ``selection_point``
+since we are doing something more complex
+than looking up values with an exact match in the data.
+To try this out, you can type ``mazda|ford`` in the search input box below.
 
 .. altair-plot::
 
