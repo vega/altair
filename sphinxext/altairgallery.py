@@ -124,7 +124,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 {{ docstring }}
 
 .. altair-plot::
-    {% if code_below %}:code-below:{% endif %}
+    {% if code_below %}:remove-code:{% endif %}
     {% if strict %}:strict:{% endif %}
 
 {{ code | indent(4) }}

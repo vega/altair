@@ -32,6 +32,7 @@ The directives have the following options::
     .. altair-plot::
         :namespace:  # specify a plotting namespace that is persistent within the doc
         :hide-code:  # if set, then hide the code and only show the plot
+        :remove-code:  # if set, then remove the code and only show the plot
         :code-below:  # if set, then code is below rather than above the figure
         :output:  [plot|repr|stdout|none]
         :alt: text  # Alternate text when plot cannot be rendered
@@ -141,6 +142,7 @@ class AltairPlotDirective(Directive):
 
     option_spec = {
         "hide-code": flag,
+        "remove-code": flag,
         "code-below": flag,
         "namespace": unchanged,
         "output": validate_output,
@@ -156,6 +158,7 @@ class AltairPlotDirective(Directive):
         app = env.app
 
         hide_code = "hide-code" in self.options
+        remove_code = "remove-code" in self.options
         code_below = "code-below" in self.options
         strict = "strict" in self.options
         div_class = self.options.get("div_class", None)
@@ -216,7 +219,8 @@ class AltairPlotDirective(Directive):
             raw_html = nodes.raw("", html, format="html")
             result += [raw_html]
 
-        result += [source_literal]
+        if not remove_code:
+            result += [source_literal]
 
         if hide_code:
             html = "</details>"
