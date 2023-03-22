@@ -199,7 +199,7 @@ that contains integers specifying a year:
     pop = data.population.url
 
     base = alt.Chart(pop).mark_bar().encode(
-        alt.Y('mean(people):Q', title='total population')
+        alt.Y('mean(people):Q').title('total population')
     ).properties(
         width=200,
         height=200
@@ -276,7 +276,7 @@ you will need to escape the special characters using a backslash:
     alt.Chart(source).mark_bar().encode(
         x='col\:colon',
         # Remove the backslash in the title
-        y=alt.Y('col\.period', title='col.period'),
+        y=alt.Y('col\.period').title('col.period'),
         # Specify the data type
         color='col\[brackets\]:N',
     )
@@ -313,7 +313,7 @@ In Altair, such an operation looks like this:
 .. altair-plot::
 
    alt.Chart(cars).mark_bar().encode(
-       alt.X('Horsepower', bin=True),
+       alt.X('Horsepower').bin(),
        y='count()'
        # could also use alt.Y(aggregate='count', type='quantitative')
    )
@@ -330,8 +330,8 @@ a "Bubble Plot"):
 .. altair-plot::
 
    alt.Chart(cars).mark_point().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
        size='count()',
    )
 
@@ -342,16 +342,16 @@ represents the mean of a third quantity, such as acceleration:
 .. altair-plot::
 
    alt.Chart(cars).mark_circle().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
        size='count()',
-       color='average(Acceleration):Q'
+       color='mean(Acceleration):Q'
    )
 
 Aggregation Functions
 ^^^^^^^^^^^^^^^^^^^^^
 
-In addition to ``count`` and ``average``, there are a large number of available
+In addition to ``count`` and ``mean``, there are a large number of available
 aggregation functions built into Altair:
 
 =========  ===========================================================================  =====================================
@@ -416,51 +416,52 @@ x-axis, using the barley dataset:
 
     base = alt.Chart(barley).mark_bar().encode(
         y='mean(yield):Q',
-        color=alt.Color('mean(yield):Q', legend=None)
+        color=alt.Color('mean(yield):Q').legend(None)
     ).properties(width=100, height=100)
 
     # Sort x in ascending order
     ascending = base.encode(
-        alt.X(field='site', type='nominal', sort='ascending')
+        alt.X('site:N').sort('ascending')
     ).properties(
         title='Ascending'
     )
 
     # Sort x in descending order
     descending = base.encode(
-        alt.X(field='site', type='nominal', sort='descending')
+        alt.X('site:N').sort('descending')
     ).properties(
         title='Descending'
     )
 
     # Sort x in an explicitly-specified order
     explicit = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=['Duluth', 'Grand Rapids', 'Morris',
-                    'University Farm', 'Waseca', 'Crookston'])
+        alt.X('site:N').sort(
+            ['Duluth', 'Grand Rapids', 'Morris', 'University Farm', 'Waseca', 'Crookston']
+        )
     ).properties(
         title='Explicit'
     )
 
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='mean'))
+        alt.X('site:N').sort(field='yield', op='mean')
     ).properties(
         title='By Yield'
     )
 
     alt.concat(
-        ascending, descending, explicit,
-        sortchannel, sortfield,
+        ascending,
+        descending,
+        explicit,
+        sortchannel,
+        sortfield,
         columns=3
     )
 
@@ -481,16 +482,14 @@ following example where we don't aggregate the data:
 
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='min'))
+        alt.X('site:N').sort(field='yield', op='max')
     ).properties(
         title='By Min Yield'
     )
@@ -510,12 +509,11 @@ While the above examples show sorting of axes by specifying ``sort`` in the
 .. altair-plot::
 
     alt.Chart(barley).mark_rect().encode(
-        alt.X('mean(yield):Q', sort='ascending'),
-        alt.Y('site:N', sort='descending'),
-        alt.Color('site:N',
-            sort=['Morris', 'Duluth', 'Grand Rapids',
-                  'University Farm', 'Waseca', 'Crookston']
-        )
+        alt.X('mean(yield):Q').sort('ascending'),
+        alt.Y('site:N').sort('descending'),
+        alt.Color('site:N').sort([
+            'Morris', 'Duluth', 'Grand Rapids', 'University Farm', 'Waseca', 'Crookston'
+        ])
     )
 
 Here the y-axis is sorted reverse-alphabetically, while the color legend is
@@ -620,12 +618,10 @@ One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly in
     
     import altair as alt
 
-    bar = alt.Chart().mark_bar().encode(
+    alt.Chart().mark_bar().encode(
         y=alt.YDatum(220).scale(domain=(0,500)),
         color=alt.value("darkkhaki")
     )
-
-    bar
 
 If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
 
