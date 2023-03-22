@@ -507,8 +507,8 @@ Input Element             Description                                           
 :class:`binding`          General method that supports many HTML input elements
 ========================= ===========================================================================  ===============================================
 
-Widgets
-^^^^^^^
+Widget Binding
+^^^^^^^^^^^^^^
 
 Widgets are HTML input elements, such as drop-downs, sliders, radio buttons, and search boxes.
 
@@ -715,7 +715,7 @@ to see the point highlighted.
         search_input
     )
 
-It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regex.
+It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`expressions`, we will see how we can match partial strings via regex.
 
 Another interesting use of the ``binding`` function is to introduce a color picker
 where the user can choose the colors of the chart interactively:
