@@ -354,24 +354,12 @@ point is highlighted:
 
 Point selections also allow for multiple chart objects to be selected.
 By default, chart elements can be added to and removed from the selection
-by clicking on them while holding the *shift* key:
+by clicking on them while holding the *shift* key, you can try in the two charts above.
 
-The point selection accepts the ``toggle`` parameter,
-which controls whether points can be removed from the selection
-once they are added.
-For example,
-here is a plot where you can "paint" the chart objects
-by hovering over them with your mouse:
+Parameter Composition
+~~~~~~~~~~~~~~~~~~~~~
 
-.. altair-plot::
-
-    point_mouseover = alt.selection_point(on='mouseover', toggle=False, empty=False)
-    make_example(point_mouseover)
-
-Composing Multiple Selections
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Altair also supports combining multiple selections using the ``&``, ``|``
+Altair also supports combining multiple parameters using the ``&``, ``|``
 and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
 operands.
 
@@ -379,10 +367,11 @@ In the following example there are two people who can make an interval
 selection in the chart. The person Alex makes a selection box when the
 alt-key (macOS: option-key) is selected and Morgan can make a selection
 box when the shift-key is selected.
-We use the alt.Brushconfig() to give the selection box of Morgan a different
+We use the ``Brushconfig`` to give the selection box of Morgan a different
 style.
 Now, we color the rectangles when they fall within Alex's or Morgan's
-selection.
+selection
+(note that you need to create both selections before seeing the effect).
 
 .. altair-plot::
 
@@ -416,8 +405,9 @@ With these operators, selections can be combined in arbitrary ways:
   selection or outside the selection of Morgan
 
 
-Selection Targets: Fields and Encodings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Selection Targets
+~~~~~~~~~~~~~~~~~
+
 For any but the simplest selections, the user needs to think about exactly
 what is targeted by the selection, and this can be controlled with either the
 ``fields`` or ``encodings`` arguments. These control what data properties are
@@ -431,9 +421,11 @@ with a matching ``Origin``.
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin'])
-    color = alt.condition(selection,
-                          alt.Color('Origin:N', legend=None),
-                          alt.value('lightgray'))
+    color = alt.condition(
+        selection,
+        alt.Color('Origin:N', legend=None),
+        alt.value('lightgray')
+    )
 
     scatter = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -464,9 +456,11 @@ cylinders:
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
-    color = alt.condition(selection,
-                          alt.Color('Origin:N', legend=None),
-                          alt.value('lightgray'))
+    color = alt.condition(
+        selection,
+        alt.Color('Origin:N', legend=None),
+        alt.value('lightgray')
+    )
 
     scatter = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
