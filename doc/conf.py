@@ -40,6 +40,7 @@ extensions = [
     "sphinxext.altairgallery",
     "sphinxext.schematable",
     "sphinx_copybutton",
+    "sphinx_design"
     # "sphinxext.rediraffe",
 ]
 

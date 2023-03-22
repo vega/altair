@@ -24,6 +24,7 @@ from .utils import (
 )
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
+from tests.examples_methods_syntax import iter_examples_methods_syntax
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -126,7 +127,23 @@ EXAMPLE_TEMPLATE = jinja2.Template(
     {% if code_below %}:code-below:{% endif %}
     {% if strict %}:strict:{% endif %}
 
-    {{ code | indent(4) }}
+{{ code | indent(4) }}
+
+.. tab-set::
+
+    .. tab-item:: Method syntax
+        :sync: method
+
+        .. code:: python
+
+{{ method_code | indent(12) }}
+
+    .. tab-item:: Attribute syntax
+        :sync: attribute
+
+        .. code:: python
+
+{{ code | indent(12) }}
 """
 )
 
@@ -186,10 +203,12 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
 def populate_examples(**kwds):
     """Iterate through Altair examples and extract code"""
 
+    method_examples = sorted(iter_examples_methods_syntax(), key=itemgetter("name"))
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
 
-    for example in examples:
+    for example, method_example in zip(examples, method_examples):
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
+        _, _, method_code, _ = get_docstring_and_rest(method_example["filename"])
         example.update(kwds)
         if category is None:
             raise Exception(
@@ -200,6 +219,7 @@ def populate_examples(**kwds):
                 "docstring": docstring,
                 "title": docstring.strip().split("\n")[0],
                 "code": code,
+                "method_code": method_code,
                 "category": category.title(),
                 "lineno": lineno,
             }
