@@ -30,21 +30,19 @@ Each argument within ``transform_calculate`` is a `Vega expression`_ string,
 which is a well-defined set of javascript-style operations that can be used
 to calculate a new field from an existing one.
 
-To streamline building these vega expressions in Python, Altair provides the
-:mod:`altair.expr` module which provides constants and functions to allow
+To streamline building these Vega expressions in Python, Altair provides the
+:mod:`expr` module which provides constants and functions to allow
 these expressions to be constructed with Python syntax; for example:
 
 .. altair-plot::
-
-    from altair import expr, datum
 
     alt.Chart(data).mark_line().encode(
         x='x:Q',
         y='y:Q',
         order='t:Q'
     ).transform_calculate(
-        x=expr.cos(datum.t * expr.PI / 50),
-        y=expr.sin(datum.t * expr.PI / 25)
+        x=alt.expr.cos(alt.datum.t * alt.expr.PI / 50),
+        y=alt.expr.sin(alt.datum.t * alt.expr.PI / 25)
     )
 
 Altair expressions are designed to output valid Vega expressions. The benefit of
