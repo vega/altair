@@ -717,7 +717,28 @@ to see the point highlighted.
 
 It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regex.
 
-Another interesting 
+Another interesting use of the ``binding`` function is to introduce a color picker
+where the user can choose the colors of the chart interactively:
+
+.. altair-plot::
+
+    color_usa = alt.param(value="#317bb4", bind=alt.binding(input='color', name='USA '))
+    color_europe = alt.param(value="#ffb54d", bind=alt.binding(input='color', name='Europe '))
+    color_japan = alt.param(value="#adadad", bind=alt.binding(input='color', name='Japan '))
+
+    alt.Chart(data.cars.url).mark_circle().encode(
+        x='Miles_per_Gallon:Q',
+        y='Horsepower:Q',
+        color=alt.Color(
+            'Origin:N',
+            scale=alt.Scale(
+                domain=['USA', 'Europe', 'Japan'],
+                range=[color_usa, color_europe, color_japan]
+            )
+        )
+    ).add_params(
+        color_usa, color_europe, color_japan
+    )
 
 Encoding Channel Binding
 ^^^^^^^^^^^^^^^^^^^^^^^^
