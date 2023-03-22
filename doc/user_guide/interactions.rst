@@ -716,9 +716,29 @@ to see the point highlighted.
 
 It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regexes.
 
+Legend Binding
+^^^^^^^^^^^^^^
+
+An interactive legend can often be helpful to assist in focusing in on groups of data.
+Instead of manually having to build a separate chart to use as a legend,
+Altair provides the ``bind='legend'`` option to facilitate the creation of clickable legends: 
+
+.. altair-plot::
+
+    selection = alt.selection_point(fields=['Origin'], bind='legend')
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N',
+        opacity=alt.condition(selection, alt.value(0.8), alt.value(0.2))
+    ).add_params(
+        selection
+    )
 
 Scale Binding
 ^^^^^^^^^^^^^
+
 With interval selections, the ``bind`` property can be set to the value of ``"scales"``. In these cases, the binding will automatically respond to the panning and zooming along the chart:
 
 .. altair-plot::
