@@ -715,7 +715,64 @@ to see the point highlighted.
         search_input
     )
 
-It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regexes.
+It is not always useful to require an exact match to the search syntax,and when we will be learning about expressions in the section :ref:`<expressions>`, we will see how we can match partial strings via regex.
+
+Another interesting 
+
+Encoding Channel Binding
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+There is no direct way to map an encoding channel to a widget in order to dynamically display different charts based on different column choices, such as ``y=column_param``. The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365, and in the meantime, you can use parameters for a convenient workaround which let's you achieve the same functionality and change the plotted columns based on a widget selection (the x-axis title cannot be changed dynamically, but a text mark could be used instead if desired):
+
+.. altair-plot::
+
+    dropdown = alt.binding_select(
+        options=['Miles_per_Gallon', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
+        name='X-axis column '
+    )
+    xcol_param = alt.param(
+        value='Miles_per_Gallon',
+        bind=dropdown
+    )
+
+    alt.Chart(data.cars.url).mark_circle().encode(
+        x=alt.X('x:Q', title=''),
+        y='Horsepower:Q',
+        color='Origin:N'
+    ).transform_calculate(
+        x=f'datum[{xcol_param.name}]'
+    ).add_params(
+        xcol_param
+    )
+
+It was possible to achieve something similar before the introduction of parameters in Altair 5, but the spec for this is more involved so the solution above is to prefer:
+
+.. altair-plot::
+
+    # Similar workaround for earlier versions of Altair
+    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower', 'Cylinders'])
+    dropdown_options = source['variable'].drop_duplicates().tolist()
+
+    dropdown = alt.binding_select(
+        options=dropdown_options,
+        name='X-axis column'
+    )
+    selection = alt.selection_point(
+        fields=['variable'],
+        value=[{'variable': dropdown_options[0]}],
+       # init={'variable': dropdown_options[0]},  # For Altair 4
+        bind=dropdown
+    )
+
+    alt.Chart(source).mark_circle().encode(
+        x=alt.X('value:Q', title=''),
+        y='Horsepower',
+        color='Origin',
+    ).add_params(
+        selection
+    ).transform_filter(
+        selection
+    )
 
 Legend Binding
 ^^^^^^^^^^^^^^
@@ -899,53 +956,3 @@ Some possible use cases for the above interactivity are not currently supported 
 1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python.  This is not currently possible (and as of December 2021 it does not seem likely to become possible any time soon), so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
 
    - The dashboarding package ``Panel`` has added support for processing Altair selections with custom callbacks in their 0.13 release. This is currently the only Python dashboarding package that supports custom callbacks for Altair selections and you can read more about how to use this functionality in `the Panel documentation <https://pyviz-dev.github.io/panel/reference/panes/Vega.html#selections>`_.
-
-2. It is not possible to use an encoding such as ``y=column_variable`` to then dynamically display different charts based on different column choices.  Similar functionality could be created using for example ``ipywidgets`` or ``panel``, but the resulting interactivity would be controlled by Python, and would not work for example as a stand-alone web page.  The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365. In the meantime you can workaround this by transforming the data into long form using either `melt` in pandas or :meth:`transform_fold` in Altair.
-
-.. altair-plot::
-    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower', 'Cylinders'])
-    dropdown_options = source['variable'].drop_duplicates().tolist()
-
-    dropdown = alt.binding_select(
-        options=dropdown_options,
-        name='X-axis column'
-    )
-    selection = alt.selection_point(
-        fields=['variable'],
-        value=[{'variable': dropdown_options[0]}],
-       # init={'variable': dropdown_options[0]},  # For Altair 4
-        bind=dropdown
-    )
-
-    alt.Chart(source).mark_circle().encode(
-        x=alt.X('value:Q', title=''),
-        y='Horsepower',
-        color='Origin',
-    ).add_params(
-        selection
-    ).transform_filter(
-        selection
-    )
-
-Taking advantage of the parameter interface introduced in Altair 5, we can express this more succinctly:
-
-.. altair-plot::
-    dropdown = alt.binding_select(
-        options=['Miles_per_Gallon', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
-        name='X-axis column '
-    )
-    param = alt.param(
-        name='selected_column',
-        value='Miles_per_Gallon',
-        bind=dropdown
-    )
-
-    alt.Chart(data.cars.url).mark_circle().encode(
-        x='x:Q',
-        y='Horsepower:Q',
-        color='Origin:N'
-    ).transform_calculate(
-        x='datum[selected_column]'
-    ).add_params(
-        param
-    )
