@@ -356,55 +356,6 @@ Point selections also allow for multiple chart objects to be selected.
 By default, chart elements can be added to and removed from the selection
 by clicking on them while holding the *shift* key, you can try in the two charts above.
 
-Parameter Composition
-~~~~~~~~~~~~~~~~~~~~~
-
-Altair also supports combining multiple parameters using the ``&``, ``|``
-and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
-operands.
-
-In the following example there are two people who can make an interval
-selection in the chart. The person Alex makes a selection box when the
-alt-key (macOS: option-key) is selected and Morgan can make a selection
-box when the shift-key is selected.
-We use the ``Brushconfig`` to give the selection box of Morgan a different
-style.
-Now, we color the rectangles when they fall within Alex's or Morgan's
-selection
-(note that you need to create both selections before seeing the effect).
-
-.. altair-plot::
-
-    alex = alt.selection_interval(
-        on="[mousedown[event.altKey], mouseup] > mousemove",
-        name='alex'
-    )
-    morgan = alt.selection_interval(
-        on="[mousedown[event.shiftKey], mouseup] > mousemove",
-        mark=alt.BrushConfig(fill="#fdbb84", fillOpacity=0.5, stroke="#e34a33"),
-        name='morgan'
-    )
-
-    alt.Chart(cars).mark_rect().encode(
-        x='Cylinders:O',
-        y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
-    ).add_params(
-        alex, morgan
-    ).properties(
-        width=300,
-        height=180
-    )
-
-With these operators, selections can be combined in arbitrary ways:
-
-- ``~(alex & morgan)``: to select the rectangles that fall outside
-  Alex's and Morgan's selections.
-
-- ``alex | ~morgan``: to select the rectangles that fall within Alex's
-  selection or outside the selection of Morgan
-
-
 Selection Targets
 ~~~~~~~~~~~~~~~~~
 
@@ -481,6 +432,56 @@ cylinders:
 
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
+
+
+Parameter Composition
+~~~~~~~~~~~~~~~~~~~~~
+
+Altair also supports combining multiple parameters using the ``&``, ``|``
+and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
+operands.
+
+Returning to our heatmap examples,
+we can construct a scenario where there are two people who can make an interval
+selection in the same chart. The person Alex makes a selection box when the
+alt-key (macOS: option-key) is selected and Morgan can make a selection
+box when the shift-key is selected.
+We use the ``Brushconfig`` to give the selection box of Morgan a different
+style.
+Now, we color the rectangles when they fall within Alex's or Morgan's
+selection
+(note that you need to create both selections before seeing the effect).
+
+.. altair-plot::
+
+    alex = alt.selection_interval(
+        on="[mousedown[event.altKey], mouseup] > mousemove",
+        name='alex'
+    )
+    morgan = alt.selection_interval(
+        on="[mousedown[event.shiftKey], mouseup] > mousemove",
+        mark=alt.BrushConfig(fill="#fdbb84", fillOpacity=0.5, stroke="#e34a33"),
+        name='morgan'
+    )
+
+    alt.Chart(cars).mark_rect().encode(
+        x='Cylinders:O',
+        y='Origin:O',
+        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
+    ).add_params(
+        alex, morgan
+    ).properties(
+        width=300,
+        height=180
+    )
+
+With these operators, selections can be combined in arbitrary ways:
+
+- ``~(alex & morgan)``: to select the rectangles that fall outside
+  Alex's and Morgan's selections.
+
+- ``alex | ~morgan``: to select the rectangles that fall within Alex's
+  selection or outside the selection of Morgan
 
 .. _binding-parameters:
 
