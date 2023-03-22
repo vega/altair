@@ -86,7 +86,7 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
         x="date:T",
         y="price:Q",
     ).transform_filter(
-        datum.symbol == "GOOG"
+        alt.datum.symbol == "GOOG"
     )
 
 Instead of using a single color as the fill color of the area, we can set it to a gradient.
@@ -99,7 +99,7 @@ In this example, we are also customizing the overlay. For more information about
 
     source = data.stocks()
 
-    alt.Chart(source).transform_filter('datum.symbol==="GOOG"').mark_area(
+    alt.Chart(source).transform_filter(alt.datum.symbol=="GOOG").mark_area(
         line={"color": "darkgreen"},
         color=alt.Gradient(
             gradient="linear",
@@ -129,9 +129,9 @@ Adding a color field to area chart creates stacked area chart by default. For ex
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
+        alt.X("yearmonth(date):T").axis(format="%Y", domain=False, tickSize=0),
         alt.Y("sum(count):Q"),
-        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
+        alt.Color("series:N").scale(scheme="category20b"),
     )
 
 
@@ -147,9 +147,9 @@ You can also create a normalized stacked area chart by setting ``stack`` to ``"n
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
-        alt.Y("sum(count):Q", stack="normalize"),
-        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
+        alt.X("yearmonth(date):T").axis(format="%Y", domain=False, tickSize=0),
+        alt.Y("sum(count):Q").stack("normalize"),
+        alt.Color("series:N").scale(scheme="category20b"),
     )
 
 
@@ -166,9 +166,9 @@ Adding the ``interactive`` method allows for zooming and panning the x-scale.
     source = data.unemployment_across_industries.url
 
     alt.Chart(source).mark_area().encode(
-        alt.X("yearmonth(date):T", axis=alt.Axis(format="%Y", domain=False, tickSize=0)),
-        alt.Y("sum(count):Q", stack="center", axis=None),
-        alt.Color("series:N", scale=alt.Scale(scheme="category20b")),
+        alt.X("yearmonth(date):T").axis(format="%Y", domain=False, tickSize=0),
+        alt.Y("sum(count):Q").stack("center").axis(None),
+        alt.Color("series:N").scale(scheme="category20b"),
     ).interactive()
 
 
@@ -184,10 +184,8 @@ Specifying ``x2`` or ``y2`` for the quantitative axis of area marks produce rang
     source = data.seattle_weather()
 
     alt.Chart(source).mark_area(opacity=0.7).encode(
-        alt.X("monthdate(date):T", title="Date"),
-        alt.Y("mean(temp_max):Q", title="Daily Temperature Range (C)"),
-        alt.Y2(
-            "mean(temp_min):Q",
-        ),
+        alt.X("monthdate(date):T").title("Date"),
+        alt.Y("mean(temp_max):Q").title("Daily Temperature Range (C)"),
+        alt.Y2("mean(temp_min):Q"),
     ).properties(width=600, height=300)
 
