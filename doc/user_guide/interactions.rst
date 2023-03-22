@@ -503,12 +503,19 @@ Input Element             Description                                           
 :class:`binding_radio`    Radio buttons that force only a single selection                                    :ref:`gallery_multiple_interactions`
 :class:`binding_select`   Drop down box for selecting a single item from a list                               :ref:`gallery_multiple_interactions`
 :class:`binding_range`    Shown as a slider to allow for selection along a scale.                             :ref:`gallery_us_population_over_time`
+:class:`binding`          General method that supports many HTML input elements
 ========================= ===========================================================================  ===============================================
 
+Widgets
+^^^^^^^
 
-Data-Driven Input Element Binding
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-With point selections, an input element can be added to the chart to establish a binding between the input and the selection. For instance, using our example from above, a dropdown can be used to highlight cars from a specific ``origin``:
+Widgets are HTML input elements, such as drop-downs, sliders, radio buttons, and search boxes.
+
+Data-Driven Widgets
+-------------------
+
+Data-driven widgets use the active value(s) of the widget to look up matching points with matching values in the chart's dataset.
+For example, we can establish a binding between an input widget and a point selection to filter the data as in the example below where a drop-down is used to highlight cars from a specific ``Origin``:
 
 .. altair-plot::
 
@@ -524,14 +531,19 @@ With point selections, an input element can be added to the chart to establish a
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color=color,
-        tooltip='Name:N'
     ).add_params(
         selection
     )
 
-The above example shows all three elements at work. We  ``bind`` the ``input_dropdown`` to the ``selection`` which is called from the ``condition`` encoded through the data.
+As you can see above,
+we are still using ``conditions`` to make the chart respond to the selection,
+just as we did without widgets.
+Bindings and input elements can also be used to filter data allowing the user to see just the selected points as in the example below.
+In this example, we also add an empty selection
+to illustrate how you can go back to showing all points
+after a selection has been made in a radio button or drop-down 
+(since these can't be deselected).
 
-Bindings and input elements can also be used to filter data on the client side. Reducing noise in the chart and allowing the user to see just certain selected elements:
 
 .. altair-plot::
 
@@ -539,8 +551,16 @@ Bindings and input elements can also be used to filter data on the client side. 
     options = ['Europe', 'Japan', 'USA']
     labels = [option + ' ' for option in options]
 
-    input_dropdown = alt.binding_radio(options=options, labels=labels, name='Region: ')
-    selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
+    input_dropdown = alt.binding_radio(
+        # Add the empty selection which shows all when clicked
+        options=options + [None],
+        labels=labels + ['All'],
+        name='Region: '
+    )
+    selection = alt.selection_point(
+        fields=['Origin'],
+        bind=input_dropdown,
+    )
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -548,19 +568,20 @@ Bindings and input elements can also be used to filter data on the client side. 
         # We need to set a constant domain to preserve the colors
         # when only one region is shown at a time
         color=alt.Color('Origin:N', scale=alt.Scale(domain=options)),
-        tooltip='Name:N'
     ).add_params(
         selection
     ).transform_filter(
         selection
     )
 
-Logic-Driven Input Element Binding
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Logic-Driven Widgets
+--------------------
 
-So far we have seen the use of selections to match values in our data.
-When using checkbox bindings,
-we want to instead use the state of the checkbox as a True/False condition
+So far we have seen the use of selections to match and lookup values in our data.
+In other cases,
+we might want to make a logic comparison directly in the conditional statement,
+For example, for a checkbox widget,
+we want to check if the state of the checkbox is True or False
 and execute some action depending on whether it is checked or not.
 When we are using a checkbox as a toggle like this,
 we need to use `param` instead of `selection_point`,
@@ -584,9 +605,18 @@ just if the value of the check box is True (checked) or False (unchecked):
         param_checkbox
     )
 
-Similarly, if we want to create a condition
-where we use the value of a slider
-we can use `param` like so:
+Similarly, we might want to create a condition
+where we want to access the value of a slider
+to use directly in a logic expression,
+e.g. compare if it is smaller or larger than the values in the data.
+For this workflow it is also recommended to use ``param``,
+and as you can see below,
+we use the special syntax ``datum.xval``
+to reference the column to compare again.
+Prefixing the column name with ``datum``
+tells Altair that we want to compare to a column in the dataframe,
+rather than to a Python variable called ``xval``,
+which would have been the case if we just wrote ``xval < selector``.
 
 .. altair-plot::
 
@@ -615,7 +645,7 @@ we can use `param` like so:
        selector
     )
 
-In this case we could also have used a selection
+In this particular case we could actually have used a selection
 as selection values can be accessed directly and used in expressions that affect the
 chart. For example, here we create a slider to choose a cutoff value, and color
 points based on whether they are smaller or larger than the value:
