@@ -608,7 +608,7 @@ to see the point highlighted.
         search_input
     )
 
-It is not always useful to require an exact match to the search syntax,and when we will be learning about :ref:`expressions`, we will see how we can match partial strings via a regex instead.
+It is not always useful to require an exact match to the search syntax, and when we will be learning about :ref:`expressions`, we will see how we can match partial strings via a regex instead.
 
 Logic-Driven Widgets
 --------------------
