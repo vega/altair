@@ -66,11 +66,6 @@ In order to use this variable in the chart specification, we explicitly add it t
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
-
-    cars = data.cars.url
-
     op_var = alt.param(value=0.1)
 
     alt.Chart(cars).mark_circle(opacity=op_var).encode(
@@ -85,11 +80,6 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
-
-    cars = data.cars.url
-
     op_var2 = 0.1
 
     alt.Chart(cars).mark_circle(opacity=op_var2).encode(
@@ -101,11 +91,6 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
 The benefit of using :func:`param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
 
 .. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    cars = data.cars.url
 
     slider = alt.binding_range(min=0, max=1, step=0.05, name='opacity:')
     op_var = alt.param(value=0.1, bind=slider)
