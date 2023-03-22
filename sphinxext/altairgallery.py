@@ -204,17 +204,19 @@ def populate_examples(**kwds):
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
-    method_examples = {x['name']: x for x in iter_examples_methods_syntax()}
+    method_examples = {x["name"]: x for x in iter_examples_methods_syntax()}
 
     for example in examples:
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
-        if example['name'] in method_examples.keys():
-            _, _, method_code, _ = get_docstring_and_rest(method_examples[example['name']]["filename"])
+        if example["name"] in method_examples.keys():
+            _, _, method_code, _ = get_docstring_and_rest(
+                method_examples[example["name"]]["filename"]
+            )
         else:
             method_code = code
             code += (
-                '# No channel encoding options are specified in this chart\n'
-                '# so the code is the same as for the method-based syntax.\n'
+                "# No channel encoding options are specified in this chart\n"
+                "# so the code is the same as for the method-based syntax.\n"
             )
         example.update(kwds)
         if category is None:
