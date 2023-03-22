@@ -30,39 +30,27 @@ For example, here we will visualize the cars dataset using four of the available
        shape='Origin'
    )
 
+Channel Options
+~~~~~~~~~~~~~~~
+
 Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
-the chart. For example, below we adjust the y-axis title and increase the step between the x-axis ticks:
-
-.. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
-
-    alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
-        y=alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
-        color='Origin',
-        shape='Origin'
-    )
-
+the chart.
+Altair 5.0 introduced an method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer)
 
 .. _method-based-attribute-setting:
 
-Alternative Syntax for Channel Options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Method-Based Syntax
+^^^^^^^^^^^^^^^^^^^
 
-Altair 5.0 introduced an alternative method-based syntax for setting channel options.  In the example above, the ``axis`` option of the ``x`` channel encoding is set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``.  To define the same :class:`X` object using the alternative method-based syntax, we can use ``x=alt.X('Horsepower').axis(tickMinStep=50)``.  In other words, the use of the ``axis`` keyword argument is replaced by the use of the ``axis`` method.
+The method-based syntax replaces *keyword arguments* with *methods*.
+For example, an ``axis`` option of the ``x`` channel encoding would traditionally be set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``. To define the same :class:`X` object using the method-based syntax, we can instead use the more succinct ``x=alt.X('Horsepower').axis(tickMinStep=50)``.
 
 The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel.  The following produces the same chart as the previous example.
 
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
-
     alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower').axis(tickMinStep=50),
-        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        alt.X('Horsepower').axis(tickMinStep=50),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
@@ -70,16 +58,45 @@ The same technique works with all encoding channels and all channel options.  Fo
 These option-setter methods can also be chained together, as in the following, in which we set the ``axis``, ``bin``, and ``scale`` options of the ``x`` channel by using the corresponding methods (``axis``, ``bin``, and ``scale``).  We can break the ``x`` definition over multiple lines to improve readability.  (This is valid syntax because of the enclosing parentheses from ``encode``.)
 
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
-
     alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower')
-                .axis(ticks=False)
-                .bin(maxbins=10)
-                .scale(domain=(30,300), reverse=True),
-        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        alt.X('Horsepower')
+            .axis(ticks=False)
+            .bin(maxbins=10)
+            .scale(domain=(30,300), reverse=True),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        color='Origin',
+        shape='Origin'
+    )
+
+
+.. _attribute-based-attribute-setting:
+
+Attribute-Based Syntax
+^^^^^^^^^^^^^^^^^^^^^^
+
+The two examples from the section above
+would look as follows with the traditional attribute-based syntax:
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
+        alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
+        color='Origin',
+        shape='Origin'
+    )
+
+For specs making extensive use of channel options,
+the attribute-based syntax can become quite verbose:
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X(
+            'Horsepower',
+            axis=alt.Axis(ticks=False),
+            bin=alt.Bin(maxbins=10),
+            scale=alt.Scale(domain=(30,300), reverse=True)
+        ),
+        alt.Y('Miles_per_Gallon', title='Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
