@@ -240,8 +240,49 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 
     chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
 
-Selection Types: Interval and Point
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Filtering Data
+^^^^^^^^^^^^^^
+
+Using a selection parameter to filter data works in much the same way
+as using it within ``condition``,
+For example, in ``transform_filter(brush)``,
+we are again using the selection parameter ``brush`` as a predicate.
+Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
+and data points which evaluate to ``False`` are filtered out.
+
+It is not possible to both select and filter in the same chart,
+so typically this functionality will be used when at least two sub-charts are present.
+In the following example,
+we attach the selection parameter to the upper chart,
+and then filter data in the lower chart based selection in the upper chart.
+You can explore how the counts change in the bar chart
+depending on the size and position of the selection in the scatter plot.
+
+.. altair-plot::
+
+    brush = alt.selection_interval()
+
+    points = alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).add_params(
+        brush
+    )
+
+    bars = alt.Chart(cars).mark_bar().encode(
+        x='count()',
+        y='Origin:N',
+        color='Origin:N'
+    ).transform_filter(
+        brush
+    )
+
+    points & bars
+
+
+Selection Types
+~~~~~~~~~~~~~~~
 
 Now that we have seen the basics of how we can use a selection to interact with a chart,
 let's take a more systematic look at some of the types of selection parameters available in Altair.
@@ -291,25 +332,6 @@ empty selection contains none of the points:
 
    interval_x = alt.selection_interval(encodings=['x'], empty=False)
    make_example(interval_x)
-
-A special case of an interval selection is when the interval is bound to the
-chart scales; this is how Altair plots can be made interactive:
-
-.. altair-plot::
-
-    scales = alt.selection_interval(bind='scales')
-
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color='Origin:N'
-    ).add_params(
-        scales
-    )
-
-Because this is such a common pattern, Altair provides the :meth:`Chart.interactive`
-method which creates such a selection more concisely.
-
 
 Point Selections
 ^^^^^^^^^^^^^^^^
@@ -466,51 +488,13 @@ cylinders:
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
 
+.. _binding-parameters:
 
-Filtering Data with Selections
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bindings & Widgets
+~~~~~~~~~~~~~~~~~~
 
-Using a selection parameter to filter data works in much the same way
-as using it within ``alt.condition``,
-For example, in ``transform_filter(brush)``,
-we are again using the selection parameter ``brush`` as a predicate.
-Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
-and data points which evaluate to ``False`` are filtered out.
-
-It is not possible to both select and filter in the same chart,
-so typically this functionality will be used when at least two sub-charts are present.
-In the following example,
-we attach the selection parameter to the upper chart,
-and then filter data in the lower chart based selection in the upper chart.
-You can explore how the counts changes in the bar chart
-depending on the size and position of the selection in the scatter plot.
-
-.. altair-plot::
-
-    brush = alt.selection_interval()
-
-    points = alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color='Origin:N'
-    ).add_params(
-        brush
-    )
-
-    bars = alt.Chart(cars).mark_bar().encode(
-        x='count()',
-        y='Origin:N',
-        color='Origin:N'
-    ).transform_filter(
-        brush
-    )
-
-    points & bars
-
-
-Binding: Adding Widgets to Drive Interactivity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-With an understanding of the selection types and conditions, you can now add data-driven and logic-driven widgets (or "bindings") as input elements to the charts using the ``bind`` option. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, bindings can be of three types:
+With an understanding of the parameter types and conditions, you can now bind parameters to chart elements (e.g. legends) and widgets (e.g. drop-downs and sliders). This is done using the ``bind`` option inside ``param`` and ``selection``. As specified by `the Vega-lite binding docs <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, bindings can be of three types:
+to data-driven and logic-driven input elements,
 
 1. Point and interval selections can be used for data-driven interactive elements, such as highlighting and filtering based on values in the data.
 2. Sliders and checkboxes can be used for logic-driven interactive elements, such as highlighting and filtering based on the absolute values in these widgets.
