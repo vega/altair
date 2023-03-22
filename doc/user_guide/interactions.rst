@@ -511,12 +511,20 @@ Widget Binding
 ^^^^^^^^^^^^^^
 
 Widgets are HTML input elements, such as drop-downs, sliders, radio buttons, and search boxes.
+There are a three strategies for how variable and selection parameters
+can be used together with widgets:
+data-driven lookups, data-driven comparisons, and logic-driven comparisons.
 
-Data-Driven Widgets
+Data-Driven Lookups
 -------------------
 
-Data-driven widgets use the active value(s) of the widget to look up matching points with matching values in the chart's dataset.
-For example, we can establish a binding between an input widget and a point selection to filter the data as in the example below where a drop-down is used to highlight cars from a specific ``Origin``:
+Data-driven lookups use the active value(s) of the widget
+together with a ``selection`` parameter
+to look up points with matching values in the chart's dataset.
+For example,
+we can establish a binding between an input widget and a point selection
+to filter the data as in the example below
+where a drop-down is used to highlight cars of a specific ``Origin``:
 
 .. altair-plot::
 
@@ -539,10 +547,11 @@ For example, we can establish a binding between an input widget and a point sele
 As you can see above,
 we are still using ``conditions`` to make the chart respond to the selection,
 just as we did without widgets.
-Bindings and input elements can also be used to filter data allowing the user to see just the selected points as in the example below.
+Bindings and input elements can also be used to filter data
+allowing the user to see just the selected points as in the example below.
 In this example, we also add an empty selection
 to illustrate how you can go back to showing all points
-after a selection has been made in a radio button or drop-down 
+after a selection has been made in a radio button or drop-down
 (since these can't be deselected).
 
 
@@ -608,48 +617,26 @@ to see the point highlighted.
         search_input
     )
 
-It is not always useful to require an exact match to the search syntax, and when we will be learning about :ref:`expressions`, we will see how we can match partial strings via a regex instead.
+It is not always useful to require an exact match to the search syntax,
+and when we will be learning about :ref:`expressions`,
+we will see how we can match partial strings via a regex instead.
 
-Logic-Driven Widgets
---------------------
+Data-Driven Comparisons
+-----------------------
 
-So far we have seen the use of selections to match and lookup exact values in our data.
+So far we have seen the use of selections
+to lookup points with precisely matching values in our data.
 This is often useful,
-but sometimes we might want to make a logic comparison
-directly in the conditional statement instead.
-For example, for a checkbox widget
-we want to check if the state of the checkbox is True or False
-and execute some action depending on whether it is checked or not.
-When we are using a checkbox as a toggle like this,
-we need to use `param` instead of `selection_point`,
-since we don't want to check if there are True/False values in our data,
-just if the value of the check box is True (checked) or False (unchecked):
-
-.. altair-plot::
-
-    bind_checkbox = alt.binding_checkbox(name='Scale point size by "Acceleration": ')
-    param_checkbox = alt.param(bind=bind_checkbox)
-
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        size=alt.condition(
-            param_checkbox,
-            alt.Size('Acceleration:Q'),
-            alt.value(25)
-        )
-    ).add_params(
-        param_checkbox
-    )
-
-Similarly, we might want to create a condition
+but sometimes we might want to make a more complex comparison
+than an exact match.
+For example,
+we might want to create a condition
 where we want to access the value of a slider
-to use directly in a logic expression,
-e.g. compare if it is smaller or larger than the values in the data.
-For this workflow it is also recommended to use ``param``,
+to use directly in a comparison with values of the data.
+For this workflow it is recommended to use variable parameters via ``param``
 and as you can see below,
 we use the special syntax ``datum.xval``
-to reference the column to compare again.
+to reference the column to compare against.
 Prefixing the column name with ``datum``
 tells Altair that we want to compare to a column in the dataframe,
 rather than to a Python variable called ``xval``,
@@ -682,8 +669,8 @@ which would have been the case if we just wrote ``xval < selector``.
        selector
     )
 
-In this particular case we could actually have used a selection
-as selection values can be accessed directly and used in expressions that affect the
+In this particular case we could actually have used a selection parameter
+since selection values can be accessed directly and used in expressions that affect the
 chart. For example, here we create a slider to choose a cutoff value, and color
 points based on whether they are smaller or larger than the value:
 
@@ -718,15 +705,47 @@ for simple interactions like this one
 since they can also be accessed in expression strings
 as we saw above.
 Similarly,
-it is often possible to use equality logic statements
+it is often possible to use equality statements
 such as ``alt.datum.xval == selector`` to lookup exact values
-via the logic driven widget syntax,
-but it is often more convenient to switch to a selection
-and specifying a field/encoding to lookup exact values.
+but it is often more convenient to switch to a selection parameter
+and specifying a field/encoding.
 
-For logic-driven widgets,
-an interesting use of the more general ``binding`` function
-is to introduce a color picker
+Logic-Driven Comparisons
+------------------------
+
+Data-driven lookups and comparisons are very helpful
+but sometimes we might want to make a logic comparison
+in the conditional statement instead
+that is independent of the data.
+For example, for a checkbox widget
+we want to check if the state of the checkbox is True or False
+and execute some action depending on whether it is checked or not.
+When we are using a checkbox as a toggle like this,
+we need to use `param` instead of `selection_point`,
+since we don't want to check if there are True/False values in our data,
+just if the value of the check box is True (checked) or False (unchecked):
+
+.. altair-plot::
+
+    bind_checkbox = alt.binding_checkbox(name='Scale point size by "Acceleration": ')
+    param_checkbox = alt.param(bind=bind_checkbox)
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        size=alt.condition(
+            param_checkbox,
+            alt.Size('Acceleration:Q'),
+            alt.value(25)
+        )
+    ).add_params(
+        param_checkbox
+    )
+
+Another example of creating a widget binding that is independent of the data,
+involves an interesting use case for the more general ``binding`` function.
+In the next example,
+this function introduces a color picker
 where the user can choose the colors of the chart interactively:
 
 .. altair-plot::
