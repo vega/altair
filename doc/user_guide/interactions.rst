@@ -6,27 +6,24 @@ Interactive Charts
 ==================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
-declarative grammar of not just visualization, but *interaction*.
+declarative grammar of not just visualization, but also *interaction*.
 This is both convenient and powerful,
 as we will see in this section.
 There are three core concepts of this grammar:
 
 - Parameters are the basic building blocks in the grammar of interaction.
-  They can either be a simple variable or the more complex :func:`selection`
+  They can either be a simple variables or more complex selections
   that map user input (e.g., mouse clicks and drags) to data queries.
-- The :func:`condition` function takes the selection input
-  and changes an element of the chart based on that input.
-- The ``bind`` property of selections establishes a two-way binding
-  between the selection and an input element of your chart,
-  such as a drop-down, radio button or slider.
+- Conditions and filters can respond to changes in parameter values
+  and update chart elements based on that input.
+- Widgets and other chart input elements can bind to parameters
+  so that charts can be manipulated via drop-down menus, radio buttons, sliders, legends, etc.
 
-Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data.
+Parameters
+~~~~~~~~~~
 
-
-Parameters: Building Blocks of Interaction
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Interactivity in Altair is built around *parameters*, of which there are two types: *variables* and *selections*.  We introduce these concepts through a series examples.
+Parameters are the building blocks of interaction in Altair.
+There are two types of parameters: *variables* (the :func:`param` function) and *selections* (the :func:`selection` function). We introduce these concepts through a series examples.
 
 .. note::
 
@@ -37,7 +34,6 @@ Interactivity in Altair is built around *parameters*, of which there are two typ
 Variables: Storing and Reusing Values
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Variables are the simplest forms of parameters can take.
 Variable parameters allow for a value to be defined once
 and then reused throughout the rest of the chart.
 Here is a simple scatter-plot created from the ``cars`` dataset:
@@ -62,7 +58,7 @@ We can create a variable parameter using :func:`param`, and assign that paramete
 
     op_var = alt.param(value=0.1)
 
-In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`Chart.add_params` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`add_params` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
 
 .. altair-plot::
 
@@ -76,7 +72,7 @@ In order to use this variable in the chart specification, we explicitly add it t
         op_var
     )
 
-It's reasonable to ask whether all this effort is necessary.  Here is a more natural way to accomplish the same thing.  We avoid the use of both :func:`param` and ``add_params``.
+It's reasonable to ask whether all this effort is necessary. Here is a more natural way to accomplish the same thing that avoids the use of both :func:`param` and ``add_params``.
 
 .. altair-plot::
 
@@ -88,7 +84,7 @@ It's reasonable to ask whether all this effort is necessary.  Here is a more nat
         color='Origin:N'
     )
 
-The benefit of using :func:`param` doesn't become apparent until we incorporate an additional component, such as in the following, where we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element.  In this example, that input element is a slider widget.
+The benefit of using :func:`param` doesn't become apparent until we incorporate an additional component. In the following example we use the ``bind`` property of the parameter, so that the parameter becomes bound to an input element. In this example, that input element is a slider widget.
 
 .. altair-plot::
 
@@ -103,14 +99,11 @@ The benefit of using :func:`param` doesn't become apparent until we incorporate 
         op_var
     )
 
-Now we can dynamically change the opacity of the points in our chart using the slider.  A noteworthy aspect of this chart is that these effects are controlled entirely within your web browser.  Once the Vega-Lite chart specification has been created by Altair, the result is an interactive chart, and that interactivity no longer requires a running Python environment.
+Now we can dynamically change the opacity of the points in our chart using the slider. You will learn much more about binding parameters to input elements such as widgets in the section :ref:`binding-parameters`.
 
-The above example includes some aspects which occur frequently when creating interactive charts in Altair:
+.. note::
 
-1. Creating a variable parameter using :func:`param`.
-2. Attaching the parameter to a chart using the :meth:`Chart.add_params` method.
-3. Binding the parameter to an input widget (such as the slider above) using the parameter's ``bind`` property.
-
+    A noteworthy aspect of Altair's interactivity is that these effects are controlled entirely within the web browser. This means that you can save charts as HTML files and share them with your colleagues who can access the interactivity via their browser without the need to install Python.
 
 Selections: Capturing Inputs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
