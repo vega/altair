@@ -116,7 +116,7 @@ A **1D error band** shows the error range of a continuous field; it can be used 
     source = data.cars.url
 
     band = alt.Chart(source).mark_errorband(extent="stdev").encode(
-        alt.Y("Miles_per_Gallon:Q", title="Miles per Gallon")
+        alt.Y("Miles_per_Gallon:Q").title("Miles per Gallon")
     )
 
     points = alt.Chart(source).mark_point().encode(
@@ -142,7 +142,7 @@ A **2D error** band shows the error range of a continuous field for each dimensi
 
     band = alt.Chart(source).mark_errorband(extent="ci").encode(
         x="Year",
-        y=alt.Y("Miles_per_Gallon", title="Miles/Gallon"),
+        y=alt.Y("Miles_per_Gallon").title("Miles/Gallon"),
     )
 
     band + line
@@ -162,11 +162,9 @@ Here is an example of a ``errorband`` with the ``color`` encoding channel set to
 
     alt.Chart(source).mark_errorband(extent="ci", borders=True).encode(
         x="year(Year)",
-        y=alt.Y(
-            "Miles_per_Gallon:Q",
-            scale=alt.Scale(zero=False),
-            title="Miles per Gallon (95% CIs)",
-        ),
+        y=alt.Y("Miles_per_Gallon:Q")
+            .scale(zero=False),
+            .title("Miles per Gallon (95% CIs)"),
         color=alt.value("black"),
     )
 
