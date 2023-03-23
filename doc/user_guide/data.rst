@@ -13,8 +13,7 @@ Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
 :class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
 and :class:`FacetChart`) accepts a dataset as its first argument.
 
-While the most common way to provide Altair with a dataset is via a pandas DataFrame,
-there are many different ways of specifying a dataset:
+There are many different ways of specifying a dataset:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
