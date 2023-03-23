@@ -184,7 +184,7 @@ it is convenient to pass the unaggregated data to Altair:
 
     alt.Chart(source).mark_bar().encode(
         x="sum(yield):Q",
-        y=alt.Y("site:N", sort="-x")
+        y=alt.Y("site:N").sort("-x")
     )
 
 
@@ -197,14 +197,13 @@ only the necessary columns:
 
     alt.Chart(source[["yield", "site"]]).mark_bar().encode(
         x="sum(yield):Q",
-        y=alt.Y("site:N",
-        sort="-x")
+        y=alt.Y("site:N").sort("-x")
     )
 
 You could also precalculate the sum in Pandas which would reduce the size of the dataset even more:
 
 .. altair-plot::
-    
+
     import altair as alt
     from vega_datasets import data
 
@@ -215,7 +214,7 @@ You could also precalculate the sum in Pandas which would reduce the size of the
 
     alt.Chart(source_aggregated).mark_bar().encode(
         x="sum_yield:Q",
-        y=alt.Y("site:N", sort="-x")
+        y=alt.Y("site:N").sort("-x")
     )
 
 
@@ -233,7 +232,7 @@ in Altair.
     alt.Chart(df).mark_boxplot().encode(
         x="Miles_per_Gallon:Q",
         y="Origin:N",
-        color=alt.Color("Origin", legend=None)
+        color=alt.Color("Origin").legend(None)
     )
 
 If you have a lot of data, you can perform the necessary calculations in Pandas and only
@@ -308,14 +307,14 @@ summary statistics to Altair instead of the full dataset.
     )
 
     rules = base.mark_rule().encode(
-        x=alt.X("lower", title="Miles_per_Gallon"),
+        x=alt.X("lower").title("Miles_per_Gallon"),
         x2="upper",
     )
 
     bars = base.mark_bar(size=14).encode(
         x="25%",
         x2="75%",
-        color=alt.Color("Origin", legend=None),
+        color=alt.Color("Origin").legend(None),
     )
 
     ticks = base.mark_tick(color="white", size=14).encode(
