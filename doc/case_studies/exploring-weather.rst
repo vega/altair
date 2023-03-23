@@ -54,7 +54,7 @@ The result is a histogram of precipitation values:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        alt.X('precipitation', bin=True),
+        alt.X('precipitation').bin(),
         y='count()'
     )
 
@@ -177,7 +177,7 @@ meaning of the plot more clear:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('month(date):N', title='Month of the year'),
+        x=alt.X('month(date):N').title('Month of the year'),
         y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
@@ -191,10 +191,10 @@ and to allow interactive panning and zooming with the mouse:
 .. altair-plot::
 
     alt.Chart(df).mark_point().encode(
-        alt.X('temp_max', title='Maximum Daily Temperature (C)'),
-        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
-        alt.Color('weather', scale=scale),
-        alt.Size('precipitation', scale=alt.Scale(range=[1, 200]))
+        alt.X('temp_max').title('Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q').title('Daily Temperature Range (C)'),
+        alt.Color('weather').scale(scale),
+        alt.Size('precipitation').scale(range=[1, 200])
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
@@ -215,7 +215,7 @@ by weather type:
     alt.Chart(df).mark_bar().encode(
         x='count()',
         y='weather:N',
-        color=alt.Color('weather:N', scale=scale),
+        color=alt.Color('weather:N').scale(scale),
     )
 
 And now we can vertically concatenate this histogram to the points plot above,
@@ -228,10 +228,10 @@ of the selection (for more information on selections, see
     brush = alt.selection_interval()
 
     points = alt.Chart().mark_point().encode(
-        alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),
-        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
+        alt.X('temp_max:Q').title('Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q').title('Daily Temperature Range (C)'),
         color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
-        size=alt.Size('precipitation:Q', scale=alt.Scale(range=[1, 200]))
+        size=alt.Size('precipitation:Q').scale(range=[1, 200])
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
@@ -244,7 +244,7 @@ of the selection (for more information on selections, see
     bars = alt.Chart().mark_bar().encode(
         x='count()',
         y='weather:N',
-        color=alt.Color('weather:N', scale=scale),
+        color=alt.Color('weather:N').scale(scale),
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).transform_filter(
