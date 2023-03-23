@@ -41,7 +41,7 @@ extensions = [
     "sphinxext.schematable",
     "sphinx_copybutton",
     "sphinx_design"
-    # "sphinxext.rediraffe",
+    "sphinx_design",
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}

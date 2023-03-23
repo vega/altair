@@ -37,6 +37,13 @@ Each encoding channel accepts a number of **channel options** (see :ref:`user-gu
 the chart.
 Altair 5.0 introduced an method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer)
 
+.. note::
+
+    With the release of Altair 5,
+    the documentation was updated to prefer the method-based syntax.
+    The gallery examples still include the attribute-based syntax
+    in addition to the method-based syntax.
+
 .. _method-based-attribute-setting:
 
 Method-Based Syntax

@@ -29,7 +29,7 @@ Enhancements
 Grammar Changes
 ~~~~~~~~~~~~~~~
 
-- Channel options can now be set via a method based syntax in addition to the previous helper class syntax. For example, in addition to ``alt.X(..., bin=alt.Bin(...))`` it is now possible to do ``alt.X(...).bin(...)```) (#2795). See :ref:`method-based-attribute-setting` for details.
+- Channel options can now be set via a more convenient method-based syntax in addition to the previous attribute-based syntax. For example, instead of ``alt.X(..., bin=alt.Bin(...))`` it is now recommend to use ``alt.X(...).bin(...)```) (#2795). See :ref:`method-based-attribute-setting` for details.
 - ``selection_single`` and ``selection_multi`` are now deprecated; use ``selection_point`` instead.  Similarly, ``type=point`` should be used instead of ``type=single`` and ``type=multi``.
 - ``add_selection`` is deprecated; use ``add_params`` instead.
 - The ``selection`` keyword argument must in many cases be replaced by ``param`` (e.g., when specifying a filter transform).
