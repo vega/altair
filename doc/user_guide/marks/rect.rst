@@ -58,9 +58,9 @@ Using the ``rect`` marks with discrete fields on ``x`` and ``y`` channels create
     source = data.seattle_weather()
 
     alt.Chart(source).mark_rect().encode(
-        alt.X("date(date):O", title="Day", axis=alt.Axis(labelAngle=0, format="%e")),
-        alt.Y("month(date):O", title="Month"),
-        alt.Color("max(temp_max):Q", title="Max Temp"),
+        alt.X("date(date):O").axis(labelAngle=0, format="%e").title("Day"),
+        alt.Y("month(date):O").title("Month"),
+        alt.Color("max(temp_max):Q").title("Max Temp"),
     )
 
 

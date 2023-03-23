@@ -197,12 +197,16 @@ The same method can be used to group lines for a ranged dot plot.
     source = data.countries()
 
     base = alt.Chart(source).encode(
-        alt.X("life_expect:Q", title="Life Expectancy (years)", scale=alt.Scale(zero=False)),
-        alt.Y("country:N", title="Country", axis=alt.Axis(offset=5, ticks=False, minExtent=70, domain=False)),
+        alt.X("life_expect:Q")
+            .scale(zero=False)
+            .title("Life Expectancy (years)"),
+        alt.Y("country:N")
+            .axis(offset=5, ticks=False, minExtent=70, domain=False)
+            .title("Country")
     ).transform_filter(
         alt.FieldOneOfPredicate(field="country", oneOf=["China", "India", "United States", "Indonesia", "Brazil"])
     )
-    
+
 
     line = base.mark_line().encode(
         detail="country",
@@ -212,9 +216,7 @@ The same method can be used to group lines for a ranged dot plot.
     )
 
     point = base.mark_point(filled=True).encode(
-        alt.Color(
-            field="year", scale=alt.Scale(range=["#e6959c", "#911a24"], domain=[1995, 2000])
-        ),
+        alt.Color("year").scale(range=["#e6959c", "#911a24"], domain=[1995, 2000]),
         size=alt.value(100),
         opacity=alt.value(1),
     )
@@ -271,8 +273,8 @@ For example, to show a pattern of data change over time between gasoline price a
     source = data.driving()
 
     alt.Chart(source).mark_line(point=True).encode(
-        alt.X("miles", scale=alt.Scale(zero=False)),
-        alt.Y("gas", scale=alt.Scale(zero=False)),
+        alt.X("miles").scale(zero=False),
+        alt.Y("gas").scale(zero=False),
         order="year",
     )
 
