@@ -18,7 +18,7 @@ An common application of a bin transform is when creating a histogram:
     movies = data.movies.url
 
     alt.Chart(movies).mark_bar().encode(
-        alt.X("IMDB_Rating:Q", bin=True),
+        alt.X("IMDB_Rating:Q").bin(),
         y='count()',
     )
 
@@ -35,12 +35,13 @@ bin a continuous field to create a discrete color map:
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.Color('Acceleration:Q', bin=alt.Bin(maxbins=5))
+        color=alt.Color('Acceleration:Q').bin(maxbins=5)
     )
 
-In the first case we set ``bin = True``, which uses the default bin settings.
+In the first case we use ``bin()`` without any arguments,
+which uses the default bin settings.
 In the second case, we exercise more fine-tuned control over the bin parameters
-by passing a :class:`~altair.Bin` object.
+by passing the ``maxbins`` argument.
 
 If you are using the same bins in multiple chart components, it can be useful
 to instead define the binning at the top level, using :meth:`~Chart.transform_bin`
