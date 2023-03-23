@@ -134,7 +134,7 @@ By default an Altair chart does not have a title, as seen in this example.
    
    alt.Chart(iowa).mark_area().encode(
        x="year:T",
-       y=alt.Y("net_generation:Q", stack="normalize"),
+       y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
 
@@ -144,7 +144,7 @@ You can add a simple title by passing the `title` keyword argument with the data
 
    alt.Chart(iowa, title="Iowa's green energy boom").mark_area().encode(
        x="year:T",
-       y=alt.Y("net_generation:Q", stack="normalize"),
+       y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
 
@@ -160,7 +160,7 @@ It is also possible to add a subtitle by passing in an `alt.Title` object.
       )
    ).mark_area().encode(
        x="year:T",
-       y=alt.Y("net_generation:Q", stack="normalize"),
+       y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
 
@@ -176,7 +176,7 @@ The subtitle can run to two lines by passing a list where each list item is a li
       )
    ).mark_area().encode(
        x="year:T",
-       y=alt.Y("net_generation:Q", stack="normalize"),
+       y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
 
@@ -195,7 +195,7 @@ The ``Title`` object can also configure a number of other attributes, e.g., the 
       )
    ).mark_area().encode(
        x="year:T",
-       y=alt.Y("net_generation:Q", stack="normalize"),
+       y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
 
@@ -226,9 +226,7 @@ in quantitative axes; if you would like to turn this off, you can add a
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q',
-            scale=alt.Scale(zero=False)
-        ),
+        alt.X('Acceleration:Q').scale(zero=False),
         y='Horsepower:Q'
     )
 
@@ -237,9 +235,7 @@ To specify exact axis limits, you can use the ``domain`` property of the scale:
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q',
-            scale=alt.Scale(domain=(5, 20))
-        ),
+        alt.X('Acceleration:Q').scale(domain=(5, 20)),
         y='Horsepower:Q'
     )
 
@@ -250,9 +246,7 @@ the ``"clip"`` property of the mark to True:
 .. altair-plot::
 
     alt.Chart(cars).mark_point(clip=True).encode(
-        alt.X('Acceleration:Q',
-            scale=alt.Scale(domain=(5, 20))
-        ),
+        alt.X('Acceleration:Q').scale(domain=(5, 20)),
         y='Horsepower:Q'
     )
 
@@ -262,12 +256,7 @@ limit to the edge of the domain:
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q',
-            scale=alt.Scale(
-                domain=(5, 20),
-                clamp=True
-            )
-        ),
+        alt.X('Acceleration:Q').scale(domain=(5, 20), clamp=True),
         y='Horsepower:Q'
     ).interactive()
 
@@ -301,8 +290,8 @@ the y labels as a dollar value:
 .. altair-plot::
 
    alt.Chart(df).mark_circle().encode(
-       x=alt.X('x', axis=alt.Axis(format='%', title='percentage')),
-       y=alt.Y('y', axis=alt.Axis(format='$', title='dollar amount'))
+       alt.X('x').axis(format='%').title('percentage'),
+       alt.Y('y').axis(format='$').title('dollar amount')
    )
 
 Axis labels can also be easily removed:
@@ -310,8 +299,8 @@ Axis labels can also be easily removed:
 .. altair-plot::
 
    alt.Chart(df).mark_circle().encode(
-       x=alt.X('x', axis=alt.Axis(labels=False)),
-       y=alt.Y('y', axis=alt.Axis(labels=False))
+       alt.X('x').axis(labels=False),
+       alt.Y('y').axis(labels=False)
    )
 
 Additional formatting codes are available; for a listing of these see the
@@ -350,7 +339,7 @@ The legend option on all of them expects a :class:`Legend` object as its input, 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', legend=alt.Legend(title="Species by color"))
+      color=alt.Color('species').title("Species by color")
   )
 
 Another thing you can do is move the legend to another position with the `orient` argument.
@@ -365,7 +354,7 @@ Another thing you can do is move the legend to another position with the `orient
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', legend=alt.Legend(orient="left")),
+      color=alt.Color('species').legend(orient="left")
   )
 
 You can remove the legend entirely by submitting a null value.
@@ -380,7 +369,7 @@ You can remove the legend entirely by submitting a null value.
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', legend=None),
+      color=alt.Color('species').legend(None),
   )
 
 Removing the Chart Border
@@ -453,8 +442,8 @@ combining the above option with setting ``axis`` to ``None`` during encoding.
     iris = data.iris()
 
     alt.Chart(iris).mark_point().encode(
-        alt.X('petalWidth', axis=None),
-        alt.Y('petalLength', axis=None),
+        alt.X('petalWidth').axis(None),
+        alt.Y('petalLength').axis(None),
         color='species'
     ).configure_axis(
         grid=False
@@ -491,7 +480,7 @@ can be passed to the `scheme` argument of the :class:`Scale` class:
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', scale=alt.Scale(scheme='dark2'))
+      color=alt.Color('species').scale(scheme='dark2')
   )
 
 Color Domain and Range
@@ -513,7 +502,7 @@ values and colors respectively.
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', scale=alt.Scale(domain=domain, range=range_))
+      color=alt.Color('species').scale(domain=domain, range=range_)
   )
 
 Raw Color Values
@@ -537,7 +526,7 @@ you can set ``scale=None`` to use those colors directly:
       size=100
   ).encode(
       x='x',
-      color=alt.Color('color', scale=None)
+      color=alt.Color('color').scale(None)
   )
 
 Adjusting the Width of Bar Marks
