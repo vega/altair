@@ -443,7 +443,7 @@ Hide it by setting ``stroke=None`` inside :meth:`Chart.configure_view`
 
 
 It is also possible to completely remove all borders and axes by
-combining the above option with setting ``axis`` to `None` during encoding.
+combining the above option with setting ``axis`` to ``None`` during encoding.
 
 .. altair-plot::
 
