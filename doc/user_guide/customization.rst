@@ -421,8 +421,8 @@ First remove the grid using the :meth:`Chart.configure_axis` method.
     )
 
 You'll note that while the inside rules are gone, the outside border remains.
-Hide it by setting the `strokeWidth` or the `strokeOpacity` options on
-:meth:`Chart.configure_view` to `0`:
+Hide it by setting ``stroke=None`` inside :meth:`Chart.configure_view`
+(``strokeWidth=0`` and ``strokeOpacity=0`` also works):
 
 .. altair-plot::
 
@@ -438,12 +438,12 @@ Hide it by setting the `strokeWidth` or the `strokeOpacity` options on
     ).configure_axis(
         grid=False
     ).configure_view(
-        strokeWidth=0
+        stroke=None
     )
 
 
 It is also possible to completely remove all borders and axes by
-combining the above option with setting `axis` to `None` during encoding.
+combining the above option with setting ``axis`` to `None` during encoding.
 
 .. altair-plot::
 
@@ -459,7 +459,7 @@ combining the above option with setting `axis` to `None` during encoding.
     ).configure_axis(
         grid=False
     ).configure_view(
-        strokeWidth=0
+        stroke=None
     )
 
 
