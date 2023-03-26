@@ -379,4 +379,4 @@ display.
 .. _VegaFusion mime renderer: https://vegafusion.io/mime_renderer.html
 .. _VegaFusion widget renderer: https://vegafusion.io/widget_renderer.html
 .. _vl-convert: https://github.com/vega/vl-convert
-.. _altair_saver: http://github.com/altair-viz/altair_saver/
+.. _altair_saver: https://github.com/altair-viz/altair_saver/

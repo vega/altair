@@ -35,7 +35,7 @@ Channel Options
 
 Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
 the chart.
-Altair 5.0 introduced an method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer)
+Altair 5.0 introduced a method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer).
 
 .. note::
 
@@ -52,7 +52,7 @@ Method-Based Syntax
 The method-based syntax replaces *keyword arguments* with *methods*.
 For example, an ``axis`` option of the ``x`` channel encoding would traditionally be set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``. To define the same :class:`X` object using the method-based syntax, we can instead use the more succinct ``x=alt.X('Horsepower').axis(tickMinStep=50)``.
 
-The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel.  The following produces the same chart as the previous example.
+The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel. The following produces the same chart as the previous example.
 
 .. altair-plot::
     alt.Chart(cars).mark_point().encode(

@@ -402,7 +402,7 @@ for the ordinal structured data.
 .. altair-plot::
 
    alt.Chart(data_obj_geojson, title="Vega-Altair - ordinal scale").mark_geoshape().encode(
-       alt.Color("properties.location:O").scale(alt.Scale(scheme='magma'))
+       alt.Color("properties.location:O").scale(scheme='magma')
    ).project(type="identity", reflectY=True)
 
 

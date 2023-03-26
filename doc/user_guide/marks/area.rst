@@ -99,7 +99,7 @@ In this example, we are also customizing the overlay. For more information about
 
     source = data.stocks()
 
-    alt.Chart(source).transform_filter(alt.datum.symbol=="GOOG").mark_area(
+    alt.Chart(source).transform_filter(alt.datum.symbol == "GOOG").mark_area(
         line={"color": "darkgreen"},
         color=alt.Gradient(
             gradient="linear",
