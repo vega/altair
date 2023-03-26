@@ -133,7 +133,7 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
     )
 
 First we'll create an interval selection using the :func:`selection_interval`
-function (and interval selection is also referred to as a "brush"):
+function (an interval selection is also referred to as a "brush"):
 
 .. altair-plot::
     :output: none
@@ -794,34 +794,7 @@ There is no direct way to map an encoding channel to a widget in order to dynami
         xcol_param
     )
 
-It was possible to achieve something similar before the introduction of parameters in Altair 5, but the spec for this is more involved so the solution above is to prefer:
-
-.. altair-plot::
-
-    # Similar workaround for earlier versions of Altair
-    source = data.cars().melt(id_vars=['Origin', 'Name', 'Year', 'Horsepower', 'Cylinders'])
-    dropdown_options = source['variable'].drop_duplicates().tolist()
-
-    dropdown = alt.binding_select(
-        options=dropdown_options,
-        name='X-axis column'
-    )
-    selection = alt.selection_point(
-        fields=['variable'],
-        value=[{'variable': dropdown_options[0]}],
-       # init={'variable': dropdown_options[0]},  # For Altair 4
-        bind=dropdown
-    )
-
-    alt.Chart(source).mark_circle().encode(
-        x=alt.X('value:Q', title=''),
-        y='Horsepower',
-        color='Origin',
-    ).add_params(
-        selection
-    ).transform_filter(
-        selection
-    )
+It was possible to achieve something similar before the introduction of parameters in Altair 5 by using ``transform_fold`` and ``transform_filter``, but the spec for this is more complex (as can be seen in `this SO answer <https://stackoverflow.com/a/70950329/2166823>`_) so the solution above is to prefer.
 
 Legend Binding
 ^^^^^^^^^^^^^^
@@ -1005,6 +978,6 @@ Limitations
 
 Some possible use cases for the above interactivity are not currently supported by Vega-Lite, and hence are not currently supported by Altair.  Here are some examples.
 
-1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python.  This is not currently possible (and as of December 2021 it does not seem likely to become possible any time soon), so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
+1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python. This is not currently possible, so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
 
    - The dashboarding package ``Panel`` has added support for processing Altair selections with custom callbacks in their 0.13 release. This is currently the only Python dashboarding package that supports custom callbacks for Altair selections and you can read more about how to use this functionality in `the Panel documentation <https://pyviz-dev.github.io/panel/reference/panes/Vega.html#selections>`_.
