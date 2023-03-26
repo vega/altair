@@ -549,6 +549,12 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
         selection
     )
 
+Note that although it looks like a value is selected in the dropdown from the start,
+we need to set `value=` to actually start out with a selection in the chart.
+We did this previously with variable parameters
+and selection parameters follow the same pattern as you will see further down
+in the :ref:`encoding-channel-binding` section.
+
 As you can see above,
 we are still using ``conditions`` to make the chart respond to the selection,
 just as we did without widgets.
@@ -774,6 +780,8 @@ where the user can choose the colors of the chart interactively:
     ).add_params(
         color_usa, color_europe, color_japan
     )
+
+.. _encoding-channel-binding:
 
 Encoding Channel Binding
 ^^^^^^^^^^^^^^^^^^^^^^^^
