@@ -593,7 +593,8 @@ In the example below,
 we use a search input to filter points that match the search string exactly.
 You can hover over the points to see the car names
 and try typing one into the search box, e.g. ``vw pickup``
-to see the point highlighted.
+to see the point highlighted
+(you need to type out the full name).
 
 .. altair-plot::
 
@@ -612,8 +613,8 @@ to see the point highlighted.
         tooltip='Name:N',
         opacity=alt.condition(
             search_input,
-            alt.value(0.8),
-            alt.value(0.1)
+            alt.value(1),
+            alt.value(0.05)
         )
     ).add_params(
         search_input
@@ -633,8 +634,8 @@ but sometimes we might want to make a more complex comparison
 than an exact match.
 For example,
 we might want to create a condition
-where we want to access the value of a slider
-to use directly in a comparison with values of the data.
+we select the points in the data that are above or below a threshold value,
+which is specified via a slider.
 For this workflow it is recommended to use variable parameters via ``param``
 and as you can see below,
 we use the special syntax ``datum.xval``
