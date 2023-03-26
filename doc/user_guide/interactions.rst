@@ -46,8 +46,8 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
     cars = data.cars.url
 
     alt.Chart(cars).mark_circle().encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     )
 
@@ -67,8 +67,8 @@ In order to use this variable in the chart specification, we explicitly add it t
     op_var = alt.param(value=0.1)
 
     alt.Chart(cars).mark_circle(opacity=op_var).encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).add_params(
         op_var
@@ -81,8 +81,8 @@ It's reasonable to ask whether all this effort is necessary. Here is a more natu
     op_var2 = 0.1
 
     alt.Chart(cars).mark_circle(opacity=op_var2).encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     )
 
@@ -94,8 +94,8 @@ The benefit of using :func:`param` doesn't become apparent until we incorporate 
     op_var = alt.param(value=0.1, bind=slider)
 
     alt.Chart(cars).mark_circle(opacity=op_var).encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).add_params(
         op_var
@@ -131,8 +131,8 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
     cars = data.cars.url
 
     alt.Chart(cars).mark_point().encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     )
 
@@ -149,8 +149,8 @@ We can now add this selection interval to our chart via ``add_params``:
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).add_params(
         brush
@@ -180,8 +180,8 @@ for points outside the selection:
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
     ).add_params(
         brush
@@ -201,13 +201,14 @@ This approach becomes even more powerful when the selection behavior is
 tied across multiple views of the data within a compound chart.
 For example, here we create a ``chart`` object using the same code as
 above, and horizontally concatenate two versions of this chart: one
-with the x-encoding tied to ``"Acceleration"``, and one with the x-encoding
-tied to ``"Miles_per_Gallon"``
+with the x-encoding tied to ``"Horsepower"``, and one with the x-encoding
+tied to ``"Acceleration"``
 
 .. altair-plot::
 
     chart = alt.Chart(cars).mark_point().encode(
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
     ).properties(
         width=250,
@@ -216,7 +217,7 @@ tied to ``"Miles_per_Gallon"``
         brush
     )
 
-    chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
+    chart | chart.encode(x='Acceleration:Q')
 
 Because both copies of the chart reference the same selection object, the
 renderer ties the selections together across panels, leading to a dynamic
@@ -233,7 +234,8 @@ We can modify the brush definition, and leave the rest of the code unchanged:
     brush = alt.selection_interval(encodings=['x'])
 
     chart = alt.Chart(cars).mark_point().encode(
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
     ).properties(
         width=250,
@@ -242,7 +244,7 @@ We can modify the brush definition, and leave the rest of the code unchanged:
         brush
     )
 
-    chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
+    chart | chart.encode(x='Acceleration:Q')
 
 Filtering Data
 ^^^^^^^^^^^^^^
@@ -768,8 +770,8 @@ where the user can choose the colors of the chart interactively:
     color_japan = alt.param(value="#adadad", bind=alt.binding(input='color', name='Japan '))
 
     alt.Chart(data.cars.url).mark_circle().encode(
-        x='Miles_per_Gallon:Q',
-        y='Horsepower:Q',
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color=alt.Color(
             'Origin:N',
             scale=alt.Scale(
@@ -791,17 +793,17 @@ There is no direct way to map an encoding channel to a widget in order to dynami
 .. altair-plot::
 
     dropdown = alt.binding_select(
-        options=['Miles_per_Gallon', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
+        options=['Horsepower', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
         name='X-axis column '
     )
     xcol_param = alt.param(
-        value='Miles_per_Gallon',
+        value='Horsepower',
         bind=dropdown
     )
 
     alt.Chart(data.cars.url).mark_circle().encode(
         x=alt.X('x:Q', title=''),
-        y='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).transform_calculate(
         x=f'datum[{xcol_param.name}]'
