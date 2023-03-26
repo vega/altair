@@ -23,7 +23,7 @@ Parameters
 ~~~~~~~~~~
 
 Parameters are the building blocks of interaction in Altair.
-There are two types of parameters: *variables* (the :func:`param` function) and *selections* (the :func:`selection` function). We introduce these concepts through a series examples.
+There are two types of parameters: *variables* and *selections*. We introduce these concepts through a series examples.
 
 .. note::
 
@@ -51,7 +51,9 @@ Here is a simple scatter-plot created from the ``cars`` dataset:
         color='Origin:N'
     )
 
-We can create a variable parameter using :func:`param`, and assign that parameter a default value of 0.1 using the ``value`` property, as follows:
+Variable parameters are created using the :func:`param` function.
+Here,
+we create a parameter with a default value of 0.1 using the ``value`` property:
 
 .. altair-plot::
     :output: none
