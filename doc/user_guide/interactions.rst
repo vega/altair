@@ -31,8 +31,8 @@ There are two types of parameters: *variables* and *selections*. We introduce th
 
 .. _basic variable:
 
-Variables: Storing and Reusing Values
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Variables: Reusing Values
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Variable parameters allow for a value to be defined once
 and then reused throughout the rest of the chart.
@@ -107,10 +107,12 @@ Now we can dynamically change the opacity of the points in our chart using the s
 
     A noteworthy aspect of Altair's interactivity is that these effects are controlled entirely within the web browser. This means that you can save charts as HTML files and share them with your colleagues who can access the interactivity via their browser without the need to install Python.
 
-Selections: Capturing Inputs to Query Data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Selections: Capturing Chart Interactions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Selection parameters define data queries that are driven by direct manipulation user input (e.g., mouse clicks or drags).
+Selection parameters define data queries
+that are driven by interactive manipulation of the chart
+by the user (e.g., via mouse clicks or drags).
 There are two types of selections:
 :func:`selection_interval` and :func:`selection_point`.
 
