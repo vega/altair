@@ -16,17 +16,17 @@ and :class:`FacetChart`) accepts a dataset as its first argument.
 There are many different ways of specifying a dataset:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
+- as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute), e.g. polars and pyarrow. This is experimental.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
-- as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute). This is experimental.
 
-When data is specified as a DataFrame, the encoding is quite simple, as Altair
+When data is specified as a pandas DataFrame, Altair
 uses the data type information provided by pandas to automatically determine
 the data types required in the encoding. For example, here we specify data via a pandas DataFrame
 and Altair automatically detects that the x-column should be visualized on a quantitative scale
-and that the y-column should be visualized on a categorical scale:
+and that the y-column should be visualized on a categorical (nominal) scale:
 
 .. altair-plot::
 
@@ -40,7 +40,10 @@ and that the y-column should be visualized on a categorical scale:
        y='y',
    )
 
-By comparison, here we create the same chart using a :class:`Data` object,
+By comparison,
+all other ways of specifying the data (including non-pandas DataFrames)
+requires encoding types to be declared explicitly.
+Here we create the same chart as above using a :class:`Data` object,
 with the data specified as a JSON-style list of records:
 
 .. altair-plot::
@@ -53,13 +56,13 @@ with the data specified as a JSON-style list of records:
                            {'x': 'D', 'y': 7},
                            {'x': 'E', 'y': 2}])
    alt.Chart(data).mark_bar().encode(
-       x='x:O',  # specify ordinal data
+       x='x:N',  # specify nominal data
        y='y:Q',  # specify quantitative data
    )
 
 Notice the extra markup required in the encoding; because Altair cannot infer
 the types within a :class:`Data` object, we must specify them manually
-(here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
+(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
 and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
 Similarly, we must also specify the data type when referencing data by URL:
@@ -75,7 +78,8 @@ Similarly, we must also specify the data type when referencing data by URL:
         y='Miles_per_Gallon:Q'
     )
 
-We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
+Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
+Below we go into more detail about the different ways of specifying data in an Altair chart.
 
 Pandas DataFrame
 ~~~~~~~~~~~~~~~~
