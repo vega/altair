@@ -6,3 +6,4 @@ pillow
 pydata-sphinx-theme
 geopandas
 myst-parser
+sphinx_copybutton
