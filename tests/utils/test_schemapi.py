@@ -610,6 +610,20 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         chart.to_dict()
 
 
+def test_multiple_field_strings_in_condition():
+    selection = alt.selection_point()
+    expected_error_message = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
+    with pytest.raises(ValueError, match=expected_error_message):
+        (
+            alt.Chart(data.cars())
+            .mark_circle()
+            .add_params(selection)
+            .encode(
+                color=alt.condition(selection, "Origin", "Origin"),
+            )
+        ).to_dict()
+
+
 def test_serialize_numpy_types():
     m = MySchema(
         a={"date": np.datetime64("2019-01-01")},

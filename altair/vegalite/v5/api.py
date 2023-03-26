@@ -773,8 +773,13 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = utils.parse_shorthand(if_true)
-        if_true.update(kwargs)
+        if isinstance(if_false, str):
+            raise ValueError(
+                "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
+            )
+        else:
+            if_true = utils.parse_shorthand(if_true)
+            if_true.update(kwargs)
     condition.update(if_true)
 
     if isinstance(if_false, core.SchemaBase):
