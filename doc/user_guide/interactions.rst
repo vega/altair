@@ -560,6 +560,7 @@ after a selection has been made in a radio button or drop-down
 .. altair-plot::
 
     # Make radio button less cramped by adding a space after each label
+    # The spacing will only show up in your IDE, not on this doc page
     options = ['Europe', 'Japan', 'USA']
     labels = [option + ' ' for option in options]
 
