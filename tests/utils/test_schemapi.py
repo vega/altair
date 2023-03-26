@@ -612,7 +612,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
 
 def test_multiple_field_strings_in_condition():
     selection = alt.selection_point()
-    expected_error_message = "A field cannot be used in both the `if_true` and `if_false` branches of a condition. One of the them has to specify a `value` or `datum` definition."
+    expected_error_message = "A field cannot be used as both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
     with pytest.raises(ValueError, match=expected_error_message):
         (
             alt.Chart(data.cars())

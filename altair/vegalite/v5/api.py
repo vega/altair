@@ -775,7 +775,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     elif isinstance(if_true, str):
         if isinstance(if_false, str):
             raise ValueError(
-                "A field cannot be used in both the `if_true` and `if_false` branches of a condition. One of the them has to specify a `value` or `datum` definition."
+                "A field cannot be used as both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
             )
         else:
             if_true = utils.parse_shorthand(if_true)
