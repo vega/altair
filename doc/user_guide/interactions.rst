@@ -400,7 +400,8 @@ with a matching ``Origin``.
 
 The above could be equivalently replace ``fields=['Origin']`` with
 ``encodings=['color']``, because in this case the chart maps ``color`` to
-``'Origin'``.
+``'Origin'``. Also note that there is a shortcut to create interactive legends in Altair
+described in the section :ref:`legend-binding`.
 
 Similarly, we can specify multiple fields and/or encodings that must be
 matched in order for a datum to be included in a selection.
@@ -802,12 +803,14 @@ There is no direct way to map an encoding channel to a widget in order to dynami
 
 It was possible to achieve something similar before the introduction of parameters in Altair 5 by using ``transform_fold`` and ``transform_filter``, but the spec for this is more complex (as can be seen in `this SO answer <https://stackoverflow.com/a/70950329/2166823>`_) so the solution above is to prefer.
 
+.. _legend-binding:
+
 Legend Binding
 ^^^^^^^^^^^^^^
 
 An interactive legend can often be helpful to assist in focusing in on groups of data.
 Instead of manually having to build a separate chart to use as a legend,
-Altair provides the ``bind='legend'`` option to facilitate the creation of clickable legends: 
+Altair provides the ``bind='legend'`` option to facilitate the creation of clickable legends:
 
 .. altair-plot::
 
