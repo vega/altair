@@ -611,8 +611,8 @@ to see the point highlighted
 .. altair-plot::
 
     search_input = alt.selection_point(
-        value='',
         fields=['Name'],
+        empty=False,  # Start with no points selected
         bind=alt.binding(
             input='search',
             placeholder="Car model",
