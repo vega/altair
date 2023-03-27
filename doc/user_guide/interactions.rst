@@ -379,7 +379,7 @@ with a matching ``Origin``.
     selection = alt.selection_point(fields=['Origin'])
     color = alt.condition(
         selection,
-        alt.Color('Origin:N', legend=None),
+        alt.Color('Origin:N').legend(None),
         alt.value('lightgray')
     )
 
@@ -391,7 +391,7 @@ with a matching ``Origin``.
     )
 
     legend = alt.Chart(cars).mark_point().encode(
-        y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
+        alt.Y('Origin:N').axis(orient='right'),
         color=color
     ).add_params(
         selection
@@ -415,7 +415,7 @@ cylinders:
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
     color = alt.condition(
         selection,
-        alt.Color('Origin:N', legend=None),
+        alt.Color('Origin:N').legend(None),
         alt.value('lightgray')
     )
 
@@ -427,7 +427,7 @@ cylinders:
     )
 
     legend = alt.Chart(cars).mark_rect().encode(
-        y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
+        alt.Y('Origin:N').axis(orient='right'),
         x='Cylinders:O',
         color=color
     ).add_params(
@@ -537,7 +537,7 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     color = alt.condition(
         selection,
-        alt.Color('Origin:N', legend=None),
+        alt.Color('Origin:N').legend(None),
         alt.value('lightgray')
     )
 
@@ -589,7 +589,7 @@ after a selection has been made in a radio button or drop-down
         y='Miles_per_Gallon:Q',
         # We need to set a constant domain to preserve the colors
         # when only one region is shown at a time
-        color=alt.Color('Origin:N', scale=alt.Scale(domain=options)),
+        color=alt.Color('Origin:N').scale(domain=options),
     ).add_params(
         selection
     ).transform_filter(
@@ -799,7 +799,7 @@ There is no direct way to map an encoding channel to a widget in order to dynami
     )
 
     alt.Chart(data.cars.url).mark_circle().encode(
-        x=alt.X('x:Q', title=''),
+        x=alt.X('x:Q').title(''),
         y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).transform_calculate(
