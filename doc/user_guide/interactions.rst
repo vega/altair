@@ -12,7 +12,7 @@ as we will see in this section.
 There are three core concepts of this grammar:
 
 - Parameters are the basic building blocks in the grammar of interaction.
-  They can either be a simple variables or more complex selections
+  They can either be simple variables or more complex selections
   that map user input (e.g., mouse clicks and drags) to data queries.
 - Conditions and filters can respond to changes in parameter values
   and update chart elements based on that input.
@@ -23,11 +23,11 @@ Parameters
 ~~~~~~~~~~
 
 Parameters are the building blocks of interaction in Altair.
-There are two types of parameters: *variables* and *selections*. We introduce these concepts through a series examples.
+There are two types of parameters: *variables* and *selections*. We introduce these concepts through a series of examples.
 
 .. note::
 
-   This material was changed considerably with the release of Altair 5.  In particular, Altair 4 had selections but not variables, and the term "parameter" first appeared in Altair 5.
+   This material was changed considerably with the release of Altair 5.
 
 .. _basic variable:
 
@@ -118,8 +118,7 @@ There are two types of selections:
 
 Here we will create a simple chart and then add an selection interval to it.
 We could create a selection interval via ``param(select="interval")``,
-but it is more convenient to use the shorter ``selection_interval``
-(and this also matches the syntax that was used in Altair 4).
+but it is more convenient to use the shorter ``selection_interval``.
 
 Here is a simple scatter-plot created from the ``cars`` dataset:
 
@@ -260,7 +259,7 @@ It is not possible to both select and filter in the same chart,
 so typically this functionality will be used when at least two sub-charts are present.
 In the following example,
 we attach the selection parameter to the upper chart,
-and then filter data in the lower chart based selection in the upper chart.
+and then filter data in the lower chart based on the selection in the upper chart.
 You can explore how the counts change in the bar chart
 depending on the size and position of the selection in the scatter plot.
 
@@ -495,8 +494,7 @@ With these operators, selections can be combined in arbitrary ways:
 Bindings & Widgets
 ~~~~~~~~~~~~~~~~~~
 
-With an understanding of the parameter types and conditions, you can now bind parameters to chart elements (e.g. legends) and widgets (e.g. drop-downs and sliders). This is done using the ``bind`` option inside ``param`` and ``selection``. As specified by `the Vega-lite binding docs <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, bindings can be of three types:
-to data-driven and logic-driven input elements,
+With an understanding of the parameter types and conditions, you can now bind parameters to chart elements (e.g. legends) and widgets (e.g. drop-downs and sliders). This is done using the ``bind`` option inside ``param`` and ``selection``. As specified by `the Vega-lite binding docs <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, there are three types of bindings available:
 
 1. Point and interval selections can be used for data-driven interactive elements, such as highlighting and filtering based on values in the data.
 2. Sliders and checkboxes can be used for logic-driven interactive elements, such as highlighting and filtering based on the absolute values in these widgets.
@@ -552,7 +550,7 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
     )
 
 Note that although it looks like a value is selected in the dropdown from the start,
-we need to set `value=` to actually start out with a selection in the chart.
+we need to set `value=` to actually start out with an initial selection in the chart.
 We did this previously with variable parameters
 and selection parameters follow the same pattern as you will see further down
 in the :ref:`encoding-channel-binding` section.
@@ -563,9 +561,9 @@ just as we did without widgets.
 Bindings and input elements can also be used to filter data
 allowing the user to see just the selected points as in the example below.
 In this example, we also add an empty selection
-to illustrate how you can go back to showing all points
+to illustrate how to revert to showing all points
 after a selection has been made in a radio button or drop-down
-(since these can't be deselected).
+(which cannot be deselected).
 
 
 .. altair-plot::
@@ -723,15 +721,14 @@ Similarly,
 it is often possible to use equality statements
 such as ``alt.datum.xval == selector`` to lookup exact values
 but it is often more convenient to switch to a selection parameter
-and specifying a field/encoding.
+and specify a field/encoding.
 
 Logic-Driven Comparisons
 ------------------------
 
-Data-driven lookups and comparisons are very helpful
-but sometimes we might want to make a logic comparison
-in the conditional statement instead
-that is independent of the data.
+A logic comparison is a type of comparison
+that is based on logical rules and conditions,
+rather than on the actual data values themselves.
 For example, for a checkbox widget
 we want to check if the state of the checkbox is True or False
 and execute some action depending on whether it is checked or not.
