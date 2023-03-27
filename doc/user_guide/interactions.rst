@@ -676,7 +676,8 @@ which would have been the case if we just wrote ``xval < selector``.
        color=alt.condition(
            alt.datum.xval < selector,
            # 'datum.xval < SelectorName',  # An equivalent alternative
-           alt.value('red'), alt.value('blue')
+           alt.value('red'),
+           alt.value('blue')
        )
     ).add_params(
        selector
@@ -703,7 +704,8 @@ points based on whether they are smaller or larger than the value:
         color=alt.condition(
             alt.datum.xval < selector.cutoff,
             # 'datum.xval < SelectorName.cutoff',  # An equivalent alternative
-            alt.value('red'), alt.value('blue')
+            alt.value('red'),
+            alt.value('blue')
         )
     ).add_params(
         selector
@@ -747,7 +749,7 @@ just if the value of the check box is True (checked) or False (unchecked):
         y='Miles_per_Gallon:Q',
         size=alt.condition(
             param_checkbox,
-            alt.Size('Acceleration:Q'),
+            'Acceleration:Q',
             alt.value(25)
         )
     ).add_params(
@@ -883,8 +885,8 @@ Using these two expressions defined as a parameter, we can connect them to an en
     param_color_py_expr = alt.param(expr=alt.expr.if_(param_width < 200, 'red', 'black'))
 
     chart = alt.Chart(df).mark_point().encode(
-        x=alt.X('xval').axis(titleColor=param_color_js_expr),
-        y=alt.Y('yval').axis(titleColor=param_color_py_expr)
+        alt.X('xval').axis(titleColor=param_color_js_expr),
+        alt.Y('yval').axis(titleColor=param_color_py_expr)
     ).add_params(
         param_width,
         param_color_js_expr,
@@ -924,8 +926,8 @@ Another option to include an expression within a chart specification is as a val
     # which is why we use this nested quotation.
     title=alt.Title(alt.expr(f'"This chart is " + {param_width.name} + " px wide"'))
     alt.Chart(df, title=title).mark_point().encode(
-        x=alt.X('xval'),
-        y=alt.Y('yval')
+        alt.X('xval'),
+        alt.Y('yval')
     ).add_params(
         param_width,
     )
@@ -959,8 +961,8 @@ To try this out, you can type ``mazda|ford`` in the search input box below.
         opacity=alt.condition(
             alt.expr.test(alt.expr.regexp(search_input, 'i'), alt.datum.Name),
             # f"test(regexp({search_input.name}, 'i'), datum.Name)",  # Equivalent js alternative
-            alt.value(0.8),
-            alt.value(0.1)
+            alt.value(1),
+            alt.value(0.05)
         )
     ).add_params(
         search_input
