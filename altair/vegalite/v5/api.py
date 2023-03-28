@@ -472,12 +472,12 @@ def selection_interval(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
@@ -489,9 +489,6 @@ def selection_interval(
     encodings : List[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
-        A list of field names whose values must match for a data tuple to
-        fall within the selection.
     on : string (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
@@ -540,7 +537,7 @@ def selection_interval(
         default allows users to use the mouse wheel to resize an interval
         selection.
     **kwds :
-        additional keywords to control the selection.
+        Additional keywords to control the selection.
 
     Returns
     -------
@@ -586,12 +583,12 @@ def selection_point(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
@@ -603,9 +600,6 @@ def selection_point(
     encodings : List[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
-        A list of field names whose values must match for a data tuple to
-        fall within the selection.
     on : string (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
@@ -655,7 +649,10 @@ def selection_point(
         data values must be interacted with directly (e.g., clicked on)
         to be added to the selection.
     **kwds :
-        additional keywords to control the selection.
+        Additional keywords to control the selection. For example:
+        fields : List[str] (optional)
+            A list of field names whose values must match for a data tuple to
+            fall within the selection.
 
     Returns
     -------
