@@ -323,12 +323,12 @@ def param(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
