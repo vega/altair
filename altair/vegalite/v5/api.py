@@ -569,6 +569,7 @@ def selection_point(
     empty=Undefined,
     expr=Undefined,
     encodings=Undefined,
+    fields=Undefined,
     on=Undefined,
     clear=Undefined,
     resolve=Undefined,
@@ -600,6 +601,9 @@ def selection_point(
     encodings : List[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+    fields : List[str] (optional)
+        A list of field names whose values must match for a data tuple to
+        fall within the selection.
     on : string (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
@@ -649,10 +653,7 @@ def selection_point(
         data values must be interacted with directly (e.g., clicked on)
         to be added to the selection.
     **kwds :
-        Additional keywords to control the selection. For example:
-        fields : List[str] (optional)
-            A list of field names whose values must match for a data tuple to
-            fall within the selection.
+        Additional keywords to control the selection.
 
     Returns
     -------
@@ -667,6 +668,7 @@ def selection_point(
         empty=empty,
         expr=expr,
         encodings=encodings,
+        fields=fields,
         on=on,
         clear=clear,
         resolve=resolve,
