@@ -133,8 +133,8 @@ Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` 
     source = data.cars()
 
     alt.Chart(source).mark_point().encode(
-        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
-        alt.Y("Horsepower:Q", scale=alt.Scale(zero=False)),
+        alt.X("Miles_per_Gallon:Q").scale(zero=False),
+        alt.Y("Horsepower:Q").scale(zero=False),
         color="Origin:N",
         shape="Origin:N",
     )
@@ -174,11 +174,9 @@ We can also use point mark with ``wedge`` as ``shape`` and ``angle`` encoding to
     alt.Chart(source).mark_point(shape="wedge", filled=True).encode(
         latitude="latitude",
         longitude="longitude",
-        color=alt.Color(
-            "dir", scale=alt.Scale(domain=[0, 360], scheme="rainbow"), legend=None
-        ),
-        angle=alt.Angle("dir", scale=alt.Scale(domain=[0, 360], range=[180, 540])),
-        size=alt.Size("speed", scale=alt.Scale(rangeMax=500)),
+        color=alt.Color("dir").scale(domain=[0, 360], scheme="rainbow").legend(None),
+        angle=alt.Angle("dir").scale(domain=[0, 360], range=[180, 540]),
+        size=alt.Size("speed").scale(rangeMax=500),
     ).project("equalEarth")
 
 Geo Point

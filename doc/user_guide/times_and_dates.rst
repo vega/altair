@@ -64,9 +64,9 @@ x-axis, and day of the month on the y-axis:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('hoursminutes(date):O', title='hour of day'),
-        alt.Y('monthdate(date):O', title='date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('hoursminutes(date):O').title('hour of day'),
+        alt.Y('monthdate(date):O').title('date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 Unless you are using a non-ES6 browser (See :ref:`note-browser-compliance`),
@@ -103,9 +103,9 @@ render **according to the timezone of the browser rendering it**:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('hoursminutes(date_pacific):O', title='hour of day'),
-        alt.Y('monthdate(date_pacific):O', title='date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('hoursminutes(date_pacific):O').title('hour of day'),
+        alt.Y('monthdate(date_pacific):O').title('date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 If you are viewing this chart on a computer whose time is set to the west coast
@@ -131,9 +131,9 @@ regardless of the system location:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('utchoursminutes(date_pacific):O', title='UTC hour of day'),
-        alt.Y('utcmonthdate(date_pacific):O', title='UTC date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('utchoursminutes(date_pacific):O').title('UTC hour of day'),
+        alt.Y('utcmonthdate(date_pacific):O').title('UTC date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 To make your charts as portable as possible (even in non-ES6 browsers which parse
@@ -146,9 +146,9 @@ in UTC time, both on the Pandas side and on the Vega-Lite side:
    temps['date_utc'] = temps['date'].dt.tz_localize('UTC')
 
    alt.Chart(temps).mark_rect().encode(
-       alt.X('utchoursminutes(date_utc):O', title='hour of day'),
-       alt.Y('utcmonthdate(date_utc):O', title='date'),
-       alt.Color('temp:Q', title='temperature (F)')
+       alt.X('utchoursminutes(date_utc):O').title('hour of day'),
+       alt.Y('utcmonthdate(date_utc):O').title('date'),
+       alt.Color('temp:Q').title('temperature (F)')
    )
 
 This is somewhat less convenient than the default behavior for timezone-agnostic

@@ -73,8 +73,8 @@ to give a profile of Seattle temperatures through the year:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('date(date):O', title='day'),
-        alt.Y('month(date):O', title='month'),
+        alt.X('date(date):O').title('day'),
+        alt.Y('month(date):O').title('month'),
         color='max(temp):Q'
     ).properties(
         title="2010 Daily High Temperatures in Seattle (F)"
@@ -90,7 +90,7 @@ method. For example:
 .. altair-plot::
 
     alt.Chart(temps).mark_line().encode(
-        alt.X('month:T', axis=alt.Axis(format='%b')),
+        alt.X('month:T').axis(format='%b'),
         y='mean(temp):Q'
     ).transform_timeunit(
         month='month(date)'

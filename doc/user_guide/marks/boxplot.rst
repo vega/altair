@@ -32,7 +32,7 @@ By default, the extent is ``1.5``.
     source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False))
+        alt.X("Miles_per_Gallon:Q").scale(zero=False)
     )
 
 
@@ -45,7 +45,7 @@ By default, the extent is ``1.5``.
     source = data.cars()
 
     alt.Chart(source).mark_boxplot(extent="min-max").encode(
-        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.X("Miles_per_Gallon:Q").scale(zero=False),
         alt.Y("Origin:N"),
     )
 
@@ -64,7 +64,7 @@ A box plot’s orientation is automatically determined by the continuous field a
     source = data.cars()
 
     alt.Chart(source).mark_boxplot().encode(
-        alt.Y("Miles_per_Gallon:Q", scale=alt.Scale(zero=False))
+        alt.Y("Miles_per_Gallon:Q").scale(zero=False)
     )
 
 2D box plot shows the distribution of a continuous field, broken down by categories.
@@ -86,8 +86,8 @@ An example of a box plot where the ``color`` encoding channel is specified.
 
     alt.Chart(source).mark_boxplot(extent="min-max").encode(
         alt.X("Origin:N"),
-        alt.Y("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
-        alt.Color("Origin:N", legend=None),
+        alt.Y("Miles_per_Gallon:Q").scale(zero=False),
+        alt.Color("Origin:N").legend(None),
     )
 
 
@@ -105,7 +105,7 @@ If the field in the tooltip encoding is unaggregated, it replaces the tooltips o
     source = data.cars()
 
     alt.Chart(source).mark_boxplot(extent="min-max").encode(
-        alt.X("Miles_per_Gallon:Q", scale=alt.Scale(zero=False)),
+        alt.X("Miles_per_Gallon:Q").scale(zero=False),
         alt.Y("Origin:N"),
         alt.Tooltip("mean(Miles_per_Gallon)"),
     )

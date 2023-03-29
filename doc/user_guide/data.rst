@@ -351,14 +351,14 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
 
 Since the spatial data in our example is not geographic, 
 we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
-geometries without applying a geographic projection. By using ``alt.Color(..., scale=None)`` we
+geometries without applying a geographic projection. By using ``alt.Color(...).scale(None)`` we
 disable the automatic color assignment in Altair
 and instead directly use the provided Hex color codes.
 
 .. altair-plot::
 
    alt.Chart(gdf_geoms, title="Vega-Altair").mark_geoshape().encode(
-       color=alt.Color("color:N", scale=None)
+       alt.Color("color:N").scale(None)
    ).project(type="identity", reflectY=True)
 
 
@@ -402,7 +402,7 @@ for the ordinal structured data.
 .. altair-plot::
 
    alt.Chart(data_obj_geojson, title="Vega-Altair - ordinal scale").mark_geoshape().encode(
-       color=alt.Color("properties.location:O", scale=alt.Scale(scheme='magma'))
+       alt.Color("properties.location:O").scale(scheme='magma')
    ).project(type="identity", reflectY=True)
 
 
@@ -519,7 +519,7 @@ as we hover over it with the mouse.
    alt.Chart(data_url_topojson, title="London-Boroughs").mark_geoshape(
        tooltip=True
    ).encode(
-       color=alt.Color("id:N", scale=alt.Scale(scheme='tableau20'), legend=alt.Legend(columns=2, symbolLimit=33))
+       alt.Color("id:N").scale(scheme='tableau20').legend(columns=2, symbolLimit=33)
    )
 
 Similar to the ``feature`` option, there also exists the ``mesh``
@@ -572,7 +572,7 @@ in the list of dictionaries:
     
    alt.Chart(data_nested_features, title="Vega-Altair").mark_geoshape().encode(
        shape="geo:G", 
-       color=alt.Color("color:N", scale=None)
+       color=alt.Color("color:N").scale(None)
    ).project(type="identity", reflectY=True)
 
 

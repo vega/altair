@@ -27,7 +27,7 @@ Bar Mark Properties
     )
 
     alt.Chart(source).mark_bar(cornerRadius=corner_var).encode(
-        x=alt.X("a:N", axis=alt.Axis(labelAngle=0)),
+        x=alt.X("a:N").axis(labelAngle=0),
         y="b:Q",
     ).add_params(corner_var)
 
@@ -54,7 +54,7 @@ Mapping a quantitative field to either ``x`` or ``y`` of the ``bar`` mark produc
     source = data.population.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("sum(people):Q", title="Population")
+        alt.X("sum(people):Q").title("Population")
     ).transform_filter(
         datum.year == 2000
     )
@@ -72,7 +72,7 @@ If we map a different discrete field to the ``y`` channel, we can produce a hori
     source = data.population.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("sum(people):Q", title="Population"),
+        alt.X("sum(people):Q").title("Population"),
         alt.Y("age:O"),
     ).transform_filter(
         datum.year == 2000
@@ -95,7 +95,7 @@ bars on continuous scales will be set based on the ``continuousBandSize`` config
     source = data.seattle_weather()
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("month(date):T", title="Date"),
+        alt.X("month(date):T").title("Date"),
         alt.Y("mean(precipitation):Q"),
     )
 
@@ -112,7 +112,7 @@ If the data is not pre-aggregated (i.e. each record in the data field represents
     source = data.movies.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("IMDB_Rating:Q", bin=True),
+        alt.X("IMDB_Rating:Q").bin(),
         y='count()',
     )
 

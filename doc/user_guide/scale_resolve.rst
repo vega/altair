@@ -60,16 +60,14 @@ each layer.
 
     source = data.cars()
 
-    base = alt.Chart(source).encode(
-            alt.X('year(Year):T')
-    )
+    base = alt.Chart(source).encode(x='year(Year):T')
 
     line_A = base.mark_line(color='#5276A7').encode(
-        alt.Y('average(Horsepower):Q', axis=alt.Axis(titleColor='#5276A7'))
+        alt.Y('average(Horsepower):Q').axis(titleColor='#5276A7')
     )
 
     line_B = base.mark_line(color='#F18727').encode(
-        alt.Y('average(Miles_per_Gallon):Q', axis=alt.Axis(titleColor='#F18727'))
+        alt.Y('average(Miles_per_Gallon):Q').axis(titleColor='#F18727')
     )
 
     alt.layer(line_A, line_B).resolve_scale(y='independent')
@@ -92,13 +90,13 @@ Vega-Lite to represent an encoding.
     line_A = base.transform_filter(
         alt.datum.Measure == 'Horsepower'
     ).encode(
-        alt.Y('average(Value):Q', axis=alt.Axis(title='Horsepower')),
+        alt.Y('average(Value):Q').title('Horsepower')
     )
 
     line_B = base.transform_filter(
         alt.datum.Measure == 'Miles_per_Gallon'
     ).encode(
-        alt.Y('average(Value):Q',axis=alt.Axis(title='Miles_per_Gallon'))
+        alt.Y('average(Value):Q').title('Miles_per_Gallon')
     )
 
     alt.layer(line_A, line_B).resolve_scale(y='independent')

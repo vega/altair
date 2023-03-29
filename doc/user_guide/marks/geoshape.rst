@@ -471,7 +471,7 @@ will make the following not work for geographic visualization:
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
         color=alt.Color('value:Q'),
-        facet=alt.Facet('variable:N', columns=3)
+        facet=alt.Facet('variable:N').columns(3)
     ).properties(
         width=180,
         height=130
@@ -545,7 +545,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
             x="population",
             opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
             color="population",
-            y=alt.Y("state", sort="-x"),
+            y=alt.Y("state").sort("-x"),
         )
     )
 
