@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.6.3,<2"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
@@ -38,7 +38,7 @@ classifiers= [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-],
+]
 
 [project.urls]
 Documentation = "https://altair-viz.github.io"
@@ -61,7 +61,7 @@ dev = [
     "types-jsonschema",
     "types-setuptools"
 ]
-docs = [
+doc = [
     "sphinx",
     "docutils",
     "jinja2",
@@ -77,15 +77,12 @@ docs = [
 [tool.hatch.version]
 path = "altair/__init__.py"
 
-[tool.hatch.build.targets.sdist]
-include = [
-    "/altair",
-    "/*.md",
-]
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool.hatch.build.targets.wheel]
+[tool.hatch.build]
 include = [
-    "/altair",
+    "/altair"
 ]
 
 [tool.black]
@@ -123,7 +120,8 @@ select = [
     # flake8-tidy-imports
     "TID"
 ]
-ignore = ["E203", "E266", "E501", "W503"]
+# ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
+ignore = ["E501", "TID252"]
 exclude = [
     ".git",
     "build",
