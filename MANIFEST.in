@@ -2,6 +2,5 @@ include *.md
 include Makefile
 include LICENSE
 include CHANGES.md
-include requirements.txt
-include requirements_dev.txt
+include pyproject.toml
 recursive-include altair *.py *.json *.ipynb *.html
