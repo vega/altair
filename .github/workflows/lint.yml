@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: black-flake8-mypy
+    name: black-ruff-mypy
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
@@ -21,9 +21,9 @@ jobs:
       run: |
         black --diff --color .
         black --check .
-    - name: Lint with flake8
+    - name: Lint with ruff
       run: |
-        flake8 .  --statistics
+        ruff --stats .
     - name: Lint with mypy
       run: |
         mypy altair tests

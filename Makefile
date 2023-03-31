@@ -1,11 +1,12 @@
 all: install
 
 install:
-	python setup.py install
+	python -m pip install hatchling
+	hatch install --extras=dev
 
 test :
 	black --diff --color --check .
-	flake8 . --statistics
+	ruff --stats .
 	mypy altair tests
 	python -m pytest --pyargs --doctest-modules tests
 
