@@ -1,6 +1,96 @@
+[build-system]
+requires = ["hatchling>=1.6.3,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "altair"
+authors = [ {name = "Vega-Altair Contributors"} ]
+dependencies = [
+    "importlib_metadata; python_version<\"3.8\"",
+    "typing_extensions>=4.0.1; python_version<\"3.11\"",
+    "jinja2",
+    "jsonschema>=3.0",
+    "numpy",
+    "pandas>=0.18",
+    "toolz"
+]
+description = "Vega-Altair: A declarative statistical visualization library for Python."
+readme = "README.md"
+keywords = [
+    "declarative",
+    "statistics",
+    "visualization",
+    "interactive",
+    "json",
+    "vega-lite",
+]
+requires-python = ">=3.7"
+dynamic = ["version"]
+license-files = { paths = ["LICENSE"] }
+classifiers= [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+],
+
+[project.urls]
+Documentation = "https://altair-viz.github.io"
+Source = "https://github.com/altair-viz/altair"
+
+[project.optional-dependencies]
+dev = [
+    "hatch",
+    "ruff",
+    "black<24",
+    "ipython",
+    "pytest",
+    "pytest-cov",
+    "m2r",
+    "vega_datasets",
+    # following is rejected by PyPI
+    "altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git",
+    "vl-convert-python",
+    "pandas-stubs",
+    "types-jsonschema",
+    "types-setuptools"
+]
+docs = [
+    "sphinx",
+    "docutils",
+    "jinja2",
+    "numpydoc",
+    "pillow",
+    "pydata-sphinx-theme",
+    "geopandas",
+    "myst-parser",
+    "sphinx_copybutton",
+    "sphinx-design"
+]
+
+[tool.hatch.version]
+path = "altair/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/altair",
+    "/*.md",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "/altair",
+]
+
 [tool.black]
 line-length = 88
-target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
+target-version = ["py37", "py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -16,11 +106,35 @@ exclude = '''
 )/
 '''
 
-[build-system]
-# Reason for setuptools version restriction to <64 can be found at
-# https://github.com/altair-viz/altair/pull/2758#issuecomment-1358091909
-requires = ["setuptools >= 40.6.0, <64", "wheel"]
-build-backend = "setuptools.build_meta"
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pycodestyle-error
+    "E",
+    # pycodestyle-warning
+    "W",
+    # pyflakes
+    "F",
+    # flake8-tidy-imports
+    "TID"
+]
+ignore = ["E203", "E266", "E501", "W503"]
+exclude = [
+    ".git",
+    "build",
+    "__pycache__",
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax",
+    "altair/vegalite/v?/schema",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 18
 
 [tool.pytest.ini_options]
 markers = [
