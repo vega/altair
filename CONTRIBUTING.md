@@ -159,12 +159,12 @@ Some additional notes:
 ### Building the Documentation Locally
 In addition to the development dependencies mentioned further above,
 you will also need to install the dependencies for the documentation 
-listed in  `docs/requirements.txt`. Note that `geopandas` might require you to first
+listed in  `pyproject.toml` (optional-dependencies/doc). Note that `geopandas` might require you to first
 install some other dependencies, see [their installation page](https://geopandas.org/en/stable/getting_started/install.html#installation)
 for details.
 
 ```
-pip install -r doc/requirements.txt
+pip install -e .[doc]
 ```
 
 Once you have all the dependencies, you can build the documentation 
