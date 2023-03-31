@@ -22,8 +22,9 @@ jobs:
         black --diff --color .
         black --check .
     - name: Lint with ruff
-      run: |
-        ruff --stats .
+      run: |        
+        ruff check .
+        ruff --statistics .
     - name: Lint with mypy
       run: |
         mypy altair tests
