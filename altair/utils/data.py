@@ -284,14 +284,14 @@ def import_pyarrow_interchange():
         import pyarrow.interchange as pi
 
         return pi
-    except pkg_resources.DistributionNotFound:
+    except pkg_resources.DistributionNotFound as err:
         # The package is not installed
         raise ImportError(
             "Usage of the DataFrame Interchange Protocol requires the package 'pyarrow', but it is not installed."
-        )
-    except pkg_resources.VersionConflict:
+        ) from err
+    except pkg_resources.VersionConflict as err:
         # The package is installed but does not meet the minimum version requirement
         raise ImportError(
             "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
             "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
-        )
+        ) from err

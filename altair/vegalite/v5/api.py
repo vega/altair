@@ -2261,11 +2261,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         try:
             import altair_viewer  # type: ignore
-        except ImportError:
+        except ImportError as err:
             raise ValueError(
                 "'show' method requires the altair_viewer package. "
                 "See http://github.com/altair-viz/altair_viewer"
-            )
+            ) from err
         altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
 
     @utils.use_signature(core.Resolve)

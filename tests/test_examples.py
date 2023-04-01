@@ -41,11 +41,11 @@ def test_render_examples_to_chart(syntax_module):
 
         try:
             assert isinstance(chart.to_dict(), dict)
-        except Exception as e:
+        except Exception as err:
             raise AssertionError(
                 f"Example file {filename} raised an exception when "
-                f"converting to a dict: {e}"
-            )
+                f"converting to a dict: {err}"
+            ) from err
 
 
 # We do not apply the save_engine mark to this test. This mark is used in

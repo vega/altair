@@ -564,7 +564,7 @@ class SchemaBase:
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                raise SchemaValidationError(self, err)
+                raise SchemaValidationError(self, err) from err
         return result
 
     def to_json(

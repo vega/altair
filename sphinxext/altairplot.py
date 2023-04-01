@@ -241,15 +241,15 @@ def html_visit_altair_plot(self, node):
         with contextlib.redirect_stdout(f):
             chart = eval_block(node["code"], namespace)
         stdout = f.getvalue()
-    except Exception as e:
+    except Exception as err:
         message = "altair-plot: {}:{} Code Execution failed:" "{}: {}".format(
-            node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
+            node["rst_source"], node["rst_lineno"], err.__class__.__name__, str(err)
         )
         if node["strict"]:
-            raise ValueError(message) from e
+            raise ValueError(message) from err
         else:
             warnings.warn(message, stacklevel=1)
-            raise nodes.SkipNode
+            raise nodes.SkipNode from err
 
     chart_name = node["chart-var-name"]
     if chart_name is not None:
@@ -283,8 +283,8 @@ def html_visit_altair_plot(self, node):
             # Last line should be a chart; convert to spec dict
             try:
                 spec = chart.to_dict()
-            except alt.utils.schemapi.SchemaValidationError:
-                raise ValueError("Invalid chart: {0}".format(node["code"]))
+            except alt.utils.schemapi.SchemaValidationError as err:
+                raise ValueError("Invalid chart: {0}".format(node["code"])) from err
             actions = node["links"]
 
             # TODO: add an option to save chart specs to file & load from there.
