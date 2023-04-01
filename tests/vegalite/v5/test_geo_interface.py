@@ -75,11 +75,11 @@ def test_geo_interface_serializing_arrays_tuples():
         "geometry": {
             "coordinates": [
                 (
-                        (6.90, 53.48),
-                        (5.98, 51.85),
-                        (6.07, 53.51),
-                        (6.90, 53.48),
-                    )
+                    (6.90, 53.48),
+                    (5.98, 51.85),
+                    (6.07, 53.51),
+                    (6.90, 53.48),
+                )
             ],
             "type": "Polygon",
         },

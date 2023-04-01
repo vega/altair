@@ -44,10 +44,7 @@ def _prepare_data(data, data_transformers):
     elif isinstance(data, str):
         return {"url": data}
     else:
-        warnings.warn(
-            "data of type {} not recognized".format(type(data)),
-            stacklevel=1
-        )
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
         return data
 
 

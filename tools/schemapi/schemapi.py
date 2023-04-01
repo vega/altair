@@ -566,7 +566,13 @@ class SchemaBase:
         return result
 
     def to_json(
-        self, validate=True, ignore=None, context=None, indent=2, sort_keys=True, **kwargs
+        self,
+        validate=True,
+        ignore=None,
+        context=None,
+        indent=2,
+        sort_keys=True,
+        **kwargs,
     ):
         """Emit the JSON representation for this object as a string.
 

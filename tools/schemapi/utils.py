@@ -232,7 +232,7 @@ class SchemaInfo:
 
             warnings.warn(
                 "no short_description for schema\n{}" "".format(self.schema),
-                stacklevel=1
+                stacklevel=1,
             )
             return "any"
 

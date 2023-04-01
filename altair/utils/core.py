@@ -227,7 +227,8 @@ def infer_vegalite_type(data):
     else:
         warnings.warn(
             "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ), stacklevel=1
+            "Defaulting to nominal.".format(typ),
+            stacklevel=1,
         )
         return "nominal"
 

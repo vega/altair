@@ -314,7 +314,7 @@ def html_visit_altair_plot(self, node):
                 "altair-plot: {}:{} Malformed block. Last line of "
                 "code block should define a valid altair Chart object."
                 "".format(node["rst_source"], node["rst_lineno"]),
-                stacklevel=1
+                stacklevel=1,
             )
         raise nodes.SkipNode
 
