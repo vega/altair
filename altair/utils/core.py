@@ -483,15 +483,15 @@ def parse_shorthand(
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    units = dict(
-        field="(?P<field>.*)",
-        type="(?P<type>{})".format("|".join(valid_typecodes)),
-        agg_count="(?P<aggregate>count)",
-        op_count="(?P<op>count)",
-        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    )
+    units = {
+        "field": "(?P<field>.*)",
+        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
+        "agg_count": "(?P<aggregate>count)",
+        "op_count": "(?P<op>count)",
+        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+    }
 
     patterns = []
 

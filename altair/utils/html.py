@@ -251,7 +251,7 @@ def spec_to_html(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version for mode='vega-lite'")
 
-    render_kwargs = dict()
+    render_kwargs = {}
     if template == "inline":
         try:
             from altair_viewer import get_bundled_script

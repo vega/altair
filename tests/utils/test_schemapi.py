@@ -418,7 +418,7 @@ def chart_example_hconcat():
     text = (
         alt.Chart(source)
         .mark_text(align="right")
-        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+        .encode(alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"}))
     )
 
     return points | text

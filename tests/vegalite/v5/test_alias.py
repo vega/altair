@@ -10,7 +10,7 @@ def test_aliases():
         try:
             getattr(alt, alias)
         except AttributeError as e:
-            assert False, f"cannot resolve '{alias}':, {e}"
+            raise AssertionError(f"cannot resolve '{alias}':, {e}")
 
         # this test fails if the alias match a colliding name in core
         with pytest.raises(AttributeError):
