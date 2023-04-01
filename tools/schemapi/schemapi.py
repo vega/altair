@@ -45,6 +45,19 @@ def debug_mode(arg):
 
 
 def validate_jsonschema(spec, schema, rootschema=None):
+    errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
+    if errors:
+        errors = _subset_to_most_relevant_errors(errors)
+        main_error = errors[0]
+        # They can be used to craft more helpful error messages when this error
+        # is being converted to a SchemaValidationError
+        main_error._additional_errors = errors[1:]
+        raise main_error
+
+
+def _get_errors_from_spec(
+    spec, schema, rootschema=None
+) -> List[jsonschema.exceptions.ValidationError]:
     # We don't use jsonschema.validate as this would validate the schema itself.
     # Instead, we pass the schema directly to the validator class. This is done for
     # two reasons: The schema comes from Vega-Lite and is not based on the user
@@ -67,16 +80,10 @@ def validate_jsonschema(spec, schema, rootschema=None):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
     validator = validator_cls(schema, **validator_kwargs)
     errors = list(validator.iter_errors(spec))
-    if errors:
-        errors = _get_most_relevant_errors(errors)
-        main_error = errors[0]
-        # They can be used to craft more helpful error messages when this error
-        # is being converted to a SchemaValidationError
-        main_error._additional_errors = errors[1:]
-        raise main_error
+    return errors
 
 
-def _get_most_relevant_errors(
+def _subset_to_most_relevant_errors(
     errors: Sequence[jsonschema.exceptions.ValidationError],
 ) -> List[jsonschema.exceptions.ValidationError]:
     if len(errors) == 0:
