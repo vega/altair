@@ -566,7 +566,7 @@ class SchemaBase:
         return result
 
     def to_json(
-        self, validate=True, ignore=[], context={}, indent=2, sort_keys=True, **kwargs
+        self, validate=True, ignore=None, context=None, indent=2, sort_keys=True, **kwargs
     ):
         """Emit the JSON representation for this object as a string.
 
@@ -593,6 +593,10 @@ class SchemaBase:
         spec : string
             The JSON specification of the chart object.
         """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
         return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
 
