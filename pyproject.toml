@@ -40,7 +40,7 @@ select = [
     "TID"
 ]
 # ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
-ignore = ["E501", "TID252"]
+ignore = ["E501", "TID252", "B905"]
 exclude = [
     ".git",
     "build",
