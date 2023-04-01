@@ -285,8 +285,9 @@ def test_selection_expression():
     assert isinstance(selection["value"], alt.expr.Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
+    magic_attr = "__magic__"
     with pytest.raises(AttributeError):
-        selection.__magic__
+        getattr(selection, magic_attr)
 
 
 @pytest.mark.save_engine
