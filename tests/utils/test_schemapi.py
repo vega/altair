@@ -392,7 +392,8 @@ def test_schema_validation_error():
     assert the_err.message in message
 
 
-def chart_example_layer():
+def chart_error_example_layer():
+    # Error: Width is not a valid property of a VConcatChart
     points = (
         alt.Chart(data.cars.url)
         .mark_point()
@@ -404,7 +405,8 @@ def chart_example_layer():
     return (points & points).properties(width=400)
 
 
-def chart_example_hconcat():
+def chart_error_example_hconcat():
+    # Error: Invalid value for title in Text
     source = data.cars()
     points = (
         alt.Chart(source)
@@ -417,14 +419,17 @@ def chart_example_hconcat():
 
     text = (
         alt.Chart(source)
-        .mark_text(align="right")
+        .mark_text()
         .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
     )
 
     return points | text
 
 
-def chart_example_invalid_channel_and_condition():
+def chart_error_example_invalid_channel():
+    # Error: invalidChannel is an invalid encoding channel. Condition is correct
+    # but is added below as in previous implementations of Altair this interfered
+    # with finding the invalidChannel error
     selection = alt.selection_point()
     return (
         alt.Chart(data.barley())
@@ -437,7 +442,8 @@ def chart_example_invalid_channel_and_condition():
     )
 
 
-def chart_example_invalid_y_option():
+def chart_error_example_invalid_y_option_value_unknown_x_option():
+    # Error: Invalid Y option value "asdf" and unknown option "unknown" for X
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -448,7 +454,8 @@ def chart_example_invalid_y_option():
     )
 
 
-def chart_example_invalid_y_option_value():
+def chart_error_example_invalid_y_option_value():
+    # Error: Invalid Y option value "asdf"
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -459,7 +466,10 @@ def chart_example_invalid_y_option_value():
     )
 
 
-def chart_example_invalid_y_option_value_with_condition():
+def chart_error_example_invalid_y_option_value_with_condition():
+    # Error: Invalid Y option value "asdf". Condition is correct
+    # but is added below as in previous implementations of Altair this interfered
+    # with finding the invalidChannel error
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -471,15 +481,18 @@ def chart_example_invalid_y_option_value_with_condition():
     )
 
 
-def chart_example_invalid_timeunit_value():
+def chart_error_example_invalid_timeunit_value():
+    # Error: Invalid value for Angle.timeUnit
     return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
 
 
-def chart_example_invalid_sort_value():
+def chart_error_example_invalid_sort_value():
+    # Error: Invalid value for Angle.sort
     return alt.Chart().encode(alt.Angle().sort("invalid_value"))
 
 
-def chart_example_invalid_bandposition_value():
+def chart_error_example_invalid_bandposition_value():
+    # Error: Invalid value for Text.bandPosition
     return (
         alt.Chart(data.cars())
         .mark_text(align="right")
@@ -491,7 +504,7 @@ def chart_example_invalid_bandposition_value():
     "chart_func, expected_error_message",
     [
         (
-            chart_example_invalid_y_option,
+            chart_error_example_invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
                 r"""`X` has no parameter named 'unknown'
 
@@ -505,7 +518,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_layer,
+            chart_error_example_layer,
             inspect.cleandoc(
                 r"""`VConcatChart` has no parameter named 'width'
 
@@ -519,7 +532,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_y_option_value,
+            chart_error_example_invalid_y_option_value,
             inspect.cleandoc(
                 r"""'asdf' is an invalid value for `stack`:
 
@@ -529,7 +542,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_y_option_value_with_condition,
+            chart_error_example_invalid_y_option_value_with_condition,
             inspect.cleandoc(
                 r"""'asdf' is an invalid value for `stack`:
 
@@ -539,7 +552,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_hconcat,
+            chart_error_example_hconcat,
             inspect.cleandoc(
                 r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
 
@@ -548,7 +561,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_channel_and_condition,
+            chart_error_example_invalid_channel,
             inspect.cleandoc(
                 r"""`Encoding` has no parameter named 'invalidChannel'
 
@@ -565,7 +578,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_timeunit_value,
+            chart_error_example_invalid_timeunit_value,
             inspect.cleandoc(
                 r"""'invalid_value' is an invalid value for `timeUnit`:
 
@@ -576,7 +589,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_sort_value,
+            chart_error_example_invalid_sort_value,
             # Previuosly, the line
             # "'invalid_value' is not of type 'array'" appeared multiple times in
             # the error message. This test should prevent a regression.
@@ -587,7 +600,7 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_bandposition_value,
+            chart_error_example_invalid_bandposition_value,
             inspect.cleandoc(
                 r"""'4' is an invalid value for `bandPosition`:
 
