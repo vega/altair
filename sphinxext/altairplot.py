@@ -248,7 +248,7 @@ def html_visit_altair_plot(self, node):
         if node["strict"]:
             raise ValueError(message) from e
         else:
-            warnings.warn(message)
+            warnings.warn(message, stacklevel=1)
             raise nodes.SkipNode
 
     chart_name = node["chart-var-name"]
@@ -313,7 +313,8 @@ def html_visit_altair_plot(self, node):
             warnings.warn(
                 "altair-plot: {}:{} Malformed block. Last line of "
                 "code block should define a valid altair Chart object."
-                "".format(node["rst_source"], node["rst_lineno"])
+                "".format(node["rst_source"], node["rst_lineno"]),
+                stacklevel=1
             )
         raise nodes.SkipNode
 

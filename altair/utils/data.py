@@ -257,7 +257,7 @@ def pipe(data, *funcs):
     warnings.warn(
         "alt.pipe() is deprecated, and will be removed in a future release. "
         "Use toolz.curried.pipe() instead.",
-        AltairDeprecationWarning,
+        AltairDeprecationWarning, stacklevel=1
     )
     return curried.pipe(data, *funcs)
 
@@ -270,7 +270,7 @@ def curry(*args, **kwargs):
     warnings.warn(
         "alt.curry() is deprecated, and will be removed in a future release. "
         "Use toolz.curried.curry() instead.",
-        AltairDeprecationWarning,
+        AltairDeprecationWarning, stacklevel=1
     )
     return curried.curry(*args, **kwargs)
 

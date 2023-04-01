@@ -30,7 +30,7 @@ def set_inspect_format_argument(format, fp, inline):
             )
 
     if format != "html" and inline:
-        warnings.warn("inline argument ignored for non HTML formats.")
+        warnings.warn("inline argument ignored for non HTML formats.", stacklevel=1)
 
     return format
 

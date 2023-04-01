@@ -112,7 +112,7 @@ def _prepare_data(data, context=None):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
-        warnings.warn("data of type {} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
 
     return data
 
@@ -354,13 +354,13 @@ def param(
         if parameter.empty == "none":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
+                utils.AltairDeprecationWarning, stacklevel=1
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
+                utils.AltairDeprecationWarning, stacklevel=1
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -371,7 +371,7 @@ def param(
     if "init" in kwds:
         warnings.warn(
             """Use 'value' instead of 'init'.""",
-            utils.AltairDeprecationWarning,
+            utils.AltairDeprecationWarning, stacklevel=1
         )
         if value is Undefined:
             kwds["value"] = kwds.pop("init")
@@ -415,7 +415,7 @@ def _selection(type=Undefined, **kwds):
         warnings.warn(
             """The types 'single' and 'multi' are now
         combined and should be specified using "selection_point()".""",
-            utils.AltairDeprecationWarning,
+            utils.AltairDeprecationWarning, stacklevel=1
         )
     else:
         raise ValueError("""'type' must be 'point' or 'interval'""")

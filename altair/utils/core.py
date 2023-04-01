@@ -227,7 +227,7 @@ def infer_vegalite_type(data):
     else:
         warnings.warn(
             "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ)
+            "Defaulting to nominal.".format(typ), stacklevel=1
         )
         return "nominal"
 
@@ -710,7 +710,9 @@ def infer_encoding_types(args, kwargs, channels):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
+            warnings.warn(
+                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
+            )
             return obj
 
         classes = name_to_channel[encoding]
