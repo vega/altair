@@ -2,8 +2,6 @@
 from .schema import *
 from .api import *
 
-from ...datasets import list_datasets, load_dataset
-
 from ...expr import datum, expr  # type: ignore[no-redef]
 
 from .display import VegaLite, renderers
