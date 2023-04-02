@@ -564,7 +564,12 @@ class SchemaBase:
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                raise SchemaValidationError(self, err) from err
+                # We do not raise `from err` as else the resulting
+                # traceback is very long as it contains part
+                # of the Vega-Lite schema. It would also first
+                # show the less helpful ValidationError instead of
+                # the more user friendly SchemaValidationError
+                raise SchemaValidationError(self, err) from None
         return result
 
     def to_json(
@@ -583,7 +588,7 @@ class SchemaBase:
         validate : boolean
             If True (default), then validate the output dictionary
             against the schema.
-        ignore : list
+        ignore : list (optional)
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
         context : dict (optional)
