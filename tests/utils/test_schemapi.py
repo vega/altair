@@ -500,6 +500,11 @@ def chart_error_example_invalid_bandposition_value():
     )
 
 
+def chart_error_invalid_type():
+    # Error: Invalid value for type
+    return alt.Chart().encode(alt.X(type="unknown"))
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -557,7 +562,8 @@ def chart_error_example_invalid_bandposition_value():
                 r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
 
                 {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'$"""
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'
+                {'text': 'Horsepower', 'align': 'right'} is not of type 'null'$"""
             ),
         ),
         (
@@ -581,22 +587,25 @@ def chart_error_example_invalid_bandposition_value():
             chart_error_example_invalid_timeunit_value,
             inspect.cleandoc(
                 r"""'invalid_value' is an invalid value for `timeUnit`:
-
+            
                 'invalid_value' is not one of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
                 'invalid_value' is not one of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
                 'invalid_value' is not one of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
-                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]$"""
+                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
+                'invalid_value' is not of type 'object'$"""
             ),
         ),
         (
             chart_error_example_invalid_sort_value,
-            # Previuosly, the line
-            # "'invalid_value' is not of type 'array'" appeared multiple times in
-            # the error message. This test should prevent a regression.
             inspect.cleandoc(
                 r"""'invalid_value' is an invalid value for `sort`:
 
-                'invalid_value' is not of type 'array'$"""
+                'invalid_value' is not of type 'array'
+                'invalid_value' is not of type 'object'
+                'invalid_value' is not of type 'null'
+                'invalid_value' is not one of \['ascending', 'descending'\]
+                'invalid_value' is not one of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
+                'invalid_value' is not one of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]$"""
             ),
         ),
         (
@@ -604,9 +613,15 @@ def chart_error_example_invalid_bandposition_value():
             inspect.cleandoc(
                 r"""'4' is an invalid value for `bandPosition`:
 
-                '4' is not of type 'number'
-                Additional properties are not allowed \('field' was unexpected\)
-                Additional properties are not allowed \('bandPosition', 'field', 'type' were unexpected\)$"""
+                '4' is not of type 'number'$"""
+            ),
+        ),
+        (
+            chart_error_invalid_type,
+            inspect.cleandoc(
+                r"""'unknown' is an invalid value for `type`:
+
+                'unknown' is not one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\]$"""
             ),
         ),
     ],

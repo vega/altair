@@ -3,7 +3,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any, Sequence, List, Dict, Optional
+from typing import Any, Sequence, List, Dict, Optional, DefaultDict
 from itertools import zip_longest
 
 import jsonschema
@@ -13,6 +13,9 @@ import numpy as np
 import pandas as pd
 
 from altair import vegalite
+
+ValidationErrorList = List[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors = Dict[str, ValidationErrorList]
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -44,20 +47,27 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
-def validate_jsonschema(spec, schema, rootschema=None):
+def validate_jsonschema(spec, schema, rootschema=None, raise_error=True):
     errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
     if errors:
-        errors = _subset_to_most_relevant_errors(errors)
-        main_error = errors[0]
+        leaf_errors = _get_leaves_of_error_tree(errors)
+        grouped_errors = _group_errors_by_json_path(leaf_errors)
+        grouped_errors = _subset_to_most_specific_json_paths(grouped_errors)
+        grouped_errors = _deduplicate_errors(grouped_errors)
+
+        # Nothing special about this first error but we need to choose one
+        # which can be raised
+        main_error = list(grouped_errors.values())[0][0]
         # They can be used to craft more helpful error messages when this error
         # is being converted to a SchemaValidationError
-        main_error._additional_errors = errors[1:]
-        raise main_error
+        main_error._all_errors = grouped_errors
+        if raise_error:
+            raise main_error
+        else:
+            return main_error
 
 
-def _get_errors_from_spec(
-    spec, schema, rootschema=None
-) -> List[jsonschema.exceptions.ValidationError]:
+def _get_errors_from_spec(spec, schema, rootschema=None) -> ValidationErrorList:
     # We don't use jsonschema.validate as this would validate the schema itself.
     # Instead, we pass the schema directly to the validator class. This is done for
     # two reasons: The schema comes from Vega-Lite and is not based on the user
@@ -83,61 +93,144 @@ def _get_errors_from_spec(
     return errors
 
 
-def _subset_to_most_relevant_errors(
-    errors: Sequence[jsonschema.exceptions.ValidationError],
-) -> List[jsonschema.exceptions.ValidationError]:
-    if len(errors) == 0:
-        return []
+def _group_errors_by_json_path(
+    errors: ValidationErrorList,
+) -> GroupedValidationErrors:
+    errors_by_json_path = collections.defaultdict(list)
+    for err in errors:
+        errors_by_json_path[err.json_path].append(err)
+    return dict(errors_by_json_path)
 
-    # Start from the first error on the top-level as we want to show
-    # an error message for one specific error only even if the chart
-    # specification might have multiple issues
-    top_level_error = errors[0]
 
-    # Go to lowest level in schema where an error happened as these give
-    # the most relevant error messages.
-    lowest_level = top_level_error
-    while lowest_level.context:
-        lowest_level = lowest_level.context[0]
-
-    most_relevant_errors = []
-    if lowest_level.validator == "additionalProperties":
-        # For these errors, the message is already informative enough and the other
-        # errors on the lowest level are not helpful for a user but instead contain
-        # the same information in a more verbose way
-        most_relevant_errors = [lowest_level]
-    else:
-        parent = lowest_level.parent
-        if parent is None:
-            # In this case we are still at the top level and can return all errors
-            most_relevant_errors = list(errors)
+def _get_leaves_of_error_tree(
+    errors: ValidationErrorList,
+) -> ValidationErrorList:
+    leaves: ValidationErrorList = []
+    for err in errors:
+        if err.context:
+            leaves.extend(_get_leaves_of_error_tree(err.context))
         else:
-            # Use all errors of the lowest level out of which
-            # we can construct more informative error messages
-            most_relevant_errors = parent.context or []
-            if lowest_level.validator == "enum":
-                # There might be other possible enums which are allowed, e.g. for
-                # the "timeUnit" property of the "Angle" encoding channel. These do not
-                # necessarily need to be in the same branch of this tree of errors that
-                # we traversed down to the lowest level. We therefore gather
-                # all enums in the leaves of the error tree.
-                enum_errors = _get_all_lowest_errors_with_validator(
-                    top_level_error, validator="enum"
-                )
-                # Remove errors which already exist in enum_errors
-                enum_errors = [
-                    err
-                    for err in enum_errors
-                    if err.message not in [e.message for e in most_relevant_errors]
-                ]
-                most_relevant_errors = most_relevant_errors + enum_errors
+            leaves.append(err)
+    return leaves
 
-    # This should never happen but might still be good to test for it as else
-    # the original error would just slip through without being raised
-    if len(most_relevant_errors) == 0:
-        raise Exception("Could not determine the most relevant errors") from errors[0]
 
-    return most_relevant_errors
+def _subset_to_most_specific_json_paths(errors_by_json_path: GroupedValidationErrors):
+    errors_by_json_path_specific: GroupedValidationErrors = {}
+    for json_path, errors in errors_by_json_path.items():
+        if not _contained_at_start_of_one_of_other_values(
+            json_path, list(errors_by_json_path.keys())
+        ):
+            errors_by_json_path_specific[json_path] = errors
+    return errors_by_json_path_specific
+
+
+def _contained_at_start_of_one_of_other_values(x: str, values: Sequence[str]) -> bool:
+    # Does not count as "contained at start of other value" if the values are
+    # the same. These cases should be handled separately
+    return any(value.startswith(x) for value in values if x != value)
+
+
+def _deduplicate_errors(
+    grouped_errors: GroupedValidationErrors,
+) -> GroupedValidationErrors:
+    grouped_errors_deduplicated: GroupedValidationErrors = {}
+    for json_path, element_errors in grouped_errors.items():
+        errors_by_validator = _group_errors_by_validator(element_errors)
+
+        deduplication_functions = {
+            "enum": _deduplicate_enum_errors,
+            "additionalProperties": _deduplicate_additional_properties_errors,
+        }
+        deduplicated_errors: ValidationErrorList = []
+        for validator, errors in errors_by_validator.items():
+            deduplication_func = deduplication_functions.get(validator, None)
+            if deduplication_func is not None:
+                errors = deduplication_func(errors)
+            deduplicated_errors.extend(_deduplicate_by_message(errors))
+
+        if len(deduplicated_errors) > 1:
+            # Removes any ValidationError "'value' is a required property" as these
+            # errors are unlikely to be the relevant ones for the user. They come from
+            # validation against a schema definition where the output of `alt.value`
+            # would be valid. However, if a user uses `alt.value`, the `value` keyword
+            # is included automatically from that function and so it's unlikely
+            # that this was what the user intended if the keyword is not present
+            # in the first place.
+            deduplicated_errors = [
+                err for err in deduplicated_errors if not _is_required_value_error(err)
+            ]
+
+        grouped_errors_deduplicated[json_path] = deduplicated_errors
+    return grouped_errors_deduplicated
+
+
+def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool:
+    return err.validator == "required" and err.validator_value == ["value"]
+
+
+def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
+    errors_by_validator: DefaultDict[
+        str, ValidationErrorList
+    ] = collections.defaultdict(list)
+    for err in errors:
+        # Ignore mypy error as err.validator as it wrongly sees err.validator
+        # as of type Optional[Validator] instead of str
+        errors_by_validator[err.validator].append(err)  # type: ignore[index]
+    return dict(errors_by_validator)
+
+
+def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList:
+    if len(errors) > 1:
+        # Deduplicate enum errors by removing the errors where the allowed values
+        # are a subset of another error. For example, if `enum` contains two errors
+        # and one has `validator_value` (i.e. accepted values) ["A", "B"] and the
+        # other one ["A", "B", "C"] then the first one is removed and the final
+        # `enum` list only contains the error with ["A", "B", "C"]
+
+        # Values (and therefore `validator_value`) of an enum are always arrays,
+        # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
+        # which is why we can use join below
+        value_strings = [",".join(err.validator_value) for err in errors]
+        longest_enums: ValidationErrorList = []
+        for value_str, err in zip(value_strings, errors):
+            if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
+                longest_enums.append(err)
+        errors = longest_enums
+    return errors
+
+
+def _deduplicate_additional_properties_errors(
+    errors: ValidationErrorList,
+) -> ValidationErrorList:
+    if len(errors) > 1:
+        # If there are multiple additional property errors it usually means that
+        # the offending element was validated against multiple schemas and
+        # its parent is a common anyOf validator.
+        # The error messages produced from these cases are usually
+        # very similar and we just take the shortest one. For example,
+        # the following 3 errors are raised for the `unknown` channel option in
+        # `alt.X("variety", unknown=2)`:
+        # - "Additional properties are not allowed ('unknown' was unexpected)"
+        # - "Additional properties are not allowed ('field', 'unknown' were unexpected)"
+        # - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)"
+        # The code below subsets this to only the first error of the three.
+        parent = errors[0].parent
+        # Test if all parent errors are the same anyOf error and only do
+        # the prioritization in these cases. Can't think of a chart spec where this
+        # would not be the case but still allow for it below to not break anything.
+        if (
+            parent is not None
+            and parent.validator == "anyOf"
+            and all(err.parent is parent for err in errors[1:])
+        ):
+            errors = [min(errors, key=lambda x: len(x.message))]
+    return errors
+
+
+def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
+    # Deduplicate errors by message. This keeps the original order in case
+    # it was chosen intentionally
+    return list({e.message: e for e in errors}.values())
 
 
 def _get_all_lowest_errors_with_validator(
@@ -197,7 +290,7 @@ class SchemaValidationError(jsonschema.ValidationError):
     def __init__(self, obj, err):
         super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
-        self._additional_errors = getattr(err, "_additional_errors", [])
+        self.errors = getattr(err, "_all_errors", {err.json_path: [err]})
 
     @staticmethod
     def _format_params_as_table(param_dict_keys):
@@ -303,7 +396,13 @@ class SchemaValidationError(jsonschema.ValidationError):
 
                 {message}"""
 
-            if self._additional_errors:
+            additional_errors = [
+                err
+                for errors in self.errors.values()
+                for err in errors
+                if err is not list(self.errors.values())[0][0]
+            ]
+            if additional_errors:
                 # Deduplicate error messages and only include them if they are
                 # different then the main error message stored in self.message.
                 # Using dict instead of set to keep the original order in case it was
@@ -312,7 +411,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                     dict.fromkeys(
                         [
                             e.message
-                            for e in self._additional_errors
+                            for e in additional_errors
                             if e.message != self.message
                         ]
                     )
