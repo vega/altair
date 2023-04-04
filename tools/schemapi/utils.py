@@ -230,7 +230,10 @@ class SchemaInfo:
         elif not self.type:
             import warnings
 
-            warnings.warn("no short_description for schema\n{}" "".format(self.schema))
+            warnings.warn(
+                "no short_description for schema\n{}" "".format(self.schema),
+                stacklevel=1,
+            )
             return "any"
 
     @property

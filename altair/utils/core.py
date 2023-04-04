@@ -227,7 +227,8 @@ def infer_vegalite_type(data):
     else:
         warnings.warn(
             "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ)
+            "Defaulting to nominal.".format(typ),
+            stacklevel=1,
         )
         return "nominal"
 
@@ -483,15 +484,15 @@ def parse_shorthand(
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    units = dict(
-        field="(?P<field>.*)",
-        type="(?P<type>{})".format("|".join(valid_typecodes)),
-        agg_count="(?P<aggregate>count)",
-        op_count="(?P<op>count)",
-        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    )
+    units = {
+        "field": "(?P<field>.*)",
+        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
+        "agg_count": "(?P<aggregate>count)",
+        "op_count": "(?P<op>count)",
+        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+    }
 
     patterns = []
 
@@ -710,7 +711,9 @@ def infer_encoding_types(args, kwargs, channels):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
+            warnings.warn(
+                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
+            )
             return obj
 
         classes = name_to_channel[encoding]

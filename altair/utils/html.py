@@ -251,14 +251,14 @@ def spec_to_html(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version for mode='vega-lite'")
 
-    render_kwargs = dict()
+    render_kwargs = {}
     if template == "inline":
         try:
             from altair_viewer import get_bundled_script
-        except ImportError:
+        except ImportError as err:
             raise ImportError(
                 "The altair_viewer package is required to convert to HTML with inline=True"
-            )
+            ) from err
         render_kwargs["vega_script"] = get_bundled_script("vega", vega_version)
         render_kwargs["vegalite_script"] = get_bundled_script(
             "vega-lite", vegalite_version

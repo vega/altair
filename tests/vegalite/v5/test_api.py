@@ -285,8 +285,9 @@ def test_selection_expression():
     assert isinstance(selection["value"], alt.expr.Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
+    magic_attr = "__magic__"
     with pytest.raises(AttributeError):
-        selection.__magic__
+        getattr(selection, magic_attr)
 
 
 @pytest.mark.save_engine
@@ -481,7 +482,7 @@ def test_selection():
     # test adding to chart
     chart = alt.Chart().add_params(single)
     chart = chart.add_params(multi, interval)
-    assert set(x.name for x in chart.params) == {"selec_1", "selec_2", "selec_3"}
+    assert {x.name for x in chart.params} == {"selec_1", "selec_2", "selec_3"}
 
     # test logical operations
     assert isinstance(single & multi, alt.SelectionPredicateComposition)
@@ -504,7 +505,7 @@ def test_transforms():
     agg1 = alt.AggregatedFieldDef(**{"as": "x1", "op": "mean", "field": "y"})
     agg2 = alt.AggregatedFieldDef(**{"as": "x2", "op": "median", "field": "z"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
-    kwds = dict(aggregate=[agg1, agg2], groupby=["foo"])
+    kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform

@@ -1,6 +1,6 @@
 black<24
 ipython
-flake8
+ruff
 pytest
 pytest-cov
 m2r

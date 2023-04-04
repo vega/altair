@@ -1,2 +1,2 @@
-# flake8: noqa
+# ruff: noqa
 from .v5.api import *
