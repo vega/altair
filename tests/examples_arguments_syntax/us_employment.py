@@ -50,7 +50,6 @@ text = alt.Chart(presidents).mark_text(
     size=11
 ).encode(
     x='start:T',
-    x2='end:T',
     text='president',
     color=alt.value('#000000')
 )

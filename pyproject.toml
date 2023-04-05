@@ -134,6 +134,37 @@ exclude = [
 [tool.ruff.mccabe]
 max-complexity = 18
 
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pycodestyle-error
+    "E",
+    # pycodestyle-warning
+    "W",
+    # pyflakes
+    "F",
+    # flake8-tidy-imports
+    "TID"
+]
+# ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
+ignore = ["E501", "TID252", "B905"]
+exclude = [
+    ".git",
+    "build",
+    "__pycache__",
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax",
+    "altair/vegalite/v?/schema",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 18
+
 [tool.pytest.ini_options]
 markers = [
     "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",

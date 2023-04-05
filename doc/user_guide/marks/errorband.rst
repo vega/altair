@@ -163,9 +163,9 @@ Here is an example of a ``errorband`` with the ``color`` encoding channel set to
     alt.Chart(source).mark_errorband(extent="ci", borders=True).encode(
         x="year(Year)",
         y=alt.Y("Miles_per_Gallon:Q")
-            .scale(zero=False),
+            .scale(zero=False)
             .title("Miles per Gallon (95% CIs)"),
-        color=alt.value("black"),
+        color=alt.value("black")
     )
 
 

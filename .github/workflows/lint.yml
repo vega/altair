@@ -24,7 +24,6 @@ jobs:
     - name: Lint with ruff
       run: |        
         ruff check .
-        ruff --statistics .
     - name: Lint with mypy
       run: |
         mypy altair tests
