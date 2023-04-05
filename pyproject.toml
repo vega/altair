@@ -57,6 +57,7 @@ dev = [
     # following is rejected by PyPI
     "altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git",
     "vl-convert-python",
+    "mypy",
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools"
