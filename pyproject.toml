@@ -86,10 +86,18 @@ include = [
     "/altair"
 ]
 
-# [tool.hatch.envs.test]
-# features = ["dev"]
-# [tool.hatch.envs.test.scripts]
-# test = "black --diff --color --check . && ruff check . && mypy altair tests && python -m pytest --pyargs --doctest-modules tests"
+[tool.hatch.envs.default]
+features = ["dev"]
+
+[tool.hatch.envs.default.scripts]
+test = [
+    "black --diff --color --check --line-length 88 .",
+    "ruff check .",
+    "mypy altair tests",
+    "python -m pytest --pyargs --doctest-modules tests"
+]
+test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
+test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
 
 [tool.black]
 line-length = 88
@@ -126,8 +134,23 @@ select = [
     # flake8-tidy-imports
     "TID"
 ]
-# ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
-ignore = ["E501", "TID252", "B905"]
+ignore = [
+    # E203, E266, W503 not yet supported by ruff, 
+    # see https://github.com/charliermarsh/ruff/issues/2402
+    # Whitespace before ':'
+    # "E203",
+    # Too many leading '#' for block comment
+    # "E266",
+    # Line break occurred before a binary operator
+    # "W503",
+    # Line too long
+    "E501", 
+    # Relative imports are banned
+    "TID252",
+    # zip() without an explicit strict= parameter set.
+    # python>=3.10 only
+    "B905"
+]
 exclude = [
     ".git",
     "build",
