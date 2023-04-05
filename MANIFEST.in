@@ -1,6 +1,0 @@
-include *.md
-include Makefile
-include LICENSE
-include CHANGES.md
-include pyproject.toml
-recursive-include altair *.py *.json *.ipynb *.html

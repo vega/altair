@@ -83,7 +83,10 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = [
-    "/altair"
+    "/altair",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml"
 ]
 
 [tool.hatch.envs.default]
