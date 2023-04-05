@@ -85,6 +85,11 @@ include = [
     "/altair"
 ]
 
+# [tool.hatch.envs.test]
+# features = ["dev"]
+# [tool.hatch.envs.test.scripts]
+# test = "black --diff --color --check . && ruff check . && mypy altair tests && python -m pytest --pyargs --doctest-modules tests"
+
 [tool.black]
 line-length = 88
 target-version = ["py37", "py38", "py39", "py310", "py311"]
@@ -102,37 +107,6 @@ exclude = '''
   | altair/vegalite/v\d*/schema
 )/
 '''
-
-[tool.ruff]
-target-version = "py310"
-line-length = 88
-select = [
-    # flake8-bugbear
-    "B",
-    # flake8-comprehensions
-    "C4",
-    # pycodestyle-error
-    "E",
-    # pycodestyle-warning
-    "W",
-    # pyflakes
-    "F",
-    # flake8-tidy-imports
-    "TID"
-]
-# ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
-ignore = ["E501", "TID252"]
-exclude = [
-    ".git",
-    "build",
-    "__pycache__",
-    "tests/examples_arguments_syntax",
-    "tests/examples_methods_syntax",
-    "altair/vegalite/v?/schema",
-]
-
-[tool.ruff.mccabe]
-max-complexity = 18
 
 [tool.ruff]
 target-version = "py310"
