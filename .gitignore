@@ -71,5 +71,5 @@ Untitled*.ipynb
 # VSCode
 .vscode
 
-# hatch
+# hatch, doc generation
 data.json
