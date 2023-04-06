@@ -1,3 +1,13 @@
+# this file contains:
+# 1 build system configuration
+# 2 project configuration
+# 3 tool configuration, for:
+# - hatch
+# - black
+# - ruff
+# - pytest
+# - mypy
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -94,13 +104,36 @@ features = ["dev"]
 
 [tool.hatch.envs.default.scripts]
 test = [
-    "black --diff --color --check --line-length 88 .",
+    "black --diff --color --check .",
     "ruff check .",
     "mypy altair tests",
     "python -m pytest --pyargs --doctest-modules tests"
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
+
+[tool.hatch.envs.doc]
+features = ["dev", "doc"]
+
+[tool.hatch.envs.doc.scripts]
+clean = "rm -rf doc/_build"
+clean-generated = [
+    "rm -rf doc/user_guide/generated",
+	"rm -rf doc/gallery"
+]
+clean-images = "rm -rf doc/_images"
+clean-all = [
+    "clean",
+    "clean-generated",
+    "clean-images"
+]
+build-html = [
+    "mkdir -p doc/_images",
+    "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
+]
+doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
+coverage = "sphinx-build -b coverage -d doc/_build/doctrees doc doc/_build/coverage"
+serve = "(cd doc/_build/html && python -m http.server)"
 
 [tool.black]
 line-length = 88

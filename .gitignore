@@ -70,3 +70,6 @@ Untitled*.ipynb
 
 # VSCode
 .vscode
+
+# hatch
+data.json
