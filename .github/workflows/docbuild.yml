@@ -5,10 +5,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        build-type: [ 'html', 'doctest' ]
-    name: ${{ matrix.build-type }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
@@ -18,10 +14,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .[dev]
-        pip install -e .[doc]
-    - name: Run docbuild
+        pip install -e .[dev,doc]
+    - name: Run doc:build-html
       run: |
-        cd doc && make ${{ matrix.build-type }}
+        hatch run doc:build-html
+    - name: Run doc:doctest
+      run: |
+        hatch run doc:doctest
 
         
