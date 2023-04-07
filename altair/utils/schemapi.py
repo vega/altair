@@ -5,7 +5,17 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any, Sequence, List, Dict, Optional, DefaultDict, Tuple, Iterable
+from typing import (
+    Any,
+    Sequence,
+    List,
+    Dict,
+    Optional,
+    DefaultDict,
+    Tuple,
+    Iterable,
+    Type,
+)
 from itertools import zip_longest
 
 import jsonschema
@@ -356,25 +366,17 @@ class SchemaValidationError(jsonschema.ValidationError):
         return param_names_table
 
     def __str__(self) -> str:
-        # Try to get the lowest class possible in the chart hierarchy so
-        # it can be displayed in the error message. This should lead to more informative
-        # error messages pointing the user closer to the source of the issue.
-        for prop_name in reversed(self.absolute_path):
-            # Check if str as e.g. first item can be a 0
-            if isinstance(prop_name, str):
-                potential_class_name = prop_name[0].upper() + prop_name[1:]
-                cls = getattr(vegalite, potential_class_name, None)
-                if cls is not None:
-                    break
-        else:
-            # Did not find a suitable class based on traversing the path so we fall
-            # back on the class of the top-level object which created
-            # the SchemaValidationError
-            cls = self.obj.__class__
+        altair_cls = self._get_altair_class_for_error(self)
+        return self._get_message_for_error(self, altair_cls)
 
+    def _get_message_for_error(
+        self,
+        error: jsonschema.exceptions.ValidationError,
+        altair_cls: Type["SchemaBase"],
+    ) -> str:
         # Output all existing parameters when an unknown parameter is specified
         if self.validator == "additionalProperties":
-            param_dict_keys = inspect.signature(cls).parameters.keys()
+            param_dict_keys = inspect.signature(altair_cls).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
             # `cleandoc` removes multiline string indentation in the output
@@ -385,10 +387,10 @@ class SchemaValidationError(jsonschema.ValidationError):
                 {}
                 See the help for `{}` to read the full description of these parameters
                 """.format(
-                    cls.__name__,
+                    altair_cls.__name__,
                     self.message.split("('")[-1].split("'")[0],
                     param_names_table,
-                    cls.__name__,
+                    altair_cls.__name__,
                 )
             )
         # Use the default error message for all other cases than unknown parameter errors
@@ -433,6 +435,26 @@ class SchemaValidationError(jsonschema.ValidationError):
                     message
                 )
             )
+
+    def _get_altair_class_for_error(
+        self, error: jsonschema.exceptions.ValidationError
+    ) -> Type["SchemaBase"]:
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(error.absolute_path):
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
+            cls = self.obj.__class__
+        return cls
 
 
 class UndefinedType:
