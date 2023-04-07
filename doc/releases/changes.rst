@@ -50,6 +50,7 @@ Backward-Incompatible Changes
 - Colons in column names must now be escaped to remove any ambiguity with encoding types. You now need to write ``"column\:name"`` instead of ``"column:name"`` (#2824).
 - Removed the Vega (v5) wrappers and deprecate rendering in Vega mode (save Chart as Vega format is still allowed) (#2829).
 - Removed the Vega-Lite 3 and 4 wrappers (#2847).
+- Removed the deprecated datasets.py (#3010).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
 
 Maintenance
