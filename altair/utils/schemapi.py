@@ -366,16 +366,20 @@ class SchemaValidationError(jsonschema.ValidationError):
         return param_names_table
 
     def __str__(self) -> str:
-        altair_cls = self._get_altair_class_for_error(self)
-        return self._get_message_for_error(self, altair_cls)
+        messages: List[str] = []
+        for _, errors in self._errors.items():
+            altair_cls = self._get_altair_class_for_error(errors[0])
+            messages.append(self._get_message_for_errors(errors, altair_cls))
+        return ("\n" + "-" * 50 + "\n").join(messages)
 
-    def _get_message_for_error(
+    def _get_message_for_errors(
         self,
-        error: jsonschema.exceptions.ValidationError,
+        errors: Sequence[jsonschema.exceptions.ValidationError],
         altair_cls: Type["SchemaBase"],
     ) -> str:
+        error = errors[0]
         # Output all existing parameters when an unknown parameter is specified
-        if self.validator == "additionalProperties":
+        if error.validator == "additionalProperties":
             param_dict_keys = inspect.signature(altair_cls).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
@@ -388,28 +392,24 @@ class SchemaValidationError(jsonschema.ValidationError):
                 See the help for `{}` to read the full description of these parameters
                 """.format(
                     altair_cls.__name__,
-                    self.message.split("('")[-1].split("'")[0],
+                    error.message.split("('")[-1].split("'")[0],
                     param_names_table,
                     altair_cls.__name__,
                 )
             )
-        # Use the default error message for all other cases than unknown parameter errors
+        # Use the default error message for all other cases than unknown
+        # parameter errors
         else:
-            message = self.message
+            message = error.message
             # Add a summary line when parameters are passed an invalid value
             # For example: "'asdf' is an invalid value for `stack`
-            if self.absolute_path:
+            if error.absolute_path:
                 # The indentation here must match that of `cleandoc` below
-                message = f"""'{self.instance}' is an invalid value for `{self.absolute_path[-1]}`:
+                message = f"""'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
 
                 {message}"""
 
-            additional_errors = [
-                err
-                for errors in self._errors.values()
-                for err in errors
-                if err is not list(self._errors.values())[0][0]
-            ]
+            additional_errors = [err for err in errors if err is not error]
             if additional_errors:
                 # Deduplicate error messages and only include them if they are
                 # different then the main error message stored in self.message.

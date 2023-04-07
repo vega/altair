@@ -446,7 +446,8 @@ def chart_error_example_invalid_channel():
 
 
 def chart_error_example_invalid_y_option_value_unknown_x_option():
-    # Error: Invalid Y option value "asdf" and unknown option "unknown" for X
+    # Error 1: unknown is an invalid channel option for X
+    # Error 2: Invalid Y option value "asdf" and unknown option "unknown" for X
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -526,6 +527,25 @@ def chart_error_invalid_value_type():
     )
 
 
+def chart_error_two_errors_in_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: invalidChannel is not a valid encoding channel
+    return alt.layer(
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
+        alt.Chart().mark_line().encode(invalidChannel="unknown"),
+    )
+
+
+def chart_error_two_errors_in_complex_concat_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: Invalid value for bandPosition
+    return alt.layer(alt.Chart().mark_point().encode(tooltip=[{"wrong"}])) | (
+        alt.Chart(data.cars())
+        .mark_text(align="right")
+        .encode(alt.Text("Horsepower:N", bandPosition="4"))
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -540,8 +560,49 @@ def chart_error_invalid_value_type():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                See the help for `X` to read the full description of these parameters
+                --------------------------------------------------
+                'asdf' is an invalid value for `stack`:
+
+                'asdf' is not one of \['zero', 'center', 'normalize'\]
+                'asdf' is not of type 'null'
+                'asdf' is not of type 'boolean'$"""  # noqa: W291
             ),
+        ),
+        (
+            chart_error_two_errors_in_layered_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`:
+
+                {'wrong'} is not of type 'string'
+                {'wrong'} is not of type 'object'
+                --------------------------------------------------
+                `Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_two_errors_in_complex_concat_layered_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`:
+
+                {'wrong'} is not of type 'string'
+                {'wrong'} is not of type 'object'
+                --------------------------------------------------
+                '4' is an invalid value for `bandPosition`:
+
+                '4' is not of type 'number'$"""
+            )
         ),
         (
             chart_error_example_layer,
@@ -667,8 +728,8 @@ def chart_error_invalid_value_type():
                 1 is not of type 'object'
                 1 is not of type 'string'
                 1 is not of type 'null'$"""
-            )
-        )
+            ),
+        ),
     ],
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
