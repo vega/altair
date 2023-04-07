@@ -6,11 +6,11 @@ from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 
 
-def write_file_or_filename(fp, content, mode="w"):
+def write_file_or_filename(fp, content, mode="w", encoding=None):
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
     if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
-        with open(fp, mode) as f:
+        with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
         fp.write(content)
@@ -168,8 +168,9 @@ def save(
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
+                encoding = kwargs.get("encoding", "utf-8")
                 write_file_or_filename(
-                    fp, mimebundle["image/svg+xml"].encode(), mode="wb"
+                    fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
                 )
         else:
             raise ValueError("Unsupported format: '{}'".format(format))
