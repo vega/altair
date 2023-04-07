@@ -244,7 +244,7 @@ class SchemaGenerator:
         contents = ["self"]
         props = []
         if si.is_anyOf():
-            props = sorted(list({p for si_sub in si.anyOf for p in si_sub.properties}))
+            props = sorted({p for si_sub in si.anyOf for p in si_sub.properties})
         elif si.properties:
             props = si.properties
 

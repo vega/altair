@@ -179,7 +179,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 chart.save(image_file)
                 hashes[filename] = example_hash
             except ImportError:
-                warnings.warn("Unable to save image: using generic image")
+                warnings.warn("Unable to save image: using generic image", stacklevel=1)
                 create_generic_image(image_file)
 
             with open(hash_file, "w") as f:

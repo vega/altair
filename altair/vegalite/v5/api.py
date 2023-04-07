@@ -112,7 +112,7 @@ def _prepare_data(data, context=None):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
-        warnings.warn("data of type {} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
 
     return data
 
@@ -355,12 +355,14 @@ def param(
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -372,6 +374,7 @@ def param(
         warnings.warn(
             """Use 'value' instead of 'init'.""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
         if value is Undefined:
             kwds["value"] = kwds.pop("init")
@@ -416,6 +419,7 @@ def _selection(type=Undefined, **kwds):
             """The types 'single' and 'multi' are now
         combined and should be specified using "selection_point()".""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
     else:
         raise ValueError("""'type' must be 'point' or 'interval'""")
@@ -2261,11 +2265,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         try:
             import altair_viewer  # type: ignore
-        except ImportError:
+        except ImportError as err:
             raise ValueError(
                 "'show' method requires the altair_viewer package. "
                 "See http://github.com/altair-viz/altair_viewer"
-            )
+            ) from err
         altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
 
     @utils.use_signature(core.Resolve)

@@ -5,7 +5,7 @@ install:
 
 test :
 	black --diff --color --check .
-	flake8 . --statistics
+	ruff check .
 	mypy altair tests
 	python -m pytest --pyargs --doctest-modules tests
 

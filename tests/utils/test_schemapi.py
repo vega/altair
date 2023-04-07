@@ -335,8 +335,9 @@ def test_copy_module(dct):
 
 def test_attribute_error():
     m = MySchema()
+    invalid_attr = "invalid_attribute"
     with pytest.raises(AttributeError) as err:
-        m.invalid_attribute
+        getattr(m, invalid_attr)
     assert str(err.value) == (
         "'MySchema' object has no attribute " "'invalid_attribute'"
     )
@@ -420,7 +421,9 @@ def chart_error_example_hconcat():
     text = (
         alt.Chart(source)
         .mark_text()
-        .encode(alt.Text("Horsepower:N", title=dict(text="Horsepower", align="right")))
+        .encode(
+            alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})
+        )
     )
 
     return points | text

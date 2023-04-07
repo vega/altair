@@ -670,11 +670,22 @@ class SchemaBase:
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                raise SchemaValidationError(self, err)
+                # We do not raise `from err` as else the resulting
+                # traceback is very long as it contains part
+                # of the Vega-Lite schema. It would also first
+                # show the less helpful ValidationError instead of
+                # the more user friendly SchemaValidationError
+                raise SchemaValidationError(self, err) from None
         return result
 
     def to_json(
-        self, validate=True, ignore=[], context={}, indent=2, sort_keys=True, **kwargs
+        self,
+        validate=True,
+        ignore=None,
+        context=None,
+        indent=2,
+        sort_keys=True,
+        **kwargs,
     ):
         """Emit the JSON representation for this object as a string.
 
@@ -683,7 +694,7 @@ class SchemaBase:
         validate : boolean
             If True (default), then validate the output dictionary
             against the schema.
-        ignore : list
+        ignore : list (optional)
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
         context : dict (optional)
@@ -701,6 +712,10 @@ class SchemaBase:
         spec : string
             The JSON specification of the chart object.
         """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
         return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
 

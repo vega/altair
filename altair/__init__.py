@@ -1,4 +1,4 @@
-# flake8: noqa
+# ruff: noqa
 __version__ = "5.0.0dev"
 
 from typing import Any
@@ -548,7 +548,6 @@ __all__ = [
     "curry",
     "data",
     "data_transformers",
-    "datasets",
     "datum",
     "default_data_transformer",
     "display",
