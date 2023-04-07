@@ -116,16 +116,24 @@ test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair -
 features = ["dev", "doc"]
 
 [tool.hatch.envs.doc.scripts]
-clean-all = [
-    "rm -rf doc/_build",
+clean = "rm -rf doc/_build"
+clean-generated = [
     "rm -rf doc/user_guide/generated",
-    "rm -rf doc/gallery",
+    "rm -rf doc/gallery"
+]
+clean-all = [
+    "clean",
+    "clean-generated",
     "rm -rf doc/_images"
 ]
-clean-all-win = [
-    "if exist doc\\_build rd /s /q doc\\_build",
+clean-win = "if exist doc\\_build rd /s /q doc\\_build"
+clean-generated-win = [
     "if exist doc\\user_guide\\generated rd /s /q doc\\user_guide\\generated",
     "if exist doc\\gallery rd /s /q doc\\gallery",
+]
+clean-all-win = [
+    "clean-win",
+    "clean-generated-win",
     "if exist doc\\_images rd /s /q doc\\_images",
 ]
 build-html = [
@@ -133,7 +141,7 @@ build-html = [
     "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
 ]
 build-html-win = [
-    "md doc\\_images",
+    "if not exist doc\\_images md doc\\_images",
     "sphinx-build -b html -d doc\\_build\\doctrees doc doc\\_build\\html"
 ]
 doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
