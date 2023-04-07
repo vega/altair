@@ -116,24 +116,34 @@ test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair -
 features = ["dev", "doc"]
 
 [tool.hatch.envs.doc.scripts]
-clean = "rm -rf doc/_build"
-clean-generated = [
-    "rm -rf doc/user_guide/generated",
-	"rm -rf doc/gallery"
-]
-clean-images = "rm -rf doc/_images"
 clean-all = [
-    "clean",
-    "clean-generated",
-    "clean-images"
+    "rm -rf doc/_build",
+    "rm -rf doc/user_guide/generated",
+	"rm -rf doc/gallery",
+    "rm -rf doc/_images"
+]
+clean-all-win = [
+    "if exist doc\\_build rd /s /q doc\\_build",
+    "if exist doc\\user_guide\\generated rd /s /q doc\\user_guide\\generated",
+    "if exist doc\\gallery rd /s /q doc\\gallery",
+    "if exist doc\\_images rd /s /q doc\\_images",
 ]
 build-html = [
     "mkdir -p doc/_images",
     "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
 ]
+build-html-win = [
+    "md doc\\_images",
+    "sphinx-build -b html -d doc\\_build\\doctrees doc doc\\_build\\html"
+]
 doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
 coverage = "sphinx-build -b coverage -d doc/_build/doctrees doc doc/_build/coverage"
 serve = "(cd doc/_build/html && python -m http.server)"
+publish-clean-build = [
+    "clean-all",
+    "build-html",
+    "(cd doc && bash sync_website.sh)"
+]
 
 [tool.black]
 line-length = 88
