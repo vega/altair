@@ -508,6 +508,24 @@ def chart_error_invalid_type():
     return alt.Chart().encode(alt.X(type="unknown"))
 
 
+def chart_error_additional_datum_argument():
+    # Error: wrong_argument is not a valid argument to datum
+    return alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
+
+
+def chart_error_invalid_value_type():
+    # Error: Value cannot be an integer in this case
+    return (
+        alt.Chart(data.cars())
+        .mark_point()
+        .encode(
+            x="Acceleration:Q",
+            y="Horsepower:Q",
+            color=alt.value(1),  # should be eg. alt.value('red')
+        )
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -627,6 +645,30 @@ def chart_error_invalid_type():
                 'unknown' is not one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\]$"""
             ),
         ),
+        (
+            chart_error_additional_datum_argument,
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'wrong_argument'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_invalid_value_type,
+            inspect.cleandoc(
+                r"""'1' is an invalid value for `value`:
+
+                1 is not of type 'object'
+                1 is not of type 'string'
+                1 is not of type 'null'$"""
+            )
+        )
     ],
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
