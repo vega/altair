@@ -5,7 +5,7 @@ import contextlib
 import inspect
 import json
 import textwrap
-from typing import Any, Sequence, List, Dict, Optional, DefaultDict
+from typing import Any, Sequence, List, Dict, Optional, DefaultDict, Tuple, Iterable
 from itertools import zip_longest
 
 import jsonschema
@@ -289,15 +289,19 @@ def _resolve_references(schema, root=None):
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
-    def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**err._contents())
+    def __init__(self, obj: "SchemaBase", err: jsonschema.ValidationError) -> None:
+        super().__init__(**err._contents())
         self.obj = obj
-        self._errors = getattr(err, "_all_errors", {err.json_path: [err]})
+        self._errors: GroupedValidationErrors = getattr(
+            err, "_all_errors", {err.json_path: [err]}
+        )
 
     @staticmethod
-    def _format_params_as_table(param_dict_keys):
+    def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
         """Format param names into a table so that they are easier to read"""
-        param_names, name_lengths = zip(
+        param_names: Tuple[str, ...]
+        name_lengths: Tuple[int, ...]
+        param_names, name_lengths = zip(  # type: ignore[assignment]  # Mypy does think it's Tuple[Any]
             *[
                 (name, len(name))
                 for name in param_dict_keys
@@ -314,15 +318,15 @@ class SchemaValidationError(jsonschema.ValidationError):
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
-        def split_into_equal_parts(n, p):
+        def split_into_equal_parts(n: int, p: int) -> List[int]:
             return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
 
         column_heights = split_into_equal_parts(num_param_names, columns)
 
         # Section the param names into columns and compute their widths
-        param_names_columns = []
-        column_max_widths = []
-        last_end_idx = 0
+        param_names_columns: List[Tuple[str, ...]] = []
+        column_max_widths: List[int] = []
+        last_end_idx: int = 0
         for ch in column_heights:
             param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
             column_max_widths.append(
@@ -331,11 +335,11 @@ class SchemaValidationError(jsonschema.ValidationError):
             last_end_idx = ch + last_end_idx
 
         # Transpose the param name columns into rows to facilitate looping
-        param_names_rows = []
+        param_names_rows: List[Tuple[str, ...]] = []
         for li in zip_longest(*param_names_columns, fillvalue=""):
             param_names_rows.append(li)
         # Build the table as a string by iterating over and formatting the rows
-        param_names_table = ""
+        param_names_table: str = ""
         for param_names_row in param_names_rows:
             for num, param_name in enumerate(param_names_row):
                 # Set column width based on the longest param in the column
@@ -351,7 +355,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                     param_names_table += " " * 16
         return param_names_table
 
-    def __str__(self):
+    def __str__(self) -> str:
         # Try to get the lowest class possible in the chart hierarchy so
         # it can be displayed in the error message. This should lead to more informative
         # error messages pointing the user closer to the source of the issue.
