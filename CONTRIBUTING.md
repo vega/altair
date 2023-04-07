@@ -61,7 +61,8 @@ which includes a number of tests to validate the correctness of your code:
 hatch run test
 ```
 
-This also runs the [black](https://black.readthedocs.io/) code formatter, [ruff](https://ruff.rs/) linter and [mypy](https://mypy-lang.org/) as type checker.
+
+This also runs the [`black`](https://black.readthedocs.io/) code formatter, [`ruff`](https://ruff.rs/) linter and [`mypy`](https://mypy-lang.org/) as type checker.
 
 
 Study the output of any failed tests and try to fix the issues
@@ -171,7 +172,7 @@ The process to build the documentation locally consists of three steps:
 3. View the generated documentation using a local Python testing server.
 
 The specific commands for each step depend on your operating system.
-Make sure you execute the following commands from the root dir of altair.
+Make sure you execute the following commands from the root dir of altair and have [`hatch`](https://hatch.pypa.io/) installed in your local environment.
 
 - For MacOS and Linux, run the following commands in your terminal:
 ```cmd
