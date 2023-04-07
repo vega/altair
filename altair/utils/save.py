@@ -168,6 +168,6 @@ def save(
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
-                write_file_or_filename(fp, mimebundle["image/svg+xml"], mode="w")
+                write_file_or_filename(fp, mimebundle["image/svg+xml"].encode(), mode="wb")
         else:
             raise ValueError("Unsupported format: '{}'".format(format))
