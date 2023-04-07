@@ -3,8 +3,7 @@ from typing import Set
 
 # Set of the names of examples that should have SVG static images.
 # This is for examples that VlConvert's PNG export does not support.
-SVG_EXAMPLES: Set[str] = set()
-SVG_EXAMPLES = {"isotype_emoji"}
+SVG_EXAMPLES: Set[str] = {"isotype_emoji"}
 
 
 def iter_examples_methods_syntax():
