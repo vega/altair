@@ -292,7 +292,7 @@ class SchemaValidationError(jsonschema.ValidationError):
     def __init__(self, obj, err):
         super(SchemaValidationError, self).__init__(**err._contents())
         self.obj = obj
-        self.errors = getattr(err, "_all_errors", {err.json_path: [err]})
+        self._errors = getattr(err, "_all_errors", {err.json_path: [err]})
 
     @staticmethod
     def _format_params_as_table(param_dict_keys):
@@ -400,9 +400,9 @@ class SchemaValidationError(jsonschema.ValidationError):
 
             additional_errors = [
                 err
-                for errors in self.errors.values()
+                for errors in self._errors.values()
                 for err in errors
-                if err is not list(self.errors.values())[0][0]
+                if err is not list(self._errors.values())[0][0]
             ]
             if additional_errors:
                 # Deduplicate error messages and only include them if they are
