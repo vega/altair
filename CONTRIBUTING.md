@@ -11,15 +11,16 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
-## How To Contribute Code to Altair
+## How To Contribute Code to Vega-Altair
 
 ### Setting Up Your Environment
 
 Fork the Altair repository on GitHub and then clone the fork to you local
 machine. For more details on forking see the [GitHub
 Documentation](https://help.github.com/en/articles/fork-a-repo).
-```
-$ git clone https://github.com/YOUR-USERNAME/altair.git
+
+```cmd
+git clone https://github.com/YOUR-USERNAME/altair.git
 ```
 
 To keep your fork up to date with changes in this repo,
@@ -29,24 +30,26 @@ Now you can install the latest version of Altair locally using `pip`.
 The `-e` flag indicates that your local changes will be reflected
 every time you open a new Python interpreter
 (instead of having to reinstall the package each time).
-```
-$ cd altair/ 
-$ python -m pip install -e '.[dev]'
+
+```cmd
+cd altair/ 
+python -m pip install -e .[dev]
 ```
 
 '[dev]' indicates that pip should also install the development requirements
-which you can find in `requirements_dev.txt`
+which you can find in `pyproject.toml` (`[project.optional-dependencies]/dev`)
 
 ### Creating a Branch
 
 Once your local environment is up-to-date, you can create a new git branch
 which will contain your contribution
 (always create a new branch instead of making changes to the master branch):
-```
-$ git switch -c <branch-name>
-```
-With this branch checked-out, make the desired changes to the package.
 
+```cmd
+git switch -c <your-branch-name>
+```
+
+With this branch checked-out, make the desired changes to the package.
 
 ### Testing your Changes
 
@@ -54,12 +57,13 @@ Before suggesting your contributing your changing to the main Altair repository,
 it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
-```
-$ make test
+```cmd
+hatch run test
 ```
 
-This also runs the [black](https://black.readthedocs.io/)
-code formatter and [flake8](https://flake8.pycqa.org/en/latest/) linter.
+
+This also runs the [`black`](https://black.readthedocs.io/) code formatter, [`ruff`](https://ruff.rs/) linter and [`mypy`](https://mypy-lang.org/) as type checker.
+
 
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
@@ -67,11 +71,13 @@ before proceeding to the next section.
 ### Creating a Pull Request
 
 When you are happy with your changes, you can commit them to your branch by running
+
+```cmd
+git add <modified-file>
+git commit -m "Some descriptive message about your change"
+git push origin <your-branch-name>
 ```
-$ git add <modified-file>
-$ git commit -m "Some descriptive message about your change"
-$ git push origin <branch-name>
-```
+
 You will then need to submit a pull request (PR) on GitHub asking to merge
 your example branch into the main Altair repository. For details on creating a PR see GitHub
 documentation [Creating a pull
@@ -85,7 +91,8 @@ automatically shown in the PR.
 Hopefully your PR will be answered in a timely manner and your contribution will
 help others in the future.
 
-## Documentation
+## How To Contribute Documentation to Vega-Altair
+
 Altair documentation is written in [reStructuredText](http://docutils.sourceforge.net/rst.html)
 and compiled into html pages using [Sphinx](http://www.sphinx-doc.org/en/master/).
 Contributing to the documentation requires some extra dependencies and 
@@ -98,7 +105,7 @@ up for a while.
 
 ### Adding Examples
 
-We are always interested in new examples contributed from the community.  These
+We are always interested in new examples contributed from the community. These
 could be everything from simple one-panel scatter and line plots, to more
 complicated layered or stacked plots, to more advanced interactive features.
 Before submitting a new example check the [Altair Example
@@ -157,28 +164,28 @@ Some additional notes:
   `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`
 
 ### Building the Documentation Locally
-In addition to the development dependencies mentioned further above,
-you will also need to install the dependencies for the documentation 
-listed in  `docs/requirements.txt`. Note that `geopandas` might require you to first
-install some other dependencies, see [their installation page](https://geopandas.org/en/stable/getting_started/install.html#installation)
-for details.
 
-```
-pip install -r doc/requirements.txt
-```
+The process to build the documentation locally consists of three steps:
 
-Once you have all the dependencies, you can build the documentation 
-using various commands defined in the Makefile. 
-From the `doc` folder, you can use `make help` to see all of the available commands
-which control the type of documentation you want to generate.
+1. Clean any previously generated files to ensure a clean build.
+2. Generate the documentation in HTML format.
+3. View the generated documentation using a local Python testing server.
 
-Usually, you will want to run `make html` which will generate the documentation
-in a sub folder `_build/html`. You can then view the documentation by running:
+The specific commands for each step depend on your operating system.
+Make sure you execute the following commands from the root dir of altair and have [`hatch`](https://hatch.pypa.io/) installed in your local environment.
 
-```
-cd _build/html
-python -m http.server
+- For MacOS and Linux, run the following commands in your terminal:
+```cmd
+hatch run doc:clean-all
+hatch run doc:build-html
+hatch run doc:serve
 ```
 
-and then opening `http://localhost:8000` in your browser.
+- For Windows, use these commands instead:
+```cmd
+hatch run doc:clean-all-win
+hatch run doc:build-html-win
+hatch run doc:serve
+```
 
+To view the documentation, open your browser and go to `http://localhost:8000`. To stop the server, use `^C` (control+c) in the terminal.

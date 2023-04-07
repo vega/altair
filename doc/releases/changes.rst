@@ -56,6 +56,7 @@ Backward-Incompatible Changes
 Maintenance
 ~~~~~~~~~~~
 
+- Vega-Altair now uses ``hatch`` for package management.
 - Vega-Altair now uses ``ruff`` for linting.
 
 Version 4.2.2 (released Jan 27, 2023)

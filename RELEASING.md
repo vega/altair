@@ -2,16 +2,15 @@
    Make sure to also install all dependencies for the documentation including `altair_saver`
    and uninstall `vl-convert-python` (this is not needed for normal contributions to the repo, see `CONTRIBUTING.md` for details).
 
-2. Make certain your branch is in sync with head
-   
-       $ git pull upstream master
-   
+2. Make certain your branch is in sync with head:
+ 
+       git pull upstream master
+
 3. Do a clean doc build:
 
-       $ cd doc
-       $ make clean-all
-       $ make html
-       $ cd _build/html; python -m http.server
+       hatch run doc:clean-all
+       hatch run doc:build-html
+       hatch run doc:serve
    
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
@@ -19,7 +18,7 @@
 4. Make sure changes.rst is up to date for the release: compare against PRs
    merged since the last release & update top heading with release date.
 
-5. Update version to, e.g. 5.0.0
+5. Update version to, e.g. 5.0.0:
 
    - in ``altair/__init__.py``
    - in ``doc/conf.py`` (two places)
@@ -42,20 +41,16 @@
 
 9. Build source & wheel distributions:
 
-       rm -r dist build  # clean old builds & distributions
-       python setup.py sdist  # create a source distribution
-       python setup.py bdist_wheel  # create a universal wheel
+       hatch clean  # clean old builds & distributions
+       hatch build  # create a source distribution and universal wheel
 
 10. publish to PyPI (Requires correct PyPI owner permissions):
 
-        twine upload dist/*
+        hatch publish
 
 11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
 
-        cd doc
-        make clean-all
-        make html
-        bash sync_website.sh
+        hatch run doc:publish-clean-build
 
 12. update version to, e.g. 5.1.0dev:
 
@@ -74,7 +69,7 @@
        Backward-Incompatible Changes
        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-14. Commit change and push to master
+14. Commit change and push to master:
 
         git add . -u
         git commit -m "MAINT: bump version to 5.1.0dev"

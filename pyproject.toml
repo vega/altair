@@ -1,6 +1,161 @@
+# this file contains:
+# 1 build system configuration
+# 2 project configuration
+# 3 tool configuration, for:
+# - hatch
+# - black
+# - ruff
+# - pytest
+# - mypy
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "altair"
+authors = [ {name = "Vega-Altair Contributors"} ]
+dependencies = [
+    "importlib_metadata; python_version<\"3.8\"",
+    "typing_extensions>=4.0.1; python_version<\"3.11\"",
+    "jinja2",
+    "jsonschema>=3.0",
+    "numpy",
+    "pandas>=0.18",
+    "toolz"
+]
+description = "Vega-Altair: A declarative statistical visualization library for Python."
+readme = "README.md"
+keywords = [
+    "declarative",
+    "statistics",
+    "visualization",
+    "interactive",
+    "json",
+    "vega-lite",
+]
+requires-python = ">=3.7"
+dynamic = ["version"]
+license-files = { paths = ["LICENSE"] }
+classifiers= [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+Documentation = "https://altair-viz.github.io"
+Source = "https://github.com/altair-viz/altair"
+
+[project.optional-dependencies]
+dev = [
+    "hatch",
+    "ruff",
+    "black<24",
+    "ipython",
+    "pytest",
+    "pytest-cov",
+    "m2r",
+    "vega_datasets",
+    # following is rejected by PyPI
+    "altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git",
+    "vl-convert-python",
+    "mypy",
+    "pandas-stubs",
+    "types-jsonschema",
+    "types-setuptools"
+]
+doc = [
+    "sphinx",
+    "docutils",
+    "jinja2",
+    "numpydoc",
+    "pillow",
+    "pydata-sphinx-theme",
+    "geopandas",
+    "myst-parser",
+    "sphinx_copybutton",
+    "sphinx-design"
+]
+
+[tool.hatch.version]
+path = "altair/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build]
+include = [
+    "/altair",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml"
+]
+
+[tool.hatch.envs.default]
+features = ["dev"]
+
+[tool.hatch.envs.default.scripts]
+test = [
+    "black --diff --color --check .",
+    "ruff check .",
+    "mypy altair tests",
+    "python -m pytest --pyargs --doctest-modules tests"
+]
+test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
+test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
+
+[tool.hatch.envs.doc]
+features = ["dev", "doc"]
+
+[tool.hatch.envs.doc.scripts]
+clean = "rm -rf doc/_build"
+clean-generated = [
+    "rm -rf doc/user_guide/generated",
+    "rm -rf doc/gallery"
+]
+clean-all = [
+    "clean",
+    "clean-generated",
+    "rm -rf doc/_images"
+]
+clean-win = "if exist doc\\_build rd /s /q doc\\_build"
+clean-generated-win = [
+    "if exist doc\\user_guide\\generated rd /s /q doc\\user_guide\\generated",
+    "if exist doc\\gallery rd /s /q doc\\gallery",
+]
+clean-all-win = [
+    "clean-win",
+    "clean-generated-win",
+    "if exist doc\\_images rd /s /q doc\\_images",
+]
+build-html = [
+    "mkdir -p doc/_images",
+    "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
+]
+build-html-win = [
+    "if not exist doc\\_images md doc\\_images",
+    "sphinx-build -b html -d doc\\_build\\doctrees doc doc\\_build\\html"
+]
+doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
+coverage = "sphinx-build -b coverage -d doc/_build/doctrees doc doc/_build/coverage"
+serve = "(cd doc/_build/html && python -m http.server)"
+publish-clean-build = [
+    "clean-all",
+    "build-html",
+    "(cd doc && bash sync_website.sh)"
+]
+
 [tool.black]
 line-length = 88
-target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
+target-version = ["py37", "py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -15,12 +170,6 @@ exclude = '''
   | altair/vegalite/v\d*/schema
 )/
 '''
-
-[build-system]
-# Reason for setuptools version restriction to <64 can be found at
-# https://github.com/altair-viz/altair/pull/2758#issuecomment-1358091909
-requires = ["setuptools >= 40.6.0, <64", "wheel"]
-build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 target-version = "py310"
@@ -39,8 +188,23 @@ select = [
     # flake8-tidy-imports
     "TID"
 ]
-# ignore = ["E203", "E266", "E501", "W503"] see https://github.com/charliermarsh/ruff/issues/2402
-ignore = ["E501", "TID252", "B905"]
+ignore = [
+    # E203, E266, W503 not yet supported by ruff, 
+    # see https://github.com/charliermarsh/ruff/issues/2402
+    # Whitespace before ':'
+    # "E203",
+    # Too many leading '#' for block comment
+    # "E266",
+    # Line break occurred before a binary operator
+    # "W503",
+    # Line too long
+    "E501", 
+    # Relative imports are banned
+    "TID252",
+    # zip() without an explicit strict= parameter set.
+    # python>=3.10 only
+    "B905"
+]
 exclude = [
     ".git",
     "build",
