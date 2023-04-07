@@ -119,7 +119,7 @@ features = ["dev", "doc"]
 clean-all = [
     "rm -rf doc/_build",
     "rm -rf doc/user_guide/generated",
-	"rm -rf doc/gallery",
+    "rm -rf doc/gallery",
     "rm -rf doc/_images"
 ]
 clean-all-win = [
