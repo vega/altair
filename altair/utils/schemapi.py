@@ -258,19 +258,6 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
     return list({e.message: e for e in errors}.values())
 
 
-def _get_all_lowest_errors_with_validator(
-    error: jsonschema.ValidationError, validator: str
-) -> List[jsonschema.ValidationError]:
-    matches: List[jsonschema.ValidationError] = []
-    if error.context:
-        for err in error.context:
-            if err.context:
-                matches.extend(_get_all_lowest_errors_with_validator(err, validator))
-            elif err.validator == validator:
-                matches.append(err)
-    return matches
-
-
 def _subclasses(cls):
     """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
