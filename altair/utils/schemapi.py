@@ -318,6 +318,20 @@ class SchemaValidationError(jsonschema.ValidationError):
         self._errors: GroupedValidationErrors = getattr(
             err, "_all_errors", {err.json_path: [err]}
         )
+        # This is the message from err
+        self._original_message = self.message
+        self.message = self._get_message()
+
+    def __str__(self) -> str:
+        return self.message
+
+    def _get_message(self) -> str:
+        messages: List[str] = []
+        for _, errors in self._errors.items():
+            altair_cls = self._get_altair_class_for_error(errors[0])
+            messages.append(self._get_message_for_errors(errors, altair_cls))
+        return ("\n" + "-" * 50 + "\n").join(messages)
+
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
@@ -377,13 +391,6 @@ class SchemaValidationError(jsonschema.ValidationError):
                     # 16 is the indendation of the returned multiline string below
                     param_names_table += " " * 16
         return param_names_table
-
-    def __str__(self) -> str:
-        messages: List[str] = []
-        for _, errors in self._errors.items():
-            altair_cls = self._get_altair_class_for_error(errors[0])
-            messages.append(self._get_message_for_errors(errors, altair_cls))
-        return ("\n" + "-" * 50 + "\n").join(messages)
 
     def _get_message_for_errors(
         self,
