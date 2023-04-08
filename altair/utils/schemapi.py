@@ -59,7 +59,12 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
-def validate_jsonschema(spec, schema, rootschema=None, raise_error=True):
+def validate_jsonschema(
+    spec: Dict[str, Any],
+    schema: Dict[str, Any],
+    rootschema: Optional[Dict[str, Any]] = None,
+    raise_error: bool = True,
+) -> Optional[jsonschema.exceptions.ValidationError]:
     errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
     if errors:
         leaf_errors = _get_leaves_of_error_tree(errors)
@@ -72,14 +77,20 @@ def validate_jsonschema(spec, schema, rootschema=None, raise_error=True):
         main_error = list(grouped_errors.values())[0][0]
         # They can be used to craft more helpful error messages when this error
         # is being converted to a SchemaValidationError
-        main_error._all_errors = grouped_errors
+        main_error._all_errors = grouped_errors  # type: ignore[attr-defined]
         if raise_error:
             raise main_error
         else:
             return main_error
+    else:
+        return None
 
 
-def _get_errors_from_spec(spec, schema, rootschema=None) -> ValidationErrorList:
+def _get_errors_from_spec(
+    spec: Dict[str, Any],
+    schema: Dict[str, Any],
+    rootschema: Optional[Dict[str, Any]] = None,
+) -> ValidationErrorList:
     # We don't use jsonschema.validate as this would validate the schema itself.
     # Instead, we pass the schema directly to the validator class. This is done for
     # two reasons: The schema comes from Vega-Lite and is not based on the user
@@ -126,7 +137,9 @@ def _get_leaves_of_error_tree(
     return leaves
 
 
-def _subset_to_most_specific_json_paths(errors_by_json_path: GroupedValidationErrors):
+def _subset_to_most_specific_json_paths(
+    errors_by_json_path: GroupedValidationErrors,
+) -> GroupedValidationErrors:
     errors_by_json_path_specific: GroupedValidationErrors = {}
     for json_path, errors in errors_by_json_path.items():
         if not _contained_at_start_of_one_of_other_values(
