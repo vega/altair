@@ -385,18 +385,16 @@ class SchemaValidationError(jsonschema.ValidationError):
             param_dict_keys = inspect.signature(altair_cls).parameters.keys()
             param_names_table = self._format_params_as_table(param_dict_keys)
 
-            message = """\
-`{}` has no parameter named {!r}
+            # Error messages for these errors look like this:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            # Line below extracts "unknown" from this string
+            parameter_name = error.message.split("('")[-1].split("'")[0]
+            message = f"""\
+`{altair_cls.__name__}` has no parameter named '{parameter_name}'
 
 Existing parameter names are:
-{}
-See the help for `{}` to read the full description of these parameters""".format(
-                altair_cls.__name__,
-                error.message.split("('")[-1].split("'")[0],
-                param_names_table,
-                altair_cls.__name__,
-            )
-            return message
+{param_names_table}
+See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         # Use the default error message for all other cases than unknown
         # parameter errors
         else:
@@ -413,7 +411,7 @@ See the help for `{}` to read the full description of these parameters""".format
             if additional_errors:
                 message += "\n" + "\n".join([e.message for e in additional_errors])
 
-            return message
+        return message.strip()
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
