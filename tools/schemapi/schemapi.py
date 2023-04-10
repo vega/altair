@@ -317,6 +317,65 @@ class SchemaValidationError(jsonschema.ValidationError):
             messages.append(self._get_message_for_errors(errors, altair_cls))
         return ("\n" + "-" * 50 + "\n").join(messages)
 
+    def _get_altair_class_for_error(
+        self, error: jsonschema.exceptions.ValidationError
+    ) -> Type["SchemaBase"]:
+        # Try to get the lowest class possible in the chart hierarchy so
+        # it can be displayed in the error message. This should lead to more informative
+        # error messages pointing the user closer to the source of the issue.
+        for prop_name in reversed(error.absolute_path):
+            # Check if str as e.g. first item can be a 0
+            if isinstance(prop_name, str):
+                potential_class_name = prop_name[0].upper() + prop_name[1:]
+                cls = getattr(vegalite, potential_class_name, None)
+                if cls is not None:
+                    break
+        else:
+            # Did not find a suitable class based on traversing the path so we fall
+            # back on the class of the top-level object which created
+            # the SchemaValidationError
+            cls = self.obj.__class__
+        return cls
+
+    def _get_message_for_errors(
+        self,
+        errors: Sequence[jsonschema.exceptions.ValidationError],
+        altair_cls: Type["SchemaBase"],
+    ) -> str:
+        error = errors[0]
+        # Output all existing parameters when an unknown parameter is specified
+        if error.validator == "additionalProperties":
+            param_dict_keys = inspect.signature(altair_cls).parameters.keys()
+            param_names_table = self._format_params_as_table(param_dict_keys)
+
+            # Error messages for these errors look like this:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            # Line below extracts "unknown" from this string
+            parameter_name = error.message.split("('")[-1].split("'")[0]
+            message = f"""\
+`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+
+Existing parameter names are:
+{param_names_table}
+See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
+        # Use the default error message for all other cases than unknown
+        # parameter errors
+        else:
+            message = error.message
+            # Add a summary line when parameters are passed an invalid value
+            # For example: "'asdf' is an invalid value for `stack`
+            if error.absolute_path:
+                message = f"""\
+'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
+
+{message}"""
+
+            additional_errors = [err for err in errors if err is not error]
+            if additional_errors:
+                message += "\n" + "\n".join([e.message for e in additional_errors])
+
+        return message.strip()
+
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
         """Format param names into a table so that they are easier to read"""
@@ -373,65 +432,6 @@ class SchemaValidationError(jsonschema.ValidationError):
                 if num == (len(param_names_row) - 1):
                     param_names_table += "\n"
         return param_names_table
-
-    def _get_message_for_errors(
-        self,
-        errors: Sequence[jsonschema.exceptions.ValidationError],
-        altair_cls: Type["SchemaBase"],
-    ) -> str:
-        error = errors[0]
-        # Output all existing parameters when an unknown parameter is specified
-        if error.validator == "additionalProperties":
-            param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-            param_names_table = self._format_params_as_table(param_dict_keys)
-
-            # Error messages for these errors look like this:
-            # "Additional properties are not allowed ('unknown' was unexpected)"
-            # Line below extracts "unknown" from this string
-            parameter_name = error.message.split("('")[-1].split("'")[0]
-            message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
-
-Existing parameter names are:
-{param_names_table}
-See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        # Use the default error message for all other cases than unknown
-        # parameter errors
-        else:
-            message = error.message
-            # Add a summary line when parameters are passed an invalid value
-            # For example: "'asdf' is an invalid value for `stack`
-            if error.absolute_path:
-                message = f"""\
-'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
-
-{message}"""
-
-            additional_errors = [err for err in errors if err is not error]
-            if additional_errors:
-                message += "\n" + "\n".join([e.message for e in additional_errors])
-
-        return message.strip()
-
-    def _get_altair_class_for_error(
-        self, error: jsonschema.exceptions.ValidationError
-    ) -> Type["SchemaBase"]:
-        # Try to get the lowest class possible in the chart hierarchy so
-        # it can be displayed in the error message. This should lead to more informative
-        # error messages pointing the user closer to the source of the issue.
-        for prop_name in reversed(error.absolute_path):
-            # Check if str as e.g. first item can be a 0
-            if isinstance(prop_name, str):
-                potential_class_name = prop_name[0].upper() + prop_name[1:]
-                cls = getattr(vegalite, potential_class_name, None)
-                if cls is not None:
-                    break
-        else:
-            # Did not find a suitable class based on traversing the path so we fall
-            # back on the class of the top-level object which created
-            # the SchemaValidationError
-            cls = self.obj.__class__
-        return cls
 
 
 class UndefinedType:
