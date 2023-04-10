@@ -345,36 +345,33 @@ class SchemaValidationError(jsonschema.ValidationError):
         error = errors[0]
         # Output all existing parameters when an unknown parameter is specified
         if error.validator == "additionalProperties":
-            param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-            param_names_table = self._format_params_as_table(param_dict_keys)
+            message = self._get_additional_properties_error_message(
+                altair_cls=altair_cls, error=error
+            )
+        else:
+            message = self._get_default_error_message(error=error, errors=errors)
 
-            # Error messages for these errors look like this:
-            # "Additional properties are not allowed ('unknown' was unexpected)"
-            # Line below extracts "unknown" from this string
-            parameter_name = error.message.split("('")[-1].split("'")[0]
-            message = f"""\
+        return message.strip()
+
+    def _get_additional_properties_error_message(
+        self,
+        altair_cls: Type["SchemaBase"],
+        error: jsonschema.exceptions.ValidationError,
+    ) -> str:
+        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
+        param_names_table = self._format_params_as_table(param_dict_keys)
+
+        # Error messages for these errors look like this:
+        # "Additional properties are not allowed ('unknown' was unexpected)"
+        # Line below extracts "unknown" from this string
+        parameter_name = error.message.split("('")[-1].split("'")[0]
+        message = f"""\
 `{altair_cls.__name__}` has no parameter named '{parameter_name}'
 
 Existing parameter names are:
 {param_names_table}
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        # Use the default error message for all other cases than unknown
-        # parameter errors
-        else:
-            message = error.message
-            # Add a summary line when parameters are passed an invalid value
-            # For example: "'asdf' is an invalid value for `stack`
-            if error.absolute_path:
-                message = f"""\
-'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
-
-{message}"""
-
-            additional_errors = [err for err in errors if err is not error]
-            if additional_errors:
-                message += "\n" + "\n".join([e.message for e in additional_errors])
-
-        return message.strip()
+        return message
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
@@ -432,6 +429,25 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                 if num == (len(param_names_row) - 1):
                     param_names_table += "\n"
         return param_names_table
+
+    def _get_default_error_message(
+        self,
+        error: jsonschema.exceptions.ValidationError,
+        errors: Sequence[jsonschema.exceptions.ValidationError],
+    ) -> str:
+        message = error.message
+        # Add a summary line when parameters are passed an invalid value
+        # For example: "'asdf' is an invalid value for `stack`
+        if error.absolute_path:
+            message = f"""\
+'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
+
+{message}"""
+
+        additional_errors = [err for err in errors if err is not error]
+        if additional_errors:
+            message += "\n" + "\n".join([e.message for e in additional_errors])
+        return message
 
 
 class UndefinedType:
