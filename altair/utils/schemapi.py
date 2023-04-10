@@ -341,7 +341,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def _get_message_for_errors(
         self,
-        errors: Sequence[jsonschema.exceptions.ValidationError],
+        errors: ValidationErrorList,
         altair_cls: Type["SchemaBase"],
     ) -> str:
         error = errors[0]
@@ -435,20 +435,43 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
     def _get_default_error_message(
         self,
         error: jsonschema.exceptions.ValidationError,
-        errors: Sequence[jsonschema.exceptions.ValidationError],
+        errors: ValidationErrorList,
     ) -> str:
-        message = error.message
+        bullet_points: List[str] = []
+        errors_by_validator = _group_errors_by_validator(errors)
+        if "enum" in errors_by_validator:
+            for error in errors_by_validator["enum"]:
+                bullet_points.append(f"one of {error.validator_value}")
+
+        if "type" in errors_by_validator:
+            types = [f"'{err.validator_value}'" for err in errors_by_validator["type"]]
+            point = "of type "
+            if len(types) == 1:
+                point += types[0]
+            elif len(types) == 2:
+                point += f"{types[0]} or {types[1]}"
+            else:
+                point += ", ".join(types[:-1]) + f", or {types[-1]}"
+            bullet_points.append(point)
+
         # Add a summary line when parameters are passed an invalid value
         # For example: "'asdf' is an invalid value for `stack`
+        message = f"'{error.instance}' is an invalid value"
         if error.absolute_path:
-            message = f"""\
-'{error.instance}' is an invalid value for `{error.absolute_path[-1]}`:
+            message += f" for `{error.absolute_path[-1]}`"
+        if len(bullet_points) == 0:
+            message += ".\n\n"
+        elif len(bullet_points) == 1:
+            message += f". Valid values are {bullet_points[0]}.\n\n"
+        else:
+            message += ". Valid values are:\n\n"
+            message += "\n".join([f"- {point}" for point in bullet_points])
+            message += "\n\n"
 
-{message}"""
+        for validator, errors in errors_by_validator.items():
+            if validator not in ("enum", "type"):
+                message += "\n".join([e.message for e in errors])
 
-        additional_errors = [err for err in errors if err is not error]
-        if additional_errors:
-            message += "\n" + "\n".join([e.message for e in additional_errors])
         return message
 
 

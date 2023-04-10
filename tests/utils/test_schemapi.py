@@ -562,20 +562,16 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
 
                 See the help for `X` to read the full description of these parameters
                 --------------------------------------------------
-                'asdf' is an invalid value for `stack`:
+                'asdf' is an invalid value for `stack`. Valid values are:
 
-                'asdf' is not one of \['zero', 'center', 'normalize'\]
-                'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'$"""  # noqa: W291
+                - one of \['zero', 'center', 'normalize'\]
+                - of type 'null' or 'boolean'$"""  # noqa: W291
             ),
         ),
         (
             chart_error_two_errors_in_layered_chart,
             inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`:
-
-                {'wrong'} is not of type 'string'
-                {'wrong'} is not of type 'object'
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
                 --------------------------------------------------
                 `Encoding` has no parameter named 'invalidChannel'
 
@@ -594,15 +590,10 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_two_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`:
-
-                {'wrong'} is not of type 'string'
-                {'wrong'} is not of type 'object'
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
                 --------------------------------------------------
-                '4' is an invalid value for `bandPosition`:
-
-                '4' is not of type 'number'$"""
-            )
+                '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+            ),
         ),
         (
             chart_error_example_layer,
@@ -621,31 +612,25 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_example_invalid_y_option_value,
             inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`:
+                r"""'asdf' is an invalid value for `stack`. Valid values are:
 
-                'asdf' is not one of \['zero', 'center', 'normalize'\]
-                'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'$"""
+                - one of \['zero', 'center', 'normalize'\]
+                - of type 'null' or 'boolean'$"""
             ),
         ),
         (
             chart_error_example_invalid_y_option_value_with_condition,
             inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`:
+                r"""'asdf' is an invalid value for `stack`. Valid values are:
 
-                'asdf' is not one of \['zero', 'center', 'normalize'\]
-                'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'$"""
+                - one of \['zero', 'center', 'normalize'\]
+                - of type 'null' or 'boolean'$"""
             ),
         ),
         (
             chart_error_example_hconcat,
             inspect.cleandoc(
-                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
-
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'null'$"""
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
             ),
         ),
         (
@@ -668,42 +653,36 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_example_invalid_timeunit_value,
             inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `timeUnit`:
+                r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
-                'invalid_value' is not one of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
-                'invalid_value' is not one of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
-                'invalid_value' is not one of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
-                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
-                'invalid_value' is not of type 'object'$"""
+                - one of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
+                - one of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
+                - one of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
+                - one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
+                - of type 'object'$"""
             ),
         ),
         (
             chart_error_example_invalid_sort_value,
             inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `sort`:
+                r"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
-                'invalid_value' is not of type 'array'
-                'invalid_value' is not of type 'object'
-                'invalid_value' is not of type 'null'
-                'invalid_value' is not one of \['ascending', 'descending'\]
-                'invalid_value' is not one of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
-                'invalid_value' is not one of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]$"""
+                - one of \['ascending', 'descending'\]
+                - one of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
+                - one of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
+                - of type 'array', 'object', or 'null'$"""
             ),
         ),
         (
             chart_error_example_invalid_bandposition_value,
             inspect.cleandoc(
-                r"""'4' is an invalid value for `bandPosition`:
-
-                '4' is not of type 'number'$"""
+                r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
             chart_error_invalid_type,
             inspect.cleandoc(
-                r"""'unknown' is an invalid value for `type`:
-
-                'unknown' is not one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\]$"""
+                r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$"""
             ),
         ),
         (
@@ -723,11 +702,7 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_invalid_value_type,
             inspect.cleandoc(
-                r"""'1' is an invalid value for `value`:
-
-                1 is not of type 'object'
-                1 is not of type 'string'
-                1 is not of type 'null'$"""
+                r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
             ),
         ),
     ],
