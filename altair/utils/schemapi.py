@@ -315,9 +315,24 @@ class SchemaValidationError(jsonschema.ValidationError):
     def _get_message(self) -> str:
         messages: List[str] = []
         for _, errors in self._errors.items():
-            altair_cls = self._get_altair_class_for_error(errors[0])
-            messages.append(self._get_message_for_errors(errors, altair_cls))
+            messages.append(self._get_message_for_errors(errors))
         return ("\n" + "-" * 50 + "\n").join(messages)
+
+    def _get_message_for_errors(
+        self,
+        errors: ValidationErrorList,
+    ) -> str:
+        error = errors[0]
+        altair_cls = self._get_altair_class_for_error(error)
+        # Output all existing parameters when an unknown parameter is specified
+        if error.validator == "additionalProperties":
+            message = self._get_additional_properties_error_message(
+                altair_cls=altair_cls, error=error
+            )
+        else:
+            message = self._get_default_error_message(error=error, errors=errors)
+
+        return message.strip()
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
@@ -338,22 +353,6 @@ class SchemaValidationError(jsonschema.ValidationError):
             # the SchemaValidationError
             cls = self.obj.__class__
         return cls
-
-    def _get_message_for_errors(
-        self,
-        errors: ValidationErrorList,
-        altair_cls: Type["SchemaBase"],
-    ) -> str:
-        error = errors[0]
-        # Output all existing parameters when an unknown parameter is specified
-        if error.validator == "additionalProperties":
-            message = self._get_additional_properties_error_message(
-                altair_cls=altair_cls, error=error
-            )
-        else:
-            message = self._get_default_error_message(error=error, errors=errors)
-
-        return message.strip()
 
     def _get_additional_properties_error_message(
         self,
