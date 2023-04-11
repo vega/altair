@@ -1,6 +1,6 @@
 .. currentmodule:: altair
 
-.. _user-guide-color-scales:
+.. _user-guide-color:
 
 Color Scales
 ============
