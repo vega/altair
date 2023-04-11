@@ -419,7 +419,6 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             cls = self.obj.__class__
         return cls
 
-
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
         """Format param names into a table so that they are easier to read"""
