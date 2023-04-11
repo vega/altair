@@ -365,17 +365,38 @@ class SchemaValidationError(jsonschema.ValidationError):
         self,
         errors: ValidationErrorList,
     ) -> str:
-        error = errors[0]
-        altair_cls = self._get_altair_class_for_error(error)
-        # Output all existing parameters when an unknown parameter is specified
-        if error.validator == "additionalProperties":
-            message = self._get_additional_properties_error_message(
-                altair_cls=altair_cls, error=error
-            )
+        if errors[0].validator == "additionalProperties":
+            # During development, we only found cases where an additionalProperties
+            # error was raised if that was the only error for the offending instance
+            # as identifiable by the json path. Therefore, we just check here the first
+            # error. However, other constellations might exist in which case
+            # this should be adapted so that other error messages are shown as well.
+            message = self._get_additional_properties_error_message(errors[0])
         else:
-            message = self._get_default_error_message(error=error, errors=errors)
+            message = self._get_default_error_message(errors=errors)
 
         return message.strip()
+
+    def _get_additional_properties_error_message(
+        self,
+        error: jsonschema.exceptions.ValidationError,
+    ) -> str:
+        """Output all existing parameters when an unknown parameter is specified."""
+        altair_cls = self._get_altair_class_for_error(error)
+        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
+        param_names_table = self._format_params_as_table(param_dict_keys)
+
+        # Error messages for these errors look like this:
+        # "Additional properties are not allowed ('unknown' was unexpected)"
+        # Line below extracts "unknown" from this string
+        parameter_name = error.message.split("('")[-1].split("'")[0]
+        message = f"""\
+`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+
+Existing parameter names are:
+{param_names_table}
+See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
+        return message
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
@@ -398,25 +419,6 @@ class SchemaValidationError(jsonschema.ValidationError):
             cls = self.obj.__class__
         return cls
 
-    def _get_additional_properties_error_message(
-        self,
-        altair_cls: Type["SchemaBase"],
-        error: jsonschema.exceptions.ValidationError,
-    ) -> str:
-        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-        param_names_table = self._format_params_as_table(param_dict_keys)
-
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
-        message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
-
-Existing parameter names are:
-{param_names_table}
-See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        return message
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
@@ -477,7 +479,6 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     def _get_default_error_message(
         self,
-        error: jsonschema.exceptions.ValidationError,
         errors: ValidationErrorList,
     ) -> str:
         bullet_points: List[str] = []
@@ -497,6 +498,10 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                 point += ", ".join(types[:-1]) + f", or {types[-1]}"
             bullet_points.append(point)
 
+        # It should not matter which error is specifically used as they are all
+        # about the same offending instance (i.e. invalid value), so we can just
+        # take the first one
+        error = errors[0]
         # Add a summary line when parameters are passed an invalid value
         # For example: "'asdf' is an invalid value for `stack`
         message = f"'{error.instance}' is an invalid value"
