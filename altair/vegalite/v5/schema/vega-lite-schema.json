@@ -12467,7 +12467,7 @@
               "$ref": "#/definitions/LayerSpec"
             },
             {
-              "$ref": "#/definitions/UnitSpecWithFrame"
+              "$ref": "#/definitions/UnitSpec"
             }
           ],
           "description": "A specification of the view that gets repeated."
@@ -29223,7 +29223,7 @@
                   "$ref": "#/definitions/LayerSpec"
                 },
                 {
-                  "$ref": "#/definitions/UnitSpecWithFrame"
+                  "$ref": "#/definitions/UnitSpec"
                 }
               ],
               "description": "A specification of the view that gets repeated."
@@ -29507,7 +29507,17 @@
         "views": {
           "description": "By default, top-level selections are applied to every view in the visualization. If this property is specified, selections will only be applied to views with the given names.",
           "items": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ]
           },
           "type": "array"
         }
