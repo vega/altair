@@ -23,59 +23,44 @@ examples of their use.
     import pandas as pd
 
     def chart_settings(scheme_name, dict_schemes, continuous):
-        # predefined scheme handling      
-        if type(dict_schemes[scheme_name]) is not list:
-            if continuous:
-                no_colors_in_scheme = 300        
-            else:
-                no_colors_in_scheme = dict_schemes[scheme_name]
-            df = pd.DataFrame({"i": range(no_colors_in_scheme)})
-            custom_scheme = False
+        # check if the input is a defined or custom scheme
+        custom_scheme = True if type(dict_schemes[scheme_name]) is list else False
 
-        # custom scheme handling
-        else:
-            if continuous:
-                no_colors_in_scheme = 300
-                df = pd.DataFrame({"i": range(no_colors_in_scheme)})  
-            else:    
-                no_colors_in_scheme = len(dict_schemes[scheme_name])
-                colors_in_scheme = dict_schemes[scheme_name]
-                df = pd.DataFrame({"i": range(no_colors_in_scheme), "hex": colors_in_scheme})
-            custom_scheme = True
-
-        # static height
-        h = 50
-
-        # width is dependent on no. of colors in scheme
+        # define a data sequence of 300 for continuous color schemes
         if continuous:
-            w = 2
-        elif no_colors_in_scheme <= 5:
-            w = 50
-        elif (no_colors_in_scheme > 5) and (no_colors_in_scheme <= 12):
-            w = 30
+            no_colors = 300
+            data = alt.sequence(0, no_colors, as_="i")
+
+        # define a data sequence using dict for defined schemes
+        elif type(dict_schemes[scheme_name]) is int:
+            no_colors = dict_schemes[scheme_name]
+            data = alt.sequence(0, no_colors, as_="i")
+
+        # define a dataframe for custom schemes (possible with Altair only?)
         else:
-            w = 15
+            no_colors = len(dict_schemes[scheme_name])
+            colors_in_scheme = dict_schemes[scheme_name]
+            data = pd.DataFrame({"i": range(no_colors), "hex": colors_in_scheme})
+
+        # dynamic width
+        w = 1.5 if continuous else 50 if no_colors <= 5 else 30 if no_colors <= 12 else 15
+
         # cornerRadius dependent on height-width ratio
         cr_l = 0 if continuous else int(w / 2.4)
         cr_s = 0 if continuous else 5
 
-        return df, w, h, cr_l, cr_s, no_colors_in_scheme, custom_scheme
+        return {
+            "data": data,
+            "width": w,
+            "cornerRadius_large": cr_l,
+            "cornerRadius_small": cr_s,
+            "no_colors": no_colors,
+            "custom": custom_scheme
+        }
 
-
-    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False):
-        df, w, h, cr_l, cr_s, no, cs = chart_settings(scheme_name, dict_schemes, continuous)
-
-        # define internal color scale definition    
-        if cs and continuous:
-            expr_hex = "scale('color', datum.i)"
-            color_type = "quantitative"
-        elif cs and not continuous:
-            expr_hex = "datum.hex"
-            color_type = "ordinal"
-        elif not cs:
-            expr_hex = "scale('color', datum.i)"
-            color_type = "ordinal"
-        scale_scheme = alt.Scale(range=dict_schemes[scheme_name]) if cs else alt.Scale(scheme=scheme_name)
+    def chart_color_scale(scheme_name, dict_schemes, continuous, custom, no):
+        color_type = "quantitative" if custom and continuous else "ordinal"    
+        scale_scheme = alt.Scale(range=dict_schemes[scheme_name]) if custom else alt.Scale(scheme=scheme_name)
 
         color_scale = (
             alt.Chart(alt.sequence(0, no, as_="i"))
@@ -83,19 +68,11 @@ examples of their use.
             .encode(alt.Color("i", type=color_type).scale(scale_scheme).legend(None))
         )    
 
-        # define styling axis
-        my_y_axis = alt.Axis(
-            grid=False,
-            ticks=False,
-            labels=False,
-            domain=False,
-            titleAngle=0,
-            titleAlign="right",
-            titleBaseline="middle",
-        )
-        
+        return color_scale
+
+    def chart_normal_vision(data, h, w, expr_hex, my_y_axis, cr_l):
         normal_vision = (
-            alt.Chart(df, height=h, width=alt.Step(w))
+            alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
                 hex=expr_hex,
                 rgb="rgb(datum.hex)",
@@ -104,9 +81,9 @@ examples of their use.
             .mark_rect(cornerRadius=cr_l, discreteBandSize=w)
             .encode(
                 x=alt.X("i:O").axis(None),
-                y=alt.Y("normal vision:N").axis(my_y_axis),
-                fill=alt.Fill("hex", type=color_type).scale(None).legend(None),
-                stroke=alt.Stroke("hex", type=color_type).scale(None).legend(None),
+                y=alt.Y("normal vision:O").axis(my_y_axis),
+                fill=alt.Fill("hex:O").scale(None).legend(None),
+                stroke=alt.Stroke("hex:O").scale(None).legend(None),
                 tooltip=[
                     alt.Tooltip("hex:O"),
                     alt.Tooltip("rgb:O"),
@@ -114,18 +91,11 @@ examples of their use.
                 ],
             )
         )
+        return normal_vision
 
-        if not cvd:
-            chart_comb = (
-                (normal_vision & color_scale)
-                .configure_concat(spacing=1)
-                .configure_view(stroke=None)
-            )
-            return chart_comb
-
-
+    def chart_green_blindness(data, h, w, expr_hex, my_y_axis, cr_s):
         green_blindness = (
-            alt.Chart(df, height=20, width=alt.Step(w))
+            alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
                 hex=expr_hex,
                 rgb="rgb(datum.hex)",
@@ -138,13 +108,15 @@ examples of their use.
             .encode(
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("green-blindness:N").axis(my_y_axis),
-                fill=alt.Fill("greenblind_rgb", type=color_type).scale(None).legend(None),
-                stroke=alt.Stroke("greenblind_rgb", type=color_type).scale(None).legend(None),            
+                fill=alt.Fill("greenblind_rgb:N").scale(None).legend(None),
+                stroke=alt.Stroke("greenblind_rgb:N").scale(None).legend(None),            
             )
-        )
+        )    
+        return green_blindness
 
+    def chart_red_blindness(data, h, w, expr_hex, my_y_axis, cr_s):
         red_blindness = (
-            alt.Chart(df, height=20, width=alt.Step(w))
+            alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
                 hex=expr_hex,
                 rgb="rgb(datum.hex)",
@@ -157,13 +129,15 @@ examples of their use.
             .encode(
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("red-blindness:N").axis(my_y_axis),
-                fill=alt.Fill("redblind_rgb", type=color_type).scale(None).legend(None),
-                stroke=alt.Stroke("redblind_rgb", type=color_type).scale(None).legend(None),             
+                fill=alt.Fill("redblind_rgb:N").scale(None).legend(None),
+                stroke=alt.Stroke("redblind_rgb:N").scale(None).legend(None),             
             )
-        )
+        )  
+        return red_blindness
 
+    def chart_grayscale(data, h, w, expr_hex, my_y_axis, cr_s):
         grayscale = (
-            alt.Chart(df, height=20, width=alt.Step(w))
+            alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
                 hex=expr_hex,
                 rgb="rgb(datum.hex)",
@@ -174,21 +148,61 @@ examples of their use.
             .encode(
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("grayscale:N").axis(my_y_axis),
-                fill=alt.Fill("grayscale_rgb", type=color_type).scale(None).legend(None),
-                stroke=alt.Stroke("grayscale_rgb", type=color_type).scale(None).legend(None),               
+                fill=alt.Fill("grayscale_rgb:N").scale(None).legend(None),
+                stroke=alt.Stroke("grayscale_rgb:N").scale(None).legend(None),               
 
             )
         )
+        return grayscale
 
+    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False):
+        # determine chart settings
+        chart_dict = chart_settings(scheme_name, dict_schemes, continuous)    
 
+        # unpack chart_dict
+        custom = chart_dict['custom']
+        data = chart_dict['data']
+        w = chart_dict['width']
+        h_l = 50
+        h_s = 20
+        cr_l = chart_dict['cornerRadius_large']
+        cr_s = chart_dict['cornerRadius_small']
+        no = chart_dict['no_colors']
 
-        chart_comb = (
-            (normal_vision & green_blindness & red_blindness & grayscale & color_scale)
-            .configure_concat(spacing=1)
-            .configure_view(stroke=None)
-        )
+        # define color scale
+        color_scale = chart_color_scale(scheme_name, dict_schemes, continuous, custom, no)
+
+        # define how hex-codes can be derived, from datasource or using color scale
+        expr_hex = "datum.hex" if custom and not continuous else "scale('color', datum.i)"
+
+        # define styling for y-axis
+        my_y_axis = alt.Axis(
+            grid=False,
+            ticks=False,
+            labels=False,
+            domain=False,
+            titleAngle=0,
+            titleAlign="right",
+            titleBaseline="middle",
+        )    
+
+        # determine color pallettes for different color deficiencies
+        normal_vision = chart_normal_vision(data, h_l, w, expr_hex, my_y_axis, cr_l)
+        green_blindness = chart_green_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s)
+        red_blindness = chart_red_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s)
+        monochrome = chart_grayscale(data, h_s, w, expr_hex, my_y_axis, cr_s)
+
+        # determine which color pallettes to return
+        if cvd and grayscale:
+            chart_concat = (normal_vision & green_blindness & red_blindness & monochrome & color_scale)
+        elif cvd and not grayscale:
+            chart_concat = (normal_vision & green_blindness & red_blindness & color_scale)
+        else:
+            chart_concat = (normal_vision & color_scale)
+
+        # set configuration on concatenated chart object
+        chart_comb = chart_concat.configure_concat(spacing=1).configure_view(stroke=None)    
         return chart_comb
-
 
 
 The Basics of Color Selection
@@ -201,8 +215,8 @@ it's important to understand the basics of color perception and theory.
 Color Perception and Theory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. The importance of perceptually uniform color scales
-------------------------------------------------------
+The importance of perceptually uniform color scales
+---------------------------------------------------
 
 Using colors that are perceptually uniform can help ensure that viewers
 can accurately perceive the relative differences between data points. By
@@ -238,8 +252,8 @@ understand.
 
          plot_scheme("non-uniform", percep_schemes, cvd=True, continuous=True)
 
-2. Different types of color spaces
-----------------------------------
+Different types of color spaces
+-------------------------------
 
 Different color spaces, such as RGB or HSL, offer different advantages and
 can affect the perceived brightness and contrast of colors. By 
@@ -249,8 +263,8 @@ that are not only informative but also visually appealing.
 Accessibility and Aesthetics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Considerations for color-blind viewers
------------------------------------------
+Considerations for color-blind viewers
+--------------------------------------
    
 Around 8% of men and 0.5% of women have some form of color vision deficiency.
 To make sure your visualizations are accessible to all viewers, it's
@@ -287,8 +301,8 @@ also inclusive.
 
          plot_scheme("unfriendly", color_vision_deficiency, cvd=True, continuous=True)
 
-1. Guidelines for creating visually appealing presentations
------------------------------------------------------------
+Guidelines for creating visually appealing presentations
+--------------------------------------------------------
 
 While accuracy is the primary goal of visualizations, aesthetics also play
 an important role in engaging viewers and making data more memorable.
@@ -310,8 +324,8 @@ visualization: sequential, diverging, and categorical. The section
 includes examples of data that can be visualized using each scale and
 popular color schemes used in practice.
 
-A. Sequential Scales
-^^^^^^^^^^^^^^^^^^^^
+Sequential Scales
+^^^^^^^^^^^^^^^^^
 
 Sequential scales are best suited for data that has an inherent ordering,
 such as data that varies from low to high, or over time. Examples of
@@ -348,20 +362,65 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("blues", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("blues", seqs_schemes, cvd=False, continuous=True)         
 
    * - .. code-block:: none
     
-         warmgreys
+         tealblues
 
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("warmgreys", seqs_schemes, cvd=False, continuous=False)
+         plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=True)
+
+   * - .. code-block:: none
+    
+         teals
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("teals", seqs_schemes, cvd=False, continuous=True)
+
+   * - .. code-block:: none
+    
+         greens
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("greens", seqs_schemes, cvd=False, continuous=True) 
+
+   * - .. code-block:: none
+    
+         browns
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("browns", seqs_schemes, cvd=False, continuous=True)
+
+   * - .. code-block:: none
+    
+         greys
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("greys", seqs_schemes, cvd=False, continuous=True)
+
+   * - .. code-block:: none
+    
+         purples
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purples", seqs_schemes, cvd=False, continuous=True)
 
 
-B. Diverging Scales
-^^^^^^^^^^^^^^^^^^^
+Diverging Scales
+^^^^^^^^^^^^^^^^
 
 1. Examples of diverging data
 -----------------------------
