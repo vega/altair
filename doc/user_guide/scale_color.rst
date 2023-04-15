@@ -287,7 +287,7 @@ also inclusive.
    :header-rows: 1
 
    * - Example
-   * - Friendly diverging color scheme (`sunset` by Paul Ton, see section xx for more)
+   * - **Friendly** diverging color scheme (`sunset` by Paul Ton, see section xx for more)
 
        .. altair-plot::
          :remove-code:
@@ -308,12 +308,65 @@ While accuracy is the primary goal of visualizations, aesthetics also play
 an important role in engaging viewers and making data more memorable.
 By using a limited color palette, choosing harmonious colors, and balancing
 colors to create a sense of visual hierarchy, you can create visualizations
-that are not only informative but also visually stunning.
+that are not only informative but also visually attractive.
 
-.. code-block:: none
+.. list-table::
+   :widths: 100
+   :header-rows: 0
+
+   * - Intuitive colors 
+
+       .. altair-plot::
+         :hide-code:            
     
-    A visualization that uses color to create a sense of visual hierarchy,
-    such as a heatmap or a scatterplot.
+         source = pd.DataFrame({
+             'land cover': ['Land', 'Water'],
+             'value': [28, 55]
+         })
+
+         intuitive = alt.Chart(source, height=alt.Step(80), width=200, title='intuitive').mark_bar().encode(
+             x=alt.X('value').axis(None),
+             y=alt.Y('land cover').title(None),
+             color=alt.Color('land cover').scale(range=['#55AA22', '#5566AA'], domain=['Land', 'Water'])    
+         )
+
+         non_intuitive = alt.Chart(source, height=alt.Step(80), width=200, title='non-intuitive').mark_bar().encode(
+             x=alt.X('value').axis(None),
+             y=alt.Y('land cover').title(None),
+             color=alt.Color('land cover').scale(range=['#5566AA', '#55AA22'], domain=['Land', 'Water'])    
+         )
+
+         (intuitive | non_intuitive).configure_view(stroke=None).resolve_scale(color='independent')         
+
+   * - Colors in moderation
+
+       .. code-block:: none
+    
+         example simple dataset/singe color
+
+   * - Consistency in colors
+
+       .. code-block:: none
+    
+         example compound 
+
+   * - Colors for clarity
+
+       .. code-block:: none
+    
+         example distinguish
+
+   * - Colors to classify 
+
+       .. code-block:: none
+    
+         example gradient for measurement vice versa
+
+   * - Explain colors
+
+       .. code-block:: none
+    
+         example use color key
 
 
 Types of Color Scales
@@ -699,7 +752,6 @@ Categorical scales are best suited for data that is unordered, such as
 different species or categories. Examples of categorical data include
 the types of flowers in a garden, or different political affiliations.
 
-
 .. altair-plot::
     :hide-code:    
     :output: none
@@ -865,6 +917,149 @@ Example color palettes from the other packages
 This subsection focuses on pre-designed color palettes that can be
 used in data visualization from other sources.
 
+.. altair-plot::   
+    :output: none
+
+    tol_schemes = {
+        "tol_bright" : ['#4477AA', '#EE6677', '#228833', '#CCBB44', '#66CCEE', '#AA3377', '#BBBBBB'],
+        "tol_highcontrast" : ['#FFFFFF', '#DDAA33', '#BB5566', '#004488', '#000000'],
+        "tol_vibrant": ['#0077BB', '#33BBEE', '#009988', '#EE7733', '#CC3311', '#EE3377', '#BBBBBB'],
+        "tol_muted": ['#332288', '#88CCEE', '#44AA99', '#117733', '#999933', '#DDCC77' ,'#CC6677' , '#882255', '#AA4499', '#DDDDDD'],
+        "tol_mediumcontrast": ['#FFFFFF', '#EECC66', '#994455','#6699CC', '#997700', '#994455', '#004488', '#000000'],
+        "tol_pale": ['#BBCCEE', '#CCEEFF', '#CCDDAA', '#EEEEBB', '#FFCCCC', '#DDDDDD'],
+        "tol_dark": ['#222255', '#225555', '#225522', '#666633', '#663333', '#555555'],
+        "tol_light": ['#77AADD', '#99DDFF', '#44BB99', '#BBCC33', '#AAAA00', '#EEDD88', '#EE8866', '#FFAABB', '#DDDDDD'],
+        "tol_sunset": ['#364B9A', '#4A7BB7', '#6EA6CD', '#98CAE1', '#C2E4EF', '#EAECCC', '#FEDA8B', '#FDB366', '#F67E4B', '#DD3D2D', '#A50026'],
+        "tol_nightfall": ['#125A56', '#00767B', '#238F9D', '#42A7C6', '#60BCE9', '#9DCCEF', '#C6DBED', '#DEE6E7', '#ECEADA', '#F0E6B2', '#F9D576', '#FFB954', '#FD9A44', '#F57634', '#E94C1F', '#D11807', '#A01813'],
+        "tol_PRGn": ['#762A83', '#9970AB', '#C2A5CF', '#E7D4E8', '#F7F7F7', '#D9F0D3', '#ACD39E', '#5AAE61', '#1B7837'],
+        "tol_YlOrBr": ['#FFFFE5', '#FFF7BC', '#FEE391', '#FEC44F', '#FB9A29', '#EC7014', '#CC4C02', '#993404', '#662506'],
+        "tol_iridescent": ['#FEFBE9', '#FCF7D5', '#F5F3C1', '#EAF0B5', '#DDECBF', '#D0E7CA', '#C2E3D2', '#B5DDD8', '#A8D8DC', '#9BD2E1', '#8DCBE4', '#81C4E7', '#7BBCE7', '#7EB2E4', '#88A5DD', '#9398D2', '#9B8AC4', '#9D7DB2', '#9A709E', '#906388', '#805770', '#684957', '#46353A'],
+        "tol_incandescent": [ '#CEFFFF', '#C6F7D6', '#A2F49B', '#BBE453', '#D5CE04', '#E7B503', '#F19903', '#F6790B', '#F94902', '#E40515', '#A80003']        
+    }
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Scheme
+     - Example
+   * - .. code-block:: none
+    
+         tol_bright
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_bright", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_highcontrast
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_highcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_vibrant
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_vibrant", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_muted
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_muted", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_mediumcontrast
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_mediumcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_pale
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_pale", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_dark
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_dark", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_light
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         
+   * - .. code-block:: none
+    
+         tol_light
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_sunset
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_sunset", tol_schemes, cvd=True, continuous=True, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_nightfall
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_nightfall", tol_schemes, cvd=True, continuous=True, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_iridescent
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_iridescent", tol_schemes, cvd=True, continuous=True, grayscale=True)
+
+   * - .. code-block:: none
+    
+         tol_incandescent
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tol_incandescent", tol_schemes, cvd=True, continuous=True, grayscale=True)
+
 Modifying Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -881,7 +1076,7 @@ Customizing color scales to match specific data requirements
 
 This subsection explores the idea of creating custom color scales that
 are tailored to the specific needs of the data being visualized. It
-discusses how to use the tools introduced in III.B.1 to create color
+discusses how to use the tools introduced in xx to create color
 scales that are better suited to representing the nuances of the data,
 and provides examples of how this can be achieved in practice.
 
