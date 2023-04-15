@@ -527,6 +527,23 @@ def chart_error_invalid_value_type():
     )
 
 
+def chart_error_wrong_tooltip_type_in_faceted_chart():
+    # Error: Wrong data type to pass to tooltip
+    return (
+        alt.Chart(pd.DataFrame({"a": [1]}))
+        .mark_point()
+        .encode(tooltip=[{"wrong"}])
+        .facet()
+    )
+
+
+def chart_error_wrong_tooltip_type_in_layered_chart():
+    # Error: Wrong data type to pass to tooltip
+    return alt.layer(
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
+    )
+
+
 def chart_error_two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: invalidChannel is not a valid encoding channel
@@ -539,11 +556,66 @@ def chart_error_two_errors_in_layered_chart():
 def chart_error_two_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: Invalid value for bandPosition
-    return alt.layer(alt.Chart().mark_point().encode(tooltip=[{"wrong"}])) | (
-        alt.Chart(data.cars())
-        .mark_text(align="right")
-        .encode(alt.Text("Horsepower:N", bandPosition="4"))
+    return (
+        chart_error_wrong_tooltip_type_in_layered_chart()
+        | chart_error_example_invalid_bandposition_value()
     )
+
+
+def chart_error_three_errors_in_complex_concat_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 3: Invalid value for bandPosition
+    return (
+        chart_error_two_errors_in_layered_chart()
+        | chart_error_example_invalid_bandposition_value()
+    )
+
+
+def chart_error_example_two_errors_with_one_in_nested_layered_chart():
+    # Error 1: invalidOption is not a valid option for Scale
+    # Error 2: invalidChannel is not a valid encoding channel
+
+    # In the final chart object, the `layer` attribute will look like this:
+    # [alt.Chart(...), alt.Chart(...), alt.LayerChart(...)]
+    # We can therefore use this example to test if an error is also
+    # spotted in a layered chart within another layered chart
+    source = pd.DataFrame(
+        [
+            {"Day": 1, "Value": 103.3},
+            {"Day": 2, "Value": 394.8},
+            {"Day": 3, "Value": 199.5},
+        ]
+    )
+
+    blue_bars = (
+        alt.Chart(source)
+        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))
+        .mark_bar()
+    )
+    red_bars = (
+        alt.Chart(source)
+        .transform_filter(alt.datum.Value >= 300)
+        .transform_calculate(as_="baseline", calculate="300")
+        .encode(
+            alt.X("Day:O"),
+            alt.Y("baseline:Q"),
+            alt.Y2("Value:Q"),
+            color=alt.value("#e45755"),
+        )
+        .mark_bar()
+    )
+
+    bars = blue_bars + red_bars
+
+    base = alt.Chart().encode(y=alt.datum(300))
+
+    rule = base.mark_rule().encode(invalidChannel=2)
+    text = base.mark_text(text="hazardous")
+    rule_text = rule + text
+
+    chart = bars + rule_text
+    return chart
 
 
 @pytest.mark.parametrize(
@@ -566,6 +638,18 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
 
                 - one of \['zero', 'center', 'normalize'\]
                 - of type 'null' or 'boolean'$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_wrong_tooltip_type_in_faceted_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
+            ),
+        ),
+        (
+            chart_error_wrong_tooltip_type_in_layered_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
             ),
         ),
         (
@@ -593,6 +677,55 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
                 r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error \#2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+            ),
+        ),
+        (
+            chart_error_three_errors_in_complex_concat_layered_chart,
+            inspect.cleandoc(
+                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error \#2: `Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters
+
+                Error \#3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_example_two_errors_with_one_in_nested_layered_chart,
+            inspect.cleandoc(
+                r"""Error \#1: `Scale` has no parameter named 'invalidOption'
+
+                Existing parameter names are:
+                align      domain      interpolate    range      round    
+                base       domainMax   nice           rangeMax   scheme   
+                bins       domainMid   padding        rangeMin   type     
+                clamp      domainMin   paddingInner   reverse    zero     
+                constant   exponent    paddingOuter                       
+
+                See the help for `Scale` to read the full description of these parameters
+
+                Error \#2: `Encoding` has no parameter named 'invalidChannel'
+
+                Existing parameter names are:
+                angle         key          order     strokeDash      tooltip   xOffset   
+                color         latitude     radius    strokeOpacity   url       y         
+                description   latitude2    radius2   strokeWidth     x         y2        
+                detail        longitude    shape     text            x2        yError    
+                fill          longitude2   size      theta           xError    yError2   
+                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                href                                                                     
+
+                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
