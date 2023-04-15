@@ -393,7 +393,7 @@ def test_schema_validation_error():
     assert the_err.message in message
 
 
-def chart_error_example_layer():
+def chart_error_example__layer():
     # Error: Width is not a valid property of a VConcatChart
     points = (
         alt.Chart(data.cars.url)
@@ -406,7 +406,7 @@ def chart_error_example_layer():
     return (points & points).properties(width=400)
 
 
-def chart_error_example_hconcat():
+def chart_error_example__hconcat():
     # Error: Invalid value for title in Text
     source = data.cars()
     points = (
@@ -429,7 +429,7 @@ def chart_error_example_hconcat():
     return points | text
 
 
-def chart_error_example_invalid_channel():
+def chart_error_example__invalid_channel():
     # Error: invalidChannel is an invalid encoding channel. Condition is correct
     # but is added below as in previous implementations of Altair this interfered
     # with finding the invalidChannel error
@@ -445,7 +445,7 @@ def chart_error_example_invalid_channel():
     )
 
 
-def chart_error_example_invalid_y_option_value_unknown_x_option():
+def chart_error_example__invalid_y_option_value_unknown_x_option():
     # Error 1: unknown is an invalid channel option for X
     # Error 2: Invalid Y option value "asdf" and unknown option "unknown" for X
     return (
@@ -458,7 +458,7 @@ def chart_error_example_invalid_y_option_value_unknown_x_option():
     )
 
 
-def chart_error_example_invalid_y_option_value():
+def chart_error_example__invalid_y_option_value():
     # Error: Invalid Y option value "asdf"
     return (
         alt.Chart(data.barley())
@@ -470,7 +470,7 @@ def chart_error_example_invalid_y_option_value():
     )
 
 
-def chart_error_example_invalid_y_option_value_with_condition():
+def chart_error_example__invalid_y_option_value_with_condition():
     # Error: Invalid Y option value "asdf". Condition is correct
     # but is added below as in previous implementations of Altair this interfered
     # with finding the invalidChannel error
@@ -485,17 +485,17 @@ def chart_error_example_invalid_y_option_value_with_condition():
     )
 
 
-def chart_error_example_invalid_timeunit_value():
+def chart_error_example__invalid_timeunit_value():
     # Error: Invalid value for Angle.timeUnit
     return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
 
 
-def chart_error_example_invalid_sort_value():
+def chart_error_example__invalid_sort_value():
     # Error: Invalid value for Angle.sort
     return alt.Chart().encode(alt.Angle().sort("invalid_value"))
 
 
-def chart_error_example_invalid_bandposition_value():
+def chart_error_example__invalid_bandposition_value():
     # Error: Invalid value for Text.bandPosition
     return (
         alt.Chart(data.cars())
@@ -504,17 +504,17 @@ def chart_error_example_invalid_bandposition_value():
     )
 
 
-def chart_error_invalid_type():
+def chart_error_example__invalid_type():
     # Error: Invalid value for type
     return alt.Chart().encode(alt.X(type="unknown"))
 
 
-def chart_error_additional_datum_argument():
+def chart_error_example__additional_datum_argument():
     # Error: wrong_argument is not a valid argument to datum
     return alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
 
 
-def chart_error_invalid_value_type():
+def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
         alt.Chart(data.cars())
@@ -527,7 +527,7 @@ def chart_error_invalid_value_type():
     )
 
 
-def chart_error_wrong_tooltip_type_in_faceted_chart():
+def chart_error_example__wrong_tooltip_type_in_faceted_chart():
     # Error: Wrong data type to pass to tooltip
     return (
         alt.Chart(pd.DataFrame({"a": [1]}))
@@ -537,14 +537,14 @@ def chart_error_wrong_tooltip_type_in_faceted_chart():
     )
 
 
-def chart_error_wrong_tooltip_type_in_layered_chart():
+def chart_error_example__wrong_tooltip_type_in_layered_chart():
     # Error: Wrong data type to pass to tooltip
     return alt.layer(
         alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
     )
 
 
-def chart_error_two_errors_in_layered_chart():
+def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: invalidChannel is not a valid encoding channel
     return alt.layer(
@@ -553,26 +553,26 @@ def chart_error_two_errors_in_layered_chart():
     )
 
 
-def chart_error_two_errors_in_complex_concat_layered_chart():
+def chart_error_example__two_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: Invalid value for bandPosition
     return (
-        chart_error_wrong_tooltip_type_in_layered_chart()
-        | chart_error_example_invalid_bandposition_value()
+        chart_error_example__wrong_tooltip_type_in_layered_chart()
+        | chart_error_example__invalid_bandposition_value()
     )
 
 
-def chart_error_three_errors_in_complex_concat_layered_chart():
+def chart_error_example__three_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: invalidChannel is not a valid encoding channel
     # Error 3: Invalid value for bandPosition
     return (
-        chart_error_two_errors_in_layered_chart()
-        | chart_error_example_invalid_bandposition_value()
+        chart_error_example__two_errors_in_layered_chart()
+        | chart_error_example__invalid_bandposition_value()
     )
 
 
-def chart_error_example_two_errors_with_one_in_nested_layered_chart():
+def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     # Error 1: invalidOption is not a valid option for Scale
     # Error 2: invalidChannel is not a valid encoding channel
 
@@ -622,7 +622,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
     "chart_func, expected_error_message",
     [
         (
-            chart_error_example_invalid_y_option_value_unknown_x_option,
+            chart_error_example__invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
                 r"""Error \#1: `X` has no parameter named 'unknown'
 
@@ -641,19 +641,19 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_wrong_tooltip_type_in_faceted_chart,
+            chart_error_example__wrong_tooltip_type_in_faceted_chart,
             inspect.cleandoc(
                 r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
             ),
         ),
         (
-            chart_error_wrong_tooltip_type_in_layered_chart,
+            chart_error_example__wrong_tooltip_type_in_layered_chart,
             inspect.cleandoc(
                 r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
             ),
         ),
         (
-            chart_error_two_errors_in_layered_chart,
+            chart_error_example__two_errors_in_layered_chart,
             inspect.cleandoc(
                 r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
@@ -672,7 +672,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_two_errors_in_complex_concat_layered_chart,
+            chart_error_example__two_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
                 r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
@@ -680,7 +680,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_three_errors_in_complex_concat_layered_chart,
+            chart_error_example__three_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
                 r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
@@ -701,7 +701,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_two_errors_with_one_in_nested_layered_chart,
+            chart_error_example__two_errors_with_one_in_nested_layered_chart,
             inspect.cleandoc(
                 r"""Error \#1: `Scale` has no parameter named 'invalidOption'
 
@@ -729,7 +729,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_layer,
+            chart_error_example__layer,
             inspect.cleandoc(
                 r"""`VConcatChart` has no parameter named 'width'
 
@@ -743,7 +743,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_invalid_y_option_value,
+            chart_error_example__invalid_y_option_value,
             inspect.cleandoc(
                 r"""'asdf' is an invalid value for `stack`. Valid values are:
 
@@ -752,7 +752,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_invalid_y_option_value_with_condition,
+            chart_error_example__invalid_y_option_value_with_condition,
             inspect.cleandoc(
                 r"""'asdf' is an invalid value for `stack`. Valid values are:
 
@@ -761,13 +761,13 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_hconcat,
+            chart_error_example__hconcat,
             inspect.cleandoc(
                 r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
             ),
         ),
         (
-            chart_error_example_invalid_channel,
+            chart_error_example__invalid_channel,
             inspect.cleandoc(
                 r"""`Encoding` has no parameter named 'invalidChannel'
 
@@ -784,7 +784,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_invalid_timeunit_value,
+            chart_error_example__invalid_timeunit_value,
             inspect.cleandoc(
                 r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
@@ -796,7 +796,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_invalid_sort_value,
+            chart_error_example__invalid_sort_value,
             inspect.cleandoc(
                 r"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
@@ -807,19 +807,19 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_example_invalid_bandposition_value,
+            chart_error_example__invalid_bandposition_value,
             inspect.cleandoc(
                 r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
-            chart_error_invalid_type,
+            chart_error_example__invalid_type,
             inspect.cleandoc(
                 r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$"""
             ),
         ),
         (
-            chart_error_additional_datum_argument,
+            chart_error_example__additional_datum_argument,
             inspect.cleandoc(
                 r"""`X` has no parameter named 'wrong_argument'
 
@@ -833,7 +833,7 @@ def chart_error_example_two_errors_with_one_in_nested_layered_chart():
             ),
         ),
         (
-            chart_error_invalid_value_type,
+            chart_error_example__invalid_value_type,
             inspect.cleandoc(
                 r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
             ),
