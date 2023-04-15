@@ -618,6 +618,25 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     return chart
 
 
+def chart_error_example__four_errors():
+    # Error 1: unknown is not a valid encoding channel option
+    # Error 2: Invalid Y option value "asdf".
+    # Error 3: another_unknown is not a valid encoding channel option
+    # Error 4: fourth_error is not a valid encoding channel option <- this error
+    # should not show up in the final error message as it is capped at showing
+    # 3 errors
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+            color=alt.Color("variety", another_unknown=2),
+            opacity=alt.Opacity("variety", fourth_error=1),
+        )
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
@@ -846,6 +865,40 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
             chart_error_example__invalid_value_type,
             inspect.cleandoc(
                 r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
+            ),
+        ),
+        (
+            chart_error_example__four_errors,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: `Color` has no parameter named 'another_unknown'
+
+                    Existing parameter names are:
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
+
+                    See the help for `Color` to read the full description of these parameters
+
+                Error 2: `Opacity` has no parameter named 'fourth_error'
+
+                    Existing parameter names are:
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
+
+                    See the help for `Opacity` to read the full description of these parameters
+
+                Error 3: `X` has no parameter named 'unknown'
+
+                    Existing parameter names are:
+                    shorthand      bin      scale   timeUnit   
+                    aggregate      field    sort    title      
+                    axis           impute   stack   type       
+                    bandPosition                               
+
+                    See the help for `X` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
     ],

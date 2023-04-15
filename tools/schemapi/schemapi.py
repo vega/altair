@@ -363,7 +363,8 @@ class SchemaValidationError(jsonschema.ValidationError):
             return "\n".join(modified_lines)
 
         error_messages: List[str] = []
-        for errors in self._errors.values():
+        # Only show a maximum of 3 errors as else the messages could get very long.
+        for errors in list(self._errors.values())[:3]:
             error_messages.append(self._get_message_for_errors_group(errors))
 
         message = ""
