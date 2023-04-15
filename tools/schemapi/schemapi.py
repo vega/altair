@@ -354,12 +354,18 @@ class SchemaValidationError(jsonschema.ValidationError):
         return self.message
 
     def _get_message(self) -> str:
-        messages: List[str] = []
-        for _, errors in self._errors.items():
-            messages.append(self._get_message_for_errors(errors))
-        return ("\n" + "-" * 50 + "\n").join(messages)
+        error_messages: List[str] = []
+        for errors in self._errors.values():
+            error_messages.append(self._get_message_for_errors_group(errors))
 
-    def _get_message_for_errors(
+        if len(error_messages) > 1:
+            error_messages = [
+                f"Error #{error_id}: {message}"
+                for error_id, message in enumerate(error_messages, start=1)
+            ]
+        return ("\n\n").join(error_messages)
+
+    def _get_message_for_errors_group(
         self,
         errors: ValidationErrorList,
     ) -> str:

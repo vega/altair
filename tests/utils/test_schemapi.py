@@ -552,7 +552,7 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_example_invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
-                r"""`X` has no parameter named 'unknown'
+                r"""Error \#1: `X` has no parameter named 'unknown'
 
                 Existing parameter names are:
                 shorthand      bin      scale   timeUnit   
@@ -561,8 +561,8 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
                 bandPosition                               
 
                 See the help for `X` to read the full description of these parameters
-                --------------------------------------------------
-                'asdf' is an invalid value for `stack`. Valid values are:
+
+                Error \#2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                 - one of \['zero', 'center', 'normalize'\]
                 - of type 'null' or 'boolean'$"""  # noqa: W291
@@ -571,9 +571,9 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_two_errors_in_layered_chart,
             inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
-                --------------------------------------------------
-                `Encoding` has no parameter named 'invalidChannel'
+                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error \#2: `Encoding` has no parameter named 'invalidChannel'
 
                 Existing parameter names are:
                 angle         key          order     strokeDash      tooltip   xOffset   
@@ -590,9 +590,9 @@ def chart_error_two_errors_in_complex_concat_layered_chart():
         (
             chart_error_two_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
-                --------------------------------------------------
-                '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error \#2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
