@@ -358,12 +358,15 @@ class SchemaValidationError(jsonschema.ValidationError):
         for errors in self._errors.values():
             error_messages.append(self._get_message_for_errors_group(errors))
 
+        message = ""
         if len(error_messages) > 1:
             error_messages = [
                 f"Error {error_id}: {message}"
                 for error_id, message in enumerate(error_messages, start=1)
             ]
-        return ("\n\n").join(error_messages)
+            message += "Multiple errors were found.\n\n"
+        message += "\n\n".join(error_messages)
+        return message
 
     def _get_message_for_errors_group(
         self,

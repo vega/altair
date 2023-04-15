@@ -624,7 +624,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
-                r"""Error 1: `X` has no parameter named 'unknown'
+                r"""Multiple errors were found.
+
+                Error 1: `X` has no parameter named 'unknown'
 
                 Existing parameter names are:
                 shorthand      bin      scale   timeUnit   
@@ -655,7 +657,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__two_errors_in_layered_chart,
             inspect.cleandoc(
-                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: `Encoding` has no parameter named 'invalidChannel'
 
@@ -674,7 +678,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__two_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
@@ -682,7 +688,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__three_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: `Encoding` has no parameter named 'invalidChannel'
 
@@ -703,7 +711,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__two_errors_with_one_in_nested_layered_chart,
             inspect.cleandoc(
-                r"""Error 1: `Scale` has no parameter named 'invalidOption'
+                r"""Multiple errors were found.
+
+                Error 1: `Scale` has no parameter named 'invalidOption'
 
                 Existing parameter names are:
                 align      domain      interpolate    range      round    
