@@ -362,7 +362,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("blues", seqs_schemes, cvd=False, continuous=True)         
+         plot_scheme("blues", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("blues", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -371,7 +377,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("tealblues", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -380,7 +392,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("teals", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("teals", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("teals", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -389,7 +407,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("greens", seqs_schemes, cvd=False, continuous=True) 
+         plot_scheme("greens", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("greens", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -398,7 +422,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("browns", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("browns", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("browns", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -407,7 +437,13 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("greys", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("greys", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("greys", seqs_schemes, cvd=False, continuous=False)
 
    * - .. code-block:: none
     
@@ -416,70 +452,432 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("purples", seqs_schemes, cvd=False, continuous=True)
+         plot_scheme("purples", seqs_schemes, cvd=True, continuous=True)
 
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purples", seqs_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         warmgreys
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("warmgreys", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("warmgreys", seqs_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         reds
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("reds", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("reds", seqs_schemes, cvd=False, continuous=False) 
+
+   * - .. code-block:: none
+    
+         oranges
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("oranges", seqs_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False)
 
 Diverging Scales
 ^^^^^^^^^^^^^^^^
 
-1. Examples of diverging data
------------------------------
+Examples of diverging data
+--------------------------
 
 Diverging scales are best suited for data that varies above and below a
 center point, such as positive and negative deviations from a mean.
 Examples of diverging data include measures of deviation, such as
 temperature anomalies or changes in sea level.
 
-1. Example color schemes for diverging data
--------------------------------------------
+.. altair-plot::
+    :hide-code:    
+    :output: none
 
-.. code-block:: none
+    divg_schemes = {
+        "blueorange": 9,
+        "brownbluegreen": 9,
+        "purplegreen": 9,
+        "pinkyellowgreen": 9,
+        "purpleorange": 9,
+        "redblue": 9,
+        "redgrey": 9,
+        "redyellowblue": 9,
+        "redyellowgreen": 9,
+        "spectral": 9,
+    }
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Scheme
+     - Example
+   * - .. code-block:: none
     
-    Diverging color schemes.
+         blueorange
 
+     - .. altair-plot::
+         :remove-code:
 
-C. Categorical Scales
-^^^^^^^^^^^^^^^^^^^^^
+         plot_scheme("blueorange", divg_schemes, cvd=True, continuous=True)
 
-1. Examples of categorical data
--------------------------------
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("blueorange", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         brownbluegreen
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("brownbluegreen", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("brownbluegreen", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         purplegreen
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purplegreen", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purplegreen", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         pinkyellowgreen
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("pinkyellowgreen", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("pinkyellowgreen", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         purpleorange
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purpleorange", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("purpleorange", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         redblue
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redblue", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redblue", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         redgrey
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redgrey", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redgrey", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         redyellowblue
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redyellowblue", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redyellowblue", divg_schemes, cvd=False, continuous=False)
+
+   * - .. code-block:: none
+    
+         redyellowgreen
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redyellowgreen", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("redyellowgreen", divg_schemes, cvd=False, continuous=False) 
+
+   * - .. code-block:: none
+    
+         spectral
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("spectral", divg_schemes, cvd=True, continuous=True)
+
+   * - 
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("spectral", divg_schemes, cvd=False, continuous=False)
+
+Categorical Scales
+^^^^^^^^^^^^^^^^^^
+
+Examples of categorical data
+----------------------------
 
 Categorical scales are best suited for data that is unordered, such as
 different species or categories. Examples of categorical data include
 the types of flowers in a garden, or different political affiliations.
 
-1. Example color schemes for categorical data
----------------------------------------------
 
-.. code-block:: none
+.. altair-plot::
+    :hide-code:    
+    :output: none
+
+    catg_schemes = {
+        "accent": 8,
+        "category10": 10,
+        "category20": 20,
+        "category20b": 20,
+        "category20c": 20,
+        "dark2": 8,
+        "paired": 12,
+        "pastel1": 9,
+        "pastel2": 8,
+        "set1": 9,
+        "set2": 8,
+        "set3": 12,
+        "tableau10": 10,
+        "tableau20": 20,
+    }
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Scheme
+     - Example
+   * - .. code-block:: none
     
-    Categorical color schemes.
+         accent
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("accent", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         category10
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("category10", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         category20
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("category20", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         category20b
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("category20b", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         category20c
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("category20c", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         dark2
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("dark2", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         paired
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("paired", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         pastel1
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("pastel1", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         pastel2
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("pastel2", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         set1
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("set1", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         set2
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("set2", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         set3
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("set3", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         tableau10
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tableau10", catg_schemes, cvd=True, continuous=False)
+
+   * - .. code-block:: none
+    
+         tableau20
+
+     - .. altair-plot::
+         :remove-code:
+
+         plot_scheme("tableau20", catg_schemes, cvd=True, continuous=False)
 
 Using Tools for Color Selection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A. Pre-Designed Color Palettes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Pre-Designed Color Palettes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Example color palettes from the other packages
--------------------------------------------------
+Example color palettes from the other packages
+----------------------------------------------
 
 This subsection focuses on pre-designed color palettes that can be
 used in data visualization from other sources.
 
-B. Modifying Color Scales
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Modifying Color Scales
+^^^^^^^^^^^^^^^^^^^^^^
 
-1. Tools for adjusting brightness, saturation, and hue
-------------------------------------------------------
+Tools for adjusting brightness, saturation, and hue
+---------------------------------------------------
 
 This subsection provides an overview of the different ways in which
 brightness, saturation, and hue can be modified to create custom color
 scales. It explains how changing these attributes can help to emphasize
 or de-emphasize certain aspects of the data being visualized.
 
-2. Customizing color scales to match specific data requirements
----------------------------------------------------------------
+Customizing color scales to match specific data requirements
+------------------------------------------------------------
 
 This subsection explores the idea of creating custom color scales that
 are tailored to the specific needs of the data being visualized. It
