@@ -628,18 +628,18 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 Error 1: `X` has no parameter named 'unknown'
 
-                Existing parameter names are:
-                shorthand      bin      scale   timeUnit   
-                aggregate      field    sort    title      
-                axis           impute   stack   type       
-                bandPosition                               
+                    Existing parameter names are:
+                    shorthand      bin      scale   timeUnit   
+                    aggregate      field    sort    title      
+                    axis           impute   stack   type       
+                    bandPosition                               
 
-                See the help for `X` to read the full description of these parameters
+                    See the help for `X` to read the full description of these parameters
 
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
-                - one of \['zero', 'center', 'normalize'\]
-                - of type 'null' or 'boolean'$"""  # noqa: W291
+                    - one of \['zero', 'center', 'normalize'\]
+                    - of type 'null' or 'boolean'$"""  # noqa: W291
             ),
         ),
         (
@@ -663,16 +663,16 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 Error 2: `Encoding` has no parameter named 'invalidChannel'
 
-                Existing parameter names are:
-                angle         key          order     strokeDash      tooltip   xOffset   
-                color         latitude     radius    strokeOpacity   url       y         
-                description   latitude2    radius2   strokeWidth     x         y2        
-                detail        longitude    shape     text            x2        yError    
-                fill          longitude2   size      theta           xError    yError2   
-                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                href                                                                     
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
 
-                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
@@ -694,16 +694,16 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 Error 2: `Encoding` has no parameter named 'invalidChannel'
 
-                Existing parameter names are:
-                angle         key          order     strokeDash      tooltip   xOffset   
-                color         latitude     radius    strokeOpacity   url       y         
-                description   latitude2    radius2   strokeWidth     x         y2        
-                detail        longitude    shape     text            x2        yError    
-                fill          longitude2   size      theta           xError    yError2   
-                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                href                                                                     
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
 
-                See the help for `Encoding` to read the full description of these parameters
+                    See the help for `Encoding` to read the full description of these parameters
 
                 Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
             ),
@@ -715,27 +715,27 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 Error 1: `Scale` has no parameter named 'invalidOption'
 
-                Existing parameter names are:
-                align      domain      interpolate    range      round    
-                base       domainMax   nice           rangeMax   scheme   
-                bins       domainMid   padding        rangeMin   type     
-                clamp      domainMin   paddingInner   reverse    zero     
-                constant   exponent    paddingOuter                       
+                    Existing parameter names are:
+                    align      domain      interpolate    range      round    
+                    base       domainMax   nice           rangeMax   scheme   
+                    bins       domainMid   padding        rangeMin   type     
+                    clamp      domainMin   paddingInner   reverse    zero     
+                    constant   exponent    paddingOuter                       
 
-                See the help for `Scale` to read the full description of these parameters
+                    See the help for `Scale` to read the full description of these parameters
 
                 Error 2: `Encoding` has no parameter named 'invalidChannel'
 
-                Existing parameter names are:
-                angle         key          order     strokeDash      tooltip   xOffset   
-                color         latitude     radius    strokeOpacity   url       y         
-                description   latitude2    radius2   strokeWidth     x         y2        
-                detail        longitude    shape     text            x2        yError    
-                fill          longitude2   size      theta           xError    yError2   
-                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                href                                                                     
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
 
-                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (

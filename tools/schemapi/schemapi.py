@@ -354,6 +354,14 @@ class SchemaValidationError(jsonschema.ValidationError):
         return self.message
 
     def _get_message(self) -> str:
+        def indent_second_line_onwards(message: str, indent: int = 4) -> str:
+            modified_lines: List[str] = []
+            for idx, line in enumerate(message.split("\n")):
+                if idx > 0 and len(line) > 0:
+                    line = " " * indent + line
+                modified_lines.append(line)
+            return "\n".join(modified_lines)
+
         error_messages: List[str] = []
         for errors in self._errors.values():
             error_messages.append(self._get_message_for_errors_group(errors))
@@ -361,8 +369,8 @@ class SchemaValidationError(jsonschema.ValidationError):
         message = ""
         if len(error_messages) > 1:
             error_messages = [
-                f"Error {error_id}: {message}"
-                for error_id, message in enumerate(error_messages, start=1)
+                indent_second_line_onwards(f"Error {error_id}: {m}")
+                for error_id, m in enumerate(error_messages, start=1)
             ]
             message += "Multiple errors were found.\n\n"
         message += "\n\n".join(error_messages)
