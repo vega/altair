@@ -624,7 +624,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
-                r"""Error \#1: `X` has no parameter named 'unknown'
+                r"""Error 1: `X` has no parameter named 'unknown'
 
                 Existing parameter names are:
                 shorthand      bin      scale   timeUnit   
@@ -634,7 +634,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 See the help for `X` to read the full description of these parameters
 
-                Error \#2: 'asdf' is an invalid value for `stack`. Valid values are:
+                Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                 - one of \['zero', 'center', 'normalize'\]
                 - of type 'null' or 'boolean'$"""  # noqa: W291
@@ -655,9 +655,9 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__two_errors_in_layered_chart,
             inspect.cleandoc(
-                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error \#2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
 
                 Existing parameter names are:
                 angle         key          order     strokeDash      tooltip   xOffset   
@@ -674,17 +674,17 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         (
             chart_error_example__two_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error \#2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
             chart_error_example__three_errors_in_complex_concat_layered_chart,
             inspect.cleandoc(
-                r"""Error \#1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                r"""Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error \#2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
 
                 Existing parameter names are:
                 angle         key          order     strokeDash      tooltip   xOffset   
@@ -697,13 +697,13 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 See the help for `Encoding` to read the full description of these parameters
 
-                Error \#3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
             ),
         ),
         (
             chart_error_example__two_errors_with_one_in_nested_layered_chart,
             inspect.cleandoc(
-                r"""Error \#1: `Scale` has no parameter named 'invalidOption'
+                r"""Error 1: `Scale` has no parameter named 'invalidOption'
 
                 Existing parameter names are:
                 align      domain      interpolate    range      round    
@@ -714,7 +714,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
                 See the help for `Scale` to read the full description of these parameters
 
-                Error \#2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
 
                 Existing parameter names are:
                 angle         key          order     strokeDash      tooltip   xOffset   

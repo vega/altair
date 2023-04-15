@@ -360,7 +360,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
         if len(error_messages) > 1:
             error_messages = [
-                f"Error #{error_id}: {message}"
+                f"Error {error_id}: {message}"
                 for error_id, message in enumerate(error_messages, start=1)
             ]
         return ("\n\n").join(error_messages)
