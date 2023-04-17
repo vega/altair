@@ -102,7 +102,7 @@ def _get_errors_from_spec(
     """Uses the relevant jsonschema validator to validate the passed in spec
     against the schema using the rootschema to resolve references.
     The schema and rootschema themselves are not validated but instead considered
-    as validate.
+    as valid.
     """
     # We don't use jsonschema.validate as this would validate the schema itself.
     # Instead, we pass the schema directly to the validator class. This is done for
@@ -239,9 +239,10 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
         str, ValidationErrorList
     ] = collections.defaultdict(list)
     for err in errors:
-        # Ignore mypy error as err.validator as it wrongly sees err.validator
-        # as of type Optional[Validator] instead of str
-        errors_by_validator[err.validator].append(err)  # type: ignore[index]
+        # Unclear when err.validator could ever be None but as it's the type hint
+        # returned by the jsonschema package we still guard against this case below
+        validator = err.validator if err.validator is not None else "Unknown validator"
+        errors_by_validator[validator].append(err)
     return dict(errors_by_validator)
 
 
@@ -280,14 +281,15 @@ def _deduplicate_additional_properties_errors(
     - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)"
     """
     if len(errors) > 1:
-        # The code below subsets this to only the first error of the three.
-        parent = errors[0].parent
         # Test if all parent errors are the same anyOf error and only do
         # the prioritization in these cases. Can't think of a chart spec where this
         # would not be the case but still allow for it below to not break anything.
+        parent = errors[0].parent
         if (
             parent is not None
             and parent.validator == "anyOf"
+            # Use [1:] as don't have to check for first error as it was used
+            # above to define `parent`
             and all(err.parent is parent for err in errors[1:])
         ):
             errors = [min(errors, key=lambda x: len(x.message))]
@@ -365,7 +367,8 @@ class SchemaValidationError(jsonschema.ValidationError):
             return "\n".join(modified_lines)
 
         error_messages: List[str] = []
-        # Only show a maximum of 3 errors as else the messages could get very long.
+        # Only show a maximum of 3 errors as else the final message returned by this
+        # method could get very long.
         for errors in list(self._errors.values())[:3]:
             error_messages.append(self._get_message_for_errors_group(errors))
 
