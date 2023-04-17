@@ -239,10 +239,10 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
         str, ValidationErrorList
     ] = collections.defaultdict(list)
     for err in errors:
-        # Unclear when err.validator could ever be None but as it's the type hint
-        # returned by the jsonschema package we still guard against this case below
-        validator = err.validator if err.validator is not None else "Unknown validator"
-        errors_by_validator[validator].append(err)
+        # Ignore mypy error as err.validator as it wrongly sees err.validator
+        # as of type Optional[Validator] instead of str which it is according
+        # to the documentation and all tested cases
+        errors_by_validator[err.validator].append(err)  # type: ignore[index]
     return dict(errors_by_validator)
 
 
