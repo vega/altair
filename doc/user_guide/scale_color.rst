@@ -20,6 +20,7 @@ examples of their use.
     :output: none
 
     import altair as alt
+    from vega_datasets import data
     import pandas as pd
 
     def chart_settings(scheme_name, dict_schemes, continuous):
@@ -340,9 +341,41 @@ that are not only informative but also visually attractive.
 
    * - Colors in moderation
 
-       .. code-block:: none
+       .. altair-plot::
+         :hide-code:   
     
-         example simple dataset/singe color
+         import altair as alt
+         from vega_datasets import data
+
+         source = data.barley.url
+
+         labels = ["Crookston", "Grand Rapids"]
+
+         cond_weight = alt.condition(
+             alt.FieldOneOfPredicate(field='value', oneOf=labels),
+             alt.value('bolder'),  # predicate True
+             alt.value('normal')   # predicate False
+         )
+
+         cond_color = alt.condition(
+                 alt.FieldOneOfPredicate(field='site', oneOf=labels),
+                 alt.value('#6A8AD5'),  # predicate True
+                 alt.value('#CCCCCC')   # predicate False
+             )
+
+         moderate = alt.Chart(source, width=200).mark_bar().encode(
+             x='sum(yield):Q',
+             y=alt.Y('site:N').sort('-x').axis(labelFontWeight=cond_weight),
+             color=cond_color
+         )
+
+         excess = alt.Chart(source, width=200).mark_bar().encode(
+             x='sum(yield):Q',
+             y=alt.Y('site:N').sort('-x'),
+             color=alt.Color('site:N').scale(scheme='set1').legend(None)
+         )
+
+         (moderate | excess).resolve_scale(color='independent')  
 
    * - Consistency in colors
 
