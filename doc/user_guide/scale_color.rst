@@ -581,10 +581,15 @@ that are not only informative but also visually attractive.
          
          source = data.iowa_electricity()
          
-         alt.Chart(source, width=200, height=200).mark_area().encode(
+         alt.Chart(
+            source, width=200, height=200
+         ).mark_area().encode(
              x="year:T",
              y="net_generation:Q",
-             color=alt.Color("source:N").legend(None)
+             color=alt.Color("source:N").legend(
+                orient="top",
+                direction='horizontal'
+             )
          )
 
      - .. altair-plot::
@@ -595,10 +600,14 @@ that are not only informative but also visually attractive.
          
          source = data.iowa_electricity()
          
-         alt.Chart(source, width=200, height=200).mark_area().encode(
+         alt.Chart(
+            source, width=200, height=200
+         ).mark_area().encode(
              x="year:T",
              y="net_generation:Q",
-             color=alt.Color("source:N")
+             color=alt.Color("source:N").legend(
+                None
+             )
          )
 
 
