@@ -312,12 +312,13 @@ colors to create a sense of visual hierarchy, you can create visualizations
 that are not only informative but also visually attractive.
 
 .. list-table::
-   :widths: 100
-   :header-rows: 0
+   :widths: 50 50
+   :header-rows: 1
 
    * - Intuitive colors 
+     - Non-intuitive colors
 
-       .. altair-plot::
+   * - .. altair-plot::
          :hide-code:            
     
          source = pd.DataFrame({
@@ -331,18 +332,29 @@ that are not only informative but also visually attractive.
              color=alt.Color('land cover').scale(range=['#55AA22', '#5566AA'], domain=['Land', 'Water'])    
          )
 
+         intuitive.configure_view(stroke=None)
+
+     - .. altair-plot::
+         :hide-code:
+
          non_intuitive = alt.Chart(source, height=alt.Step(80), width=200, title='non-intuitive').mark_bar().encode(
              x=alt.X('value').axis(None),
              y=alt.Y('land cover').title(None),
              color=alt.Color('land cover').scale(range=['#5566AA', '#55AA22'], domain=['Land', 'Water'])    
          )
 
-         (intuitive | non_intuitive).configure_view(stroke=None).resolve_scale(color='independent')         
+         non_intuitive.configure_view(stroke=None)
+
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
 
    * - Colors in moderation
+     - Colors in excess
 
-       .. altair-plot::
-         :hide-code:   
+   * - .. altair-plot::
+         :hide-code:
     
          import altair as alt
          from vega_datasets import data
@@ -352,54 +364,242 @@ that are not only informative but also visually attractive.
          labels = ["Crookston", "Grand Rapids"]
 
          cond_weight = alt.condition(
-             alt.FieldOneOfPredicate(field='value', oneOf=labels),
-             alt.value('bolder'),  # predicate True
-             alt.value('normal')   # predicate False
+             alt.FieldOneOfPredicate(
+                 field="value", oneOf=labels
+             ),
+             alt.value("bolder"),  # predicate True
+             alt.value("normal"),  # predicate False
          )
 
          cond_color = alt.condition(
-                 alt.FieldOneOfPredicate(field='site', oneOf=labels),
-                 alt.value('#6A8AD5'),  # predicate True
-                 alt.value('#CCCCCC')   # predicate False
+             alt.FieldOneOfPredicate(
+                 field="site", oneOf=labels
+             ),
+             alt.value("#6A8AD5"),  # predicate True
+             alt.value("#CCCCCC"),  # predicate False
+         )
+
+         moderate = (
+             alt.Chart(source, width=200)
+             .mark_bar()
+             .encode(
+                 x="sum(yield):Q",
+                 y=alt.Y("site:N")
+                 .sort("-x")
+                 .axis(labelFontWeight=cond_weight),
+                 color=cond_color,
              )
-
-         moderate = alt.Chart(source, width=200).mark_bar().encode(
-             x='sum(yield):Q',
-             y=alt.Y('site:N').sort('-x').axis(labelFontWeight=cond_weight),
-             color=cond_color
          )
 
-         excess = alt.Chart(source, width=200).mark_bar().encode(
-             x='sum(yield):Q',
-             y=alt.Y('site:N').sort('-x'),
-             color=alt.Color('site:N').scale(scheme='set1').legend(None)
+         moderate
+
+     - .. altair-plot::
+         :hide-code:
+
+         excess = (
+             alt.Chart(source, width=200)
+             .mark_bar()
+             .encode(
+                 x="sum(yield):Q",
+                 y=alt.Y("site:N").sort("-x"),
+                 color=alt.Color("site:N")
+                 .scale(scheme="set1")
+                 .legend(None),
+             )
          )
 
-         (moderate | excess).resolve_scale(color='independent')  
+         excess
 
-   * - Consistency in colors
 
-       .. code-block:: none
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Consistency color usage between plots
+     - In-consistent color usage between plots
+
+   * - .. altair-plot::
+         :hide-code:
     
-         example compound 
+         import altair as alt
+         from vega_datasets import data
 
-   * - Colors for clarity
+         source = data.movies()
 
-       .. code-block:: none
+         line = alt.Chart(source).mark_line().encode(
+         alt.X("IMDB_Rating").bin(True),
+         alt.Y(alt.repeat("layer"))
+             .aggregate("mean")
+             .title("Mean of US and Worldwide Gross"),
+         color=alt.datum(alt.repeat("layer"))
+         ).repeat(
+             layer=["US_Gross", "Worldwide_Gross"]  
+         )
+
+         bar = alt.Chart(source).mark_bar().transform_fold(
+             fold = ["US_Gross", "Worldwide_Gross"]
+         ).encode(
+             alt.X('value:Q').aggregate("sum").title(None),
+             alt.Y('key:N').sort('-x'),
+             alt.Color('key:N', sort=['Worldwide_Gross'])
+                 .scale(range=['#6A8AD5', '#CCCCCC'])
+         )
+
+         equal = (line & bar).resolve_scale(color="shared")
+         equal
+
+
+     - .. altair-plot::
+         :hide-code:
+
+         inequal = (line & bar).resolve_scale(color='independent') 
+         inequal
+
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Clarity in colors
+     - Indistinct color usage
+
+   * - .. altair-plot::
+         :hide-code:
     
-         example distinguish
+         import altair as alt
+         from vega_datasets import data
 
-   * - Colors to classify 
+         source = data.stocks()
 
-       .. code-block:: none
+         alt.Chart(
+             source, width=200, height=200
+         ).mark_line().encode(
+             x="date:T",
+             y="price:Q",
+             color=alt.Color("symbol:N").scale(
+                 scheme="reds"
+             ),
+         )
+
+
+     - .. altair-plot::
+         :hide-code:
+
+         source = data.stocks()
+
+         col_range = [
+             "#E69F00",
+             "#57B4E9",
+             "#019E73",
+             "#F0E442",
+             "#0072B2",
+         ]
+         col_sort = [
+             "GOOG",
+             "AAPL",
+             "IBM",
+             "AMZN",
+             "MSFT",
+         ]
+
+         alt.Chart(
+             source, width=200, height=200
+         ).mark_line().encode(
+             x="date:T",
+             y=alt.Y("price:Q"),
+             color=alt.Color(
+                 "symbol:N", sort=col_sort
+             ).scale(range=col_range),
+         )
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Distinct classification of categories
+     - No gradient colors for categories
+
+   * - .. altair-plot::
+         :hide-code:
     
-         example gradient for measurement vice versa
+         import altair as alt
+         from vega_datasets import data
 
-   * - Explain colors
+         source = data.stocks()
+         col_range = [
+             "#E69F00",
+             "#57B4E9",
+             "#019E73",
+             "#F0E442",
+             "#0072B2",
+         ]
+         col_sort = [
+             "GOOG",
+             "AAPL",
+             "IBM",
+             "AMZN",
+             "MSFT",
+         ]
 
-       .. code-block:: none
-    
-         example use color key
+         alt.Chart(
+             source, width=200, height=200
+         ).mark_line().encode(
+             x=alt.X('symbol:N', sort='-y'),
+             y=alt.Y('price:Q').aggregate('sum'),
+             color=alt.Color(
+                 "symbol:N", sort=col_sort
+             ).scale(range=col_range),
+         )
+
+     - .. altair-plot::
+         :hide-code:
+
+         source = data.stocks()
+
+         alt.Chart(
+             source, width=200, height=200
+         ).mark_bar().encode(
+             x=alt.X('symbol:N', sort=col_sort),
+             y=alt.Y('price:Q').aggregate('sum'),
+             color=alt.Color("symbol:N").scale(
+                 scheme="reds"
+             ),
+         )
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Explain colors using a colorbar
+     - No understanding of used colors
+
+   * - .. altair-plot::
+         :hide-code:
+
+         import altair as alt
+         from vega_datasets import data
+         
+         source = data.iowa_electricity()
+         
+         alt.Chart(source, width=200, height=200).mark_area().encode(
+             x="year:T",
+             y="net_generation:Q",
+             color=alt.Color("source:N").legend(None)
+         )
+
+     - .. altair-plot::
+         :hide-code:
+
+         import altair as alt
+         from vega_datasets import data
+         
+         source = data.iowa_electricity()
+         
+         alt.Chart(source, width=200, height=200).mark_area().encode(
+             x="year:T",
+             y="net_generation:Q",
+             color=alt.Color("source:N")
+         )
 
 
 Types of Color Scales
