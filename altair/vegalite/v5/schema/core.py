@@ -16754,7 +16754,7 @@ class LayerRepeatSpec(RepeatSpec):
         ``"column"`` to the listed fields to be repeated along the particular orientations.
         The objects ``{"repeat": "row"}`` and ``{"repeat": "column"}`` can be used to refer
         to the repeated field respectively.
-    spec : anyOf(:class:`LayerSpec`, :class:`UnitSpec`)
+    spec : anyOf(:class:`LayerSpec`, :class:`UnitSpecWithFrame`)
         A specification of the view that gets repeated.
     align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
         The alignment to apply to grid rows and columns. The supported string values are
@@ -18978,7 +18978,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
         **See also:** `init <https://vega.github.io/vega-lite/docs/value.html>`__
         documentation.
-    views : List(anyOf(string, List(string)))
+    views : List(string)
         By default, top-level selections are applied to every view in the visualization. If
         this property is specified, selections will only be applied to views with the given
         names.

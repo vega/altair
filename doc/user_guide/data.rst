@@ -25,8 +25,8 @@ There are many different ways of specifying a dataset:
 When data is specified as a pandas DataFrame, Altair
 uses the data type information provided by pandas to automatically determine
 the data types required in the encoding. For example, here we specify data via a pandas DataFrame
-and Altair automatically detects that the x-column should be visualized on a quantitative scale
-and that the y-column should be visualized on a categorical (nominal) scale:
+and Altair automatically detects that the x-column should be visualized on a categorical (nominal) scale
+and that the y-column should be visualized on a quantitative scale:
 
 .. altair-plot::
 
@@ -349,7 +349,7 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
    gdf_geoms
 
 
-Since the spatial data in our example is not geographic, 
+Since the spatial data in our example is not geographic,
 we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
 geometries without applying a geographic projection. By using ``alt.Color(...).scale(None)`` we
 disable the automatic color assignment in Altair
@@ -486,7 +486,7 @@ TopoJSON File by URL
 ^^^^^^^^^^^^^^^^^^^^
 
 Altair can load TopoJSON resources directly from a web URL. As
-explained in :ref:`spatial-data-inline-topojson`, we have to use the 
+explained in :ref:`spatial-data-inline-topojson`, we have to use the
 ``feature`` parameter to specify the object name (here ``boroughs``) and
 define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 
@@ -496,11 +496,11 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
    from vega_datasets import data
 
    url_topojson = data.londonBoroughs.url
-    
+
    data_url_topojson = alt.Data(
        url=url_topojson, format=alt.DataFormat(feature="boroughs", type="topojson")
    )
-    
+
    data_url_topojson
 
 Note: There also exist a shorthand to extract the objects from a
@@ -532,7 +532,7 @@ specific regions such as individual countries, states or counties.
 
 Here below we draw the same Boroughs of London, but now as mesh only.
 
-Note: you have to explicitly define ``filled=False`` to draw multi(lines) 
+Note: you have to explicitly define ``filled=False`` to draw multi(lines)
 without fill color.
 
 .. altair-plot::
@@ -540,14 +540,14 @@ without fill color.
    from vega_datasets import data
 
    url_topojson = data.londonBoroughs.url
-    
+
    data_url_topojson_mesh = alt.Data(
        url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")
    )
 
    alt.Chart(data_url_topojson_mesh, title="Border London-Boroughs").mark_geoshape(
        filled=False
-   )  
+   )
 
 .. _spatial-data-nested-geojson:
 
@@ -569,9 +569,9 @@ in the list of dictionaries:
        {"color": "#A9CDE0", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}},
    ]
    data_nested_features = alt.Data(values=nested_features)
-    
+
    alt.Chart(data_nested_features, title="Vega-Altair").mark_geoshape().encode(
-       shape="geo:G", 
+       shape="geo:G",
        color=alt.Color("color:N").scale(None)
    ).project(type="identity", reflectY=True)
 
