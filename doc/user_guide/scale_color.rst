@@ -59,9 +59,10 @@ examples of their use.
             "custom": custom_scheme
         }
 
-    def chart_color_scale(scheme_name, dict_schemes, continuous, custom, no):
+    def chart_color_scale(scheme_name, dict_schemes, continuous, custom, no, method):
         color_type = "quantitative" if custom and continuous else "ordinal"    
         scale_scheme = alt.Scale(range=dict_schemes[scheme_name]) if custom else alt.Scale(scheme=scheme_name)
+        scale_scheme.interpolate = method
 
         color_scale = (
             alt.Chart(alt.sequence(0, no, as_="i"))
@@ -156,7 +157,7 @@ examples of their use.
         )
         return grayscale
 
-    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False):
+    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False, top=False, bottom=False, single=True, method='rgb'):
         # determine chart settings
         chart_dict = chart_settings(scheme_name, dict_schemes, continuous)    
 
@@ -171,10 +172,15 @@ examples of their use.
         no = chart_dict['no_colors']
 
         # define color scale
-        color_scale = chart_color_scale(scheme_name, dict_schemes, continuous, custom, no)
+        color_scale = chart_color_scale(scheme_name, dict_schemes, continuous, custom, no, method)
 
         # define how hex-codes can be derived, from datasource or using color scale
-        expr_hex = "datum.hex" if custom and not continuous else "scale('color', datum.i)"
+        if single:
+            expr_hex = "datum.hex" if custom and not continuous else "scale('color', datum.i)"
+        elif top:
+            expr_hex = "datum.hex" if custom and not continuous else "scale('concat_0_color', datum.i)"
+        elif bottom:
+            expr_hex = "datum.hex" if custom and not continuous else "scale('concat_1_color', datum.i)"
 
         # define styling for y-axis
         my_y_axis = alt.Axis(
@@ -202,8 +208,9 @@ examples of their use.
             chart_concat = (normal_vision & color_scale)
 
         # set configuration on concatenated chart object
-        chart_comb = chart_concat.configure_concat(spacing=1).configure_view(stroke=None)    
-        return chart_comb
+        if single:
+            chart_concat = chart_concat.configure_concat(spacing=1).configure_view(stroke=None)    
+        return chart_concat
 
 
 The Basics of Color Selection
@@ -421,39 +428,68 @@ that are not only informative but also visually attractive.
    * - .. altair-plot::
          :hide-code:
     
-         import altair as alt
-         from vega_datasets import data
-
          source = data.movies()
-
-         line = alt.Chart(source).mark_line().encode(
-         alt.X("IMDB_Rating").bin(True),
-         alt.Y(alt.repeat("layer"))
-             .aggregate("mean")
-             .title("Mean of US and Worldwide Gross"),
-         color=alt.datum(alt.repeat("layer"))
-         ).repeat(
-             layer=["US_Gross", "Worldwide_Gross"]  
+         
+         line = (
+             alt.Chart(source, width=200, height=200)
+             .transform_fold(
+                 fold=["US_Gross", "Worldwide_Gross"]
+             )
+             .mark_line()
+             .encode(
+                 x=alt.X("IMDB_Rating:Q").bin(True),
+                 y=alt.Y("value:Q")
+                 .aggregate("mean")
+                 .sort("-x"),
+                 color=alt.Color(
+                     "key:N",
+                     sort=["Worldwide_Gross"],
+                 ).legend(
+                     orient="top",
+                     direction="horizontal",
+                 ),
+             )
          )
-
-         bar = alt.Chart(source).mark_bar().transform_fold(
-             fold = ["US_Gross", "Worldwide_Gross"]
-         ).encode(
-             alt.X('value:Q').aggregate("sum").title(None),
-             alt.Y('key:N').sort('-x'),
-             alt.Color('key:N', sort=['Worldwide_Gross'])
-                 .scale(range=['#6A8AD5', '#CCCCCC'])
+         
+         bar = (
+             alt.Chart(source, width=200)
+             .transform_fold(
+                 fold=["US_Gross", "Worldwide_Gross"]
+             )
+             .mark_bar()
+             .encode(
+                 x=alt.X("value:Q")
+                 .aggregate("sum")
+                 .title(None),
+                 y=alt.Y("key:N").sort("-x"),
+                 color=alt.Color(
+                     "key:N",
+                     sort=["Worldwide_Gross"],
+                 )
+                 .scale(range=["#6A8AD5", "#CCCCCC"])
+                 .legend(
+                     orient="top",
+                     direction="horizontal",
+                 ),
+             )
          )
-
-         equal = (line & bar).resolve_scale(color="shared")
+         
+         equal = (line & bar).resolve_scale(
+             color="shared"
+         )
          equal
+
+
 
 
      - .. altair-plot::
          :hide-code:
 
-         inequal = (line & bar).resolve_scale(color='independent') 
+         inequal = (line & bar).resolve_scale(
+             color="independent"
+         )
          inequal
+
 
 
 .. list-table::
@@ -466,25 +502,6 @@ that are not only informative but also visually attractive.
    * - .. altair-plot::
          :hide-code:
     
-         import altair as alt
-         from vega_datasets import data
-
-         source = data.stocks()
-
-         alt.Chart(
-             source, width=200, height=200
-         ).mark_line().encode(
-             x="date:T",
-             y="price:Q",
-             color=alt.Color("symbol:N").scale(
-                 scheme="reds"
-             ),
-         )
-
-
-     - .. altair-plot::
-         :hide-code:
-
          source = data.stocks()
 
          col_range = [
@@ -512,6 +529,24 @@ that are not only informative but also visually attractive.
              ).scale(range=col_range),
          )
 
+     - .. altair-plot::
+         :hide-code:
+
+         import altair as alt
+         from vega_datasets import data
+
+         source = data.stocks()
+
+         alt.Chart(
+             source, width=200, height=200
+         ).mark_line().encode(
+             x="date:T",
+             y="price:Q",
+             color=alt.Color("symbol:N").scale(
+                 scheme="reds"
+             ),
+         )
+
 .. list-table::
    :widths: 50 50
    :header-rows: 1
@@ -521,7 +556,7 @@ that are not only informative but also visually attractive.
 
    * - .. altair-plot::
          :hide-code:
-    
+
          import altair as alt
          from vega_datasets import data
 
@@ -543,7 +578,7 @@ that are not only informative but also visually attractive.
 
          alt.Chart(
              source, width=200, height=200
-         ).mark_line().encode(
+         ).mark_bar().encode(
              x=alt.X('symbol:N', sort='-y'),
              y=alt.Y('price:Q').aggregate('sum'),
              color=alt.Color(
@@ -562,7 +597,7 @@ that are not only informative but also visually attractive.
              x=alt.X('symbol:N', sort=col_sort),
              y=alt.Y('price:Q').aggregate('sum'),
              color=alt.Color("symbol:N").scale(
-                 scheme="reds"
+                 scheme="purples"
              ),
          )
 
@@ -587,8 +622,9 @@ that are not only informative but also visually attractive.
              x="year:T",
              y="net_generation:Q",
              color=alt.Color("source:N").legend(
-                orient="top",
-                direction='horizontal'
+                orient="bottom",
+                direction="horizontal",
+                columns=2
              )
          )
 
@@ -657,13 +693,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("blues", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("blues", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("blues", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("blues", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -672,13 +705,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tealblues", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("tealblues", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -687,13 +717,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("teals", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("teals", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("teals", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("teals", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -702,13 +729,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("greens", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("greens", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("greens", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("greens", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -717,13 +741,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("browns", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("browns", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("browns", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("browns", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -732,13 +753,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("greys", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("greys", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("greys", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("greys", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -747,13 +765,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("purples", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("purples", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("purples", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("purples", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -762,13 +777,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("warmgreys", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("warmgreys", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("warmgreys", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("warmgreys", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -777,13 +789,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("reds", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("reds", seqs_schemes, cvd=False, continuous=False) 
+         alt.vconcat(
+             plot_scheme("reds", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("reds", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -792,13 +801,10 @@ range of values is continuous and unbroken.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("oranges", seqs_schemes, cvd=True, continuous=True)
-
-   * - 
-     - .. altair-plot::
-         :remove-code:
-
-         plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("oranges", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
 Diverging Scales
 ^^^^^^^^^^^^^^^^
@@ -843,8 +849,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("blueorange", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("blueorange", divg_schemes, cvd=False, continuous=False)
@@ -858,8 +863,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("brownbluegreen", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("brownbluegreen", divg_schemes, cvd=False, continuous=False)
@@ -873,8 +877,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("purplegreen", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("purplegreen", divg_schemes, cvd=False, continuous=False)
@@ -888,8 +891,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("pinkyellowgreen", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("pinkyellowgreen", divg_schemes, cvd=False, continuous=False)
@@ -903,8 +905,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("purpleorange", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("purpleorange", divg_schemes, cvd=False, continuous=False)
@@ -918,8 +919,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("redblue", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("redblue", divg_schemes, cvd=False, continuous=False)
@@ -933,8 +933,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("redgrey", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("redgrey", divg_schemes, cvd=False, continuous=False)
@@ -948,8 +947,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("redyellowblue", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("redyellowblue", divg_schemes, cvd=False, continuous=False)
@@ -963,8 +961,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("redyellowgreen", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("redyellowgreen", divg_schemes, cvd=False, continuous=False) 
@@ -978,8 +975,7 @@ temperature anomalies or changes in sea level.
 
          plot_scheme("spectral", divg_schemes, cvd=True, continuous=True)
 
-   * - 
-     - .. altair-plot::
+       .. altair-plot::
          :remove-code:
 
          plot_scheme("spectral", divg_schemes, cvd=False, continuous=False)
