@@ -157,7 +157,7 @@ examples of their use.
         )
         return grayscale
 
-    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False, top=False, bottom=False, single=True, method='rgb'):
+    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False, top=False, bottom=False, single=True, method='hcl'):
         # determine chart settings
         chart_dict = chart_settings(scheme_name, dict_schemes, continuous)    
 
@@ -268,11 +268,8 @@ can affect the perceived brightness and contrast of colors. By
 understanding the nuances of color spaces, you can create visualizations
 that are not only informative but also visually appealing.
 
-Accessibility and Aesthetics
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Considerations for color-blind viewers
---------------------------------------
+Color-blind viewers
+^^^^^^^^^^^^^^^^^^^
    
 Around 8% of men and 0.5% of women have some form of color vision deficiency.
 To make sure your visualizations are accessible to all viewers, it's
@@ -286,8 +283,8 @@ also inclusive.
     :output: none
 
     color_vision_deficiency = {
-        'tol_sunset_friendly': ['#364B9A', '#4A7BB7', '#6EA6CD', '#98CAE1', '#C2E4EF', '#EAECCC', '#FEDA8B', '#FDB366', '#F67E4B', '#DD3D2D', '#A50026'],
-        'unfriendly' : ['#006400', '#228B22', '#00FF00', '#7FFF00', '#FFFF00', '#FFA500', '#FF0000']        
+        'redyellowblue': 9,
+        'redyellowgreen' : 9
     }
 
 .. list-table::
@@ -300,17 +297,17 @@ also inclusive.
        .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_sunset_friendly", color_vision_deficiency, cvd=True, continuous=True)
+         plot_scheme("redyellowblue", color_vision_deficiency, cvd=True, continuous=True)
 
    * - **Unfriendly** diverging color scale
 
        .. altair-plot::
          :remove-code:
 
-         plot_scheme("unfriendly", color_vision_deficiency, cvd=True, continuous=True)
+         plot_scheme("redyellowgreen", color_vision_deficiency, cvd=True, continuous=True)
 
-Guidelines for creating visually appealing presentations
---------------------------------------------------------
+Guidelines for using colors
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 While accuracy is the primary goal of visualizations, aesthetics also play
 an important role in engaging viewers and making data more memorable.
@@ -655,10 +652,10 @@ visualization: sequential, diverging, and categorical. The section
 includes examples of data that can be visualized using each scale and
 popular color schemes used in practice.
 
-Sequential Scales
-^^^^^^^^^^^^^^^^^
+Sequential Schemes
+^^^^^^^^^^^^^^^^^^
 
-Sequential scales are best suited for data that has an inherent ordering,
+Sequential schemes are best suited for data that has an inherent ordering,
 such as data that varies from low to high, or over time. Examples of
 sequential data include temperature or population density, where the
 range of values is continuous and unbroken.
@@ -806,13 +803,10 @@ range of values is continuous and unbroken.
              plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
          ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
-Diverging Scales
-^^^^^^^^^^^^^^^^
+Diverging Schemes
+^^^^^^^^^^^^^^^^^
 
-Examples of diverging data
---------------------------
-
-Diverging scales are best suited for data that varies above and below a
+Diverging schemes are best suited for data that varies above and below a
 center point, such as positive and negative deviations from a mean.
 Examples of diverging data include measures of deviation, such as
 temperature anomalies or changes in sea level.
@@ -847,12 +841,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("blueorange", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("blueorange", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("blueorange", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("blueorange", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -861,12 +853,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("brownbluegreen", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("brownbluegreen", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("brownbluegreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("brownbluegreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -875,12 +865,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("purplegreen", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("purplegreen", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("purplegreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("purplegreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -889,12 +877,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("pinkyellowgreen", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("pinkyellowgreen", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("pinkyellowgreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("pinkyellowgreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -903,12 +889,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("purpleorange", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("purpleorange", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("purpleorange", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("purpleorange", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -917,12 +901,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("redblue", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("redblue", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("redblue", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("redblue", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -931,12 +913,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("redgrey", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("redgrey", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("redgrey", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("redgrey", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -945,12 +925,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("redyellowblue", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("redyellowblue", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("redyellowblue", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("redyellowblue", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -959,12 +937,10 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("redyellowgreen", divg_schemes, cvd=True, continuous=True)
-
-       .. altair-plot::
-         :remove-code:
-
-         plot_scheme("redyellowgreen", divg_schemes, cvd=False, continuous=False) 
+         alt.vconcat(
+             plot_scheme("redyellowgreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("redyellowgreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
    * - .. code-block:: none
     
@@ -973,18 +949,58 @@ temperature anomalies or changes in sea level.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("spectral", divg_schemes, cvd=True, continuous=True)
+         alt.vconcat(
+             plot_scheme("spectral", divg_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("spectral", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
-       .. altair-plot::
+Cyclical Schemes
+^^^^^^^^^^^^^^^^
+
+Cyclical color schemes may be used to highlight periodic patterns in continuous data.
+However, these schemes are not well suited to accurately convey value differences.
+
+.. altair-plot::
+    :hide-code:    
+    :output: none
+
+    cycl_schemes = {
+        "rainbow": 9,
+        "sinebow": 9
+    }
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Scheme
+     - Example
+   * - .. code-block:: none
+    
+         rainbow
+
+     - .. altair-plot::
          :remove-code:
 
-         plot_scheme("spectral", divg_schemes, cvd=False, continuous=False)
+         alt.vconcat(
+             plot_scheme("rainbow", cycl_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("rainbow", cycl_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+
+   * - .. code-block:: none
+    
+         sinebow
+
+     - .. altair-plot::
+         :remove-code:
+
+         alt.vconcat(
+             plot_scheme("sinebow", cycl_schemes, cvd=True, continuous=True, single=False, top=True),
+             plot_scheme("sinebow", cycl_schemes, cvd=False, continuous=False, single=False, bottom=True)
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
 
 Categorical Scales
 ^^^^^^^^^^^^^^^^^^
-
-Examples of categorical data
-----------------------------
 
 Categorical scales are best suited for data that is unordered, such as
 different species or categories. Examples of categorical data include
