@@ -3172,7 +3172,7 @@ def _needs_name(subchart):
         return False
 
     # Variable parameters won't receive a views property.
-    if all([isinstance(p, core.VariableParameter) for p in subchart.params]):
+    if all(isinstance(p, core.VariableParameter) for p in subchart.params):
         return False
 
     return True
@@ -3328,7 +3328,7 @@ def _repeat_names(params, repeat):
         views = []
         repeat_strings = _get_repeat_strings(repeat)
         for v in param.views:
-            if any([v.endswith(f"child__{r}") for r in repeat_strings]):
+            if any(v.endswith(f"child__{r}") for r in repeat_strings):
                 views.append(v)
             else:
                 views += [_extend_view_name(v, r) for r in repeat_strings]
