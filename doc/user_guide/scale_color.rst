@@ -76,16 +76,17 @@ examples of their use.
         normal_vision = (
             alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
-                hex=expr_hex,
-                rgb="rgb(datum.hex)",
-                lum="luminance(datum.hex)",
+                hex_raw=expr_hex,
+                rgb="rgb(datum.hex_raw)",
+                lum="luminance(datum.hex_raw)",
+                hex="'#'+format(datum.rgb['r'], 'x')+format(datum.rgb['g'], 'x')+format(datum.rgb['b'], 'x')"
             )
             .mark_rect(cornerRadius=cr_l, discreteBandSize=w)
             .encode(
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("normal vision:O").axis(my_y_axis),
-                fill=alt.Fill("hex:O").scale(None).legend(None),
-                stroke=alt.Stroke("hex:O").scale(None).legend(None),
+                fill=alt.Fill("hex_raw:O").scale(None).legend(None),
+                stroke=alt.Stroke("hex_raw:O").scale(None).legend(None),
                 tooltip=[
                     alt.Tooltip("hex:O"),
                     alt.Tooltip("rgb:O"),
@@ -157,7 +158,7 @@ examples of their use.
         )
         return grayscale
 
-    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False, top=False, bottom=False, single=True, method='hcl'):
+    def plot_scheme(scheme_name, dict_schemes, continuous=False, cvd=False, grayscale=False, top=False, bottom=False, single=True, method='rgb'):
         # determine chart settings
         chart_dict = chart_settings(scheme_name, dict_schemes, continuous)    
 
