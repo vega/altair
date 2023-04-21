@@ -5,13 +5,13 @@
 Installation
 ============
 
-Altair can be installed, along with the example datasets in vega_datasets_, using::
+Altair can be installed, along with the example datasets in vega_datasets_, using:
 
 .. code-block:: bash
 
     pip install altair vega_datasets
 
-If you are using the conda_ package manager, the equivalent is::
+If you are using the conda_ package manager, the equivalent is:
 
 .. code-block:: bash
 
