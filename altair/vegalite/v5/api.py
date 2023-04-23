@@ -3338,7 +3338,7 @@ def _repeat_names(params, repeat, spec):
                 if any(v.endswith(f"child__{r}") for r in repeat_strings):
                     views.append(v)
                 else:
-                    views += [_extend_view_name(v, r) for r in repeat_strings]
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
             elif isinstance(spec, LayerChart):
                 if any(v.startswith(f"child__{r}") for r in repeat_strings):
                     views.append(v)
