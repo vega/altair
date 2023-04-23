@@ -201,5 +201,4 @@ def test_creation_views_params_layered_repeat_chart():
     ).repeat(column=["distance", "delay", "time"])
 
     dct = c.to_dict()
-
-    assert dct
+    assert dct['params'][0]['views'][0] == "child__column_distance_view_1"
