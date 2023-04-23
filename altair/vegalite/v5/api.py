@@ -3310,7 +3310,7 @@ def _extend_view_name(v, r):
     if v.endswith("child__" + r):
         return v
     else:
-        return v + "child__" + r
+        return f"{v}_child__{r}"
 
 
 def _repeat_names(params, repeat):
