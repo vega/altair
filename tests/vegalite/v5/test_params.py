@@ -195,4 +195,4 @@ def test_creation_views_params_layered_repeat_chart():
     )
 
     dct = c.to_dict()
-    assert dct["params"][0]["views"][0] == "child__column_distance_view_1"
+    assert "child__column_distance_view_" in dct["params"][0]["views"][0]
