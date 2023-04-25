@@ -10,13 +10,13 @@ HTML_TEMPLATE = jinja2.Template(
 <head>
 {%- endif %}
   <style>
-    #vis.vega-embed {
+    #{{ output_div }}.vega-embed {
       width: 100%;
       display: flex;
     }
 
-    #vis.vega-embed details,
-    #vis.vega-embed details summary {
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
       position: relative;
     }
   </style>
@@ -157,6 +157,17 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
+    }
+  </style>
   <script type="text/javascript">
     // vega.js v{{ vega_version }}
     {{ vega_script }}
