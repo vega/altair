@@ -1,8 +1,6 @@
 # Vega-Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
-*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
-[![build status](https://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
 [![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
@@ -11,9 +9,12 @@
 **Vega-Altair** is a declarative statistical visualization library for Python. With Vega-Altair, you can spend more time understanding your data and its meaning. Vega-Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
-simplicity produces beautiful and effective visualizations with a minimal amount of code. *Vega-Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+simplicity produces beautiful and effective visualizations with a minimal amount of code. 
+
+*Vega-Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
 Interactive Data Lab](https://idl.cs.washington.edu/).*
+*The Vega-Altair open source project is not affiliated with Altair Engineering, Inc.*
 
 ## Documentation
 
