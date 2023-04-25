@@ -532,6 +532,9 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         elif len(bullet_points) == 1:
             message += f". Valid values are {bullet_points[0]}.\n\n"
         else:
+            # We don't use .capitalize below to make the first letter uppercase
+            # as that makes the rest of the message lowercase
+            bullet_points = [point[0].upper() + point[1:] for point in bullet_points]
             message += ". Valid values are:\n\n"
             message += "\n".join([f"- {point}" for point in bullet_points])
             message += "\n\n"
