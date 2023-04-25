@@ -89,6 +89,17 @@ requirejs.config({
 
 HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     """
+<style>
+  #{{ output_div }}.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #{{ output_div }}.vega-embed details,
+  #{{ output_div }}.vega-embed details summary {
+    position: relative;
+  }
+</style>    
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
