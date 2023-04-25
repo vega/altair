@@ -32,6 +32,7 @@ The directives have the following options::
     .. altair-plot::
         :namespace:  # specify a plotting namespace that is persistent within the doc
         :hide-code:  # if set, then hide the code and only show the plot
+        :remove-code:  # if set, then remove the code and only show the plot
         :code-below:  # if set, then code is below rather than above the figure
         :output:  [plot|repr|stdout|none]
         :alt: text  # Alternate text when plot cannot be rendered
@@ -141,6 +142,7 @@ class AltairPlotDirective(Directive):
 
     option_spec = {
         "hide-code": flag,
+        "remove-code": flag,
         "code-below": flag,
         "namespace": unchanged,
         "output": validate_output,
@@ -156,6 +158,7 @@ class AltairPlotDirective(Directive):
         app = env.app
 
         hide_code = "hide-code" in self.options
+        remove_code = "remove-code" in self.options
         code_below = "code-below" in self.options
         strict = "strict" in self.options
         div_class = self.options.get("div_class", None)
@@ -216,7 +219,8 @@ class AltairPlotDirective(Directive):
             raw_html = nodes.raw("", html, format="html")
             result += [raw_html]
 
-        result += [source_literal]
+        if not remove_code:
+            result += [source_literal]
 
         if hide_code:
             html = "</details>"
@@ -237,15 +241,15 @@ def html_visit_altair_plot(self, node):
         with contextlib.redirect_stdout(f):
             chart = eval_block(node["code"], namespace)
         stdout = f.getvalue()
-    except Exception as e:
+    except Exception as err:
         message = "altair-plot: {}:{} Code Execution failed:" "{}: {}".format(
-            node["rst_source"], node["rst_lineno"], e.__class__.__name__, str(e)
+            node["rst_source"], node["rst_lineno"], err.__class__.__name__, str(err)
         )
         if node["strict"]:
-            raise ValueError(message) from e
+            raise ValueError(message) from err
         else:
-            warnings.warn(message)
-            raise nodes.SkipNode
+            warnings.warn(message, stacklevel=1)
+            raise nodes.SkipNode from err
 
     chart_name = node["chart-var-name"]
     if chart_name is not None:
@@ -279,8 +283,8 @@ def html_visit_altair_plot(self, node):
             # Last line should be a chart; convert to spec dict
             try:
                 spec = chart.to_dict()
-            except alt.utils.schemapi.SchemaValidationError:
-                raise ValueError("Invalid chart: {0}".format(node["code"]))
+            except alt.utils.schemapi.SchemaValidationError as err:
+                raise ValueError("Invalid chart: {0}".format(node["code"])) from err
             actions = node["links"]
 
             # TODO: add an option to save chart specs to file & load from there.
@@ -309,7 +313,8 @@ def html_visit_altair_plot(self, node):
             warnings.warn(
                 "altair-plot: {}:{} Malformed block. Last line of "
                 "code block should define a valid altair Chart object."
-                "".format(node["rst_source"], node["rst_lineno"])
+                "".format(node["rst_source"], node["rst_lineno"]),
+                stacklevel=1,
             )
         raise nodes.SkipNode
 

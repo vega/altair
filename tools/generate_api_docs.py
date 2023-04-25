@@ -93,7 +93,13 @@ def encoding_wrappers():
 
 
 def api_functions():
-    return sorted(iter_objects(alt.api, restrict_to_type=types.FunctionType))
+    # Exclude typing.cast
+    altair_api_functions = [
+        obj_name
+        for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)
+        if obj_name != "cast"
+    ]
+    return sorted(altair_api_functions)
 
 
 def lowlevel_wrappers():

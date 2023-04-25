@@ -5,7 +5,7 @@ import textwrap
 import re
 
 
-class CodeSnippet(object):
+class CodeSnippet:
     """Object whose repr() is a string of code"""
 
     def __init__(self, code):
@@ -56,7 +56,7 @@ def _get_args(info):
     return (nonkeyword, required, kwds, invalid_kwds, additional)
 
 
-class SchemaGenerator(object):
+class SchemaGenerator:
     """Class that defines methods for generating code from schemas
 
     Parameters
@@ -165,15 +165,22 @@ class SchemaGenerator(object):
             doc += self._process_description(  # remove condition description
                 re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
             ).splitlines()
+        # Remove lines which contain the "raw-html" directive which cannot be processed
+        # by Sphinx at this level of the docstring. It works for descriptions
+        # of attributes which is why we do not do the same below. The removed
+        # lines are anyway non-descriptive for a user.
+        doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
-            doc += ["", "Attributes", "----------", ""]
+            doc += ["", "Parameters", "----------", ""]
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
-                    "    {}".format(self._process_description(propinfo.description)),
+                    "    {}".format(
+                        self._process_description(propinfo.deep_description)
+                    ),
                 ]
         if len(doc) > 1:
             doc += [""]
@@ -236,9 +243,8 @@ class SchemaGenerator(object):
     def get_args(self, si):
         contents = ["self"]
         props = []
-        # TODO: do we need to specialize the anyOf code?
         if si.is_anyOf():
-            props = sorted(list({p for si_sub in si.anyOf for p in si_sub.properties}))
+            props = sorted({p for si_sub in si.anyOf for p in si_sub.properties})
         elif si.properties:
             props = si.properties
 
@@ -246,6 +252,23 @@ class SchemaGenerator(object):
             contents.extend([p + "=Undefined" for p in props])
         elif si.type:
             py_type = self._equiv_python_types[si.type]
+            if py_type == "list":
+                # Try to get a type hint like "List[str]" which is more specific
+                # then just "list"
+                item_vl_type = si.items.get("type", None)
+                if item_vl_type is not None:
+                    item_type = self._equiv_python_types[item_vl_type]
+                else:
+                    item_si = SchemaInfo(si.items, self.rootschema)
+                    assert item_si.is_reference()
+                    altair_class_name = item_si.title
+                    item_type = f"core.{altair_class_name}"
+                py_type = f"List[{item_type}]"
+            elif si.is_enum():
+                # If it's an enum, we can type hint it as a Literal which tells
+                # a type checker that only the values in enum are acceptable
+                enum_values = [f'"{v}"' for v in si.enum]
+                py_type = f"Literal[{', '.join(enum_values)}]"
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
@@ -255,7 +278,7 @@ class SchemaGenerator(object):
     def get_signature(self, attr, sub_si, indent, has_overload=False):
         lines = []
         if has_overload:
-            lines.append("@overload")
+            lines.append("@overload  # type: ignore[no-overload-impl]")
         args = ", ".join(self.get_args(sub_si))
         lines.append(f"def {attr}({args}) -> '{self.classname}':")
         lines.append(indent * " " + "...\n")
@@ -264,13 +287,21 @@ class SchemaGenerator(object):
     def setter_hint(self, attr, indent):
         si = SchemaInfo(self.schema, self.rootschema).properties[attr]
         if si.is_anyOf():
-            signatures = [
-                self.get_signature(attr, sub_si, indent, has_overload=True)
-                for sub_si in si.anyOf
-            ]
-            return [line for sig in signatures for line in sig]
+            return self._get_signature_any_of(si, attr, indent)
         else:
             return self.get_signature(attr, si, indent)
+
+    def _get_signature_any_of(self, si: SchemaInfo, attr, indent):
+        signatures = []
+        for sub_si in si.anyOf:
+            if sub_si.is_anyOf():
+                # Recursively call method again to go a level deeper
+                signatures.extend(self._get_signature_any_of(sub_si, attr, indent))
+            else:
+                signatures.extend(
+                    self.get_signature(attr, sub_si, indent, has_overload=True)
+                )
+        return list(flatten(signatures))
 
     def method_code(self, indent=0):
         """Return code to assist setter methods"""
@@ -280,3 +311,16 @@ class SchemaGenerator(object):
         type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
 
         return ("\n" + indent * " ").join(type_hints)
+
+
+def flatten(container):
+    """Flatten arbitrarily flattened list
+
+    From https://stackoverflow.com/a/10824420
+    """
+    for i in container:
+        if isinstance(i, (list, tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i

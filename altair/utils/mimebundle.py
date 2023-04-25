@@ -1,5 +1,4 @@
 from .html import spec_to_html
-from ..vegalite.v5.data import data_transformers
 
 
 def spec_to_mimebundle(
@@ -102,26 +101,23 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
         # Compute VlConvert's vl_version string (of the form 'v5_2')
         # from SCHEMA_VERSION (of the form 'v5.2.0')
         vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
-        # Turn off the data transformer until the following issue is resolved
-        # https://github.com/vega/vl-convert/issues/31#
-        with data_transformers.enable("default"), data_transformers.disable_max_rows():
-            if format == "vega":
-                vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
-                return {"application/vnd.vega.v5+json": vg}
-            elif format == "svg":
-                svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
-                return {"image/svg+xml": svg}
-            elif format == "png":
-                png = vlc.vegalite_to_png(
-                    spec,
-                    vl_version=vl_version,
-                    scale=kwargs.get("scale_factor", 1.0),
-                )
-                return {"image/png": png}
-            else:
-                # This should be validated above
-                # but raise exception for the sake of future development
-                raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
+        if format == "vega":
+            vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
+            return {"application/vnd.vega.v5+json": vg}
+        elif format == "svg":
+            svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
+            return {"image/svg+xml": svg}
+        elif format == "png":
+            png = vlc.vegalite_to_png(
+                spec,
+                vl_version=vl_version,
+                scale=kwargs.get("scale_factor", 1.0),
+            )
+            return {"image/png": png}
+        else:
+            # This should be validated above
+            # but raise exception for the sake of future development
+            raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
     elif normalized_engine == "altairsaver":
         import altair_saver
 

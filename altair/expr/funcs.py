@@ -144,7 +144,7 @@ FUNCTION_LISTING = {
 NAME_MAP = {"if": "if_"}
 
 
-class ExprFunc(object):
+class ExprFunc:
     def __init__(self, name, doc):
         self.name = name
         self.doc = doc

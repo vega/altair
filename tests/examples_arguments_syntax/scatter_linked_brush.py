@@ -10,7 +10,7 @@ from vega_datasets import data
 
 source = data.cars()
 
-brush = alt.selection(type='interval', resolve='global')
+brush = alt.selection_interval(resolve='global')
 
 base = alt.Chart(source).mark_point().encode(
     y='Miles_per_Gallon',

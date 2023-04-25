@@ -125,7 +125,7 @@ For stacked marks, this controls the order of components of the stack. Here, the
         x='variety:N',
         y='sum(yield):Q',
         color='site:N',
-        order=alt.Order("site", sort="ascending")
+        order=alt.Order("site").sort("ascending")
     )
 
 The order can be reversed by changing the sort option to `descending`.
@@ -141,7 +141,7 @@ The order can be reversed by changing the sort option to `descending`.
         x='variety:N',
         y='sum(yield):Q',
         color='site:N',
-        order=alt.Order("site", sort="descending")
+        order=alt.Order("site").sort("descending")
     )
 
 The same approach works for other mark types, like stacked areas charts.
@@ -157,7 +157,7 @@ The same approach works for other mark types, like stacked areas charts.
         x='variety:N',
         y='sum(yield):Q',
         color='site:N',
-        order=alt.Order("site", sort="ascending")
+        order=alt.Order("site").sort("ascending")
     )
 
 Note that unlike the ``sort`` parameter to positional encoding channels,
@@ -175,8 +175,8 @@ For line marks, the :class:`Order` channel encodes the order in which data point
     driving = data.driving()
 
     alt.Chart(driving).mark_line(point=True).encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False)),
+        alt.X('miles').scale(zero=False),
+        alt.Y('gas').scale(zero=False),
         order='year'
     )
 

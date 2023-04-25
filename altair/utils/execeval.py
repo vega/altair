@@ -10,7 +10,7 @@ else:
         return ast.Module(nodelist)
 
 
-class _CatchDisplay(object):
+class _CatchDisplay:
     """Class to temporarily catch sys.displayhook"""
 
     def __init__(self):

@@ -10,10 +10,11 @@ Basic Statistical Visualization
 
 This tutorial will guide you through the basic process of creating
 visualizations in Altair. First, you will need to make sure you have the Altair
-package and its dependencies installed (see :ref:`installation`) and make sure
-you understand how altair plots are displayed (see :ref:`displaying-charts`).
+package and its dependencies installed (see :ref:`installation`).
 This tutorial will assume you are working within a Jupyter notebook user
-interface, so that plots are automatically rendered.
+interface (such as JupyterLab, Colab or VS Code), so that plots are automatically rendered. 
+If you are using another interface, you may want to read about how Altair 
+plots are displayed before proceeding (see :ref:`displaying-charts`).
 
 Here is the outline of this basic tutorial:
 
@@ -192,7 +193,7 @@ column as well:
     y = alt.Y('average(b):Q')
     print(y.to_json())
 
-This short-hand is equivalent to spelling-out the attributes by name:
+This short-hand is equivalent to spelling-out the parameters by name:
 
 .. altair-plot::
     :output: repr
@@ -220,16 +221,16 @@ Customizing your Visualization
 By default, Altair via Vega-Lite makes some choices about default properties
 of the visualization.
 Altair also provides an API to customize the look of the visualization.
-For example, we can specify the axis titles using the ``axis`` attribute
-of channel classes, and we can specify the color of the marking by setting
-the ``color`` keyword of the ``Chart.mark_*`` methods to any valid HTML
+For example, we can specify the axis titles using the :meth:`title` method
+of channel classes, and we can specify the color of the mark by setting
+the ``color`` keyword of the ``Chart.mark_*`` method to any valid HTML
 color string:
 
 .. altair-plot::
 
     alt.Chart(data).mark_bar(color='firebrick').encode(
-        alt.Y('a', title='category'),
-        alt.X('average(b)', title='avg(b) by category')
+        alt.Y('a').title('category'),
+        alt.X('average(b)').title('avg(b) by category')
     )
 
 

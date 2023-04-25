@@ -94,7 +94,7 @@ def is_valid_identifier(var, allow_unicode=False):
     return is_valid and not keyword.iskeyword(var)
 
 
-class SchemaProperties(object):
+class SchemaProperties:
     """A wrapper for properties within a schema"""
 
     def __init__(self, properties, schema, rootschema=None):
@@ -133,7 +133,7 @@ class SchemaProperties(object):
         return (self[key] for key in self)
 
 
-class SchemaInfo(object):
+class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
     def __init__(self, schema, rootschema=None):
@@ -230,7 +230,10 @@ class SchemaInfo(object):
         elif not self.type:
             import warnings
 
-            warnings.warn("no short_description for schema\n{}" "".format(self.schema))
+            warnings.warn(
+                "no short_description for schema\n{}" "".format(self.schema),
+                stacklevel=1,
+            )
             return "any"
 
     @property
@@ -300,7 +303,27 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self.raw_schema.get("description", self.schema.get("description", ""))
+        return self._get_description(include_sublevels=False)
+
+    @property
+    def deep_description(self):
+        return self._get_description(include_sublevels=True)
+
+    def _get_description(self, include_sublevels: bool = False):
+        desc = self.raw_schema.get("description", self.schema.get("description", ""))
+        if not desc and include_sublevels:
+            for item in self.anyOf:
+                sub_desc = item._get_description(include_sublevels=False)
+                if desc and sub_desc:
+                    raise ValueError(
+                        "There are multiple potential descriptions which could"
+                        + " be used for the currently inspected schema. You'll need to"
+                        + " clarify which one is the correct one.\n"
+                        + str(self.schema)
+                    )
+                if sub_desc:
+                    desc = sub_desc
+        return desc
 
     def is_list(self):
         return isinstance(self.schema, list)

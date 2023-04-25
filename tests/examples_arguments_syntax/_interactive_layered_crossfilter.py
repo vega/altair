@@ -14,7 +14,7 @@ source = alt.UrlData(
     format={'parse': {'date': 'date'}}
 )
 
-brush = alt.selection(type='interval', encodings=['x'])
+brush = alt.selection_interval(encodings=['x'])
 
 # Define the base chart, with the common parts of the
 # background and highlights

@@ -132,4 +132,6 @@ div.bottomnav {
 
 .gallery .image-title {
   font-size: .95em;
+  display: block;
+  line-height: 22px;
 }

@@ -10,7 +10,7 @@ import altair as alt
 from vega_datasets import data
 
 source = data.cars()
-brush = alt.selection(type='interval')
+brush = alt.selection_interval()
 
 alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',

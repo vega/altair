@@ -1,7 +1,7 @@
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Dict
+from typing import Callable, Dict, Optional
 import uuid
 
 from .plugin_registry import PluginRegistry
@@ -97,7 +97,7 @@ class RendererRegistry(PluginRegistry[RendererType]):
 # ==============================================================================
 
 
-class Displayable(object):
+class Displayable:
     """A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
@@ -112,7 +112,7 @@ class Displayable(object):
     through appropriate data model transformers.
     """
 
-    renderers = None
+    renderers: Optional[RendererRegistry] = None
     schema_path = ("altair", "")
 
     def __init__(self, spec, validate=False):
@@ -124,7 +124,9 @@ class Displayable(object):
     def _validate(self):
         # type: () -> None
         """Validate the spec against the schema."""
-        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
+        data = pkgutil.get_data(*self.schema_path)
+        assert data is not None
+        schema_dict = json.loads(data.decode("utf-8"))
         validate_jsonschema(
             self.spec,
             schema_dict,
@@ -165,7 +167,7 @@ def json_renderer_base(spec, str_repr, **options):
     )
 
 
-class HTMLRenderer(object):
+class HTMLRenderer:
     """Object to render charts as HTML, with a unique output div each time"""
 
     def __init__(self, output_div="altair-viz-{}", **kwargs):

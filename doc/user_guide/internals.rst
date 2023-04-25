@@ -136,7 +136,7 @@ from the Vega-Lite documentation, which has the following JSON specification::
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}
@@ -161,7 +161,7 @@ construct an Altair chart object from this string of Vega-Lite JSON:
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}
@@ -186,7 +186,7 @@ you can use the :meth:`~Chart.from_dict` method to construct the chart object:
           {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
         ]
       },
-      "mark": "bar",
+      "mark": {"type": "bar"},
       "encoding": {
         "x": {"field": "a", "type": "ordinal"},
         "y": {"field": "b", "type": "quantitative"}

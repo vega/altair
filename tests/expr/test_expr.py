@@ -4,6 +4,8 @@ import pytest
 
 from altair import expr
 from altair import datum
+from altair import ExprRef
+from jsonschema.exceptions import ValidationError
 
 
 def test_unary_operations():
@@ -97,10 +99,35 @@ def test_datum_getattr():
     x = datum["foo"]
     assert repr(x) == "datum['foo']"
 
+    magic_attr = "__magic__"
     with pytest.raises(AttributeError):
-        datum.__magic__
+        getattr(datum, magic_attr)
 
 
 def test_expression_getitem():
     x = datum.foo[0]
     assert repr(x) == "datum.foo[0]"
+
+
+def test_expression_function_expr():
+    # test including a expr.<CONSTANT> should return an ExprRef
+    er = expr(expr.PI * 2)
+    assert isinstance(er, ExprRef)
+    assert repr(er) == "ExprRef({\n  expr: (PI * 2)\n})"
+
+
+def test_expression_function_string():
+    # expr() can only work with str
+    er = expr("2 * 2")
+    assert isinstance(er, ExprRef)
+    assert repr(er) == "ExprRef({\n  expr: '2 * 2'\n})"
+
+
+def test_expression_function_nostring():
+    # expr() can only work with str otherwise
+    # should raise a SchemaValidationError
+    with pytest.raises(ValidationError):
+        expr(2 * 2)
+
+    with pytest.raises(ValidationError):
+        expr(["foo", "bah"])

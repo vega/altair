@@ -61,7 +61,7 @@ The contents of the resulting file will look something like this:
           "type": "quantitative"
         }
       },
-      "mark": "point"
+      "mark": {"type": "point"}
     }
 
 This JSON can then be inserted into any web page using the vegaEmbed_ library.
@@ -121,7 +121,7 @@ javascript-enabled web browser:
               "type": "quantitative"
             }
           },
-          "mark": "point"
+          "mark": {"type": "point"}
         };
         var opt = {"renderer": "canvas", "actions": false};
         vegaEmbed("#vis", spec, opt);

@@ -40,7 +40,7 @@ def _deprecate(obj, name=None, message=None):
 
     Examples
     --------
-    >>> class Foo(object): pass
+    >>> class Foo: pass
     >>> OldFoo = _deprecate(Foo, "OldFoo")
     >>> f = OldFoo()  # doctest: +SKIP
     AltairDeprecationWarning: alt.OldFoo is deprecated. Use alt.Foo instead.
@@ -62,9 +62,10 @@ def _deprecate(obj, name=None, message=None):
 
         @functools.wraps(obj)
         def new_obj(*args, **kwargs):
-            warnings.warn(message, AltairDeprecationWarning)
+            warnings.warn(message, AltairDeprecationWarning, stacklevel=1)
             return obj(*args, **kwargs)
 
+        new_obj._deprecated = True
         return new_obj
     else:
         raise ValueError("Cannot deprecate object of type {}".format(type(obj)))

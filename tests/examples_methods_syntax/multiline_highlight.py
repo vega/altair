@@ -12,10 +12,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-highlight = alt.selection(
-    type='point', on='mouseover',
-    fields=['symbol'], nearest=True
-)
+highlight = alt.selection_point(on='mouseover', fields=['symbol'], nearest=True)
 
 base = alt.Chart(source).encode(
     x='date:T',

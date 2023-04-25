@@ -3,11 +3,11 @@ import altair.vegalite.v5 as alt
 
 
 def geom_obj(geom):
-    class Geom(object):
+    class Geom:
         pass
 
     geom_obj = Geom()
-    setattr(geom_obj, "__geo_interface__", geom)
+    geom_obj.__geo_interface__ = geom
     return geom_obj
 
 
@@ -74,13 +74,11 @@ def test_geo_interface_serializing_arrays_tuples():
         "bbox": arr.array("d", [1, 2, 3, 4]),
         "geometry": {
             "coordinates": [
-                tuple(
-                    (
-                        tuple((6.90, 53.48)),
-                        tuple((5.98, 51.85)),
-                        tuple((6.07, 53.51)),
-                        tuple((6.90, 53.48)),
-                    )
+                (
+                    (6.90, 53.48),
+                    (5.98, 51.85),
+                    (6.07, 53.51),
+                    (6.90, 53.48),
                 )
             ],
             "type": "Polygon",

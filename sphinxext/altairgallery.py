@@ -24,6 +24,7 @@ from .utils import (
 )
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
+from tests.examples_methods_syntax import iter_examples_methods_syntax
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -38,15 +39,15 @@ GALLERY_TEMPLATE = jinja2.Template(
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-This gallery contains a selection of examples of the plots Altair can create.
-
-Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
+This gallery contains a selection of examples of the plots Altair can create. Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
 Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/vega/>`_ project. To access them yourself, install `vega_datasets <https://github.com/altair-viz/vega_datasets>`_.
 
 .. code-block:: none
 
    python -m pip install vega_datasets
+
+If you can't find the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
 
 {% for grouper, group in examples %}
 
@@ -123,10 +124,26 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 {{ docstring }}
 
 .. altair-plot::
-    {% if code_below %}:code-below:{% endif %}
+    {% if code_below %}:remove-code:{% endif %}
     {% if strict %}:strict:{% endif %}
 
-    {{ code | indent(4) }}
+{{ code | indent(4) }}
+
+.. tab-set::
+
+    .. tab-item:: Method syntax
+        :sync: method
+
+        .. code:: python
+
+{{ method_code | indent(12) }}
+
+    .. tab-item:: Attribute syntax
+        :sync: attribute
+
+        .. code:: python
+
+{{ code | indent(12) }}
 """
 )
 
@@ -162,7 +179,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 chart.save(image_file)
                 hashes[filename] = example_hash
             except ImportError:
-                warnings.warn("Unable to save image: using generic image")
+                warnings.warn("Unable to save image: using generic image", stacklevel=1)
                 create_generic_image(image_file)
 
             with open(hash_file, "w") as f:
@@ -187,9 +204,20 @@ def populate_examples(**kwds):
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
+    method_examples = {x["name"]: x for x in iter_examples_methods_syntax()}
 
     for example in examples:
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
+        if example["name"] in method_examples.keys():
+            _, _, method_code, _ = get_docstring_and_rest(
+                method_examples[example["name"]]["filename"]
+            )
+        else:
+            method_code = code
+            code += (
+                "# No channel encoding options are specified in this chart\n"
+                "# so the code is the same as for the method-based syntax.\n"
+            )
         example.update(kwds)
         if category is None:
             raise Exception(
@@ -200,6 +228,7 @@ def populate_examples(**kwds):
                 "docstring": docstring,
                 "title": docstring.strip().split("\n")[0],
                 "code": code,
+                "method_code": method_code,
                 "category": category.title(),
                 "lineno": lineno,
             }

@@ -23,7 +23,7 @@ You must interrupt the kernel to cancel this command.
 # Mock server used for testing
 
 
-class MockRequest(object):
+class MockRequest:
     def makefile(self, *args, **kwargs):
         return IO(b"GET /")
 
@@ -31,7 +31,7 @@ class MockRequest(object):
         pass
 
 
-class MockServer(object):
+class MockServer:
     def __init__(self, ip_port, Handler):
         Handler(MockRequest(), ip_port[0], self)
 

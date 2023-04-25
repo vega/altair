@@ -10,7 +10,7 @@ from vega_datasets import data
 source = data.barley()
 
 alt.Chart(source).mark_bar().encode(
-    column='year',
+    column='year:O',
     x='yield',
     y='variety',
     color='site'

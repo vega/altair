@@ -7,6 +7,11 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
+import sys
+from typing import cast
+
+# Have to rename it here as else it overlaps with schema.core.Type
+from typing import Type as TypingType
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -14,6 +19,11 @@ from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 # ------------------------------------------------------------------------
@@ -86,12 +96,15 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    if isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
+    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
         data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, str):
+    elif isinstance(data, str):
         data = core.UrlData(data)
+
+    elif hasattr(data, "__dataframe__"):
+        data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:
@@ -99,7 +112,7 @@ def _prepare_data(data, context=None):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
-        warnings.warn("data of type {} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
 
     return data
 
@@ -111,8 +124,11 @@ Impute = core.ImputeParams
 Title = core.TitleParams
 
 
-@utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
+    @utils.use_signature(core.LookupData)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
@@ -120,9 +136,12 @@ class LookupData(core.LookupData):
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
-@utils.use_signature(core.FacetMapping)
 class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
+
+    @utils.use_signature(core.FacetMapping)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def to_dict(self, *args, **kwargs):
         copy = self.copy(deep=False)
@@ -289,39 +308,61 @@ def value(value, **kwargs):
     return dict(value=value, **kwargs)
 
 
-def param(name=None, select=None, **kwds):
-    """Create a named parameter.
+def param(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    expr=Undefined,
+    **kwds,
+):
+    """Create a named parameter.  See https://altair-viz.github.io/user_guide/interactions.html for examples.  Although both variable parameters and selection parameters can be created using this 'param' function, to create a selection parameter, it is recommended to use either 'selection_point' or 'selection_interval' instead.
 
     Parameters
     ----------
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
     **kwds :
         additional keywords will be used to construct a parameter.  If 'select'
-        is among the keywords, then a SelectionParameter will be created.
-        Otherwise, a VariableParameter will be created.
+        is among the keywords, then a selection parameter will be created.
+        Otherwise, a variable parameter will be created.
 
     Returns
     -------
     parameter: Parameter
         The parameter object that can be used in chart creation.
     """
-
     parameter = Parameter(name)
 
-    if "empty" in kwds:
-        parameter.empty = kwds.pop("empty")
+    if empty is not Undefined:
+        parameter.empty = empty
         if parameter.empty == "none":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -333,51 +374,38 @@ def param(name=None, select=None, **kwds):
         warnings.warn(
             """Use 'value' instead of 'init'.""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
-        if "value" not in kwds:
+        if value is Undefined:
             kwds["value"] = kwds.pop("init")
         else:
             # If both 'value' and 'init' are set, we ignore 'init'.
             kwds.pop("init")
 
-    if select is None:
-        parameter.param = core.VariableParameter(name=parameter.name, **kwds)
+    if "select" not in kwds:
+        parameter.param = core.VariableParameter(
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
+        )
         parameter.param_type = "variable"
     elif "views" in kwds:
         parameter.param = core.TopLevelSelectionParameter(
-            name=parameter.name, select=select, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
         )
         parameter.param_type = "selection"
     else:
         parameter.param = core.SelectionParameter(
-            name=parameter.name, select=select, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
         )
         parameter.param_type = "selection"
 
     return parameter
 
 
-# TODO: Update the docstring
-def selection(type=Undefined, **kwds):
-    """Create a selection.
-
-    Parameters
-    ----------
-    type : string
-        The type of the selection: either "interval" or "point"]
-    **kwds :
-        additional keywords to control the selection.
-
-    Returns
-    -------
-    Parameter
-        The Parameter object that can be used in chart creation.
-    """
-
+def _selection(type=Undefined, **kwds):
     # We separate out the parameter keywords from the selection keywords
     param_kwds = {}
 
-    for kwd in {"name", "value", "bind", "empty", "init", "views"}:
+    for kwd in {"name", "bind", "value", "empty", "init", "views"}:
         if kwd in kwds:
             param_kwds[kwd] = kwds.pop(kwd)
 
@@ -389,8 +417,9 @@ def selection(type=Undefined, **kwds):
         select = core.PointSelectionConfig(type="point", **kwds)
         warnings.warn(
             """The types 'single' and 'multi' are now
-        combined and should be specified using "type='point'".""",
+        combined and should be specified using "selection_point()".""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
     else:
         raise ValueError("""'type' must be 'point' or 'interval'""")
@@ -398,16 +427,259 @@ def selection(type=Undefined, **kwds):
     return param(select=select, **param_kwds)
 
 
-@utils.use_signature(core.IntervalSelectionConfig)
-def selection_interval(**kwargs):
-    """Create a selection parameter with type='interval'"""
-    return selection(type="interval", **kwargs)
+@utils.deprecation.deprecated(
+    message="""'selection' is deprecated.
+   Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
+)
+def selection(type=Undefined, **kwds):
+    """
+    Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
+
+    Create a selection parameter.
+
+    Parameters
+    ----------
+    type : enum('point', 'interval') (required)
+        Determines the default event processing and data query for the
+        selection. Vega-Lite currently supports two selection types:
+        * "point" - to select multiple discrete data values; the first
+        value is selected on click and additional values toggled on
+        shift-click.
+        * "interval" - to select a continuous range of data values on
+        drag.
+    **kwds :
+        additional keywords to control the selection.
+    """
+
+    return _selection(type=type, **kwds)
 
 
-@utils.use_signature(core.PointSelectionConfig)
-def selection_point(**kwargs):
-    """Create a selection with type='point'"""
-    return selection(type="point", **kwargs)
+def selection_interval(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    expr=Undefined,
+    encodings=Undefined,
+    on=Undefined,
+    clear=Undefined,
+    resolve=Undefined,
+    mark=Undefined,
+    translate=Undefined,
+    zoom=Undefined,
+    **kwds,
+):
+    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    encodings : List[str] (optional)
+        A list of encoding channels. The corresponding data field values
+        must match for a data tuple to fall within the selection.
+    on : string (optional)
+        A Vega event stream (object or selector) that triggers the selection.
+        For interval selections, the event stream must specify a start and end.
+    clear : string or boolean (optional)
+        Clears the selection, emptying it of all values. This property can
+        be an Event Stream or False to disable clear.  Default is 'dblclick'.
+    resolve : enum('global', 'union', 'intersect') (optional)
+        With layered and multi-view displays, a strategy that determines
+        how selections' data queries are resolved when applied in a filter
+        transform, conditional encoding rule, or scale domain.
+        One of:
+
+        * 'global': only one brush exists for the entire SPLOM. When the
+          user begins to drag, any previous brushes are cleared, and a
+          new one is constructed.
+        * 'union': each cell contains its own brush, and points are
+          highlighted if they lie within any of these individual brushes.
+        * 'intersect': each cell contains its own brush, and points are
+          highlighted only if they fall within all of these individual
+          brushes.
+
+        The default is 'global'.
+    mark : :class:`Mark` (optional)
+        An interval selection also adds a rectangle mark to depict the
+        extents of the interval. The mark property can be used to
+        customize the appearance of the mark.
+    translate : string or boolean (optional)
+        When truthy, allows a user to interactively move an interval
+        selection back-and-forth. Can be True, False (to disable panning),
+        or a Vega event stream definition which must include a start and
+        end event to trigger continuous panning. Discrete panning (e.g.,
+        pressing the left/right arrow keys) will be supported in future
+        versions.
+        The default value is True, which corresponds to
+        [mousedown, window:mouseup] > window:mousemove!
+        This default allows users to click and drag within an interval
+        selection to reposition it.
+    zoom : string or boolean (optional)
+        When truthy, allows a user to interactively resize an interval
+        selection. Can be True, False (to disable zooming), or a Vega
+        event stream definition. Currently, only wheel events are supported,
+        but custom event streams can still be used to specify filters,
+        debouncing, and throttling. Future versions will expand the set of
+        events that can trigger this transformation.
+        The default value is True, which corresponds to wheel!. This
+        default allows users to use the mouse wheel to resize an interval
+        selection.
+    **kwds :
+        Additional keywords to control the selection.
+
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
+    """
+    return _selection(
+        type="interval",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        encodings=encodings,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        mark=mark,
+        translate=translate,
+        zoom=zoom,
+        **kwds,
+    )
+
+
+def selection_point(
+    name=None,
+    value=Undefined,
+    bind=Undefined,
+    empty=Undefined,
+    expr=Undefined,
+    encodings=Undefined,
+    fields=Undefined,
+    on=Undefined,
+    clear=Undefined,
+    resolve=Undefined,
+    toggle=Undefined,
+    nearest=Undefined,
+    **kwds,
+):
+    """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : :class:`Expr` (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    encodings : List[str] (optional)
+        A list of encoding channels. The corresponding data field values
+        must match for a data tuple to fall within the selection.
+    fields : List[str] (optional)
+        A list of field names whose values must match for a data tuple to
+        fall within the selection.
+    on : string (optional)
+        A Vega event stream (object or selector) that triggers the selection.
+        For interval selections, the event stream must specify a start and end.
+    clear : string or boolean (optional)
+        Clears the selection, emptying it of all values. This property can
+        be an Event Stream or False to disable clear.  Default is 'dblclick'.
+    resolve : enum('global', 'union', 'intersect') (optional)
+        With layered and multi-view displays, a strategy that determines
+        how selections' data queries are resolved when applied in a filter
+        transform, conditional encoding rule, or scale domain.
+        One of:
+
+        * 'global': only one brush exists for the entire SPLOM. When the
+          user begins to drag, any previous brushes are cleared, and a
+          new one is constructed.
+        * 'union': each cell contains its own brush, and points are
+          highlighted if they lie within any of these individual brushes.
+        * 'intersect': each cell contains its own brush, and points are
+          highlighted only if they fall within all of these individual
+          brushes.
+
+        The default is 'global'.
+    toggle : string or boolean (optional)
+        Controls whether data values should be toggled (inserted or
+        removed from a point selection) or only ever inserted into
+        point selections.
+        One of:
+
+        * True (default): the toggle behavior, which corresponds to
+          "event.shiftKey". As a result, data values are toggled
+          when the user interacts with the shift-key pressed.
+        * False: disables toggling behaviour; the selection will
+          only ever contain a single data value corresponding
+          to the most recent interaction.
+        * A Vega expression which is re-evaluated as the user interacts.
+          If the expression evaluates to True, the data value is
+          toggled into or out of the point selection. If the expression
+          evaluates to False, the point selection is first cleared, and
+          the data value is then inserted. For example, setting the
+          value to the Vega expression True will toggle data values
+          without the user pressing the shift-key.
+
+    nearest : boolean (optional)
+        When true, an invisible voronoi diagram is computed to accelerate
+        discrete selection. The data value nearest the mouse cursor is
+        added to the selection.  The default is False, which means that
+        data values must be interacted with directly (e.g., clicked on)
+        to be added to the selection.
+    **kwds :
+        Additional keywords to control the selection.
+
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
+    """
+    return _selection(
+        type="point",
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        encodings=encodings,
+        fields=fields,
+        on=on,
+        clear=clear,
+        resolve=resolve,
+        toggle=toggle,
+        nearest=nearest,
+        **kwds,
+    )
 
 
 @utils.deprecation.deprecated(
@@ -415,7 +687,8 @@ def selection_point(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_multi(**kwargs):
-    return selection(type="point", **kwargs)
+    """'selection_multi' is deprecated.  Use 'selection_point'"""
+    return _selection(type="point", **kwargs)
 
 
 @utils.deprecation.deprecated(
@@ -423,7 +696,8 @@ def selection_multi(**kwargs):
 )
 @utils.use_signature(core.PointSelectionConfig)
 def selection_single(**kwargs):
-    return selection(type="point", **kwargs)
+    """'selection_single' is deprecated.  Use 'selection_point'"""
+    return _selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
@@ -502,8 +776,13 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = {"shorthand": if_true}
-        if_true.update(kwargs)
+        if isinstance(if_false, str):
+            raise ValueError(
+                "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
+            )
+        else:
+            if_true = utils.parse_shorthand(if_true)
+            if_true.update(kwargs)
     condition.update(if_true)
 
     if isinstance(if_false, core.SchemaBase):
@@ -529,7 +808,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     _class_is_valid_at_instantiation = False
 
-    def to_dict(self, *args, **kwargs):
+    def to_dict(self, *args, **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export"""
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
@@ -545,7 +824,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
-        copy = self.copy(deep=False)
+        # TopLevelMixin instance does not necessarily have copy defined but due to how
+        # Altair is set up this should hold. Too complex to type hint right now
+        copy = self.copy(deep=False)  # type: ignore[attr-defined]
         original_data = getattr(copy, "data", Undefined)
         copy.data = _prepare_data(original_data, context)
 
@@ -556,17 +837,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context["top_level"] = False
         kwargs["context"] = context
 
-        try:
-            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
-        except jsonschema.ValidationError:
-            dct = None
-
-        # If we hit an error, then re-convert with validate='deep' to get
-        # a more useful traceback. We don't do this by default because it's
-        # much slower in the case that there are no errors.
-        if dct is None:
-            kwargs["validate"] = "deep"
-            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+        # TopLevelMixin instance does not necessarily have to_dict defined
+        # but due to how Altair is set up this should hold.
+        # Too complex to type hint right now
+        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
@@ -576,6 +850,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             # apply theme from theme registry
             the_theme = themes.get()
+            # Use assert to tell type checkers that it is not None. Holds true
+            # as there is always a default theme set when importing Altair
+            assert the_theme is not None
             dct = utils.update_nested(the_theme(), dct, copy=True)
 
             # update datasets
@@ -592,7 +869,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds=None,
         fullhtml=True,
         requirejs=False,
-    ):
+    ) -> str:
         return utils.spec_to_html(
             self.to_dict(),
             mode="vega-lite",
@@ -630,7 +907,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format : string (optional)
             the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
             If not specified, the format will be determined from the filename.
-        override_data_transformer : boolean (optional)
+        override_data_transformer : `boolean` (optional)
             If True (default), then the save action will be done with
             the MaxRowsError disabled. If False, then do not change the data
             transformer.
@@ -695,7 +972,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         layer=Undefined,
         columns=Undefined,
         **kwargs,
-    ):
+    ) -> "RepeatChart":
         """Return a RepeatChart built from the chart
 
         Fields within the chart can be set to correspond to the row or
@@ -744,12 +1021,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         return RepeatChart(spec=self, repeat=repeat, columns=columns, **kwargs)
 
-    def properties(self, **kwargs):
+    def properties(self, **kwargs) -> Self:
         """Set top-level properties of the Chart.
 
         Argument names and types are the same as class initialization.
         """
-        copy = self.copy(deep=False)
+        # ignore type as copy comes from another class for subclasses of TopLevelMixin
+        copy = self.copy(deep=False)  # type: ignore[attr-defined]
         for key, val in kwargs.items():
             if key == "selection" and isinstance(val, Parameter):
                 # TODO: Can this be removed
@@ -758,7 +1036,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             else:
                 # Don't validate data, because it hasn't been processed.
                 if key != "data":
-                    self.validate_property(key, val)
+                    # ignore type as validate_property comes from SchemaBase,
+                    # not from TopLevelMixin
+                    self.validate_property(key, val)  # type: ignore[attr-defined]
                 setattr(copy, key, val)
         return copy
 
@@ -784,7 +1064,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         tilt=Undefined,
         translate=Undefined,
         **kwds,
-    ):
+    ) -> Self:
         """Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
@@ -795,7 +1075,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular',
         'gnomonic', 'identity', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
 
-        Attributes
+        Parameters
         ----------
         type : ProjectionType
             The cartographic projection to use. This value is case-insensitive, for example
@@ -893,9 +1173,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         copy.transform.extend(transforms)
         return copy
 
-    def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
+    def transform_aggregate(
+        self, aggregate=Undefined, groupby=Undefined, **kwds
+    ) -> Self:
         """
-        Add an AggregateTransform to the schema.
+        Add an :class:`AggregateTransform` to the schema.
 
         Parameters
         ----------
@@ -967,9 +1249,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs):
+    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs) -> Self:
         """
-        Add a BinTransform to the schema.
+        Add a :class:`BinTransform` to the schema.
 
         Parameters
         ----------
@@ -1023,9 +1305,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs):
+    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs) -> Self:
         """
-        Add a CalculateTransform to the schema.
+        Add a :class:`CalculateTransform` to the schema.
 
         Parameters
         ----------
@@ -1097,10 +1379,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         maxsteps=Undefined,
         minsteps=Undefined,
         steps=Undefined,
-    ):
-        """Add a DensityTransform to the spec.
+    ) -> Self:
+        """Add a :class:`DensityTransform` to the spec.
 
-        Attributes
+        Parameters
         ----------
         density : str
             The data field for which to perform density estimation.
@@ -1162,9 +1444,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         keyvals=Undefined,
         method=Undefined,
         value=Undefined,
-    ):
+    ) -> Self:
         """
-        Add an ImputeTransform to the schema.
+        Add an :class:`ImputeTransform` to the schema.
 
         Parameters
         ----------
@@ -1225,9 +1507,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_joinaggregate(
         self, joinaggregate=Undefined, groupby=Undefined, **kwargs
-    ):
+    ) -> Self:
         """
-        Add a JoinAggregateTransform to the schema.
+        Add a :class:`JoinAggregateTransform` to the schema.
 
         Parameters
         ----------
@@ -1276,9 +1558,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     # TODO: Update docstring
-    def transform_filter(self, filter, **kwargs):
+    def transform_filter(self, filter, **kwargs) -> Self:
         """
-        Add a FilterTransform to the schema.
+        Add a :class:`FilterTransform` to the schema.
 
         Parameters
         ----------
@@ -1309,8 +1591,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(self, flatten, as_=Undefined):
-        """Add a FlattenTransform to the schema.
+    def transform_flatten(self, flatten, as_=Undefined) -> Self:
+        """Add a :class:`FlattenTransform` to the schema.
 
         Parameters
         ----------
@@ -1337,8 +1619,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.FlattenTransform(flatten=flatten, **{"as": as_})
         )
 
-    def transform_fold(self, fold, as_=Undefined):
-        """Add a FoldTransform to the spec.
+    def transform_fold(self, fold, as_=Undefined) -> Self:
+        """Add a :class:`FoldTransform` to the spec.
 
         Parameters
         ----------
@@ -1361,9 +1643,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FoldTransform(fold=fold, **{"as": as_}))
 
     def transform_loess(
-        self, on, loess, as_=Undefined, bandwidth=Undefined, groupby=Undefined
-    ):
-        """Add a LoessTransform to the spec.
+        self,
+        on,
+        loess,
+        as_=Undefined,
+        bandwidth=Undefined,
+        groupby=Undefined,
+    ) -> Self:
+        """Add a :class:`LoessTransform` to the spec.
 
         Parameters
         ----------
@@ -1404,10 +1691,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_=Undefined,
         default=Undefined,
         **kwargs,
-    ):
-        """Add a DataLookupTransform or SelectionLookupTransform to the chart
+    ) -> Self:
+        """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
 
-        Attributes
+        Parameters
         ----------
         lookup : string
             Key in primary data source.
@@ -1453,9 +1740,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.LookupTransform(**kwargs))
 
     def transform_pivot(
-        self, pivot, value, groupby=Undefined, limit=Undefined, op=Undefined
-    ):
-        """Add a pivot transform to the chart.
+        self,
+        pivot,
+        value,
+        groupby=Undefined,
+        limit=Undefined,
+        op=Undefined,
+    ) -> Self:
+        """Add a :class:`PivotTransform` to the chart.
 
         Parameters
         ----------
@@ -1500,8 +1792,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby=Undefined,
         probs=Undefined,
         step=Undefined,
-    ):
-        """Add a quantile transform to the chart
+    ) -> Self:
+        """Add a :class:`QuantileTransform` to the chart
 
         Parameters
         ----------
@@ -1549,8 +1841,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         method=Undefined,
         order=Undefined,
         params=Undefined,
-    ):
-        """Add a RegressionTransform to the chart.
+    ) -> Self:
+        """Add a :class:`RegressionTransform` to the chart.
 
         Parameters
         ----------
@@ -1604,9 +1896,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         )
 
-    def transform_sample(self, sample=1000):
+    def transform_sample(self, sample=1000) -> Self:
         """
-        Add a SampleTransform to the schema.
+        Add a :class:`SampleTransform` to the schema.
 
         Parameters
         ----------
@@ -1624,9 +1916,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.SampleTransform(sample))
 
-    def transform_stack(self, as_, stack, groupby, offset=Undefined, sort=Undefined):
+    def transform_stack(
+        self, as_, stack, groupby, offset=Undefined, sort=Undefined
+    ) -> Self:
         """
-        Add a StackTransform to the schema.
+        Add a :class:`StackTransform` to the schema.
 
         Parameters
         ----------
@@ -1660,10 +1954,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_timeunit(
-        self, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs
-    ):
+        self,
+        as_=Undefined,
+        field=Undefined,
+        timeUnit=Undefined,
+        **kwargs,
+    ) -> Self:
         """
-        Add a TimeUnitTransform to the schema.
+        Add a :class:`TimeUnitTransform` to the schema.
 
         Parameters
         ----------
@@ -1747,8 +2045,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ignorePeers=Undefined,
         sort=Undefined,
         **kwargs,
-    ):
-        """Add a WindowTransform to the schema
+    ) -> Self:
+        """Add a :class:`WindowTransform` to the schema
 
         Parameters
         ----------
@@ -1904,7 +2202,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         http_server=None,
         **kwargs,
     ):
-        """Open a browser window and display a rendering of the chart
+        """
+        'serve' is deprecated. Use 'show' instead.
+
+        Open a browser window and display a rendering of the chart
 
         Parameters
         ----------
@@ -1964,11 +2265,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         try:
             import altair_viewer  # type: ignore
-        except ImportError:
+        except ImportError as err:
             raise ValueError(
                 "'show' method requires the altair_viewer package. "
                 "See http://github.com/altair-viz/altair_viewer"
-            )
+            ) from err
         altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
 
     @utils.use_signature(core.Resolve)
@@ -1986,26 +2287,27 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs):
+    def resolve_axis(self, *args, **kwargs) -> Self:
         return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs):
+    def resolve_legend(self, *args, **kwargs) -> Self:
         return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs):
+    def resolve_scale(self, *args, **kwargs) -> Self:
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
-class _EncodingMixin(object):
+class _EncodingMixin:
     @utils.use_signature(core.FacetedEncoding)
-    def encode(self, *args, **kwargs):
+    def encode(self, *args, **kwargs) -> Self:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)
 
         # get a copy of the dict representation of the previous encoding
-        copy = self.copy(deep=["encoding"])
+        # ignore type as copy method comes from SchemaBase
+        copy = self.copy(deep=["encoding"])  # type: ignore[attr-defined]
         encoding = copy._get("encoding", {})
         if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items() if v is not Undefined}
@@ -2023,7 +2325,7 @@ class _EncodingMixin(object):
         data=Undefined,
         columns=Undefined,
         **kwargs,
-    ):
+    ) -> "FacetChart":
         """Create a facet chart from the current chart.
 
         Faceted charts require data to be specified at the top level; if data
@@ -2060,13 +2362,17 @@ class _EncodingMixin(object):
                 "facet argument cannot be combined with row/column argument."
             )
 
-        if data is Undefined:
-            if self.data is Undefined:
+        # Remove "ignore" statement once Undefined is no longer typed as Any
+        if data is Undefined:  # type: ignore
+            # Remove "ignore" statement once Undefined is no longer typed as Any
+            if self.data is Undefined:  # type: ignore
                 raise ValueError(
                     "Facet charts require data to be specified at the top level."
                 )
-            self = self.copy(deep=False)
-            data, self.data = self.data, Undefined
+            # ignore type as copy comes from another class
+            self = self.copy(deep=False)  # type: ignore[attr-defined]
+            # Remove "ignore" statement once Undefined is no longer typed as Any
+            data, self.data = self.data, Undefined  # type: ignore
 
         if facet_specified:
             if isinstance(facet, str):
@@ -2087,7 +2393,7 @@ class Chart(
     ``transform_filter()``, ``properties()``, etc. See Altair's documentation
     for details and examples: http://altair-viz.github.io/.
 
-    Attributes
+    Parameters
     ----------
     data : Data
         An object describing the data source
@@ -2161,7 +2467,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True):
+    def from_dict(cls, dct, validate=True) -> "Chart":  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters
@@ -2183,16 +2489,19 @@ class Chart(
         """
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                class_ = super(Chart, cls)
+                class_ = cast(TypingType[TopLevelMixin], super(Chart, cls))
             try:
-                return class_.from_dict(dct, validate=validate)
+                # TopLevelMixin classes don't necessarily have from_dict defined
+                # but all classes which are used here have due to how Altair is
+                # designed. Too complex to type check right now.
+                return class_.from_dict(dct, validate=validate)  # type: ignore[attr-defined]
             except jsonschema.ValidationError:
                 pass
 
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def to_dict(self, *args, **kwargs):
+    def to_dict(self, *args, **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export."""
         context = kwargs.get("context", {})
         if self.data is Undefined and "data" not in context:
@@ -2203,7 +2512,7 @@ class Chart(
             return super(Chart, copy).to_dict(*args, **kwargs)
         return super().to_dict(*args, **kwargs)
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params:
             return self
@@ -2218,10 +2527,11 @@ class Chart(
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *params):
+    def add_selection(self, *params) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2282,33 +2592,47 @@ def _check_if_can_be_layered(spec):
     if encoding is not Undefined:
         for channel in ["row", "column", "facet"]:
             if _get(encoding, channel) is not Undefined:
-                raise ValueError("Faceted charts cannot be layered.")
+                raise ValueError(
+                    "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+                )
     if isinstance(spec, (Chart, LayerChart)):
         return
 
     if not isinstance(spec, (core.SchemaBase, dict)):
         raise ValueError("Only chart objects can be layered.")
     if _get(spec, "facet") is not Undefined:
-        raise ValueError("Faceted charts cannot be layered.")
+        raise ValueError(
+            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        )
     if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        raise ValueError("Faceted charts cannot be layered.")
+        raise ValueError(
+            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        )
     if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        raise ValueError("Repeat charts cannot be layered.")
+        raise ValueError(
+            "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+        )
     if isinstance(spec, ConcatChart) or _get(spec, "concat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
     if isinstance(spec, HConcatChart) or _get(spec, "hconcat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
     if isinstance(spec, VConcatChart) or _get(spec, "vconcat") is not Undefined:
-        raise ValueError("Concatenated charts cannot be layered.")
+        raise ValueError(
+            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        )
 
 
-@utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
 
     # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
     # we set the arguments explicitly here.
     # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
         repeat=Undefined,
@@ -2337,8 +2661,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        if isinstance(spec, Chart):
-            params = _repeat_names(params, repeat)
+        if isinstance(spec, (Chart, LayerChart)):
+            params = _repeat_names(params, repeat, spec)
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -2363,7 +2687,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2386,7 +2710,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -2397,7 +2721,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2421,10 +2746,10 @@ def repeat(repeater="repeat"):
     return core.RepeatRef(repeat=repeater)
 
 
-@utils.use_signature(core.TopLevelConcatSpec)
 class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelConcatSpec)
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
         for spec in concat:
@@ -2447,7 +2772,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2473,7 +2798,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.concat:
             return self
@@ -2484,7 +2809,8 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2493,10 +2819,10 @@ def concat(*charts, **kwargs):
     return ConcatChart(concat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelHConcatSpec)
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
@@ -2517,7 +2843,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2543,7 +2869,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.hconcat:
             return self
@@ -2554,7 +2880,8 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2563,10 +2890,10 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
 
+    @utils.use_signature(core.TopLevelVConcatSpec)
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
@@ -2587,7 +2914,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2613,7 +2940,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.vconcat:
             return self
@@ -2624,7 +2951,8 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2633,10 +2961,10 @@ def vconcat(*charts, **kwargs):
     return VConcatChart(vconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelLayerSpec)
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
@@ -2669,13 +2997,13 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         copy += other
         return copy
 
-    def add_layers(self, *layers):
+    def add_layers(self, *layers) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2704,7 +3032,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         )
         return copy
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.layer:
             return self
@@ -2715,7 +3043,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2724,10 +3053,10 @@ def layer(*charts, **kwargs):
     return LayerChart(layer=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
 
+    @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
         self,
         data=Undefined,
@@ -2744,7 +3073,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def interactive(self, name=None, bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2767,7 +3096,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params):
+    def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -2778,7 +3107,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     @utils.deprecation.deprecated(
         message="'add_selection' is deprecated. Use 'add_params' instead."
     )
-    def add_selection(self, *selections):
+    def add_selection(self, *selections) -> Self:
+        """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
@@ -2842,7 +3172,7 @@ def _needs_name(subchart):
         return False
 
     # Variable parameters won't receive a views property.
-    if all([isinstance(p, core.VariableParameter) for p in subchart.params]):
+    if all(isinstance(p, core.VariableParameter) for p in subchart.params):
         return False
 
     return True
@@ -2975,15 +3305,21 @@ def _get_repeat_strings(repeat):
     return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
-def _extend_view_name(v, r):
+def _extend_view_name(v, r, spec):
     # prevent the same extension from happening more than once
-    if v.endswith("child__" + r):
-        return v
-    else:
-        return v + "child__" + r
+    if isinstance(spec, Chart):
+        if v.endswith("child__" + r):
+            return v
+        else:
+            return f"{v}_child__{r}"
+    elif isinstance(spec, LayerChart):
+        if v.startswith("child__" + r):
+            return v
+        else:
+            return f"child__{r}_{v}"
 
 
-def _repeat_names(params, repeat):
+def _repeat_names(params, repeat, spec):
     if params is Undefined:
         return params
 
@@ -2998,10 +3334,17 @@ def _repeat_names(params, repeat):
         views = []
         repeat_strings = _get_repeat_strings(repeat)
         for v in param.views:
-            if any([v.endswith(f"child__{r}") for r in repeat_strings]):
-                views.append(v)
-            else:
-                views += [_extend_view_name(v, r) for r in repeat_strings]
+            if isinstance(spec, Chart):
+                if any(v.endswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+            elif isinstance(spec, LayerChart):
+                if any(v.startswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+
         p.views = views
         params_named.append(p)
 

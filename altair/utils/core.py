@@ -9,18 +9,27 @@ import re
 import sys
 import traceback
 import warnings
+from typing import Callable, TypeVar, Any
 
 import jsonschema
 import pandas as pd
 import numpy as np
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase
+
+if sys.version_info >= (3, 10):
+    from typing import ParamSpec
+else:
+    from typing_extensions import ParamSpec
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
     # Import for pandas < 0.20.0
-    from pandas.lib import infer_dtype as _infer_dtype
+    from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
+
+_V = TypeVar("_V")
+_P = ParamSpec("_P")
 
 
 def infer_dtype(value):
@@ -218,7 +227,8 @@ def infer_vegalite_type(data):
     else:
         warnings.warn(
             "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ)
+            "Defaulting to nominal.".format(typ),
+            stacklevel=1,
         )
         return "nominal"
 
@@ -474,15 +484,15 @@ def parse_shorthand(
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    units = dict(
-        field="(?P<field>.*)",
-        type="(?P<type>{})".format("|".join(valid_typecodes)),
-        agg_count="(?P<aggregate>count)",
-        op_count="(?P<op>count)",
-        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    )
+    units = {
+        "field": "(?P<field>.*)",
+        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
+        "agg_count": "(?P<aggregate>count)",
+        "op_count": "(?P<op>count)",
+        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+    }
 
     patterns = []
 
@@ -526,27 +536,49 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if isinstance(data, pd.DataFrame) and "type" not in attrs:
-        if "field" in attrs and attrs["field"] in data.columns:
-            attrs["type"] = infer_vegalite_type(data[attrs["field"]])
+        # Remove escape sequences so that types can be inferred for columns with special characters
+        if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
+            attrs["type"] = infer_vegalite_type(data[attrs["field"].replace("\\", "")])
             # ordered categorical dataframe columns return the type and sort order as a tuple
             if isinstance(attrs["type"], tuple):
                 attrs["sort"] = attrs["type"][1]
                 attrs["type"] = attrs["type"][0]
+
+    # If an unescaped colon is still present, it's often due to an incorrect data type specification
+    # but could also be due to using a column name with ":" in it.
+    if (
+        "field" in attrs
+        and ":" in attrs["field"]
+        and attrs["field"][attrs["field"].rfind(":") - 1] != "\\"
+    ):
+        raise ValueError(
+            '"{}" '.format(attrs["field"].split(":")[-1])
+            + "is not one of the valid encoding data types: {}.".format(
+                ", ".join(TYPECODE_MAP.values())
+            )
+            + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            + "If you are trying to use a column name that contains a colon, "
+            + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
+        )
     return attrs
 
 
-def use_signature(Obj):
+def use_signature(Obj: Callable[_P, Any]):
     """Apply call signature and documentation of Obj to the decorated method"""
 
-    def decorate(f):
+    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
-        f.__wrapped__ = Obj.__init__
-        f._uses_signature = Obj
+        f.__wrapped__ = Obj.__init__  # type: ignore
+        f._uses_signature = Obj  # type: ignore
 
         # Supplement the docstring of f with information from Obj
         if Obj.__doc__:
+            # Patch in a reference to the class this docstring is copied from,
+            # to generate a hyperlink.
             doclines = Obj.__doc__.splitlines()
+            doclines[0] = f"Refer to :class:`{Obj.__name__}`"
+
             if f.__doc__:
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
@@ -669,15 +701,6 @@ def infer_encoding_types(args, kwargs, channels):
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
-        try:
-            condition = obj["condition"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            if condition is not Undefined:
-                obj = obj.copy()
-                obj["condition"] = _wrap_in_channel_class(condition, encoding)
-
         if isinstance(obj, SchemaBase):
             return obj
 
@@ -688,7 +711,9 @@ def infer_encoding_types(args, kwargs, channels):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
+            warnings.warn(
+                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
+            )
             return obj
 
         classes = name_to_channel[encoding]

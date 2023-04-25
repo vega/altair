@@ -39,7 +39,7 @@ We can construct that same chart manually using the stack transform:
         sort=[alt.SortField('site', 'descending')]
     ).mark_bar().encode(
         column='year:O',
-        x=alt.X('yield_1:Q', title='yield'),
+        x=alt.X('yield_1:Q').title('yield'),
         x2='yield_2:Q',
         y='variety:N',
         color='site:N',

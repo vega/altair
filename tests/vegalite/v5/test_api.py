@@ -138,16 +138,30 @@ def test_chart_infer_types():
         assert dct["encoding"]["size"]["type"] == "ordinal"
         assert dct["encoding"]["size"]["field"] == "s"
         assert dct["encoding"]["size"]["sort"] == [2, 1]
+        assert dct["encoding"]["tooltip"]["type"] == "ordinal"
+        assert dct["encoding"]["tooltip"]["field"] == "s"
+        # "sort" should be removed for channels that don't support it
+        assert "sort" not in dct["encoding"]["tooltip"]
 
     # Pass field names by keyword
-    chart = alt.Chart(data).mark_point().encode(x="x", y="y", color="c", size="s")
+    chart = (
+        alt.Chart(data)
+        .mark_point()
+        .encode(x="x", y="y", color="c", size="s", tooltip="s")
+    )
     _check_encodings(chart)
 
     # pass Channel objects by keyword
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(x=alt.X("x"), y=alt.Y("y"), color=alt.Color("c"), size=alt.Size("s"))
+        .encode(
+            x=alt.X("x"),
+            y=alt.Y("y"),
+            color=alt.Color("c"),
+            size=alt.Size("s"),
+            tooltip=alt.Tooltip("s"),
+        )
     )
     _check_encodings(chart)
 
@@ -155,7 +169,7 @@ def test_chart_infer_types():
     chart = (
         alt.Chart(data)
         .mark_point()
-        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"))
+        .encode(alt.X("x"), alt.Y("y"), alt.Color("c"), alt.Size("s"), alt.Tooltip("s"))
     )
     _check_encodings(chart)
 
@@ -167,6 +181,7 @@ def test_chart_infer_types():
             alt.X("x", type="nominal"),
             alt.Y("y", type="ordinal"),
             alt.Size("s", type="nominal"),
+            alt.Tooltip("s", type="nominal"),
         )
     )
     dct = chart.to_dict()
@@ -174,6 +189,8 @@ def test_chart_infer_types():
     assert dct["encoding"]["y"]["type"] == "ordinal"
     assert dct["encoding"]["size"]["type"] == "nominal"
     assert "sort" not in dct["encoding"]["size"]
+    assert dct["encoding"]["tooltip"]["type"] == "nominal"
+    assert "sort" not in dct["encoding"]["tooltip"]
 
 
 @pytest.mark.parametrize(
@@ -238,7 +255,7 @@ def test_chart_operations():
 
 
 def test_selection_to_dict():
-    brush = alt.selection(type="interval")
+    brush = alt.selection_interval()
 
     # test some value selections
     # Note: X and Y cannot have conditions
@@ -268,8 +285,9 @@ def test_selection_expression():
     assert isinstance(selection["value"], alt.expr.Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
+    magic_attr = "__magic__"
     with pytest.raises(AttributeError):
-        selection.__magic__
+        getattr(selection, magic_attr)
 
 
 @pytest.mark.save_engine
@@ -464,7 +482,7 @@ def test_selection():
     # test adding to chart
     chart = alt.Chart().add_params(single)
     chart = chart.add_params(multi, interval)
-    assert set(x.name for x in chart.params) == {"selec_1", "selec_2", "selec_3"}
+    assert {x.name for x in chart.params} == {"selec_1", "selec_2", "selec_3"}
 
     # test logical operations
     assert isinstance(single & multi, alt.SelectionPredicateComposition)
@@ -487,7 +505,7 @@ def test_transforms():
     agg1 = alt.AggregatedFieldDef(**{"as": "x1", "op": "mean", "field": "y"})
     agg2 = alt.AggregatedFieldDef(**{"as": "x2", "op": "median", "field": "z"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
-    kwds = dict(aggregate=[agg1, agg2], groupby=["foo"])
+    kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform
@@ -945,16 +963,32 @@ def test_layer_errors():
     )
 
     with pytest.raises(ValueError) as err:
+        alt.hconcat(simple_chart) + simple_chart
+    assert (
+        str(err.value)
+        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+    )
+
+    with pytest.raises(ValueError) as err:
         repeat_chart + simple_chart
-    assert str(err.value) == "Repeat charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+    )
 
     with pytest.raises(ValueError) as err:
         facet_chart1 + simple_chart
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
     with pytest.raises(ValueError) as err:
         alt.layer(simple_chart) + facet_chart2
-    assert str(err.value) == "Faceted charts cannot be layered."
+    assert (
+        str(err.value)
+        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+    )
 
 
 @pytest.mark.parametrize(

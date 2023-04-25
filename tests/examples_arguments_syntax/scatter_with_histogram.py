@@ -25,7 +25,7 @@ m = np.random.normal(15, 1, size=100)
 source = pd.DataFrame({"x": x, "y":y, "m":m})
 
 # interval selection in the scatter plot
-pts = alt.selection(type="interval", encodings=["x"])
+pts = alt.selection_interval(encodings=["x"])
 
 # left panel: scatter plot
 points = alt.Chart().mark_point(filled=True, color="black").encode(
