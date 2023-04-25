@@ -393,7 +393,8 @@ def test_schema_validation_error():
     assert the_err.message in message
 
 
-def chart_example_layer():
+def chart_error_example__layer():
+    # Error: Width is not a valid property of a VConcatChart
     points = (
         alt.Chart(data.cars.url)
         .mark_point()
@@ -405,7 +406,8 @@ def chart_example_layer():
     return (points & points).properties(width=400)
 
 
-def chart_example_hconcat():
+def chart_error_example__hconcat():
+    # Error: Invalid value for title in Text
     source = data.cars()
     points = (
         alt.Chart(source)
@@ -418,7 +420,7 @@ def chart_example_hconcat():
 
     text = (
         alt.Chart(source)
-        .mark_text(align="right")
+        .mark_text()
         .encode(
             alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})
         )
@@ -427,7 +429,10 @@ def chart_example_hconcat():
     return points | text
 
 
-def chart_example_invalid_channel_and_condition():
+def chart_error_example__invalid_channel():
+    # Error: invalidChannel is an invalid encoding channel. Condition is correct
+    # but is added below as in previous implementations of Altair this interfered
+    # with finding the invalidChannel error
     selection = alt.selection_point()
     return (
         alt.Chart(data.barley())
@@ -440,7 +445,9 @@ def chart_example_invalid_channel_and_condition():
     )
 
 
-def chart_example_invalid_y_option():
+def chart_error_example__invalid_y_option_value_unknown_x_option():
+    # Error 1: unknown is an invalid channel option for X
+    # Error 2: Invalid Y option value "asdf" and unknown option "unknown" for X
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -451,7 +458,8 @@ def chart_example_invalid_y_option():
     )
 
 
-def chart_example_invalid_y_option_value():
+def chart_error_example__invalid_y_option_value():
+    # Error: Invalid Y option value "asdf"
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -462,7 +470,10 @@ def chart_example_invalid_y_option_value():
     )
 
 
-def chart_example_invalid_y_option_value_with_condition():
+def chart_error_example__invalid_y_option_value_with_condition():
+    # Error: Invalid Y option value "asdf". Condition is correct
+    # but is added below as in previous implementations of Altair this interfered
+    # with finding the invalidChannel error
     return (
         alt.Chart(data.barley())
         .mark_bar()
@@ -474,15 +485,18 @@ def chart_example_invalid_y_option_value_with_condition():
     )
 
 
-def chart_example_invalid_timeunit_value():
+def chart_error_example__invalid_timeunit_value():
+    # Error: Invalid value for Angle.timeUnit
     return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
 
 
-def chart_example_invalid_sort_value():
+def chart_error_example__invalid_sort_value():
+    # Error: Invalid value for Angle.sort
     return alt.Chart().encode(alt.Angle().sort("invalid_value"))
 
 
-def chart_example_invalid_bandposition_value():
+def chart_error_example__invalid_bandposition_value():
+    # Error: Invalid value for Text.bandPosition
     return (
         alt.Chart(data.cars())
         .mark_text(align="right")
@@ -490,25 +504,261 @@ def chart_example_invalid_bandposition_value():
     )
 
 
+def chart_error_example__invalid_type():
+    # Error: Invalid value for type
+    return alt.Chart().encode(alt.X(type="unknown"))
+
+
+def chart_error_example__additional_datum_argument():
+    # Error: wrong_argument is not a valid argument to datum
+    return alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
+
+
+def chart_error_example__invalid_value_type():
+    # Error: Value cannot be an integer in this case
+    return (
+        alt.Chart(data.cars())
+        .mark_point()
+        .encode(
+            x="Acceleration:Q",
+            y="Horsepower:Q",
+            color=alt.value(1),  # should be eg. alt.value('red')
+        )
+    )
+
+
+def chart_error_example__wrong_tooltip_type_in_faceted_chart():
+    # Error: Wrong data type to pass to tooltip
+    return (
+        alt.Chart(pd.DataFrame({"a": [1]}))
+        .mark_point()
+        .encode(tooltip=[{"wrong"}])
+        .facet()
+    )
+
+
+def chart_error_example__wrong_tooltip_type_in_layered_chart():
+    # Error: Wrong data type to pass to tooltip
+    return alt.layer(
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
+    )
+
+
+def chart_error_example__two_errors_in_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: invalidChannel is not a valid encoding channel
+    return alt.layer(
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
+        alt.Chart().mark_line().encode(invalidChannel="unknown"),
+    )
+
+
+def chart_error_example__two_errors_in_complex_concat_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: Invalid value for bandPosition
+    return (
+        chart_error_example__wrong_tooltip_type_in_layered_chart()
+        | chart_error_example__invalid_bandposition_value()
+    )
+
+
+def chart_error_example__three_errors_in_complex_concat_layered_chart():
+    # Error 1: Wrong data type to pass to tooltip
+    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 3: Invalid value for bandPosition
+    return (
+        chart_error_example__two_errors_in_layered_chart()
+        | chart_error_example__invalid_bandposition_value()
+    )
+
+
+def chart_error_example__two_errors_with_one_in_nested_layered_chart():
+    # Error 1: invalidOption is not a valid option for Scale
+    # Error 2: invalidChannel is not a valid encoding channel
+
+    # In the final chart object, the `layer` attribute will look like this:
+    # [alt.Chart(...), alt.Chart(...), alt.LayerChart(...)]
+    # We can therefore use this example to test if an error is also
+    # spotted in a layered chart within another layered chart
+    source = pd.DataFrame(
+        [
+            {"Day": 1, "Value": 103.3},
+            {"Day": 2, "Value": 394.8},
+            {"Day": 3, "Value": 199.5},
+        ]
+    )
+
+    blue_bars = (
+        alt.Chart(source)
+        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))
+        .mark_bar()
+    )
+    red_bars = (
+        alt.Chart(source)
+        .transform_filter(alt.datum.Value >= 300)
+        .transform_calculate(as_="baseline", calculate="300")
+        .encode(
+            alt.X("Day:O"),
+            alt.Y("baseline:Q"),
+            alt.Y2("Value:Q"),
+            color=alt.value("#e45755"),
+        )
+        .mark_bar()
+    )
+
+    bars = blue_bars + red_bars
+
+    base = alt.Chart().encode(y=alt.datum(300))
+
+    rule = base.mark_rule().encode(invalidChannel=2)
+    text = base.mark_text(text="hazardous")
+    rule_text = rule + text
+
+    chart = bars + rule_text
+    return chart
+
+
+def chart_error_example__four_errors():
+    # Error 1: unknown is not a valid encoding channel option
+    # Error 2: Invalid Y option value "asdf".
+    # Error 3: another_unknown is not a valid encoding channel option
+    # Error 4: fourth_error is not a valid encoding channel option <- this error
+    # should not show up in the final error message as it is capped at showing
+    # 3 errors
+    return (
+        alt.Chart(data.barley())
+        .mark_bar()
+        .encode(
+            x=alt.X("variety", unknown=2),
+            y=alt.Y("sum(yield)", stack="asdf"),
+            color=alt.Color("variety", another_unknown=2),
+            opacity=alt.Opacity("variety", fourth_error=1),
+        )
+    )
+
+
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
         (
-            chart_example_invalid_y_option,
+            chart_error_example__invalid_y_option_value_unknown_x_option,
             inspect.cleandoc(
-                r"""`X` has no parameter named 'unknown'
+                r"""Multiple errors were found.
 
-                Existing parameter names are:
-                shorthand      bin      scale   timeUnit   
-                aggregate      field    sort    title      
-                axis           impute   stack   type       
-                bandPosition                               
+                Error 1: `X` has no parameter named 'unknown'
 
-                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                    Existing parameter names are:
+                    shorthand      bin      scale   timeUnit   
+                    aggregate      field    sort    title      
+                    axis           impute   stack   type       
+                    bandPosition                               
+
+                    See the help for `X` to read the full description of these parameters
+
+                Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
+
+                    - One of \['zero', 'center', 'normalize'\]
+                    - Of type 'null' or 'boolean'$"""  # noqa: W291
             ),
         ),
         (
-            chart_example_layer,
+            chart_error_example__wrong_tooltip_type_in_faceted_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
+            ),
+        ),
+        (
+            chart_error_example__wrong_tooltip_type_in_layered_chart,
+            inspect.cleandoc(
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
+            ),
+        ),
+        (
+            chart_error_example__two_errors_in_layered_chart,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
+
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
+
+                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_example__two_errors_in_complex_concat_layered_chart,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+            ),
+        ),
+        (
+            chart_error_example__three_errors_in_complex_concat_layered_chart,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
+
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
+
+                    See the help for `Encoding` to read the full description of these parameters
+
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_example__two_errors_with_one_in_nested_layered_chart,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: `Scale` has no parameter named 'invalidOption'
+
+                    Existing parameter names are:
+                    align      domain      interpolate    range      round    
+                    base       domainMax   nice           rangeMax   scheme   
+                    bins       domainMid   padding        rangeMin   type     
+                    clamp      domainMin   paddingInner   reverse    zero     
+                    constant   exponent    paddingOuter                       
+
+                    See the help for `Scale` to read the full description of these parameters
+
+                Error 2: `Encoding` has no parameter named 'invalidChannel'
+
+                    Existing parameter names are:
+                    angle         key          order     strokeDash      tooltip   xOffset   
+                    color         latitude     radius    strokeOpacity   url       y         
+                    description   latitude2    radius2   strokeWidth     x         y2        
+                    detail        longitude    shape     text            x2        yError    
+                    fill          longitude2   size      theta           xError    yError2   
+                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
+                    href                                                                     
+
+                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_example__layer,
             inspect.cleandoc(
                 r"""`VConcatChart` has no parameter named 'width'
 
@@ -522,36 +772,31 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_y_option_value,
+            chart_error_example__invalid_y_option_value,
             inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`:
+                r"""'asdf' is an invalid value for `stack`. Valid values are:
 
-                'asdf' is not one of \['zero', 'center', 'normalize'\]
-                'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'$"""
+                - One of \['zero', 'center', 'normalize'\]
+                - Of type 'null' or 'boolean'$"""
             ),
         ),
         (
-            chart_example_invalid_y_option_value_with_condition,
+            chart_error_example__invalid_y_option_value_with_condition,
             inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`:
+                r"""'asdf' is an invalid value for `stack`. Valid values are:
 
-                'asdf' is not one of \['zero', 'center', 'normalize'\]
-                'asdf' is not of type 'null'
-                'asdf' is not of type 'boolean'$"""
+                - One of \['zero', 'center', 'normalize'\]
+                - Of type 'null' or 'boolean'$"""
             ),
         ),
         (
-            chart_example_hconcat,
+            chart_error_example__hconcat,
             inspect.cleandoc(
-                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`:
-
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'string'
-                {'text': 'Horsepower', 'align': 'right'} is not of type 'array'$"""
+                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
             ),
         ),
         (
-            chart_example_invalid_channel_and_condition,
+            chart_error_example__invalid_channel,
             inspect.cleandoc(
                 r"""`Encoding` has no parameter named 'invalidChannel'
 
@@ -568,35 +813,92 @@ def chart_example_invalid_bandposition_value():
             ),
         ),
         (
-            chart_example_invalid_timeunit_value,
+            chart_error_example__invalid_timeunit_value,
             inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `timeUnit`:
+                r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
-                'invalid_value' is not one of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
-                'invalid_value' is not one of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
-                'invalid_value' is not one of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
-                'invalid_value' is not one of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]$"""
+                - One of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
+                - One of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
+                - One of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
+                - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
+                - Of type 'object'$"""
             ),
         ),
         (
-            chart_example_invalid_sort_value,
-            # Previuosly, the line
-            # "'invalid_value' is not of type 'array'" appeared multiple times in
-            # the error message. This test should prevent a regression.
+            chart_error_example__invalid_sort_value,
             inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `sort`:
+                r"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
-                'invalid_value' is not of type 'array'$"""
+                - One of \['ascending', 'descending'\]
+                - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
+                - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
+                - Of type 'array', 'object', or 'null'$"""
             ),
         ),
         (
-            chart_example_invalid_bandposition_value,
+            chart_error_example__invalid_bandposition_value,
             inspect.cleandoc(
-                r"""'4' is an invalid value for `bandPosition`:
+                r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
+            ),
+        ),
+        (
+            chart_error_example__invalid_type,
+            inspect.cleandoc(
+                r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$"""
+            ),
+        ),
+        (
+            chart_error_example__additional_datum_argument,
+            inspect.cleandoc(
+                r"""`X` has no parameter named 'wrong_argument'
 
-                '4' is not of type 'number'
-                Additional properties are not allowed \('field' was unexpected\)
-                Additional properties are not allowed \('bandPosition', 'field', 'type' were unexpected\)$"""
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+            ),
+        ),
+        (
+            chart_error_example__invalid_value_type,
+            inspect.cleandoc(
+                r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
+            ),
+        ),
+        (
+            chart_error_example__four_errors,
+            inspect.cleandoc(
+                r"""Multiple errors were found.
+
+                Error 1: `Color` has no parameter named 'another_unknown'
+
+                    Existing parameter names are:
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
+
+                    See the help for `Color` to read the full description of these parameters
+
+                Error 2: `Opacity` has no parameter named 'fourth_error'
+
+                    Existing parameter names are:
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
+
+                    See the help for `Opacity` to read the full description of these parameters
+
+                Error 3: `X` has no parameter named 'unknown'
+
+                    Existing parameter names are:
+                    shorthand      bin      scale   timeUnit   
+                    aggregate      field    sort    title      
+                    axis           impute   stack   type       
+                    bandPosition                               
+
+                    See the help for `X` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
     ],
