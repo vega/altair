@@ -99,7 +99,7 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
   #{{ output_div }}.vega-embed details summary {
     position: relative;
   }
-</style>    
+</style>
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
