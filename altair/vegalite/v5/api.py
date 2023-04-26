@@ -2661,8 +2661,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        if isinstance(spec, Chart):
-            params = _repeat_names(params, repeat)
+        if isinstance(spec, (Chart, LayerChart)):
+            params = _repeat_names(params, repeat, spec)
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -3305,15 +3305,21 @@ def _get_repeat_strings(repeat):
     return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
-def _extend_view_name(v, r):
+def _extend_view_name(v, r, spec):
     # prevent the same extension from happening more than once
-    if v.endswith("child__" + r):
-        return v
-    else:
-        return v + "child__" + r
+    if isinstance(spec, Chart):
+        if v.endswith("child__" + r):
+            return v
+        else:
+            return f"{v}_child__{r}"
+    elif isinstance(spec, LayerChart):
+        if v.startswith("child__" + r):
+            return v
+        else:
+            return f"child__{r}_{v}"
 
 
-def _repeat_names(params, repeat):
+def _repeat_names(params, repeat, spec):
     if params is Undefined:
         return params
 
@@ -3328,10 +3334,17 @@ def _repeat_names(params, repeat):
         views = []
         repeat_strings = _get_repeat_strings(repeat)
         for v in param.views:
-            if any(v.endswith(f"child__{r}") for r in repeat_strings):
-                views.append(v)
-            else:
-                views += [_extend_view_name(v, r) for r in repeat_strings]
+            if isinstance(spec, Chart):
+                if any(v.endswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+            elif isinstance(spec, LayerChart):
+                if any(v.startswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+
         p.views = views
         params_named.append(p)
 
