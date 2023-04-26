@@ -44,11 +44,11 @@ examples of their use.
             data = pd.DataFrame({"i": range(no_colors), "hex": colors_in_scheme})
 
         # dynamic width
-        max_width = 450
+        max_width = 400
         w = max_width / no_colors
 
         # cornerRadius dependent on height-width ratio
-        cr_l = 0 if continuous else int(w / 2.4)
+        cr_l = 0 if continuous else 10
         cr_s = 0 if continuous else 5
 
         return {
@@ -73,7 +73,8 @@ examples of their use.
 
         return color_scale
 
-    def chart_normal_vision(data, h, w, expr_hex, my_y_axis, cr_l):
+    def chart_normal_vision(data, h, w, expr_hex, my_y_axis, cr_l, no):
+        stroke_nv = alt.value('gray') if no < 25 else alt.Stroke("hex_raw:N").scale(None).legend(None)
         normal_vision = (
             alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
@@ -87,7 +88,7 @@ examples of their use.
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("normal vision:O").axis(my_y_axis),
                 fill=alt.Fill("hex_raw:O").scale(None).legend(None),
-                stroke=alt.Stroke("hex_raw:O").scale(None).legend(None),
+                stroke=stroke_nv,
                 tooltip=[
                     alt.Tooltip("hex:O"),
                     alt.Tooltip("rgb:O"),
@@ -97,7 +98,8 @@ examples of their use.
         )
         return normal_vision
 
-    def chart_green_blindness(data, h, w, expr_hex, my_y_axis, cr_s):
+    def chart_green_blindness(data, h, w, expr_hex, my_y_axis, cr_s, no):
+        stroke_gb = alt.value('gray') if no < 25 else alt.Stroke("greenblind_rgb:N").scale(None).legend(None)
         green_blindness = (
             alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
@@ -113,12 +115,13 @@ examples of their use.
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("green-blindness:N").axis(my_y_axis),
                 fill=alt.Fill("greenblind_rgb:N").scale(None).legend(None),
-                stroke=alt.Stroke("greenblind_rgb:N").scale(None).legend(None),            
+                stroke=stroke_gb           
             )
         )    
         return green_blindness
 
-    def chart_red_blindness(data, h, w, expr_hex, my_y_axis, cr_s):
+    def chart_red_blindness(data, h, w, expr_hex, my_y_axis, cr_s, no):
+        stroke_rb = alt.value('gray') if no < 25 else alt.Stroke("redblind_rgb:N").scale(None).legend(None)
         red_blindness = (
             alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
@@ -134,12 +137,13 @@ examples of their use.
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("red-blindness:N").axis(my_y_axis),
                 fill=alt.Fill("redblind_rgb:N").scale(None).legend(None),
-                stroke=alt.Stroke("redblind_rgb:N").scale(None).legend(None),             
+                stroke=stroke_rb            
             )
         )  
         return red_blindness
 
-    def chart_grayscale(data, h, w, expr_hex, my_y_axis, cr_s):
+    def chart_grayscale(data, h, w, expr_hex, my_y_axis, cr_s, no):
+        stroke_gs = alt.value('gray') if no < 25 else alt.Stroke("grayscale_rgb:N").scale(None).legend(None)
         grayscale = (
             alt.Chart(data, height=h, width=alt.Step(w))
             .transform_calculate(
@@ -153,7 +157,7 @@ examples of their use.
                 x=alt.X("i:O").axis(None),
                 y=alt.Y("grayscale:N").axis(my_y_axis),
                 fill=alt.Fill("grayscale_rgb:N").scale(None).legend(None),
-                stroke=alt.Stroke("grayscale_rgb:N").scale(None).legend(None),               
+                stroke=stroke_gs,               
 
             )
         )
@@ -173,7 +177,7 @@ examples of their use.
         cr_s = chart_dict['cornerRadius_small']
         no = chart_dict['no_colors']
 
-        # define color scale
+        # define color scale and stroke
         color_scale = chart_color_scale(scheme_name, dict_schemes, continuous, custom, no, method)
 
         # define how hex-codes can be derived, from datasource or using color scale
@@ -196,10 +200,10 @@ examples of their use.
         )    
 
         # determine color pallettes for different color deficiencies
-        normal_vision = chart_normal_vision(data, h_l, w, expr_hex, my_y_axis, cr_l)
-        green_blindness = chart_green_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s)
-        red_blindness = chart_red_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s)
-        monochrome = chart_grayscale(data, h_s, w, expr_hex, my_y_axis, cr_s)
+        normal_vision = chart_normal_vision(data, h_l, w, expr_hex, my_y_axis, cr_l, no)
+        green_blindness = chart_green_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s, no)
+        red_blindness = chart_red_blindness(data, h_s, w, expr_hex, my_y_axis, cr_s, no)
+        monochrome = chart_grayscale(data, h_s, w, expr_hex, my_y_axis, cr_s, no)
 
         # determine which color pallettes to return
         if cvd and grayscale:
@@ -261,18 +265,17 @@ Or like this (``interpolate='hcl'``):
     plot_scheme("two_color", percep_schemes, cvd=False, continuous=300, method='hcl')
 
 As you can observe, all three color ramps are different,
-but all three color ramps start with ``blue`` and finsish with ``orange``.
-So what is the correct interpolation method to go from ``blue`` to ``orange``?
+but all three color ramps start with ``blue`` and finish with ``orange``.
 
+So what is the correct interpolation method to go from ``blue`` to ``orange``?
 There is no single answer to this question. 
-It also based how we, as a human, see colors. 
+It also based how we see colors. 
 To better understand the perception of colors to the human-eye, we
 can make use of a color space. A color space is a diagram to help
-understand how we see perceive colors and how they are distributed as wavelengths.
+understand how we see perceive colors and how they are distributed compare to each other.
 
-Here we show the corresponding trajectories of the blue/orange color
-gradient based on the three interpolation methods
-(``rgb``, ``hcl``, ``hcl-long``) in a common used color space ('CIE 1931 color space'):
+Here we show a common used color space ('CIE 1931 color space') from where we
+can see that the human eye has more attenuation to the color green:
 
 .. altair-plot::
     :hide-code:
@@ -327,14 +330,19 @@ gradient based on the three interpolation methods
 
     (rect + line).configure_view(stroke=None)
 
+In the color space are the trajectories of the blue/orange color
+gradient overlayed based on the three interpolation methods
+(``rgb``, ``hcl``, ``hcl-long``).
 You can see that all interpolation methods chose a different route
-in the color space. We now also understand why there is a ``-long`` suffix
+in the color space. The "``rgb``" trajectory a direct route. The
+``hcl`` trajectory is choosing a route on the bottom part of the space.
+We now also understand why there is a ``-long`` suffix
 in the interpolation method ``hcl-long``. 
 The interpolation trajectory is indeed very ``long``.
 
-The default of Altair is ``hcl``, but dependening on your use-case
-you can choose another interpolation method,
-see :class:`ScaleInterpolateEnum` for a complete list of options. 
+The default interpolation between colors within Altair is ``hcl``. 
+Dependening on your use-case you can choose another interpolation method,
+for a complete list of interpolation options see :class:`ScaleInterpolateEnum`. 
 
 Color-blind viewers
 ^^^^^^^^^^^^^^^^^^^
@@ -360,14 +368,18 @@ also inclusive.
    :header-rows: 1
 
    * - Example
-   * - **Friendly** diverging color scheme (``redyellowblue``)
+   * - **More friendly** diverging color scheme (``redyellowblue``). 
+       This color scheme avoids using green colors, and instead uses red,
+       yellow, and blue colors.
 
        .. altair-plot::
          :remove-code:
 
          plot_scheme("redyellowblue", color_vision_deficiency, cvd=True, continuous=True)
 
-   * - **Unfriendly** diverging color scale (``redyellowgreen``)
+   * - **Unfriendly** diverging color scale (``redyellowgreen``).
+       The red and green colors are used to represent different ends of a spectrum, 
+       but these two colors are not easy differentiated with some type of CVD.
 
        .. altair-plot::
          :remove-code:
@@ -390,7 +402,10 @@ that are not only informative but also visually attractive.
    * - Intuitive colors 
      - Non-intuitive colors
 
-   * - .. altair-plot::
+   * - Choose colors that are easy to understand by selecting ones that
+       naturally relate to your data.
+
+       .. altair-plot::
          :hide-code:            
     
          source = pd.DataFrame({
@@ -413,7 +428,10 @@ that are not only informative but also visually attractive.
 
          intuitive
 
-     - .. altair-plot::
+     - It is confusing and difficult to understand if you choose
+       colors which are non-intuive. Eg. green for water and blue for land.
+       
+       .. altair-plot::
          :hide-code:
 
          non_intuitive = alt.Chart(
@@ -439,7 +457,10 @@ that are not only informative but also visually attractive.
    * - Colors in moderation
      - Colors in excess
 
-   * - .. altair-plot::
+   * - Try not to use too many colors. If you choose more colors, use them
+       thoughtfully to emphasize the most important parts of your visualization.
+
+       .. altair-plot::
          :hide-code:
     
          import altair as alt
@@ -479,7 +500,11 @@ that are not only informative but also visually attractive.
 
          moderate
 
-     - .. altair-plot::
+     - Using too many colors in graphs or charts can make them confusing
+       and hard to read, which can lead to misunderstandings. To make it
+       easy to understand, use colors carefully and don't use too many.
+
+       .. altair-plot::
          :hide-code:
 
          excess = (
@@ -504,7 +529,10 @@ that are not only informative but also visually attractive.
    * - Consistency color usage between plots
      - In-consistent color usage between plots
 
-   * - .. altair-plot::
+   * - Using the same colors for the same data in charts or graphs helps
+       people understand the information better.
+       
+       .. altair-plot::
          :hide-code:
     
          source = data.movies()
@@ -558,10 +586,10 @@ that are not only informative but also visually attractive.
          )
          equal
 
-
-
-
-     - .. altair-plot::
+     - Choosing different colors for the same data can lead
+       to misunderstandings or incorrect conclusions.
+       
+       .. altair-plot::
          :hide-code:
 
          inequal = (line & bar).resolve_scale(
@@ -578,7 +606,11 @@ that are not only informative but also visually attractive.
    * - Clarity in colors
      - Indistinct color usage
 
-   * - .. altair-plot::
+   * - Use colors in order to make the data easier to read. If the items in the
+       visualiation can be easily distinguished leads to better understanding of
+       the data.
+     
+       .. altair-plot::
          :hide-code:
     
          source = data.stocks()
@@ -608,7 +640,10 @@ that are not only informative but also visually attractive.
              ).scale(range=col_range),
          )
 
-     - .. altair-plot::
+     - It is hard to understand the data correctly if you use colors
+       that make the items in your visualization unclear from each other.
+ 
+       ..  altair-plot::
          :hide-code:
 
          import altair as alt
@@ -633,7 +668,10 @@ that are not only informative but also visually attractive.
    * - Distinct classification of categories
      - No gradient colors for categories
 
-   * - .. altair-plot::
+   * - Often categories are unique and distinct from each other. 
+       Emphasize this by chosing colors that are clearly distinct from each other.
+       
+       .. altair-plot::
          :hide-code:
 
          import altair as alt
@@ -665,7 +703,10 @@ that are not only informative but also visually attractive.
              ).scale(range=col_range),
          )
 
-     - .. altair-plot::
+     - When unique categories are not distinguishable by their color usage, 
+       it can cause confusion and misunderstandings.
+
+       .. altair-plot::
          :hide-code:
 
          source = data.stocks()
@@ -687,7 +728,10 @@ that are not only informative but also visually attractive.
    * - Explain colors using a colorbar
      - No understanding of used colors
 
-   * - .. altair-plot::
+   * - When you use colors in your visualization, it's important to explain
+       what each color means so that people can understand your message better.
+  
+       .. altair-plot::
          :hide-code:
 
          import altair as alt
@@ -707,7 +751,10 @@ that are not only informative but also visually attractive.
              )
          )
 
-     - .. altair-plot::
+     - If you do not explain what your colors mean, people might be confused
+       and not understand your visualization properly. 
+       
+       .. altair-plot::
          :hide-code:
 
          import altair as alt
@@ -775,7 +822,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("blues", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("blues", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -787,7 +834,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("tealblues", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("tealblues", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -799,7 +846,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("teals", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("teals", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -811,7 +858,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("greens", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("greens", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -823,7 +870,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("browns", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("browns", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -835,7 +882,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("greys", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("greys", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -847,7 +894,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("purples", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("purples", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -859,7 +906,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("warmgreys", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("warmgreys", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -871,7 +918,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("reds", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("reds", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -883,7 +930,7 @@ range of values is continuous and unbroken.
          alt.vconcat(
              plot_scheme("oranges", seqs_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
 Diverging Schemes
 ^^^^^^^^^^^^^^^^^
@@ -926,7 +973,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("blueorange", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("blueorange", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -938,7 +985,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("brownbluegreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("brownbluegreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -950,7 +997,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("purplegreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("purplegreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -962,7 +1009,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("pinkyellowgreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("pinkyellowgreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -974,7 +1021,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("purpleorange", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("purpleorange", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -986,7 +1033,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("redblue", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("redblue", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -998,7 +1045,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("redgrey", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("redgrey", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1010,7 +1057,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("redyellowblue", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("redyellowblue", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1022,7 +1069,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("redyellowgreen", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("redyellowgreen", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1034,7 +1081,7 @@ temperature anomalies or changes in sea level.
          alt.vconcat(
              plot_scheme("spectral", divg_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("spectral", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
 Cyclical Schemes
 ^^^^^^^^^^^^^^^^
@@ -1067,7 +1114,7 @@ However, these schemes are not well suited to accurately convey value difference
          alt.vconcat(
              plot_scheme("rainbow", cycl_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("rainbow", cycl_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1079,7 +1126,7 @@ However, these schemes are not well suited to accurately convey value difference
          alt.vconcat(
              plot_scheme("sinebow", cycl_schemes, cvd=True, continuous=True, single=False, top=True),
              plot_scheme("sinebow", cycl_schemes, cvd=False, continuous=False, single=False, bottom=True)
-         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent')
+         ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
 Categorical Scales
 ^^^^^^^^^^^^^^^^^^
@@ -1122,7 +1169,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("accent", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("accent", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1131,7 +1178,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("category10", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("category10", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1140,7 +1187,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("category20", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("category20", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1149,7 +1196,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("category20b", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("category20b", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1158,7 +1205,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("category20c", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("category20c", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1167,7 +1214,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("dark2", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("dark2", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1176,7 +1223,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("paired", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("paired", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1185,7 +1232,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("pastel1", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("pastel1", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1194,7 +1241,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("pastel2", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("pastel2", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1203,7 +1250,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("set1", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("set1", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1212,7 +1259,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("set2", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("set2", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1221,7 +1268,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("set3", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("set3", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1230,7 +1277,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tableau10", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("tableau10", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1239,7 +1286,7 @@ the types of flowers in a garden, or different political affiliations.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tableau20", catg_schemes, cvd=True, continuous=False)
+         plot_scheme("tableau20", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
 Using Tools for Color Selection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1286,7 +1333,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_bright", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_bright", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1295,7 +1342,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_highcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_highcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1304,7 +1351,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_vibrant", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_vibrant", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1313,7 +1360,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_muted", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_muted", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1322,7 +1369,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_mediumcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_mediumcontrast", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1331,7 +1378,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_pale", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_pale", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1340,7 +1387,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_dark", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_dark", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
@@ -1349,7 +1396,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
          
    * - .. code-block:: none
     
@@ -1358,7 +1405,7 @@ used in data visualization from other sources.
      - .. altair-plot::
          :remove-code:
 
-         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True)
+         plot_scheme("tol_light", tol_schemes, cvd=True, continuous=False, grayscale=True).configure_scale(rectBandPaddingInner=0.1)
 
    * - .. code-block:: none
     
