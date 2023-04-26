@@ -24,7 +24,7 @@ Enhancements
 - Substantially improved error handling. Both in terms of finding the more relevant error (#2842), and in terms of improving the formatting and clarity of the error messages (#2824, #2568, #2979, #3009).
 - Include experimental support for the DataFrame Interchange Protocol (through ``__dataframe__`` attribute). This requires ``pyarrow>=11.0.0`` (#2888).
 - Support data type inference for columns with special characters (#2905).
-- Responsive width support using ``width="container"`` for all three html templates (#2867).
+- Responsive width support using ``width="container"`` when saving charts to html or displaying them with the default  `html` renderer (#2867).
 
 Grammar Changes
 ~~~~~~~~~~~~~~~
