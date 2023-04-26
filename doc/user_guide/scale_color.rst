@@ -2,8 +2,8 @@
 
 .. _user-guide-color:
 
-Color Scales
-============
+Color usage
+===========
 
 Effective visualization of scientific data requires careful attention
 to color selection. Choosing the right colors can be a complex task,
@@ -219,14 +219,14 @@ examples of their use.
         return chart_concat
 
 
-The Basics of Color Selection
+The basics of color selection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Color selection is an essential aspect of creating clear and informative
 visualizations of scientific data. To make the most effective choices,
 it's important to understand the basics of color perception and theory.
 
-Color Perception and Theory
+Color perception and theory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We will explain the basics using two colors, ``blue`` and ``orange``: 
@@ -773,15 +773,13 @@ that are not only informative but also visually attractive.
          )
 
 
-Types of Color Scales
-~~~~~~~~~~~~~~~~~~~~~
+Color schemes
+~~~~~~~~~~~~~
 
-This sections presents the three primary color scales used in data
-visualization: sequential, diverging, and categorical. The section
-includes examples of data that can be visualized using each scale and
-popular color schemes used in practice.
+This sections presents the three primary color schemes used in data
+visualization: sequential, diverging, and categorical. 
 
-Sequential Schemes
+Sequential schemes
 ^^^^^^^^^^^^^^^^^^
 
 Sequential schemes are best suited for data that has an inherent ordering,
@@ -932,7 +930,7 @@ range of values is continuous and unbroken.
              plot_scheme("oranges", seqs_schemes, cvd=False, continuous=False, single=False, bottom=True)
          ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
-Diverging Schemes
+Diverging schemes
 ^^^^^^^^^^^^^^^^^
 
 Diverging schemes are best suited for data that varies above and below a
@@ -1083,7 +1081,7 @@ temperature anomalies or changes in sea level.
              plot_scheme("spectral", divg_schemes, cvd=False, continuous=False, single=False, bottom=True)
          ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
-Cyclical Schemes
+Cyclical schemes
 ^^^^^^^^^^^^^^^^
 
 Cyclical color schemes may be used to highlight periodic patterns in continuous data.
@@ -1128,10 +1126,10 @@ However, these schemes are not well suited to accurately convey value difference
              plot_scheme("sinebow", cycl_schemes, cvd=False, continuous=False, single=False, bottom=True)
          ).configure_concat(spacing=1).configure_view(stroke=None).resolve_scale(color='independent').configure_scale(rectBandPaddingInner=0.1)
 
-Categorical Scales
-^^^^^^^^^^^^^^^^^^
+Categorical schemes
+^^^^^^^^^^^^^^^^^^^
 
-Categorical scales are best suited for data that is unordered, such as
+Categorical schemes are best suited for data that is unordered, such as
 different species or categories. Examples of categorical data include
 the types of flowers in a garden, or different political affiliations.
 
@@ -1288,17 +1286,18 @@ the types of flowers in a garden, or different political affiliations.
 
          plot_scheme("tableau20", catg_schemes, cvd=True, continuous=False).configure_scale(rectBandPaddingInner=0.1)
 
-Using Tools for Color Selection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Pre-Designed Color Palettes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Example color palettes from the other packages
-----------------------------------------------
+Palettes from other sources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This subsection focuses on pre-designed color palettes that can be
 used in data visualization from other sources.
+
+Here some color schemes from Paul Tol, https://personal.sron.nl/~pault/ which are picked as being:
+
+- distinct for all people, including colour-blind readers
+- distinct from black and white
+- distinct on screen and paper
+- matching well together
 
 .. altair-plot::   
     :output: none
@@ -1443,33 +1442,84 @@ used in data visualization from other sources.
 
          plot_scheme("tol_incandescent", tol_schemes, cvd=True, continuous=True, grayscale=True)
 
-Modifying Color Scales
-^^^^^^^^^^^^^^^^^^^^^^
+Expressions and colors
+~~~~~~~~~~~~~~~~~~~~~~
 
-Tools for adjusting brightness, saturation, and hue
----------------------------------------------------
+We can make use of the measured values regarding colors in a visualization.
+In the following example we will make use of the ``lumniance`` to detect if 
+the color of a text overlay on top of a bar should be colored ``black`` or
+``white``. The luminance describes the brightnes, normalized to 0 for darkest
+black and 1 for lightest white.
 
-This subsection provides an overview of the different ways in which
-brightness, saturation, and hue can be modified to create custom color
-scales. It explains how changing these attributes can help to emphasize
-or de-emphasize certain aspects of the data being visualized.
+In the following chart we have a sorted bar chart where the text overlay describes
+the sum of yield as is expressed on the ``x`` encoding channel.
 
-Customizing color scales to match specific data requirements
-------------------------------------------------------------
+.. altair-plot::
 
-This subsection explores the idea of creating custom color scales that
-are tailored to the specific needs of the data being visualized. It
-discusses how to use the tools introduced in xx to create color
-scales that are better suited to representing the nuances of the data,
-and provides examples of how this can be achieved in practice.
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    base = alt.Chart(source).encode(
+        x=alt.X('sum(yield):Q').stack('zero'),
+        y=alt.Y('site:O').sort('-x'),
+        text=alt.Text('sum(yield):Q', format='.0f')
+    )
+
+    bars = base.mark_bar().encode(color='sum(yield):Q')
+    text = base.mark_text(align='right', dx=-3, color='black')
+
+    bars + text
+
+As you can see, when the bar becomes darker, the text overlay becomes less visible.
+
+At this moment we can make use of the measured luminance to decide if the text overlay
+should be colored ``black`` or ``white``.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    base = alt.Chart(source).encode(
+        x=alt.X('sum(yield):Q').stack('zero'),
+        y=alt.Y('site:O').sort('-x'),
+        text=alt.Text('sum(yield):Q', format='.0f')
+    )
+
+    bars = base.mark_bar(
+        tooltip=alt.expr("luminance(scale('color', datum.sum_yield))")
+    ).encode(
+        color='sum(yield):Q'
+    )
+
+    text = base.mark_text(
+        align='right', 
+        dx=-3,
+        color=alt.expr("luminance(scale('color', datum.sum_yield)) > 0.5 ? 'black' : 'white'")
+    )
+
+    bars + text
+
+The lighter the bar, the higher the luminance. If the bar is light
+we like a text overlay that is black. The darker the bar, the lower
+the luminance. If the bar is dark, we like a text overlay that is white.
+
+In the expression above we have written this as a predicate. The text
+appear ``black`` if the luminance is above ``0.5`` and ``white`` when
+the luminance is below ``0.5``. The luminance is computed using the
+``'color'`` scale in combination with the interal computed data field
+``datum.sum_yield``. You can inspect the luminance through the tooltip
+by hovering the bars.
 
 Conclusion
 ~~~~~~~~~~
 
-By utilizing the tools and resources available for color selection,
-data visualizers can create effective and visually appealing
-presentations that accurately convey scientific data. Whether using
-pre-designed color schemes or customizing color scales, it is
-essential to consider factors such as accessibility, aesthetics,
-and perceptual relationships in order to create the most effective
-visualizations possible.
+If you use the right colors when making visualizations with scientific
+data, you can make them look good and easy to understand. You can use
+pre-designed color schemes or choose your own, but make sure they look
+good, are easy to see and make sense with the information you're
+presenting.
