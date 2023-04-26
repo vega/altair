@@ -620,7 +620,7 @@ data before usage in Altair using GeoPandas for example as such:
    encodings/index
    marks/index
    transform/index
-   scale_color
+   color_usage
    interactions
    compound_charts
    scale_resolve
