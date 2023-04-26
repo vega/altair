@@ -2,7 +2,7 @@
 
 .. _user-guide-color:
 
-Color usage
+Color Usage
 ===========
 
 Effective visualization of scientific data requires careful attention
