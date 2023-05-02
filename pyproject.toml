@@ -65,7 +65,7 @@ dev = [
     "m2r",
     "vega_datasets",
     # following is rejected by PyPI
-    "altair_viewer @ git+https://github.com/altair/altair_viewer.git",
+    "altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git",
     "vl-convert-python",
     "mypy",
     "pandas-stubs",
