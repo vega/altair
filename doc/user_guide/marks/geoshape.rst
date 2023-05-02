@@ -76,19 +76,24 @@ The following examples applies these approaches to focus on continental Africa:
 
 .. altair-plot::
 
-    from shapely.ops import orient
-    from shapely.geometry import mapping
-
-    extent_roi = gdf_ne.query("continent == 'Africa'").unary_union.envelope
+    extent_roi = gdf_ne.query("continent == 'Africa'")
+    xmin, ymin, xmax, ymax = extent_roi.total_bounds
 
     # fit object should be an array of GeoJSON-like features
-    # order polygon exterior needs to be clock-wise (left-hand-rule)
-    if extent_roi.exterior.is_ccw:
-        extent_roi = orient(extent_roi, -1)
-    extent_roi_geojson = [mapping(extent_roi)]
+    extent_roi_feature = {
+        "type": "Feature", 
+        "geometry": {"type": "Polygon", 
+                     "coordinates": [[
+                         [xmax, ymax],
+                         [xmax, ymin],
+                         [xmin, ymin],
+                         [xmin, ymax],
+                         [xmax, ymax]]]},
+        "properties": {}
+    }
 
     alt.Chart(gdf_ne).mark_geoshape(clip=True).project(
-        fit=extent_roi_geojson
+        fit=extent_roi_feature
     )
 
 Cartesian coordinates

@@ -191,6 +191,7 @@ Low-Level Schema Wrappers
    AxisConfig
    AxisOrient
    AxisResolveMap
+   BBox
    BarConfig
    BaseTitleNoValueRefs
    Baseline
@@ -310,6 +311,9 @@ Low-Level Schema Wrappers
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
+   Feature
+   FeatureCollection
+   FeatureGeometryGeoJsonProperties
    Field
    FieldDefWithoutScale
    FieldEqualPredicate
@@ -343,6 +347,9 @@ Low-Level Schema Wrappers
    GenericUnitSpecEncodingAnyMark
    GeoJsonFeature
    GeoJsonFeatureCollection
+   GeoJsonProperties
+   Geometry
+   GeometryCollection
    Gradient
    GradientStop
    GraticuleGenerator
@@ -377,6 +384,7 @@ Low-Level Schema Wrappers
    LegendResolveMap
    LegendStreamBinding
    LineConfig
+   LineString
    LinearGradient
    LocalMultiTimeUnit
    LocalSingleTimeUnit
@@ -398,6 +406,9 @@ Low-Level Schema Wrappers
    MarkType
    MergedStream
    Month
+   MultiLineString
+   MultiPoint
+   MultiPolygon
    MultiTimeUnit
    NamedData
    NonArgAggregateOp
@@ -419,9 +430,12 @@ Low-Level Schema Wrappers
    Parse
    ParseValue
    PivotTransform
+   Point
    PointSelectionConfig
    PointSelectionConfigWithoutType
    PolarDef
+   Polygon
+   Position
    Position2Def
    PositionDatumDef
    PositionDatumDefBase

@@ -1539,6 +1539,18 @@ class AxisResolveMap(VegaLiteSchema):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
 
 
+class BBox(VegaLiteSchema):
+    """BBox schema wrapper
+
+    anyOf(List(float), List(float))
+    Bounding box https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/BBox'}
+
+    def __init__(self, *args, **kwds):
+        super(BBox, self).__init__(*args, **kwds)
+
+
 class BarConfig(AnyMarkConfig):
     """BarConfig schema wrapper
 
@@ -5624,6 +5636,91 @@ class FacetedEncoding(VegaLiteSchema):
                                               yError2=yError2, yOffset=yOffset, **kwds)
 
 
+class Feature(VegaLiteSchema):
+    """Feature schema wrapper
+
+    Mapping(required=[geometry, properties, type])
+    A feature object which contains a geometry and associated properties.
+    https://tools.ietf.org/html/rfc7946#section-3.2
+
+    Parameters
+    ----------
+
+    geometry : :class:`Geometry`
+        The feature's geometry
+    properties : :class:`GeoJsonProperties`
+        Properties associated with this feature.
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    id : anyOf(string, float)
+        A value that uniquely identifies this feature in a
+        https://tools.ietf.org/html/rfc7946#section-3.2.
+    """
+    _schema = {'$ref': '#/definitions/Feature'}
+
+    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
+                 id=Undefined, **kwds):
+        super(Feature, self).__init__(geometry=geometry, properties=properties, type=type, bbox=bbox,
+                                      id=id, **kwds)
+
+
+class FeatureCollection(VegaLiteSchema):
+    """FeatureCollection schema wrapper
+
+    Mapping(required=[features, type])
+    A collection of feature objects.  https://tools.ietf.org/html/rfc7946#section-3.3
+
+    Parameters
+    ----------
+
+    features : List(:class:`FeatureGeometryGeoJsonProperties`)
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/FeatureCollection'}
+
+    def __init__(self, features=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(FeatureCollection, self).__init__(features=features, type=type, bbox=bbox, **kwds)
+
+
+class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
+    """FeatureGeometryGeoJsonProperties schema wrapper
+
+    Mapping(required=[geometry, properties, type])
+    A feature object which contains a geometry and associated properties.
+    https://tools.ietf.org/html/rfc7946#section-3.2
+
+    Parameters
+    ----------
+
+    geometry : :class:`Geometry`
+        The feature's geometry
+    properties : :class:`GeoJsonProperties`
+        Properties associated with this feature.
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    id : anyOf(string, float)
+        A value that uniquely identifies this feature in a
+        https://tools.ietf.org/html/rfc7946#section-3.2.
+    """
+    _schema = {'$ref': '#/definitions/Feature<Geometry,GeoJsonProperties>'}
+
+    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
+                 id=Undefined, **kwds):
+        super(FeatureGeometryGeoJsonProperties, self).__init__(geometry=geometry, properties=properties,
+                                                               type=type, bbox=bbox, id=id, **kwds)
+
+
 class Field(VegaLiteSchema):
     """Field schema wrapper
 
@@ -6136,23 +6233,102 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
 class GeoJsonFeature(Fit):
     """GeoJsonFeature schema wrapper
 
-    Any
+    Mapping(required=[geometry, properties, type])
+    A feature object which contains a geometry and associated properties.
+    https://tools.ietf.org/html/rfc7946#section-3.2
+
+    Parameters
+    ----------
+
+    geometry : :class:`Geometry`
+        The feature's geometry
+    properties : :class:`GeoJsonProperties`
+        Properties associated with this feature.
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    id : anyOf(string, float)
+        A value that uniquely identifies this feature in a
+        https://tools.ietf.org/html/rfc7946#section-3.2.
     """
     _schema = {'$ref': '#/definitions/GeoJsonFeature'}
 
-    def __init__(self, *args, **kwds):
-        super(GeoJsonFeature, self).__init__(*args, **kwds)
+    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
+                 id=Undefined, **kwds):
+        super(GeoJsonFeature, self).__init__(geometry=geometry, properties=properties, type=type,
+                                             bbox=bbox, id=id, **kwds)
 
 
 class GeoJsonFeatureCollection(Fit):
     """GeoJsonFeatureCollection schema wrapper
 
-    Any
+    Mapping(required=[features, type])
+    A collection of feature objects.  https://tools.ietf.org/html/rfc7946#section-3.3
+
+    Parameters
+    ----------
+
+    features : List(:class:`FeatureGeometryGeoJsonProperties`)
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
     _schema = {'$ref': '#/definitions/GeoJsonFeatureCollection'}
 
+    def __init__(self, features=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(GeoJsonFeatureCollection, self).__init__(features=features, type=type, bbox=bbox, **kwds)
+
+
+class GeoJsonProperties(VegaLiteSchema):
+    """GeoJsonProperties schema wrapper
+
+    anyOf(Mapping(required=[]), None)
+    """
+    _schema = {'$ref': '#/definitions/GeoJsonProperties'}
+
     def __init__(self, *args, **kwds):
-        super(GeoJsonFeatureCollection, self).__init__(*args, **kwds)
+        super(GeoJsonProperties, self).__init__(*args, **kwds)
+
+
+class Geometry(VegaLiteSchema):
+    """Geometry schema wrapper
+
+    anyOf(:class:`Point`, :class:`MultiPoint`, :class:`LineString`, :class:`MultiLineString`,
+    :class:`Polygon`, :class:`MultiPolygon`, :class:`GeometryCollection`)
+    Union of geometry objects. https://tools.ietf.org/html/rfc7946#section-3
+    """
+    _schema = {'$ref': '#/definitions/Geometry'}
+
+    def __init__(self, *args, **kwds):
+        super(Geometry, self).__init__(*args, **kwds)
+
+
+class GeometryCollection(Geometry):
+    """GeometryCollection schema wrapper
+
+    Mapping(required=[geometries, type])
+    Geometry Collection https://tools.ietf.org/html/rfc7946#section-3.1.8
+
+    Parameters
+    ----------
+
+    geometries : List(:class:`Geometry`)
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/GeometryCollection'}
+
+    def __init__(self, geometries=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(GeometryCollection, self).__init__(geometries=geometries, type=type, bbox=bbox, **kwds)
 
 
 class Gradient(VegaLiteSchema):
@@ -8445,6 +8621,29 @@ class LineConfig(AnyMarkConfig):
                                          width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
+class LineString(Geometry):
+    """LineString schema wrapper
+
+    Mapping(required=[coordinates, type])
+    LineString geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.4
+
+    Parameters
+    ----------
+
+    coordinates : List(:class:`Position`)
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/LineString'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(LineString, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+
+
 class LinearGradient(Gradient):
     """LinearGradient schema wrapper
 
@@ -9926,6 +10125,75 @@ class Month(VegaLiteSchema):
 
     def __init__(self, *args):
         super(Month, self).__init__(*args)
+
+
+class MultiLineString(Geometry):
+    """MultiLineString schema wrapper
+
+    Mapping(required=[coordinates, type])
+    MultiLineString geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.5
+
+    Parameters
+    ----------
+
+    coordinates : List(List(:class:`Position`))
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/MultiLineString'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(MultiLineString, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+
+
+class MultiPoint(Geometry):
+    """MultiPoint schema wrapper
+
+    Mapping(required=[coordinates, type])
+    MultiPoint geometry object.  https://tools.ietf.org/html/rfc7946#section-3.1.3
+
+    Parameters
+    ----------
+
+    coordinates : List(:class:`Position`)
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/MultiPoint'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(MultiPoint, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+
+
+class MultiPolygon(Geometry):
+    """MultiPolygon schema wrapper
+
+    Mapping(required=[coordinates, type])
+    MultiPolygon geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.7
+
+    Parameters
+    ----------
+
+    coordinates : List(List(List(:class:`Position`)))
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/MultiPolygon'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(MultiPolygon, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
 
 
 class NamedData(DataSource):
@@ -11495,6 +11763,33 @@ class ParseValue(VegaLiteSchema):
         super(ParseValue, self).__init__(*args, **kwds)
 
 
+class Point(Geometry):
+    """Point schema wrapper
+
+    Mapping(required=[coordinates, type])
+    Point geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.2
+
+    Parameters
+    ----------
+
+    coordinates : :class:`Position`
+        A Position is an array of coordinates.
+        https://tools.ietf.org/html/rfc7946#section-3.1.1 Array should contain between two
+        and three elements. The previous GeoJSON specification allowed more elements (e.g.,
+        which could be used to represent M values), but the current specification only
+        allows X, Y, and (optionally) Z to be defined.
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/Point'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(Point, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+
+
 class PointSelectionConfig(VegaLiteSchema):
     """PointSelectionConfig schema wrapper
 
@@ -11719,6 +12014,44 @@ class PolarDef(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(PolarDef, self).__init__(*args, **kwds)
+
+
+class Polygon(Geometry):
+    """Polygon schema wrapper
+
+    Mapping(required=[coordinates, type])
+    Polygon geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.6
+
+    Parameters
+    ----------
+
+    coordinates : List(List(:class:`Position`))
+
+    type : string
+        Specifies the type of GeoJSON object.
+    bbox : :class:`BBox`
+        Bounding box of the coordinate range of the object's Geometries, Features, or
+        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+    """
+    _schema = {'$ref': '#/definitions/Polygon'}
+
+    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
+        super(Polygon, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+
+
+class Position(VegaLiteSchema):
+    """Position schema wrapper
+
+    List(float)
+    A Position is an array of coordinates. https://tools.ietf.org/html/rfc7946#section-3.1.1
+    Array should contain between two and three elements. The previous GeoJSON specification
+    allowed more elements (e.g., which could be used to represent M values), but the current
+    specification only allows X, Y, and (optionally) Z to be defined.
+    """
+    _schema = {'$ref': '#/definitions/Position'}
+
+    def __init__(self, *args):
+        super(Position, self).__init__(*args)
 
 
 class Position2Def(VegaLiteSchema):
@@ -13023,7 +13356,7 @@ class Projection(VegaLiteSchema):
         **Default value:** ``2.0``
     extent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
 
-    fit : anyOf(List(:class:`GeoJsonFeature`), List(:class:`Fit`), :class:`ExprRef`)
+    fit : anyOf(:class:`Fit`, List(:class:`Fit`), :class:`ExprRef`)
 
     fraction : anyOf(float, :class:`ExprRef`)
         The fraction parameter for the ``bottomley`` projection.
@@ -13151,7 +13484,7 @@ class ProjectionConfig(VegaLiteSchema):
         **Default value:** ``2.0``
     extent : anyOf(:class:`Vector2Vector2number`, :class:`ExprRef`)
 
-    fit : anyOf(List(:class:`GeoJsonFeature`), List(:class:`Fit`), :class:`ExprRef`)
+    fit : anyOf(:class:`Fit`, List(:class:`Fit`), :class:`ExprRef`)
 
     fraction : anyOf(float, :class:`ExprRef`)
         The fraction parameter for the ``bottomley`` projection.
