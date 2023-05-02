@@ -1,5 +1,5 @@
 # ruff: noqa
-__version__ = "5.0.0dev"
+__version__ = "5.0.0rc3"
 
 from typing import Any
 
