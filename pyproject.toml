@@ -19,7 +19,7 @@ dependencies = [
     "importlib_metadata; python_version<\"3.8\"",
     "typing_extensions>=4.0.1; python_version<\"3.11\"",
     "jinja2",
-    "jsonschema>=3.0",
+    "jsonschema>=4.0.1",
     "numpy",
     "pandas>=0.18",
     "toolz"
@@ -65,7 +65,7 @@ dev = [
     "m2r",
     "vega_datasets",
     # following is rejected by PyPI
-    "altair_viewer @ git+https://github.com/altair-viz/altair_viewer.git",
+    "altair_viewer @ git+https://github.com/mattijn/altair_viewer.git@vl5.8",
     "vl-convert-python",
     "mypy",
     "pandas-stubs",
