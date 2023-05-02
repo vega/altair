@@ -52,6 +52,7 @@ Backward-Incompatible Changes
 - Removed the Vega-Lite 3 and 4 wrappers (#2847).
 - Removed the deprecated datasets.py (#3010).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+- Minimum requirement of ``jsonschema`` is ``4.0.1`` or higher (#).
 
 Maintenance
 ~~~~~~~~~~~
