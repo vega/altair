@@ -14,11 +14,11 @@ Enhancements
 
 - As described in the release notes for `Vega-Lite 5.0.0 <https://github.com/vega/vega-lite/releases/tag/v5.0.0>`_, the primary change in this release of Altair is the introduction of parameters. There are two types of parameters, selection parameters and variable parameters.  Variable parameters are new to Altair, and while selections are not new, much of the old terminology has been deprecated.  See :ref:`gallery_slider_cutoff` for an application of variable parameters (#2528).
 - Grouped bar charts and jitter are now supported using offset channels, see :ref:`gallery_grouped_bar_chart2` and :ref:`gallery_strip_plot_jitter`
-- ``vl-convert`` is now used as the default backend for saving Altair charts as svg and png files, which should simplify saving chart as it does not require external dependencies like altair_saver does (#2701).
+- `vl-convert <https://github.com/vega/vl-convert>`_ is now used as the default backend for saving Altair charts as svg and png files, which simplifies saving chart as it does not require external dependencies like `altair_saver <http://github.com/altair-viz/altair_saver>`_ does (#2701). Currently, `altair_saver <http://github.com/altair-viz/altair_saver>`_ does not support Altair 5 and it is recommended to switch to `vl-convert <https://github.com/vega/vl-convert>`_. See :ref:`saving-png` for more details.
+- Saving charts with HTML inline is now supported without having `altair_saver <http://github.com/altair-viz/altair_saver>`_ installed (#2807).
 - The default chart width was changed from 400 to 300 (#2785).
 - Ordered pandas categorical data are now automatically encoded as sorted ordinal data (#2522)
 - The ``Title`` and ``Impute`` aliases were added for ``TitleParams`` and ``ImputeParams``, respectively (#2732).
-- Saving charts with HTML inline is now supported without having altair_saver installed (#2807).
 - The documentation page has been revamped, both in terms of appearance and content.
 - More informative autocompletion by removing deprecated methods (#2814) and for editors that rely on type hints (e.g. VS Code) we added support for completion in method chains (#2846) and extended keyword completion to cover additional methods (#2920).
 - Substantially improved error handling. Both in terms of finding the more relevant error (#2842), and in terms of improving the formatting and clarity of the error messages (#2824, #2568, #2979, #3009).
