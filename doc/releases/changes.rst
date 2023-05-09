@@ -3,8 +3,8 @@
 Release Notes
 =============
 
-Version 5.0.0 (unreleased)
---------------------------
+Version 5.0.0
+-------------
 
 - Update Vega-Lite from version 4.17.0 to version 5.8.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
