@@ -129,10 +129,10 @@ def _get_errors_from_spec(
     return errors
 
 
-def _json_path(err: jsonschema.exceptions.ValidationError):
+def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
     """Drop in replacement for the .json_path property of the jsonschema
     ValidationError class, which is not available as property for
-    ValidationError with jsonschema=<4.0.1.
+    ValidationError with jsonschema<4.0.1.
     More info, see https://github.com/altair-viz/altair/issues/3038
     """
     path = "$"
@@ -154,7 +154,7 @@ def _group_errors_by_json_path(
     """
     errors_by_json_path = collections.defaultdict(list)
     for err in errors:
-        err_key = err.json_path if hasattr(err, "json_path") else _json_path(err)
+        err_key = getattr(err, "json_path", _json_path(err))
         errors_by_json_path[err_key].append(err)
     return dict(errors_by_json_path)
 
@@ -364,7 +364,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {_json_path(err): [err]}
+            err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
         )
         # This is the message from err
         self._original_message = self.message
