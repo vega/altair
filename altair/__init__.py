@@ -1,5 +1,5 @@
 # ruff: noqa
-__version__ = "5.0.0dev"
+__version__ = "5.1.0dev"
 
 from typing import Any
 
@@ -31,6 +31,7 @@ __all__ = [
     "AxisConfig",
     "AxisOrient",
     "AxisResolveMap",
+    "BBox",
     "BarConfig",
     "BaseTitleNoValueRefs",
     "Baseline",
@@ -163,6 +164,9 @@ __all__ = [
     "FacetSpec",
     "FacetedEncoding",
     "FacetedUnitSpec",
+    "Feature",
+    "FeatureCollection",
+    "FeatureGeometryGeoJsonProperties",
     "Field",
     "FieldChannelMixin",
     "FieldDefWithoutScale",
@@ -203,6 +207,9 @@ __all__ = [
     "GenericUnitSpecEncodingAnyMark",
     "GeoJsonFeature",
     "GeoJsonFeatureCollection",
+    "GeoJsonProperties",
+    "Geometry",
+    "GeometryCollection",
     "Gradient",
     "GradientStop",
     "GraticuleGenerator",
@@ -248,6 +255,7 @@ __all__ = [
     "LegendResolveMap",
     "LegendStreamBinding",
     "LineConfig",
+    "LineString",
     "LinearGradient",
     "LocalMultiTimeUnit",
     "LocalSingleTimeUnit",
@@ -275,6 +283,9 @@ __all__ = [
     "MaxRowsError",
     "MergedStream",
     "Month",
+    "MultiLineString",
+    "MultiPoint",
+    "MultiPolygon",
     "MultiTimeUnit",
     "NamedData",
     "NonArgAggregateOp",
@@ -303,9 +314,12 @@ __all__ = [
     "Parse",
     "ParseValue",
     "PivotTransform",
+    "Point",
     "PointSelectionConfig",
     "PointSelectionConfigWithoutType",
     "PolarDef",
+    "Polygon",
+    "Position",
     "Position2Def",
     "PositionDatumDef",
     "PositionDatumDefBase",

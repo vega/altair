@@ -31,21 +31,19 @@ xmin, xmax, ymin, ymax = (
     df_wind.latitude.max(),
 )
 
-# clockwise, left-hand-rule
-extent = [
-    {
-        "type": "Polygon",
-        "coordinates": (
-            (
-                (xmax, ymax),
-                (xmax, ymin),
-                (xmin, ymin),
-                (xmin, ymax),
-                (xmax, ymax),
-            ),
-        ),
-    }
-]
+# extent as feature or featurecollection
+extent = {
+    "type": "Feature", 
+    "geometry": {"type": "Polygon", 
+                 "coordinates": [[
+                     [xmax, ymax],
+                     [xmax, ymin],
+                     [xmin, ymin],
+                     [xmin, ymax],
+                     [xmax, ymax]]]
+                },
+    "properties": {}
+}
 
 # use fit combined with clip=True
 base = (

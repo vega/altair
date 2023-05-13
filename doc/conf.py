@@ -12,8 +12,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
 from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -36,7 +36,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.githubpages",
     "numpydoc.numpydoc",
-    "sphinxext.altairplot",
+    "sphinxext_altair.altairplot",
     "sphinxext.altairgallery",
     "sphinxext.schematable",
     "sphinx_copybutton",
@@ -76,7 +76,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.0.0"
+version = "5.1.0"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}dev"
 
@@ -156,7 +156,7 @@ html_theme_options = {
         },
     ],
     "header_links_before_dropdown": 6,
-    "announcement": """This website is for the release candidate of version 5 <code class="docutils literal notranslate"><span class="pre">pip install altair==5.0.0rc1</span></code> <span class="pre">(more info <a href='https://github.com/altair-viz/altair/issues/2937'>#2937</a>)</span>. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
+    "announcement": """This website is for version 5. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
 }
 
 html_context = {"default_mode": "light"}
