@@ -75,8 +75,7 @@ dev = [
 doc = [
     "sphinx",
     "docutils",
-    # This will be replaced with the package once released
-    "sphinxext_altair @ git+https://github.com/binste/sphinxext-altair.git@initial_version",
+    "sphinxext_altair",
     "jinja2",
     "numpydoc",
     "pillow",
