@@ -75,6 +75,7 @@ dev = [
 doc = [
     "sphinx",
     "docutils",
+    "sphinxext_altair",
     "jinja2",
     "numpydoc",
     "pillow",
