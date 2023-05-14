@@ -93,15 +93,7 @@ path = "altair/__init__.py"
 allow-direct-references = true
 
 [tool.hatch.build]
-include = [
-    "/altair",
-    "README.md",
-    "LICENSE",
-    "pyproject.toml"
-]
-
-[tool.hatch.build.targets.wheel]
-only-include = ["/altair"]
+include = ["/altair"]
 
 [tool.hatch.envs.default]
 features = ["dev"]
