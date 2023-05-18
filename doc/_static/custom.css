@@ -74,3 +74,9 @@ properly displayed on mobile devices and not restricted to 20% */
 .full-width-plot {
   width: 100%;
 }
+
+.lead {
+  font-size: 1.3em;
+  font-weight: 300;
+  margin-top: 18px;
+}
