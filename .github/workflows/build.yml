@@ -65,3 +65,12 @@ jobs:
         run: |
           # pip install vl-convert-python
           pytest -m save_engine --doctest-modules tests
+      - name: Validate Vega-Lite schema
+        run: |
+          # We install all 'format' dependencies of jsonschema as check-jsonschema
+          # only does the 'format' checks which are installed.
+          # We can always use the latest jsonschema version here.
+          # uri-reference check is disabled as the URIs in the Vega-Lite schema do
+          # not conform RFC 3986.
+          pip install 'jsonschema[format]' --upgrade
+          check-jsonschema --check-metaschema altair/vegalite/v5/schema/vega-lite-schema.json --disable-formats uri-reference
