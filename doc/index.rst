@@ -15,9 +15,9 @@ Vega-Altair: Declarative Visualization in Python
    **Vega-Altair** is a declarative visualization library for Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
 
 
-.. grid:: 2
-   :padding: 4
-   :gutter: 3
+.. grid:: 1 1 2 2
+   :padding: 0 2 3 5
+   :gutter: 2 2 3 3
    :class-container: startpage-grid
 
    .. grid-item-card:: Getting Started
