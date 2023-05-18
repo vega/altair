@@ -12,7 +12,40 @@ Vega-Altair: Declarative Visualization in Python
 
    **Vega-Altair** is a declarative visualization library for Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
 
-You can browse this site via the links in the top navigation panel. It can also be helpful to browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
+
+.. grid:: 2
+   :padding: 4
+   :gutter: 3
+   :class-container: startpage-grid
+
+   .. grid-item-card:: Getting Started
+      :link: overview
+      :link-type: ref
+      :link-alt: Getting started
+
+      In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
+
+   .. grid-item-card:: User Guide
+      :link: user-guide-data
+      :link-type: ref
+      :link-alt: User guide
+
+      Check out the User Guides for in-depth information on the key concepts of Vega-Altair.
+
+   .. grid-item-card:: Examples
+      :link: example-gallery
+      :link-type: ref
+      :link-alt: Examples
+
+      The Examples gallery contains a selection of different visualizations which you can create with Vega-Altair.
+
+   .. grid-item-card:: API
+      :link: API
+      :link-type: ref
+      :link-alt: API
+
+      The API reference guide contains detailed information on all of Vega-Altair's methods and classes.
+
 
 *The Vega-Altair open-source project is not affiliated with Altair Engineering, Inc.*
 

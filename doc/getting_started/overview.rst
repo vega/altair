@@ -36,7 +36,7 @@ concise grammar.
 The project is named after the `brightest star <https://en.wikipedia.org/wiki/Altair>`_ 
 in the constellation Aquila. From Earth's sky Altair appears close to Vega, the star from which our parent project drew its name.
 
-This documentation serves as the main reference for learning about Altair. Additional learning material and tutorials can be found in the :ref:`learning-resources` section.
+This documentation serves as the main reference for learning about Altair. Additional learning material and tutorials can be found in the :ref:`learning-resources` section. It can also be helpful to browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
