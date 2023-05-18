@@ -72,5 +72,5 @@ jobs:
           # We can always use the latest jsonschema version here.
           # uri-reference check is disabled as the URIs in the Vega-Lite schema do
           # not conform RFC 3986.
-          pip install 'jsonschema[format]' --upgrade
+          pip install 'jsonschema[format]' check-jsonschema --upgrade
           check-jsonschema --check-metaschema altair/vegalite/v5/schema/vega-lite-schema.json --disable-formats uri-reference
