@@ -7,8 +7,8 @@ Vega-Altair: Declarative Visualization in Python
 
 
 .. altair-minigallery::
-   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
-   :size: 15
+   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, errorbars_with_ci, scatter_linked_brush, layered_heatmap_text, natural_disasters, bar_rounded, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube, ridgeline_plot, violin_plot, strip_plot, table_bubble_plot_github
+   :size: 21
 
 Vega-Altair is a declarative statistical visualization library for Python. 
 

@@ -74,9 +74,3 @@ properly displayed on mobile devices and not restricted to 20% */
 .full-width-plot {
   width: 100%;
 }
-
-/* Use full page width without sidebars */
-/* .bd-content { */
-/*   max-width: 100%; */
-/*   flex-grow: 1; */
-/* } */
