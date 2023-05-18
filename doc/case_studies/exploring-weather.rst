@@ -263,7 +263,7 @@ This is the end of this tutorial where you have seen various ways to bin
 and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
-:ref:`API`.
+:ref:`api`.
 
 .. _Pandas: http://pandas.pydata.org/
 
