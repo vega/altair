@@ -3,8 +3,20 @@
 Release Notes
 =============
 
-Version 5.0.0
--------------
+Version 5.1.0 (unreleased)
+--------------------------
+
+Enhancements
+~~~~~~~~~~~~
+
+Bug Fixes
+~~~~~~~~~
+
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Version 5.0.0 (released May 9, 2023)
+------------------------------------
 
 - Update Vega-Lite from version 4.17.0 to version 5.8.0;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
@@ -52,6 +64,7 @@ Backward-Incompatible Changes
 - Removed the Vega-Lite 3 and 4 wrappers (#2847).
 - Removed the deprecated datasets.py (#3010).
 - In regards to the grammar changes listed above, the old terminology will still work in many basic cases.  On the other hand, if that old terminology gets used at a lower level, then it most likely will not work.  For example, in the current version of :ref:`gallery_scatter_with_minimap`, two instances of the key ``param`` are used in dictionaries to specify axis domains.  Those used to be ``selection``, but that usage is not compatible with the current Vega-Lite schema.
+- Removed the ``altair.sphinxext`` module (#2792). The ``altair-plot`` Sphinx directive is now part of the `sphinxext-altair <https://github.com/altair-viz/sphinxext-altair>`_ package.
 
 Maintenance
 ~~~~~~~~~~~
