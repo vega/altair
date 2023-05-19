@@ -6,7 +6,6 @@ Release Notes
 Version 5.0.1 (unreleased)
 --------------------------
 
-- Migrate altair.sphinxext.altairplot module to `sphinxext-altair <https://github.com/altair-viz/sphinxext-altair>`_ extension (#3056).
 - Remove unwanted files during build to avoid littering site-packages folder (#3057)
 - Deprecate the `.ref()` function for selections, instead of removing it (#3063). 
 
