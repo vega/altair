@@ -80,7 +80,8 @@ properly displayed on mobile devices and not restricted to 20% */
 .lead {
   font-size: 1.3em;
   font-weight: 300;
-  margin-top: 18px;
+  margin-top: 22px;
+  margin-bottom: 22px;
 }
 
 .lead strong {
