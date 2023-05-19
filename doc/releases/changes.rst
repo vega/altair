@@ -3,17 +3,11 @@
 Release Notes
 =============
 
-Version 5.1.0 (unreleased)
+Version 5.0.1 (unreleased)
 --------------------------
 
-Enhancements
-~~~~~~~~~~~~
-
-Bug Fixes
-~~~~~~~~~
-
-Backward-Incompatible Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Remove unwanted files during build to avoid littering site-packages folder (#3057)
+- Deprecate the `.ref()` function for selections, instead of removing it (#3063). 
 
 Version 5.0.0 (released May 9, 2023)
 ------------------------------------

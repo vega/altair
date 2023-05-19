@@ -191,6 +191,13 @@ class Parameter(expr.core.OperatorMixin, object):
             name = self._get_name()
         self.name = name
 
+    @utils.deprecation.deprecated(
+        message="'ref' is deprecated. No need to call '.ref()' anymore."
+    )
+    def ref(self):
+        "'ref' is deprecated. No need to call '.ref()' anymore."
+        return self.to_dict()
+
     def to_dict(self):
         if self.param_type == "variable":
             return {"expr": self.name}
