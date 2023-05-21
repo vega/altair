@@ -48,7 +48,9 @@ div.bottomnav {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
   margin-bottom: 10px;
 }
 #showcase:after,

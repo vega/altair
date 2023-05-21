@@ -82,6 +82,10 @@ properly displayed on mobile devices and not restricted to 20% */
   font-weight: 300;
   margin-top: 22px;
   margin-bottom: 22px;
+  /* This pushes down the lead so that it is not rendered on top of
+  the gallery (showcase) which has an absolute position. The value is calculated
+  as height (showcase) + margin-bottom (showcase) + margin-top (lead) */
+  padding-top: 332px;
 }
 
 .lead strong {

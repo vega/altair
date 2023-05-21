@@ -26,5 +26,5 @@ img.logo {
 
 /* Increas max-width of the content area slightly to accomodate larger screens */
 .bd-main .bd-content .bd-article-container {
-    max-width: 1300px;
+    max-width: 1000px;
 }
