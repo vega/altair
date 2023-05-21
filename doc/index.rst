@@ -6,8 +6,8 @@ Vega-Altair: Declarative Visualization in Python
    :format: html
 
 .. altair-minigallery::
-   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, errorbars_with_ci, scatter_linked_brush, layered_heatmap_text, natural_disasters, bar_rounded, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube, ridgeline_plot, violin_plot, strip_plot, table_bubble_plot_github
-   :size: 21
+   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, errorbars_with_ci, scatter_linked_brush, line_with_ci, natural_disasters, bar_rounded, streamgraph, multiline_tooltip, choropleth, select_detail, interactive_cross_highlight, seattle_weather_interactive, london_tube, ridgeline_plot, violin_plot, strip_plot, table_bubble_plot_github, radial_chart, boxplot, mosaic_with_labels
+   :size: 24
 
 
 .. rst-class:: lead

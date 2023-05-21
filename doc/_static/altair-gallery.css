@@ -74,11 +74,19 @@ div.bottomnav {
 #showcase .examples {
   margin: 0 auto;
   height: 300px;
-  width: 1300px;
   line-height: 0;
+  /* Width and padding settings give the example showcase the same width
+  as the page header on a big screen. On smaller screens, they both will
+  have the same width anyway as the title header is responsive and gets narrower
+  and the example showcase gets clipped by the overflow: hidden setting. */
+  width: 88rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 #showcase .preview {
-  width: 180px;
+  /* Value is chosen through trial and error so that the examples fill out the 
+  whole width which is defined in #showcase .examples */
+  width: 172px;
   height: 100px;
   padding: 0;
   outline: 1px solid #ddd;
