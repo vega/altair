@@ -29,7 +29,7 @@ ranked_text = alt.Chart(source).mark_text(align='right').encode(
 ).transform_window(
     row_number='row_number()'
 ).transform_filter(
-    'datum.row_number < 15'
+    alt.datum.row_number < 15
 )
 
 # Data Tables
