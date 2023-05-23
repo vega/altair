@@ -34,13 +34,13 @@ ranked_text = alt.Chart(source).mark_text(align='right').encode(
 
 # Data Tables
 horsepower = ranked_text.encode(text='Horsepower:N').properties(
-    title=alt.TitleParams(text='Horsepower', align='right')
+    title=alt.Title(text='Horsepower', align='right')
 )
 mpg = ranked_text.encode(text='Miles_per_Gallon:N').properties(
-    title=alt.TitleParams(text='MPG', align='right')
+    title=alt.Title(text='MPG', align='right')
 )
 origin = ranked_text.encode(text='Origin:N').properties(
-    title=alt.TitleParams(text='Origin', align='right')
+    title=alt.Title(text='Origin', align='right')
 )
 text = alt.hconcat(horsepower, mpg, origin) # Combine data tables
 
