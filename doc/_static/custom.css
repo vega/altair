@@ -75,8 +75,21 @@ properly displayed on mobile devices and not restricted to 20% */
   width: 100%;
 }
 
-/* Use full page width without sidebars */
-/* .bd-content { */
-/*   max-width: 100%; */
-/*   flex-grow: 1; */
-/* } */
+/* Configurations for the start page
+------------------------------------ */
+.lead {
+  font-size: 1.3em;
+  font-weight: 300;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  /* This pushes down the lead so that it is not rendered on top of
+  the gallery (showcase) which has an absolute position. The value is calculated
+  as height (showcase) + margin-bottom (showcase) + margin-top (lead) */
+  padding-top: 332px;
+}
+
+.lead strong {
+  /* Default is bolder which is less */
+  font-weight: bold;
+}
+/* ---------------------------------- */

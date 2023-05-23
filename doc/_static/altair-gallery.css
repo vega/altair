@@ -44,11 +44,13 @@ div.bottomnav {
 /* Front-page Example Showcase */
 #showcase {
   width: 100%;
-  height: 240px;
+  height: 300px;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
   margin-bottom: 10px;
 }
 #showcase:after,
@@ -71,13 +73,21 @@ div.bottomnav {
 }
 #showcase .examples {
   margin: 0 auto;
-  height: 240px;
-  width: 800px;
+  height: 300px;
   line-height: 0;
+  /* Width and padding settings give the example showcase the same width
+  as the page header on a big screen. On smaller screens, they both will
+  have the same width anyway as the title header is responsive and gets narrower
+  and the example showcase gets clipped by the overflow: hidden setting. */
+  width: 88rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 #showcase .preview {
-  width: 144px;
-  height: 80px;
+  /* Value is chosen through trial and error so that the examples fill out the 
+  whole width which is defined in #showcase .examples */
+  width: 172px;
+  height: 100px;
   padding: 0;
   outline: 1px solid #ddd;
   background-position: left top;

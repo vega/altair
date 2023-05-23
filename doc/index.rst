@@ -5,16 +5,49 @@ Vega-Altair: Declarative Visualization in Python
 .. role:: raw-html(raw)
    :format: html
 
-
 .. altair-minigallery::
-   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
-   :size: 15
+   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, errorbars_with_ci, scatter_linked_brush, line_with_ci, natural_disasters, bar_rounded, streamgraph, multiline_tooltip, choropleth, select_detail, interactive_cross_highlight, seattle_weather_interactive, london_tube, ridgeline_plot, violin_plot, strip_plot, table_bubble_plot_github, radial_chart, boxplot, mosaic_with_labels
+   :size: 24
 
-Vega-Altair is a declarative statistical visualization library for Python. 
 
-Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
+.. rst-class:: lead
 
-You can browse this site via the links in the top navigation panel. It can also be helpful to browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
+   **Vega-Altair** is a declarative visualization library for Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
+
+
+.. grid:: 1 1 2 2
+   :padding: 0 2 3 5
+   :gutter: 2 2 3 3
+   :class-container: startpage-grid
+
+   .. grid-item-card:: Getting Started
+      :link: overview
+      :link-type: ref
+      :link-alt: Getting started
+
+      In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
+
+   .. grid-item-card:: User Guide
+      :link: user-guide-data
+      :link-type: ref
+      :link-alt: User guide
+
+      Check out the User Guides for in-depth information on the key concepts of Vega-Altair.
+
+   .. grid-item-card:: Examples
+      :link: example-gallery
+      :link-type: ref
+      :link-alt: Examples
+
+      The Examples gallery contains a selection of different visualizations which you can create with Vega-Altair.
+
+   .. grid-item-card:: API
+      :link: api
+      :link-type: ref
+      :link-alt: api
+
+      The API reference guide contains detailed information on all of Vega-Altair's methods and classes.
+
 
 *The Vega-Altair open-source project is not affiliated with Altair Engineering, Inc.*
 
@@ -25,7 +58,7 @@ You can browse this site via the links in the top navigation panel. It can also 
    Getting Started <getting_started/overview>
    User Guide <user_guide/data>
    Examples <gallery/index>
-   API <user_guide/API>
+   API <user_guide/api>
    user_guide/ecosystem
    releases/changes
 
