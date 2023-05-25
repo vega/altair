@@ -1,7 +1,7 @@
 """
 Brushing Scatter Plot to Show Data on a Table
 ---------------------------------------------
-A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin. 
+A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin.
 The tables update to reflect the selection on the scatter plot.
 """
 # category: scatter plots
@@ -18,26 +18,30 @@ brush = alt.selection_interval()
 points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
-    color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
+    color=alt.condition(brush, alt.value('steelblue'), alt.value('grey'))
 ).add_params(brush)
 
 # Base chart for data tables
-ranked_text = alt.Chart(source).mark_text().encode(
-    y=alt.Y('row_number:O',axis=None)
-).transform_window(
-    row_number='row_number()'
+ranked_text = alt.Chart(source).mark_text(align='right').encode(
+    y=alt.Y('row_number:O', axis=None)
 ).transform_filter(
     brush
 ).transform_window(
-    rank='rank(row_number)'
+    row_number='row_number()'
 ).transform_filter(
-    alt.datum.rank<20
+    alt.datum.row_number < 15
 )
 
 # Data Tables
-horsepower = ranked_text.encode(text='Horsepower:N').properties(title='Horsepower')
-mpg = ranked_text.encode(text='Miles_per_Gallon:N').properties(title='MPG')
-origin = ranked_text.encode(text='Origin:N').properties(title='Origin')
+horsepower = ranked_text.encode(text='Horsepower:N').properties(
+    title=alt.Title(text='Horsepower', align='right')
+)
+mpg = ranked_text.encode(text='Miles_per_Gallon:N').properties(
+    title=alt.Title(text='MPG', align='right')
+)
+origin = ranked_text.encode(text='Origin:N').properties(
+    title=alt.Title(text='Origin', align='right')
+)
 text = alt.hconcat(horsepower, mpg, origin) # Combine data tables
 
 # Build chart
@@ -46,4 +50,6 @@ alt.hconcat(
     text
 ).resolve_legend(
     color="independent"
+).configure_view(
+    stroke=None
 )
