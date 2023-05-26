@@ -3395,9 +3395,12 @@ def _remove_layer_props(chart, subcharts, layer_props):
             else:
                 raise ValueError(f"There are inconsistent values {values} for {prop}")
         else:
-            # Top level has this prop; subchart props must be either
-            # Undefined or identical to proceed.
-            if all(c[prop] is Undefined or c[prop] == chart[prop] for c in subcharts):
+            # Top level has this prop; subchart must either not have the prop
+            # or it must be Undefined or identical to proceed.
+            if all(
+                getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
+                for c in subcharts
+            ):
                 output_dict[prop] = chart[prop]
             else:
                 raise ValueError(f"There are inconsistent values {values} for {prop}")
