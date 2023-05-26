@@ -3,11 +3,12 @@
 Release Notes
 =============
 
-Version 5.0.1 (unreleased)
---------------------------
+Version 5.0.1 (released May 26, 2023)
+-------------------------------------
 
-- Remove unwanted files during build to avoid littering site-packages folder (#3057)
-- Deprecate the `.ref()` function for selections, instead of removing it (#3063). 
+- Remove unwanted files during build to avoid littering site-packages folder (#3057).
+- Deprecate the ``.ref()`` function for selections, instead of removing it (#3063). 
+- Fix bug in reconstructing layered charts with ``Chart.from_json()``/``Chart.from_dict()`` (#3068).
 
 Version 5.0.0 (released May 9, 2023)
 ------------------------------------
