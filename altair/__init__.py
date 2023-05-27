@@ -556,6 +556,7 @@ __all__ = [
     "binding_select",
     "channels",
     "check_fields_and_encodings",
+    "compiler",
     "concat",
     "condition",
     "core",
@@ -596,6 +597,7 @@ __all__ = [
     "value",
     "vconcat",
     "vegalite",
+    "vegalite_compilers",
     "with_property_setters",
 ]
 
