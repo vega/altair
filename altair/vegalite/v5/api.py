@@ -19,6 +19,7 @@ from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
+from .compiler import vegalite_compilers
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -890,6 +891,23 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             fullhtml=fullhtml,
             requirejs=requirejs,
         )
+
+    def to_vega(self):
+        """Convert a chart to a Vega specification
+
+        Converts a Chart to a Vega-Lite specification and then uses the active
+        Vega-Lite compiler plugin to compile that Vega-Lite specification to a
+        Vega specification.
+
+        Note: The default Vega-Lite compiler plugin depends on the
+        vl-convert-python package
+
+        Returns
+        -------
+        vega_spec : dict
+            a Vega chart specification.
+        """
+        return vegalite_compilers.get()(self.to_dict())
 
     def save(
         self,
