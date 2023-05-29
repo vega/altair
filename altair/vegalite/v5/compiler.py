@@ -1,6 +1,7 @@
 from ...utils.compiler import VegaLiteCompilerRegistry
 
-vegalite_compilers = VegaLiteCompilerRegistry()
+ENTRY_POINT_GROUP: str = "altair.vegalite.v5.vegalite_compiler"
+vegalite_compilers = VegaLiteCompilerRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 
 def vl_convert_compiler(vegalite_spec) -> dict:
