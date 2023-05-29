@@ -750,7 +750,7 @@ class SchemaBase:
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
             to specify this argument as a user.
-        context : dict[str, Any] (optional)
+        context : dict[str, Any], optional
             A context dictionary. It is usually not needed
             to specify this argument as a user.
 
