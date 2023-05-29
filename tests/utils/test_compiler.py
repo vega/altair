@@ -1,3 +1,4 @@
+import json
 import pytest
 from altair import vegalite_compilers, Chart
 
@@ -28,6 +29,13 @@ def test_vegalite_compiler(chart):
     assert_is_vega_spec(vega_spec)
 
 
-def test_to_vega(chart):
-    vega_spec = chart.to_vega()
+def test_to_dict_with_format_vega(chart):
+    vega_spec = chart.to_dict(format="vega")
     assert_is_vega_spec(vega_spec)
+
+
+def test_to_json_with_format_vega(chart):
+    json_spec = chart.to_json(format="vega")
+    assert isinstance(json_spec, str)
+    spec = json.loads(json_spec)
+    assert_is_vega_spec(spec)

@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast
+from typing import cast, Optional, List, Dict, Any
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -816,8 +816,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     _class_is_valid_at_instantiation = False
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args, format: str = "vega-lite", **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export"""
+        # Validate format
+        if format not in ("vega-lite", "vega"):
+            raise ValueError(
+                f'The format argument must be either "vega-lite" or "vega". Received {repr(format)}'
+            )
+
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
         #   inference.
@@ -828,7 +834,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # note: not a deep copy because we want datasets and data arguments to
         # be passed by reference
-        context = kwargs.get("context", {}).copy()
+        context = (kwargs.get("context", {}) or {}).copy()
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
@@ -848,26 +854,68 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # TopLevelMixin instance does not necessarily have to_dict defined
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
-        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
+        vegalite_spec = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
             # since this is top-level we add $schema if it's missing
-            if "$schema" not in dct:
-                dct["$schema"] = SCHEMA_URL
+            if "$schema" not in vegalite_spec:
+                vegalite_spec["$schema"] = SCHEMA_URL
 
             # apply theme from theme registry
             the_theme = themes.get()
             # Use assert to tell type checkers that it is not None. Holds true
             # as there is always a default theme set when importing Altair
             assert the_theme is not None
-            dct = utils.update_nested(the_theme(), dct, copy=True)
+            vegalite_spec = utils.update_nested(the_theme(), vegalite_spec, copy=True)
 
             # update datasets
             if context["datasets"]:
-                dct.setdefault("datasets", {}).update(context["datasets"])
+                vegalite_spec.setdefault("datasets", {}).update(context["datasets"])
 
-        return dct
+        if format == "vega":
+            return vegalite_compilers.get()(vegalite_spec)
+        else:
+            return vegalite_spec
+
+    def to_json(
+        self,
+        validate: bool = True,
+        indent: int = 2,
+        sort_keys: bool = True,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[Dict[str, Any]] = None,
+        **kwargs,
+    ) -> str:
+        """Convert a chart to a JSON string
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        indent : int, optional
+            The number of spaces of indentation to use. The default is 2.
+        sort_keys : bool, optional
+            If True (default), sort keys in the output.
+        format : str, optional
+            The chart specification format. One of "vega-lite" (default) or "vega".
+            The "vega" format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+        """
+        spec = self.to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
+        return json.dumps(spec, indent=indent, sort_keys=sort_keys, **kwargs)
 
     def to_html(
         self,
@@ -891,23 +939,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             fullhtml=fullhtml,
             requirejs=requirejs,
         )
-
-    def to_vega(self):
-        """Convert a chart to a Vega specification
-
-        Converts a Chart to a Vega-Lite specification and then uses the active
-        Vega-Lite compiler plugin to compile that Vega-Lite specification to a
-        Vega specification.
-
-        Note: The default Vega-Lite compiler plugin depends on the
-        vl-convert-python package
-
-        Returns
-        -------
-        vega_spec : dict
-            a Vega chart specification.
-        """
-        return vegalite_compilers.get()(self.to_dict())
 
     def save(
         self,
@@ -2526,7 +2557,7 @@ class Chart(
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args, format="vega-lite", **kwargs) -> dict:
         """Convert the chart to a dictionary suitable for JSON export."""
         context = kwargs.get("context", {})
         if self.data is Undefined and "data" not in context:
@@ -2534,8 +2565,8 @@ class Chart(
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
             copy.data = core.InlineData(values=[{}])
-            return super(Chart, copy).to_dict(*args, **kwargs)
-        return super().to_dict(*args, **kwargs)
+            return super(Chart, copy).to_dict(*args, format=format, **kwargs)
+        return super().to_dict(*args, format=format, **kwargs)
 
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
