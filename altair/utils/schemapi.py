@@ -744,7 +744,7 @@ class SchemaBase:
 
         Parameters
         ----------
-        validate : boolean, optional
+        validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
         ignore : list[str], optional
