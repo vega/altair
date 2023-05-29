@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, Optional, List, Dict, Any
+from typing import cast, Optional, List, Any, Dict as TypingDict
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -874,7 +874,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 vegalite_spec.setdefault("datasets", {}).update(context["datasets"])
 
         if format == "vega":
-            return vegalite_compilers.get()(vegalite_spec)
+            plugin = vegalite_compilers.get()
+            if plugin is None:
+                raise ValueError("No active vega-lite compiler plugin found")
+            return plugin(vegalite_spec)
         else:
             return vegalite_spec
 
@@ -885,7 +888,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         sort_keys: bool = True,
         format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
-        context: Optional[Dict[str, Any]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
         **kwargs,
     ) -> str:
         """Convert a chart to a JSON string
@@ -912,6 +915,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
         """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
         spec = self.to_dict(
             validate=validate, format=format, ignore=ignore, context=context
         )

@@ -734,7 +734,7 @@ class SchemaBase:
             and self._kwds == other._kwds
         )
 
-    def to_dict(self, validate=True, ignore=None, context=None):
+    def to_dict(self, validate=True, format="vega-lite", ignore=None, context=None):
         """Return a dictionary representation of the object
 
         Parameters
@@ -742,6 +742,8 @@ class SchemaBase:
         validate : boolean
             If True (default), then validate the output dictionary
             against the schema.
+        format : str, default "vega-lite":
+            The chart specification format. Only used for top-level chart objects
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -816,11 +818,12 @@ class SchemaBase:
 
     def to_json(
         self,
-        validate=True,
-        ignore=None,
-        context=None,
-        indent=2,
-        sort_keys=True,
+        validate: bool = True,
+        indent: int = 2,
+        sort_keys: bool = True,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[Dict[str, Any]] = None,
         **kwargs,
     ):
         """Emit the JSON representation for this object as a string.
@@ -840,6 +843,8 @@ class SchemaBase:
             the number of spaces of indentation to use
         sort_keys : boolean, default True
             if True, sort keys in the output
+        format : str, default "vega-lite":
+            The chart specification format. Only used for top-level chart objects
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
