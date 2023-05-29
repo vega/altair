@@ -6,7 +6,7 @@ import inspect
 import sys
 from pathlib import Path
 from os.path import abspath, dirname, join
-from typing import TypeVar, Type, cast, List, Any
+from typing import TypeVar, Type, cast, List, Any, Optional
 
 import black
 
@@ -80,6 +80,8 @@ def _is_relevant_attribute(attr_name):
         or attr is List
         or attr is Any
         or attr is Literal
+        or attr is Optional
+        or attr_name == "TypingDict"
     ):
         return False
     else:
