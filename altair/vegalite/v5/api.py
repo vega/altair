@@ -831,10 +831,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             against the schema.
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
-            to specify this argument.
+            to specify this argument as a user.
         context : dict[str, Any], optional
             A context dictionary. It is usually not needed
-            to specify this argument.
+            to specify this argument as a user.
 
         Notes
         -----
@@ -2558,10 +2558,10 @@ class Chart(
             against the schema.
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
-            to specify this argument.
+            to specify this argument as a user.
         context : dict[str, Any], optional
             A context dictionary. It is usually not needed
-            to specify this argument.
+            to specify this argument as a user.
 
         Notes
         -----

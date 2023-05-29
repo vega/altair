@@ -746,9 +746,11 @@ class SchemaBase:
             If True (default), then validate the output dictionary
             against the schema.
         ignore : list[str], optional
-            A list of keys to ignore.
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
         context : dict[str, Any] (optional)
-            A context dictionary.
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
 
         Notes
         -----
@@ -837,9 +839,11 @@ class SchemaBase:
             If True (default), then validate the output dictionary
             against the schema.
         ignore : list[str], optional
-            A list of keys to ignore.
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
         context : dict[str, Any], optional
-            A context dictionary.
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
