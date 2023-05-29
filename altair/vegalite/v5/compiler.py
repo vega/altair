@@ -1,4 +1,4 @@
-from ..compiler import VegaLiteCompilerRegistry
+from ...utils.compiler import VegaLiteCompilerRegistry
 
 vegalite_compilers = VegaLiteCompilerRegistry()
 
