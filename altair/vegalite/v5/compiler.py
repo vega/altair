@@ -4,7 +4,7 @@ ENTRY_POINT_GROUP: str = "altair.vegalite.v5.vegalite_compiler"
 vegalite_compilers = VegaLiteCompilerRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 
-def vl_convert_compiler(vegalite_spec) -> dict:
+def vl_convert_compiler(vegalite_spec: dict) -> dict:
     """
     Vega-Lite to Vega compiler that uses vl-convert
     """

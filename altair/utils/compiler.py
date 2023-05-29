@@ -4,7 +4,7 @@ from altair.utils import PluginRegistry
 # ==============================================================================
 # Vega-Lite to Vega compiler registry
 # ==============================================================================
-VegaLiteCompilerType = Callable
+VegaLiteCompilerType = Callable[[dict], dict]
 
 
 class VegaLiteCompilerRegistry(PluginRegistry[VegaLiteCompilerType]):
