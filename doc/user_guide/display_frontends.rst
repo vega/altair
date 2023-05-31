@@ -397,7 +397,7 @@ VegaLite 4/5 Object
 :ref:`notebook-vega-lite-4-object`
 
 If you are using JupyterLab (not Jupyter notebook) and see an error message
-mentioning either `VegaLite 4 object` or `VegaLite 5 object`, then this means
+mentioning either ``VegaLite 4 object`` or ``VegaLite 5 object``, then this means
 that you have enabled the ``mimetype`` renderer, but that your JupyterLab
 frontend does not support the VegaLite 4 or 5 mimetype.
 
@@ -529,7 +529,7 @@ Notebook: VegaLite 4/5 object
 :ref:`jupyterlab-vega-lite-4-object`
 
 If you are using Jupyter Notebook (not JupyterLab) and see an error message
-mentioning either `VegaLite 4 object` or `VegaLite 5 object`, then this means
+mentioning either ``VegaLite 4 object`` or ``VegaLite 5 object``, then this means
 that you have enabled the ``mimetype`` renderer. The easiest solution is to use the default renderer::
 
     alt.renderers.enable('default')
