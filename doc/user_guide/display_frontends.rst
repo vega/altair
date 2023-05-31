@@ -391,17 +391,15 @@ Troubleshooting in JupyterLab
   
 .. _jupyterlab-vega-lite-4-object:
 
-VegaLite 4 Object
-^^^^^^^^^^^^^^^^^
+VegaLite 4/5 Object
+^^^^^^^^^^^^^^^^^^^
 *If you are using the Jupyter notebook rather than JupyterLab, then refer to*
 :ref:`notebook-vega-lite-4-object`
 
-If you are using JupyterLab (not Jupyter notebook) and see the following output::
-
-    <VegaLite 4 object>
-
-This means that you have enabled the ``mimetype`` renderer, but that your JupyterLab
-frontend does not support the VegaLite 4 mimetype.
+If you are using JupyterLab (not Jupyter notebook) and see an error message
+mentioning either `VegaLite 4 object` or `VegaLite 5 object`, then this means
+that you have enabled the ``mimetype`` renderer, but that your JupyterLab
+frontend does not support the VegaLite 4 or 5 mimetype.
 
 The easiest solution is to use the default renderer::
 
@@ -409,12 +407,9 @@ The easiest solution is to use the default renderer::
 
 and rerun the cell with the chart.
 
-If you would like to use the mimetype rendering with the JupyterLab frontend extension,
-then make certain the extension is installed and enabled:
-
-    $ jupyter labextension install @jupyterlab/vega5-extension
-
-and then restart your jupyter frontend.
+If you would like to use the mimetype rendering with JupyterLab,
+update JupyterLab to the newest version with ``pip install -U jupyterlab``
+or ``conda update jupyterlab``.
   
 .. _jupyterlab-vega-lite-3-object:
 
@@ -528,18 +523,14 @@ Troubleshooting in Notebooks
 
 .. _notebook-vega-lite-4-object:
 
-Notebook: VegaLite 4 object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Notebook: VegaLite 4/5 object
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 *If you are using JupyterLab rather than the Jupyter notebook, then refer to*
-:ref:`jupyterlab-vega-lite-3-object`
+:ref:`jupyterlab-vega-lite-4-object`
 
-If you are using Jupyter Notebook (not JupyterLab) and see the following output::
-
-    <VegaLite 4 object>
-
-This means that you have enabled the ``mimetype`` renderer.
-
-The easiest solution is to use the default renderer::
+If you are using Jupyter Notebook (not JupyterLab) and see an error message
+mentioning either `VegaLite 4 object` or `VegaLite 5 object`, then this means
+that you have enabled the ``mimetype`` renderer. The easiest solution is to use the default renderer::
 
     alt.renderers.enable('default')
 
