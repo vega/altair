@@ -737,6 +737,7 @@ class SchemaBase:
     def to_dict(
         self,
         validate: bool = True,
+        format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None,
     ) -> dict:
@@ -747,6 +748,8 @@ class SchemaBase:
         validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
+        format: str, optional
+            Chart specification format, Only used by top-level chart objects
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
             to specify this argument as a user.
@@ -829,6 +832,7 @@ class SchemaBase:
         validate: bool = True,
         indent: int = 2,
         sort_keys: bool = True,
+        format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None,
         **kwargs,
@@ -844,6 +848,8 @@ class SchemaBase:
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
+        format: str, optional
+            Chart specification format, Only used by top-level chart objects
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
             to specify this argument as a user.
