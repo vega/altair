@@ -8,7 +8,7 @@ import pandas as pd
 from toolz import curried
 from typing import Callable
 
-from .core import sanitize_dataframe
+from .core import sanitize_dataframe, sanitize_arrow_table
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -166,7 +166,7 @@ def to_values(data):
     elif hasattr(data, "__dataframe__"):
         # experimental interchange dataframe support
         pi = import_pyarrow_interchange()
-        pa_table = _sanitize_arrow_table(pi.from_dataframe(data))
+        pa_table = sanitize_arrow_table(pi.from_dataframe(data))
         return {"values": pa_table.to_pylist()}
 
 
@@ -185,24 +185,6 @@ def check_data_type(data):
 # ==============================================================================
 # Private utilities
 # ==============================================================================
-def _sanitize_arrow_table(pa_table):
-    """Sanitize arrow table for JSON serialization"""
-    import pyarrow as pa
-    import pyarrow.compute as pc
-
-    arrays = []
-    schema = pa_table.schema
-    for name in schema.names:
-        array = pa_table[name]
-        dtype = schema.field(name).type
-        if str(dtype).startswith("timestamp"):
-            arrays.append(pc.strftime(array))
-        else:
-            arrays.append(array)
-
-    return pa.Table.from_arrays(arrays, names=schema.names)
-
-
 def _compute_data_hash(data_str):
     return hashlib.md5(data_str.encode()).hexdigest()
 
