@@ -5,7 +5,10 @@ from altair.utils.data import to_values
 
 def test_arrow_timestamp_conversion():
     """Test that arrow timestamp values are converted to ISO-8601 strings"""
-    data = {"date": [datetime(2004, 8, 1), datetime(2004, 9, 1)], "value": [102, 129]}
+    data = {
+        "date": [datetime(2004, 8, 1), datetime(2004, 9, 1), None],
+        "value": [102, 129, 139],
+    }
     pa_table = pa.table(data)
 
     values = to_values(pa_table)
@@ -13,6 +16,7 @@ def test_arrow_timestamp_conversion():
         "values": [
             {"date": "2004-08-01T00:00:00.000000", "value": 102},
             {"date": "2004-09-01T00:00:00.000000", "value": 129},
+            {"date": None, "value": 139},
         ]
     }
     assert values == expected_values
