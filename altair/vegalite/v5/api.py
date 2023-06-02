@@ -8,10 +8,11 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, Optional, List, Any, Dict as TypingDict
+from typing import cast, List, Optional, Any
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
+from typing import Dict as TypingDict
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -816,8 +817,45 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     _class_is_valid_at_instantiation = False
 
-    def to_dict(self, *args, format: str = "vega-lite", **kwargs) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export"""
+    def to_dict(
+        self,
+        validate: bool = True,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
+        """Convert the chart to a dictionary suitable for JSON export
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
+
+        Returns
+        -------
+        dict
+            The dictionary representation of this chart
+
+        Raises
+        ------
+        SchemaValidationError
+            if validate=True and the dict does not conform to the schema
+        """
+
         # Validate format
         if format not in ("vega-lite", "vega"):
             raise ValueError(
@@ -834,7 +872,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # note: not a deep copy because we want datasets and data arguments to
         # be passed by reference
-        context = (kwargs.get("context", {}) or {}).copy()
+        context = context.copy() if context else {}
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
@@ -849,12 +887,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False
-        kwargs["context"] = context
 
         # TopLevelMixin instance does not necessarily have to_dict defined
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
-        vegalite_spec = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
+        vegalite_spec = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+            validate=validate, ignore=ignore, context=context
+        )
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
@@ -2564,16 +2603,56 @@ class Chart(
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def to_dict(self, *args, format="vega-lite", **kwargs) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export."""
-        context = kwargs.get("context", {})
+    def to_dict(
+        self,
+        validate: bool = True,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
+        """Convert the chart to a dictionary suitable for JSON export
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
+
+        Returns
+        -------
+        dict
+            The dictionary representation of this chart
+
+        Raises
+        ------
+        SchemaValidationError
+            if validate=True and the dict does not conform to the schema
+        """
+        context = context or {}
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
             copy.data = core.InlineData(values=[{}])
-            return super(Chart, copy).to_dict(*args, format=format, **kwargs)
-        return super().to_dict(*args, format=format, **kwargs)
+            return super(Chart, copy).to_dict(
+                validate=validate, format=format, ignore=ignore, context=context
+            )
+        return super().to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
 
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
