@@ -734,29 +734,39 @@ class SchemaBase:
             and self._kwds == other._kwds
         )
 
-    def to_dict(self, validate=True, ignore=None, context=None):
+    def to_dict(
+        self,
+        validate: bool = True,
+        ignore: Optional[List[str]] = None,
+        context: Optional[Dict[str, Any]] = None,
+    ) -> dict:
         """Return a dictionary representation of the object
 
         Parameters
         ----------
-        validate : boolean
+        validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
-        ignore : list
-            A list of keys to ignore. This will *not* passed to child to_dict
-            function calls.
-        context : dict (optional)
-            A context dictionary that will be passed to all child to_dict
-            function calls
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
 
         Returns
         -------
-        dct : dictionary
+        dict
             The dictionary representation of this object
 
         Raises
         ------
-        jsonschema.ValidationError :
+        SchemaValidationError :
             if validate=True and the dict does not conform to the schema
         """
         if context is None:
@@ -816,36 +826,41 @@ class SchemaBase:
 
     def to_json(
         self,
-        validate=True,
-        ignore=None,
-        context=None,
-        indent=2,
-        sort_keys=True,
+        validate: bool = True,
+        indent: int = 2,
+        sort_keys: bool = True,
+        ignore: Optional[List[str]] = None,
+        context: Optional[Dict[str, Any]] = None,
         **kwargs,
-    ):
+    ) -> str:
         """Emit the JSON representation for this object as a string.
 
         Parameters
         ----------
-        validate : boolean
+        validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
-        ignore : list (optional)
-            A list of keys to ignore. This will *not* passed to child to_dict
-            function calls.
-        context : dict (optional)
-            A context dictionary that will be passed to all child to_dict
-            function calls
-        indent : integer, default 2
-            the number of spaces of indentation to use
-        sort_keys : boolean, default True
-            if True, sort keys in the output
+        indent : int, optional
+            The number of spaces of indentation to use. The default is 2.
+        sort_keys : bool, optional
+            If True (default), sort keys in the output.
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
+
         Returns
         -------
-        spec : string
+        str
             The JSON specification of the chart object.
         """
         if ignore is None:
