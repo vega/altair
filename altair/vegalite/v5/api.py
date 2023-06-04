@@ -20,6 +20,7 @@ from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
+from .compiler import vegalite_compilers
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -819,6 +820,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def to_dict(
         self,
         validate: bool = True,
+        *,
+        format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[TypingDict[str, Any]] = None,
     ) -> dict:
@@ -829,6 +832,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
             to specify this argument as a user.
@@ -851,6 +856,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         SchemaValidationError
             if validate=True and the dict does not conform to the schema
         """
+
+        # Validate format
+        if format not in ("vega-lite", "vega"):
+            raise ValueError(
+                f'The format argument must be either "vega-lite" or "vega". Received {repr(format)}'
+            )
+
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
         #   inference.
@@ -880,28 +892,78 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # TopLevelMixin instance does not necessarily have to_dict defined
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
-        dct = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+        vegalite_spec = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
             validate=validate, ignore=ignore, context=context
         )
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
             # since this is top-level we add $schema if it's missing
-            if "$schema" not in dct:
-                dct["$schema"] = SCHEMA_URL
+            if "$schema" not in vegalite_spec:
+                vegalite_spec["$schema"] = SCHEMA_URL
 
             # apply theme from theme registry
             the_theme = themes.get()
             # Use assert to tell type checkers that it is not None. Holds true
             # as there is always a default theme set when importing Altair
             assert the_theme is not None
-            dct = utils.update_nested(the_theme(), dct, copy=True)
+            vegalite_spec = utils.update_nested(the_theme(), vegalite_spec, copy=True)
 
             # update datasets
             if context["datasets"]:
-                dct.setdefault("datasets", {}).update(context["datasets"])
+                vegalite_spec.setdefault("datasets", {}).update(context["datasets"])
 
-        return dct
+        if format == "vega":
+            plugin = vegalite_compilers.get()
+            if plugin is None:
+                raise ValueError("No active vega-lite compiler plugin found")
+            return plugin(vegalite_spec)
+        else:
+            return vegalite_spec
+
+    def to_json(
+        self,
+        validate: bool = True,
+        indent: int = 2,
+        sort_keys: bool = True,
+        *,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+        **kwargs,
+    ) -> str:
+        """Convert a chart to a JSON string
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        indent : int, optional
+            The number of spaces of indentation to use. The default is 2.
+        sort_keys : bool, optional
+            If True (default), sort keys in the output.
+        format : str, optional
+            The chart specification format. One of "vega-lite" (default) or "vega".
+            The "vega" format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+        """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
+        spec = self.to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
+        return json.dumps(spec, indent=indent, sort_keys=sort_keys, **kwargs)
 
     def to_html(
         self,
@@ -2546,6 +2608,8 @@ class Chart(
     def to_dict(
         self,
         validate: bool = True,
+        *,
+        format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[TypingDict[str, Any]] = None,
     ) -> dict:
@@ -2556,6 +2620,8 @@ class Chart(
         validate : bool, optional
             If True (default), then validate the output dictionary
             against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
         ignore : list[str], optional
             A list of keys to ignore. It is usually not needed
             to specify this argument as a user.
@@ -2585,9 +2651,11 @@ class Chart(
             copy = self.copy(deep=False)
             copy.data = core.InlineData(values=[{}])
             return super(Chart, copy).to_dict(
-                validate=validate, ignore=ignore, context=context
+                validate=validate, format=format, ignore=ignore, context=context
             )
-        return super().to_dict(validate=validate, ignore=ignore, context=context)
+        return super().to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
 
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""

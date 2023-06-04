@@ -737,6 +737,7 @@ class SchemaBase:
     def to_dict(
         self,
         validate: bool = True,
+        *,
         ignore: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None,
     ) -> dict:
@@ -829,6 +830,7 @@ class SchemaBase:
         validate: bool = True,
         indent: int = 2,
         sort_keys: bool = True,
+        *,
         ignore: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None,
         **kwargs,
