@@ -820,6 +820,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def to_dict(
         self,
         validate: bool = True,
+        *,
         format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[TypingDict[str, Any]] = None,
@@ -925,6 +926,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         validate: bool = True,
         indent: int = 2,
         sort_keys: bool = True,
+        *,
         format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[TypingDict[str, Any]] = None,
@@ -2606,6 +2608,7 @@ class Chart(
     def to_dict(
         self,
         validate: bool = True,
+        *,
         format: str = "vega-lite",
         ignore: Optional[List[str]] = None,
         context: Optional[TypingDict[str, Any]] = None,
