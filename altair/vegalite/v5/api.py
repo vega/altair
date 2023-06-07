@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, List, Optional, Any
+from typing import cast, List, Optional, Any, Iterable
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -2657,6 +2657,32 @@ class Chart(
             validate=validate, format=format, ignore=ignore, context=context
         )
 
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[pd.DataFrame]:
+        """Evaluate a Chart's transforms
+
+        Evaluate the data transforms associated with a Chart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        DataFrame
+            Transformed data as a DataFrame
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params:
@@ -2917,6 +2943,32 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[pd.DataFrame]:
+        """Evaluate a ConcatChart's transforms
+
+        Evaluate the data transforms associated with a ConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
@@ -2987,6 +3039,32 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
+
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[pd.DataFrame]:
+        """Evaluate a HConcatChart's transforms
+
+        Evaluate the data transforms associated with a HConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
@@ -3059,6 +3137,32 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[pd.DataFrame]:
+        """Evaluate a VConcatChart's transforms
+
+        Evaluate the data transforms associated with a VConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
@@ -3128,6 +3232,32 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
+
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[pd.DataFrame]:
+        """Evaluate a LayerChart's transforms
+
+        Evaluate the data transforms associated with a LayerChart and return the
+        transformed data for each layer as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each layer as a list of DataFrames
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, "LayerChart")
@@ -3217,6 +3347,32 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         super(FacetChart, self).__init__(
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
+
+    def transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[pd.DataFrame]:
+        """Evaluate a FacetChart's transforms
+
+        Evaluate the data transforms associated with a FacetChart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        DataFrame
+            Transformed data as a DataFrame
+        """
+        from ...utils.transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
