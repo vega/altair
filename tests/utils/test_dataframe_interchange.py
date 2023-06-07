@@ -2,10 +2,29 @@ from datetime import datetime
 import pyarrow as pa
 import pandas as pd
 import pytest
+import sys
+import os
 
 from altair.utils.data import to_values
 
 
+def windows_has_tzdata():
+    """
+    From PyArrow: python/pyarrow/tests/util.py
+
+    This is the default location where tz.cpp will look for (until we make
+    this configurable at run-time)
+    """
+    tzdata_path = os.path.expandvars(r"%USERPROFILE%\Downloads\tzdata")
+    return os.path.exists(tzdata_path)
+
+
+# Skip test on Windows when the tz database is not configured.
+# See https://github.com/altair-viz/altair/issues/3050.
+@pytest.mark.skipif(
+    sys.platform == "win32" and not windows_has_tzdata(),
+    reason="Timezone database is not installed on Windows",
+)
 def test_arrow_timestamp_conversion():
     """Test that arrow timestamp values are converted to ISO-8601 strings"""
     data = {
