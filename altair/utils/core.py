@@ -397,6 +397,31 @@ def sanitize_dataframe(df):  # noqa: C901
     return df
 
 
+def sanitize_arrow_table(pa_table):
+    """Sanitize arrow table for JSON serialization"""
+    import pyarrow as pa
+    import pyarrow.compute as pc
+
+    arrays = []
+    schema = pa_table.schema
+    for name in schema.names:
+        array = pa_table[name]
+        dtype = schema.field(name).type
+        if str(dtype).startswith("timestamp"):
+            arrays.append(pc.strftime(array))
+        elif str(dtype).startswith("duration"):
+            raise ValueError(
+                'Field "{col_name}" has type "{dtype}" which is '
+                "not supported by Altair. Please convert to "
+                "either a timestamp or a numerical value."
+                "".format(col_name=name, dtype=dtype)
+            )
+        else:
+            arrays.append(array)
+
+    return pa.Table.from_arrays(arrays, names=schema.names)
+
+
 def parse_shorthand(
     shorthand,
     data=None,
