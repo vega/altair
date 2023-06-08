@@ -4,6 +4,7 @@ import pkgutil
 import pytest
 
 
+# fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
     ("annual_weather_heatmap.py", 366, ["monthdate_date_end", "max_temp_max"]),
     ("anscombe_plot.py", 44, ["Series", "X", "Y"]),
@@ -53,6 +54,7 @@ import pytest
     ("wilkinson-dot-plot.py", 21, ["data", "id"]),
     ("window_rank.py", 12, ["team", "diff"]),
 ])
+# fmt: on
 def test_primitive_chart_examples(filename, rows, cols):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source)
@@ -61,6 +63,7 @@ def test_primitive_chart_examples(filename, rows, cols):
     assert set(cols).issubset(set(df.columns))
 
 
+# fmt: off
 @pytest.mark.parametrize("filename,all_rows,all_cols", [
     ("errorbars_with_std.py", [10, 10], [["upper_yield"], ["extent_yield"]]),
     ("candlestick_chart.py", [44, 44], [["low"], ["close"]]),
@@ -90,6 +93,7 @@ def test_primitive_chart_examples(filename, rows, cols):
     ("us_employment.py", [120, 1, 2], [["month"], ["president"], ["president"]]),
     ("us_population_pyramid_over_time.py", [19, 38, 19], [["gender"], ["year"], ["gender"]]),
 ])
+# fmt: on
 def test_compound_chart_examples(filename, all_rows, all_cols):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source)
