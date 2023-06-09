@@ -70,7 +70,8 @@ dev = [
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
-    "types-setuptools"
+    "types-setuptools",
+    "vegafusion[embed]"
 ]
 doc = [
     "sphinx",
