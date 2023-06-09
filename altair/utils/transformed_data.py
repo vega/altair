@@ -59,7 +59,16 @@ def transformed_data(chart, row_limit=None, exclude=None):
         If input chart is a Chart or Facet Chart, returns a DataFrame of the transformed data
         Otherwise, returns a list of DataFrames of the transformed data
     """
-    from vegafusion import runtime, get_local_tz, get_inline_datasets_for_spec  # type: ignore
+    try:
+        from vegafusion import runtime, get_local_tz, get_inline_datasets_for_spec  # type: ignore
+    except ImportError as err:
+        raise ImportError(
+            "transformed_data requires the vegafusion-python-embed and vegafusion packages\n"
+            "These can be installed with pip using:\n"
+            "    pip install vegafusion[embed]\n"
+            "Or with conda using:\n"
+            "    conda install -c conda-forge vegafusion-python-embed vegafusion"
+        ) from err
 
     if isinstance(chart, Chart):
         # Add dummy mark if None specified to satisfy Vega-Lite
