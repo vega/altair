@@ -60,7 +60,7 @@ import pytest
 def test_primitive_chart_examples(filename, rows, cols):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source)
-    df = chart.transformed_data()
+    df = chart._transformed_data()
     assert len(df) == rows
     assert set(cols).issubset(set(df.columns))
 
@@ -101,7 +101,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols):
     chart = eval_block(source)
     print(chart)
 
-    dfs = chart.transformed_data()
+    dfs = chart._transformed_data()
     assert len(dfs) == len(all_rows)
     for df, rows, cols in zip(dfs, all_rows, all_cols):
         assert len(df) == rows
@@ -119,7 +119,7 @@ def test_transformed_data_exclude():
     )
 
     chart = (bar + rule + some_annotation).properties(width=600)
-    datasets = chart.transformed_data(exclude=["some_annotation"])
+    datasets = chart._transformed_data(exclude=["some_annotation"])
 
     assert len(datasets) == 2
     assert len(datasets[0]) == 52

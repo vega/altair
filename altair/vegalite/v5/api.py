@@ -2657,7 +2657,7 @@ class Chart(
             validate=validate, format=format, ignore=ignore, context=context
         )
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
@@ -2943,7 +2943,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
@@ -3040,7 +3040,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy |= other
         return copy
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
@@ -3137,7 +3137,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
@@ -3233,7 +3233,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
@@ -3348,7 +3348,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
 
-    def transformed_data(
+    def _transformed_data(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
