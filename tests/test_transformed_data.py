@@ -1,5 +1,7 @@
 from altair.utils.execeval import eval_block
+import altair as alt
 from tests import examples_methods_syntax
+from vega_datasets import data
 import pkgutil
 import pytest
 
@@ -104,3 +106,23 @@ def test_compound_chart_examples(filename, all_rows, all_cols):
     for df, rows, cols in zip(dfs, all_rows, all_cols):
         assert len(df) == rows
         assert set(cols).issubset(set(df.columns))
+
+
+def test_transformed_data_exclude():
+    source = data.wheat()
+    bar = alt.Chart(source).mark_bar().encode(x="year:O", y="wheat:Q")
+    rule = alt.Chart(source).mark_rule(color="red").encode(y="mean(wheat):Q")
+    some_annotation = (
+        alt.Chart(name="some_annotation")
+        .mark_text(fontWeight="bold")
+        .encode(text=alt.value("Just some text"), y=alt.datum(85), x=alt.value(200))
+    )
+
+    chart = (bar + rule + some_annotation).properties(width=600)
+    datasets = chart.transformed_data(exclude=["some_annotation"])
+
+    assert len(datasets) == 2
+    assert len(datasets[0]) == 52
+    assert "wheat_start" in datasets[0]
+    assert len(datasets[1]) == 1
+    assert "mean_wheat" in datasets[1]
