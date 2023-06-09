@@ -71,6 +71,7 @@ dev = [
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
+    "pyarrow>=11",
     "vegafusion[embed]"
 ]
 doc = [

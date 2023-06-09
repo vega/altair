@@ -8,7 +8,7 @@ import pandas as pd
 from toolz import curried
 from typing import Callable
 
-from .core import sanitize_dataframe
+from .core import sanitize_dataframe, sanitize_arrow_table
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -166,7 +166,7 @@ def to_values(data):
     elif hasattr(data, "__dataframe__"):
         # experimental interchange dataframe support
         pi = import_pyarrow_interchange()
-        pa_table = pi.from_dataframe(data)
+        pa_table = sanitize_arrow_table(pi.from_dataframe(data))
         return {"values": pa_table.to_pylist()}
 
 
@@ -185,8 +185,6 @@ def check_data_type(data):
 # ==============================================================================
 # Private utilities
 # ==============================================================================
-
-
 def _compute_data_hash(data_str):
     return hashlib.md5(data_str.encode()).hexdigest()
 
