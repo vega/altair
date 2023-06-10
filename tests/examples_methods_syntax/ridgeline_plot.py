@@ -35,7 +35,7 @@ alt.Chart(source, height=step).transform_timeunit(
     strokeWidth=0.5
 ).encode(
     alt.X('bin_min:Q')
-        .bin(True)
+        .bin('binned')
         .title('Maximum Daily Temperature (C)'),
     alt.Y('value:Q')
         .axis(None)
@@ -44,9 +44,9 @@ alt.Chart(source, height=step).transform_timeunit(
         .legend(None)
         .scale(domain=[30, 5], scheme='redyellowblue')
 ).facet(
-    alt.Row('Month:T')
+    row=alt.Row('Month:T')
         .title(None)
-        .header(labelAngle=0, labelAlign='right', format='%B')
+        .header(labelAngle=0, labelAlign='left', format='%B')
 ).properties(
     title='Seattle Weather',
     bounds='flush'
