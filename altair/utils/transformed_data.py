@@ -54,9 +54,10 @@ def transformed_data(chart, row_limit=None, exclude=None):
 
     Returns
     -------
-    DataFrame or list of DataFrame
-        If input chart is a Chart or Facet Chart, returns a DataFrame of the transformed data
-        Otherwise, returns a list of DataFrames of the transformed data
+    pandas DataFrame or list of pandas DataFrames or None
+        If input chart is a Chart or Facet Chart, returns a pandas DataFrame of the
+        transformed data. Otherwise, returns a list of pandas DataFrames of the
+        transformed data
     """
     try:
         from vegafusion import runtime, get_local_tz, get_inline_datasets_for_spec  # type: ignore
