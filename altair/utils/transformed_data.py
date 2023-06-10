@@ -11,7 +11,6 @@ from altair import (
     ConcatChart,
     data_transformers,
 )
-from typing import Union
 from altair.utils.schemapi import Undefined
 
 Scope = Tuple[int, ...]
