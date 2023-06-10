@@ -16,7 +16,7 @@ from altair.utils.schemapi import Undefined
 Scope = Tuple[int, ...]
 FacetMapping = Dict[Tuple[str, Scope], Tuple[str, Scope]]
 
-MAGIC_CHART_NAME = "_vf_mark{}"
+VIEW_NAME = "altair_view_{}"
 
 
 @overload
@@ -78,9 +78,9 @@ def transformed_data(chart, row_limit=None, exclude=None):
     # Deep copy chart so that we can rename marks without affecting caller
     chart = chart.copy(deep=True)
 
-    # Rename chart or subcharts with magic names that we can look up in the
+    # Ensure that all views are named so that we can look them up in the
     # resulting Vega specification
-    chart_names = name_chart(chart, 0, exclude=exclude)
+    chart_names = name_views(chart, 0, exclude=exclude)
 
     # Compile to Vega and extract inline DataFrames
     with data_transformers.enable("vegafusion-inline"):
@@ -89,7 +89,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
 
     # Build mapping from mark names to vega datasets
     facet_mapping = get_facet_mapping(vega_spec)
-    dataset_mapping = get_datasets_for_chart_names(
+    dataset_mapping = get_datasets_for_view_names(
         vega_spec, chart_names, facet_mapping
     )
 
@@ -122,36 +122,36 @@ def transformed_data(chart, row_limit=None, exclude=None):
         return datasets
 
 
-def make_magic_chart_name(i: int) -> str:
-    """Make magic chart name for chart number i
+def make_view_name(i: int) -> str:
+    """Make view name for view number i
 
     Parameters
     ----------
     i : int
-        Mark number
+        View number
 
     Returns
     -------
     str
-        Mark name
+        View name
     """
-    return MAGIC_CHART_NAME.format(i)
+    return VIEW_NAME.format(i)
 
 
-def name_chart(
+def name_views(
     chart: Union[
         Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, ConcatChart
     ],
     i: int = 0,
     exclude: Optional[Iterable[str]] = None,
 ) -> List[str]:
-    """Name unnamed charts and subcharts
+    """Name unnamed chart views
 
-    Name unnamed charts and subcharts so that we can look them up later in
+    Name unnamed charts views so that we can look them up later in
     the compiled Vega spec.
 
     Note: This function mutates the input chart by applying names to
-    unnamed charts.
+    unnamed views.
 
     Parameters
     ----------
@@ -173,7 +173,8 @@ def name_chart(
         # the name
         if chart.name not in exclude:
             if chart.name in (None, Undefined):
-                name = make_magic_chart_name(i)
+                # Add name since none is specified
+                name = make_view_name(i)
                 chart.name = name
             return [chart.name]
         else:
@@ -196,7 +197,7 @@ def name_chart(
 
         chart_names: List[str] = []
         for subchart in subcharts:
-            for name in name_chart(subchart, i=i + len(chart_names), exclude=exclude):
+            for name in name_views(subchart, i=i + len(chart_names), exclude=exclude):
                 chart_names.append(name)
         return chart_names
 
@@ -484,13 +485,13 @@ def get_from_facet_mapping(
     return scoped_dataset
 
 
-def get_datasets_for_chart_names(
+def get_datasets_for_view_names(
     group: dict,
     vl_chart_names: List[str],
     facet_mapping: FacetMapping,
     scope: Scope = (),
 ) -> Dict[str, Tuple[str, Scope]]:
-    """Get the Vega datasets that correspond to the provided Altair chart names
+    """Get the Vega datasets that correspond to the provided Altair view names
 
     Parameters
     ----------
@@ -506,7 +507,7 @@ def get_datasets_for_chart_names(
     Returns
     -------
     dict from str to (str, tuple of int)
-        Dict from Altair chart names to scoped datasets
+        Dict from Altair view names to scoped datasets
     """
     datasets = {}
     group_index = 0
@@ -523,7 +524,7 @@ def get_datasets_for_chart_names(
 
         name = mark.get("name", "")
         if mark.get("type", "") == "group":
-            group_data_names = get_datasets_for_chart_names(
+            group_data_names = get_datasets_for_view_names(
                 group, vl_chart_names, facet_mapping, scope=scope + (group_index,)
             )
             for k, v in group_data_names.items():
