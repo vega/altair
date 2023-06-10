@@ -5,10 +5,11 @@ import hashlib
 import sys
 import warnings
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from types import ModuleType
 
 import pandas as pd
 from toolz import curried
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 from .core import sanitize_dataframe, sanitize_arrow_table
 from .core import sanitize_geo_interface
@@ -17,9 +18,9 @@ from .plugin_registry import PluginRegistry
 
 
 if sys.version_info >= (3, 8):
-    from typing import Protocol
+    from typing import Protocol, TypedDict, Literal
 else:
-    from typing_extensions import Protocol
+    from typing_extensions import Protocol, TypedDict, Literal
 
 
 if TYPE_CHECKING:
@@ -37,12 +38,25 @@ class SupportsDataframe(Protocol):
 
 DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, SupportsDataframe]
 TDataType = TypeVar("TDataType", bound=DataType)
-ToValuesReturnType = Optional[Dict[str, Union[dict, List[dict]]]]
+
+VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
+ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+
 
 # ==============================================================================
 # Data transformer registry
+#
+# A data transformer is a callable that takes a supported data type and returns
+# a transformed dictionary version of it which is compatible with the VegaLite schema.
+# The dict objects will be the Data portion of the VegaLite schema.
+#
+# Renderers only deal with the dict form of a
+# VegaLite spec, after the Data model has been put into a schema compliant
+# form.
 # ==============================================================================
-DataTransformerType = Callable
+class DataTransformerType(Protocol):
+    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict:
+        pass
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
@@ -58,24 +72,6 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 
 
 # ==============================================================================
-# Data model transformers
-#
-# A data model transformer is a pure function that takes a dict or DataFrame
-# and returns a transformed version of a dict or DataFrame. The dict objects
-# will be the Data portion of the VegaLite schema. The idea is that user can
-# pipe a sequence of these data transformers together to prepare the data before
-# it hits the renderer.
-#
-# In this version of Altair, renderers only deal with the dict form of a
-# VegaLite spec, after the Data model has been put into a schema compliant
-# form.
-#
-# A data model transformer has the following type signature:
-# DataModelType = Union[dict, pd.DataFrame]
-# DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
-# ==============================================================================
-
-
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
@@ -157,6 +153,24 @@ def sample(
         return None
 
 
+class _JsonFormatDict(TypedDict):
+    type: Literal["json"]
+
+
+class _CsvFormatDict(TypedDict):
+    type: Literal["csv"]
+
+
+class _DataJsonUrlDict(TypedDict):
+    url: str
+    format: _JsonFormatDict
+
+
+class _DataCsvUrlDict(TypedDict):
+    url: str
+    format: _CsvFormatDict
+
+
 @curried.curry
 def to_json(
     data: DataType,
@@ -164,7 +178,7 @@ def to_json(
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> Dict[str, Union[str, Dict[str, str]]]:
+) -> _DataJsonUrlDict:
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -183,7 +197,7 @@ def to_csv(
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> Dict[str, Union[str, Dict[str, str]]]:
+) -> _DataCsvUrlDict:
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
@@ -217,12 +231,11 @@ def to_values(data: DataType) -> ToValuesReturnType:
         pa_table = sanitize_arrow_table(pi.from_dataframe(data))
         return {"values": pa_table.to_pylist()}
     else:
-        # Should this raise an error?
-        return None
+        # Should never reach this state as tested by check_data_type
+        raise ValueError("Unrecognized data type: {}".format(type(data)))
 
 
 def check_data_type(data: DataType) -> None:
-    """Raise if the data is not a dict or DataFrame."""
     if not isinstance(data, (dict, pd.DataFrame)) and not any(
         hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
     ):
@@ -328,7 +341,7 @@ def curry(*args, **kwargs):
     return curried.curry(*args, **kwargs)
 
 
-def import_pyarrow_interchange():
+def import_pyarrow_interchange() -> ModuleType:
     import pkg_resources
 
     try:
