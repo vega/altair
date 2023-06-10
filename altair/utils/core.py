@@ -23,6 +23,11 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
+
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
@@ -191,9 +196,12 @@ TIMEUNITS = [
 ]
 
 
+InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
+
+
 def infer_vegalite_type(
     data: Union[np.ndarray, pd.Series]
-) -> Union[str, Tuple[str, list]]:
+) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')

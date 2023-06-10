@@ -27,20 +27,20 @@ if TYPE_CHECKING:
     import pyarrow.lib
 
 
-class SupportsGeoInterface(Protocol):
+class _SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-class SupportsDataframe(Protocol):
+class _SupportsDataframe(Protocol):
     def __dataframe__(self, *args, **kwargs):
         ...
 
 
-DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, SupportsDataframe]
-TDataType = TypeVar("TDataType", bound=DataType)
+_DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _SupportsDataframe]
+_TDataType = TypeVar("_TDataType", bound=_DataType)
 
-VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
-ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+_VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
+_ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
 
 
 # ==============================================================================
@@ -55,7 +55,7 @@ ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
 # form.
 # ==============================================================================
 class DataTransformerType(Protocol):
-    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict:
+    def __call__(self, data: _DataType, **kwargs) -> _VegaLiteDataDict:
         pass
 
 
@@ -79,7 +79,7 @@ class MaxRowsError(Exception):
 
 
 @curried.curry
-def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
+def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
@@ -115,7 +115,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
 
 @curried.curry
 def sample(
-    data: DataType, n: Optional[int] = None, frac: Optional[float] = None
+    data: _DataType, n: Optional[int] = None, frac: Optional[float] = None
 ) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
     """Reduce the size of the data model by sampling without replacement."""
     check_data_type(data)
@@ -173,7 +173,7 @@ class _DataCsvUrlDict(TypedDict):
 
 @curried.curry
 def to_json(
-    data: DataType,
+    data: _DataType,
     prefix: str = "altair-data",
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -192,7 +192,7 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data: Union[dict, pd.DataFrame, SupportsDataframe],
+    data: Union[dict, pd.DataFrame, _SupportsDataframe],
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -208,7 +208,7 @@ def to_csv(
 
 
 @curried.curry
-def to_values(data: DataType) -> ToValuesReturnType:
+def to_values(data: _DataType) -> _ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
@@ -235,7 +235,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
         raise ValueError("Unrecognized data type: {}".format(type(data)))
 
 
-def check_data_type(data: DataType) -> None:
+def check_data_type(data: _DataType) -> None:
     if not isinstance(data, (dict, pd.DataFrame)) and not any(
         hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
     ):
@@ -253,7 +253,7 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.md5(data_str.encode()).hexdigest()
 
 
-def _data_to_json_string(data: DataType) -> str:
+def _data_to_json_string(data: _DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
@@ -281,7 +281,7 @@ def _data_to_json_string(data: DataType) -> str:
         )
 
 
-def _data_to_csv_string(data: Union[dict, pd.DataFrame, SupportsDataframe]) -> str:
+def _data_to_csv_string(data: Union[dict, pd.DataFrame, _SupportsDataframe]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
