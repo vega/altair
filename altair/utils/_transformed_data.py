@@ -71,7 +71,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
         ) from err
 
     if isinstance(chart, Chart):
-        # Add dummy mark if None specified to satisfy Vega-Lite
+        # Add mark if none is specified to satisfy Vega-Lite
         if chart.mark == Undefined:
             chart = chart.mark_point()
 
