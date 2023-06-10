@@ -15,8 +15,6 @@ from altair.utils.schemapi import Undefined
 Scope = Tuple[int, ...]
 FacetMapping = Dict[Tuple[str, Scope], Tuple[str, Scope]]
 
-VIEW_NAME = "altair_view_{}"
-
 
 @overload
 def transformed_data(
@@ -119,22 +117,6 @@ def transformed_data(chart, row_limit=None, exclude=None):
         return datasets
 
 
-def make_view_name(i: int) -> str:
-    """Make view name for view number i
-
-    Parameters
-    ----------
-    i : int
-        View number
-
-    Returns
-    -------
-    str
-        View name
-    """
-    return VIEW_NAME.format(i)
-
-
 def name_views(
     chart: Union[
         Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, ConcatChart
@@ -169,8 +151,7 @@ def name_views(
         if chart.name not in exclude:
             if chart.name in (None, Undefined):
                 # Add name since none is specified
-                name = make_view_name(i)
-                chart.name = name
+                chart.name = Chart._get_name()
             return [chart.name]
         else:
             return []
