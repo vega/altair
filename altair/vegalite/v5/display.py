@@ -1,4 +1,5 @@
 import os
+import sys
 from typing import Dict
 
 from ...utils.mimebundle import spec_to_mimebundle
@@ -13,9 +14,14 @@ from ..display import (
 
 from .schema import SCHEMA_VERSION
 
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip("v")
-VEGA_VERSION = "5"
-VEGAEMBED_VERSION = "6"
+if sys.version_info >= (3, 8):
+    from typing import Final
+else:
+    from typing_extensions import Final
+
+VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
+VEGA_VERSION: Final = "5"
+VEGAEMBED_VERSION: Final = "6"
 
 
 # ==============================================================================
@@ -24,15 +30,15 @@ VEGAEMBED_VERSION = "6"
 
 
 # The MIME type for Vega-Lite 5.x releases.
-VEGALITE_MIME_TYPE = "application/vnd.vegalite.v5+json"
+VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v5+json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v5.renderer"
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
 
 # The display message when rendering fails
-DEFAULT_DISPLAY = """\
+DEFAULT_DISPLAY: Final = """\
 <VegaLite 5 object>
 
 If you see this message, it means the renderer has not been properly enabled

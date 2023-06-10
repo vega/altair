@@ -1,3 +1,5 @@
+import sys
+
 from ..data import (
     MaxRowsError,
     curry,
@@ -11,13 +13,18 @@ from ..data import (
     DataTransformerRegistry,
 )
 
+if sys.version_info >= (3, 8):
+    from typing import Final
+else:
+    from typing_extensions import Final
+
 
 # ==============================================================================
 # VegaLite 5 data transformers
 # ==============================================================================
 
 
-ENTRY_POINT_GROUP = "altair.vegalite.v5.data_transformer"
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.data_transformer"
 
 
 data_transformers = DataTransformerRegistry(entry_point_group=ENTRY_POINT_GROUP)

@@ -1,4 +1,5 @@
 """Tools for enabling and registering chart themes"""
+import sys
 from typing import Dict, Union
 
 from ...utils.theme import ThemeRegistry
@@ -15,6 +16,11 @@ VEGA_THEMES = [
     "googlecharts",
     "powerbi",
 ]
+
+if sys.version_info >= (3, 8):
+    from typing import Final
+else:
+    from typing_extensions import Final
 
 
 class VegaTheme:
@@ -36,7 +42,7 @@ class VegaTheme:
 # The entry point group that can be used by other packages to declare other
 # themes that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v5.theme"
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.theme"
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 themes.register(
