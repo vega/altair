@@ -2859,6 +2859,32 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[DataFrameLike]:
+        """Evaluate a RepeatChart's transforms
+
+        Evaluate the data transforms associated with a RepeatChart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Raises
+        ------
+        NotImplementedError
+            RepeatChart does not yet support transformed_data
+        """
+        raise NotImplementedError(
+            "transformed_data is not yet implemented for RepeatChart"
+        )
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
