@@ -89,9 +89,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
 
     # Build mapping from mark names to vega datasets
     facet_mapping = get_facet_mapping(vega_spec)
-    dataset_mapping = get_datasets_for_view_names(
-        vega_spec, chart_names, facet_mapping
-    )
+    dataset_mapping = get_datasets_for_view_names(vega_spec, chart_names, facet_mapping)
 
     # Build a list of vega dataset names that corresponds to the order
     # of the chart components
