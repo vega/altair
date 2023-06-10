@@ -160,7 +160,7 @@ def name_chart(
     i : int (default 0)
         Starting chart index
     exclude : iterable of str
-        Set of the names of charts to exclude
+        Names of charts to exclude
 
     Returns
     -------
