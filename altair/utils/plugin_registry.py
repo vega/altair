@@ -157,11 +157,11 @@ class PluginRegistry(Generic[PluginType]):
                     for ep in importlib_metadata_get(self.entry_point_group)
                     if ep.name == name
                 ]
-            except ValueError:
+            except ValueError as err:
                 if name in self.entrypoint_err_messages:
-                    raise ValueError(self.entrypoint_err_messages[name])
+                    raise ValueError(self.entrypoint_err_messages[name]) from err
                 else:
-                    raise NoSuchEntryPoint(self.entry_point_group, name)
+                    raise NoSuchEntryPoint(self.entry_point_group, name) from err
             value = cast(PluginType, ep.load())
             self.register(name, value)
         self._active_name = name

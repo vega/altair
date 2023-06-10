@@ -10,7 +10,7 @@ import pandas as pd
 from toolz import curried
 from typing import Callable, TypeVar
 
-from .core import sanitize_dataframe
+from .core import sanitize_dataframe, sanitize_arrow_table
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -213,7 +213,7 @@ def to_values(data: DataType) -> Optional[Dict[str, Union[dict, List[dict]]]]:
     elif hasattr(data, "__dataframe__"):
         # experimental interchange dataframe support
         pi = import_pyarrow_interchange()
-        pa_table = pi.from_dataframe(data)
+        pa_table = sanitize_arrow_table(pi.from_dataframe(data))
         return {"values": pa_table.to_pylist()}
     else:
         # Should this raise an error?
@@ -235,8 +235,6 @@ def check_data_type(data: DataType) -> None:
 # ==============================================================================
 # Private utilities
 # ==============================================================================
-
-
 def _compute_data_hash(data_str: str) -> str:
     return hashlib.md5(data_str.encode()).hexdigest()
 
@@ -310,6 +308,7 @@ def pipe(data, *funcs):
         "alt.pipe() is deprecated, and will be removed in a future release. "
         "Use toolz.curried.pipe() instead.",
         AltairDeprecationWarning,
+        stacklevel=1,
     )
     return curried.pipe(data, *funcs)
 
@@ -323,6 +322,7 @@ def curry(*args, **kwargs):
         "alt.curry() is deprecated, and will be removed in a future release. "
         "Use toolz.curried.curry() instead.",
         AltairDeprecationWarning,
+        stacklevel=1,
     )
     return curried.curry(*args, **kwargs)
 
@@ -336,14 +336,14 @@ def import_pyarrow_interchange():
         import pyarrow.interchange as pi
 
         return pi
-    except pkg_resources.DistributionNotFound:
+    except pkg_resources.DistributionNotFound as err:
         # The package is not installed
         raise ImportError(
             "Usage of the DataFrame Interchange Protocol requires the package 'pyarrow', but it is not installed."
-        )
-    except pkg_resources.VersionConflict:
+        ) from err
+    except pkg_resources.VersionConflict as err:
         # The package is installed but does not meet the minimum version requirement
         raise ImportError(
             "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
             "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
-        )
+        ) from err

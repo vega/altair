@@ -60,8 +60,8 @@ Text Mark Properties
     )
 
     base = alt.Chart(source).encode(
-        x=alt.X("a:Q", axis=alt.Axis(labelAngle=0), scale=alt.Scale(domain=[0, 100])),
-        y=alt.Y("b:Q", scale=alt.Scale(domain=[0, 100])),
+        x=alt.X("a:Q").axis(labelAngle=0).scale(domain=[0, 100]),
+        y=alt.Y("b:Q").scale(domain=[0, 100]),
     )
 
     pts = base.mark_point()
@@ -117,16 +117,14 @@ Text Table Heatmap
         num_cars="count()",
         groupby=["Origin", "Cylinders"],
     ).encode(
-        alt.X("Cylinders:O", scale=alt.Scale(paddingInner=0)),
-        alt.Y("Origin:O", scale=alt.Scale(paddingInner=0)),
+        alt.X("Cylinders:O").scale(paddingInner=0),
+        alt.Y("Origin:O").scale(paddingInner=0),
     )
 
     heatmap = base.mark_rect().encode(
-        color=alt.Color(
-            "num_cars:Q",
-            scale=alt.Scale(scheme="viridis"),
-            legend=alt.Legend(direction="horizontal"),
-        )
+        alt.Color("num_cars:Q")
+            .scale(scheme="viridis")
+            .legend(direction="horizontal")
     )
 
     text = base.mark_text(baseline="middle").encode(
@@ -155,7 +153,7 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
 
     bar = alt.Chart(source).mark_bar().encode(
         y="a:N",
-        x=alt.X("b:Q", scale=alt.Scale(domain=[0, 60]))
+        x=alt.X("b:Q").scale(domain=[0, 60])
     )
     text = bar.mark_text(
         align="left",

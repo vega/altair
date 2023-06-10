@@ -221,16 +221,16 @@ Customizing your Visualization
 By default, Altair via Vega-Lite makes some choices about default properties
 of the visualization.
 Altair also provides an API to customize the look of the visualization.
-For example, we can specify the axis titles using the ``axis`` attribute
-of channel classes, and we can specify the color of the marking by setting
-the ``color`` keyword of the ``Chart.mark_*`` methods to any valid HTML
+For example, we can specify the axis titles using the :meth:`title` method
+of channel classes, and we can specify the color of the mark by setting
+the ``color`` keyword of the ``Chart.mark_*`` method to any valid HTML
 color string:
 
 .. altair-plot::
 
     alt.Chart(data).mark_bar(color='firebrick').encode(
-        alt.Y('a', title='category'),
-        alt.X('average(b)', title='avg(b) by category')
+        alt.Y('a').title('category'),
+        alt.X('average(b)').title('avg(b) by category')
     )
 
 

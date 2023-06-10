@@ -99,8 +99,9 @@ def test_datum_getattr():
     x = datum["foo"]
     assert repr(x) == "datum['foo']"
 
+    magic_attr = "__magic__"
     with pytest.raises(AttributeError):
-        datum.__magic__
+        getattr(datum, magic_attr)
 
 
 def test_expression_getitem():

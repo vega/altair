@@ -34,7 +34,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar().encode(
-        x=alt.X('yield:Q', scale=alt.Scale(zero=False)),
+        x=alt.X('yield:Q').scale(zero=False),
         y=alt.Y('variety:N')
     )
 
@@ -42,7 +42,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
         filled=True,
         color="black",
     ).encode(
-        x=alt.X("yield:Q", aggregate="mean"),
+        x=alt.X("mean(yield)"),
         y=alt.Y("variety:N"),
     )
 
@@ -57,12 +57,12 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
-        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        x=alt.X("yield:Q").scale(zero=False),
         y=alt.Y("variety:N"),
     )
 
     points = alt.Chart(source).mark_point(filled=True, color="black").encode(
-        x=alt.X("yield:Q", aggregate="mean"),
+        x=alt.X("mean(yield)"),
         y=alt.Y("variety:N"),
     )
 
@@ -78,7 +78,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar(extent="iqr").encode(
-        x=alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        x=alt.X("yield:Q").scale(zero=False),
         y=alt.Y("variety:N"),
     )
 
@@ -86,7 +86,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
         filled=True,
         color="black"
     ).encode(
-        x=alt.X("yield:Q", aggregate="mean"),
+        x=alt.X("mean(yield)"),
         y=alt.Y("variety:N"),
     )
 
@@ -109,7 +109,7 @@ If the data is already pre-aggregated with low and high values of the error bars
     })
 
     bar = alt.Chart(source).mark_errorbar().encode(
-        alt.X("upper_yield:Q", scale=alt.Scale(zero=False), title="yield"),
+        alt.X("upper_yield:Q").scale(zero=False).title("yield"),
         alt.X2("lower_yield:Q"),
         alt.Y("variety:N"),
     )
@@ -138,7 +138,7 @@ If the data is already pre-aggregated with center and error values of the error 
     })
 
     bar = alt.Chart(source).mark_errorbar().encode(
-        x=alt.X("yield_center:Q", scale=alt.Scale(zero=False), title="yield"),
+        x=alt.X("yield_center:Q").scale(zero=False).title("yield"),
         xError=("yield_error:Q"),
         y=alt.Y("variety:N"),
     )
@@ -170,14 +170,14 @@ The orientation of an error bar is automatically determined by the continuous fi
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar().encode(
-        alt.Y("yield:Q", scale=alt.Scale(zero=False))
+        alt.Y("yield:Q").scale(zero=False)
     )
 
     points = alt.Chart(source).mark_point(
         filled=True,
         color="black"
     ).encode(
-        alt.Y("yield:Q", aggregate="mean")
+        alt.Y("mean(yield)")
     )
 
     error_bars + points
@@ -193,7 +193,7 @@ For 2D error bars with one continuous field and one discrete field, the error ba
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar(extent="stdev").encode(
-        alt.Y("yield:Q", scale=alt.Scale(zero=False)),
+        alt.Y("yield:Q").scale(zero=False),
         alt.X("variety:N"),
     )
 
@@ -201,7 +201,7 @@ For 2D error bars with one continuous field and one discrete field, the error ba
         filled=True,
         color="black",
     ).encode(
-        alt.Y("yield:Q", aggregate="mean"),
+        alt.Y("mean(yield)"),
         alt.X("variety:N"),
     )
 
@@ -220,7 +220,7 @@ Here is an example of a ``errorbar`` with the ``color`` encoding channel set to 
     source = data.barley()
 
     error_bars = alt.Chart(source).mark_errorbar(ticks=True).encode(
-        alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        alt.X("yield:Q").scale(zero=False),
         alt.Y("variety:N"),
         color=alt.value("#4682b4"),
     )
@@ -229,7 +229,7 @@ Here is an example of a ``errorbar`` with the ``color`` encoding channel set to 
         filled=True,
         color="black"
     ).encode(
-        alt.X("yield:Q", aggregate="mean"),
+        alt.X("mean(yield)"),
         alt.Y("variety:N"),
     )
 
@@ -246,7 +246,7 @@ You can add custom tooltips to error bars. The custom tooltip will override the 
     source = data.barley()
 
     alt.Chart(source).mark_errorbar().encode(
-        alt.X("yield:Q", scale=alt.Scale(zero=False)),
+        alt.X("yield:Q").scale(zero=False),
         alt.Y("variety:N"),
         tooltip="variety:N",
     )

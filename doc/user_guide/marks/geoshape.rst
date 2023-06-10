@@ -12,7 +12,7 @@ A ``geoshape`` mark can contain any :ref:`standard mark properties <mark-propert
 
 Basic Map
 ^^^^^^^^^
-Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth dataset and create a basic map using ``mark_geoshape``:
+Altair can work with many different geographical data formats, including geojson and topojson files. Often, the most convenient input format to use is a ``GeoDataFrame``. Here we load the Natural Earth 110m Cultural Vectors dataset and create a basic map using ``mark_geoshape``:
 
 .. altair-plot::
 
@@ -20,8 +20,9 @@ Altair can work with many different geographical data formats, including geojson
     from vega_datasets import data
     import geopandas as gpd
 
-    fp = gpd.datasets.get_path('naturalearth_lowres')
-    gdf_ne = gpd.read_file(fp)  # shapefile
+    url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
+    gdf_ne = gpd.read_file(url)  # zipped shapefile
+    gdf_ne = gdf_ne[["NAME", "CONTINENT", "POP_EST", 'geometry']]
 
     alt.Chart(gdf_ne).mark_geoshape()
 
@@ -51,7 +52,7 @@ The following examples applies these approaches to focus on continental Africa:
 
 .. altair-plot::
 
-    gdf_sel = gdf_ne[gdf_ne.continent == 'Africa']
+    gdf_sel = gdf_ne.query("CONTINENT == 'Africa'")
 
     alt.Chart(gdf_sel).mark_geoshape()
 
@@ -60,7 +61,7 @@ The following examples applies these approaches to focus on continental Africa:
 .. altair-plot::
 
     alt.Chart(gdf_ne).mark_geoshape().transform_filter(
-        alt.datum.continent == 'Africa'
+        alt.datum.CONTINENT == 'Africa'
     )
 
 3. Specify ``scale`` (zoom level) and ``translate`` (panning) within the ``project`` method:
@@ -76,19 +77,24 @@ The following examples applies these approaches to focus on continental Africa:
 
 .. altair-plot::
 
-    from shapely.ops import orient
-    from shapely.geometry import mapping
+    extent_roi = gdf_ne.query("CONTINENT == 'Africa'")
+    xmin, ymin, xmax, ymax = extent_roi.total_bounds
 
-    extent_roi = gdf_ne.query("continent == 'Africa'").unary_union.envelope
-
-    # fit object should be an array of GeoJSON-like features
-    # order polygon exterior needs to be clock-wise (left-hand-rule)
-    if extent_roi.exterior.is_ccw:
-        extent_roi = orient(extent_roi, -1)
-    extent_roi_geojson = [mapping(extent_roi)]
+    # fit object should be a GeoJSON-like Feature or FeatureCollection 
+    extent_roi_feature = {
+        "type": "Feature", 
+        "geometry": {"type": "Polygon", 
+                     "coordinates": [[
+                         [xmax, ymax],
+                         [xmax, ymin],
+                         [xmin, ymin],
+                         [xmin, ymax],
+                         [xmax, ymax]]]},
+        "properties": {}
+    }
 
     alt.Chart(gdf_ne).mark_geoshape(clip=True).project(
-        fit=extent_roi_geojson
+        fit=extent_roi_feature
     )
 
 Cartesian coordinates
@@ -107,12 +113,12 @@ In the following example the input geometry is not projected and is instead rend
 
 Mapping Polygons
 ^^^^^^^^^^^^^^^^
-The following example maps the visual property of the ``name`` column using the ``color`` encoding.
+The following example maps the visual property of the ``NAME`` column using the ``color`` encoding.
 
 .. altair-plot::
 
     alt.Chart(gdf_sel).mark_geoshape().encode(
-        color='name:N'
+        color='NAME:N'
     )
 
 Since each country is represented by a (multi)polygon, we can separate the ``stroke`` and ``fill`` definitions as such:
@@ -123,7 +129,7 @@ Since each country is represented by a (multi)polygon, we can separate the ``str
         stroke='white',
         strokeWidth=1.5
     ).encode(
-        fill='name:N'
+        fill='NAME:N'
     )
 
 Mapping Lines
@@ -161,7 +167,7 @@ Using this approach one can also style Polygons as if they are Linestrings:
         filled=False,
         strokeWidth=1.5
     ).encode(
-        stroke='name:N'
+        stroke='NAME:N'
     )
 
 Mapping Points
@@ -189,7 +195,7 @@ Caveat: To use the ``size`` encoding for the Points you will need to use the ``m
     gdf_centroid["lat"] = gdf_centroid.geometry.y
 
     alt.Chart(gdf_centroid).mark_circle().encode(
-        longitude="lon:Q", latitude="lat:Q", size="pop_est:Q"
+        longitude="lon:Q", latitude="lat:Q", size="POP_EST:Q"
     )
 
 Altair also contains expressions related to geographical features. We can for example define the ``centroids`` using a ``geoCentroid`` expression:
@@ -209,7 +215,7 @@ Altair also contains expressions related to geographical features. We can for ex
     ).encode(
         longitude='centroid[0]:Q',
         latitude='centroid[1]:Q',
-        size="pop_est:Q"
+        size="POP_EST:Q"
     )
 
     (basemap + bubbles).project(
@@ -224,7 +230,7 @@ An alternative to showing the population sizes as bubbles, is to create a "Choro
 .. altair-plot::
 
     alt.Chart(gdf_sel).mark_geoshape().encode(
-        color='pop_est'
+        color='POP_EST'
     )
 
 When we create choropleth maps, we need to be careful, because although the color changes according to the value of the column we are interested in, the size is tied to the area of each country and we might miss interesting values in small countries just because we can't easily see them on the map (e.g. if we were to visualize population density).
@@ -471,7 +477,7 @@ will make the following not work for geographic visualization:
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
         color=alt.Color('value:Q'),
-        facet=alt.Facet('variable:N', columns=3)
+        facet=alt.Facet('variable:N').columns(3)
     ).properties(
         width=180,
         height=130
@@ -545,7 +551,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
             x="population",
             opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
             color="population",
-            y=alt.Y("state", sort="-x"),
+            y=alt.Y("state").sort("-x"),
         )
     )
 

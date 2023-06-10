@@ -156,7 +156,7 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
     chart.save('chart.svg')
     chart.save('chart.pdf')
 
-However, saving these images requires some additional extensions to run the
+Saving these images requires an additional extension to run the
 javascript code necessary to interpret the Vega-Lite specification and output
 it in the form of an image. There are two packages that can be used to enable
 image export: vl-convert_ or altair_saver_.
@@ -165,7 +165,16 @@ vl-convert
 ^^^^^^^^^^
 The vl-convert_ package can be installed with::
 
-    $ pip install vl-convert-python
+    conda install -c conda-forge vl-convert-python
+
+or::
+
+    pip install vl-convert-python
+
+.. note::
+   
+   Conda packages are not yet available for the Apple Silicon architecture.
+   See `conda-forge/vl-convert-python-feedstock#9 <https://github.com/conda-forge/vl-convert-python-feedstock/issues/9>`_.
 
 Unlike altair_saver_, vl-convert_ does not require any external dependencies.
 However, it only supports saving charts to PNG and SVG formats. To save directly to
@@ -174,13 +183,19 @@ on other `limitations <https://github.com/vega/vl-convert#limitations>`_.
 
 altair_saver
 ^^^^^^^^^^^^
+
+.. note::
+   
+   altair_saver does not yet support Altair 5.
+
+
 The altair_saver_ package can be installed with::
 
-    $ conda install altair_saver
+    conda install -c conda-forge altair_saver
 
 or::
 
-    $ pip install altair_saver
+    pip install altair_saver
 
 See the altair_saver_ documentation for information about additional installation
 requirements.

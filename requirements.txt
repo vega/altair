@@ -1,7 +1,0 @@
-importlib_metadata; python_version < "3.8"
-typing_extensions>=4.0.1; python_version < "3.11"
-jinja2
-jsonschema>=3.0
-numpy
-pandas>=0.18
-toolz

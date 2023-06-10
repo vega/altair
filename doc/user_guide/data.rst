@@ -13,21 +13,20 @@ Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
 :class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
 and :class:`FacetChart`) accepts a dataset as its first argument.
 
-While the most common way to provide Altair with a dataset is via a pandas DataFrame,
-there are many different ways of specifying a dataset:
+There are many different ways of specifying a dataset:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
+- as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute), e.g. polars and pyarrow. This is experimental.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
-- as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute). This is experimental.
 
-When data is specified as a DataFrame, the encoding is quite simple, as Altair
+When data is specified as a pandas DataFrame, Altair
 uses the data type information provided by pandas to automatically determine
 the data types required in the encoding. For example, here we specify data via a pandas DataFrame
-and Altair automatically detects that the x-column should be visualized on a quantitative scale
-and that the y-column should be visualized on a categorical scale:
+and Altair automatically detects that the x-column should be visualized on a categorical (nominal) scale
+and that the y-column should be visualized on a quantitative scale:
 
 .. altair-plot::
 
@@ -41,7 +40,10 @@ and that the y-column should be visualized on a categorical scale:
        y='y',
    )
 
-By comparison, here we create the same chart using a :class:`Data` object,
+By comparison,
+all other ways of specifying the data (including non-pandas DataFrames)
+requires encoding types to be declared explicitly.
+Here we create the same chart as above using a :class:`Data` object,
 with the data specified as a JSON-style list of records:
 
 .. altair-plot::
@@ -54,13 +56,13 @@ with the data specified as a JSON-style list of records:
                            {'x': 'D', 'y': 7},
                            {'x': 'E', 'y': 2}])
    alt.Chart(data).mark_bar().encode(
-       x='x:O',  # specify ordinal data
+       x='x:N',  # specify nominal data
        y='y:Q',  # specify quantitative data
    )
 
 Notice the extra markup required in the encoding; because Altair cannot infer
 the types within a :class:`Data` object, we must specify them manually
-(here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
+(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
 and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
 Similarly, we must also specify the data type when referencing data by URL:
@@ -76,7 +78,8 @@ Similarly, we must also specify the data type when referencing data by URL:
         y='Miles_per_Gallon:Q'
     )
 
-We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
+Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
+Below we go into more detail about the different ways of specifying data in an Altair chart.
 
 Pandas DataFrame
 ~~~~~~~~~~~~~~~~
@@ -346,16 +349,16 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
    gdf_geoms
 
 
-Since the spatial data in our example is not geographic, 
+Since the spatial data in our example is not geographic,
 we use ``project`` configuration ``type="identity", reflectY=True`` to draw the
-geometries without applying a geographic projection. By using ``alt.Color(..., scale=None)`` we
+geometries without applying a geographic projection. By using ``alt.Color(...).scale(None)`` we
 disable the automatic color assignment in Altair
 and instead directly use the provided Hex color codes.
 
 .. altair-plot::
 
    alt.Chart(gdf_geoms, title="Vega-Altair").mark_geoshape().encode(
-       color=alt.Color("color:N", scale=None)
+       alt.Color("color:N").scale(None)
    ).project(type="identity", reflectY=True)
 
 
@@ -399,7 +402,7 @@ for the ordinal structured data.
 .. altair-plot::
 
    alt.Chart(data_obj_geojson, title="Vega-Altair - ordinal scale").mark_geoshape().encode(
-       color=alt.Color("properties.location:O", scale=alt.Scale(scheme='magma'))
+       alt.Color("properties.location:O").scale(scheme='magma')
    ).project(type="identity", reflectY=True)
 
 
@@ -483,7 +486,7 @@ TopoJSON File by URL
 ^^^^^^^^^^^^^^^^^^^^
 
 Altair can load TopoJSON resources directly from a web URL. As
-explained in :ref:`spatial-data-inline-topojson`, we have to use the 
+explained in :ref:`spatial-data-inline-topojson`, we have to use the
 ``feature`` parameter to specify the object name (here ``boroughs``) and
 define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 
@@ -493,11 +496,11 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
    from vega_datasets import data
 
    url_topojson = data.londonBoroughs.url
-    
+
    data_url_topojson = alt.Data(
        url=url_topojson, format=alt.DataFormat(feature="boroughs", type="topojson")
    )
-    
+
    data_url_topojson
 
 Note: There also exist a shorthand to extract the objects from a
@@ -516,7 +519,7 @@ as we hover over it with the mouse.
    alt.Chart(data_url_topojson, title="London-Boroughs").mark_geoshape(
        tooltip=True
    ).encode(
-       color=alt.Color("id:N", scale=alt.Scale(scheme='tableau20'), legend=alt.Legend(columns=2, symbolLimit=33))
+       alt.Color("id:N").scale(scheme='tableau20').legend(columns=2, symbolLimit=33)
    )
 
 Similar to the ``feature`` option, there also exists the ``mesh``
@@ -529,7 +532,7 @@ specific regions such as individual countries, states or counties.
 
 Here below we draw the same Boroughs of London, but now as mesh only.
 
-Note: you have to explicitly define ``filled=False`` to draw multi(lines) 
+Note: you have to explicitly define ``filled=False`` to draw multi(lines)
 without fill color.
 
 .. altair-plot::
@@ -537,14 +540,14 @@ without fill color.
    from vega_datasets import data
 
    url_topojson = data.londonBoroughs.url
-    
+
    data_url_topojson_mesh = alt.Data(
        url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")
    )
 
    alt.Chart(data_url_topojson_mesh, title="Border London-Boroughs").mark_geoshape(
        filled=False
-   )  
+   )
 
 .. _spatial-data-nested-geojson:
 
@@ -566,10 +569,10 @@ in the list of dictionaries:
        {"color": "#A9CDE0", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}},
    ]
    data_nested_features = alt.Data(values=nested_features)
-    
+
    alt.Chart(data_nested_features, title="Vega-Altair").mark_geoshape().encode(
-       shape="geo:G", 
-       color=alt.Color("color:N", scale=None)
+       shape="geo:G",
+       color=alt.Color("color:N").scale(None)
    ).project(type="identity", reflectY=True)
 
 

@@ -30,39 +30,34 @@ For example, here we will visualize the cars dataset using four of the available
        shape='Origin'
    )
 
+Channel Options
+~~~~~~~~~~~~~~~
+
 Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
-the chart. For example, below we adjust the y-axis title and increase the step between the x-axis ticks:
+the chart.
+Altair 5.0 introduced a method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer).
 
-.. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
+.. note::
 
-    alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
-        y=alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
-        color='Origin',
-        shape='Origin'
-    )
-
+    With the release of Altair 5,
+    the documentation was updated to prefer the method-based syntax.
+    The gallery examples still include the attribute-based syntax
+    in addition to the method-based syntax.
 
 .. _method-based-attribute-setting:
 
-Alternative Syntax for Channel Options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Method-Based Syntax
+^^^^^^^^^^^^^^^^^^^
 
-Altair 5.0 introduced an alternative method-based syntax for setting channel options.  In the example above, the ``axis`` option of the ``x`` channel encoding is set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``.  To define the same :class:`X` object using the alternative method-based syntax, we can use ``x=alt.X('Horsepower').axis(tickMinStep=50)``.  In other words, the use of the ``axis`` keyword argument is replaced by the use of the ``axis`` method.
+The method-based syntax replaces *keyword arguments* with *methods*.
+For example, an ``axis`` option of the ``x`` channel encoding would traditionally be set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``. To define the same :class:`X` object using the method-based syntax, we can instead use the more succinct ``x=alt.X('Horsepower').axis(tickMinStep=50)``.
 
-The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel.  The following produces the same chart as the previous example.
+The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel. The following produces the same chart as the previous example.
 
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
-
     alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower').axis(tickMinStep=50),
-        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        alt.X('Horsepower').axis(tickMinStep=50),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
@@ -70,16 +65,45 @@ The same technique works with all encoding channels and all channel options.  Fo
 These option-setter methods can also be chained together, as in the following, in which we set the ``axis``, ``bin``, and ``scale`` options of the ``x`` channel by using the corresponding methods (``axis``, ``bin``, and ``scale``).  We can break the ``x`` definition over multiple lines to improve readability.  (This is valid syntax because of the enclosing parentheses from ``encode``.)
 
 .. altair-plot::
-    import altair as alt
-    from vega_datasets import data
-    cars = data.cars()
-
     alt.Chart(cars).mark_point().encode(
-        x=alt.X('Horsepower')
-                .axis(ticks=False)
-                .bin(maxbins=10)
-                .scale(domain=(30,300), reverse=True),
-        y=alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        alt.X('Horsepower')
+            .axis(ticks=False)
+            .bin(maxbins=10)
+            .scale(domain=(30,300), reverse=True),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        color='Origin',
+        shape='Origin'
+    )
+
+
+.. _attribute-based-attribute-setting:
+
+Attribute-Based Syntax
+^^^^^^^^^^^^^^^^^^^^^^
+
+The two examples from the section above
+would look as follows with the traditional attribute-based syntax:
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
+        alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
+        color='Origin',
+        shape='Origin'
+    )
+
+For specs making extensive use of channel options,
+the attribute-based syntax can become quite verbose:
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X(
+            'Horsepower',
+            axis=alt.Axis(ticks=False),
+            bin=alt.Bin(maxbins=10),
+            scale=alt.Scale(domain=(30,300), reverse=True)
+        ),
+        alt.Y('Miles_per_Gallon', title='Miles per Gallon'),
         color='Origin',
         shape='Origin'
     )
@@ -182,7 +206,7 @@ that contains integers specifying a year:
     pop = data.population.url
 
     base = alt.Chart(pop).mark_bar().encode(
-        alt.Y('mean(people):Q', title='total population')
+        alt.Y('mean(people):Q').title('total population')
     ).properties(
         width=200,
         height=200
@@ -259,7 +283,7 @@ you will need to escape the special characters using a backslash:
     alt.Chart(source).mark_bar().encode(
         x='col\:colon',
         # Remove the backslash in the title
-        y=alt.Y('col\.period', title='col.period'),
+        y=alt.Y('col\.period').title('col.period'),
         # Specify the data type
         color='col\[brackets\]:N',
     )
@@ -296,7 +320,7 @@ In Altair, such an operation looks like this:
 .. altair-plot::
 
    alt.Chart(cars).mark_bar().encode(
-       alt.X('Horsepower', bin=True),
+       alt.X('Horsepower').bin(),
        y='count()'
        # could also use alt.Y(aggregate='count', type='quantitative')
    )
@@ -313,8 +337,8 @@ a "Bubble Plot"):
 .. altair-plot::
 
    alt.Chart(cars).mark_point().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
        size='count()',
    )
 
@@ -325,16 +349,16 @@ represents the mean of a third quantity, such as acceleration:
 .. altair-plot::
 
    alt.Chart(cars).mark_circle().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
        size='count()',
-       color='average(Acceleration):Q'
+       color='mean(Acceleration):Q'
    )
 
 Aggregation Functions
 ^^^^^^^^^^^^^^^^^^^^^
 
-In addition to ``count`` and ``average``, there are a large number of available
+In addition to ``count`` and ``mean``, there are a large number of available
 aggregation functions built into Altair:
 
 =========  ===========================================================================  =====================================
@@ -399,51 +423,52 @@ x-axis, using the barley dataset:
 
     base = alt.Chart(barley).mark_bar().encode(
         y='mean(yield):Q',
-        color=alt.Color('mean(yield):Q', legend=None)
+        color=alt.Color('mean(yield):Q').legend(None)
     ).properties(width=100, height=100)
 
     # Sort x in ascending order
     ascending = base.encode(
-        alt.X(field='site', type='nominal', sort='ascending')
+        alt.X('site:N').sort('ascending')
     ).properties(
         title='Ascending'
     )
 
     # Sort x in descending order
     descending = base.encode(
-        alt.X(field='site', type='nominal', sort='descending')
+        alt.X('site:N').sort('descending')
     ).properties(
         title='Descending'
     )
 
     # Sort x in an explicitly-specified order
     explicit = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=['Duluth', 'Grand Rapids', 'Morris',
-                    'University Farm', 'Waseca', 'Crookston'])
+        alt.X('site:N').sort(
+            ['Duluth', 'Grand Rapids', 'Morris', 'University Farm', 'Waseca', 'Crookston']
+        )
     ).properties(
         title='Explicit'
     )
 
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='mean'))
+        alt.X('site:N').sort(field='yield', op='mean')
     ).properties(
         title='By Yield'
     )
 
     alt.concat(
-        ascending, descending, explicit,
-        sortchannel, sortfield,
+        ascending,
+        descending,
+        explicit,
+        sortchannel,
+        sortfield,
         columns=3
     )
 
@@ -464,16 +489,14 @@ following example where we don't aggregate the data:
 
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='min'))
+        alt.X('site:N').sort(field='yield', op='max')
     ).properties(
         title='By Min Yield'
     )
@@ -493,12 +516,11 @@ While the above examples show sorting of axes by specifying ``sort`` in the
 .. altair-plot::
 
     alt.Chart(barley).mark_rect().encode(
-        alt.X('mean(yield):Q', sort='ascending'),
-        alt.Y('site:N', sort='descending'),
-        alt.Color('site:N',
-            sort=['Morris', 'Duluth', 'Grand Rapids',
-                  'University Farm', 'Waseca', 'Crookston']
-        )
+        alt.X('mean(yield):Q').sort('ascending'),
+        alt.Y('site:N').sort('descending'),
+        alt.Color('site:N').sort([
+            'Morris', 'Duluth', 'Grand Rapids', 'University Farm', 'Waseca', 'Crookston'
+        ])
     )
 
 Here the y-axis is sorted reverse-alphabetically, while the color legend is
@@ -603,12 +625,10 @@ One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly in
     
     import altair as alt
 
-    bar = alt.Chart().mark_bar().encode(
+    alt.Chart().mark_bar().encode(
         y=alt.YDatum(220).scale(domain=(0,500)),
         color=alt.value("darkkhaki")
     )
-
-    bar
 
 If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
 

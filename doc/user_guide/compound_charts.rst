@@ -34,9 +34,8 @@ same data; for example:
 .. altair-plot::
 
     import altair as alt
-    from altair.expr import datum
-
     from vega_datasets import data
+
     stocks = data.stocks.url
 
     base = alt.Chart(stocks).encode(
@@ -44,7 +43,7 @@ same data; for example:
         y='price:Q',
         color='symbol:N'
     ).transform_filter(
-        datum.symbol == 'GOOG'
+        alt.datum.symbol == 'GOOG'
     )
 
     base.mark_line() + base.mark_point()
@@ -82,9 +81,9 @@ heat-map:
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q', bin=True),
-        alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
-        alt.Color('count()', scale=alt.Scale(scheme='greenblue'))
+        alt.X('IMDB_Rating:Q').bin(),
+        alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+        alt.Color('count()').scale(scheme='greenblue')
     )
 
     points = alt.Chart(source).mark_circle(
@@ -137,7 +136,7 @@ distribution of its points:
 
     chart2 = alt.Chart(iris).mark_bar().encode(
         x='count()',
-        y=alt.Y('petalWidth:Q', bin=alt.Bin(maxbins=30)),
+        y=alt.Y('petalWidth:Q').bin(maxbins=30),
         color='species:N'
     ).properties(
         height=300,
@@ -189,9 +188,7 @@ with a ``brush`` selection to add interaction:
         height=200
     )
 
-    upper = base.encode(
-        alt.X('date:T', scale=alt.Scale(domain=brush))
-    )
+    upper = base.encode(alt.X('date:T').scale(domain=brush))
 
     lower = base.properties(
         height=60
@@ -282,8 +279,8 @@ using ``alt.repeat('layer')``:
     source = data.movies()
 
     alt.Chart(source).mark_line().encode(
-        x=alt.X("IMDB_Rating", bin=True),
-        y=alt.Y(alt.repeat('layer'), aggregate='mean', title="Mean of US and Worldwide Gross"),
+        x=alt.X("IMDB_Rating").bin(),
+        y=alt.Y(alt.repeat('layer')).aggregate('mean').title("Mean of US and Worldwide Gross"),
         color=alt.ColorDatum(alt.repeat('layer'))
     ).repeat(layer=["US_Gross", "Worldwide_Gross"])
 
@@ -305,8 +302,8 @@ concatenation:
 .. altair-plot::
 
     import altair as alt
-    from altair.expr import datum
     from vega_datasets import data
+
     iris = data.iris.url
 
     base = alt.Chart(iris).mark_point().encode(
@@ -320,7 +317,7 @@ concatenation:
 
     chart = alt.hconcat()
     for species in ['setosa', 'versicolor', 'virginica']:
-        chart |= base.transform_filter(datum.species == species)
+        chart |= base.transform_filter(alt.datum.species == species)
     chart
 
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,

@@ -1,20 +1,20 @@
 """
-This script fills the contents of doc/user_guide/API.rst
+This script fills the contents of doc/user_guide/api.rst
 based on the updated Altair schema.
 """
-from os.path import abspath, dirname, join
 import sys
 import types
+from os.path import abspath, dirname, join
 
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
 import altair as alt  # noqa: E402
 
-API_FILENAME = join(ROOT_DIR, "doc", "user_guide", "API.rst")
+API_FILENAME = join(ROOT_DIR, "doc", "user_guide", "api.rst")
 
 API_TEMPLATE = """\
-.. _API:
+.. _api:
 
 API Reference
 =============

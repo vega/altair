@@ -31,7 +31,7 @@ data directly, the line skips the missing entries:
    import altair as alt
 
    raw = alt.Chart(data).mark_line(point=True).encode(
-       x=alt.X('t:Q'),
+       x='t:Q',
        y='value:Q',
        color='variable:N'
    )
@@ -42,7 +42,7 @@ no points) it can imply the existence of data that is not there.
 
 Impute via Encodings
 ^^^^^^^^^^^^^^^^^^^^
-To address this, you can use an impute argument to the encoding channel.
+To address this, you can use the impute method of the encoding channel.
 For example, we can impute using a constant value (we'll show the raw chart
 lightly in the background for reference):
 
@@ -51,7 +51,7 @@ lightly in the background for reference):
    background = raw.encode(opacity=alt.value(0.2))
    chart = alt.Chart(data).mark_line(point=True).encode(
        x='t:Q',
-       y=alt.Y('value:Q', impute=alt.ImputeParams(value=0)),
+       y=alt.Y('value:Q').impute(value=0),
        color='variable:N'
    )
    background + chart
@@ -62,7 +62,7 @@ Or we can impute using any supported aggregate:
 
    chart = alt.Chart(data).mark_line(point=True).encode(
        x='t:Q',
-       y=alt.Y('value:Q', impute=alt.ImputeParams(method='mean')),
+       y=alt.Y('value:Q').impute(method='mean'),
        color='variable:N'
    )
    background + chart

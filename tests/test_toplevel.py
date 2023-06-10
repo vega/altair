@@ -17,4 +17,4 @@ def test_completeness_of__all__():
     # If the assert statement fails below, there are probably either new objects
     # in the top-level Altair namespace or some were removed.
     # In that case, run tools/update_init_file.py to update __all__
-    assert getattr(alt, "__all__") == relevant_attributes
+    assert alt.__all__ == relevant_attributes

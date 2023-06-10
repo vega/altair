@@ -44,7 +44,7 @@ def _prepare_data(data, data_transformers):
     elif isinstance(data, str):
         return {"url": data}
     else:
-        warnings.warn("data of type {} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
         return data
 
 
@@ -94,11 +94,11 @@ def vegalite(line, cell):
     elif not YAML_AVAILABLE:
         try:
             spec = json.loads(cell)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as err:
             raise ValueError(
                 "%%vegalite: spec is not valid JSON. "
                 "Install pyyaml to parse spec as yaml"
-            )
+            ) from err
     else:
         spec = yaml.load(cell, Loader=yaml.SafeLoader)
 

@@ -30,7 +30,7 @@ from schemapi.utils import (  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    "vega-lite": {"v5": "v5.6.1"},
+    "vega-lite": {"v5": "v5.8.0"},
 }
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
@@ -581,7 +581,7 @@ def vegalite_main(skip_download=False):
         outfile = join(schemapath, "__init__.py")
         print("Writing {}".format(outfile))
         with open(outfile, "w", encoding="utf8") as f:
-            f.write("# flake8: noqa\n")
+            f.write("# ruff: noqa\n")
             f.write("from .core import *\nfrom .channels import *\n")
             f.write(
                 "SCHEMA_VERSION = {!r}\n" "".format(SCHEMA_VERSION[library][version])

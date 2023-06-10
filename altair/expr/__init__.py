@@ -1,5 +1,5 @@
 """Tools for creating transform & filter expressions with a python syntax"""
-# flake8: noqa
+# ruff: noqa
 from typing import Any
 
 from .core import datum, Expression

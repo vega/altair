@@ -9,8 +9,8 @@ def test_aliases():
         # this test pass if the alias can resolve to its real name
         try:
             getattr(alt, alias)
-        except AttributeError as e:
-            assert False, f"cannot resolve '{alias}':, {e}"
+        except AttributeError as err:
+            raise AssertionError(f"cannot resolve '{alias}':, {err}") from err
 
         # this test fails if the alias match a colliding name in core
         with pytest.raises(AttributeError):

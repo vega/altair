@@ -12,8 +12,14 @@ HTML_TEMPLATE = jinja2.Template(
 <head>
 {%- endif %}
   <style>
-    .error {
-        color: red;
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
     }
   </style>
 {%- if not requirejs %}
@@ -62,7 +68,7 @@ requirejs.config({
       var embedOpt = {{ embed_options }};
 
       function showError(el, error){
-          el.innerHTML = ('<div class="error" style="color:red;">'
+          el.innerHTML = ('<div style="color:red;">'
                           + '<p>JavaScript Error: ' + error.message + '</p>'
                           + "<p>This usually means there's a typo in your chart specification. "
                           + "See the javascript console for the full traceback.</p>"
@@ -85,6 +91,17 @@ requirejs.config({
 
 HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     """
+<style>
+  #{{ output_div }}.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #{{ output_div }}.vega-embed details,
+  #{{ output_div }}.vega-embed details summary {
+    position: relative;
+  }
+</style>
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
@@ -153,6 +170,17 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
+    }
+  </style>
   <script type="text/javascript">
     // vega.js v{{ vega_version }}
     {{ vega_script }}
@@ -253,14 +281,14 @@ def spec_to_html(
     if mode == "vega-lite" and vegalite_version is None:
         raise ValueError("must specify vega-lite version for mode='vega-lite'")
 
-    render_kwargs = dict()
+    render_kwargs = {}
     if template == "inline":
         try:
             from altair_viewer import get_bundled_script
-        except ImportError:
+        except ImportError as err:
             raise ImportError(
                 "The altair_viewer package is required to convert to HTML with inline=True"
-            )
+            ) from err
         render_kwargs["vega_script"] = get_bundled_script("vega", vega_version)
         render_kwargs["vegalite_script"] = get_bundled_script(
             "vega-lite", vegalite_version

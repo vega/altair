@@ -62,7 +62,7 @@ def _deprecate(obj, name=None, message=None):
 
         @functools.wraps(obj)
         def new_obj(*args, **kwargs):
-            warnings.warn(message, AltairDeprecationWarning)
+            warnings.warn(message, AltairDeprecationWarning, stacklevel=1)
             return obj(*args, **kwargs)
 
         new_obj._deprecated = True

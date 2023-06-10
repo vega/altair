@@ -8,10 +8,11 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast
+from typing import cast, List, Optional, Any
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
+from typing import Dict as TypingDict
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -19,6 +20,7 @@ from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
+from .compiler import vegalite_compilers
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -112,7 +114,7 @@ def _prepare_data(data, context=None):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
-        warnings.warn("data of type {} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
 
     return data
 
@@ -190,6 +192,13 @@ class Parameter(expr.core.OperatorMixin, object):
         if name is None:
             name = self._get_name()
         self.name = name
+
+    @utils.deprecation.deprecated(
+        message="'ref' is deprecated. No need to call '.ref()' anymore."
+    )
+    def ref(self):
+        "'ref' is deprecated. No need to call '.ref()' anymore."
+        return self.to_dict()
 
     def to_dict(self):
         if self.param_type == "variable":
@@ -323,12 +332,12 @@ def param(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
@@ -355,12 +364,14 @@ def param(
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = False
         elif parameter.empty == "all":
             warnings.warn(
                 """The value of 'empty' should be True or False.""",
                 utils.AltairDeprecationWarning,
+                stacklevel=1,
             )
             parameter.empty = True
         elif (parameter.empty is False) or (parameter.empty is True):
@@ -372,6 +383,7 @@ def param(
         warnings.warn(
             """Use 'value' instead of 'init'.""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
         if value is Undefined:
             kwds["value"] = kwds.pop("init")
@@ -416,6 +428,7 @@ def _selection(type=Undefined, **kwds):
             """The types 'single' and 'multi' are now
         combined and should be specified using "selection_point()".""",
             utils.AltairDeprecationWarning,
+            stacklevel=1,
         )
     else:
         raise ValueError("""'type' must be 'point' or 'interval'""")
@@ -472,12 +485,12 @@ def selection_interval(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
@@ -489,9 +502,6 @@ def selection_interval(
     encodings : List[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
-        A list of field names whose values must match for a data tuple to
-        fall within the selection.
     on : string (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
@@ -540,7 +550,7 @@ def selection_interval(
         default allows users to use the mouse wheel to resize an interval
         selection.
     **kwds :
-        additional keywords to control the selection.
+        Additional keywords to control the selection.
 
     Returns
     -------
@@ -572,6 +582,7 @@ def selection_point(
     empty=Undefined,
     expr=Undefined,
     encodings=Undefined,
+    fields=Undefined,
     on=Undefined,
     clear=Undefined,
     resolve=Undefined,
@@ -586,12 +597,12 @@ def selection_point(
     name : string (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
@@ -655,7 +666,7 @@ def selection_point(
         data values must be interacted with directly (e.g., clicked on)
         to be added to the selection.
     **kwds :
-        additional keywords to control the selection.
+        Additional keywords to control the selection.
 
     Returns
     -------
@@ -670,6 +681,7 @@ def selection_point(
         empty=empty,
         expr=expr,
         encodings=encodings,
+        fields=fields,
         on=on,
         clear=clear,
         resolve=resolve,
@@ -773,8 +785,13 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
-        if_true = utils.parse_shorthand(if_true)
-        if_true.update(kwargs)
+        if isinstance(if_false, str):
+            raise ValueError(
+                "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
+            )
+        else:
+            if_true = utils.parse_shorthand(if_true)
+            if_true.update(kwargs)
     condition.update(if_true)
 
     if isinstance(if_false, core.SchemaBase):
@@ -800,8 +817,52 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     _class_is_valid_at_instantiation = False
 
-    def to_dict(self, *args, **kwargs) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export"""
+    def to_dict(
+        self,
+        validate: bool = True,
+        *,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
+        """Convert the chart to a dictionary suitable for JSON export
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
+
+        Returns
+        -------
+        dict
+            The dictionary representation of this chart
+
+        Raises
+        ------
+        SchemaValidationError
+            if validate=True and the dict does not conform to the schema
+        """
+
+        # Validate format
+        if format not in ("vega-lite", "vega"):
+            raise ValueError(
+                f'The format argument must be either "vega-lite" or "vega". Received {repr(format)}'
+            )
+
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
         #   inference.
@@ -812,7 +873,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # note: not a deep copy because we want datasets and data arguments to
         # be passed by reference
-        context = kwargs.get("context", {}).copy()
+        context = context.copy() if context else {}
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
@@ -827,31 +888,82 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False
-        kwargs["context"] = context
 
         # TopLevelMixin instance does not necessarily have to_dict defined
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
-        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)  # type: ignore[misc]
+        vegalite_spec = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+            validate=validate, ignore=ignore, context=context
+        )
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
             # since this is top-level we add $schema if it's missing
-            if "$schema" not in dct:
-                dct["$schema"] = SCHEMA_URL
+            if "$schema" not in vegalite_spec:
+                vegalite_spec["$schema"] = SCHEMA_URL
 
             # apply theme from theme registry
             the_theme = themes.get()
             # Use assert to tell type checkers that it is not None. Holds true
             # as there is always a default theme set when importing Altair
             assert the_theme is not None
-            dct = utils.update_nested(the_theme(), dct, copy=True)
+            vegalite_spec = utils.update_nested(the_theme(), vegalite_spec, copy=True)
 
             # update datasets
             if context["datasets"]:
-                dct.setdefault("datasets", {}).update(context["datasets"])
+                vegalite_spec.setdefault("datasets", {}).update(context["datasets"])
 
-        return dct
+        if format == "vega":
+            plugin = vegalite_compilers.get()
+            if plugin is None:
+                raise ValueError("No active vega-lite compiler plugin found")
+            return plugin(vegalite_spec)
+        else:
+            return vegalite_spec
+
+    def to_json(
+        self,
+        validate: bool = True,
+        indent: int = 2,
+        sort_keys: bool = True,
+        *,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+        **kwargs,
+    ) -> str:
+        """Convert a chart to a JSON string
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        indent : int, optional
+            The number of spaces of indentation to use. The default is 2.
+        sort_keys : bool, optional
+            If True (default), sort keys in the output.
+        format : str, optional
+            The chart specification format. One of "vega-lite" (default) or "vega".
+            The "vega" format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+        """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
+        spec = self.to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
+        return json.dumps(spec, indent=indent, sort_keys=sort_keys, **kwargs)
 
     def to_html(
         self,
@@ -2257,11 +2369,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         try:
             import altair_viewer  # type: ignore
-        except ImportError:
+        except ImportError as err:
             raise ValueError(
                 "'show' method requires the altair_viewer package. "
                 "See http://github.com/altair-viz/altair_viewer"
-            )
+            ) from err
         altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
 
     @utils.use_signature(core.Resolve)
@@ -2493,16 +2605,57 @@ class Chart(
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
-    def to_dict(self, *args, **kwargs) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export."""
-        context = kwargs.get("context", {})
+    def to_dict(
+        self,
+        validate: bool = True,
+        *,
+        format: str = "vega-lite",
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
+        """Convert the chart to a dictionary suitable for JSON export
+
+        Parameters
+        ----------
+        validate : bool, optional
+            If True (default), then validate the output dictionary
+            against the schema.
+        format : str, optional
+            Chart specification format, one of "vega-lite" (default) or "vega"
+        ignore : list[str], optional
+            A list of keys to ignore. It is usually not needed
+            to specify this argument as a user.
+        context : dict[str, Any], optional
+            A context dictionary. It is usually not needed
+            to specify this argument as a user.
+
+        Notes
+        -----
+        Technical: The ignore parameter will *not* be passed to child to_dict
+        function calls.
+
+        Returns
+        -------
+        dict
+            The dictionary representation of this chart
+
+        Raises
+        ------
+        SchemaValidationError
+            if validate=True and the dict does not conform to the schema
+        """
+        context = context or {}
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
             copy.data = core.InlineData(values=[{}])
-            return super(Chart, copy).to_dict(*args, **kwargs)
-        return super().to_dict(*args, **kwargs)
+            return super(Chart, copy).to_dict(
+                validate=validate, format=format, ignore=ignore, context=context
+            )
+        return super().to_dict(
+            validate=validate, format=format, ignore=ignore, context=context
+        )
 
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
@@ -2653,8 +2806,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        if isinstance(spec, Chart):
-            params = _repeat_names(params, repeat)
+        if isinstance(spec, (Chart, LayerChart)):
+            params = _repeat_names(params, repeat, spec)
         super(RepeatChart, self).__init__(
             repeat=repeat,
             spec=spec,
@@ -3164,7 +3317,7 @@ def _needs_name(subchart):
         return False
 
     # Variable parameters won't receive a views property.
-    if all([isinstance(p, core.VariableParameter) for p in subchart.params]):
+    if all(isinstance(p, core.VariableParameter) for p in subchart.params):
         return False
 
     return True
@@ -3297,15 +3450,21 @@ def _get_repeat_strings(repeat):
     return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
-def _extend_view_name(v, r):
+def _extend_view_name(v, r, spec):
     # prevent the same extension from happening more than once
-    if v.endswith("child__" + r):
-        return v
-    else:
-        return v + "child__" + r
+    if isinstance(spec, Chart):
+        if v.endswith("child__" + r):
+            return v
+        else:
+            return f"{v}_child__{r}"
+    elif isinstance(spec, LayerChart):
+        if v.startswith("child__" + r):
+            return v
+        else:
+            return f"child__{r}_{v}"
 
 
-def _repeat_names(params, repeat):
+def _repeat_names(params, repeat, spec):
     if params is Undefined:
         return params
 
@@ -3320,10 +3479,17 @@ def _repeat_names(params, repeat):
         views = []
         repeat_strings = _get_repeat_strings(repeat)
         for v in param.views:
-            if any([v.endswith(f"child__{r}") for r in repeat_strings]):
-                views.append(v)
-            else:
-                views += [_extend_view_name(v, r) for r in repeat_strings]
+            if isinstance(spec, Chart):
+                if any(v.endswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+            elif isinstance(spec, LayerChart):
+                if any(v.startswith(f"child__{r}") for r in repeat_strings):
+                    views.append(v)
+                else:
+                    views += [_extend_view_name(v, r, spec) for r in repeat_strings]
+
         p.views = views
         params_named.append(p)
 
@@ -3367,9 +3533,12 @@ def _remove_layer_props(chart, subcharts, layer_props):
             else:
                 raise ValueError(f"There are inconsistent values {values} for {prop}")
         else:
-            # Top level has this prop; subchart props must be either
-            # Undefined or identical to proceed.
-            if all(c[prop] is Undefined or c[prop] == chart[prop] for c in subcharts):
+            # Top level has this prop; subchart must either not have the prop
+            # or it must be Undefined or identical to proceed.
+            if all(
+                getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
+                for c in subcharts
+            ):
                 output_dict[prop] = chart[prop]
             else:
                 raise ValueError(f"There are inconsistent values {values} for {prop}")

@@ -226,11 +226,11 @@ def _getargs(*args, **kwargs):
 
 
 def test_infer_encoding_types(channels):
-    expected = dict(
-        x=channels.X("xval"),
-        y=channels.YValue("yval"),
-        strokeWidth=channels.StrokeWidthValue(value=4),
-    )
+    expected = {
+        "x": channels.X("xval"),
+        "y": channels.YValue("yval"),
+        "strokeWidth": channels.StrokeWidthValue(value=4),
+    }
 
     # All positional args
     args, kwds = _getargs(
@@ -258,20 +258,20 @@ def test_infer_encoding_types_with_condition():
         opacity=alt.condition("pred3", "ofield:N", alt.value(0.2)),
     )
 
-    expected = dict(
-        size=channels.SizeValue(
+    expected = {
+        "size": channels.SizeValue(
             2,
             condition=alt.ConditionalPredicateValueDefnumberExprRef(
                 value=1, test=alt.Predicate("pred1")
             ),
         ),
-        color=channels.Color(
+        "color": channels.Color(
             "cfield:N",
             condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
                 value="red", test=alt.Predicate("pred2")
             ),
         ),
-        opacity=channels.OpacityValue(
+        "opacity": channels.OpacityValue(
             0.2,
             condition=alt.ConditionalPredicateMarkPropFieldOrDatumDef(
                 field=alt.FieldName("ofield"),
@@ -279,7 +279,7 @@ def test_infer_encoding_types_with_condition():
                 type=alt.StandardType("nominal"),
             ),
         ),
-    )
+    }
     assert infer_encoding_types(args, kwds, channels) == expected
 
 

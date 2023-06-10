@@ -232,7 +232,8 @@ def infer_vegalite_type(
     else:
         warnings.warn(
             "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ)
+            "Defaulting to nominal.".format(typ),
+            stacklevel=1,
         )
         return "nominal"
 
@@ -401,6 +402,31 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     return df
 
 
+def sanitize_arrow_table(pa_table):
+    """Sanitize arrow table for JSON serialization"""
+    import pyarrow as pa
+    import pyarrow.compute as pc
+
+    arrays = []
+    schema = pa_table.schema
+    for name in schema.names:
+        array = pa_table[name]
+        dtype = schema.field(name).type
+        if str(dtype).startswith("timestamp"):
+            arrays.append(pc.strftime(array))
+        elif str(dtype).startswith("duration"):
+            raise ValueError(
+                'Field "{col_name}" has type "{dtype}" which is '
+                "not supported by Altair. Please convert to "
+                "either a timestamp or a numerical value."
+                "".format(col_name=name, dtype=dtype)
+            )
+        else:
+            arrays.append(array)
+
+    return pa.Table.from_arrays(arrays, names=schema.names)
+
+
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
     data: Optional[pd.DataFrame] = None,
@@ -488,15 +514,15 @@ def parse_shorthand(
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    units = dict(
-        field="(?P<field>.*)",
-        type="(?P<type>{})".format("|".join(valid_typecodes)),
-        agg_count="(?P<aggregate>count)",
-        op_count="(?P<op>count)",
-        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    )
+    units = {
+        "field": "(?P<field>.*)",
+        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
+        "agg_count": "(?P<aggregate>count)",
+        "op_count": "(?P<op>count)",
+        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+    }
 
     patterns = []
 
@@ -562,7 +588,7 @@ def parse_shorthand(
             + "is not one of the valid encoding data types: {}.".format(
                 ", ".join(TYPECODE_MAP.values())
             )
-            + "\nFor more details, see https://altair-viz.github.io/altair-docs/user_guide/encodings/index.html#encoding-data-types. "
+            + "\nFor more details, see https://altair-viz.github.io/user_guide/encodings/index.html#encoding-data-types. "
             + "If you are trying to use a column name that contains a colon, "
             + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
         )
@@ -721,7 +747,9 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
+            warnings.warn(
+                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
+            )
             return obj
 
         classes = name_to_channel[encoding]

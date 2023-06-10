@@ -25,7 +25,7 @@ def test_html_renderer_embed_options(chart, renderer="html"):
     with alt.renderers.enable(renderer):
         assert_has_options(chart, mode="vega-lite")
 
-        with alt.renderers.enable(embed_options=dict(actions={"export": True})):
+        with alt.renderers.enable(embed_options={"actions": {"export": True}}):
             assert_has_options(chart, mode="vega-lite", actions={"export": True})
 
         with alt.renderers.set_embed_options(actions=True):
