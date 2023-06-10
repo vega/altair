@@ -21,6 +21,7 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
+from ...utils.core import DataFrameLike
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -2661,7 +2662,7 @@ class Chart(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[pd.DataFrame]:
+    ) -> Optional[DataFrameLike]:
         """Evaluate a Chart's transforms
 
         Evaluate the data transforms associated with a Chart and return the
@@ -2947,7 +2948,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[pd.DataFrame]:
+    ) -> List[DataFrameLike]:
         """Evaluate a ConcatChart's transforms
 
         Evaluate the data transforms associated with a ConcatChart and return the
@@ -3044,7 +3045,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[pd.DataFrame]:
+    ) -> List[DataFrameLike]:
         """Evaluate a HConcatChart's transforms
 
         Evaluate the data transforms associated with a HConcatChart and return the
@@ -3141,7 +3142,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[pd.DataFrame]:
+    ) -> List[DataFrameLike]:
         """Evaluate a VConcatChart's transforms
 
         Evaluate the data transforms associated with a VConcatChart and return the
@@ -3237,7 +3238,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[pd.DataFrame]:
+    ) -> List[DataFrameLike]:
         """Evaluate a LayerChart's transforms
 
         Evaluate the data transforms associated with a LayerChart and return the
@@ -3352,7 +3353,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[pd.DataFrame]:
+    ) -> Optional[DataFrameLike]:
         """Evaluate a FacetChart's transforms
 
         Evaluate the data transforms associated with a FacetChart and return the

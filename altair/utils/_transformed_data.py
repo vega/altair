@@ -1,7 +1,5 @@
 from typing import List, Optional, Tuple, Dict, Iterable, overload, Union
 
-import pandas as pd
-
 from altair import (
     Chart,
     FacetChart,
@@ -11,6 +9,7 @@ from altair import (
     ConcatChart,
     data_transformers,
 )
+from altair.utils.core import DataFrameLike
 from altair.utils.schemapi import Undefined
 
 Scope = Tuple[int, ...]
@@ -24,7 +23,7 @@ def transformed_data(
     chart: Union[Chart, FacetChart],
     row_limit: Optional[int] = None,
     exclude: Optional[Iterable[str]] = None,
-) -> Optional[pd.DataFrame]:
+) -> Optional[DataFrameLike]:
     ...
 
 
@@ -33,7 +32,7 @@ def transformed_data(
     chart: Union[LayerChart, HConcatChart, VConcatChart, ConcatChart],
     row_limit: Optional[int] = None,
     exclude: Optional[Iterable[str]] = None,
-) -> List[pd.DataFrame]:
+) -> List[DataFrameLike]:
     ...
 
 
@@ -54,9 +53,9 @@ def transformed_data(chart, row_limit=None, exclude=None):
 
     Returns
     -------
-    pandas DataFrame or list of pandas DataFrames or None
-        If input chart is a Chart or Facet Chart, returns a pandas DataFrame of the
-        transformed data. Otherwise, returns a list of pandas DataFrames of the
+    DataFrame or list of DataFrames or None
+        If input chart is a Chart or Facet Chart, returns a DataFrame of the
+        transformed data. Otherwise, returns a list of DataFrames of the
         transformed data
     """
     try:

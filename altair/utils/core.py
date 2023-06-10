@@ -18,9 +18,9 @@ import numpy as np
 from altair.utils.schemapi import SchemaBase
 
 if sys.version_info >= (3, 10):
-    from typing import ParamSpec
+    from typing import ParamSpec, Protocol
 else:
-    from typing_extensions import ParamSpec
+    from typing_extensions import ParamSpec, Protocol
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
@@ -30,6 +30,11 @@ except ImportError:
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
+
+
+class DataFrameLike(Protocol):
+    def __dataframe__(self, *args, **kwargs):
+        ...
 
 
 def infer_dtype(value):
