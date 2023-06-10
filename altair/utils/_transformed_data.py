@@ -169,8 +169,6 @@ def name_views(
     """
     exclude = set(exclude) if exclude is not None else set()
     if isinstance(chart, (Chart, FacetChart)):
-        # Perform shallow copy of chart so that we can change
-        # the name
         if chart.name not in exclude:
             if chart.name in (None, Undefined):
                 # Add name since none is specified
