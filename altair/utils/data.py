@@ -37,6 +37,7 @@ class SupportsDataframe(Protocol):
 
 DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, SupportsDataframe]
 TDataType = TypeVar("TDataType", bound=DataType)
+ToValuesReturnType = Optional[Dict[str, Union[dict, List[dict]]]]
 
 # ==============================================================================
 # Data transformer registry
@@ -193,7 +194,7 @@ def to_csv(
 
 
 @curried.curry
-def to_values(data: DataType) -> Optional[Dict[str, Union[dict, List[dict]]]]:
+def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
