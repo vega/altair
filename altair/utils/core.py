@@ -37,7 +37,7 @@ _V = TypeVar("_V")
 _P = ParamSpec("_P")
 
 
-class DataFrameLike(Protocol):
+class _DataFrameLike(Protocol):
     def __dataframe__(self, *args, **kwargs):
         ...
 

@@ -124,7 +124,6 @@ __all__ = [
     "Cyclical",
     "Data",
     "DataFormat",
-    "DataFrameLike",
     "DataSource",
     "Datasets",
     "DateTime",
