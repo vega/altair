@@ -18,9 +18,14 @@ import numpy as np
 from altair.utils.schemapi import SchemaBase
 
 if sys.version_info >= (3, 10):
-    from typing import ParamSpec, Protocol
+    from typing import ParamSpec
 else:
-    from typing_extensions import ParamSpec, Protocol
+    from typing_extensions import ParamSpec
+
+if sys.version_info >= (3, 8):
+    from typing import Protocol
+else:
+    from typing_extensions import Protocol
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
