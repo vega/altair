@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, List, Optional, Any
+from typing import cast, List, Optional, Any, Iterable
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -21,6 +21,7 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
+from ...utils.core import _DataFrameLike
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -2657,6 +2658,32 @@ class Chart(
             validate=validate, format=format, ignore=ignore, context=context
         )
 
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[_DataFrameLike]:
+        """Evaluate a Chart's transforms
+
+        Evaluate the data transforms associated with a Chart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        DataFrame
+            Transformed data as a DataFrame
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def add_params(self, *params) -> Self:
         """Add one or more parameters to the chart."""
         if not params:
@@ -2832,6 +2859,32 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             **kwds,
         )
 
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[_DataFrameLike]:
+        """Evaluate a RepeatChart's transforms
+
+        Evaluate the data transforms associated with a RepeatChart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Raises
+        ------
+        NotImplementedError
+            RepeatChart does not yet support transformed_data
+        """
+        raise NotImplementedError(
+            "transformed_data is not yet implemented for RepeatChart"
+        )
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
@@ -2917,6 +2970,32 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[_DataFrameLike]:
+        """Evaluate a ConcatChart's transforms
+
+        Evaluate the data transforms associated with a ConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
@@ -2987,6 +3066,32 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
+
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[_DataFrameLike]:
+        """Evaluate a HConcatChart's transforms
+
+        Evaluate the data transforms associated with a HConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
@@ -3059,6 +3164,32 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[_DataFrameLike]:
+        """Evaluate a VConcatChart's transforms
+
+        Evaluate the data transforms associated with a VConcatChart and return the
+        transformed data for each subplot as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each subplot as a list of DataFrames
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
+
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive
 
@@ -3128,6 +3259,32 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
+
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> List[_DataFrameLike]:
+        """Evaluate a LayerChart's transforms
+
+        Evaluate the data transforms associated with a LayerChart and return the
+        transformed data for each layer as a list of DataFrames
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        list of DataFrame
+            Transformed data for each layer as a list of DataFrames
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, "LayerChart")
@@ -3217,6 +3374,32 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         super(FacetChart, self).__init__(
             data=data, spec=spec, facet=facet, params=params, **kwargs
         )
+
+    def _transformed_data(
+        self,
+        row_limit: Optional[int] = None,
+        exclude: Optional[Iterable[str]] = None,
+    ) -> Optional[_DataFrameLike]:
+        """Evaluate a FacetChart's transforms
+
+        Evaluate the data transforms associated with a FacetChart and return the
+        transformed data a DataFrame
+
+        Parameters
+        ----------
+        row_limit : int (optional)
+            Maximum number of rows to return for each DataFrame. None (default) for unlimited
+        exclude : iterable of str
+            Set of the names of charts to exclude
+
+        Returns
+        -------
+        DataFrame
+            Transformed data as a DataFrame
+        """
+        from altair.utils._transformed_data import transformed_data
+
+        return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
         """Make chart axes scales interactive

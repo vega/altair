@@ -22,6 +22,11 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
+if sys.version_info >= (3, 8):
+    from typing import Protocol
+else:
+    from typing_extensions import Protocol
+
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
@@ -30,6 +35,11 @@ except ImportError:
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
+
+
+class _DataFrameLike(Protocol):
+    def __dataframe__(self, *args, **kwargs):
+        ...
 
 
 def infer_dtype(value):
