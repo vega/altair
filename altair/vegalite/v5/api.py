@@ -2992,7 +2992,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         list of DataFrame
             Transformed data for each subplot as a list of DataFrames
         """
-        from altair.utils.transformed_data import transformed_data
+        from altair.utils._transformed_data import transformed_data
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
@@ -3089,7 +3089,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         list of DataFrame
             Transformed data for each subplot as a list of DataFrames
         """
-        from altair.utils.transformed_data import transformed_data
+        from altair.utils._transformed_data import transformed_data
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
@@ -3186,7 +3186,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         list of DataFrame
             Transformed data for each subplot as a list of DataFrames
         """
-        from altair.utils.transformed_data import transformed_data
+        from altair.utils._transformed_data import transformed_data
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
@@ -3282,7 +3282,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         list of DataFrame
             Transformed data for each layer as a list of DataFrames
         """
-        from altair.utils.transformed_data import transformed_data
+        from altair.utils._transformed_data import transformed_data
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
@@ -3397,7 +3397,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         DataFrame
             Transformed data as a DataFrame
         """
-        from altair.utils.transformed_data import transformed_data
+        from altair.utils._transformed_data import transformed_data
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
