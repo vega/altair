@@ -49,7 +49,7 @@ alt.Chart(source, height=step).transform_timeunit(
     row=alt.Row(
         'Month:T',
         title=None,
-        header=alt.Header(labelAngle=0, labelAlign='right', format='%B')
+        header=alt.Header(labelAngle=0, labelAlign='left', format='%B')
     )
 ).properties(
     title='Seattle Weather',

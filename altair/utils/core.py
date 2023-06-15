@@ -24,9 +24,9 @@ else:
     from typing_extensions import ParamSpec
 
 if sys.version_info >= (3, 8):
-    from typing import Literal
+    from typing import Literal, Protocol
 else:
-    from typing_extensions import Literal
+    from typing_extensions import Literal, Protocol
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
@@ -36,6 +36,11 @@ except ImportError:
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
+
+
+class _DataFrameLike(Protocol):
+    def __dataframe__(self, *args, **kwargs):
+        ...
 
 
 def infer_dtype(value):
