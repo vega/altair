@@ -28,8 +28,8 @@ VEGALITE_MIME_TYPE = "application/vnd.vegalite.v5+json"  # type: str
 ENTRY_POINT_GROUP = "altair.vegalite.v5.renderer"  # type: str
 
 # The display message when rendering fails
-DEFAULT_DISPLAY = """\
-<VegaLite 5 object>
+DEFAULT_DISPLAY = f"""\
+<VegaLite {VEGALITE_VERSION.split('.')[0]} object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
