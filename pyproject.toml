@@ -85,7 +85,8 @@ doc = [
     "geopandas",
     "myst-parser",
     "sphinx_copybutton",
-    "sphinx-design"
+    "sphinx-design",
+    "ipython"
 ]
 
 [tool.hatch.version]
