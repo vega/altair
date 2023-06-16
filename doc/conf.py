@@ -41,8 +41,6 @@ extensions = [
     "sphinxext.schematable",
     "sphinx_copybutton",
     "sphinx_design",
-    'IPython.sphinxext.ipython_console_highlighting',
-    'IPython.sphinxext.ipython_directive'
 ]
 
 altair_plot_links = {"editor": True, "source": False, "export": False}

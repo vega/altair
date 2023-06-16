@@ -70,7 +70,8 @@ First, install VegaFusion with the embed extras enabled.
 Then create an Altair chart and call the :meth:`~Chart.transformed_data` method
 to extract a pandas DataFrame containing the transformed data.
 
-.. ipython:: python
+.. altair-plot::
+    :output: repr
 
     import altair as alt
     from vega_datasets import data
