@@ -31,7 +31,6 @@ class _SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-
 _DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _DataFrameLike]
 _TDataType = TypeVar("_TDataType", bound=_DataType)
 
