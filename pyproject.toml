@@ -220,6 +220,9 @@ markers = [
     "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",
 ]
 
+[tool.mypy]
+warn_unused_ignores = true
+
 [[tool.mypy.overrides]]
 module = [
     "vega_datasets.*",
