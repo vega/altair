@@ -156,12 +156,12 @@ class _CsvFormatDict(TypedDict):
     type: Literal["csv"]
 
 
-class _DataJsonUrlDict(TypedDict):
+class _ToJsonReturnUrlDict(TypedDict):
     url: str
     format: _JsonFormatDict
 
 
-class _DataCsvUrlDict(TypedDict):
+class _ToCsvReturnUrlDict(TypedDict):
     url: str
     format: _CsvFormatDict
 
@@ -173,7 +173,7 @@ def to_json(
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _DataJsonUrlDict:
+) -> _ToJsonReturnUrlDict:
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -192,7 +192,7 @@ def to_csv(
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _DataCsvUrlDict:
+) -> _ToCsvReturnUrlDict:
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
