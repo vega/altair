@@ -201,12 +201,12 @@ TIMEUNITS = [
 ]
 
 
-InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
+_InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 
 def infer_vegalite_type(
     data: Union[np.ndarray, pd.Series]
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
