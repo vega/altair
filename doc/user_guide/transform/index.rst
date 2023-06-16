@@ -47,6 +47,70 @@ Transform                                  Method                               
 :ref:`user-guide-window-transform`         :meth:`~Chart.transform_window`            Compute a windowed aggregation
 =========================================  =========================================  ================================================================================
 
+Accessing Transformed Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+When charts are displayed, data transformations are performed in the browser by
+the Vega JavaScript library. It's often helpful to inspect transformed data
+results in the process of building a chart. One approach is to display the
+transformed data results in a table composed of :ref:`Text<user-guide-text-marks>`
+marks as in the :ref:`gallery_scatter_linked_table` gallery example.
+
+While this approach works, it's somewhat cumbersome, and still does not make it
+possible to access the transformed data from Python. To make transformed data
+results available in Python, Altair provides the :meth:`~Chart.transformed_data`
+Chart method which integrates with `VegaFusion <https://vegafusion.io/>`_
+to evaluate data transformations in the Python kernel.
+
+First, install VegaFusion with the embed extras enabled.
+
+.. code-block:: none
+
+   pip install "vegafusion[embed]"
+
+Then create an Altair chart and call the :meth:`~Chart.transformed_data` method
+to extract a pandas DataFrame containing the transformed data.
+
+.. altair-plot::
+    :output: repr
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+    chart = alt.Chart(cars).mark_bar().encode(
+        y='Cylinders:O',
+        x='mean_acc:Q'
+    ).transform_aggregate(
+        mean_acc='mean(Acceleration)',
+        groupby=["Cylinders"]
+    )
+    chart.transformed_data()
+
+The :meth:`~Chart.transformed_data` method currently supports most, but not all,
+of Altair's transforms. See the table below.
+
+=========================================  =========
+Transform                                  Supported
+=========================================  =========
+:ref:`user-guide-aggregate-transform`        ✔
+:ref:`user-guide-bin-transform`              ✔
+:ref:`user-guide-calculate-transform`        ✔
+:ref:`user-guide-density-transform`
+:ref:`user-guide-filter-transform`           ✔
+:ref:`user-guide-flatten-transform`
+:ref:`user-guide-fold-transform`             ✔
+:ref:`user-guide-impute-transform`           ✔
+:ref:`user-guide-joinaggregate-transform`    ✔
+:ref:`user-guide-loess-transform`
+:ref:`user-guide-lookup-transform`
+:ref:`user-guide-pivot-transform`            ✔
+:ref:`user-guide-quantile-transform`
+:ref:`user-guide-regression-transform`
+:ref:`user-guide-sample-transform`
+:ref:`user-guide-stack-transform`            ✔
+:ref:`user-guide-timeunit-transform`         ✔
+:ref:`user-guide-window-transform`           ✔
+=========================================  =========
 
 .. toctree::
    :hidden:
