@@ -50,10 +50,16 @@ Transform                                  Method                               
 Accessing Transformed Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 When charts are displayed, data transformations are performed in the browser by
-the Vega JavaScript library. To make the transformed data available in Python,
-Altair provides the :meth:`~Chart.transformed_data` Chart method which integrates with
-`VegaFusion <https://vegafusion.io/>`_ to evaluate these data transformations in
-the Python kernel.
+the Vega JavaScript library. It's often helpful to inspect transformed data
+results in the process of building a chart. One approach is to display the
+transformed data results in a table composed of :ref:`Text<user-guide-text-marks>`
+marks as in the :ref:`gallery_scatter_linked_table` gallery example.
+
+While this approach works, it's somewhat cumbersome, and still does not make it
+possible to access the transformed data from Python. To make transformed data
+results available in Python, Altair provides the :meth:`~Chart.transformed_data`
+Chart method which integrates with `VegaFusion <https://vegafusion.io/>`_
+to evaluate data transformations in the Python kernel.
 
 First, install VegaFusion with the embed extras enabled.
 
