@@ -11,7 +11,7 @@ import pandas as pd
 from toolz import curried
 from typing import TypeVar
 
-from .core import sanitize_dataframe, sanitize_arrow_table
+from .core import sanitize_dataframe, sanitize_arrow_table, _DataFrameLike
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -31,12 +31,8 @@ class _SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-class _SupportsDataframe(Protocol):
-    def __dataframe__(self, *args, **kwargs):
-        ...
 
-
-_DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _SupportsDataframe]
+_DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _DataFrameLike]
 _TDataType = TypeVar("_TDataType", bound=_DataType)
 
 _VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
@@ -192,7 +188,7 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data: Union[dict, pd.DataFrame, _SupportsDataframe],
+    data: Union[dict, pd.DataFrame, _DataFrameLike],
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -281,7 +277,7 @@ def _data_to_json_string(data: _DataType) -> str:
         )
 
 
-def _data_to_csv_string(data: Union[dict, pd.DataFrame, _SupportsDataframe]) -> str:
+def _data_to_csv_string(data: Union[dict, pd.DataFrame, _DataFrameLike]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
