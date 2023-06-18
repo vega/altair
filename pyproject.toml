@@ -155,7 +155,7 @@ publish-clean-build = [
 line-length = 88
 target-version = ["py37", "py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
-exclude = '''
+extend-exclude = '''
 /(
     \.eggs
   | \.git
