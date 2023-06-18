@@ -22,7 +22,7 @@ base_monarchs = alt.Chart(data.monarchs.url).transform_calculate(
 )
 
 bars = base_wheat.mark_bar(fill="#aaa", stroke="#999").encode(
-    alt.X("year:Q", bin="binned").axis(format="d", tickCount=5).scale(zero=False),
+    alt.X("year:Q").bin("binned").axis(format="d", tickCount=5).scale(zero=False),
     alt.Y("wheat:Q").axis(zindex=1),
     alt.X2("year_end"),
 )
