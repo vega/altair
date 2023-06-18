@@ -43,7 +43,7 @@ class _DataFrameLike(Protocol):
         ...
 
 
-def infer_dtype(value):
+def infer_dtype(value: object) -> str:
     """Infer the dtype of the value.
 
     This is a compatibility function for pandas infer_dtype,
@@ -54,10 +54,10 @@ def infer_dtype(value):
             _infer_dtype([1], skipna=False)
         except TypeError:
             # pandas < 0.21.0 don't support skipna keyword
-            infer_dtype._supports_skipna = False
+            infer_dtype._supports_skipna = False  # type: ignore[attr-defined]
         else:
-            infer_dtype._supports_skipna = True
-    if infer_dtype._supports_skipna:
+            infer_dtype._supports_skipna = True  # type: ignore[attr-defined]
+    if infer_dtype._supports_skipna:  # type: ignore[attr-defined]
         return _infer_dtype(value, skipna=False)
     else:
         return _infer_dtype(value)
@@ -205,7 +205,7 @@ _InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"
 
 
 def infer_vegalite_type(
-    data: Union[np.ndarray, pd.Series]
+    data: object,
 ) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
     """
     From an array-like input, infer the correct vega typecode
@@ -213,9 +213,8 @@ def infer_vegalite_type(
 
     Parameters
     ----------
-    data: Numpy array or Pandas Series
+    data: object
     """
-    # Otherwise, infer based on the dtype of the input
     typ = infer_dtype(data)
 
     if typ in [
@@ -226,10 +225,8 @@ def infer_vegalite_type(
         "complex",
     ]:
         return "quantitative"
-    # Can ignore error that np.ndarray has no attribute cat as in this case
-    # it should always be a pd.DataFrame anyway
-    elif typ == "categorical" and data.cat.ordered:  # type: ignore[union-attr]
-        return ("ordinal", data.cat.categories.tolist())  # type: ignore[union-attr]
+    elif typ == "categorical" and hasattr(data, "cat") and data.cat.ordered:
+        return ("ordinal", data.cat.categories.tolist())
     elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
         return "nominal"
     elif typ in [
