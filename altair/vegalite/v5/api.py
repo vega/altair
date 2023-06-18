@@ -2369,7 +2369,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             connected to a browser.
         """
         try:
-            import altair_viewer  # type: ignore
+            import altair_viewer
         except ImportError as err:
             raise ValueError(
                 "'show' method requires the altair_viewer package. "
@@ -2468,7 +2468,7 @@ class _EncodingMixin:
             )
 
         # Remove "ignore" statement once Undefined is no longer typed as Any
-        if data is Undefined:  # type: ignore
+        if data is Undefined:
             # Remove "ignore" statement once Undefined is no longer typed as Any
             if self.data is Undefined:  # type: ignore
                 raise ValueError(

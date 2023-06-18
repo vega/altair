@@ -1,17 +1,27 @@
 import os
+import sys
+from typing import Dict
 
 from ...utils.mimebundle import spec_to_mimebundle
-from ..display import Displayable
-from ..display import default_renderer_base
-from ..display import json_renderer_base
-from ..display import RendererRegistry
-from ..display import HTMLRenderer
+from ..display import (
+    Displayable,
+    default_renderer_base,
+    json_renderer_base,
+    RendererRegistry,
+    HTMLRenderer,
+    DefaultRendererReturnType,
+)
 
 from .schema import SCHEMA_VERSION
 
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip("v")
-VEGA_VERSION = "5"
-VEGAEMBED_VERSION = "6"
+if sys.version_info >= (3, 8):
+    from typing import Final
+else:
+    from typing_extensions import Final
+
+VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
+VEGA_VERSION: Final = "5"
+VEGAEMBED_VERSION: Final = "6"
 
 
 # ==============================================================================
@@ -20,15 +30,15 @@ VEGAEMBED_VERSION = "6"
 
 
 # The MIME type for Vega-Lite 5.x releases.
-VEGALITE_MIME_TYPE = "application/vnd.vegalite.v5+json"  # type: str
+VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v5+json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v5.renderer"  # type: str
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
 
 # The display message when rendering fails
-DEFAULT_DISPLAY = f"""\
+DEFAULT_DISPLAY: Final = f"""\
 <VegaLite {VEGALITE_VERSION.split('.')[0]} object>
 
 If you see this message, it means the renderer has not been properly enabled
@@ -41,15 +51,15 @@ renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 here = os.path.dirname(os.path.realpath(__file__))
 
 
-def mimetype_renderer(spec, **metadata):
+def mimetype_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
     return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY, **metadata)
 
 
-def json_renderer(spec, **metadata):
+def json_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
     return json_renderer_base(spec, DEFAULT_DISPLAY, **metadata)
 
 
-def png_renderer(spec, **metadata):
+def png_renderer(spec: dict, **metadata) -> Dict[str, bytes]:
     return spec_to_mimebundle(
         spec,
         format="png",
@@ -61,7 +71,7 @@ def png_renderer(spec, **metadata):
     )
 
 
-def svg_renderer(spec, **metadata):
+def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
     return spec_to_mimebundle(
         spec,
         format="svg",
@@ -102,7 +112,7 @@ class VegaLite(Displayable):
     schema_path = (__name__, "schema/vega-lite-schema.json")
 
 
-def vegalite(spec, validate=True):
+def vegalite(spec: dict, validate: bool = True) -> None:
     """Render and optionally validate a VegaLite 5 spec.
 
     This will use the currently enabled renderer to render the spec.

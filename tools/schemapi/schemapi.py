@@ -459,7 +459,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         """Format param names into a table so that they are easier to read"""
         param_names: Tuple[str, ...]
         name_lengths: Tuple[int, ...]
-        param_names, name_lengths = zip(  # type: ignore[assignment]  # Mypy does think it's Tuple[Any]
+        param_names, name_lengths = zip(
             *[
                 (name, len(name))
                 for name in param_dict_keys

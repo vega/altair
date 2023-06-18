@@ -1,6 +1,14 @@
+import sys
+
 from ...utils.compiler import VegaLiteCompilerRegistry
 
-ENTRY_POINT_GROUP: str = "altair.vegalite.v5.vegalite_compiler"
+if sys.version_info >= (3, 8):
+    from typing import Final
+else:
+    from typing_extensions import Final
+
+
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.vegalite_compiler"
 vegalite_compilers = VegaLiteCompilerRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 

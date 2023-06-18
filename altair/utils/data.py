@@ -2,55 +2,71 @@ import json
 import os
 import random
 import hashlib
+import sys
 import warnings
+from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from types import ModuleType
 
 import pandas as pd
 from toolz import curried
-from typing import Callable
+from typing import TypeVar
 
-from .core import sanitize_dataframe, sanitize_arrow_table
+from .core import sanitize_dataframe, sanitize_arrow_table, _DataFrameLike
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
 
+if sys.version_info >= (3, 8):
+    from typing import Protocol, TypedDict, Literal
+else:
+    from typing_extensions import Protocol, TypedDict, Literal
+
+
+if TYPE_CHECKING:
+    import pyarrow.lib
+
+
+class _SupportsGeoInterface(Protocol):
+    __geo_interface__: MutableMapping
+
+
+_DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _DataFrameLike]
+_TDataType = TypeVar("_TDataType", bound=_DataType)
+
+_VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
+_ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+
+
 # ==============================================================================
 # Data transformer registry
+#
+# A data transformer is a callable that takes a supported data type and returns
+# a transformed dictionary version of it which is compatible with the VegaLite schema.
+# The dict objects will be the Data portion of the VegaLite schema.
+#
+# Renderers only deal with the dict form of a
+# VegaLite spec, after the Data model has been put into a schema compliant
+# form.
 # ==============================================================================
-DataTransformerType = Callable
+class DataTransformerType(Protocol):
+    def __call__(self, data: _DataType, **kwargs) -> _VegaLiteDataDict:
+        pass
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
     _global_settings = {"consolidate_datasets": True}
 
     @property
-    def consolidate_datasets(self):
+    def consolidate_datasets(self) -> bool:
         return self._global_settings["consolidate_datasets"]
 
     @consolidate_datasets.setter
-    def consolidate_datasets(self, value):
+    def consolidate_datasets(self, value: bool) -> None:
         self._global_settings["consolidate_datasets"] = value
 
 
 # ==============================================================================
-# Data model transformers
-#
-# A data model transformer is a pure function that takes a dict or DataFrame
-# and returns a transformed version of a dict or DataFrame. The dict objects
-# will be the Data portion of the VegaLite schema. The idea is that user can
-# pipe a sequence of these data transformers together to prepare the data before
-# it hits the renderer.
-#
-# In this version of Altair, renderers only deal with the dict form of a
-# VegaLite spec, after the Data model has been put into a schema compliant
-# form.
-#
-# A data model transformer has the following type signature:
-# DataModelType = Union[dict, pd.DataFrame]
-# DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
-# ==============================================================================
-
-
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
@@ -58,7 +74,7 @@ class MaxRowsError(Exception):
 
 
 @curried.curry
-def limit_rows(data, max_rows=5000):
+def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
@@ -75,7 +91,9 @@ def limit_rows(data, max_rows=5000):
         if "values" in data:
             values = data["values"]
         else:
-            return data
+            # mypy gets confused as it doesn't see Dict[Any, Any]
+            # as equivalent to TDataType
+            return data  # type: ignore[return-value]
     elif hasattr(data, "__dataframe__"):
         values = data
     if max_rows is not None and len(values) > max_rows:
@@ -91,7 +109,9 @@ def limit_rows(data, max_rows=5000):
 
 
 @curried.curry
-def sample(data, n=None, frac=None):
+def sample(
+    data: _DataType, n: Optional[int] = None, frac: Optional[float] = None
+) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
     """Reduce the size of the data model by sampling without replacement."""
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
@@ -99,26 +119,61 @@ def sample(data, n=None, frac=None):
     elif isinstance(data, dict):
         if "values" in data:
             values = data["values"]
-            n = n if n else int(frac * len(values))
+            if not n:
+                if frac is None:
+                    raise ValueError(
+                        "frac cannot be None if n is None and data is a dictionary"
+                    )
+                n = int(frac * len(values))
             values = random.sample(values, n)
             return {"values": values}
+        else:
+            # Maybe this should raise an error or return something useful?
+            return None
     elif hasattr(data, "__dataframe__"):
         # experimental interchange dataframe support
         pi = import_pyarrow_interchange()
         pa_table = pi.from_dataframe(data)
-        n = n if n else int(frac * len(pa_table))
+        if not n:
+            if frac is None:
+                raise ValueError(
+                    "frac cannot be None if n is None with this data input type"
+                )
+            n = int(frac * len(pa_table))
         indices = random.sample(range(len(pa_table)), n)
         return pa_table.take(indices)
+    else:
+        # Maybe this should raise an error or return something useful? Currently,
+        # if data is of type SupportsGeoInterface it lands here
+        return None
+
+
+class _JsonFormatDict(TypedDict):
+    type: Literal["json"]
+
+
+class _CsvFormatDict(TypedDict):
+    type: Literal["csv"]
+
+
+class _ToJsonReturnUrlDict(TypedDict):
+    url: str
+    format: _JsonFormatDict
+
+
+class _ToCsvReturnUrlDict(TypedDict):
+    url: str
+    format: _CsvFormatDict
 
 
 @curried.curry
 def to_json(
-    data,
-    prefix="altair-data",
-    extension="json",
-    filename="{prefix}-{hash}.{extension}",
-    urlpath="",
-):
+    data: _DataType,
+    prefix: str = "altair-data",
+    extension: str = "json",
+    filename: str = "{prefix}-{hash}.{extension}",
+    urlpath: str = "",
+) -> _ToJsonReturnUrlDict:
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -132,12 +187,12 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data,
-    prefix="altair-data",
-    extension="csv",
-    filename="{prefix}-{hash}.{extension}",
-    urlpath="",
-):
+    data: Union[dict, pd.DataFrame, _DataFrameLike],
+    prefix: str = "altair-data",
+    extension: str = "csv",
+    filename: str = "{prefix}-{hash}.{extension}",
+    urlpath: str = "",
+) -> _ToCsvReturnUrlDict:
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
@@ -148,14 +203,16 @@ def to_csv(
 
 
 @curried.curry
-def to_values(data):
+def to_values(data: _DataType) -> _ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
-        data = sanitize_geo_interface(data.__geo_interface__)
-        return {"values": data}
+        # Maybe the type could be further clarified here that it is
+        # SupportGeoInterface and then the ignore statement is not needed?
+        data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
+        return {"values": data_sanitized}
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
@@ -168,10 +225,12 @@ def to_values(data):
         pi = import_pyarrow_interchange()
         pa_table = sanitize_arrow_table(pi.from_dataframe(data))
         return {"values": pa_table.to_pylist()}
+    else:
+        # Should never reach this state as tested by check_data_type
+        raise ValueError("Unrecognized data type: {}".format(type(data)))
 
 
-def check_data_type(data):
-    """Raise if the data is not a dict or DataFrame."""
+def check_data_type(data: _DataType) -> None:
     if not isinstance(data, (dict, pd.DataFrame)) and not any(
         hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
     ):
@@ -185,17 +244,19 @@ def check_data_type(data):
 # ==============================================================================
 # Private utilities
 # ==============================================================================
-def _compute_data_hash(data_str):
+def _compute_data_hash(data_str: str) -> str:
     return hashlib.md5(data_str.encode()).hexdigest()
 
 
-def _data_to_json_string(data):
+def _data_to_json_string(data: _DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
-        data = sanitize_geo_interface(data.__geo_interface__)
+        # Maybe the type could be further clarified here that it is
+        # SupportGeoInterface and then the ignore statement is not needed?
+        data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return json.dumps(data)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
@@ -215,7 +276,7 @@ def _data_to_json_string(data):
         )
 
 
-def _data_to_csv_string(data):
+def _data_to_csv_string(data: Union[dict, pd.DataFrame, _DataFrameLike]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
@@ -275,7 +336,7 @@ def curry(*args, **kwargs):
     return curried.curry(*args, **kwargs)
 
 
-def import_pyarrow_interchange():
+def import_pyarrow_interchange() -> ModuleType:
     import pkg_resources
 
     try:
