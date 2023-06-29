@@ -221,3 +221,26 @@ def test_spec_to_json_mimebundle():
         format="json",
     )
     assert bundle == {"application/json": vegalite_spec}
+
+
+def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
+    with alt.data_transformers.enable("vegafusion"):
+        bundle = spec_to_mimebundle(
+            spec=vegalite_spec,
+            mode="vega-lite",
+            format="vega",
+        )
+        # Returned bundle will be vega
+        vega_spec = bundle["application/vnd.vega.v5+json"]
+        assert vega_spec["$schema"] == "https://vega.github.io/schema/vega/v5.json"
+
+        # Check data_0 is there
+        data_0 = vega_spec["data"][1]
+        assert data_0["name"] == "data_0"
+
+        # Check that the bin transform has been applied
+        row0 = data_0["values"][0]
+        assert row0 == {"a": "A", "b": 28, "b_end": 28.0, "b_start": 0.0}
+
+        # And no transforms remain
+        assert len(data_0.get("transform", [])) == 0
