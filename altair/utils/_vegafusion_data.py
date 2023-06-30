@@ -1,8 +1,14 @@
-from typing import TypedDict, Union, Dict, Set, MutableMapping, Final
-
+import sys
 from toolz import curried
 import uuid
 from weakref import WeakValueDictionary
+
+from typing import Union, Dict, Set, MutableMapping, Final
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 from altair.utils.core import _DataFrameLike
 from altair.utils.data import _DataType, _ToValuesReturnType, MaxRowsError
