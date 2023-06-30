@@ -45,6 +45,7 @@ def spec_to_mimebundle(
     The png, svg, pdf, and vega outputs require the altair_saver package
     """
     from altair.utils.display import compile_with_vegafusion, using_vegafusion
+
     if mode != "vega-lite":
         raise ValueError("mode must be 'vega-lite'")
 

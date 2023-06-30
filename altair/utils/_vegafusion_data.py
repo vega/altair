@@ -143,7 +143,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     from altair import vegalite_compilers, data_transformers
 
     try:
-        import vegafusion as vf
+        import vegafusion as vf  # type: ignore
     except ImportError as e:
         raise ImportError(
             'The "vegafusion" data transformer requires the vegafusion-python-embed\n'
@@ -154,7 +154,11 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
         ) from e
 
     # Compile Vega-Lite spec to Vega
-    vega_spec = vegalite_compilers.get()(vegalite_spec)
+    compiler = vegalite_compilers.get()
+    if compiler is None:
+        raise ValueError("No active vega-lite compiler plugin found")
+
+    vega_spec = compiler(vegalite_spec)
 
     # Retrieve dict of inline tables referenced by the spec
     inline_tables = get_inline_tables(vega_spec)

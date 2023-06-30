@@ -115,6 +115,7 @@ def save(
         additional kwargs passed to spec_to_mimebundle.
     """
     from altair.utils._vegafusion_data import using_vegafusion
+
     if json_kwds is None:
         json_kwds = {}
 
@@ -126,7 +127,9 @@ def save(
     def perform_save():
         spec = chart.to_dict()
 
-        inner_mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
+        inner_mode = set_inspect_mode_argument(
+            mode, embed_options, spec, vegalite_version
+        )
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)

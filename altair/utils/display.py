@@ -163,6 +163,7 @@ def default_renderer_base(
     how to render the custom VegaLite MIME type listed above.
     """
     from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
+
     assert isinstance(spec, dict)
     bundle: Dict[str, Union[str, dict]] = {}
     metadata: Dict[str, Dict[str, Any]] = {}
