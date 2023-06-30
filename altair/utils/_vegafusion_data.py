@@ -23,7 +23,7 @@ extracted_inline_tables: MutableMapping[str, _DataFrameLike] = WeakValueDictiona
 # Special URL prefix that VegaFusion uses to denote that a
 # dataset in a Vega spec corresponds to an entry in the `inline_datasets`
 # kwarg of vf.runtime.pre_transform_spec().
-VEGAFUSION_PREFIX: Final = "table://"
+VEGAFUSION_PREFIX: Final = "vegafusion+dataset://"
 
 
 class _ToVegaFusionReturnUrlDict(TypedDict):
