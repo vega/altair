@@ -153,7 +153,7 @@ def save(
             mimebundle = spec_to_mimebundle(
                 spec=spec,
                 format=format,
-                mode=mode,
+                mode=inner_mode,
                 vega_version=vega_version,
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
