@@ -124,13 +124,13 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             if mode == "vega":
                 png = vlc.vega_to_png(
                     spec,
-                    scale=kwargs.get("scale_factor", 1.0),
+                    scale=kwargs.get("scale_factor", 1),
                 )
             else:
                 png = vlc.vegalite_to_png(
                     spec,
                     vl_version=vl_version,
-                    scale=kwargs.get("scale_factor", 1.0),
+                    scale=kwargs.get("scale_factor", 1),
                 )
             return {"image/png": png}
         else:
