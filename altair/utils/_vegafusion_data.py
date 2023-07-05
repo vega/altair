@@ -146,6 +146,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     dict
         A Vega spec that has been pre-transformed by VegaFusion
     """
+    # Local import to avoid circular ImportError
     from altair import vegalite_compilers, data_transformers
 
     try:
@@ -194,6 +195,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
 
 def using_vegafusion() -> bool:
     """Check whether the vegafusion data transfomer is enabled"""
-    from altair.vegalite.v5.data import data_transformers
+    # Local import to avoid circular ImportError
+    from altair import data_transformers
 
     return data_transformers.active == "vegafusion"

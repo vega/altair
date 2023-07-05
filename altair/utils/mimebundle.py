@@ -44,6 +44,7 @@ def spec_to_mimebundle(
     ----
     The png, svg, pdf, and vega outputs require the altair_saver package
     """
+    # Local import to avoid circular ImportError
     from altair.utils.display import compile_with_vegafusion, using_vegafusion
 
     if mode != "vega-lite":

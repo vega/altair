@@ -162,6 +162,7 @@ def default_renderer_base(
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
     """
+    # Local import to avoid circular ImportError
     from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
 
     assert isinstance(spec, dict)

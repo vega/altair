@@ -4,6 +4,7 @@ import warnings
 
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
+from altair.utils._vegafusion_data import using_vegafusion
 
 
 def write_file_or_filename(fp, content, mode="w", encoding=None):
@@ -114,8 +115,6 @@ def save(
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
-    from altair.utils._vegafusion_data import using_vegafusion
-
     if json_kwds is None:
         json_kwds = {}
 
