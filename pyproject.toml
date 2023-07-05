@@ -80,7 +80,7 @@ doc = [
     "sphinxext_altair",
     "jinja2",
     "numpydoc",
-    "pillow",
+    "pillow>=9,<10",
     "pydata-sphinx-theme",
     "geopandas",
     "myst-parser",
