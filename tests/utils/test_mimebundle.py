@@ -1,6 +1,7 @@
 import pytest
 
 import altair as alt
+from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
@@ -232,7 +233,7 @@ def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
         )
         # Returned bundle will be vega
         vega_spec = bundle["application/vnd.vega.v5+json"]
-        assert vega_spec["$schema"] == "https://vega.github.io/schema/vega/v5.json"
+        assert vega_spec["$schema"] == f"https://vega.github.io/schema/vega/v{VEGA_VERSION}.json"
 
         # Check data_0 is there
         data_0 = vega_spec["data"][1]
