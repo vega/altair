@@ -124,7 +124,7 @@ def save(
     format = set_inspect_format_argument(format, fp, inline)
 
     def perform_save():
-        spec = chart.to_dict()
+        spec = chart.to_dict(context={"pre_transform": False})
 
         inner_mode = set_inspect_mode_argument(
             mode, embed_options, spec, vegalite_version

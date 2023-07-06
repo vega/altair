@@ -21,6 +21,10 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
+from ...utils._vegafusion_data import (
+    using_vegafusion as _using_vegafusion,
+    compile_with_vegafusion as _compile_with_vegafusion,
+)
 from ...utils.core import _DataFrameLike
 
 if sys.version_info >= (3, 11):
@@ -871,6 +875,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         #   true then a "$schema" arg is added to the dict.
         # - 'datasets' is a dict of named datasets that should be inserted
         #   in the top-level object
+        # - 'pre_transform' whether data transformations should be pre-evaluated
+        #   if the current data transformer supports it (currently only used when
+        #   the "vegafusion" transformer is enabled)
 
         # note: not a deep copy because we want datasets and data arguments to
         # be passed by reference
@@ -914,13 +921,26 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if context["datasets"]:
                 vegalite_spec.setdefault("datasets", {}).update(context["datasets"])
 
-        if format == "vega":
-            plugin = vegalite_compilers.get()
-            if plugin is None:
-                raise ValueError("No active vega-lite compiler plugin found")
-            return plugin(vegalite_spec)
+        if context.get("pre_transform", True) and _using_vegafusion():
+            if format == "vega-lite":
+                raise ValueError(
+                    'When the "vegafusion" data transformer is enabled, the \n'
+                    "to_dict() and to_json() chart methods must be called with "
+                    'format="vega". \n'
+                    "For example: \n"
+                    '    >>> chart.to_dict(format="vega")\n'
+                    '    >>> chart.to_json(format="vega")'
+                )
+            else:
+                return _compile_with_vegafusion(vegalite_spec)
         else:
-            return vegalite_spec
+            if format == "vega":
+                plugin = vegalite_compilers.get()
+                if plugin is None:
+                    raise ValueError("No active vega-lite compiler plugin found")
+                return plugin(vegalite_spec)
+            else:
+                return vegalite_spec
 
     def to_json(
         self,
@@ -2251,7 +2271,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
         try:
-            dct = self.to_dict()
+            dct = self.to_dict(context={"pre_transform": False})
         except Exception:
             utils.display_traceback(in_ipython=True)
             return {}

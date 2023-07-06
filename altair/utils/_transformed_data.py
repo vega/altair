@@ -82,7 +82,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
 
     # Compile to Vega and extract inline DataFrames
     with data_transformers.enable("vegafusion"):
-        vega_spec = chart.to_dict(format="vega")
+        vega_spec = chart.to_dict(format="vega", context={"pre_transform": False})
         inline_datasets = get_inline_tables(vega_spec)
 
     # Build mapping from mark names to vega datasets
