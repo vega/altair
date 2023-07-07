@@ -901,7 +901,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
         vegalite_spec = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
-            validate=validate, ignore=ignore, context=context
+            validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
         # TODO: following entries are added after validation. Should they be validated?
