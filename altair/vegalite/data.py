@@ -27,7 +27,7 @@ class DataTransformerRegistry(_DataTransformerRegistry):
     def disable_max_rows(self) -> PluginEnabler:
         """Disable the MaxRowsError."""
         options = self.options
-        if self.active == "default":
+        if self.active in ("default", "vegafusion"):
             options = options.copy()
             options["max_rows"] = None
         return self.enable(**options)

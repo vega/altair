@@ -4,6 +4,7 @@ import warnings
 
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
+from altair.utils._vegafusion_data import using_vegafusion
 
 
 def write_file_or_filename(fp, content, mode="w", encoding=None):
@@ -122,15 +123,12 @@ def save(
 
     format = set_inspect_format_argument(format, fp, inline)
 
-    # Temporarily turn off any data transformers so that all data is inlined
-    # when calling chart.to_dict. This is relevant for vl-convert which cannot access
-    # local json files which could be created by a json data transformer. Furthermore,
-    # we don't exit the with statement until this function completed due to the issue
-    # described at https://github.com/vega/vl-convert/issues/31
-    with data_transformers.enable("default"), data_transformers.disable_max_rows():
-        spec = chart.to_dict()
+    def perform_save():
+        spec = chart.to_dict(context={"pre_transform": False})
 
-        mode = set_inspect_mode_argument(mode, embed_options, spec, vegalite_version)
+        inner_mode = set_inspect_mode_argument(
+            mode, embed_options, spec, vegalite_version
+        )
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
@@ -141,7 +139,7 @@ def save(
             mimebundle = spec_to_mimebundle(
                 spec=spec,
                 format=format,
-                mode=mode,
+                mode=inner_mode,
                 vega_version=vega_version,
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
@@ -154,7 +152,7 @@ def save(
             mimebundle = spec_to_mimebundle(
                 spec=spec,
                 format=format,
-                mode=mode,
+                mode=inner_mode,
                 vega_version=vega_version,
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
@@ -174,3 +172,18 @@ def save(
                 )
         else:
             raise ValueError("Unsupported format: '{}'".format(format))
+
+    if using_vegafusion():
+        # When the vegafusion data transformer is enabled, transforms will be
+        # evaluated during save and the resulting data will be included in the
+        # vega specification that is saved.
+        with data_transformers.disable_max_rows():
+            perform_save()
+    else:
+        # Temporarily turn off any data transformers so that all data is inlined
+        # when calling chart.to_dict. This is relevant for vl-convert which cannot access
+        # local json files which could be created by a json data transformer. Furthermore,
+        # we don't exit the with statement until this function completed due to the issue
+        # described at https://github.com/vega/vl-convert/issues/31
+        with data_transformers.enable("default"), data_transformers.disable_max_rows():
+            perform_save()

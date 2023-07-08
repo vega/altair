@@ -1,6 +1,7 @@
 import pytest
 
 import altair as alt
+from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
@@ -221,3 +222,41 @@ def test_spec_to_json_mimebundle():
         format="json",
     )
     assert bundle == {"application/json": vegalite_spec}
+
+
+def check_pre_transformed_vega_spec(vega_spec):
+    assert (
+        vega_spec["$schema"]
+        == f"https://vega.github.io/schema/vega/v{VEGA_VERSION}.json"
+    )
+
+    # Check data_0 is there
+    data_0 = vega_spec["data"][1]
+    assert data_0["name"] == "data_0"
+
+    # Check that the bin transform has been applied
+    row0 = data_0["values"][0]
+    assert row0 == {"a": "A", "b": 28, "b_end": 28.0, "b_start": 0.0}
+
+    # And no transforms remain
+    assert len(data_0.get("transform", [])) == 0
+
+
+def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
+    with alt.data_transformers.enable("vegafusion"):
+        bundle = spec_to_mimebundle(
+            spec=vegalite_spec,
+            mode="vega-lite",
+            format="vega",
+        )
+        # Returned bundle will be vega
+        vega_spec = bundle["application/vnd.vega.v5+json"]
+        check_pre_transformed_vega_spec(vega_spec)
+
+
+def test_vegafusion_chart_to_vega_mime_bundle(vegalite_spec):
+    chart = alt.Chart.from_dict(vegalite_spec)
+    with alt.data_transformers.enable("vegafusion"), alt.renderers.enable("json"):
+        bundle = chart._repr_mimebundle_()
+        vega_spec = bundle[0]["application/json"]
+        check_pre_transformed_vega_spec(vega_spec)

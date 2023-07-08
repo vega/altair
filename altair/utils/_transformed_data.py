@@ -9,6 +9,7 @@ from altair import (
     ConcatChart,
     data_transformers,
 )
+from altair.utils._vegafusion_data import get_inline_tables
 from altair.utils.core import _DataFrameLike
 from altair.utils.schemapi import Undefined
 
@@ -57,7 +58,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
         transformed data
     """
     try:
-        from vegafusion import runtime, get_local_tz, get_inline_datasets_for_spec  # type: ignore
+        from vegafusion import runtime, get_local_tz  # type: ignore
     except ImportError as err:
         raise ImportError(
             "transformed_data requires the vegafusion-python-embed and vegafusion packages\n"
@@ -80,9 +81,9 @@ def transformed_data(chart, row_limit=None, exclude=None):
     chart_names = name_views(chart, 0, exclude=exclude)
 
     # Compile to Vega and extract inline DataFrames
-    with data_transformers.enable("vegafusion-inline"):
-        vega_spec = chart.to_dict(format="vega")
-        inline_datasets = get_inline_datasets_for_spec(vega_spec)
+    with data_transformers.enable("vegafusion"):
+        vega_spec = chart.to_dict(format="vega", context={"pre_transform": False})
+        inline_datasets = get_inline_tables(vega_spec)
 
     # Build mapping from mark names to vega datasets
     facet_mapping = get_facet_mapping(vega_spec)

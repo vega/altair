@@ -44,8 +44,15 @@ def spec_to_mimebundle(
     ----
     The png, svg, pdf, and vega outputs require the altair_saver package
     """
+    # Local import to avoid circular ImportError
+    from altair.utils.display import compile_with_vegafusion, using_vegafusion
+
     if mode != "vega-lite":
         raise ValueError("mode must be 'vega-lite'")
+
+    if using_vegafusion():
+        spec = compile_with_vegafusion(spec)
+        mode = "vega"
 
     if format in ["png", "svg", "pdf", "vega"]:
         return _spec_to_mimebundle_with_engine(
@@ -82,7 +89,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
         a dictionary representing a vega-lite plot spec
     format : string {'png', 'svg', 'pdf', 'vega'}
         the format of the mimebundle to be returned
-    mode : string {'vega-lite'}
+    mode : string {'vega-lite', 'vega'}
         The rendering mode.
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use
@@ -102,17 +109,29 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
         # from SCHEMA_VERSION (of the form 'v5.2.0')
         vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
         if format == "vega":
-            vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
+            if mode == "vega":
+                vg = spec
+            else:
+                vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
             return {"application/vnd.vega.v5+json": vg}
         elif format == "svg":
-            svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
+            if mode == "vega":
+                svg = vlc.vega_to_svg(spec)
+            else:
+                svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
             return {"image/svg+xml": svg}
         elif format == "png":
-            png = vlc.vegalite_to_png(
-                spec,
-                vl_version=vl_version,
-                scale=kwargs.get("scale_factor", 1.0),
-            )
+            if mode == "vega":
+                png = vlc.vega_to_png(
+                    spec,
+                    scale=kwargs.get("scale_factor", 1),
+                )
+            else:
+                png = vlc.vegalite_to_png(
+                    spec,
+                    vl_version=vl_version,
+                    scale=kwargs.get("scale_factor", 1),
+                )
             return {"image/png": png}
         else:
             # This should be validated above
