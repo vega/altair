@@ -1,4 +1,3 @@
-
 from ..data import (
     MaxRowsError,
     curry,

@@ -1,4 +1,3 @@
-
 from ...utils.compiler import VegaLiteCompilerRegistry
 
 from typing import Final
