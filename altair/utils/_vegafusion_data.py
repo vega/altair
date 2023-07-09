@@ -5,10 +5,7 @@ from weakref import WeakValueDictionary
 
 from typing import Union, Dict, Set, MutableMapping
 
-if sys.version_info >= (3, 8):
-    from typing import TypedDict, Final
-else:
-    from typing_extensions import TypedDict, Final
+from typing import TypedDict, Final
 
 from altair.utils.core import _DataFrameLike
 from altair.utils.data import _DataType, _ToValuesReturnType, MaxRowsError

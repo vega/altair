@@ -17,10 +17,7 @@ from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
 
-if sys.version_info >= (3, 8):
-    from typing import Protocol, TypedDict, Literal
-else:
-    from typing_extensions import Protocol, TypedDict, Literal
+from typing import Protocol, TypedDict, Literal
 
 
 if TYPE_CHECKING:

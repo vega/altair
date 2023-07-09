@@ -17,10 +17,7 @@ VEGA_THEMES = [
     "powerbi",
 ]
 
-if sys.version_info >= (3, 8):
-    from typing import Final
-else:
-    from typing_extensions import Final
+from typing import Final
 
 
 class VegaTheme:

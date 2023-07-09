@@ -2,7 +2,7 @@ import ast
 import sys
 
 
-if sys.version_info > (3, 8):
+if sys.version_info >= (3, 9):
     Module = ast.Module
 else:
     # Mock the Python >= 3.8 API

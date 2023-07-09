@@ -424,10 +424,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
             "from altair.utils import parse_shorthand",
             "from typing import overload, List",
             "",
-            "if sys.version_info >= (3, 8):",
-            "    from typing import Literal",
-            "else:",
-            "    from typing_extensions import Literal",
+            "from typing import Literal",
         ]
     contents = [HEADER]
     contents.extend(imports)

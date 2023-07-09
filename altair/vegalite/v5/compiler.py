@@ -2,10 +2,7 @@ import sys
 
 from ...utils.compiler import VegaLiteCompilerRegistry
 
-if sys.version_info >= (3, 8):
-    from typing import Final
-else:
-    from typing_extensions import Final
+from typing import Final
 
 
 ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.vegalite_compiler"
