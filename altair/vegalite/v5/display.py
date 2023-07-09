@@ -1,5 +1,4 @@
 import os
-import sys
 from typing import Dict
 
 from ...utils.mimebundle import spec_to_mimebundle

@@ -2,7 +2,6 @@ import json
 import os
 import random
 import hashlib
-import sys
 import warnings
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
 from types import ModuleType

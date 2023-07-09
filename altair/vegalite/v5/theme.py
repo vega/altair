@@ -1,6 +1,5 @@
 """Tools for enabling and registering chart themes"""
-import sys
-from typing import Dict, Union
+from typing import Dict, Union, Final
 
 from ...utils.theme import ThemeRegistry
 
@@ -16,8 +15,6 @@ VEGA_THEMES = [
     "googlecharts",
     "powerbi",
 ]
-
-from typing import Final
 
 
 class VegaTheme:

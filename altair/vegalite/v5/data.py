@@ -1,4 +1,3 @@
-import sys
 
 from ..data import (
     MaxRowsError,

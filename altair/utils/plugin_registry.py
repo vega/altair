@@ -1,4 +1,3 @@
-import sys
 from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
 from types import TracebackType
 

@@ -1,4 +1,3 @@
-import sys
 from toolz import curried
 import uuid
 from weakref import WeakValueDictionary
