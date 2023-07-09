@@ -14,6 +14,7 @@ Bug Fixes
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Drop support for Python 3.7 which is end-of-life
 
 Version 5.0.1 (released May 26, 2023)
 -------------------------------------
