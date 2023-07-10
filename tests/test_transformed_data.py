@@ -67,6 +67,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
+
     assert len(df) == rows
     assert set(cols).issubset(set(df.columns))
 
@@ -112,10 +113,15 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
     dfs = chart.transformed_data()
-    assert len(dfs) == len(all_rows)
-    for df, rows, cols in zip(dfs, all_rows, all_cols):
-        assert len(df) == rows
-        assert set(cols).issubset(set(df.columns))
+
+    if not to_reconstruct:
+        # Only run assert statements if the chart is not reconstructed. Reason
+        # is that for some charts, the original chart contained duplicated datasets
+        # which disappear when reconstructing the chart.
+        assert len(dfs) == len(all_rows)
+        for df, rows, cols in zip(dfs, all_rows, all_cols):
+            assert len(df) == rows
+            assert set(cols).issubset(set(df.columns))
 
 
 @pytest.mark.parametrize("to_reconstruct", [True, False])
