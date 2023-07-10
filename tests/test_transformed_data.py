@@ -57,9 +57,15 @@ import pytest
     ("window_rank.py", 12, ["team", "diff"]),
 ])
 # fmt: on
-def test_primitive_chart_examples(filename, rows, cols):
+@pytest.mark.parametrize("to_reconstruct", [True, False])
+def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source)
+    if to_reconstruct:
+        # When reconstructing a Chart, Altair uses different classes
+        # then what might have been originally used. See
+        # https://github.com/hex-inc/vegafusion/issues/354 for more info.
+        chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
     assert len(df) == rows
     assert set(cols).issubset(set(df.columns))
@@ -96,11 +102,15 @@ def test_primitive_chart_examples(filename, rows, cols):
     ("us_population_pyramid_over_time.py", [19, 38, 19], [["gender"], ["year"], ["gender"]]),
 ])
 # fmt: on
-def test_compound_chart_examples(filename, all_rows, all_cols):
+@pytest.mark.parametrize("to_reconstruct", [True, False])
+def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source)
-    print(chart)
-
+    if to_reconstruct:
+        # When reconstructing a Chart, Altair uses different classes
+        # then what might have been originally used. See
+        # https://github.com/hex-inc/vegafusion/issues/354 for more info.
+        chart = alt.Chart.from_dict(chart.to_dict())
     dfs = chart.transformed_data()
     assert len(dfs) == len(all_rows)
     for df, rows, cols in zip(dfs, all_rows, all_cols):
@@ -108,7 +118,8 @@ def test_compound_chart_examples(filename, all_rows, all_cols):
         assert set(cols).issubset(set(df.columns))
 
 
-def test_transformed_data_exclude():
+@pytest.mark.parametrize("to_reconstruct", [True, False])
+def test_transformed_data_exclude(to_reconstruct):
     source = data.wheat()
     bar = alt.Chart(source).mark_bar().encode(x="year:O", y="wheat:Q")
     rule = alt.Chart(source).mark_rule(color="red").encode(y="mean(wheat):Q")
@@ -119,6 +130,11 @@ def test_transformed_data_exclude():
     )
 
     chart = (bar + rule + some_annotation).properties(width=600)
+    if to_reconstruct:
+        # When reconstructing a Chart, Altair uses different classes
+        # then what might have been originally used. See
+        # https://github.com/hex-inc/vegafusion/issues/354 for more info.
+        chart = alt.Chart.from_dict(chart.to_dict())
     datasets = chart.transformed_data(exclude=["some_annotation"])
 
     assert len(datasets) == 2

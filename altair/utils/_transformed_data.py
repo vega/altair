@@ -7,6 +7,21 @@ from altair import (
     HConcatChart,
     VConcatChart,
     ConcatChart,
+    TopLevelUnitSpec,
+    FacetedUnitSpec,
+    UnitSpec,
+    UnitSpecWithFrame,
+    NonNormalizedSpec,
+    TopLevelLayerSpec,
+    LayerSpec,
+    TopLevelConcatSpec,
+    ConcatSpecGenericSpec,
+    TopLevelHConcatSpec,
+    HConcatSpecGenericSpec,
+    TopLevelVConcatSpec,
+    VConcatSpecGenericSpec,
+    TopLevelFacetSpec,
+    FacetSpec,
     data_transformers,
 )
 from altair.utils._vegafusion_data import get_inline_tables
@@ -15,6 +30,25 @@ from altair.utils.schemapi import Undefined
 
 Scope = Tuple[int, ...]
 FacetMapping = Dict[Tuple[str, Scope], Tuple[str, Scope]]
+
+
+# For the transformed_data functionality, the chart classes in the values
+# can be considered equivalent to the chart class in the key.
+_chart_class_mapping = {
+    Chart: (
+        Chart,
+        TopLevelUnitSpec,
+        FacetedUnitSpec,
+        UnitSpec,
+        UnitSpecWithFrame,
+        NonNormalizedSpec,
+    ),
+    LayerChart: (LayerChart, TopLevelLayerSpec, LayerSpec),
+    ConcatChart: (ConcatChart, TopLevelConcatSpec, ConcatSpecGenericSpec),
+    HConcatChart: (HConcatChart, TopLevelHConcatSpec, HConcatSpecGenericSpec),
+    VConcatChart: (VConcatChart, TopLevelVConcatSpec, VConcatSpecGenericSpec),
+    FacetChart: (FacetChart, TopLevelFacetSpec, FacetSpec),
+}
 
 
 @overload
@@ -118,6 +152,16 @@ def transformed_data(chart, row_limit=None, exclude=None):
         return datasets
 
 
+# The equivalent classes from _chart_class_mapping should also be added
+# to the type hints below for `chart` as the function would also work for them.
+# However, this was not possible so far as mypy then complains about
+# "Overloaded function signatures 1 and 2 overlap with incompatible return types [misc]"
+# This might be due to the complex type hierarchy of the chart classes.
+# See also https://github.com/python/mypy/issues/5119
+# and https://github.com/python/mypy/issues/4020 which show that mypy might not have
+# a very consistent behavior for overloaded functions.
+# The same error appeared when trying it with Protocols for the concat and layer charts.
+# This function is only used internally and so we accept this inconsistency for now.
 def name_views(
     chart: Union[
         Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, ConcatChart
@@ -148,7 +192,9 @@ def name_views(
         List of the names of the charts and subcharts
     """
     exclude = set(exclude) if exclude is not None else set()
-    if isinstance(chart, (Chart, FacetChart)):
+    if isinstance(chart, _chart_class_mapping[Chart]) or isinstance(
+        chart, _chart_class_mapping[FacetChart]
+    ):
         if chart.name not in exclude:
             if chart.name in (None, Undefined):
                 # Add name since none is specified
@@ -157,13 +203,13 @@ def name_views(
         else:
             return []
     else:
-        if isinstance(chart, LayerChart):
+        if isinstance(chart, _chart_class_mapping[LayerChart]):
             subcharts = chart.layer
-        elif isinstance(chart, HConcatChart):
+        elif isinstance(chart, _chart_class_mapping[HConcatChart]):
             subcharts = chart.hconcat
-        elif isinstance(chart, VConcatChart):
+        elif isinstance(chart, _chart_class_mapping[VConcatChart]):
             subcharts = chart.vconcat
-        elif isinstance(chart, ConcatChart):
+        elif isinstance(chart, _chart_class_mapping[ConcatChart]):
             subcharts = chart.concat
         else:
             raise ValueError(
