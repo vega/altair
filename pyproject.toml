@@ -16,7 +16,6 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [ {name = "Vega-Altair Contributors"} ]
 dependencies = [
-    "importlib_metadata; python_version<\"3.8\"",
     "typing_extensions>=4.0.1; python_version<\"3.11\"",
     "jinja2",
     "jsonschema>=3.0",
@@ -34,7 +33,7 @@ keywords = [
     "json",
     "vega-lite",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 dynamic = ["version"]
 license-files = { paths = ["LICENSE"] }
 classifiers= [
@@ -43,7 +42,6 @@ classifiers= [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -153,7 +151,7 @@ publish-clean-build = [
 
 [tool.black]
 line-length = 88
-target-version = ["py37", "py38", "py39", "py310", "py311"]
+target-version = ["py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -170,7 +168,7 @@ extend-exclude = '''
 '''
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py38"
 line-length = 88
 select = [
     # flake8-bugbear

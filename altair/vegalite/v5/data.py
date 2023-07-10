@@ -1,5 +1,3 @@
-import sys
-
 from ..data import (
     MaxRowsError,
     curry,
@@ -15,10 +13,7 @@ from ..data import (
 
 from ...utils._vegafusion_data import vegafusion_data_transformer
 
-if sys.version_info >= (3, 8):
-    from typing import Final
-else:
-    from typing_extensions import Final
+from typing import Final
 
 
 # ==============================================================================

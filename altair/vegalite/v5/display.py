@@ -1,5 +1,4 @@
 import os
-import sys
 from typing import Dict
 
 from ...utils.mimebundle import spec_to_mimebundle
@@ -14,10 +13,7 @@ from ..display import (
 
 from .schema import SCHEMA_VERSION
 
-if sys.version_info >= (3, 8):
-    from typing import Final
-else:
-    from typing_extensions import Final
+from typing import Final
 
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
 VEGA_VERSION: Final = "5"

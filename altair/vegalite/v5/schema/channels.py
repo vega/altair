@@ -8,10 +8,7 @@ from altair.utils.schemapi import Undefined, with_property_setters
 from altair.utils import parse_shorthand
 from typing import overload, List
 
-if sys.version_info >= (3, 8):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+from typing import Literal
 
 
 class FieldChannelMixin:
