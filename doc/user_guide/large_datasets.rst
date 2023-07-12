@@ -16,9 +16,15 @@ If you try to create a plot that will directly embed a dataset with more than
 
 .. code-block:: none
 
-    MaxRowsError: The number of rows in your dataset is greater than the maximum
-                  allowed (5000). For information on how to plot larger datasets
-                  in Altair, see the documentation.
+    MaxRowsError: The number of rows in your dataset is greater than the maximum allowed (5000).
+
+    Try enabling the VegaFusion data transformer which raises this limit by pre-evaluating data
+    transformations in Python.
+        >> import altair as alt
+        >> alt.data_transformers.enable("vegafusion")
+
+    Or, see https://altair-viz.github.io/user_guide/large_datasets.html for additional information
+    on how to plot large datasets.
 
 This is not because Altair cannot handle larger datasets, but it is because it
 is important for the user to think carefully about how large datasets are handled. 

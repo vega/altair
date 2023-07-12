@@ -96,10 +96,14 @@ def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
         raise MaxRowsError(
             "The number of rows in your dataset is greater "
             f"than the maximum allowed ({max_rows}).\n\n"
-            "See https://altair-viz.github.io/user_guide/large_datasets.html "
-            "for information on how to plot large datasets, "
-            "including how to install third-party data management tools and, "
-            "in the right circumstance, disable the restriction"
+            "Try enabling the VegaFusion data transformer which "
+            "raises this limit by pre-evaluating data\n"
+            "transformations in Python.\n"
+            "    >> import altair as alt\n"
+            "    >> alt.data_transformers.enable(\"vegafusion\")\n\n"
+            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
+            "for additional information\n"
+            "on how to plot large datasets."
         )
     return data
 
