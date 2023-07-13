@@ -100,7 +100,7 @@ def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
             "raises this limit by pre-evaluating data\n"
             "transformations in Python.\n"
             "    >> import altair as alt\n"
-            "    >> alt.data_transformers.enable(\"vegafusion\")\n\n"
+            '    >> alt.data_transformers.enable("vegafusion")\n\n'
             "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
             "for additional information\n"
             "on how to plot large datasets."
