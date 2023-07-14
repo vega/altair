@@ -16,16 +16,22 @@ If you try to create a plot that will directly embed a dataset with more than
 
 .. code-block:: none
 
-    MaxRowsError: The number of rows in your dataset is greater than the maximum
-                  allowed (5000). For information on how to plot larger datasets
-                  in Altair, see the documentation.
+    MaxRowsError: The number of rows in your dataset is greater than the maximum allowed (5000).
+
+    Try enabling the VegaFusion data transformer which raises this limit by pre-evaluating data
+    transformations in Python.
+        >> import altair as alt
+        >> alt.data_transformers.enable("vegafusion")
+
+    Or, see https://altair-viz.github.io/user_guide/large_datasets.html for additional information
+    on how to plot large datasets.
 
 This is not because Altair cannot handle larger datasets, but it is because it
 is important for the user to think carefully about how large datasets are handled. 
 The following sections describe various considerations as well as approaches to deal with
 large datasets.
 
-If you are certain you would like to embed your full dataset within the visualization
+If you are certain you would like to embed your full untransformed dataset within the visualization
 specification, you can disable the ``MaxRows`` check::
 
     alt.data_transformers.disable_max_rows()
@@ -70,6 +76,122 @@ very large specifications which can have various negative implications:
 * if you display the chart on a website it slows down the loading of the page
 * slow evaluation of transforms as the calculations are performed in JavaScript which is not the fastest language for processing large amounts of data
 
+.. _vegafusion-data-transformer:
+
+VegaFusion Data Transformer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The easiest and most flexible approach for addressing a ``MaxRowsError`` is to
+enable the ``"vegafusion"`` data transformer, which was added in Altair 5.1.
+`VegaFusion`_ is an external project that provides efficient Rust implementations
+of most of Altair's data transformations. By evaluating data transformations (e.g. binning
+and aggregations) in Python, the size of the datasets that must be included in the final chart
+specification are often greatly reduced. In addition, VegaFusion automatically removes
+unused columns, which reduces dataset size even for charts without data transformations.
+
+When the ``"vegafusion"`` data transformer is active, data transformations will be
+pre-evaluated when :ref:`displaying-charts`, :ref:`user-guide-saving`, converted charts a dictionaries,
+and converting charts to JSON.
+
+VegaFusion's development is sponsored by `Hex <https://hex.tech>`_.
+
+Installing VegaFusion
+^^^^^^^^^^^^^^^^^^^^^
+The VegaFusion dependencies can be installed using pip
+
+.. code-block:: none
+
+   pip install "vegafusion[embed]"
+
+or conda
+
+.. code-block:: none
+
+   conda install -c conda-forge vegafusion vegafusion-python-embed vl-convert-python
+
+Note that conda packages are not yet available for the Apple Silicon architecture.
+
+Enabling the VegaFusion Data Transformer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Activate the VegaFusion data transformer with:
+
+.. code-block:: python
+
+    import altair as alt
+    alt.data_transformers.enable("vegafusion")
+
+All charts created after activating the VegaFusion data transformer
+will work with datasets containing up to 100,000 rows.
+VegaFusion's row limit is applied after all supported data transformations have been applied.
+So you are unlikely to reach it with a chart such as a histogram,
+but you may hit it in the case of a large scatter chart or a chart that uses interactivity.
+If you need to work with larger datasets,
+you can disable the maximum row limit
+or switch to using the VegaFusion widget renderer described below.
+
+Converting to JSON or dictionary
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When converting a VegaFusion chart to JSON with ``chart.to_json`` or to a Python dictionary with
+``chart.to_dict``, the ``format`` argument must be set to ``"vega"`` rather than the
+default of ``"vega-lite"``. For example:
+
+.. code-block:: python
+
+    chart.to_json(format="vega")
+    chart.to_dict(format="vega")
+
+This is because VegaFusion works with Vega chart specifications
+rather than the Vega-Lite specifications produced by Altair. When the VegaFusion
+data transformer is enabled, the `vl-convert`_
+library is used to perform the conversion from Vega-Lite to Vega.
+
+Local Timezone Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Some Altair transformations (e.g. :ref:`user-guide-timeunit-transform`) are based on
+a local timezone. Normally, the browser's local timezone is used. However, because
+VegaFusion evaluates these transforms in Python before rendering, it's not possible to
+access the browser's timezone. Instead, the local timezone of the Python kernel will be
+used by default. In the case of a cloud notebook service, this may be difference than
+the browser's local timezone.
+
+VegaFusion's local timezone may be customized using the ``vegafusion.set_local_tz``
+function. For example:
+
+.. code-block:: python
+
+    import vegafusion as vf
+    vf.set_local_tz("America/New_York")
+
+DuckDB Integration
+^^^^^^^^^^^^^^^^^^
+VegaFusion provides optional integration with `DuckDB`_. Because DuckDB can perform queries on pandas
+DataFrames without converting through Arrow, it's often faster than VegaFusion's default query engine
+which requires this conversion. See the `VegaFusion DuckDB`_ documentation for more information.
+
+Interactivity
+^^^^^^^^^^^^^
+For charts that use selections to filter data interactively, the VegaFusion data transformer
+will include all of the data that participates in the interaction in the resulting chart
+specification. This makes it an unsuitable approach for building interactive charts that filter
+large datasets (e.g. crossfiltering a dataset with over a million rows).
+
+The `VegaFusion widget renderer`_ is designed to support this use case, and is available in the
+third-party ``vegafusion-jupyter`` package.
+
+It is enabled with:
+
+.. code-block:: python
+
+    import vegafusion as vf
+    vf.enable_widget()
+
+The widget renderer uses a Jupyter Widget extension to maintain a live connection between the displayed chart
+and the Python kernel. This makes it possible for transforms to be evaluated interactively in response to
+changes in selections, and to send the datasets to the client in arrow format separately instead of inlining
+them in the chart json specification.
+
+Charts rendered this way require a running Python kernel and Jupyter Widget extension to
+display, which works in many frontends including locally in the classic notebook, JupyterLab, and VSCode,
+as well as remotely in Colab and Binder.
 
 .. _passing-data-by-url:
 
@@ -332,56 +454,10 @@ summary statistics to Altair instead of the full dataset.
     
     rules + bars + ticks + outliers
 
-
-VegaFusion
-~~~~~~~~~~
-`VegaFusion`_ is a third-party package that re-implements most Vega-Lite transforms for evaluation
-in the Python kernel, which makes it possible to scale Altair charts to millions of rows of data.
-VegaFusion provides two rendering modes that are useful in different situations.
-
-Mime Renderer
-^^^^^^^^^^^^^
-The `VegaFusion mime renderer`_ is a good choice for charts that contain aggregations
-and that do not re-aggregate or re-filter data in response to selections
-(so it offers similar but more advanced functionality as the ``altair-transform`` package).
-It is enabled with:
-
-.. code-block:: python
-
-    import vegafusion as vf
-    vf.enable()
-
-The mime renderer automates the :ref:`preaggregate-and-filter` workflow described above. Right before
-a chart is rendered, VegaFusion extracts the datasets and supported transforms and evaluates them in the
-Python kernel. It then removes any unused columns and inlines the transformed data into the chart specification
-for rendering.
-
-Charts rendered this way are self-contained and do not require the Python kernel or a custom
-notebook extension to display. They are rendered with the same frontend functionality that
-is already used to display regular Altair charts.
-
-Widget Renderer
-^^^^^^^^^^^^^^^
-The `VegaFusion widget renderer`_ is a good choice for displaying unaggregated data
-and for aggregated charts that re-aggregate or re-filter data in response to selections
-(so it offers similar but more advanced functionality as the ``altair-data-server`` package).
-It is enabled with:
-
-.. code-block:: python
-
-    import vegafusion as vf
-    vf.enable_widget()
-
-The widget renderer uses a Jupyter Widget extension to maintain a live connection between the displayed chart and the Python kernel.
-This makes it possible for transforms to be evaluated interactively in response to changes in selections,
-and to send the datasets to the client in arrow format separately instead of inlining them in the chart json spec. 
-
-Charts rendered this way require a running Python kernel and Jupyter Widget extension to
-display, which works in many frontends including locally in the classic notebook, JupyterLab, and VSCode,
-as well as remotely in Colab and Binder.
-
 .. _VegaFusion: https://vegafusion.io
 .. _VegaFusion mime renderer: https://vegafusion.io/mime_renderer.html
 .. _VegaFusion widget renderer: https://vegafusion.io/widget_renderer.html
+.. _DuckDB: https://duckdb.org/
+.. _VegaFusion DuckDB: https://vegafusion.io/duckdb.html
 .. _vl-convert: https://github.com/vega/vl-convert
 .. _altair_saver: https://github.com/altair-viz/altair_saver/
