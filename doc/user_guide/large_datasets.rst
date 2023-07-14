@@ -122,7 +122,7 @@ Activate the VegaFusion data transformer with:
 
 Converting to JSON or dictionary
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When converting a chart to JSON with ``chart.to_json`` or to a Python dictionary with
+When converting a VegaFusion chart to JSON with ``chart.to_json`` or to a Python dictionary with
 ``chart.to_dict``, the ``format`` argument must be set to ``"vega"`` rather than the
 default of ``"vega-lite"``. For example:
 
