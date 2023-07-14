@@ -119,6 +119,14 @@ Activate the VegaFusion data transformer with:
     import altair as alt
     alt.data_transformers.enable("vegafusion")
 
+All charts created after activating the VegaFusion data transformer
+will work with datasets containing up to 100,000 rows.
+VegaFusion's row limit is applied after all supported data transformations have been applied.
+So you are unlikely to reach it with a chart such as a histogram,
+but you may hit it in the case of a large scatter chart or a chart that uses interactivity.
+If you need to work with larger datasets,
+you can disable the maximum row limit
+or switch to using the VegaFusion widget renderer described below.
 
 Converting to JSON or dictionary
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
