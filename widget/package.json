@@ -1,0 +1,17 @@
+{
+  "name": "altair_widget",
+  "version": "0.1.0",
+  "description": "Altair Chart Widget",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --format=esm --outfile=../altair/widget/static/index.js --minify"
+  },
+  "author": "Altair Maintainers",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "vega-embed": "^6.22.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.18.13"
+  }
+}

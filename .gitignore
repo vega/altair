@@ -75,3 +75,4 @@ Untitled*.ipynb
 
 # hatch, doc generation
 data.json
+/widget/node_modules/
