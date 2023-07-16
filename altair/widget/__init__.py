@@ -1,4 +1,4 @@
-import anywidget
+import anywidget  # type: ignore
 import traitlets
 import pathlib
 
