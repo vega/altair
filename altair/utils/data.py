@@ -76,6 +76,21 @@ def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
     If max_rows is None, then do not perform any check.
     """
     check_data_type(data)
+
+    def raise_max_rows_error():
+        raise MaxRowsError(
+            "The number of rows in your dataset is greater "
+            f"than the maximum allowed ({max_rows}).\n\n"
+            "Try enabling the VegaFusion data transformer which "
+            "raises this limit by pre-evaluating data\n"
+            "transformations in Python.\n"
+            "    >> import altair as alt\n"
+            '    >> alt.data_transformers.enable("vegafusion")\n\n'
+            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
+            "for additional information\n"
+            "on how to plot large datasets."
+        )
+
     if hasattr(data, "__geo_interface__"):
         if data.__geo_interface__["type"] == "FeatureCollection":
             values = data.__geo_interface__["features"]
@@ -91,20 +106,17 @@ def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
             # as equivalent to TDataType
             return data  # type: ignore[return-value]
     elif hasattr(data, "__dataframe__"):
-        values = data
+        pi = import_pyarrow_interchange()
+        pa_table = pi.from_dataframe(data)
+        if max_rows is not None and pa_table.num_rows > max_rows:
+            raise_max_rows_error()
+        # Return pyarrow Table instead of input since the
+        # `from_dataframe` call may be expensive
+        return pa_table
+
     if max_rows is not None and len(values) > max_rows:
-        raise MaxRowsError(
-            "The number of rows in your dataset is greater "
-            f"than the maximum allowed ({max_rows}).\n\n"
-            "Try enabling the VegaFusion data transformer which "
-            "raises this limit by pre-evaluating data\n"
-            "transformations in Python.\n"
-            "    >> import altair as alt\n"
-            '    >> alt.data_transformers.enable("vegafusion")\n\n'
-            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
-            "for additional information\n"
-            "on how to plot large datasets."
-        )
+        raise_max_rows_error()
+
     return data
 
 
