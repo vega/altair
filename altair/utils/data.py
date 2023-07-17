@@ -108,7 +108,7 @@ def limit_rows(data: _TDataType, max_rows: Optional[int] = 5000) -> _TDataType:
     elif hasattr(data, "__dataframe__"):
         pi = import_pyarrow_interchange()
         pa_table = pi.from_dataframe(data)
-        if pa_table.num_rows > max_rows:
+        if max_rows is not None and pa_table.num_rows > max_rows:
             raise_max_rows_error()
         # Return pyarrow Table instead of input since the
         # `from_dataframe` call may be expensive
