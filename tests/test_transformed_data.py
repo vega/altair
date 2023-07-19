@@ -5,7 +5,13 @@ from vega_datasets import data
 import pkgutil
 import pytest
 
+try:
+    import vegafusion as vf  # type: ignore
+except ImportError:
+    vf = None
 
+
+@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
     ("annual_weather_heatmap.py", 366, ["monthdate_date_end", "max_temp_max"]),
@@ -72,6 +78,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     assert set(cols).issubset(set(df.columns))
 
 
+@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
 @pytest.mark.parametrize("filename,all_rows,all_cols", [
     ("errorbars_with_std.py", [10, 10], [["upper_yield"], ["extent_yield"]]),
@@ -124,6 +131,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
             assert set(cols).issubset(set(df.columns))
 
 
+@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_transformed_data_exclude(to_reconstruct):
     source = data.wheat()

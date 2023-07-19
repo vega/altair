@@ -28,6 +28,10 @@ jobs:
           pip install .[dev]
           # pip install "selenium<4.3.0"
           # pip install altair_saver
+      - name: Maybe uninstall optional dependencies
+        if: ${{ matrix.python-version }}=="3.9"
+        run: |
+          pip uninstall -y pyarrow vegafusion vegafusion-python-embed
       - name: Test that schema generation has no effect
         run: |
           python tools/generate_schema_wrapper.py
