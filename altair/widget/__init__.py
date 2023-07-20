@@ -69,7 +69,7 @@ class ChartWidget(anywidget.AnyWidget):
 
     @traitlets.observe("_selections")
     def change_selections(self, change):
-        new_selections = dict()
+        new_selections = {}
         for selection_name, selection_dict in change.new.items():
             new_selections[selection_name] = SelectionParam(
                 name=selection_name, **selection_dict
@@ -78,9 +78,7 @@ class ChartWidget(anywidget.AnyWidget):
 
     @traitlets.observe("_params")
     def change_params(self, change):
-        new_params = dict()
+        new_params = {}
         for param_name, param_dict in change.new.items():
-            new_params[param_name] = Param(
-                name=param_name, **param_dict
-            )
+            new_params[param_name] = Param(name=param_name, **param_dict)
         self.params = new_params
