@@ -30,16 +30,18 @@ class SelectionParam:
             # Transpose values e.g.
             #  from [{"a": 1, "b": "A"}, {"a": 2, "b": "B"}]
             #    to  {"a": [1, 2], "b": ["A", "B"]}
-            value = {}
+            selection_value: Union[dict, list] = {}
             for point in points:
                 for k, v in point.items():
                     value.setdefault(k, []).append(v)
 
             # _vgsid_ is one-based. subtract 1 to be zero-indexed
             if list(value.keys()) == ["_vgsid_"]:
-                value = [i - 1 for i in value["_vgsid_"]]
+                selection_value = [i - 1 for i in value["_vgsid_"]]
+        else:
+            selection_value = value
 
-        return SelectionParam(name=name, value=value, _store=store)
+        return SelectionParam(name=name, value=selection_value, _store=store)
 
 
 class ChartWidget(anywidget.AnyWidget):
@@ -63,7 +65,7 @@ class ChartWidget(anywidget.AnyWidget):
 
     @traitlets.observe("chart")
     def change_chart(self, change):
-        new_chart: TopLevelSpec = change.new
+        new_chart = change.new
 
         params = getattr(new_chart, "params", [])
         selection_watches = []
