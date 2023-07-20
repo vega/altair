@@ -4,7 +4,8 @@
   "description": "Altair Chart Widget",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --format=esm --outfile=../altair/widget/static/index.js --minify"
+    "build": "esbuild src/index.js --bundle --format=esm --outfile=../altair/widget/static/index.js --minify",
+    "watch": "esbuild src/index.js --bundle --format=esm --watch --outfile=../altair/widget/static/index.js --minify"
   },
   "author": "Altair Maintainers",
   "license": "BSD-3-Clause",
