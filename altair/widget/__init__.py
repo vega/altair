@@ -2,7 +2,7 @@ import anywidget  # type: ignore
 import traitlets
 import pathlib
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import altair as alt
 from altair.utils._vegafusion_data import using_vegafusion
@@ -20,8 +20,26 @@ class Param:
 @dataclass
 class SelectionParam:
     name: str
-    value: Dict[str, Any]
-    store: List[Dict[str, Any]]
+    value: Union[List[int], Dict[str, list]]
+    _store: List[Dict[str, Any]]
+
+    @classmethod
+    def from_vega(cls, name: str, value: dict, store: List[Dict[str, Any]]):
+        points = value.get("vlPoint", {}).get("or", None)
+        if points is not None:
+            # Transpose values e.g.
+            #  from [{"a": 1, "b": "A"}, {"a": 2, "b": "B"}]
+            #    to  {"a": [1, 2], "b": ["A", "B"]}
+            value = {}
+            for point in points:
+                for k, v in point.items():
+                    value.setdefault(k, []).append(v)
+
+            # _vgsid_ is one-based. subtract 1 to be zero-indexed
+            if list(value.keys()) == ["_vgsid_"]:
+                value = [i - 1 for i in value["_vgsid_"]]
+
+        return SelectionParam(name=name, value=value, _store=store)
 
 
 class ChartWidget(anywidget.AnyWidget):
@@ -71,7 +89,7 @@ class ChartWidget(anywidget.AnyWidget):
     def change_selections(self, change):
         new_selections = {}
         for selection_name, selection_dict in change.new.items():
-            new_selections[selection_name] = SelectionParam(
+            new_selections[selection_name] = SelectionParam.from_vega(
                 name=selection_name, **selection_dict
             )
         self.selections = new_selections
