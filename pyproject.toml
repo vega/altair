@@ -94,6 +94,7 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = ["/altair"]
+artifact = "altair/widget/static/index.js"
 
 [tool.hatch.envs.default]
 features = ["dev"]
@@ -241,3 +242,14 @@ module = [
     "altair.vegalite.v5.schema.*"
 ]
 ignore_errors = true
+
+[tool.hatch.build.hooks.jupyter-builder]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = ["altair/widget/static/index.js"]
+skip-if-exists = ["altair/widget/static/index.js"]
+dependencies = ["hatch-jupyter-builder>=0.5.0"]
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+npm = "npm"
+build_cmd = "build"
+path = "widget"

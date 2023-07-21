@@ -76,3 +76,4 @@ Untitled*.ipynb
 # hatch, doc generation
 data.json
 /widget/node_modules/
+/altair/widget/static/index.js
