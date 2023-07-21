@@ -15,6 +15,7 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
+from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 from altair.utils.schemapi import SchemaBase
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
@@ -437,7 +438,7 @@ def sanitize_arrow_table(pa_table):
 
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
-    data: Optional[_DataFrameLike] = None,
+    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
@@ -621,7 +622,7 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Column,
+    column: Union[Column, PandasColumn],
 ) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
