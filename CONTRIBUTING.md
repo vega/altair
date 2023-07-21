@@ -39,6 +39,11 @@ python -m pip install -e .[dev]
 '[dev]' indicates that pip should also install the development requirements
 which you can find in `pyproject.toml` (`[project.optional-dependencies]/dev`)
 
+### Install Node.js and npm
+
+Building Altair requires `npm`, which is distributed as part of Node.js. See the 
+official [Node.js installation instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
 ### Creating a Branch
 
 Once your local environment is up-to-date, you can create a new git branch
