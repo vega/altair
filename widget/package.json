@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "esbuild src/index.js --bundle --format=esm --outfile=../altair/widget/static/index.js --minify",
-    "watch": "esbuild src/index.js --bundle --format=esm --watch --outfile=../altair/widget/static/index.js --minify"
+    "watch": "npm run build -- --sourcemap=inline --watch"
   },
   "author": "Altair Maintainers",
   "license": "BSD-3-Clause",
