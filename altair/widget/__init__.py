@@ -18,30 +18,24 @@ class Param:
 
 
 @dataclass
-class SelectionParam:
+class IndexSelectionParam:
     name: str
-    value: Union[List[int], Dict[str, list]]
+    value: List[int]
     _store: List[Dict[str, Any]]
 
-    @classmethod
-    def from_vega(cls, name: str, value: dict, store: List[Dict[str, Any]]):
-        points = value.get("vlPoint", {}).get("or", None)
-        if points is not None:
-            # Transpose values e.g.
-            #  from [{"a": 1, "b": "A"}, {"a": 2, "b": "B"}]
-            #    to  {"a": [1, 2], "b": ["A", "B"]}
-            selection_value: Union[dict, list] = {}
-            for point in points:
-                for k, v in point.items():
-                    value.setdefault(k, []).append(v)
 
-            # _vgsid_ is one-based. subtract 1 to be zero-indexed
-            if list(value.keys()) == ["_vgsid_"]:
-                selection_value = [i - 1 for i in value["_vgsid_"]]
-        else:
-            selection_value = value
+@dataclass
+class PointSelectionParam:
+    name: str
+    value: List[Dict[str, Any]]
+    _store: List[Dict[str, Any]]
 
-        return SelectionParam(name=name, value=selection_value, _store=store)
+
+@dataclass
+class IntervalSelectionParam:
+    name: str
+    value: Dict[str, list]
+    _store: List[Dict[str, Any]]
 
 
 class ChartWidget(anywidget.AnyWidget):
@@ -57,6 +51,7 @@ class ChartWidget(anywidget.AnyWidget):
     selections = traitlets.Dict()
     params = traitlets.Dict()
 
+    _selection_types = traitlets.Dict()
     _selection_watches = traitlets.List().tag(sync=True)
     _selections = traitlets.Dict().tag(sync=True)
 
@@ -69,11 +64,28 @@ class ChartWidget(anywidget.AnyWidget):
 
         params = getattr(new_chart, "params", [])
         selection_watches = []
+        selection_types = {}
         param_watches = []
         if params is not alt.Undefined:
             for param in new_chart.params:
                 select = getattr(param, "select", alt.Undefined)
+
                 if select != alt.Undefined:
+                    if not isinstance(select, dict):
+                        select = select.to_dict()
+
+                    select_type = select["type"]
+                    if select_type == "point":
+                        if not select.get("fields", None) and not select.get("encodings", None):
+                            # Point selection with no associated fields or encodings specified.
+                            # This is an index-based selection
+                            selection_types[param.name] = "index"
+                        else:
+                            selection_types[param.name] = "point"
+                    elif select_type == "interval":
+                        selection_types[param.name] = "interval"
+                    else:
+                        raise ValueError(f"Unexpected selection type {select.type}")
                     selection_watches.append(param.name)
                 else:
                     param_watches.append(param.name)
@@ -84,6 +96,7 @@ class ChartWidget(anywidget.AnyWidget):
                 self.spec = new_chart.to_dict(format="vega")
             else:
                 self.spec = new_chart.to_dict()
+            self._selection_types = selection_types
             self._selection_watches = selection_watches
             self._param_watches = param_watches
 
@@ -91,9 +104,25 @@ class ChartWidget(anywidget.AnyWidget):
     def _on_change_selections(self, change):
         new_selections = {}
         for selection_name, selection_dict in change.new.items():
-            new_selections[selection_name] = SelectionParam.from_vega(
-                name=selection_name, **selection_dict
-            )
+            value = selection_dict["value"]
+            store = selection_dict["store"]
+            selection_type = self._selection_types[selection_name]
+            if selection_type == "index":
+                points = value.get("vlPoint", {}).get("or", [])
+                indices = [p["_vgsid_"] - 1 for p in points]
+                new_selections[selection_name] = IndexSelectionParam(
+                    name=selection_name, value=indices, _store=store
+                )
+            elif selection_type == "point":
+                points = value.get("vlPoint", {}).get("or", [])
+                new_selections[selection_name] = PointSelectionParam(
+                    name=selection_name, value=points, _store=store
+                )
+            elif selection_type == "interval":
+                new_selections[selection_name] = IntervalSelectionParam(
+                    name=selection_name, value=value, _store=store
+                )
+
         self.selections = new_selections
 
     @traitlets.observe("_params")
