@@ -8,7 +8,10 @@ import altair as alt
 from altair.utils.core import parse_shorthand, update_nested, infer_encoding_types
 from altair.utils.core import infer_dtype
 
-FAKE_CHANNELS_MODULE = '''
+json_schema_specification = alt.load_schema()["$schema"]
+json_schema_dict_str = f'{{"$schema": "{json_schema_specification}"}}'
+
+FAKE_CHANNELS_MODULE = f'''
 """Fake channels module for utility tests."""
 
 from altair.utils import schemapi
@@ -27,32 +30,32 @@ class ValueChannel:
 
 
 class X(FieldChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "x"
 
 
 class XValue(ValueChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "x"
 
 
 class Y(FieldChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "y"
 
 
 class YValue(ValueChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "y"
 
 
 class StrokeWidth(FieldChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "strokeWidth"
 
 
 class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
-    _schema = {}
+    _schema = {json_schema_dict_str}
     _encoding_name = "strokeWidth"
 '''
 
