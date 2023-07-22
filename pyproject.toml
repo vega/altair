@@ -94,7 +94,7 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = ["/altair"]
-artifact = "altair/widget/static/index.js"
+artifacts = "altair/widget/static/index.js"
 
 [tool.hatch.envs.default]
 features = ["dev"]
