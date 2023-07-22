@@ -47,42 +47,46 @@ class ChartWidget(anywidget.AnyWidget):
     }
     """
 
+    # Public traitlets
     chart = traitlets.Instance(TopLevelSpec)
     spec = traitlets.Dict().tag(sync=True)
     selections = traitlets.Dict()
     params = traitlets.Dict()
-
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
 
+    # Internal selection traitlets
     _selection_types = traitlets.Dict()
     _selection_watches = traitlets.List().tag(sync=True)
     _selections = traitlets.Dict().tag(sync=True)
 
+    # Internal param traitlets
     _param_watches = traitlets.List().tag(sync=True)
     _params = traitlets.Dict().tag(sync=True)
+
+    def __init__(self, chart, debounce_wait=10, **kwargs: Any):
+        super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
 
     def set_params(self, *args: Param):
         updates = []
         for param in args:
             if param.name not in self.params:
                 raise ValueError(f"No param named {param.name}")
-
+            clean_value = param.value if param.value != alt.Undefined else None
             updates.append({
                 "name": param.name,
-                "namespace": "signal",
-                "scope": [],  # Assume params are top-level for now
-                "value": param.value,
+                "value": clean_value,
             })
 
         # Update params directly so that they are set immediately
         # after this function returns
         new_params = dict(self._params)
         for param in args:
-            new_params[param.name] = {"value": param.value}
+            clean_value = param.value if param.value != alt.Undefined else None
+            new_params[param.name] = {"value": clean_value}
         self._params = new_params
 
         self.send({
-            "type": "update",
+            "type": "setParams",
             "updates": updates
         })
 
@@ -121,7 +125,8 @@ class ChartWidget(anywidget.AnyWidget):
                     initial_selections[param.name] = {"value": None, "store": []}
                 else:
                     param_watches.append(param.name)
-                    initial_params[param.name] = {"value": param.value}
+                    clean_value = param.value if param.value != alt.Undefined else None
+                    initial_params[param.name] = {"value": clean_value}
 
         # Update properties all together
         with self.hold_sync():
