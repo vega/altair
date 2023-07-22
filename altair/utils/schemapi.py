@@ -19,6 +19,7 @@ from typing import (
 )
 from itertools import zip_longest
 from importlib.metadata import version as importlib_version
+from typing import Final
 
 import jsonschema
 import jsonschema.exceptions
@@ -31,6 +32,11 @@ from altair import vegalite
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors = Dict[str, ValidationErrorList]
+
+# This URI is arbitrary and could be anything else. It just cannot be an empty
+# string as we need to reference the schema registered in
+# the referencing.Registry
+_VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -123,41 +129,8 @@ def _get_errors_from_spec(
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
     if _use_referencing_library():
-        # Referencing is a dependency of newer jsonschema versions, starting with the
-        # version that is specified in _use_referencing_library and we therefore
-        # can expect that it is installed if the function returns True.
-        import referencing
-
-        # Create a copy so that $ref is not modified in the original schema in case
-        # that it would still reference a dictionary which might be attached to
-        # an Altair class _schema attribute
-        schema = copy.deepcopy(schema)
-
-        # This URI is arbitrary and could be anything else. It just cannot be an empty
-        # string as we need to reference the schema registered in the Registry
-        rooturi = "urn:vega-lite-schema"
-
-        def _prepare_refs(d: dict) -> dict:
-            for key, value in d.items():
-                if key == "$ref":
-                    d[key] = rooturi + d[key]
-                else:
-                    if isinstance(value, dict):
-                        d[key] = _prepare_refs(value)
-                    elif isinstance(value, list):
-                        values = []
-                        for v in value:
-                            if isinstance(v, dict):
-                                v = _prepare_refs(v)
-                            values.append(v)
-                        d[key] = values
-            return d
-
-        schema = _prepare_refs(schema)
-
-        validator_kwargs["registry"] = referencing.Registry().with_contents(
-            [(rooturi, rootschema or schema)]
-        )
+        schema = _prepare_references_in_schema(schema)
+        validator_kwargs["registry"] = _get_referencing_registry(rootschema or schema)
 
     else:
         # No resolver is necessary if the schema is already the full schema
@@ -177,6 +150,41 @@ def _use_referencing_library():
     # In version 4.18.0, the jsonschema package deprecated RefResolver in
     # favor of the referencing library.
     return Version(jsonschema_version_str) >= Version("4.18")
+
+
+def _prepare_references_in_schema(schema: dict) -> dict:
+    # Create a copy so that $ref is not modified in the original schema in case
+    # that it would still reference a dictionary which might be attached to
+    # an Altair class _schema attribute
+    schema = copy.deepcopy(schema)
+
+    def _prepare_refs(d: dict) -> dict:
+        for key, value in d.items():
+            if key == "$ref":
+                d[key] = _VEGA_LITE_ROOT_URI + d[key]
+            else:
+                if isinstance(value, dict):
+                    d[key] = _prepare_refs(value)
+                elif isinstance(value, list):
+                    values = []
+                    for v in value:
+                        if isinstance(v, dict):
+                            v = _prepare_refs(v)
+                        values.append(v)
+                    d[key] = values
+        return d
+
+    schema = _prepare_refs(schema)
+    return schema
+
+
+def _get_referencing_registry(rootschema):
+    # Referencing is a dependency of newer jsonschema versions, starting with the
+    # version that is specified in _use_referencing_library and we therefore
+    # can expect that it is installed if the function returns True.
+    import referencing
+
+    return referencing.Registry().with_contents([(_VEGA_LITE_ROOT_URI, rootschema)])
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
@@ -399,11 +407,24 @@ def _todict(obj, context):
 
 
 def _resolve_references(schema, root=None):
-    """Resolve schema references."""
-    resolver = jsonschema.RefResolver.from_schema(root or schema)
-    while "$ref" in schema:
-        with resolver.resolving(schema["$ref"]) as resolved:
-            schema = resolved
+    """Resolve schema references until there is no $ref anymore
+    in the top-level of the dictionary.
+    """
+    if _use_referencing_library():
+        registry = _get_referencing_registry(root or schema)
+        # Using a different variable name to show that this is not the
+        # jsonschema.RefResolver but instead a Resolver from the referencing
+        # library
+        referencing_resolver = registry.resolver()
+        while "$ref" in schema:
+            schema = referencing_resolver.lookup(
+                _VEGA_LITE_ROOT_URI + schema["$ref"]
+            ).contents
+    else:
+        resolver = jsonschema.RefResolver.from_schema(root or schema)
+        while "$ref" in schema:
+            with resolver.resolving(schema["$ref"]) as resolved:
+                schema = resolved
     return schema
 
 
