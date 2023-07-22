@@ -64,7 +64,7 @@ class ChartWidget(anywidget.AnyWidget):
     _params = traitlets.Dict().tag(sync=True)
 
     @traitlets.observe("chart")
-    def change_chart(self, change):
+    def _on_change_chart(self, change):
         new_chart = change.new
 
         params = getattr(new_chart, "params", [])
@@ -88,7 +88,7 @@ class ChartWidget(anywidget.AnyWidget):
             self._param_watches = param_watches
 
     @traitlets.observe("_selections")
-    def change_selections(self, change):
+    def _on_change_selections(self, change):
         new_selections = {}
         for selection_name, selection_dict in change.new.items():
             new_selections[selection_name] = SelectionParam.from_vega(
@@ -97,7 +97,7 @@ class ChartWidget(anywidget.AnyWidget):
         self.selections = new_selections
 
     @traitlets.observe("_params")
-    def change_params(self, change):
+    def _on_change_params(self, change):
         new_params = {}
         for param_name, param_dict in change.new.items():
             new_params[param_name] = Param(name=param_name, **param_dict)
