@@ -1,5 +1,6 @@
 import collections
 import contextlib
+import copy
 import inspect
 import json
 import textwrap
@@ -15,12 +16,14 @@ from typing import (
     Type,
 )
 from itertools import zip_longest
+from importlib.metadata import version as importlib_version
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
 import pandas as pd
+from packaging.version import Version
 
 from altair import vegalite
 
@@ -111,20 +114,67 @@ def _get_errors_from_spec(
     # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
     # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
     # it is not a valid URI reference due to the characters such as '<'.
-    if rootschema is not None:
-        validator_cls = jsonschema.validators.validator_for(rootschema)
-        resolver = jsonschema.RefResolver.from_schema(rootschema)
-    else:
-        validator_cls = jsonschema.validators.validator_for(schema)
-        # No resolver is necessary if the schema is already the full schema
-        resolver = None
 
-    validator_kwargs = {"resolver": resolver}
+    validator_cls = jsonschema.validators.validator_for(rootschema or schema)
+    validator_kwargs: Dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
+
+    if _use_referencing_library():
+        # Referencing is a dependency of newer jsonschema versions, starting with the
+        # version that is specified in _use_referencing_library and we therefore
+        # can expect that it is installed if the function returns True.
+        import referencing
+
+        # Create a copy so that $ref is not modified in the original schema in case
+        # that it would still reference a dictionary which might be attached to
+        # an Altair class _schema attribute
+        schema = copy.deepcopy(schema)
+
+        # This URI is arbitrary and could be anything else. It just cannot be an empty
+        # string as we need to reference the schema registered in the Registry
+        rooturi = "urn:vega-lite-schema"
+
+        def _prepare_refs(d: dict) -> dict:
+            for key, value in d.items():
+                if key == "$ref":
+                    d[key] = rooturi + d[key]
+                else:
+                    if isinstance(value, dict):
+                        d[key] = _prepare_refs(value)
+                    elif isinstance(value, list):
+                        values = []
+                        for v in value:
+                            if isinstance(v, dict):
+                                v = _prepare_refs(v)
+                            values.append(v)
+                        d[key] = values
+            return d
+
+        schema = _prepare_refs(schema)
+
+        validator_kwargs["registry"] = referencing.Registry().with_contents(
+            [(rooturi, rootschema or schema)]
+        )
+
+    else:
+        # No resolver is necessary if the schema is already the full schema
+        validator_kwargs["resolver"] = (
+            jsonschema.RefResolver.from_schema(rootschema)
+            if rootschema is not None
+            else None
+        )
+
     validator = validator_cls(schema, **validator_kwargs)
     errors = list(validator.iter_errors(spec))
     return errors
+
+
+def _use_referencing_library():
+    jsonschema_version_str = importlib_version("jsonschema")
+    # In version 4.18.0, the jsonschema package deprecated RefResolver in
+    # favor of the referencing library.
+    return Version(jsonschema_version_str) >= Version("4.18")
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
