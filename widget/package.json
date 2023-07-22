@@ -10,7 +10,8 @@
   "author": "Altair Maintainers",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "vega-embed": "^6.22.1"
+    "vega-embed": "^6.22.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "esbuild": "0.18.13"

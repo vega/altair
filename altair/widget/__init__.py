@@ -11,27 +11,27 @@ from altair.vegalite.v5.schema.core import TopLevelSpec
 _here = pathlib.Path(__file__).parent
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class Param:
     name: str
     value: Any
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class IndexSelectionParam:
     name: str
     value: List[int]
     _store: List[Dict[str, Any]]
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class PointSelectionParam:
     name: str
     value: List[Dict[str, Any]]
     _store: List[Dict[str, Any]]
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class IntervalSelectionParam:
     name: str
     value: Dict[str, list]
@@ -42,6 +42,7 @@ class ChartWidget(anywidget.AnyWidget):
     _esm = _here / "static" / "index.js"
     _css = r"""
     .vega-embed {
+        /* Make sure action menu isn't cut off */
         overflow: visible;
     }
     """
@@ -51,12 +52,39 @@ class ChartWidget(anywidget.AnyWidget):
     selections = traitlets.Dict()
     params = traitlets.Dict()
 
+    debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
+
     _selection_types = traitlets.Dict()
     _selection_watches = traitlets.List().tag(sync=True)
     _selections = traitlets.Dict().tag(sync=True)
 
     _param_watches = traitlets.List().tag(sync=True)
     _params = traitlets.Dict().tag(sync=True)
+
+    def set_params(self, *args: Param):
+        updates = []
+        for param in args:
+            if param.name not in self.params:
+                raise ValueError(f"No param named {param.name}")
+
+            updates.append({
+                "name": param.name,
+                "namespace": "signal",
+                "scope": [],  # Assume params are top-level for now
+                "value": param.value,
+            })
+
+        # Update params directly so that they are set immediately
+        # after this function returns
+        new_params = dict(self._params)
+        for param in args:
+            new_params[param.name] = {"value": param.value}
+        self._params = new_params
+
+        self.send({
+            "type": "update",
+            "updates": updates
+        })
 
     @traitlets.observe("chart")
     def _on_change_chart(self, change):
@@ -66,6 +94,9 @@ class ChartWidget(anywidget.AnyWidget):
         selection_watches = []
         selection_types = {}
         param_watches = []
+        initial_params = dict()
+        initial_selections = dict()
+
         if params is not alt.Undefined:
             for param in new_chart.params:
                 select = getattr(param, "select", alt.Undefined)
@@ -87,8 +118,10 @@ class ChartWidget(anywidget.AnyWidget):
                     else:
                         raise ValueError(f"Unexpected selection type {select.type}")
                     selection_watches.append(param.name)
+                    initial_selections[param.name] = {"value": None, "store": []}
                 else:
                     param_watches.append(param.name)
+                    initial_params[param.name] = {"value": param.value}
 
         # Update properties all together
         with self.hold_sync():
@@ -98,7 +131,10 @@ class ChartWidget(anywidget.AnyWidget):
                 self.spec = new_chart.to_dict()
             self._selection_types = selection_types
             self._selection_watches = selection_watches
+            self._selections = initial_selections
+
             self._param_watches = param_watches
+            self._params = initial_params
 
     @traitlets.observe("_selections")
     def _on_change_selections(self, change):
@@ -108,17 +144,25 @@ class ChartWidget(anywidget.AnyWidget):
             store = selection_dict["store"]
             selection_type = self._selection_types[selection_name]
             if selection_type == "index":
-                points = value.get("vlPoint", {}).get("or", [])
-                indices = [p["_vgsid_"] - 1 for p in points]
+                if value is None:
+                    indices = []
+                else:
+                    points = value.get("vlPoint", {}).get("or", [])
+                    indices = [p["_vgsid_"] - 1 for p in points]
                 new_selections[selection_name] = IndexSelectionParam(
                     name=selection_name, value=indices, _store=store
                 )
             elif selection_type == "point":
-                points = value.get("vlPoint", {}).get("or", [])
+                if value is None:
+                    points = []
+                else:
+                    points = value.get("vlPoint", {}).get("or", [])
                 new_selections[selection_name] = PointSelectionParam(
                     name=selection_name, value=points, _store=store
                 )
             elif selection_type == "interval":
+                if value is None:
+                    value = {}
                 new_selections[selection_name] = IntervalSelectionParam(
                     name=selection_name, value=value, _store=store
                 )
