@@ -138,8 +138,10 @@ same contribution procedure outlined above.
 
 Some additional notes:
 
-- all examples should be in their own file in the `altair/examples` directory, and
-  the format and style of new contributions should generally match that of existing examples.
+- all examples should be in their own file in the  `tests/examples_arguments_syntax` 
+  and `tests/examples_methods_syntax` directory, and each example should have a
+  corresponding `arguments_syntax` and `methods_syntax` implementation.
+- The format and style of new contributions should generally match that of existing examples.
 - The file docstring will be rendered into HTML via
   [reStructuredText](http://docutils.sourceforge.net/rst.html), so use that
   format for any hyperlinks or text styling. In particular, be sure you include
