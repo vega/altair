@@ -219,16 +219,13 @@ values = pd.DataFrame(
     ]
 )
 
-y_axis = alt.Y(
-    "name",
-    axis=alt.Axis(
-        title=None,
-        offset=50,
-        labelFontWeight="bold",
-        ticks=False,
-        grid=True,
-        domain=False,
-    ),
+y_axis = alt.Y("name").axis(
+    title=None,
+    offset=50,
+    labelFontWeight="bold",
+    ticks=False,
+    grid=True,
+    domain=False,
 )
 
 base = alt.Chart(
@@ -246,23 +243,17 @@ bubbles = (
     .encode(
         alt.X(
             "value:Q",
-            title=None,
-        ),
+        ).title(None),
         y_axis,
-        alt.Size(
-            "count()",
-            legend=alt.Legend(offset=75, title="Number of ratings"),
-        ),
-        tooltip=[alt.Tooltip("count()", title="Number of ratings")],
+        alt.Size("count()").legend(offset=75, title="Number of ratings"),
+        tooltip=[alt.Tooltip("count()").title("Number of ratings")],
     )
 )
 
 ticks = base.mark_tick(color="black").encode(
-    alt.X(
-        "median:Q",
-        axis=alt.Axis(grid=False, values=[1, 2, 3, 4, 5], format=".0f"),
-        scale=alt.Scale(domain=[0, 6]),
-    )
+    alt.X("median:Q")
+    .axis(grid=False, values=[1, 2, 3, 4, 5], format=".0f")
+    .scale(domain=[0, 6]),
 )
 
 
