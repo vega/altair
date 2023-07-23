@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
-        jsonschema-version: ["3.0", "4.17"]
+        jsonschema-version: ["3.0", "latest"]
     name: py ${{ matrix.python-version }} js ${{ matrix.jsonschema-version }}
     steps:
       - uses: actions/checkout@v3
@@ -24,10 +24,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jsonschema==${{ matrix.jsonschema-version }}
           pip install .[dev]
           # pip install "selenium<4.3.0"
           # pip install altair_saver
+      - name: Install specific jsonschema
+        # Only have to execute this if we don't want the latest jsonschema version
+        if: ${{ matrix.jsonschema-version }}!="latest"
+        run: |
+          pip install jsonschema==${{ matrix.jsonschema-version }}
       - name: Test that schema generation has no effect
         run: |
           python tools/generate_schema_wrapper.py
