@@ -28,6 +28,9 @@ import numpy as np
 import pandas as pd
 from packaging.version import Version
 
+# This leads to circular imports with the vegalite module. Currently, this works
+# but be aware that when you access it in this script, the vegalite module might
+# not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
