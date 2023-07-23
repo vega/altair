@@ -178,7 +178,7 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
     schema = copy.deepcopy(schema)
 
     def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
-        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This
+        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This function
         recursively iterates through the whole dictionary."""
         for key, value in d.items():
             if key == "$ref":
@@ -191,20 +191,22 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
                 if isinstance(value, dict):
                     d[key] = _prepare_refs(value)
                 elif isinstance(value, list):
-                    values = []
+                    prepared_values = []
                     for v in value:
                         if isinstance(v, dict):
                             v = _prepare_refs(v)
-                        values.append(v)
-                    d[key] = values
+                        prepared_values.append(v)
+                    d[key] = prepared_values
         return d
 
     schema = _prepare_refs(schema)
     return schema
 
 
+# We do not annotate the return value here as the referencing library is not always
+# available and this function is only executed in those cases.
 def _get_referencing_registry(
-    rootschema: dict, json_schema_draft_url: Optional[str] = None
+    rootschema: Dict[str, Any], json_schema_draft_url: Optional[str] = None
 ):
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
@@ -441,12 +443,14 @@ def _todict(obj, context):
         return obj
 
 
-def _resolve_references(schema, root=None):
+def _resolve_references(
+    schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """Resolve schema references until there is no $ref anymore
     in the top-level of the dictionary.
     """
     if _use_referencing_library():
-        registry = _get_referencing_registry(root or schema)
+        registry = _get_referencing_registry(rootschema or schema)
         # Using a different variable name to show that this is not the
         # jsonschema.RefResolver but instead a Resolver from the referencing
         # library
@@ -456,7 +460,7 @@ def _resolve_references(schema, root=None):
                 _VEGA_LITE_ROOT_URI + schema["$ref"]
             ).contents
     else:
-        resolver = jsonschema.RefResolver.from_schema(root or schema)
+        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
         while "$ref" in schema:
             with resolver.resolving(schema["$ref"]) as resolved:
                 schema = resolved
@@ -1053,7 +1057,7 @@ class SchemaBase:
         """Resolve references in the context of this object's schema or root schema."""
         return _resolve_references(
             schema=(schema or cls._schema),
-            root=(cls._rootschema or cls._schema or schema),
+            rootschema=(cls._rootschema or cls._schema or schema),
         )
 
     @classmethod
