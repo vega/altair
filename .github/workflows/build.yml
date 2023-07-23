@@ -29,7 +29,7 @@ jobs:
           # pip install altair_saver
       - name: Install specific jsonschema
         # Only have to execute this if we don't want the latest jsonschema version
-        if: ${{ matrix.jsonschema-version }}!='latest'
+        if: ${{ matrix.jsonschema-version != 'latest' }}
         run: |
           pip install jsonschema==${{ matrix.jsonschema-version }}
       - name: Test that schema generation has no effect
