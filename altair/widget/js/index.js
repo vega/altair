@@ -1,5 +1,5 @@
 import embed from "https://cdn.jsdelivr.net/npm/vega-embed@6/+esm";
-import { debounce } from "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.js"
+import debounce from 'https://cdn.jsdelivr.net/npm/just-debounce-it@3.2.0/+esm'
 
 export async function render({ model, el }) {
     let finalize;
@@ -15,7 +15,6 @@ export async function render({ model, el }) {
 
         // Debounce config
         const wait = model.get("debounce_wait") ?? 10;
-        const maxWait = wait;
 
         const selectionWatches = model.get("_selection_watches");
         const initialSelections = {};
@@ -28,7 +27,7 @@ export async function render({ model, el }) {
                 model.set("_selections", newSelections);
                 model.save_changes();
             };
-            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, {maxWait}));
+            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, true));
 
             initialSelections[selectionName] = {value: {}, store: []}
         }
@@ -43,7 +42,7 @@ export async function render({ model, el }) {
                 model.set("params", newParams);
                 model.save_changes();
             };
-            api.view.addSignalListener(paramName, debounce(paramHandler, wait, {maxWait}));
+            api.view.addSignalListener(paramName, debounce(paramHandler, wait, true));
 
             initialParams[paramName] = api.view.signal(paramName) ?? null
         }
