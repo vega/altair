@@ -114,8 +114,8 @@ your idea has not already been implemented.
 
 Once you have an example you would like to add there are a few guide lines to follow.
 Every example should:
-- have a `arguments_syntax` and `methods_syntax` implementation. They need to be 
-  be saved as a stand alone script in the `tests/examples_arguments_syntax` 
+- have a `arguments_syntax` and `methods_syntax` implementation. Each implementation 
+  must be saved as a stand alone script in the `tests/examples_arguments_syntax` 
   and `tests/examples_methods_syntax` directories.
 - have a descriptive docstring, which will eventually be extracted for the
   documentation website.
