@@ -1,6 +1,6 @@
 """
 Distributions and Medians of Likert Scale Ratings
----------------------------
+-------------------------------------------------
 Distributions and Medians of Likert Scale Ratings. (Figure 9 from @jhoffswell and @zcliu’s ‘Interactive Repair of Tables Extracted from PDF Documents on Mobile Devices’ – http://idl.cs.washington.edu/files/2019-InteractiveTableRepair-CHI.pdf).
 
 Adapted from `Distributions and Medians of Likert Scale Ratings <https://vega.github.io/vega-lite/examples/layer_likert.html>`_.
