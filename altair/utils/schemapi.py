@@ -183,8 +183,17 @@ def _get_referencing_registry(rootschema):
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
     import referencing
+    import referencing.jsonschema
 
-    return referencing.Registry().with_contents([(_VEGA_LITE_ROOT_URI, rootschema)])
+    # Parse jsonschema specification from the full Vega-Lite schema as the passed
+    # in schema in this function might not contain a $schema key.
+    specification = referencing.jsonschema.specification_with(
+        vegalite.VegaLiteSchema._rootschema["$schema"]
+    )
+    resource = referencing.Resource(contents=rootschema, specification=specification)
+    return referencing.Registry().with_resource(
+        uri=_VEGA_LITE_ROOT_URI, resource=resource
+    )
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
