@@ -35,8 +35,17 @@ GroupedValidationErrors = Dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
-# the referencing.Registry
+# the referencing.Registry.
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
+
+# Ideally, jsonschema specification would be parsed from the current Vega-Lite
+# schema instead of being hardcoded here as a default value.
+# However, due to circular imports between this module and the altair.vegalite
+# modules, this information is not yet available at this point as altair.vegalite
+# is only partially loaded. The draft version which is used is unlikely to
+# change often so it's ok to keep this. There is also a test which validates
+# that this value is always the same as in the Vega-Lite schema.
+_DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#"
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -123,14 +132,19 @@ def _get_errors_from_spec(
     # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
     # it is not a valid URI reference due to the characters such as '<'.
 
-    validator_cls = jsonschema.validators.validator_for(rootschema or schema)
+    json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
+    validator_cls = jsonschema.validators.validator_for(
+        {"$schema": json_schema_draft_url}
+    )
     validator_kwargs: Dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
     if _use_referencing_library():
         schema = _prepare_references_in_schema(schema)
-        validator_kwargs["registry"] = _get_referencing_registry(rootschema or schema)
+        validator_kwargs["registry"] = _get_referencing_registry(
+            rootschema or schema, json_schema_draft_url
+        )
 
     else:
         # No resolver is necessary if the schema is already the full schema
@@ -145,24 +159,34 @@ def _get_errors_from_spec(
     return errors
 
 
-def _use_referencing_library():
+def _get_json_schema_draft_url(schema: dict) -> str:
+    return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
+
+
+def _use_referencing_library() -> bool:
+    """In version 4.18.0, the jsonschema package deprecated RefResolver in
+    favor of the referencing library."""
     jsonschema_version_str = importlib_version("jsonschema")
-    # In version 4.18.0, the jsonschema package deprecated RefResolver in
-    # favor of the referencing library.
     return Version(jsonschema_version_str) >= Version("4.18")
 
 
-def _prepare_references_in_schema(schema: dict) -> dict:
+def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
     # Create a copy so that $ref is not modified in the original schema in case
     # that it would still reference a dictionary which might be attached to
     # an Altair class _schema attribute
     schema = copy.deepcopy(schema)
 
-    def _prepare_refs(d: dict) -> dict:
+    def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
+        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This
+        recursively iterates through the whole dictionary."""
         for key, value in d.items():
             if key == "$ref":
                 d[key] = _VEGA_LITE_ROOT_URI + d[key]
             else:
+                # $ref values can only be nested in dictionaries or lists
+                # as the passed in `d` dictionary comes from the Vega-Lite json schema
+                # and in json we only have arrays (-> lists in Python) and objects
+                # (-> dictionaries in Python) which we need to iterate through.
                 if isinstance(value, dict):
                     d[key] = _prepare_refs(value)
                 elif isinstance(value, list):
@@ -178,19 +202,20 @@ def _prepare_references_in_schema(schema: dict) -> dict:
     return schema
 
 
-def _get_referencing_registry(rootschema):
+def _get_referencing_registry(
+    rootschema: dict, json_schema_draft_url: Optional[str] = None
+):
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
     import referencing
     import referencing.jsonschema
 
-    # Parse jsonschema specification from the full Vega-Lite schema as the passed
-    # in schema in this function might not contain a $schema key.
-    specification = referencing.jsonschema.specification_with(
-        vegalite.VegaLiteSchema._rootschema["$schema"]
-    )
-    resource = referencing.Resource(contents=rootschema, specification=specification)
+    if json_schema_draft_url is None:
+        json_schema_draft_url = _get_json_schema_draft_url(rootschema)
+
+    specification = referencing.jsonschema.specification_with(json_schema_draft_url)
+    resource = specification.create_resource(rootschema)
     return referencing.Registry().with_resource(
         uri=_VEGA_LITE_ROOT_URI, resource=resource
     )
