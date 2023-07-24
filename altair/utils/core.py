@@ -15,8 +15,10 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
+from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 from altair.utils.schemapi import SchemaBase
+from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
@@ -36,7 +38,7 @@ _P = ParamSpec("_P")
 
 
 class _DataFrameLike(Protocol):
-    def __dataframe__(self, *args, **kwargs):
+    def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
 
 
@@ -436,7 +438,7 @@ def sanitize_arrow_table(pa_table):
 
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
-    data: Optional[pd.DataFrame] = None,
+    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
@@ -516,6 +518,8 @@ def parse_shorthand(
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
+    from altair.utils.data import pyarrow_available
+
     if not shorthand:
         return {}
 
@@ -574,14 +578,29 @@ def parse_shorthand(
         attrs["type"] = "temporal"
 
     # if data is specified and type is not, infer type from data
-    if isinstance(data, pd.DataFrame) and "type" not in attrs:
-        # Remove escape sequences so that types can be inferred for columns with special characters
-        if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
-            attrs["type"] = infer_vegalite_type(data[attrs["field"].replace("\\", "")])
-            # ordered categorical dataframe columns return the type and sort order as a tuple
-            if isinstance(attrs["type"], tuple):
-                attrs["sort"] = attrs["type"][1]
-                attrs["type"] = attrs["type"][0]
+    if "type" not in attrs:
+        if pyarrow_available() and data is not None and hasattr(data, "__dataframe__"):
+            dfi = data.__dataframe__()
+            if "field" in attrs:
+                unescaped_field = attrs["field"].replace("\\", "")
+                if unescaped_field in dfi.column_names():
+                    column = dfi.get_column_by_name(unescaped_field)
+                    attrs["type"] = infer_vegalite_type_for_dfi_column(column)
+                    if isinstance(attrs["type"], tuple):
+                        attrs["sort"] = attrs["type"][1]
+                        attrs["type"] = attrs["type"][0]
+        elif isinstance(data, pd.DataFrame):
+            # Fallback if pyarrow is not installed or if pandas is older than 1.5
+            #
+            # Remove escape sequences so that types can be inferred for columns with special characters
+            if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
+                attrs["type"] = infer_vegalite_type(
+                    data[attrs["field"].replace("\\", "")]
+                )
+                # ordered categorical dataframe columns return the type and sort order as a tuple
+                if isinstance(attrs["type"], tuple):
+                    attrs["sort"] = attrs["type"][1]
+                    attrs["type"] = attrs["type"][0]
 
     # If an unescaped colon is still present, it's often due to an incorrect data type specification
     # but could also be due to using a column name with ":" in it.
@@ -600,6 +619,43 @@ def parse_shorthand(
             + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
         )
     return attrs
+
+
+def infer_vegalite_type_for_dfi_column(
+    column: Union[Column, PandasColumn],
+) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
+    from pyarrow.interchange.from_dataframe import column_to_array
+
+    try:
+        kind = column.dtype[0]
+    except NotImplementedError as e:
+        # Edge case hack:
+        # dtype access fails for pandas column with datetime64[ns, UTC] type,
+        # but all we need to know is that its temporal, so check the
+        # error message for the presence of datetime64.
+        #
+        # See https://github.com/pandas-dev/pandas/issues/54239
+        if "datetime64" in e.args[0]:
+            return "temporal"
+        raise e
+
+    if (
+        kind == DtypeKind.CATEGORICAL
+        and column.describe_categorical["is_ordered"]
+        and column.describe_categorical["categories"] is not None
+    ):
+        # Treat ordered categorical column as Vega-Lite ordinal
+        categories_column = column.describe_categorical["categories"]
+        categories_array = column_to_array(categories_column)
+        return "ordinal", categories_array.to_pylist()
+    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+        return "nominal"
+    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+        return "quantitative"
+    elif kind == DtypeKind.DATETIME:
+        return "temporal"
+    else:
+        raise ValueError(f"Unexpected DtypeKind: {kind}")
 
 
 def use_signature(Obj: Callable[_P, Any]):

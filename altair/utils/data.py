@@ -368,3 +368,11 @@ def import_pyarrow_interchange() -> ModuleType:
             "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
             "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
         ) from err
+
+
+def pyarrow_available() -> bool:
+    try:
+        import_pyarrow_interchange()
+        return True
+    except ImportError:
+        return False
