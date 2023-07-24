@@ -630,9 +630,11 @@ def infer_vegalite_type_for_dfi_column(
         kind = column.dtype[0]
     except NotImplementedError as e:
         # Edge case hack:
-        # dtype access fails for pandas column with datetime64[ns] type,
+        # dtype access fails for pandas column with datetime64[ns, UTC] type,
         # but all we need to know is that its temporal, so check the
         # error message for the presence of datetime64.
+        #
+        # See https://github.com/pandas-dev/pandas/issues/54239
         if "datetime64" in e.args[0]:
             return "temporal"
         raise e
