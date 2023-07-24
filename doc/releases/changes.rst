@@ -8,6 +8,7 @@ Version 5.1.0 (unreleased month date, year)
 
 Enhancements
 ~~~~~~~~~~~~
+ - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
 
 Bug Fixes
 ~~~~~~~~~
