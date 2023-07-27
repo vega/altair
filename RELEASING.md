@@ -4,7 +4,7 @@
 
 2. Make certain your branch is in sync with head:
  
-       git pull upstream master
+       git pull upstream main
 
 3. Do a clean doc build:
 
@@ -28,11 +28,11 @@
    - URLs in ``doc/conf.py``
    - versions in ``altair/vegalite/v5/display.py``
 
-7. Commit change and push to master:
+7. Commit change and push to main:
 
        git add . -u
        git commit -m "MAINT: bump version to 5.0.0"
-       git push upstream master
+       git push upstream main
 
 8. Tag the release:
 
@@ -69,11 +69,11 @@
        Backward-Incompatible Changes
        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-14. Commit change and push to master:
+14. Commit change and push to main:
 
         git add . -u
         git commit -m "MAINT: bump version to 5.1.0dev"
-        git push upstream master
+        git push upstream main
 
 15. Double-check that a conda-forge pull request is generated from the updated
     pip package by the conda-forge bot (may take up to ~an hour):

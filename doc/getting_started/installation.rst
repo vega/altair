@@ -27,7 +27,7 @@ Development Installation
 
 The `Altair source repository`_ is available on GitHub. Once you have cloned the
 repository and installed all the above dependencies, run the following command
-from the root of the repository to install the master version of Altair:
+from the root of the repository to install the main version of Altair:
 
 .. code-block:: bash
 
@@ -46,7 +46,7 @@ development version directly from GitHub using:
 
     pip install -e git+https://github.com/altair-viz/altair.git
 
-Please see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md>`_
+Please see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md>`_
 for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
