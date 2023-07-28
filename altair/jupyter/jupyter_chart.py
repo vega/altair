@@ -161,7 +161,6 @@ class JupyterChart(anywidget.AnyWidget):
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
-    _selection_watches = traitlets.List().tag(sync=True)
     _vl_selections = traitlets.Dict().tag(sync=True)
 
     # Internal param traitlets
@@ -249,7 +248,6 @@ class JupyterChart(anywidget.AnyWidget):
             else:
                 self.spec = new_chart.to_dict()
             self._selection_types = selection_types
-            self._selection_watches = selection_watches
             self._vl_selections = initial_vl_selections
             self._params = initial_params
 

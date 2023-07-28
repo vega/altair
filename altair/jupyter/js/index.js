@@ -16,9 +16,8 @@ export async function render({ model, el }) {
         // Debounce config
         const wait = model.get("debounce_wait") ?? 10;
 
-        const selectionWatches = model.get("_selection_watches");
         const initialSelections = {};
-        for (const selectionName of selectionWatches) {
+        for (const selectionName of Object.keys(model.get("_vl_selections"))) {
             const selectionHandler = (_, value) => {
                 const newSelections = JSON.parse(JSON.stringify(model.get("_vl_selections"))) || {};
                 const store = JSON.parse(JSON.stringify(api.view.data(`${selectionName}_store`)));
