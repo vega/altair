@@ -49,16 +49,12 @@ export async function render({ model, el }) {
 
         model.save_changes();
 
-        // Register custom message handler
-        model.on("msg:custom", msg => {
-            if (msg.type === "setParams") {
-                for (const update of msg.updates) {
-                    api.view.signal(update.name, update.value);
-                }
-                api.view.run();
-            } else {
-                console.log(`Unexpected message type ${msg.type}`)
+        // Param change callback
+        model.on('change:params', (new_params) => {
+            for (const [param, value] of Object.entries(new_params.changed.params)) {
+                api.view.signal(param, value);
             }
+            api.view.run();
         });
     }
 

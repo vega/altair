@@ -105,40 +105,6 @@ class JupyterChart(anywidget.AnyWidget):
         """
         super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
 
-    def set_params(self, **kwargs: Any):
-        """
-        Update one or more of a Chart's (non-selection) parameters.
-        The parameters that are eligible for update are stored in
-        the params property of the JupyterChart.
-
-        Parameters
-        ----------
-        kwargs
-            Parameter name and value pairs
-        """
-        updates = []
-        new_params = dict(self.params)
-        for name, value in kwargs.items():
-            if name not in self.params:
-                raise ValueError(f"No param named {name}")
-
-            updates.append(
-                {
-                    "name": name,
-                    "value": value,
-                }
-            )
-
-            new_params[name] = value
-
-        # Update params directly so that they are set immediately
-        # after this function returns (rather than waiting for round
-        # trip through front-end)
-        self.params = new_params
-
-        # Send param update message
-        self.send({"type": "setParams", "updates": updates})
-
     @traitlets.observe("chart")
     def _on_change_chart(self, change):
         """
