@@ -34,24 +34,23 @@ export async function render({ model, el }) {
         model.set("_selections", initialSelections);
 
         const initialParams = {};
-        for (const paramName of Object.keys(model.get("params"))) {
+        for (const paramName of Object.keys(model.get("_params"))) {
             const paramHandler = (_, value) => {
-                const newParams = JSON.parse(JSON.stringify(model.get("params"))) || {};
+                const newParams = JSON.parse(JSON.stringify(model.get("_params"))) || {};
                 newParams[paramName] = value;
-                model.set("params", newParams);
+                model.set("_params", newParams);
                 model.save_changes();
             };
             api.view.addSignalListener(paramName, debounce(paramHandler, wait, true));
 
             initialParams[paramName] = api.view.signal(paramName) ?? null
         }
-        model.set("params", initialParams);
-
+        model.set("_params", initialParams);
         model.save_changes();
 
         // Param change callback
-        model.on('change:params', (new_params) => {
-            for (const [param, value] of Object.entries(new_params.changed.params)) {
+        model.on('change:_params', (new_params) => {
+            for (const [param, value] of Object.entries(new_params.changed._params)) {
                 api.view.signal(param, value);
             }
             api.view.run();

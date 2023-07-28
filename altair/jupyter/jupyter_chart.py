@@ -80,7 +80,6 @@ class JupyterChart(anywidget.AnyWidget):
     chart = traitlets.Instance(TopLevelSpec)
     spec = traitlets.Dict().tag(sync=True)
     selections = traitlets.Dict()
-    params = traitlets.Dict().tag(sync=True)
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
 
     # Internal selection traitlets
@@ -89,7 +88,7 @@ class JupyterChart(anywidget.AnyWidget):
     _selections = traitlets.Dict().tag(sync=True)
 
     # Internal param traitlets
-    _param_watches = traitlets.List().tag(sync=True)
+    _params = traitlets.Dict().tag(sync=True)
 
     def __init__(self, chart: TopLevelSpec, debounce_wait: int = 10, **kwargs: Any):
         """
@@ -156,7 +155,7 @@ class JupyterChart(anywidget.AnyWidget):
             self._selection_types = selection_types
             self._selection_watches = selection_watches
             self._selections = initial_selections
-            self.params = initial_params
+            self._params = initial_params
 
     @traitlets.observe("_selections")
     def _on_change_selections(self, change):
