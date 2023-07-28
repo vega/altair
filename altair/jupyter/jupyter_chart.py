@@ -150,7 +150,6 @@ class JupyterChart(anywidget.AnyWidget):
         params = getattr(new_chart, "params", [])
         selection_watches = []
         selection_types = {}
-        param_watches = []
         initial_params = {}
         initial_selections = {}
 
@@ -179,7 +178,6 @@ class JupyterChart(anywidget.AnyWidget):
                     selection_watches.append(param.name)
                     initial_selections[param.name] = {"value": None, "store": []}
                 else:
-                    param_watches.append(param.name)
                     clean_value = param.value if param.value != alt.Undefined else None
                     initial_params[param.name] = clean_value
 
@@ -193,7 +191,6 @@ class JupyterChart(anywidget.AnyWidget):
             self._selection_watches = selection_watches
             self._selections = initial_selections
             self.params = initial_params
-            self._param_watches = param_watches
 
     @traitlets.observe("_selections")
     def _on_change_selections(self, change):

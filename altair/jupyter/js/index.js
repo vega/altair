@@ -33,9 +33,8 @@ export async function render({ model, el }) {
         }
         model.set("_selections", initialSelections);
 
-        const paramWatches = model.get("_param_watches");
         const initialParams = {};
-        for (const paramName of paramWatches) {
+        for (const paramName of Object.keys(model.get("params"))) {
             const paramHandler = (_, value) => {
                 const newParams = JSON.parse(JSON.stringify(model.get("params"))) || {};
                 newParams[paramName] = value;
