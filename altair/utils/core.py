@@ -298,6 +298,13 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
     return geo_dct
 
 
+def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
+    try:
+        return np.issubdtype(dtype, subtype)
+    except (NotImplementedError, TypeError):
+        return False
+
+
 def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     """Sanitize a DataFrame to prepare it for serialization.
 
@@ -394,10 +401,10 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif np.issubdtype(dtype, np.integer):
+        elif numpy_is_subtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
-        elif np.issubdtype(dtype, np.floating):
+        elif numpy_is_subtype(dtype, np.floating):
             # For floats, convert to Python float: np.float is not JSON serializable
             # Also convert NaN/inf values to null, as they are not JSON serializable
             col = df[col_name]
