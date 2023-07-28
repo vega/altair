@@ -1,15 +1,15 @@
 try:
     import anywidget  # noqa: F401
-    from .chart_widget import ChartWidget
+    from .jupyter_chart import JupyterChart
 except ImportError:
-    # When anywidget isn't available, create stand-in ChartWidget class
+    # When anywidget isn't available, create stand-in JupyterChart class
     # that raises an informative import error on construction. This
-    # way we can make ChartWidget available in the altair namespace
+    # way we can make JupyterChart available in the altair namespace
     # when anywidget is not installed
-    class ChartWidget:  # type: ignore
+    class JupyterChart:  # type: ignore
         def __init__(self, *args, **kwargs):
             raise ImportError(
-                "The Altair ChartWidget requires the anywidget \n"
+                "The Altair JupyterChart requires the anywidget \n"
                 "Python package which may be installed using pip with\n"
                 "    pip install anywidget\n"
                 "or using conda with\n"

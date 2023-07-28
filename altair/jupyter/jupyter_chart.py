@@ -67,7 +67,7 @@ class IntervalSelection:
     store: List[Dict[str, Any]]
 
 
-class ChartWidget(anywidget.AnyWidget):
+class JupyterChart(anywidget.AnyWidget):
     _esm = _here / "js" / "index.js"
     _css = r"""
     .vega-embed {
@@ -109,7 +109,7 @@ class ChartWidget(anywidget.AnyWidget):
         """
         Update one or more of a Chart's (non-selection) parameters.
         The parameters that are eligible for update are stored in
-        the params property of the ChartWidget.
+        the params property of the JupyterChart.
 
         Parameters
         ----------
@@ -142,7 +142,7 @@ class ChartWidget(anywidget.AnyWidget):
     @traitlets.observe("chart")
     def _on_change_chart(self, change):
         """
-        Internal callback function that updates the ChartWidget's internal
+        Internal callback function that updates the JupyterChart's internal
         state when the wrapped Chart instance changes
         """
         new_chart = change.new
@@ -198,7 +198,7 @@ class ChartWidget(anywidget.AnyWidget):
     @traitlets.observe("_selections")
     def _on_change_selections(self, change):
         """
-        Internal callback function that updates the ChartWidget's public
+        Internal callback function that updates the JupyterChart's public
         selections traitlet in response to changes that the JavaScript logic
         makes to the internal _selections traitlet.
         """

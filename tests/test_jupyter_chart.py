@@ -1,5 +1,9 @@
 import altair as alt
-from altair.widget.chart_widget import IntervalSelection, IndexSelection, PointSelection
+from altair.jupyter.jupyter_chart import (
+    IntervalSelection,
+    IndexSelection,
+    PointSelection,
+)
 from vega_datasets import data
 import pandas as pd
 import pytest
@@ -16,7 +20,7 @@ def test_chart_with_no_interactivity(transformer):
         )
 
         chart = alt.Chart(source).mark_bar().encode(x="a", y="b")
-        widget = alt.ChartWidget(chart)
+        widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
             assert widget.spec == chart.to_dict(format="vega")
@@ -45,7 +49,7 @@ def test_interval_selection_example(transformer):
             .add_params(brush)
         )
 
-        widget = alt.ChartWidget(chart)
+        widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
             assert widget.spec == chart.to_dict(format="vega")
@@ -112,7 +116,7 @@ def test_index_selection_example(transformer):
             .add_params(brush)
         )
 
-        widget = alt.ChartWidget(chart)
+        widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
             assert widget.spec == chart.to_dict(format="vega")
@@ -171,7 +175,7 @@ def test_point_selection(transformer):
             .add_params(brush)
         )
 
-        widget = alt.ChartWidget(chart)
+        widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
             assert widget.spec == chart.to_dict(format="vega")
@@ -230,7 +234,7 @@ def test_param_updates(transformer):
             .add_params(size_param)
         )
 
-        widget = alt.ChartWidget(chart)
+        widget = alt.JupyterChart(chart)
 
         # There should be one param and zero selections
         assert len(widget.selections) == 0

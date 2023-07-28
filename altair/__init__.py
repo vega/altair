@@ -53,7 +53,6 @@ __all__ = [
     "CalculateTransform",
     "Categorical",
     "Chart",
-    "ChartWidget",
     "Color",
     "ColorDatum",
     "ColorDef",
@@ -235,6 +234,7 @@ __all__ = [
     "JoinAggregateFieldDef",
     "JoinAggregateTransform",
     "JsonDataFormat",
+    "JupyterChart",
     "Key",
     "LabelOverlap",
     "LatLongDef",
@@ -570,6 +570,7 @@ __all__ = [
     "expr",
     "graticule",
     "hconcat",
+    "jupyter",
     "layer",
     "limit_rows",
     "load_ipython_extension",
@@ -599,7 +600,6 @@ __all__ = [
     "vconcat",
     "vegalite",
     "vegalite_compilers",
-    "widget",
     "with_property_setters",
 ]
 
@@ -609,7 +609,7 @@ def __dir__():
 
 
 from .vegalite import *
-from .widget import ChartWidget
+from .jupyter import JupyterChart
 
 
 def load_ipython_extension(ipython):
