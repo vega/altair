@@ -28,8 +28,8 @@ def test_chart_with_no_interactivity(transformer):
             assert widget.spec == chart.to_dict()
 
         # There should be no params or selections initialized
-        assert len(widget.selections) == 0
-        assert len(widget.params) == 0
+        assert len(widget.selections.trait_values()) == 0
+        assert len(widget.params.trait_values()) == 0
 
 
 @pytest.mark.parametrize("transformer", ["default", "vegafusion"])
@@ -57,11 +57,11 @@ def test_interval_selection_example(transformer):
             assert widget.spec == chart.to_dict()
 
         # There should be one selection and zero params
-        assert len(widget.selections) == 1
-        assert len(widget.params) == 0
+        assert len(widget.selections.trait_values()) == 1
+        assert len(widget.params.trait_values()) == 0
 
         # Check initial interval selection
-        selection = widget.selections["interval"]
+        selection = widget.selections.interval
         assert isinstance(selection, IntervalSelection)
         assert selection.value == {}
         assert selection.store == []
@@ -90,7 +90,7 @@ def test_interval_selection_example(transformer):
             }
         }
 
-        selection = widget.selections["interval"]
+        selection = widget.selections.interval
         assert isinstance(selection, IntervalSelection)
         assert selection.value == {
             "Horsepower": [40.0, 100],
@@ -124,11 +124,11 @@ def test_index_selection_example(transformer):
             assert widget.spec == chart.to_dict()
 
         # There should be one selection and zero params
-        assert len(widget.selections) == 1
-        assert len(widget.params) == 0
+        assert len(widget.selections.trait_values()) == 1
+        assert len(widget.params.trait_values()) == 0
 
         # Check initial interval selection
-        selection = widget.selections["index"]
+        selection = widget.selections.index
         assert isinstance(selection, IndexSelection)
         assert selection.value == []
         assert selection.store == []
@@ -152,7 +152,7 @@ def test_index_selection_example(transformer):
             }
         }
 
-        selection = widget.selections["index"]
+        selection = widget.selections.index
         assert isinstance(selection, IndexSelection)
         assert selection.value == [219, 329, 340]
         assert selection.store == store
@@ -183,11 +183,11 @@ def test_point_selection(transformer):
             assert widget.spec == chart.to_dict()
 
         # There should be one selection and zero params
-        assert len(widget.selections) == 1
-        assert len(widget.params) == 0
+        assert len(widget.selections.trait_values()) == 1
+        assert len(widget.params.trait_values()) == 0
 
         # Check initial interval selection
-        selection = widget.selections["point"]
+        selection = widget.selections.point
         assert isinstance(selection, PointSelection)
         assert selection.value == []
         assert selection.store == []
@@ -214,7 +214,7 @@ def test_point_selection(transformer):
             }
         }
 
-        selection = widget.selections["point"]
+        selection = widget.selections.point
         assert isinstance(selection, PointSelection)
         assert selection.value == [{"Cylinders": 4}, {"Cylinders": 5}]
         assert selection.store == store
@@ -237,12 +237,12 @@ def test_param_updates(transformer):
         widget = alt.JupyterChart(chart)
 
         # There should be one param and zero selections
-        assert len(widget.selections) == 0
-        assert len(widget.params) == 1
+        assert len(widget.selections.trait_values()) == 0
+        assert len(widget.params.trait_values()) == 1
 
         # Initial value should match what was provided
-        assert widget.params["size"] == 10
+        assert widget.params.size == 10
 
         # Update param from python
-        widget.set_params(size=50)
-        assert widget.params["size"] == 50
+        widget.params.size = 50
+        assert widget.params.size == 50
