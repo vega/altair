@@ -11,6 +11,37 @@ from altair.vegalite.v5.schema.core import TopLevelSpec
 _here = pathlib.Path(__file__).parent
 
 
+class Params(traitlets.HasTraits):
+    """
+    Traitlet class storing a JupyterChart's params
+    """
+    def __init__(self, trait_values):
+        super().__init__()
+
+        for key, value in trait_values.items():
+            if isinstance(value, int):
+                traitlet_type = traitlets.Int()
+            elif isinstance(value, float):
+                traitlet_type = traitlets.Float()
+            elif isinstance(value, str):
+                traitlet_type = traitlets.Unicode()
+            elif isinstance(value, list):
+                traitlet_type = traitlets.List()
+            elif isinstance(value, dict):
+                traitlet_type = traitlets.Dict()
+            else:
+                raise ValueError(f"Unexpected param type: {type(value)}")
+
+            # Add the new trait.
+            self.add_traits(**{key: traitlet_type})
+
+            # Set the trait's value.
+            setattr(self, key, value)
+
+    def __repr__(self):
+        return f"Params({self.trait_values()})"
+
+
 @dataclass(frozen=True, eq=True)
 class IndexSelection:
     """
@@ -102,6 +133,7 @@ class JupyterChart(anywidget.AnyWidget):
         debounce_wait: int
              Debouncing wait time in milliseconds
         """
+        self.params = Params({})
         super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
 
     @traitlets.observe("chart")
@@ -146,6 +178,15 @@ class JupyterChart(anywidget.AnyWidget):
                     clean_value = param.value if param.value != alt.Undefined else None
                     initial_params[param.name] = clean_value
 
+        self.params = Params(initial_params)
+
+        def on_param_traitlet_changed(param_change):
+            new_params = dict(self._params)
+            new_params[param_change["name"]] = param_change["new"]
+            self._params = new_params
+
+        self.params.observe(on_param_traitlet_changed)
+
         # Update properties all together
         with self.hold_sync():
             if using_vegafusion():
@@ -156,6 +197,11 @@ class JupyterChart(anywidget.AnyWidget):
             self._selection_watches = selection_watches
             self._selections = initial_selections
             self._params = initial_params
+
+    @traitlets.observe("_params")
+    def _on_change_params(self, change):
+        for param_name, value in change.new.items():
+            setattr(self.params, param_name, value)
 
     @traitlets.observe("_selections")
     def _on_change_selections(self, change):
