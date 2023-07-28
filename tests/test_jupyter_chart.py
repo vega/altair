@@ -80,7 +80,7 @@ def test_interval_selection_example(transformer):
                 ],
             }
         ]
-        widget._selections = {
+        widget._vl_selections = {
             "interval": {
                 "value": {
                     "Horsepower": [40.0, 100],
@@ -140,7 +140,7 @@ def test_index_selection_example(transformer):
             {"unit": "", "_vgsid_": 341},
         ]
 
-        widget._selections = {
+        widget._vl_selections = {
             "index": {
                 "value": {
                     "_vgsid_": "Set(220,330,341)",
@@ -204,7 +204,7 @@ def test_point_selection(transformer):
             },
         ]
 
-        widget._selections = {
+        widget._vl_selections = {
             "point": {
                 "value": {
                     "Cylinders": [4, 5],

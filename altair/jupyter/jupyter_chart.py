@@ -42,6 +42,53 @@ class Params(traitlets.HasTraits):
         return f"Params({self.trait_values()})"
 
 
+class Selections(traitlets.HasTraits):
+    """
+    Traitlet class storing a JupyterChart's selections
+    """
+    def __init__(self, trait_values):
+        super().__init__()
+
+        for key, value in trait_values.items():
+            if isinstance(value, IndexSelection):
+                traitlet_type = traitlets.Instance(IndexSelection)
+            elif isinstance(value, PointSelection):
+                traitlet_type = traitlets.Instance(PointSelection)
+            elif isinstance(value, IntervalSelection):
+                traitlet_type = traitlets.Instance(IntervalSelection)
+            else:
+                raise ValueError(f"Unexpected selection type: {type(value)}")
+
+            # Add the new trait.
+            self.add_traits(**{key: traitlet_type})
+
+            # Set the trait's value.
+            setattr(self, key, value)
+
+            # Make read-only
+            self.observe(self._make_read_only, names=key)
+
+    def __repr__(self):
+        return f"Selections({self.trait_values()})"
+
+    def _make_read_only(self, change):
+        """
+        Work around to make traits read-only, but still allow us to change
+        them internally
+        """
+        if change['name'] in self.traits() and change['old'] != change['new']:
+            self._set_value(change['name'], change['old'])
+        raise ValueError(
+            "Selections may not be set from Python.\n"
+            f"Attempted to set select: {change['name']}"
+        )
+
+    def _set_value(self, key, value):
+        self.unobserve(self._make_read_only, names=key)
+        setattr(self, key, value)
+        self.observe(self._make_read_only, names=key)
+
+
 @dataclass(frozen=True, eq=True)
 class IndexSelection:
     """
@@ -110,13 +157,12 @@ class JupyterChart(anywidget.AnyWidget):
     # Public traitlets
     chart = traitlets.Instance(TopLevelSpec)
     spec = traitlets.Dict().tag(sync=True)
-    selections = traitlets.Dict()
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
     _selection_watches = traitlets.List().tag(sync=True)
-    _selections = traitlets.Dict().tag(sync=True)
+    _vl_selections = traitlets.Dict().tag(sync=True)
 
     # Internal param traitlets
     _params = traitlets.Dict().tag(sync=True)
@@ -134,6 +180,7 @@ class JupyterChart(anywidget.AnyWidget):
              Debouncing wait time in milliseconds
         """
         self.params = Params({})
+        self.selections = Selections({})
         super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
 
     @traitlets.observe("chart")
@@ -148,7 +195,8 @@ class JupyterChart(anywidget.AnyWidget):
         selection_watches = []
         selection_types = {}
         initial_params = {}
-        initial_selections = {}
+        initial_vl_selections = {}
+        empty_selections = {}
 
         if params is not alt.Undefined:
             for param in new_chart.params:
@@ -166,18 +214,22 @@ class JupyterChart(anywidget.AnyWidget):
                             # Point selection with no associated fields or encodings specified.
                             # This is an index-based selection
                             selection_types[param.name] = "index"
+                            empty_selections[param.name] = IndexSelection(name=param.name, value=[], store=[])
                         else:
                             selection_types[param.name] = "point"
+                            empty_selections[param.name] = PointSelection(name=param.name, value=[], store=[])
                     elif select_type == "interval":
                         selection_types[param.name] = "interval"
+                        empty_selections[param.name] = IntervalSelection(name=param.name, value={}, store=[])
                     else:
                         raise ValueError(f"Unexpected selection type {select.type}")
                     selection_watches.append(param.name)
-                    initial_selections[param.name] = {"value": None, "store": []}
+                    initial_vl_selections[param.name] = {"value": None, "store": []}
                 else:
                     clean_value = param.value if param.value != alt.Undefined else None
                     initial_params[param.name] = clean_value
 
+        # Setup params
         self.params = Params(initial_params)
 
         def on_param_traitlet_changed(param_change):
@@ -187,6 +239,9 @@ class JupyterChart(anywidget.AnyWidget):
 
         self.params.observe(on_param_traitlet_changed)
 
+        # Setup selections
+        self.selections = Selections(empty_selections)
+
         # Update properties all together
         with self.hold_sync():
             if using_vegafusion():
@@ -195,7 +250,7 @@ class JupyterChart(anywidget.AnyWidget):
                 self.spec = new_chart.to_dict()
             self._selection_types = selection_types
             self._selection_watches = selection_watches
-            self._selections = initial_selections
+            self._vl_selections = initial_vl_selections
             self._params = initial_params
 
     @traitlets.observe("_params")
@@ -203,14 +258,13 @@ class JupyterChart(anywidget.AnyWidget):
         for param_name, value in change.new.items():
             setattr(self.params, param_name, value)
 
-    @traitlets.observe("_selections")
+    @traitlets.observe("_vl_selections")
     def _on_change_selections(self, change):
         """
         Internal callback function that updates the JupyterChart's public
         selections traitlet in response to changes that the JavaScript logic
         makes to the internal _selections traitlet.
         """
-        new_selections = {}
         for selection_name, selection_dict in change.new.items():
             value = selection_dict["value"]
             store = selection_dict["store"]
@@ -221,22 +275,23 @@ class JupyterChart(anywidget.AnyWidget):
                 else:
                     points = value.get("vlPoint", {}).get("or", [])
                     indices = [p["_vgsid_"] - 1 for p in points]
-                new_selections[selection_name] = IndexSelection(
+
+                self.selections._set_value(selection_name, IndexSelection(
                     name=selection_name, value=indices, store=store
-                )
+                ))
             elif selection_type == "point":
                 if value is None:
                     points = []
                 else:
                     points = value.get("vlPoint", {}).get("or", [])
-                new_selections[selection_name] = PointSelection(
+
+                self.selections._set_value(selection_name, PointSelection(
                     name=selection_name, value=points, store=store
-                )
+                ))
             elif selection_type == "interval":
                 if value is None:
                     value = {}
-                new_selections[selection_name] = IntervalSelection(
-                    name=selection_name, value=value, store=store
-                )
 
-        self.selections = new_selections
+                self.selections._set_value(selection_name, IntervalSelection(
+                    name=selection_name, value=value, store=store
+                ))

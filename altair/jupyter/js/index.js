@@ -20,18 +20,18 @@ export async function render({ model, el }) {
         const initialSelections = {};
         for (const selectionName of selectionWatches) {
             const selectionHandler = (_, value) => {
-                const newSelections = JSON.parse(JSON.stringify(model.get("_selections"))) || {};
+                const newSelections = JSON.parse(JSON.stringify(model.get("_vl_selections"))) || {};
                 const store = JSON.parse(JSON.stringify(api.view.data(`${selectionName}_store`)));
 
                 newSelections[selectionName] = {value, store};
-                model.set("_selections", newSelections);
+                model.set("_vl_selections", newSelections);
                 model.save_changes();
             };
             api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, true));
 
             initialSelections[selectionName] = {value: {}, store: []}
         }
-        model.set("_selections", initialSelections);
+        model.set("_vl_selections", initialSelections);
 
         const initialParams = {};
         for (const paramName of Object.keys(model.get("_params"))) {
