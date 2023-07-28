@@ -48,11 +48,11 @@ export async function render({ model, el }) {
         model.save_changes();
 
         // Param change callback
-        model.on('change:_params', (new_params) => {
+        model.on('change:_params', async (new_params) => {
             for (const [param, value] of Object.entries(new_params.changed._params)) {
                 api.view.signal(param, value);
             }
-            api.view.run();
+            await api.view.runAsync();
         });
     }
 
