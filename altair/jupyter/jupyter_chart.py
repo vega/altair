@@ -15,6 +15,7 @@ class Params(traitlets.HasTraits):
     """
     Traitlet class storing a JupyterChart's params
     """
+
     def __init__(self, trait_values):
         super().__init__()
 
@@ -46,6 +47,7 @@ class Selections(traitlets.HasTraits):
     """
     Traitlet class storing a JupyterChart's selections
     """
+
     def __init__(self, trait_values):
         super().__init__()
 
@@ -76,8 +78,8 @@ class Selections(traitlets.HasTraits):
         Work around to make traits read-only, but still allow us to change
         them internally
         """
-        if change['name'] in self.traits() and change['old'] != change['new']:
-            self._set_value(change['name'], change['old'])
+        if change["name"] in self.traits() and change["old"] != change["new"]:
+            self._set_value(change["name"], change["old"])
         raise ValueError(
             "Selections may not be set from Python.\n"
             f"Attempted to set select: {change['name']}"
@@ -213,13 +215,19 @@ class JupyterChart(anywidget.AnyWidget):
                             # Point selection with no associated fields or encodings specified.
                             # This is an index-based selection
                             selection_types[param.name] = "index"
-                            empty_selections[param.name] = IndexSelection(name=param.name, value=[], store=[])
+                            empty_selections[param.name] = IndexSelection(
+                                name=param.name, value=[], store=[]
+                            )
                         else:
                             selection_types[param.name] = "point"
-                            empty_selections[param.name] = PointSelection(name=param.name, value=[], store=[])
+                            empty_selections[param.name] = PointSelection(
+                                name=param.name, value=[], store=[]
+                            )
                     elif select_type == "interval":
                         selection_types[param.name] = "interval"
-                        empty_selections[param.name] = IntervalSelection(name=param.name, value={}, store=[])
+                        empty_selections[param.name] = IntervalSelection(
+                            name=param.name, value={}, store=[]
+                        )
                     else:
                         raise ValueError(f"Unexpected selection type {select.type}")
                     selection_watches.append(param.name)
@@ -274,22 +282,25 @@ class JupyterChart(anywidget.AnyWidget):
                     points = value.get("vlPoint", {}).get("or", [])
                     indices = [p["_vgsid_"] - 1 for p in points]
 
-                self.selections._set_value(selection_name, IndexSelection(
-                    name=selection_name, value=indices, store=store
-                ))
+                self.selections._set_value(
+                    selection_name,
+                    IndexSelection(name=selection_name, value=indices, store=store),
+                )
             elif selection_type == "point":
                 if value is None:
                     points = []
                 else:
                     points = value.get("vlPoint", {}).get("or", [])
 
-                self.selections._set_value(selection_name, PointSelection(
-                    name=selection_name, value=points, store=store
-                ))
+                self.selections._set_value(
+                    selection_name,
+                    PointSelection(name=selection_name, value=points, store=store),
+                )
             elif selection_type == "interval":
                 if value is None:
                     value = {}
 
-                self.selections._set_value(selection_name, IntervalSelection(
-                    name=selection_name, value=value, store=store
-                ))
+                self.selections._set_value(
+                    selection_name,
+                    IntervalSelection(name=selection_name, value=value, store=store),
+                )
