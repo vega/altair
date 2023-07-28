@@ -9,7 +9,7 @@ import pandas as pd
 import pytest
 
 try:
-    import vegafusion
+    import vegafusion  # type: ignore # noqa: F401
 
     transformers = ["default", "vegafusion"]
 except ImportError:
