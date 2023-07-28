@@ -4,13 +4,30 @@ import debounce from 'https://cdn.jsdelivr.net/npm/just-debounce-it@3.2.0/+esm'
 export async function render({ model, el }) {
     let finalize;
 
+    function showError(error){
+        el.innerHTML = (
+            '<div style="color:red;">'
+            + '<p>JavaScript Error: ' + error.message + '</p>'
+            + "<p>This usually means there's a typo in your chart specification. "
+            + "See the javascript console for the full traceback.</p>"
+            + '</div>'
+        );
+    }
+
     const reembed = async () => {
         if (finalize != null) {
           finalize();
         }
 
         let spec = model.get("spec");
-        let api = await embed(el, spec);
+        let api;
+        try {
+            api = await embed(el, spec);
+        } catch (error) {
+            showError(error)
+            return;
+        }
+
         finalize = api.finalize;
 
         // Debounce config
