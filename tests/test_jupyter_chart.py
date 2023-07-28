@@ -8,8 +8,15 @@ from vega_datasets import data
 import pandas as pd
 import pytest
 
+try:
+    import vegafusion
 
-@pytest.mark.parametrize("transformer", ["default", "vegafusion"])
+    transformers = ["default", "vegafusion"]
+except ImportError:
+    transformers = ["default"]
+
+
+@pytest.mark.parametrize("transformer", transformers)
 def test_chart_with_no_interactivity(transformer):
     with alt.data_transformers.enable(transformer):
         source = pd.DataFrame(
@@ -32,7 +39,7 @@ def test_chart_with_no_interactivity(transformer):
         assert len(widget.params.trait_values()) == 0
 
 
-@pytest.mark.parametrize("transformer", ["default", "vegafusion"])
+@pytest.mark.parametrize("transformer", transformers)
 def test_interval_selection_example(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -99,7 +106,7 @@ def test_interval_selection_example(transformer):
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", ["default", "vegafusion"])
+@pytest.mark.parametrize("transformer", transformers)
 def test_index_selection_example(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -158,7 +165,7 @@ def test_index_selection_example(transformer):
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", ["default", "vegafusion"])
+@pytest.mark.parametrize("transformer", transformers)
 def test_point_selection(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -220,7 +227,7 @@ def test_point_selection(transformer):
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", ["default", "vegafusion"])
+@pytest.mark.parametrize("transformer", transformers)
 def test_param_updates(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
