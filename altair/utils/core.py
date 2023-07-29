@@ -643,7 +643,7 @@ def infer_vegalite_type_for_dfi_column(
         # error message for the presence of datetime64.
         #
         # See https://github.com/pandas-dev/pandas/issues/54239
-        if "datetime64" in e.args[0]:
+        if "datetime64" in e.args[0] or "timestamp" in e.args[0]:
             return "temporal"
         raise e
 
