@@ -8,6 +8,12 @@ import altair as alt
 from altair.utils.core import parse_shorthand, update_nested, infer_encoding_types
 from altair.utils.core import infer_dtype
 
+try:
+    import pyarrow as pa
+except ImportError:
+    pa = None
+
+
 FAKE_CHANNELS_MODULE = '''
 """Fake channels module for utility tests."""
 
@@ -146,6 +152,20 @@ def test_parse_shorthand_with_data():
     check("count()", data, aggregate="count", type="quantitative")
     check("month(z)", data, timeUnit="month", field="z", type="temporal")
     check("month(t)", data, timeUnit="month", field="t", type="temporal")
+
+
+@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+def test_parse_shorthand_for_arrow_timestamp():
+    data = pd.DataFrame(
+        {
+            "z": pd.date_range("2018-01-01", periods=5, freq="D"),
+            "t": pd.date_range("2018-01-01", periods=5, freq="D").tz_localize("UTC"),
+        }
+    )
+    # Convert to arrow-packed dtypes
+    data = pa.Table.from_pandas(data).to_pandas(types_mapper=pd.ArrowDtype)
+    assert parse_shorthand("z", data) == {"field": "z", "type": "temporal"}
+    assert parse_shorthand("z", data) == {"field": "z", "type": "temporal"}
 
 
 def test_parse_shorthand_all_aggregates():
