@@ -82,6 +82,7 @@ support for gridded datasets.
 
 Areas of focus:
 
+* Add support for Python array/tensor interchange protocol (through the `__dlpack__` interface)
 * Add support for creating charts from Xarray
   `DataArray <https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html>`_
   objects (rendering large arrays may require the performance work described elsewhere).
