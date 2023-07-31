@@ -42,7 +42,7 @@ jobs:
         # to work with this Pandas version.
         if: ${{ matrix.python-version == '3.8' }}
         run: |
-          pip install pandas==0.18
+          pip install pandas==0.25.3
       - name: Test that schema generation has no effect
         run: |
           python tools/generate_schema_wrapper.py
