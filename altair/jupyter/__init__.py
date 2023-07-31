@@ -1,6 +1,5 @@
 try:
     import anywidget  # noqa: F401
-    from .jupyter_chart import JupyterChart
 except ImportError:
     # When anywidget isn't available, create stand-in JupyterChart class
     # that raises an informative import error on construction. This
@@ -16,3 +15,5 @@ except ImportError:
                 "    conda install -c conda-forge anywidget\n"
                 "Afterwards, you will need to restart your Python kernel."
             )
+else:
+    from .jupyter_chart import JupyterChart
