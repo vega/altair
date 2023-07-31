@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 
 import altair as alt
 from altair.utils._vegafusion_data import using_vegafusion
-from altair.vegalite.v5.schema.core import TopLevelSpec
+from altair import TopLevelSpec
 
 _here = pathlib.Path(__file__).parent
 
