@@ -191,7 +191,7 @@ def infer_vegalite_type(
     ----------
     data: object
     """
-    typ = infer_dtype(data)
+    typ = infer_dtype(data, skipna=False)
 
     if typ in [
         "floating",
