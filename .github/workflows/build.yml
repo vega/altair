@@ -31,9 +31,9 @@ jobs:
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
-        # Uninstalling for Python 3.9 is an arbitrary choice.
+        # Uninstalling for Python 3.8 is an arbitrary choice.
         # Also see https://github.com/altair-viz/altair/pull/3114
-        if: ${{ matrix.python-version == '3.9' }}
+        if: ${{ matrix.python-version == '3.8' }}
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed
       - name: Maybe install lowest supported Pandas version
