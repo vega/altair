@@ -632,7 +632,7 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, PandasColumn],
+    column: Union[Column, "PandasColumn"],
 ) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
