@@ -15,7 +15,6 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
-from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 from altair.utils.schemapi import SchemaBase
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
@@ -25,13 +24,16 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol
+from typing import Literal, Protocol, TYPE_CHECKING
 
 try:
     from pandas.api.types import infer_dtype as _infer_dtype
 except ImportError:
     # Import for pandas < 0.20.0
     from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
+
+if TYPE_CHECKING:
+    from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
