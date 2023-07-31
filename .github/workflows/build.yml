@@ -33,14 +33,14 @@ jobs:
         # accidentally introduced a hard dependency on these libraries.
         # Uninstalling for Python 3.9 is an arbitrary choice.
         # Also see https://github.com/altair-viz/altair/pull/3114
-        if: ${{ matrix.python-version == "3.9" }}
+        if: ${{ matrix.python-version }} == "3.9"
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed
       - name: Maybe install lowest supported Pandas version
         # We install the lowest supported Pandas version for one job to test that
         # it still works. We do this for Python 3.8 as that is the last Python version
         # to work with this Pandas version.
-        if: ${{ matrix.python-version == "3.8" }}
+        if: ${{ matrix.python-version }} == "3.8"
         run: |
           pip install pandas==0.18
       - name: Test that schema generation has no effect
