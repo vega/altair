@@ -43,7 +43,7 @@ which you can find in `pyproject.toml` (`[project.optional-dependencies]/dev`)
 
 Once your local environment is up-to-date, you can create a new git branch
 which will contain your contribution
-(always create a new branch instead of making changes to the master branch):
+(always create a new branch instead of making changes to the main branch):
 
 ```cmd
 git switch -c <your-branch-name>

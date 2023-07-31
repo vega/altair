@@ -42,7 +42,7 @@ alt.Chart(cars).mark_point().encode(
 )
 ```
 
-![Vega-Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png)
+![Vega-Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/main/images/cars.png)
 
 One of the unique features of Vega-Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_. 
 With a few modifications to the example above we can create a linked histogram that is filtered based on a selection of the scatter plot.
@@ -74,7 +74,7 @@ bars = alt.Chart(source).mark_bar().encode(
 points & bars
 ```
 
-![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
+![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/main/images/cars_scatter_bar.gif)
 
 ## Features
 * Carefully-designed, declarative Python API.
@@ -114,7 +114,7 @@ hatch run test
 ```
 
 For information on how to contribute your developments back to the Vega-Altair repository, see
-[`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
+[`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md)
 
 ## Citing Vega-Altair
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
