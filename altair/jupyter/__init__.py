@@ -13,5 +13,6 @@ except ImportError:
                 "Python package which may be installed using pip with\n"
                 "    pip install anywidget\n"
                 "or using conda with\n"
-                "    conda install -c conda-forge anywidget"
+                "    conda install -c conda-forge anywidget\n"
+                "Afterwards, you will need to restart your Python kernel."
             )
