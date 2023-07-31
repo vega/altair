@@ -22,7 +22,7 @@ dependencies = [
     "jsonschema>=3.0",
     "numpy",
     # If you update the minimum required pandas version, also update it in build.yml
-    "pandas>=0.18",
+    "pandas>=0.25",
     "toolz"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
