@@ -15,6 +15,7 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
+from pandas.api.types import infer_dtype
 
 from altair.utils.schemapi import SchemaBase
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
@@ -26,12 +27,6 @@ else:
 
 from typing import Literal, Protocol, TYPE_CHECKING
 
-try:
-    from pandas.api.types import infer_dtype as _infer_dtype
-except ImportError:
-    # Import for pandas < 0.20.0
-    from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
-
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
@@ -42,26 +37,6 @@ _P = ParamSpec("_P")
 class _DataFrameLike(Protocol):
     def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
-
-
-def infer_dtype(value: object) -> str:
-    """Infer the dtype of the value.
-
-    This is a compatibility function for pandas infer_dtype,
-    with skipna=False regardless of the pandas version.
-    """
-    if not hasattr(infer_dtype, "_supports_skipna"):
-        try:
-            _infer_dtype([1], skipna=False)
-        except TypeError:
-            # pandas < 0.21.0 don't support skipna keyword
-            infer_dtype._supports_skipna = False  # type: ignore[attr-defined]
-        else:
-            infer_dtype._supports_skipna = True  # type: ignore[attr-defined]
-    if infer_dtype._supports_skipna:  # type: ignore[attr-defined]
-        return _infer_dtype(value, skipna=False)
-    else:
-        return _infer_dtype(value)
 
 
 TYPECODE_MAP = {
