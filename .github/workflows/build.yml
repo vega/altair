@@ -36,6 +36,13 @@ jobs:
         if: ${{ matrix.python-version }}=="3.9"
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed
+      - name: Maybe install lowest supported Pandas version
+        # We install the lowest supported Pandas version for one job to test that
+        # it still works. We do this for Python 3.8 as that is the last Python version
+        # to work with this Pandas version.
+        if: ${{ matrix.python-version }}=="3.8"
+        run: |
+          pip install pandas==0.18
       - name: Test that schema generation has no effect
         run: |
           python tools/generate_schema_wrapper.py
