@@ -23,7 +23,8 @@ dependencies = [
     "numpy",
     # If you update the minimum required pandas version, also update it in build.yml
     "pandas>=0.25",
-    "toolz"
+    "toolz",
+    "packaging"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
