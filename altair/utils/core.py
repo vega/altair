@@ -324,7 +324,13 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
     for col_name, dtype in df.dtypes.items():
         dtype_name = str(dtype)
-        if dtype_name == "string":
+        if dtype_name == "category":
+            # Work around bug in to_json for categorical types in older versions of pandas
+            # https://github.com/pydata/pandas/issues/10778
+            # https://github.com/altair-viz/altair/pull/2170
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
+        elif dtype_name == "string":
             # dedicated string datatype (since 1.0)
             # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
             col = df[col_name].astype(object)
