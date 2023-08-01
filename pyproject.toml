@@ -18,9 +18,11 @@ authors = [ {name = "Vega-Altair Contributors"} ]
 dependencies = [
     "typing_extensions>=4.0.1; python_version<\"3.11\"",
     "jinja2",
+    # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
     "numpy",
-    "pandas>=0.18",
+    # If you update the minimum required pandas version, also update it in build.yml
+    "pandas>=0.25",
     "toolz",
     "packaging"
 ]
