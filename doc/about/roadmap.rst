@@ -110,7 +110,7 @@ Scale/Performance Improvements
 ------------------------------
 In the traditional Vega-Altair architecture, a chart's entire input dataset is serialized
 to JSON and transferred to the browser for data transformation and rendering. Rendering
-itself is then preformed by The Vega JavaScript library using the Canvas API (which is
+itself is then performed by The Vega JavaScript library using the Canvas API (which is
 not GPU accelerated). This architecture has many advantages (e.g. chart specifications
 are fully self-contained and portable to Python-free rendering environments), but it
 is not well suited for creating charts of large datasets.
