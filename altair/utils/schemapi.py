@@ -213,8 +213,8 @@ def _get_referencing_registry(
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
-    import referencing
-    import referencing.jsonschema
+    import referencing  # type: ignore[import]
+    import referencing.jsonschema  # type: ignore[import]
 
     if json_schema_draft_url is None:
         json_schema_draft_url = _get_json_schema_draft_url(rootschema)
