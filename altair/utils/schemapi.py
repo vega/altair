@@ -213,8 +213,12 @@ def _get_referencing_registry(
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
-    import referencing  # type: ignore[import]
-    import referencing.jsonschema  # type: ignore[import]
+    # We ignore 'import' mypy errors which happen when the referencing library
+    # is not installed. That's ok as in these cases this function is not called.
+    # We also have to ignore 'unused-ignore' errors as mypy raises those in case
+    # referencing is installed.
+    import referencing  # type: ignore[import,unused-ignore]
+    import referencing.jsonschema  # type: ignore[import,unused-ignore]
 
     if json_schema_draft_url is None:
         json_schema_draft_url = _get_json_schema_draft_url(rootschema)
