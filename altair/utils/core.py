@@ -325,7 +325,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     for col_name, dtype in df.dtypes.items():
         dtype_name = str(dtype)
         if dtype_name == "category":
-            # Work around bug in to_json for categorical types in older versions 
+            # Work around bug in to_json for categorical types in older versions
             # of pandas as they do not properly convert NaN values to null in to_json.
             # We can probably remove this part once we require Pandas >= 1.0
             col = df[col_name].astype(object)
