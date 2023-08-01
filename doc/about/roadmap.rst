@@ -38,7 +38,10 @@ Areas of focus:
 
 * Standardize the API of methods that convert charts into other formats (``alt.Chart().to_<format>``).
 
-* Add type hints to the public API and most of the internals so that users can type check their Altair code with a static type checker such as mypy. This will also make it easier for other packages to integrate with Altair.
+* Add type hints to the public API and most of the internals so that users can type check their Altair
+  code with a static type  checker such as mypy. This will also make it easier for other packages to
+  integrate with Altair.
+
 Documentation
 -------------
 We want to continue to improve Vega-Altair's official documentation to be more
@@ -84,6 +87,7 @@ support for gridded datasets.
 Areas of focus:
 
 * Add support for Python array/tensor interchange protocol (through the ``__dlpack__`` interface)
+
 * Add support for creating charts from Xarray
   `DataArray <https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html>`_
   objects (rendering large arrays may require the performance work described elsewhere).
@@ -124,12 +128,15 @@ Areas of focus:
 * Provide optional integration with VegaFusion to automatically
   move data transformation steps from the browser to efficient multi-threaded implementations
   in the Python kernel.
+
 * Utilize binary serialization of datasets in Apache Arrow IPC format between the Python kernel
   and the browser. This will significant reduce serialization time for large unaggregated
   visualizations such as scatter plots.
+
 * Support creating Vega-Altair charts that reference tables in external database systems, and convert
   data transformation steps to SQL that can be evaluated by the database before the results are
   transferred to the Python kernel *(VF)*.
+
 * Add support for GPU accelerated rendering. This will enable rendering of large unnagregated
   visualizations at interactive speeds. For example, pan and zoom interactions on a large scatter
   plot *(VG)*.
