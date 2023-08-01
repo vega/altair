@@ -21,7 +21,8 @@ dependencies = [
     "jsonschema>=3.0",
     "numpy",
     "pandas>=0.18",
-    "toolz"
+    "toolz",
+    "packaging"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
