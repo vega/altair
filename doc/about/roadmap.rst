@@ -38,6 +38,7 @@ Areas of focus:
 
 * Standardize the API of methods that convert charts into other formats (``alt.Chart().to_<format>``).
 
+* Add type hints to the public API and most of the internals so that users can type check their Altair code with a static type checker such as mypy. This will also make it easier for other packages to integrate with Altair.
 Documentation
 -------------
 We want to continue to improve Vega-Altair's official documentation to be more
