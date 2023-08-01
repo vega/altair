@@ -74,7 +74,7 @@ class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
     ],
 )
 def test_infer_dtype(value, expected_type):
-    assert infer_dtype(value) == expected_type
+    assert infer_dtype(value, skipna=False) == expected_type
 
 
 def test_parse_shorthand():

@@ -15,7 +15,7 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
-from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
+from pandas.api.types import infer_dtype
 
 from altair.utils.schemapi import SchemaBase
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
@@ -25,13 +25,10 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol
+from typing import Literal, Protocol, TYPE_CHECKING
 
-try:
-    from pandas.api.types import infer_dtype as _infer_dtype
-except ImportError:
-    # Import for pandas < 0.20.0
-    from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
+if TYPE_CHECKING:
+    from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
@@ -40,26 +37,6 @@ _P = ParamSpec("_P")
 class _DataFrameLike(Protocol):
     def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
-
-
-def infer_dtype(value: object) -> str:
-    """Infer the dtype of the value.
-
-    This is a compatibility function for pandas infer_dtype,
-    with skipna=False regardless of the pandas version.
-    """
-    if not hasattr(infer_dtype, "_supports_skipna"):
-        try:
-            _infer_dtype([1], skipna=False)
-        except TypeError:
-            # pandas < 0.21.0 don't support skipna keyword
-            infer_dtype._supports_skipna = False  # type: ignore[attr-defined]
-        else:
-            infer_dtype._supports_skipna = True  # type: ignore[attr-defined]
-    if infer_dtype._supports_skipna:  # type: ignore[attr-defined]
-        return _infer_dtype(value, skipna=False)
-    else:
-        return _infer_dtype(value)
 
 
 TYPECODE_MAP = {
@@ -214,7 +191,7 @@ def infer_vegalite_type(
     ----------
     data: object
     """
-    typ = infer_dtype(data)
+    typ = infer_dtype(data, skipna=False)
 
     if typ in [
         "floating",
@@ -348,9 +325,9 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     for col_name, dtype in df.dtypes.items():
         dtype_name = str(dtype)
         if dtype_name == "category":
-            # Work around bug in to_json for categorical types in older versions of pandas
-            # https://github.com/pydata/pandas/issues/10778
-            # https://github.com/altair-viz/altair/pull/2170
+            # Work around bug in to_json for categorical types in older versions
+            # of pandas as they do not properly convert NaN values to null in to_json.
+            # We can probably remove this part once we require Pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif dtype_name == "string":
@@ -630,7 +607,7 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, PandasColumn],
+    column: Union[Column, "PandasColumn"],
 ) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
