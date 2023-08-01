@@ -1,12 +1,12 @@
 import anywidget
 import traitlets
 import pathlib
-from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any
 
 import altair as alt
 from altair.utils._vegafusion_data import using_vegafusion
 from altair import TopLevelSpec
+from altair.utils.selection import IndexSelection, PointSelection, IntervalSelection
 
 _here = pathlib.Path(__file__).parent
 
@@ -89,62 +89,6 @@ class Selections(traitlets.HasTraits):
         self.unobserve(self._make_read_only, names=key)
         setattr(self, key, value)
         self.observe(self._make_read_only, names=key)
-
-
-@dataclass(frozen=True, eq=True)
-class IndexSelection:
-    """
-    An IndexSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when neither the fields nor encodings arguments are specified.
-
-    The value field is a list of zero-based indices into the
-    selected dataset.
-
-    Note: These indices only apply to the input DataFrame
-    for charts that do not include aggregations (e.g. a scatter chart).
-    """
-
-    name: str
-    value: List[int]
-    store: List[Dict[str, Any]]
-
-
-@dataclass(frozen=True, eq=True)
-class PointSelection:
-    """
-    A PointSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when the fields or encodings arguments are specified.
-
-    The value field is a list of dicts of the form:
-        [{"dim1": 1, "dim2": "A"}, {"dim1": 2, "dim2": "BB"}]
-
-    where "dim1" and "dim2" are dataset columns and the dict values
-    correspond to the specific selected values.
-    """
-
-    name: str
-    value: List[Dict[str, Any]]
-    store: List[Dict[str, Any]]
-
-
-@dataclass(frozen=True, eq=True)
-class IntervalSelection:
-    """
-    An IntervalSelection represents the state of an Altair
-    interval selection (as constructed by alt.selection_interval()).
-
-    The value field is a dict of the form:
-        {"dim1": [0, 10], "dim2": ["A", "BB", "CCC"]}
-
-    where "dim1" and "dim2" are dataset columns and the dict values
-    correspond to the selected range.
-    """
-
-    name: str
-    value: Dict[str, list]
-    store: List[Dict[str, Any]]
 
 
 class JupyterChart(anywidget.AnyWidget):
@@ -276,31 +220,19 @@ class JupyterChart(anywidget.AnyWidget):
             store = selection_dict["store"]
             selection_type = self._selection_types[selection_name]
             if selection_type == "index":
-                if value is None:
-                    indices = []
-                else:
-                    points = value.get("vlPoint", {}).get("or", [])
-                    indices = [p["_vgsid_"] - 1 for p in points]
-
                 self.selections._set_value(
                     selection_name,
-                    IndexSelection(name=selection_name, value=indices, store=store),
+                    IndexSelection.from_vega(selection_name, signal=value, store=store),
                 )
             elif selection_type == "point":
-                if value is None:
-                    points = []
-                else:
-                    points = value.get("vlPoint", {}).get("or", [])
-
                 self.selections._set_value(
                     selection_name,
-                    PointSelection(name=selection_name, value=points, store=store),
+                    PointSelection.from_vega(selection_name, signal=value, store=store),
                 )
             elif selection_type == "interval":
-                if value is None:
-                    value = {}
-
                 self.selections._set_value(
                     selection_name,
-                    IntervalSelection(name=selection_name, value=value, store=store),
+                    IntervalSelection.from_vega(
+                        selection_name, signal=value, store=store
+                    ),
                 )
