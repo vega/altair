@@ -3,8 +3,7 @@ import os
 import random
 import hashlib
 import warnings
-from importlib.metadata import version as importlib_version
-from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as importlib_version, PackageNotFoundError
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
 from types import ModuleType
 
