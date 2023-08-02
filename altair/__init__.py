@@ -234,6 +234,7 @@ __all__ = [
     "JoinAggregateFieldDef",
     "JoinAggregateTransform",
     "JsonDataFormat",
+    "JupyterChart",
     "Key",
     "LabelOverlap",
     "LatLongDef",
@@ -569,6 +570,7 @@ __all__ = [
     "expr",
     "graticule",
     "hconcat",
+    "jupyter",
     "layer",
     "limit_rows",
     "load_ipython_extension",
@@ -607,6 +609,7 @@ def __dir__():
 
 
 from .vegalite import *
+from .jupyter import JupyterChart
 
 
 def load_ipython_extension(ipython):

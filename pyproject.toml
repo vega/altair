@@ -73,7 +73,8 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "pyarrow>=11",
-    "vegafusion[embed]"
+    "vegafusion[embed]",
+    "anywidget"
 ]
 doc = [
     "sphinx",
@@ -97,6 +98,7 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = ["/altair"]
+artifacts = ["altair/jupyter/js/index.js"]
 
 [tool.hatch.envs.default]
 features = ["dev"]
