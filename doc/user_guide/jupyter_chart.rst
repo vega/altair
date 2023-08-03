@@ -391,3 +391,13 @@ is used to combine the chart and HTML table in a column layout.
       <source src="https://github.com/altair-viz/altair/assets/15064365/1414ed59-8782-4c2e-8dd3-905d2f85fa7e">
       Your browser does not support the video tag.
     </video>
+
+Limitations
+-----------
+
+Internet Connection Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The JupyterChart class currently loads its JavaScript dependencies dynamically from a CDN location.
+This keeps the ``altair`` package small, but it means that an internet connection is required
+to display JupyterChart instances. In the future, we would like to provide optional offline support.
+
