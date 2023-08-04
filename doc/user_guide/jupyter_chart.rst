@@ -375,10 +375,12 @@ is used to combine the chart and HTML table in a column layout.
         if sel is None or 'Horsepower' not in sel:
             filtered = source.iloc[:0]
         else:
-            filtered = source.query(
+            filter_query = (
                 f"{sel['Horsepower'][0]} <= `Horsepower` <= {sel['Horsepower'][1]} & "
                 f"{sel['Miles_per_Gallon'][0]} <= `Miles_per_Gallon` <= {sel['Miles_per_Gallon'][1]}"
             )
+            filtered = source.query(filter_query)
+
         table_widget.value = filtered.to_html()
 
     chart_widget.selections.observe(on_select, ["brush"])
