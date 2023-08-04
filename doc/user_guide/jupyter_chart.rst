@@ -292,8 +292,8 @@ extract the selected rows in the input DataFrame.
         color=alt.condition(brush, 'Origin:N', alt.value('grey')),
     ).add_params(brush)
 
-    widget = alt.ChartWidget(chart)
-    widget
+    jchart = alt.JupyterChart(chart)
+    jchart
 
 .. raw:: html
 
