@@ -47,7 +47,7 @@ cell evaluates to a ``JupyterChart`` instance. For example:
     jchart = alt.JupyterChart(chart)
     jchart
 
-.. image:: https://github.com/altair-viz/altair/assets/15064365/59cb2484-ad51-461a-8353-e1d4fa5f6bb6
+.. image:: /_static/jupyter_chart/simple_bar.svg
   :alt: Bar chart with letters A through I on the x-axis
 
 
@@ -63,7 +63,7 @@ will immediately be displayed in place of the old one.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/21d580ef-4dec-4687-a765-9b6d6d84c61f">
+      <source src="/_static/jupyter_chart/updating_charts.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -121,7 +121,7 @@ is available as ``jchart.params.cutoff``.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/0f979ed9-ff70-4198-bd83-f94e5f3e07e2">
+      <source src="/_static/jupyter_chart/accessing_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -144,7 +144,7 @@ the ``cutoff`` parameter.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/0d3787e8-984e-474a-923f-19c7a603bdef">
+      <source src="/_static/jupyter_chart/observing_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -156,7 +156,7 @@ attribute. Here's an example of updating the ``cutoff`` variable parameter by as
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/94ee9188-d582-4f51-aa30-1aaa11d6ed34">
+      <source src="/_static/jupyter_chart/setting_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -178,7 +178,7 @@ to the value of an ipywidgets ``IntSlider``.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/b63549fb-6d19-4d38-862d-cb578b4327b3">
+      <source src="/_static/jupyter_chart/linking_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -217,7 +217,7 @@ variable's value only from the ``IntSlider`` ipywidget.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/b8f70490-6a0b-4032-8ef8-95a21004b7ed">
+      <source src="/_static/jupyter_chart/linking_variable_params2.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -260,7 +260,7 @@ the legend.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/9a48c9d7-ed84-4405-9125-8da58238f03b">
+      <source src="/_static/jupyter_chart/point_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -298,7 +298,7 @@ extract the selected rows in the input DataFrame.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/2960fc28-885e-40a4-8bd5-9e4b56616afe">
+      <source src="/_static/jupyter_chart/index_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -337,7 +337,7 @@ is a dictionary from column names to selection intervals
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/8b1b6ea6-6d9d-4a53-aac9-3e120609d99d">
+      <source src="/_static/jupyter_chart/interval_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -388,7 +388,7 @@ is used to combine the chart and HTML table in a column layout.
 .. raw:: html
 
     <video controls>
-      <source src="https://github.com/altair-viz/altair/assets/15064365/1414ed59-8782-4c2e-8dd3-905d2f85fa7e">
+      <source src="/_static/jupyter_chart/linking_interval_selection.mov">
       Your browser does not support the video tag.
     </video>
 
