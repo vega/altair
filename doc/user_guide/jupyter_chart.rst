@@ -395,9 +395,12 @@ is used to combine the chart and HTML table in a column layout.
 Limitations
 -----------
 
+Setting Selections
+~~~~~~~~~~~~~~~~~~
+It's not currently possible to set selection states from Python.
+
 Internet Connection Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The JupyterChart class currently loads its JavaScript dependencies dynamically from a CDN location.
 This keeps the ``altair`` package small, but it means that an internet connection is required
 to display JupyterChart instances. In the future, we would like to provide optional offline support.
-
