@@ -1,10 +1,10 @@
-# Charter for the [FIXME] Organization
+# Charter for the [Altair-Viz] Organization
 
-This is the organizational charter for the [FIXME] Organization (the "Organization"). By adding their name to the [Steering Committee.md file](./STEERING-COMMITTEE.md), Steering Committee members agree as follows.
+This is the organizational charter for the Altair-Viz Organization (the "Organization"). By adding their name to the [Steering Committee.md file](./STEERING-COMMITTEE.md), Steering Committee members agree as follows.
 
 ## 1. Mission
 
-[Set out mission of the Organization].
+Altair-Viz builds visualization tools with the main focus on Vega-Altair which is a declarative visualization library in Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite grammar, empowers you to spend less time writing code and more time exploring your data.
 
 ## 2. Steering Committee
 
