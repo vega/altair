@@ -11,6 +11,8 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
+All contributions, suggestions, and feedback you submitted are accepted under the [Project's license](./LICENSE). You represent that if you do not own copyright in the code that you have the authority to submit it under the [Project's license](./LICENSE). All feedback, suggestions, or contributions are not confidential.
+
 ## How To Contribute Code to Vega-Altair
 
 ### Setting Up Your Environment
@@ -189,3 +191,9 @@ hatch run doc:serve
 ```
 
 To view the documentation, open your browser and go to `http://localhost:8000`. To stop the server, use `^C` (control+c) in the terminal.
+
+---
+The Project abides by the Organization's [code of conduct](./governance/org-docs/CODE-OF-CONDUCT.md) and [trademark policy](./governance/org-docs/TRADEMARKS.md).
+
+Part of MVG-0.1-beta.
+Made with love by GitHub. Licensed under the [CC-BY 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/).
