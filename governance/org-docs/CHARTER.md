@@ -4,7 +4,7 @@ This is the organizational charter for the Altair-Viz Organization (the "Organiz
 
 ## 1. Mission
 
-Altair-Viz builds visualization tools with the main focus on Vega-Altair which is a declarative visualization library in Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite grammar, empowers you to spend less time writing code and more time exploring your data.
+Altair-Viz builds visualization tools with the main focus on Vega-Altair which is a declarative visualization library in Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite grammar, empowers users to spend less time writing code and more time exploring their data.
 
 ## 2. Steering Committee
 
