@@ -7,6 +7,7 @@ This document lists the members of the Organization's Steering Committee. Voting
 | Stefan Binder | @binste | - |
 | Joel Ostblom | @joelostblom  | - |
 | Jon Mease | @jonmmease | [Hex Technologies](https://hex.tech/) |
+| Mattijn van Hoek | @mattijn | - |
 
 ---
 Part of MVG-0.1-beta.
