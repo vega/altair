@@ -1,4 +1,4 @@
-# Charter for the [Altair-Viz] Organization
+# Charter for the Altair-Viz Organization
 
 This is the organizational charter for the Altair-Viz Organization (the "Organization"). By adding their name to the [Steering Committee.md file](./STEERING-COMMITTEE.md), Steering Committee members agree as follows.
 
