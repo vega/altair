@@ -28,6 +28,8 @@ In addition to the method set out in section 2.2, the membership of a Steering C
 
 **4.2 Unreachable Member**. If a member is unresponsive at its listed handle for more than three months the Steering Committee may vote to remove the member.
 
+**4.3 Code of Conduct violation**. If a member violates the Code of Conduct in a way that justifies at least a warning, the Steering Committee may vote to remove the member.
+
 ## 5. Trademarks
 
 Any names, trademarks, service marks, logos, mascots, or similar indicators of source or origin and the goodwill associated with them arising out of the Organization's activities or Organization projects' activities (the "Marks"), are controlled by the Organization. Steering Committee members may only use the Marks in accordance with the Organization's [trademark policy](./TRADEMARKS.md). If a Steering Committee member is terminated or removed from the Steering Committee, any rights the Steering Committee member may have in the Marks revert to the Organization.
