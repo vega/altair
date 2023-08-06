@@ -8,6 +8,7 @@ This document lists the Maintainers of the Project. Maintainers may be added onc
 | Joel Ostblom | @joelostblom  | - |
 | Jon Mease | @jonmmease | [Hex Technologies](https://hex.tech/) |
 | Mattijn van Hoek | @mattijn | - |
+| Christopher Davis | @ChristopherDavisUCI | - |
 
 ---
 Part of MVG-0.1-beta.
