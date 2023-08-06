@@ -923,8 +923,8 @@ class SchemaBase:
         dct: dict,
         validate: bool = True,
         _wrapper_classes: Optional[Iterable[Type["SchemaBase"]]] = None,
-    # Type hints for this method would get rather complicated
-    # if we want to provide a more specific return type
+        # Type hints for this method would get rather complicated
+        # if we want to provide a more specific return type
     ) -> Any:
         """Construct class from a dictionary representation
 
@@ -958,9 +958,12 @@ class SchemaBase:
 
     @classmethod
     def from_json(
-        cls, json_string: str, validate: bool = True, **kwargs: Any
-    # Type hints for this method would get rather complicated
-    # if we want to provide a more specific return type
+        cls,
+        json_string: str,
+        validate: bool = True,
+        **kwargs: Any
+        # Type hints for this method would get rather complicated
+        # if we want to provide a more specific return type
     ) -> Any:
         """Instantiate the object from a valid JSON string
 
@@ -1091,8 +1094,8 @@ class _FromDict:
         schema: Optional[dict] = None,
         rootschema: Optional[dict] = None,
         default_class=_passthrough,
-    # Type hints for this method would get rather complicated
-    # if we want to provide a more specific return type
+        # Type hints for this method would get rather complicated
+        # if we want to provide a more specific return type
     ) -> Any:
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
