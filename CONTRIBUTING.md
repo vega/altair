@@ -149,7 +149,8 @@ Some additional notes:
 - If your example fits into a chart type but involves significant configuration
   it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the
-  variable `source`. Then `source` is passed to the `alt.Chart` object. See
+  variable `source`. Then `source` is passed to the `alt.Chart` object.
+  If the example requires multiple dataframes then this does not apply. See
   other examples for guidance. 
 - Example code should not require downloading external datasets. We suggest
   using the `vega_datasets` package if possible.
