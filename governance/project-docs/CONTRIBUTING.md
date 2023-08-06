@@ -1,2 +1,2 @@
 # Contributing
-See the [CONTRIBUTING.md file](https://github.com/binste/altair/blob/main/CONTRIBUTING.md) in the altair repository.
+See the [CONTRIBUTING.md file](https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md) in the altair repository.

@@ -1,2 +1,2 @@
 # License
-See the [LICENSE file](https://github.com/binste/altair/blob/main/LICENSE) in the altair repository.
+See the [LICENSE file](https://github.com/altair-viz/altair/blob/main/LICENSE) in the altair repository.
