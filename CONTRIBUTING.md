@@ -114,7 +114,9 @@ your idea has not already been implemented.
 
 Once you have an example you would like to add there are a few guide lines to follow.
 Every example should:
-- be saved as a stand alone script in the `altair/examples/` directory.
+- have a `arguments_syntax` and `methods_syntax` implementation. Each implementation 
+  must be saved as a stand alone script in the `tests/examples_arguments_syntax` 
+  and `tests/examples_methods_syntax` directories.
 - have a descriptive docstring, which will eventually be extracted for the
   documentation website.
 - contain a category tag.
@@ -138,8 +140,7 @@ same contribution procedure outlined above.
 
 Some additional notes:
 
-- all examples should be in their own file in the `altair/examples` directory, and
-  the format and style of new contributions should generally match that of existing examples.
+- The format and style of new contributions should generally match that of existing examples.
 - The file docstring will be rendered into HTML via
   [reStructuredText](http://docutils.sourceforge.net/rst.html), so use that
   format for any hyperlinks or text styling. In particular, be sure you include
@@ -148,7 +149,8 @@ Some additional notes:
 - If your example fits into a chart type but involves significant configuration
   it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the
-  variable `source`. Then `source` is passed to the `alt.Chart` object. See
+  variable `source`. Then `source` is passed to the `alt.Chart` object.
+  If the example requires multiple dataframes then this does not apply. See
   other examples for guidance. 
 - Example code should not require downloading external datasets. We suggest
   using the `vega_datasets` package if possible.
