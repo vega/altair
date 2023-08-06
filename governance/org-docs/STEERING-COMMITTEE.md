@@ -8,6 +8,7 @@ This document lists the members of the Organization's Steering Committee. Voting
 | Joel Ostblom | @joelostblom  | - |
 | Jon Mease | @jonmmease | [Hex Technologies](https://hex.tech/) |
 | Mattijn van Hoek | @mattijn | - |
+| Christopher Davis | @ChristopherDavisUCI | - |
 
 ---
 Part of MVG-0.1-beta.
