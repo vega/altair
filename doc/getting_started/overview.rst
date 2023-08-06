@@ -51,4 +51,5 @@ This documentation serves as the main reference for learning about Altair. Addit
    installation
    starting
    getting_help
+   resources
    project_philosophy

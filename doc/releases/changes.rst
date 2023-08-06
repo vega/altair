@@ -8,13 +8,18 @@ Version 5.1.0 (unreleased month date, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Add ``chart.transformed_data()`` method to extract transformed chart data using VegaFusion (#3081, #3084, #3102)
+- Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
+- Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
 
 Bug Fixes
 ~~~~~~~~~
+- Don't call ``len`` on DataFrame Interchange Protocol objects (#3111)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Drop support for Python 3.7 which is end-of-life (#3100).
+- Drop support for Python 3.7 which is end-of-life (#3100)
+- Increase minimum required Pandas version to 0.25 (#3130)
 
 Version 5.0.1 (released May 26, 2023)
 -------------------------------------

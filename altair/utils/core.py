@@ -15,49 +15,28 @@ from types import ModuleType
 import jsonschema
 import pandas as pd
 import numpy as np
+from pandas.api.types import infer_dtype
 
 from altair.utils.schemapi import SchemaBase
+from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol
+from typing import Literal, Protocol, TYPE_CHECKING
 
-try:
-    from pandas.api.types import infer_dtype as _infer_dtype
-except ImportError:
-    # Import for pandas < 0.20.0
-    from pandas.lib import infer_dtype as _infer_dtype  # type: ignore[no-redef]
+if TYPE_CHECKING:
+    from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
 _V = TypeVar("_V")
 _P = ParamSpec("_P")
 
 
 class _DataFrameLike(Protocol):
-    def __dataframe__(self, *args, **kwargs):
+    def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
-
-
-def infer_dtype(value: object) -> str:
-    """Infer the dtype of the value.
-
-    This is a compatibility function for pandas infer_dtype,
-    with skipna=False regardless of the pandas version.
-    """
-    if not hasattr(infer_dtype, "_supports_skipna"):
-        try:
-            _infer_dtype([1], skipna=False)
-        except TypeError:
-            # pandas < 0.21.0 don't support skipna keyword
-            infer_dtype._supports_skipna = False  # type: ignore[attr-defined]
-        else:
-            infer_dtype._supports_skipna = True  # type: ignore[attr-defined]
-    if infer_dtype._supports_skipna:  # type: ignore[attr-defined]
-        return _infer_dtype(value, skipna=False)
-    else:
-        return _infer_dtype(value)
 
 
 TYPECODE_MAP = {
@@ -212,7 +191,7 @@ def infer_vegalite_type(
     ----------
     data: object
     """
-    typ = infer_dtype(data)
+    typ = infer_dtype(data, skipna=False)
 
     if typ in [
         "floating",
@@ -296,6 +275,13 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
     return geo_dct
 
 
+def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
+    try:
+        return np.issubdtype(dtype, subtype)
+    except (NotImplementedError, TypeError):
+        return False
+
+
 def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     """Sanitize a DataFrame to prepare it for serialization.
 
@@ -337,26 +323,27 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             return val
 
     for col_name, dtype in df.dtypes.items():
-        if str(dtype) == "category":
-            # Work around bug in to_json for categorical types in older versions of pandas
-            # https://github.com/pydata/pandas/issues/10778
-            # https://github.com/altair-viz/altair/pull/2170
+        dtype_name = str(dtype)
+        if dtype_name == "category":
+            # Work around bug in to_json for categorical types in older versions
+            # of pandas as they do not properly convert NaN values to null in to_json.
+            # We can probably remove this part once we require Pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype) == "string":
+        elif dtype_name == "string":
             # dedicated string datatype (since 1.0)
             # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype) == "bool":
+        elif dtype_name == "bool":
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
-        elif str(dtype) == "boolean":
+        elif dtype_name == "boolean":
             # dedicated boolean datatype (since 1.0)
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype).startswith("datetime"):
+        elif dtype_name.startswith("datetime") or dtype_name.startswith("timestamp"):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
@@ -366,18 +353,18 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             df[col_name] = (
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )
-        elif str(dtype).startswith("timedelta"):
+        elif dtype_name.startswith("timedelta"):
             raise ValueError(
                 'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
                 "".format(col_name=col_name, dtype=dtype)
             )
-        elif str(dtype).startswith("geometry"):
+        elif dtype_name.startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue
-        elif str(dtype) in {
+        elif dtype_name in {
             "Int8",
             "Int16",
             "Int32",
@@ -392,10 +379,10 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif np.issubdtype(dtype, np.integer):
+        elif numpy_is_subtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
-        elif np.issubdtype(dtype, np.floating):
+        elif numpy_is_subtype(dtype, np.floating):
             # For floats, convert to Python float: np.float is not JSON serializable
             # Also convert NaN/inf values to null, as they are not JSON serializable
             col = df[col_name]
@@ -436,7 +423,7 @@ def sanitize_arrow_table(pa_table):
 
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
-    data: Optional[pd.DataFrame] = None,
+    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
@@ -516,6 +503,8 @@ def parse_shorthand(
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
+    from altair.utils.data import pyarrow_available
+
     if not shorthand:
         return {}
 
@@ -574,14 +563,29 @@ def parse_shorthand(
         attrs["type"] = "temporal"
 
     # if data is specified and type is not, infer type from data
-    if isinstance(data, pd.DataFrame) and "type" not in attrs:
-        # Remove escape sequences so that types can be inferred for columns with special characters
-        if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
-            attrs["type"] = infer_vegalite_type(data[attrs["field"].replace("\\", "")])
-            # ordered categorical dataframe columns return the type and sort order as a tuple
-            if isinstance(attrs["type"], tuple):
-                attrs["sort"] = attrs["type"][1]
-                attrs["type"] = attrs["type"][0]
+    if "type" not in attrs:
+        if pyarrow_available() and data is not None and hasattr(data, "__dataframe__"):
+            dfi = data.__dataframe__()
+            if "field" in attrs:
+                unescaped_field = attrs["field"].replace("\\", "")
+                if unescaped_field in dfi.column_names():
+                    column = dfi.get_column_by_name(unescaped_field)
+                    attrs["type"] = infer_vegalite_type_for_dfi_column(column)
+                    if isinstance(attrs["type"], tuple):
+                        attrs["sort"] = attrs["type"][1]
+                        attrs["type"] = attrs["type"][0]
+        elif isinstance(data, pd.DataFrame):
+            # Fallback if pyarrow is not installed or if pandas is older than 1.5
+            #
+            # Remove escape sequences so that types can be inferred for columns with special characters
+            if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
+                attrs["type"] = infer_vegalite_type(
+                    data[attrs["field"].replace("\\", "")]
+                )
+                # ordered categorical dataframe columns return the type and sort order as a tuple
+                if isinstance(attrs["type"], tuple):
+                    attrs["sort"] = attrs["type"][1]
+                    attrs["type"] = attrs["type"][0]
 
     # If an unescaped colon is still present, it's often due to an incorrect data type specification
     # but could also be due to using a column name with ":" in it.
@@ -600,6 +604,43 @@ def parse_shorthand(
             + 'prefix it with a backslash; for example "column\\:name" instead of "column:name".'
         )
     return attrs
+
+
+def infer_vegalite_type_for_dfi_column(
+    column: Union[Column, "PandasColumn"],
+) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
+    from pyarrow.interchange.from_dataframe import column_to_array
+
+    try:
+        kind = column.dtype[0]
+    except NotImplementedError as e:
+        # Edge case hack:
+        # dtype access fails for pandas column with datetime64[ns, UTC] type,
+        # but all we need to know is that its temporal, so check the
+        # error message for the presence of datetime64.
+        #
+        # See https://github.com/pandas-dev/pandas/issues/54239
+        if "datetime64" in e.args[0] or "timestamp" in e.args[0]:
+            return "temporal"
+        raise e
+
+    if (
+        kind == DtypeKind.CATEGORICAL
+        and column.describe_categorical["is_ordered"]
+        and column.describe_categorical["categories"] is not None
+    ):
+        # Treat ordered categorical column as Vega-Lite ordinal
+        categories_column = column.describe_categorical["categories"]
+        categories_array = column_to_array(categories_column)
+        return "ordinal", categories_array.to_pylist()
+    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+        return "nominal"
+    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+        return "quantitative"
+    elif kind == DtypeKind.DATETIME:
+        return "temporal"
+    else:
+        raise ValueError(f"Unexpected DtypeKind: {kind}")
 
 
 def use_signature(Obj: Callable[_P, Any]):

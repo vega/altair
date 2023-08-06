@@ -1,9 +1,13 @@
 from datetime import datetime
-import pyarrow as pa
 import pandas as pd
 import pytest
 import sys
 import os
+
+try:
+    import pyarrow as pa
+except ImportError:
+    pa = None
 
 from altair.utils.data import to_values
 
@@ -25,6 +29,7 @@ def windows_has_tzdata():
     sys.platform == "win32" and not windows_has_tzdata(),
     reason="Timezone database is not installed on Windows",
 )
+@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 def test_arrow_timestamp_conversion():
     """Test that arrow timestamp values are converted to ISO-8601 strings"""
     data = {
@@ -44,6 +49,7 @@ def test_arrow_timestamp_conversion():
     assert values == expected_values
 
 
+@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 def test_duration_raises():
     td = pd.timedelta_range(0, periods=3, freq="h")
     df = pd.DataFrame(td).reset_index()

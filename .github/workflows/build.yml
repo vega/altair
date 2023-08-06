@@ -28,6 +28,21 @@ jobs:
           pip install .[dev]
           # pip install "selenium<4.3.0"
           # pip install altair_saver
+      - name: Maybe uninstall optional dependencies
+        # We uninstall pyarrow and vegafusion for one job to test that we have not
+        # accidentally introduced a hard dependency on these libraries.
+        # Uninstalling for Python 3.8 is an arbitrary choice.
+        # Also see https://github.com/altair-viz/altair/pull/3114
+        if: ${{ matrix.python-version == '3.8' }}
+        run: |
+          pip uninstall -y pyarrow vegafusion vegafusion-python-embed
+      - name: Maybe install lowest supported Pandas version
+        # We install the lowest supported Pandas version for one job to test that
+        # it still works. Downgrade to the oldest versions of pandas and numpy that include
+        # Python 3.8 wheels, so only run this job for Python 3.8
+        if: ${{ matrix.python-version == '3.8' }}
+        run: |
+          pip install pandas==0.25.3 numpy==1.17.5
       - name: Test that schema generation has no effect
         run: |
           python tools/generate_schema_wrapper.py
