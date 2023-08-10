@@ -1,7 +1,7 @@
 .. _user-guide-jupyterchart:
 
-JupyterChart
-============
+JupyterChart Interactivity
+==========================
 The ``JupyterChart`` class, introduced in Vega-Altair 5.1, makes it possible to update charts
 after they have been displayed and access the state of :ref:`user-guide-interactions` from Python.
 
