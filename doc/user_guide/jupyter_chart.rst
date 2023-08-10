@@ -268,7 +268,22 @@ The ``PointSelection`` instance may be accessed as ``jchart.selections.point`` (
 value of the ``name`` argument to ``alt.selection_point``).
 
 The ``jchart.selections.point.value`` property contains a list of dictionaries where each element
-represents a single point in the selection.
+represents a single point in the selection. This list of dictionaries may be converted into a pandas
+`query <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html>`_ string as follows
+
+.. code-block:: python
+
+    filter = " or ".join([
+        " and ".join([
+            f"`{col}` == {repr(val)}" for col, val in sel.items()
+        ])
+        for sel in jchart.selections.point.value
+    ])
+    source.query(filter)
+
+For example, when the Japan and Europe legend entries are selected, the ``filter`` string above will
+evaluate to ``"`Origin` == 'Japan' or `Origin` == 'Europe'"``, and the ``source.query(filter)`` expression
+will evaluate to a pandas ``DataFrame`` containing the rows of ``source`` that are in the selection.
 
 Index Selections
 ~~~~~~~~~~~~~~~~
@@ -341,6 +356,23 @@ is a dictionary from column names to selection intervals
       Your browser does not support the video tag.
     </video>
 
+The selection dictionary may be converted into a pandas
+`query <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html>`_ string as follows
+
+.. code-block:: python
+
+    filter = " and ".join([
+        f"{v[0]} <= `{k}` <= {v[1]}"
+        for k, v in jchart.selections.interval.value.items()
+    ])
+    source.query(filter)
+
+
+For example, when the x-selection is from 120 to 160 and the y-selection is from 25 to 35,
+``jchart.selections.interval.value`` will be ``{'Horsepower': [120, 160], 'Miles_per_Gallon': [25, 30]}``,
+the ``filter`` string will be ``"120 <= `Horsepower` <= 160 and 25 <= `Miles_per_Gallon` <= 35"``, and the
+``source.query(filter)`` expression will evaluate to a pandas ``DataFrame`` that contains the rows of
+``source`` that are in the selection.
 
 Observing Selections
 ~~~~~~~~~~~~~~~~~~~~
@@ -376,7 +408,7 @@ is used to combine the chart and HTML table in a column layout.
             filtered = source.iloc[:0]
         else:
             filter_query = (
-                f"{sel['Horsepower'][0]} <= `Horsepower` <= {sel['Horsepower'][1]} & "
+                f"{sel['Horsepower'][0]} <= `Horsepower` <= {sel['Horsepower'][1]} and "
                 f"{sel['Miles_per_Gallon'][0]} <= `Miles_per_Gallon` <= {sel['Miles_per_Gallon'][1]}"
             )
             filtered = source.query(filter_query)
