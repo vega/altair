@@ -3,12 +3,14 @@ import os
 import random
 import hashlib
 import warnings
+from importlib.metadata import version as importlib_version, PackageNotFoundError
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
 from types import ModuleType
 
 import pandas as pd
 from toolz import curried
 from typing import TypeVar
+from packaging.version import Version
 
 from .core import sanitize_dataframe, sanitize_arrow_table, _DataFrameLike
 from .core import sanitize_geo_interface
@@ -349,25 +351,23 @@ def curry(*args, **kwargs):
 
 
 def import_pyarrow_interchange() -> ModuleType:
-    import pkg_resources
-
     try:
-        pkg_resources.require("pyarrow>=11.0.0")
-        # The package is installed and meets the minimum version requirement
-        import pyarrow.interchange as pi
+        pyarrow_version_str = importlib_version("pyarrow")
+    except PackageNotFoundError as err:
+        raise ImportError(
+            "Usage of the DataFrame Interchange Protocol requires the package"
+            + " 'pyarrow', but it is not installed."
+        ) from err
+    else:
+        if Version(pyarrow_version_str) < Version("11.0.0"):
+            raise ImportError(
+                "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
+                "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
+            )
+        else:
+            import pyarrow.interchange as pi
 
-        return pi
-    except pkg_resources.DistributionNotFound as err:
-        # The package is not installed
-        raise ImportError(
-            "Usage of the DataFrame Interchange Protocol requires the package 'pyarrow', but it is not installed."
-        ) from err
-    except pkg_resources.VersionConflict as err:
-        # The package is installed but does not meet the minimum version requirement
-        raise ImportError(
-            "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
-            "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
-        ) from err
+            return pi
 
 
 def pyarrow_available() -> bool:

@@ -59,8 +59,8 @@ Vega-Altair: Declarative Visualization in Python
    User Guide <user_guide/data>
    Examples <gallery/index>
    API <user_guide/api>
-   user_guide/ecosystem
    releases/changes
+   About <about/roadmap>
 
 .. _GitHub: http://github.com/altair-viz/altair
 .. _Git Issues: http://github.com/altair-viz/altair/issues

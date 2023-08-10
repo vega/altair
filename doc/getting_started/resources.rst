@@ -1,4 +1,4 @@
-.. _ecosystem:
+.. _resources:
 
 Resources
 =========

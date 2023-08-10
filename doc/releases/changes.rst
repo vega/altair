@@ -19,7 +19,8 @@ Bug Fixes
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Drop support for Python 3.7 which is end-of-life (#3100).
+- Drop support for Python 3.7 which is end-of-life (#3100)
+- Increase minimum required Pandas version to 0.25 (#3130)
 
 Version 5.0.1 (released May 26, 2023)
 -------------------------------------
