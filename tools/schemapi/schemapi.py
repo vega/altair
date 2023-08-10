@@ -925,7 +925,7 @@ class SchemaBase:
         _wrapper_classes: Optional[Iterable[Type["SchemaBase"]]] = None,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
-    ) -> Any:
+    ) -> "SchemaBase":
         """Construct class from a dictionary representation
 
         Parameters
