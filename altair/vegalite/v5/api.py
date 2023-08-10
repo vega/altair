@@ -2592,7 +2592,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True) -> "Chart":  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
+    def from_dict(cls, dct, validate=True) -> core.SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters
