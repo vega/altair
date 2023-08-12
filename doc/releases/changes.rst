@@ -11,6 +11,7 @@ Enhancements
 - Add ``chart.transformed_data()`` method to extract transformed chart data using VegaFusion (#3081, #3084, #3102)
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
+- Add support for new referencing logic in version 4.18 of the jsonschema package
 
 Bug Fixes
 ~~~~~~~~~
@@ -25,7 +26,7 @@ Version 5.0.1 (released May 26, 2023)
 -------------------------------------
 
 - Remove unwanted files during build to avoid littering site-packages folder (#3057).
-- Deprecate the ``.ref()`` function for selections, instead of removing it (#3063). 
+- Deprecate the ``.ref()`` function for selections, instead of removing it (#3063).
 - Fix bug in reconstructing layered charts with ``Chart.from_json()``/``Chart.from_dict()`` (#3068).
 
 Version 5.0.0 (released May 9, 2023)
@@ -118,7 +119,7 @@ Enhancements
 
 - Pie charts are now supported through the use of ``mark_arc``. (Examples: eg.
   :ref:`gallery_pie_chart` and :ref:`gallery_radial_chart`.)
-- Support for the ``datum`` encoding specifications from Vega-Lite; see 
+- Support for the ``datum`` encoding specifications from Vega-Lite; see
   `Vega-Lite Datum Definition <https://vega.github.io/vega-lite/docs/encoding.html#datum-def>`_.
   (Examples: :ref:`gallery_line_chart_with_datum` and :ref:`gallery_line_chart_with_color_datum`.)
 - ``angle`` encoding can now be used to control point styles (Example: :ref:`gallery_wind_vector_map`)
