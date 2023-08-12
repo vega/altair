@@ -162,6 +162,10 @@ Examples are:
 
 Altair Viewer
 ~~~~~~~~~~~~~
+.. note::
+   
+   altair_viewer does not yet support Altair 5.
+
 For non-notebook IDEs, a useful companion is the `Altair Viewer`_ package,
 which provides an Altair renderer that works directly from any Python terminal.
 Start by installing the package::
