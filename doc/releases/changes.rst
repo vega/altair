@@ -6,11 +6,15 @@ Release Notes
 Version 5.1.0 (unreleased month date, year)
 -------------------------------------------
 
+- Update Vega-Lite from version 5.8.0 to version 5.14.1;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+
 Enhancements
 ~~~~~~~~~~~~
 - Add ``chart.transformed_data()`` method to extract transformed chart data using VegaFusion (#3081, #3084, #3102)
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
+- Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
 
 Bug Fixes
 ~~~~~~~~~
