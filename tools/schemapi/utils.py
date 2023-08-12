@@ -5,19 +5,10 @@ import re
 import textwrap
 import urllib
 
-import jsonschema
+from .schemapi import _resolve_references as resolve_references
 
 
 EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
-
-
-def resolve_references(schema, root=None):
-    """Resolve References within a JSON schema"""
-    resolver = jsonschema.RefResolver.from_schema(root or schema)
-    while "$ref" in schema:
-        with resolver.resolving(schema["$ref"]) as resolved:
-            schema = resolved
-    return schema
 
 
 def get_valid_identifier(

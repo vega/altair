@@ -1,5 +1,6 @@
 import collections
 import contextlib
+import copy
 import inspect
 import json
 import sys
@@ -21,13 +22,19 @@ from typing import (
     TypeVar,
 )
 from itertools import zip_longest
+from importlib.metadata import version as importlib_version
+from typing import Final
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
 import pandas as pd
+from packaging.version import Version
 
+# This leads to circular imports with the vegalite module. Currently, this works
+# but be aware that when you access it in this script, the vegalite module might
+# not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
 if sys.version_info >= (3, 11):
@@ -39,6 +46,20 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound="SchemaBase")
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors = Dict[str, ValidationErrorList]
+
+# This URI is arbitrary and could be anything else. It just cannot be an empty
+# string as we need to reference the schema registered in
+# the referencing.Registry.
+_VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
+
+# Ideally, jsonschema specification would be parsed from the current Vega-Lite
+# schema instead of being hardcoded here as a default value.
+# However, due to circular imports between this module and the altair.vegalite
+# modules, this information is not yet available at this point as altair.vegalite
+# is only partially loaded. The draft version which is used is unlikely to
+# change often so it's ok to keep this. There is also a test which validates
+# that this value is always the same as in the Vega-Lite schema.
+_DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#"
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -147,20 +168,100 @@ def _get_errors_from_spec(
     # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
     # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
     # it is not a valid URI reference due to the characters such as '<'.
-    if rootschema is not None:
-        validator_cls = jsonschema.validators.validator_for(rootschema)
-        resolver = jsonschema.RefResolver.from_schema(rootschema)
-    else:
-        validator_cls = jsonschema.validators.validator_for(schema)
-        # No resolver is necessary if the schema is already the full schema
-        resolver = None
 
-    validator_kwargs = {"resolver": resolver}
+    json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
+    validator_cls = jsonschema.validators.validator_for(
+        {"$schema": json_schema_draft_url}
+    )
+    validator_kwargs: Dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
+
+    if _use_referencing_library():
+        schema = _prepare_references_in_schema(schema)
+        validator_kwargs["registry"] = _get_referencing_registry(
+            rootschema or schema, json_schema_draft_url
+        )
+
+    else:
+        # No resolver is necessary if the schema is already the full schema
+        validator_kwargs["resolver"] = (
+            jsonschema.RefResolver.from_schema(rootschema)
+            if rootschema is not None
+            else None
+        )
+
     validator = validator_cls(schema, **validator_kwargs)
     errors = list(validator.iter_errors(spec))
     return errors
+
+
+def _get_json_schema_draft_url(schema: dict) -> str:
+    return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
+
+
+def _use_referencing_library() -> bool:
+    """In version 4.18.0, the jsonschema package deprecated RefResolver in
+    favor of the referencing library."""
+    jsonschema_version_str = importlib_version("jsonschema")
+    return Version(jsonschema_version_str) >= Version("4.18")
+
+
+def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
+    # Create a copy so that $ref is not modified in the original schema in case
+    # that it would still reference a dictionary which might be attached to
+    # an Altair class _schema attribute
+    schema = copy.deepcopy(schema)
+
+    def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
+        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This function
+        recursively iterates through the whole dictionary."""
+        for key, value in d.items():
+            if key == "$ref":
+                d[key] = _VEGA_LITE_ROOT_URI + d[key]
+            else:
+                # $ref values can only be nested in dictionaries or lists
+                # as the passed in `d` dictionary comes from the Vega-Lite json schema
+                # and in json we only have arrays (-> lists in Python) and objects
+                # (-> dictionaries in Python) which we need to iterate through.
+                if isinstance(value, dict):
+                    d[key] = _prepare_refs(value)
+                elif isinstance(value, list):
+                    prepared_values = []
+                    for v in value:
+                        if isinstance(v, dict):
+                            v = _prepare_refs(v)
+                        prepared_values.append(v)
+                    d[key] = prepared_values
+        return d
+
+    schema = _prepare_refs(schema)
+    return schema
+
+
+# We do not annotate the return value here as the referencing library is not always
+# available and this function is only executed in those cases.
+def _get_referencing_registry(
+    rootschema: Dict[str, Any], json_schema_draft_url: Optional[str] = None
+):
+    # Referencing is a dependency of newer jsonschema versions, starting with the
+    # version that is specified in _use_referencing_library and we therefore
+    # can expect that it is installed if the function returns True.
+    # We ignore 'import' mypy errors which happen when the referencing library
+    # is not installed. That's ok as in these cases this function is not called.
+    # We also have to ignore 'unused-ignore' errors as mypy raises those in case
+    # referencing is installed.
+    import referencing  # type: ignore[import,unused-ignore]
+    import referencing.jsonschema  # type: ignore[import,unused-ignore]
+
+    if json_schema_draft_url is None:
+        json_schema_draft_url = _get_json_schema_draft_url(rootschema)
+
+    specification = referencing.jsonschema.specification_with(json_schema_draft_url)
+    resource = specification.create_resource(rootschema)
+    return referencing.Registry().with_resource(
+        uri=_VEGA_LITE_ROOT_URI, resource=resource
+    )
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
@@ -382,12 +483,27 @@ def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
         return obj
 
 
-def _resolve_references(schema: dict, root: Optional[dict] = None) -> dict:
-    """Resolve schema references."""
-    resolver = jsonschema.RefResolver.from_schema(root or schema)
-    while "$ref" in schema:
-        with resolver.resolving(schema["$ref"]) as resolved:
-            schema = resolved
+def _resolve_references(
+    schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Resolve schema references until there is no $ref anymore
+    in the top-level of the dictionary.
+    """
+    if _use_referencing_library():
+        registry = _get_referencing_registry(rootschema or schema)
+        # Using a different variable name to show that this is not the
+        # jsonschema.RefResolver but instead a Resolver from the referencing
+        # library
+        referencing_resolver = registry.resolver()
+        while "$ref" in schema:
+            schema = referencing_resolver.lookup(
+                _VEGA_LITE_ROOT_URI + schema["$ref"]
+            ).contents
+    else:
+        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
+        while "$ref" in schema:
+            with resolver.resolving(schema["$ref"]) as resolved:
+                schema = resolved
     return schema
 
 
@@ -1008,7 +1124,7 @@ class SchemaBase:
         assert schema_to_pass is not None
         return _resolve_references(
             schema=schema_to_pass,
-            root=(cls._rootschema or cls._schema or schema),
+            rootschema=(cls._rootschema or cls._schema or schema),
         )
 
     @classmethod
