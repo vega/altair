@@ -41,7 +41,7 @@ doc strings within ``altair/vegalite/v5/api.py``.
 These additional methods have fairly good test coverage, so running the test
 suite should identify any inconsistencies:
 ```
-$ make test
+hatch run test
 ```
 Generally, minor version updates (e.g. Vega-Lite 2.3->2.4) have been relatively
 painless, maybe requiring the addition of a few chart methods or modification
