@@ -1695,6 +1695,24 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
+    def transform_extent(self, extent: str, param: str):
+        """Add a :class:`ExtentTransform` to the spec.
+
+        Parameters
+        ----------
+        extent : str
+            The field of which to get the extent.
+        param : str
+            The name of the output parameter which will be created by
+            the extent transform.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+        """
+        return self._add_transform(core.ExtentTransform(extent=extent, param=param))
+
     # TODO: Update docstring
     def transform_filter(self, filter, **kwargs) -> Self:
         """
@@ -2605,7 +2623,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True) -> "Chart":  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
+    def from_dict(cls, dct, validate=True) -> core.SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters

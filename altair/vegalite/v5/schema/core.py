@@ -1759,6 +1759,8 @@ class BarConfig(AnyMarkConfig):
     lineHeight : anyOf(float, :class:`ExprRef`)
         The line height in pixels (the spacing between subsequent lines of text) for
         multi-line text marks.
+    minBandSize : anyOf(float, :class:`ExprRef`)
+        The minimum band size for bar and rectangle marks. **Default value:** ``0.25``
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -1943,9 +1945,9 @@ class BarConfig(AnyMarkConfig):
                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                  fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
                  innerRadius=Undefined, interpolate=Undefined, invalid=Undefined, limit=Undefined,
-                 lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                 orient=Undefined, outerRadius=Undefined, padAngle=Undefined, radius=Undefined,
-                 radius2=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
+                 lineBreak=Undefined, lineHeight=Undefined, minBandSize=Undefined, opacity=Undefined,
+                 order=Undefined, orient=Undefined, outerRadius=Undefined, padAngle=Undefined,
+                 radius=Undefined, radius2=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
                  startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
@@ -1970,10 +1972,11 @@ class BarConfig(AnyMarkConfig):
                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                         height=height, href=href, innerRadius=innerRadius,
                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                        lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity,
-                                        order=order, orient=orient, outerRadius=outerRadius,
-                                        padAngle=padAngle, radius=radius, radius2=radius2, shape=shape,
-                                        size=size, smooth=smooth, startAngle=startAngle, stroke=stroke,
+                                        lineBreak=lineBreak, lineHeight=lineHeight,
+                                        minBandSize=minBandSize, opacity=opacity, order=order,
+                                        orient=orient, outerRadius=outerRadius, padAngle=padAngle,
+                                        radius=radius, radius2=radius2, shape=shape, size=size,
+                                        smooth=smooth, startAngle=startAngle, stroke=stroke,
                                         strokeCap=strokeCap, strokeDash=strokeDash,
                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
@@ -2335,6 +2338,27 @@ class BindRange(Binding):
                  min=Undefined, name=Undefined, step=Undefined, **kwds):
         super(BindRange, self).__init__(input=input, debounce=debounce, element=element, max=max,
                                         min=min, name=name, step=step, **kwds)
+
+
+class BinnedTimeUnit(VegaLiteSchema):
+    """BinnedTimeUnit schema wrapper
+
+    anyOf(enum('binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth',
+    'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes',
+    'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday',
+    'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes',
+    'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'), enum('binnedutcyear',
+    'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth',
+    'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours',
+    'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds',
+    'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours',
+    'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds',
+    'binnedutcyeardayofyear'))
+    """
+    _schema = {'$ref': '#/definitions/BinnedTimeUnit'}
+
+    def __init__(self, *args, **kwds):
+        super(BinnedTimeUnit, self).__init__(*args, **kwds)
 
 
 class Blend(VegaLiteSchema):
@@ -3094,7 +3118,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -3298,7 +3322,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4087,6 +4111,10 @@ class Config(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/title.html>`__. For a full list of title
         configuration options, please see the `corresponding section of the title
         documentation <https://vega.github.io/vega-lite/docs/title.html#config>`__.
+    tooltipFormat : :class:`FormatConfig`
+        Define `custom format configuration
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ for tooltips. If
+        unspecified, default format config will be applied.
     trail : :class:`LineConfig`
         Trail-Specific Config
     view : :class:`ViewConfig`
@@ -4114,7 +4142,8 @@ class Config(VegaLiteSchema):
                  params=Undefined, point=Undefined, projection=Undefined, range=Undefined,
                  rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined, square=Undefined,
                  style=Undefined, text=Undefined, tick=Undefined, timeFormat=Undefined,
-                 timeFormatType=Undefined, title=Undefined, trail=Undefined, view=Undefined, **kwds):
+                 timeFormatType=Undefined, title=Undefined, tooltipFormat=Undefined, trail=Undefined,
+                 view=Undefined, **kwds):
         super(Config, self).__init__(arc=arc, area=area, aria=aria, autosize=autosize, axis=axis,
                                      axisBand=axisBand, axisBottom=axisBottom,
                                      axisDiscrete=axisDiscrete, axisLeft=axisLeft, axisPoint=axisPoint,
@@ -4139,7 +4168,8 @@ class Config(VegaLiteSchema):
                                      range=range, rect=rect, rule=rule, scale=scale,
                                      selection=selection, square=square, style=style, text=text,
                                      tick=tick, timeFormat=timeFormat, timeFormatType=timeFormatType,
-                                     title=title, trail=trail, view=view, **kwds)
+                                     title=title, tooltipFormat=tooltipFormat, trail=trail, view=view,
+                                     **kwds)
 
 
 class Cursor(VegaLiteSchema):
@@ -4472,7 +4502,7 @@ class Encoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`)
+    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`, :class:`OrderOnlyDef`)
         Order of the marks.
 
 
@@ -5078,7 +5108,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -5275,7 +5305,7 @@ class FacetFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -5477,7 +5507,7 @@ class FacetedEncoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`)
+    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`, :class:`OrderOnlyDef`)
         Order of the marks.
 
 
@@ -5789,7 +5819,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6005,7 +6035,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6170,6 +6200,79 @@ class FontWeight(VegaLiteSchema):
 
     def __init__(self, *args):
         super(FontWeight, self).__init__(*args)
+
+
+class FormatConfig(VegaLiteSchema):
+    """FormatConfig schema wrapper
+
+    Mapping(required=[])
+
+    Parameters
+    ----------
+
+    normalizedNumberFormat : string
+        If normalizedNumberFormatType is not specified, D3 number format for axis labels,
+        text marks, and tooltips of normalized stacked fields (fields with ``stack:
+        "normalize"`` ). For example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.normalizedNumberFormatType`` is specified and
+        ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
+        alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
+        value:** ``%``
+    normalizedNumberFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.normalizedNumberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
+    numberFormat : string
+        If numberFormatType is not specified, D3 number format for guide labels, text marks,
+        and tooltips of non-normalized fields (fields *without* ``stack: "normalize"`` ).
+        For example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
+        ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
+        ``config.numberFormatType`` function.
+    numberFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.numberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
+    timeFormat : string
+        Default time format for raw time values (without time units) in text marks, legend
+        labels and header labels.
+
+        **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
+        for each label automatically so this config does not affect axes.
+    timeFormatType : string
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.timeFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-time-format,
+        which is exposed as `timeFormat in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#timeFormat>`__. **Note:** You must
+        also set ``customFormatTypes`` to ``true`` and there must *not* be a ``timeUnit``
+        defined to use this feature.
+    """
+    _schema = {'$ref': '#/definitions/FormatConfig'}
+
+    def __init__(self, normalizedNumberFormat=Undefined, normalizedNumberFormatType=Undefined,
+                 numberFormat=Undefined, numberFormatType=Undefined, timeFormat=Undefined,
+                 timeFormatType=Undefined, **kwds):
+        super(FormatConfig, self).__init__(normalizedNumberFormat=normalizedNumberFormat,
+                                           normalizedNumberFormatType=normalizedNumberFormatType,
+                                           numberFormat=numberFormat, numberFormatType=numberFormatType,
+                                           timeFormat=timeFormat, timeFormatType=timeFormatType, **kwds)
 
 
 class Generator(Data):
@@ -7264,7 +7367,7 @@ class LatLongFieldDef(LatLongDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9405,6 +9508,8 @@ class MarkDef(AnyMark):
     lineHeight : anyOf(float, :class:`ExprRef`)
         The line height in pixels (the spacing between subsequent lines of text) for
         multi-line text marks.
+    minBandSize : anyOf(float, :class:`ExprRef`)
+        The minimum band size for bar and rectangle marks. **Default value:** ``0.25``
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -9642,18 +9747,18 @@ class MarkDef(AnyMark):
                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
                  href=Undefined, innerRadius=Undefined, interpolate=Undefined, invalid=Undefined,
                  limit=Undefined, line=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
-                 padAngle=Undefined, point=Undefined, radius=Undefined, radius2=Undefined,
-                 radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined, size=Undefined,
-                 smooth=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 theta2Offset=Undefined, thetaOffset=Undefined, thickness=Undefined,
-                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
-                 xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
-                 **kwds):
+                 minBandSize=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
+                 radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
+                 size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
+                 thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
+                 tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                 x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                 yOffset=Undefined, **kwds):
         super(MarkDef, self).__init__(type=type, align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                                       ariaRoleDescription=ariaRoleDescription, aspect=aspect,
                                       bandSize=bandSize, baseline=baseline, binSpacing=binSpacing,
@@ -9671,9 +9776,9 @@ class MarkDef(AnyMark):
                                       fontWeight=fontWeight, height=height, href=href,
                                       innerRadius=innerRadius, interpolate=interpolate, invalid=invalid,
                                       limit=limit, line=line, lineBreak=lineBreak,
-                                      lineHeight=lineHeight, opacity=opacity, order=order,
-                                      orient=orient, outerRadius=outerRadius, padAngle=padAngle,
-                                      point=point, radius=radius, radius2=radius2,
+                                      lineHeight=lineHeight, minBandSize=minBandSize, opacity=opacity,
+                                      order=order, orient=orient, outerRadius=outerRadius,
+                                      padAngle=padAngle, point=point, radius=radius, radius2=radius2,
                                       radius2Offset=radius2Offset, radiusOffset=radiusOffset,
                                       shape=shape, size=size, smooth=smooth, stroke=stroke,
                                       strokeCap=strokeCap, strokeDash=strokeDash,
@@ -9947,7 +10052,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10540,7 +10645,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10915,7 +11020,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11100,7 +11205,7 @@ class OrderFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11206,6 +11311,23 @@ class OrderFieldDef(VegaLiteSchema):
         super(OrderFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
                                             field=field, sort=sort, timeUnit=timeUnit, title=title,
                                             type=type, **kwds)
+
+
+class OrderOnlyDef(VegaLiteSchema):
+    """OrderOnlyDef schema wrapper
+
+    Mapping(required=[])
+
+    Parameters
+    ----------
+
+    sort : :class:`SortOrder`
+        The sort order. One of ``"ascending"`` (default) or ``"descending"``.
+    """
+    _schema = {'$ref': '#/definitions/OrderOnlyDef'}
+
+    def __init__(self, sort=Undefined, **kwds):
+        super(OrderOnlyDef, self).__init__(sort=sort, **kwds)
 
 
 class OrderValueDef(VegaLiteSchema):
@@ -12673,7 +12795,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12922,7 +13044,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13142,7 +13264,7 @@ class FieldEqualPredicate(Predicate):
         The value that the field should be equal to.
     field : :class:`FieldName`
         Field to be tested.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldEqualPredicate'}
@@ -13163,7 +13285,7 @@ class FieldGTEPredicate(Predicate):
         Field to be tested.
     gte : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be greater than or equals to.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldGTEPredicate'}
@@ -13184,7 +13306,7 @@ class FieldGTPredicate(Predicate):
         Field to be tested.
     gt : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be greater than.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldGTPredicate'}
@@ -13205,7 +13327,7 @@ class FieldLTEPredicate(Predicate):
         Field to be tested.
     lte : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be less than or equals to.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldLTEPredicate'}
@@ -13226,7 +13348,7 @@ class FieldLTPredicate(Predicate):
         Field to be tested.
     lt : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be less than.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldLTPredicate'}
@@ -13248,7 +13370,7 @@ class FieldOneOfPredicate(Predicate):
     oneOf : anyOf(List(string), List(float), List(boolean), List(:class:`DateTime`))
         A set of values that the ``field`` 's value should be a member of, for a data item
         included in the filtered data.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldOneOfPredicate'}
@@ -13270,7 +13392,7 @@ class FieldRangePredicate(Predicate):
     range : anyOf(List(anyOf(float, :class:`DateTime`, None, :class:`ExprRef`)), :class:`ExprRef`)
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldRangePredicate'}
@@ -13293,7 +13415,7 @@ class FieldValidPredicate(Predicate):
         If set to true the field's value has to be valid, meaning both not ``null`` and not
         `NaN
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN>`__.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
     """
     _schema = {'$ref': '#/definitions/FieldValidPredicate'}
@@ -13929,6 +14051,8 @@ class RectConfig(AnyMarkConfig):
     lineHeight : anyOf(float, :class:`ExprRef`)
         The line height in pixels (the spacing between subsequent lines of text) for
         multi-line text marks.
+    minBandSize : anyOf(float, :class:`ExprRef`)
+        The minimum band size for bar and rectangle marks. **Default value:** ``0.25``
     opacity : anyOf(float, :class:`ExprRef`)
         The overall opacity (value between [0,1]).
 
@@ -14113,15 +14237,16 @@ class RectConfig(AnyMarkConfig):
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
                  height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
                  invalid=Undefined, limit=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
-                 padAngle=Undefined, radius=Undefined, radius2=Undefined, shape=Undefined,
-                 size=Undefined, smooth=Undefined, startAngle=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, theta2=Undefined, timeUnitBandPosition=Undefined,
-                 timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                 x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+                 minBandSize=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 outerRadius=Undefined, padAngle=Undefined, radius=Undefined, radius2=Undefined,
+                 shape=Undefined, size=Undefined, smooth=Undefined, startAngle=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
+                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
+                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined,
+                 **kwds):
         super(RectConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
                                          ariaRoleDescription=ariaRoleDescription, aspect=aspect,
                                          baseline=baseline, binSpacing=binSpacing, blend=blend,
@@ -14138,10 +14263,11 @@ class RectConfig(AnyMarkConfig):
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                          height=height, href=href, innerRadius=innerRadius,
                                          interpolate=interpolate, invalid=invalid, limit=limit,
-                                         lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity,
-                                         order=order, orient=orient, outerRadius=outerRadius,
-                                         padAngle=padAngle, radius=radius, radius2=radius2, shape=shape,
-                                         size=size, smooth=smooth, startAngle=startAngle, stroke=stroke,
+                                         lineBreak=lineBreak, lineHeight=lineHeight,
+                                         minBandSize=minBandSize, opacity=opacity, order=order,
+                                         orient=orient, outerRadius=outerRadius, padAngle=padAngle,
+                                         radius=radius, radius2=radius2, shape=shape, size=size,
+                                         smooth=smooth, startAngle=startAngle, stroke=stroke,
                                          strokeCap=strokeCap, strokeDash=strokeDash,
                                          strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                          strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
@@ -14409,7 +14535,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14610,6 +14736,11 @@ class Scale(VegaLiteSchema):
     domainMin : anyOf(float, :class:`DateTime`, :class:`ExprRef`)
         Sets the minimum value in the scale domain, overriding the domain property. This
         property is only intended for use with scales having continuous domains.
+    domainRaw : :class:`ExprRef`
+        An expression for an array of raw values that, if non-null, directly overrides the
+        *domain* property. This is useful for supporting interactions such as panning or
+        zooming a scale. The scale may be initially determined using a data-driven domain,
+        then modified in response to user input by setting the rawDomain value.
     exponent : anyOf(float, :class:`ExprRef`)
         The exponent of the ``pow`` scale.
     interpolate : anyOf(:class:`ScaleInterpolateEnum`, :class:`ExprRef`, :class:`ScaleInterpolateParams`)
@@ -14727,7 +14858,7 @@ class Scale(VegaLiteSchema):
         snapping to the pixel grid.
 
         **Default value:** ``false``.
-    scheme : anyOf(string, :class:`SchemeParams`, :class:`ExprRef`)
+    scheme : anyOf(:class:`ColorScheme`, :class:`SchemeParams`, :class:`ExprRef`)
         A string indicating a color `scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__ name (e.g.,
         ``"category10"`` or ``"blues"`` ) or a `scheme parameter object
@@ -14782,17 +14913,17 @@ class Scale(VegaLiteSchema):
 
     def __init__(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined,
                  constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined,
-                 domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined,
-                 padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined,
-                 rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined,
-                 scheme=Undefined, type=Undefined, zero=Undefined, **kwds):
+                 domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined,
+                 nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined,
+                 range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined,
+                 round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds):
         super(Scale, self).__init__(align=align, base=base, bins=bins, clamp=clamp, constant=constant,
                                     domain=domain, domainMax=domainMax, domainMid=domainMid,
-                                    domainMin=domainMin, exponent=exponent, interpolate=interpolate,
-                                    nice=nice, padding=padding, paddingInner=paddingInner,
-                                    paddingOuter=paddingOuter, range=range, rangeMax=rangeMax,
-                                    rangeMin=rangeMin, reverse=reverse, round=round, scheme=scheme,
-                                    type=type, zero=zero, **kwds)
+                                    domainMin=domainMin, domainRaw=domainRaw, exponent=exponent,
+                                    interpolate=interpolate, nice=nice, padding=padding,
+                                    paddingInner=paddingInner, paddingOuter=paddingOuter, range=range,
+                                    rangeMax=rangeMax, rangeMin=rangeMin, reverse=reverse, round=round,
+                                    scheme=scheme, type=type, zero=zero, **kwds)
 
 
 class ScaleBins(VegaLiteSchema):
@@ -15234,7 +15365,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15450,7 +15581,7 @@ class SchemeParams(VegaLiteSchema):
     Parameters
     ----------
 
-    name : string
+    name : :class:`ColorScheme`
         A color scheme name for ordinal scales (e.g., ``"category10"`` or ``"blues"`` ).
 
         For the full list of supported schemes, please refer to the `Vega Scheme
@@ -15528,7 +15659,7 @@ class SecondaryFieldDef(Position2Def):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16142,7 +16273,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16295,7 +16426,7 @@ class SharedEncoding(VegaLiteSchema):
 
     opacity : Mapping(required=[])
 
-    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`)
+    order : anyOf(:class:`OrderFieldDef`, List(:class:`OrderFieldDef`), :class:`OrderValueDef`, :class:`OrderOnlyDef`)
         Order of the marks.
 
 
@@ -17539,7 +17670,7 @@ class StringFieldDef(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -17745,7 +17876,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18270,7 +18401,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18959,6 +19090,37 @@ class TimeUnitParams(VegaLiteSchema):
     """TimeUnitParams schema wrapper
 
     Mapping(required=[])
+    Time Unit Params for encoding predicate, which can specified if the data is  already
+    "binned".
+
+    Parameters
+    ----------
+
+    binned : boolean
+        Whether the data has already been binned to this time unit. If true, Vega-Lite will
+        only format the data, marks, and guides, without applying the timeUnit transform to
+        re-bin the data again.
+    maxbins : float
+        If no ``unit`` is specified, maxbins is used to infer time units.
+    step : float
+        The number of steps between bins, in terms of the least significant unit provided.
+    unit : :class:`TimeUnit`
+        Defines how date-time values should be binned.
+    utc : boolean
+        True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
+    """
+    _schema = {'$ref': '#/definitions/TimeUnitParams'}
+
+    def __init__(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined,
+                 utc=Undefined, **kwds):
+        super(TimeUnitParams, self).__init__(binned=binned, maxbins=maxbins, step=step, unit=unit,
+                                             utc=utc, **kwds)
+
+
+class TimeUnitTransformParams(VegaLiteSchema):
+    """TimeUnitTransformParams schema wrapper
+
+    Mapping(required=[])
 
     Parameters
     ----------
@@ -18972,10 +19134,11 @@ class TimeUnitParams(VegaLiteSchema):
     utc : boolean
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
     """
-    _schema = {'$ref': '#/definitions/TimeUnitParams'}
+    _schema = {'$ref': '#/definitions/TimeUnitTransformParams'}
 
     def __init__(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds):
-        super(TimeUnitParams, self).__init__(maxbins=maxbins, step=step, unit=unit, utc=utc, **kwds)
+        super(TimeUnitTransformParams, self).__init__(maxbins=maxbins, step=step, unit=unit, utc=utc,
+                                                      **kwds)
 
 
 class TitleAnchor(VegaLiteSchema):
@@ -20182,11 +20345,12 @@ class Transform(VegaLiteSchema):
     """Transform schema wrapper
 
     anyOf(:class:`AggregateTransform`, :class:`BinTransform`, :class:`CalculateTransform`,
-    :class:`DensityTransform`, :class:`FilterTransform`, :class:`FlattenTransform`,
-    :class:`FoldTransform`, :class:`ImputeTransform`, :class:`JoinAggregateTransform`,
-    :class:`LoessTransform`, :class:`LookupTransform`, :class:`QuantileTransform`,
-    :class:`RegressionTransform`, :class:`TimeUnitTransform`, :class:`SampleTransform`,
-    :class:`StackTransform`, :class:`WindowTransform`, :class:`PivotTransform`)
+    :class:`DensityTransform`, :class:`ExtentTransform`, :class:`FilterTransform`,
+    :class:`FlattenTransform`, :class:`FoldTransform`, :class:`ImputeTransform`,
+    :class:`JoinAggregateTransform`, :class:`LoessTransform`, :class:`LookupTransform`,
+    :class:`QuantileTransform`, :class:`RegressionTransform`, :class:`TimeUnitTransform`,
+    :class:`SampleTransform`, :class:`StackTransform`, :class:`WindowTransform`,
+    :class:`PivotTransform`)
     """
     _schema = {'$ref': '#/definitions/Transform'}
 
@@ -20318,6 +20482,25 @@ class DensityTransform(Transform):
         super(DensityTransform, self).__init__(density=density, bandwidth=bandwidth, counts=counts,
                                                cumulative=cumulative, extent=extent, groupby=groupby,
                                                maxsteps=maxsteps, minsteps=minsteps, steps=steps, **kwds)
+
+
+class ExtentTransform(Transform):
+    """ExtentTransform schema wrapper
+
+    Mapping(required=[extent, param])
+
+    Parameters
+    ----------
+
+    extent : :class:`FieldName`
+        The field of which to get the extent.
+    param : :class:`ParameterName`
+        The output parameter produced by the extent transform.
+    """
+    _schema = {'$ref': '#/definitions/ExtentTransform'}
+
+    def __init__(self, extent=Undefined, param=Undefined, **kwds):
+        super(ExtentTransform, self).__init__(extent=extent, param=param, **kwds)
 
 
 class FilterTransform(Transform):
@@ -20724,7 +20907,7 @@ class TimeUnitTransform(Transform):
 
     field : :class:`FieldName`
         The data field to apply time unit.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitTransformParams`)
         The timeUnit.
     as : :class:`FieldName`
         The output field to write the timeUnit value.
@@ -20815,7 +20998,7 @@ class TypedFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.

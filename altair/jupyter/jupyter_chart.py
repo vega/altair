@@ -145,6 +145,11 @@ class JupyterChart(anywidget.AnyWidget):
 
         if params is not alt.Undefined:
             for param in new_chart.params:
+                if isinstance(param.name, alt.ParameterName):
+                    clean_name = param.name.to_json().strip('"')
+                else:
+                    clean_name = param.name
+
                 select = getattr(param, "select", alt.Undefined)
 
                 if select != alt.Undefined:
@@ -158,27 +163,27 @@ class JupyterChart(anywidget.AnyWidget):
                         ):
                             # Point selection with no associated fields or encodings specified.
                             # This is an index-based selection
-                            selection_types[param.name] = "index"
-                            empty_selections[param.name] = IndexSelection(
-                                name=param.name, value=[], store=[]
+                            selection_types[clean_name] = "index"
+                            empty_selections[clean_name] = IndexSelection(
+                                name=clean_name, value=[], store=[]
                             )
                         else:
-                            selection_types[param.name] = "point"
-                            empty_selections[param.name] = PointSelection(
-                                name=param.name, value=[], store=[]
+                            selection_types[clean_name] = "point"
+                            empty_selections[clean_name] = PointSelection(
+                                name=clean_name, value=[], store=[]
                             )
                     elif select_type == "interval":
-                        selection_types[param.name] = "interval"
-                        empty_selections[param.name] = IntervalSelection(
-                            name=param.name, value={}, store=[]
+                        selection_types[clean_name] = "interval"
+                        empty_selections[clean_name] = IntervalSelection(
+                            name=clean_name, value={}, store=[]
                         )
                     else:
                         raise ValueError(f"Unexpected selection type {select.type}")
-                    selection_watches.append(param.name)
-                    initial_vl_selections[param.name] = {"value": None, "store": []}
+                    selection_watches.append(clean_name)
+                    initial_vl_selections[clean_name] = {"value": None, "store": []}
                 else:
                     clean_value = param.value if param.value != alt.Undefined else None
-                    initial_params[param.name] = clean_value
+                    initial_params[clean_name] = clean_value
 
         # Setup params
         self.params = Params(initial_params)

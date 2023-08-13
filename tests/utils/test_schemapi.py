@@ -20,11 +20,22 @@ from altair.utils.schemapi import (
     Undefined,
     _FromDict,
     SchemaValidationError,
+    _DEFAULT_JSON_SCHEMA_DRAFT_URL,
 )
 
-_JSONSCHEMA_DRAFT = load_schema()["$schema"]
+_JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
+
+
+def test_actual_json_schema_draft_is_same_as_hardcoded_default():
+    # See comments next to definition of _DEFAULT_JSON_SCHEMA_DRAFT_URL
+    # for details why we need this test
+    assert _DEFAULT_JSON_SCHEMA_DRAFT_URL == _JSON_SCHEMA_DRAFT_URL, (
+        "The default json schema URL, which is hardcoded,"
+        + " is not the same as the one used in the Vega-Lite schema."
+        + " You need to update the default value."
+    )
 
 
 class _TestSchema(SchemaBase):
@@ -35,7 +46,7 @@ class _TestSchema(SchemaBase):
 
 class MySchema(_TestSchema):
     _schema = {
-        "$schema": _JSONSCHEMA_DRAFT,
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
         "definitions": {
             "StringMapping": {
                 "type": "object",
@@ -72,7 +83,7 @@ class StringArray(_TestSchema):
 
 class Derived(_TestSchema):
     _schema = {
-        "$schema": _JSONSCHEMA_DRAFT,
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
         "definitions": {
             "Foo": {"type": "object", "properties": {"d": {"type": "string"}}},
             "Bar": {"type": "string", "enum": ["A", "B"]},
@@ -99,7 +110,7 @@ class Bar(_TestSchema):
 
 class SimpleUnion(_TestSchema):
     _schema = {
-        "$schema": _JSONSCHEMA_DRAFT,
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
         "anyOf": [{"type": "integer"}, {"type": "string"}],
     }
 
@@ -111,7 +122,7 @@ class DefinitionUnion(_TestSchema):
 
 class SimpleArray(_TestSchema):
     _schema = {
-        "$schema": _JSONSCHEMA_DRAFT,
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
         "type": "array",
         "items": {"anyOf": [{"type": "integer"}, {"type": "string"}]},
     }
@@ -119,7 +130,7 @@ class SimpleArray(_TestSchema):
 
 class InvalidProperties(_TestSchema):
     _schema = {
-        "$schema": _JSONSCHEMA_DRAFT,
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
         "type": "object",
         "properties": {"for": {}, "as": {}, "vega-lite": {}, "$schema": {}},
     }
@@ -735,11 +746,11 @@ def chart_error_example__four_errors():
                 Error 1: `Scale` has no parameter named 'invalidOption'
 
                     Existing parameter names are:
-                    align      domain      interpolate    range      round    
-                    base       domainMax   nice           rangeMax   scheme   
-                    bins       domainMid   padding        rangeMin   type     
-                    clamp      domainMin   paddingInner   reverse    zero     
-                    constant   exponent    paddingOuter                       
+                    align      domain      exponent       paddingOuter   round    
+                    base       domainMax   interpolate    range          scheme   
+                    bins       domainMid   nice           rangeMax       type     
+                    clamp      domainMin   padding        rangeMin       zero     
+                    constant   domainRaw   paddingInner   reverse                 
 
                     See the help for `Scale` to read the full description of these parameters
 
@@ -821,6 +832,8 @@ def chart_error_example__four_errors():
                 - One of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
                 - One of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
                 - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
+                - One of \['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'\]
+                - One of \['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'\]
                 - Of type 'object'$"""
             ),
         ),

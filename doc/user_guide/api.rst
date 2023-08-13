@@ -204,6 +204,7 @@ Low-Level Schema Wrappers
    BindRadioSelect
    BindRange
    Binding
+   BinnedTimeUnit
    Blend
    BoxPlot
    BoxPlotConfig
@@ -305,6 +306,7 @@ Low-Level Schema Wrappers
    EventType
    Expr
    ExprRef
+   ExtentTransform
    FacetEncodingFieldDef
    FacetFieldDef
    FacetMapping
@@ -343,6 +345,7 @@ Low-Level Schema Wrappers
    FoldTransform
    FontStyle
    FontWeight
+   FormatConfig
    Generator
    GenericUnitSpecEncodingAnyMark
    GeoJsonFeature
@@ -419,6 +422,7 @@ Low-Level Schema Wrappers
    NumericMarkPropDef
    OffsetDef
    OrderFieldDef
+   OrderOnlyDef
    OrderValueDef
    Orient
    Orientation
@@ -532,6 +536,7 @@ Low-Level Schema Wrappers
    TimeUnit
    TimeUnitParams
    TimeUnitTransform
+   TimeUnitTransformParams
    TitleAnchor
    TitleConfig
    TitleFrame

@@ -11,6 +11,8 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
+All contributions, suggestions, and feedback you submitted are accepted under the [Project's license](./LICENSE). You represent that if you do not own copyright in the code that you have the authority to submit it under the [Project's license](./LICENSE). All feedback, suggestions, or contributions are not confidential.
+
 ## How To Contribute Code to Vega-Altair
 
 ### Setting Up Your Environment
@@ -114,7 +116,9 @@ your idea has not already been implemented.
 
 Once you have an example you would like to add there are a few guide lines to follow.
 Every example should:
-- be saved as a stand alone script in the `altair/examples/` directory.
+- have a `arguments_syntax` and `methods_syntax` implementation. Each implementation 
+  must be saved as a stand alone script in the `tests/examples_arguments_syntax` 
+  and `tests/examples_methods_syntax` directories.
 - have a descriptive docstring, which will eventually be extracted for the
   documentation website.
 - contain a category tag.
@@ -138,8 +142,7 @@ same contribution procedure outlined above.
 
 Some additional notes:
 
-- all examples should be in their own file in the `altair/examples` directory, and
-  the format and style of new contributions should generally match that of existing examples.
+- The format and style of new contributions should generally match that of existing examples.
 - The file docstring will be rendered into HTML via
   [reStructuredText](http://docutils.sourceforge.net/rst.html), so use that
   format for any hyperlinks or text styling. In particular, be sure you include
@@ -148,7 +151,8 @@ Some additional notes:
 - If your example fits into a chart type but involves significant configuration
   it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the
-  variable `source`. Then `source` is passed to the `alt.Chart` object. See
+  variable `source`. Then `source` is passed to the `alt.Chart` object.
+  If the example requires multiple dataframes then this does not apply. See
   other examples for guidance. 
 - Example code should not require downloading external datasets. We suggest
   using the `vega_datasets` package if possible.
@@ -189,3 +193,9 @@ hatch run doc:serve
 ```
 
 To view the documentation, open your browser and go to `http://localhost:8000`. To stop the server, use `^C` (control+c) in the terminal.
+
+---
+The Project abides by the Organization's [code of conduct](./governance/org-docs/CODE-OF-CONDUCT.md) and [trademark policy](./governance/org-docs/TRADEMARKS.md).
+
+Part of MVG-0.1-beta.
+Made with love by GitHub. Licensed under the [CC-BY 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/).

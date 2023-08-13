@@ -222,7 +222,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -380,7 +380,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Angle':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -444,7 +444,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Angle':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Angle':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Angle':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -803,7 +811,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -961,7 +969,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Color':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -1025,7 +1033,15 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Color':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Color':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Color':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -1370,7 +1386,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -1569,7 +1585,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Column':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Column':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Column':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -1698,7 +1722,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -1879,7 +1903,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Description':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Description':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Description':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2019,7 +2051,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -2177,7 +2209,15 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Detail':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Detail':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Detail':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2354,7 +2394,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -2574,7 +2614,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Facet':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Facet':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Facet':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2730,7 +2778,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -2888,7 +2936,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Fill':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2952,7 +3000,15 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Fill':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Fill':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Fill':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3311,7 +3367,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -3469,7 +3525,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'FillOpacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3533,7 +3589,15 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'FillOpacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'FillOpacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3865,7 +3929,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4046,7 +4110,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Href':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Href':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Href':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4186,7 +4258,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4344,7 +4416,15 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Key':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Key':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Key':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4429,7 +4509,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4574,7 +4654,15 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Latitude':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Latitude':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4793,7 +4881,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4869,7 +4957,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Latitude2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Latitude2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Latitude2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -5108,7 +5204,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -5253,7 +5349,15 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Longitude':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Longitude':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -5472,7 +5576,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -5548,7 +5652,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Longitude2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Longitude2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Longitude2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -5855,7 +5967,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6013,7 +6125,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Opacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -6077,7 +6189,15 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Opacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Opacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Opacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -6370,7 +6490,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6531,7 +6651,15 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Order':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Order':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Order':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -6741,7 +6869,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6883,7 +7011,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Radius':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -6959,7 +7087,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Radius':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Radius':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7143,7 +7279,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'RadiusDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7270,7 +7406,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7346,7 +7482,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Radius2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Radius2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Radius2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7639,7 +7783,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7838,7 +7982,15 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Row':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Row':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Row':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7994,7 +8146,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8152,7 +8304,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Shape':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8216,7 +8368,15 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Shape':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Shape':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Shape':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8575,7 +8735,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8733,7 +8893,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Size':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8797,7 +8957,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Size':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Size':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Size':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9156,7 +9324,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9314,7 +9482,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Stroke':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9378,7 +9546,15 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Stroke':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Stroke':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Stroke':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9737,7 +9913,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9895,7 +10071,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeDash':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9959,7 +10135,15 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'StrokeDash':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeDash':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -10318,7 +10502,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10476,7 +10660,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -10540,7 +10724,15 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'StrokeOpacity':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeOpacity':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -10899,7 +11091,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11057,7 +11249,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -11121,7 +11313,15 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'StrokeWidth':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'StrokeWidth':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -11453,7 +11653,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11634,7 +11834,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Text':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Text':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Text':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12046,7 +12254,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12188,7 +12396,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Theta':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12264,7 +12472,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Theta':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Theta':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12447,7 +12663,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'ThetaDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12574,7 +12790,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12650,7 +12866,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Theta2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Theta2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Theta2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12930,7 +13154,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13111,7 +13335,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Tooltip':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Tooltip':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Tooltip':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -13291,7 +13523,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13472,7 +13704,15 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Url':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Url':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Url':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -13711,7 +13951,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13869,7 +14109,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'X':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -13945,7 +14185,15 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'X':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'X':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14162,7 +14410,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14289,7 +14537,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14365,7 +14613,15 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'X2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'X2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'X2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14605,7 +14861,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14681,7 +14937,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'XError':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'XError':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14790,7 +15054,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14866,7 +15130,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'XError2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'XError2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XError2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15025,7 +15297,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15163,7 +15435,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffset':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15227,7 +15499,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'XOffset':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'XOffset':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'XOffset':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15379,7 +15659,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'XOffsetDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15592,7 +15872,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15750,7 +16030,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'Y':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15826,7 +16106,15 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Y':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Y':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16043,7 +16331,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16170,7 +16458,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16246,7 +16534,15 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'Y2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'Y2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'Y2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16486,7 +16782,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16562,7 +16858,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'YError':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'YError':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16671,7 +16975,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16747,7 +17051,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'YError2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'YError2':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YError2':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16906,7 +17218,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -17044,7 +17356,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffset':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -17108,7 +17420,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def timeUnit(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
+    def timeUnit(self, _: Literal["binnedyear", "binnedyearquarter", "binnedyearquartermonth", "binnedyearmonth", "binnedyearmonthdate", "binnedyearmonthdatehours", "binnedyearmonthdatehoursminutes", "binnedyearmonthdatehoursminutesseconds", "binnedyearweek", "binnedyearweekday", "binnedyearweekdayhours", "binnedyearweekdayhoursminutes", "binnedyearweekdayhoursminutesseconds", "binnedyeardayofyear"], **kwds) -> 'YOffset':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, _: Literal["binnedutcyear", "binnedutcyearquarter", "binnedutcyearquartermonth", "binnedutcyearmonth", "binnedutcyearmonthdate", "binnedutcyearmonthdatehours", "binnedutcyearmonthdatehoursminutes", "binnedutcyearmonthdatehoursminutesseconds", "binnedutcyearweek", "binnedutcyearweekday", "binnedutcyearweekdayhours", "binnedutcyearweekdayhoursminutes", "binnedutcyearweekdayhoursminutesseconds", "binnedutcyeardayofyear"], **kwds) -> 'YOffset':
+        ...
+
+    @overload  # type: ignore[no-overload-impl]
+    def timeUnit(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds) -> 'YOffset':
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -17260,7 +17580,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
+    def scale(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds) -> 'YOffsetDatum':
         ...
 
     @overload  # type: ignore[no-overload-impl]

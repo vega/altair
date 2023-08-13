@@ -367,7 +367,9 @@ def test_save(format, engine, basic_chart):
             os.remove(fp)
 
 
-@pytest.mark.parametrize("inline", [False, True])
+# Only test inline=False as altair_viewer is required for inline=True
+# but that package has not yet been released with support for Altair 5
+@pytest.mark.parametrize("inline", [False])
 def test_save_html(basic_chart, inline):
     out = io.StringIO()
     basic_chart.save(out, format="html", inline=inline)
@@ -522,6 +524,10 @@ def test_transforms():
     chart = alt.Chart().transform_density("x", as_=["value", "density"])
     kwds = {"as": ["value", "density"], "density": "x"}
     assert chart.transform == [alt.DensityTransform(**kwds)]
+
+    # extent transform
+    chart = alt.Chart().transform_extent("x", "x_extent")
+    assert chart.transform == [alt.ExtentTransform(extent="x", param="x_extent")]
 
     # filter transform
     chart = alt.Chart().transform_filter("datum.a < 4")

@@ -19,6 +19,8 @@ There are three core concepts of this grammar:
 - Widgets and other chart input elements can bind to parameters
   so that charts can be manipulated via drop-down menus, radio buttons, sliders, legends, etc.
 
+.. _parameters:
+
 Parameters
 ~~~~~~~~~~
 
@@ -991,11 +993,11 @@ For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
 
-Limitations
-~~~~~~~~~~~
+Access Params From Python
+~~~~~~~~~~~~~~~~~~~~~~~~~
+As of Vega-Altair 5.1, it's now possible to access the values of variable and selection parameters
+from Python using the :ref:`user-guide-jupyterchart` class.
 
-Some possible use cases for the above interactivity are not currently supported by Vega-Lite, and hence are not currently supported by Altair.  Here are some examples.
-
-1. If we are using a ``selection_point``, it would be natural to want to return information about the chosen data point, and then process that information using Python. This is not currently possible, so any data processing will have to be handled using tools such as ``transform_calculate``, etc. You can follow the progress on this in the following issue: https://github.com/altair-viz/altair/issues/1153.
-
-   - The dashboarding package ``Panel`` has added support for processing Altair selections with custom callbacks in their 0.13 release. This is currently the only Python dashboarding package that supports custom callbacks for Altair selections and you can read more about how to use this functionality in `the Panel documentation <https://pyviz-dev.github.io/panel/reference/panes/Vega.html#selections>`_.
+Additionally, the dashboarding package ``Panel`` includes support for processing Altair selections
+with custom callbacks. See the
+`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_.
