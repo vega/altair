@@ -15,7 +15,7 @@ Enhancements
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
 - Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
-=======
+- Add new transform method `transform_extent` (#3148)
 - Add support for new referencing logic in version 4.18 of the jsonschema package
 
 Bug Fixes
