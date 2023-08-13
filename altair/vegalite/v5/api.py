@@ -1698,9 +1698,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self : Chart object
             returns chart to allow for chaining
         """
-        return self._add_transform(
-            core.ExtentTransform(extent=extent, param=param)
-        )
+        return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
     # TODO: Update docstring
     def transform_filter(self, filter, **kwargs) -> Self:
