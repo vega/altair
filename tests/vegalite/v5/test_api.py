@@ -525,6 +525,10 @@ def test_transforms():
     kwds = {"as": ["value", "density"], "density": "x"}
     assert chart.transform == [alt.DensityTransform(**kwds)]
 
+    # extent transform
+    chart = alt.Chart().transform_extent("x", "x_extent")
+    assert chart.transform == [alt.ExtentTransform(extent="x", param="x_extent")]
+
     # filter transform
     chart = alt.Chart().transform_filter("datum.a < 4")
     assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
