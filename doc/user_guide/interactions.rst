@@ -19,6 +19,8 @@ There are three core concepts of this grammar:
 - Widgets and other chart input elements can bind to parameters
   so that charts can be manipulated via drop-down menus, radio buttons, sliders, legends, etc.
 
+.. _parameters:
+
 Parameters
 ~~~~~~~~~~
 

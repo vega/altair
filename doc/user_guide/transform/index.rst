@@ -31,6 +31,7 @@ Transform                                  Method                               
 :ref:`user-guide-bin-transform`            :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
 :ref:`user-guide-calculate-transform`      :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
 :ref:`user-guide-density-transform`        :meth:`~Chart.transform_density`           Create a new data column with the kernel density estimate of the input.
+:ref:`user-guide-extent-transform`         :meth:`~Chart.transform_extent`            Find the extent of a field and store the result in a parameter.
 :ref:`user-guide-filter-transform`         :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
 :ref:`user-guide-flatten-transform`        :meth:`~Chart.transform_flatten`           Flatten array data into columns.
 :ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data (opposite of pivot).
@@ -96,6 +97,7 @@ Transform                                  Supported
 :ref:`user-guide-bin-transform`              ✔
 :ref:`user-guide-calculate-transform`        ✔
 :ref:`user-guide-density-transform`
+:ref:`user-guide-extent-transform`           ✔
 :ref:`user-guide-filter-transform`           ✔
 :ref:`user-guide-flatten-transform`
 :ref:`user-guide-fold-transform`             ✔
@@ -119,6 +121,7 @@ Transform                                  Supported
    bin
    calculate
    density
+   extent
    filter
    flatten
    fold

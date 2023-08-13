@@ -3424,6 +3424,17 @@
             }
           ]
         },
+        "minBandSize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "The minimum band size for bar and rectangle marks. __Default value:__ `0.25`"
+        },
         "opacity": {
           "anyOf": [
             {
@@ -4414,6 +4425,48 @@
         }
       ]
     },
+    "BinnedTimeUnit": {
+      "anyOf": [
+        {
+          "enum": [
+            "binnedyear",
+            "binnedyearquarter",
+            "binnedyearquartermonth",
+            "binnedyearmonth",
+            "binnedyearmonthdate",
+            "binnedyearmonthdatehours",
+            "binnedyearmonthdatehoursminutes",
+            "binnedyearmonthdatehoursminutesseconds",
+            "binnedyearweek",
+            "binnedyearweekday",
+            "binnedyearweekdayhours",
+            "binnedyearweekdayhoursminutes",
+            "binnedyearweekdayhoursminutesseconds",
+            "binnedyeardayofyear"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "binnedutcyear",
+            "binnedutcyearquarter",
+            "binnedutcyearquartermonth",
+            "binnedutcyearmonth",
+            "binnedutcyearmonthdate",
+            "binnedutcyearmonthdatehours",
+            "binnedutcyearmonthdatehoursminutes",
+            "binnedutcyearmonthdatehoursminutesseconds",
+            "binnedutcyearweek",
+            "binnedutcyearweekday",
+            "binnedutcyearweekdayhours",
+            "binnedutcyearweekdayhoursminutes",
+            "binnedutcyearweekdayhoursminutesseconds",
+            "binnedutcyeardayofyear"
+          ],
+          "type": "string"
+        }
+      ]
+    },
     "Blend": {
       "enum": [
         null,
@@ -4990,6 +5043,9 @@
             },
             {
               "$ref": "#/definitions/OrderValueDef"
+            },
+            {
+              "$ref": "#/definitions/OrderOnlyDef"
             }
           ],
           "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html). Setting `order` to `{\"value\": null}` makes the line marks use the original order in the data sources.\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
@@ -5892,6 +5948,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -6070,6 +6129,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -6237,6 +6299,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -6913,6 +6978,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -7083,6 +7151,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -7242,6 +7313,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -7764,6 +7838,10 @@
         "title": {
           "$ref": "#/definitions/TitleConfig",
           "description": "Title configuration, which determines default properties for all [titles](https://vega.github.io/vega-lite/docs/title.html). For a full list of title configuration options, please see the [corresponding section of the title documentation](https://vega.github.io/vega-lite/docs/title.html#config)."
+        },
+        "tooltipFormat": {
+          "$ref": "#/definitions/FormatConfig",
+          "description": "Define [custom format configuration](https://vega.github.io/vega-lite/docs/config.html#format) for tooltips. If unspecified, default format config will be applied."
         },
         "trail": {
           "$ref": "#/definitions/LineConfig",
@@ -8737,6 +8815,24 @@
       ],
       "type": "object"
     },
+    "ExtentTransform": {
+      "additionalProperties": false,
+      "properties": {
+        "extent": {
+          "$ref": "#/definitions/FieldName",
+          "description": "The field of which to get the extent."
+        },
+        "param": {
+          "$ref": "#/definitions/ParameterName",
+          "description": "The output parameter produced by the extent transform."
+        }
+      },
+      "required": [
+        "extent",
+        "param"
+      ],
+      "type": "object"
+    },
     "FacetEncodingFieldDef": {
       "additionalProperties": false,
       "properties": {
@@ -8847,6 +8943,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -8933,6 +9032,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -9072,6 +9174,9 @@
             },
             {
               "$ref": "#/definitions/OrderValueDef"
+            },
+            {
+              "$ref": "#/definitions/OrderOnlyDef"
             }
           ],
           "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html). Setting `order` to `{\"value\": null}` makes the line marks use the original order in the data sources.\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
@@ -9516,6 +9621,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -9556,6 +9664,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -9600,6 +9711,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -9642,6 +9756,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -9682,6 +9799,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -9739,6 +9859,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -10067,6 +10190,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -10166,6 +10292,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -10269,6 +10398,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -10368,6 +10500,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -10538,6 +10673,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -10632,6 +10770,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -10709,6 +10850,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -10732,6 +10876,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -10850,6 +10997,36 @@
         "string",
         "number"
       ]
+    },
+    "FormatConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "normalizedNumberFormat": {
+          "description": "If normalizedNumberFormatType is not specified, D3 number format for axis labels, text marks, and tooltips of normalized stacked fields (fields with `stack: \"normalize\"`). For example `\"s\"` for SI units. Use [D3's number format pattern](https://github.com/d3/d3-format#locale_format).\n\nIf `config.normalizedNumberFormatType` is specified and `config.customFormatTypes` is `true`, this value will be passed as `format` alongside `datum.value` to the `config.numberFormatType` function. __Default value:__ `%`",
+          "type": "string"
+        },
+        "normalizedNumberFormatType": {
+          "description": "[Custom format type](https://vega.github.io/vega-lite/docs/config.html#custom-format-type) for `config.normalizedNumberFormat`.\n\n__Default value:__ `undefined` -- This is equilvalent to call D3-format, which is exposed as [`format` in Vega-Expression](https://vega.github.io/vega/docs/expressions/#format). __Note:__ You must also set `customFormatTypes` to `true` to use this feature.",
+          "type": "string"
+        },
+        "numberFormat": {
+          "description": "If numberFormatType is not specified, D3 number format for guide labels, text marks, and tooltips of non-normalized fields (fields *without* `stack: \"normalize\"`). For example `\"s\"` for SI units. Use [D3's number format pattern](https://github.com/d3/d3-format#locale_format).\n\nIf `config.numberFormatType` is specified and `config.customFormatTypes` is `true`, this value will be passed as `format` alongside `datum.value` to the `config.numberFormatType` function.",
+          "type": "string"
+        },
+        "numberFormatType": {
+          "description": "[Custom format type](https://vega.github.io/vega-lite/docs/config.html#custom-format-type) for `config.numberFormat`.\n\n__Default value:__ `undefined` -- This is equilvalent to call D3-format, which is exposed as [`format` in Vega-Expression](https://vega.github.io/vega/docs/expressions/#format). __Note:__ You must also set `customFormatTypes` to `true` to use this feature.",
+          "type": "string"
+        },
+        "timeFormat": {
+          "description": "Default time format for raw time values (without time units) in text marks, legend labels and header labels.\n\n__Default value:__ `\"%b %d, %Y\"` __Note:__ Axes automatically determine the format for each label automatically so this config does not affect axes.",
+          "type": "string"
+        },
+        "timeFormatType": {
+          "description": "[Custom format type](https://vega.github.io/vega-lite/docs/config.html#custom-format-type) for `config.timeFormat`.\n\n__Default value:__ `undefined` -- This is equilvalent to call D3-time-format, which is exposed as [`timeFormat` in Vega-Expression](https://vega.github.io/vega/docs/expressions/#timeFormat). __Note:__ You must also set `customFormatTypes` to `true` and there must *not* be a `timeUnit` defined to use this feature.",
+          "type": "string"
+        }
+      },
+      "type": "object"
     },
     "Generator": {
       "anyOf": [
@@ -12515,6 +12692,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -16905,6 +17085,17 @@
             }
           ]
         },
+        "minBandSize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "The minimum band size for bar and rectangle marks. __Default value:__ `0.25`"
+        },
         "opacity": {
           "anyOf": [
             {
@@ -17915,6 +18106,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -17934,6 +18128,16 @@
         "type": {
           "$ref": "#/definitions/StandardType",
           "description": "The type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`) for the encoded field or constant value (`datum`). It can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html).\n\nVega-Lite automatically infers data types in many cases as discussed below. However, type is required for a field if: (1) the field is not nominal and the field encoding has no specified `aggregate` (except `argmin` and `argmax`), `bin`, scale type, custom `sort` order, nor `timeUnit` or (2) if you wish to use an ordinal scale for a field with `bin` or `timeUnit`.\n\n__Default value:__\n\n1) For a data `field`, `\"nominal\"` is the default data type unless the field encoding has `aggregate`, `channel`, `bin`, scale type, `sort`, or `timeUnit` that satisfies the following criteria:\n- `\"quantitative\"` is the default type if (1) the encoded field contains `bin` or `aggregate` except `\"argmin\"` and `\"argmax\"`, (2) the encoding channel is `latitude` or `longitude` channel or (3) if the specified scale type is [a quantitative scale](https://vega.github.io/vega-lite/docs/scale.html#type).\n- `\"temporal\"` is the default type if (1) the encoded field contains `timeUnit` or (2) the specified scale type is a time or utc scale\n- `\"ordinal\"` is the default type if (1) the encoded field contains a [custom `sort` order](https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order), (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding channel is `order`.\n\n2) For a constant value in data domain (`datum`):\n- `\"quantitative\"` if the datum is a number\n- `\"nominal\"` if the datum is a string\n- `\"temporal\"` if the datum is [a date time object](https://vega.github.io/vega-lite/docs/datetime.html)\n\n__Note:__\n- Data `type` describes the semantics of the data rather than the primitive data types (number, string, etc.). The same primitive data type can have different types of measurement. For example, numeric data can represent quantitative, ordinal, or nominal data.\n- Data values for a temporal field can be either a date-time string (e.g., `\"2015-03-07 12:32:17\"`, `\"17:01\"`, `\"2015-03-16\"`. `\"2015\"`) or a timestamp number (e.g., `1552199579097`).\n- When using with [`bin`](https://vega.github.io/vega-lite/docs/bin.html), the `type` property can be either `\"quantitative\"` (for using a linear bin scale) or [`\"ordinal\"` (for using an ordinal bin scale)](https://vega.github.io/vega-lite/docs/type.html#cast-bin).\n- When using with [`timeUnit`](https://vega.github.io/vega-lite/docs/timeunit.html), the `type` property can be either `\"temporal\"` (default, for using a temporal scale) or [`\"ordinal\"` (for using an ordinal scale)](https://vega.github.io/vega-lite/docs/type.html#cast-bin).\n- When using with [`aggregate`](https://vega.github.io/vega-lite/docs/aggregate.html), the `type` property refers to the post-aggregation data type. For example, we can calculate count `distinct` of a categorical field `\"cat\"` using `{\"aggregate\": \"distinct\", \"field\": \"cat\"}`. The `\"type\"` of the aggregate output is `\"quantitative\"`.\n- Secondary channels (e.g., `x2`, `y2`, `xError`, `yError`) do not have `type` as they must have exactly the same type as their primary channels (e.g., `x`, `y`).\n\n__See also:__ [`type`](https://vega.github.io/vega-lite/docs/type.html) documentation."
+        }
+      },
+      "type": "object"
+    },
+    "OrderOnlyDef": {
+      "additionalProperties": false,
+      "properties": {
+        "sort": {
+          "$ref": "#/definitions/SortOrder",
+          "description": "The sort order. One of `\"ascending\"` (default) or `\"descending\"`."
         }
       },
       "type": "object"
@@ -19524,6 +19728,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -19615,6 +19822,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -20689,6 +20899,17 @@
             }
           ]
         },
+        "minBandSize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "The minimum band size for bar and rectangle marks. __Default value:__ `0.25`"
+        },
         "opacity": {
           "anyOf": [
             {
@@ -21346,6 +21567,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -21514,6 +21738,10 @@
             }
           ],
           "description": "Sets the minimum value in the scale domain, overriding the domain property. This property is only intended for use with scales having continuous domains."
+        },
+        "domainRaw": {
+          "$ref": "#/definitions/ExprRef",
+          "description": "An expression for an array of raw values that, if non-null, directly overrides the _domain_ property. This is useful for supporting interactions such as panning or zooming a scale. The scale may be initially determined using a data-driven domain, then modified in response to user input by setting the rawDomain value."
         },
         "exponent": {
           "anyOf": [
@@ -21684,7 +21912,7 @@
         "scheme": {
           "anyOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/ColorScheme"
             },
             {
               "$ref": "#/definitions/SchemeParams"
@@ -22088,6 +22316,9 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
+              "$ref": "#/definitions/BinnedTimeUnit"
+            },
+            {
               "$ref": "#/definitions/TimeUnitParams"
             }
           ],
@@ -22237,8 +22468,8 @@
           "type": "array"
         },
         "name": {
-          "description": "A color scheme name for ordinal scales (e.g., `\"category10\"` or `\"blues\"`).\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.",
-          "type": "string"
+          "$ref": "#/definitions/ColorScheme",
+          "description": "A color scheme name for ordinal scales (e.g., `\"category10\"` or `\"blues\"`).\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
         }
       },
       "required": [
@@ -22272,6 +22503,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -22811,6 +23045,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -22970,6 +23207,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23109,6 +23349,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -23278,6 +23521,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23443,6 +23689,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23578,6 +23827,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23656,6 +23908,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23721,6 +23976,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -23798,6 +24056,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -23886,6 +24147,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -23961,6 +24225,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -24121,6 +24388,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -24177,6 +24447,9 @@
             },
             {
               "$ref": "#/definitions/OrderValueDef"
+            },
+            {
+              "$ref": "#/definitions/OrderOnlyDef"
             }
           ],
           "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html). Setting `order` to `{\"value\": null}` makes the line marks use the original order in the data sources.\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
@@ -24266,6 +24539,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -24361,6 +24637,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -24519,6 +24798,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -24683,6 +24965,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -24840,6 +25125,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -25007,6 +25295,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -25169,6 +25460,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -25328,6 +25622,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -25480,6 +25777,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -25610,6 +25910,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -25703,6 +26006,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -25859,6 +26165,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26005,6 +26314,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26100,6 +26412,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26169,6 +26484,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26217,6 +26535,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -26309,6 +26630,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -26456,6 +26780,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26551,6 +26878,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26620,6 +26950,9 @@
                   "$ref": "#/definitions/TimeUnit"
                 },
                 {
+                  "$ref": "#/definitions/BinnedTimeUnit"
+                },
+                {
                   "$ref": "#/definitions/TimeUnitParams"
                 }
               ],
@@ -26668,6 +27001,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -26760,6 +27096,9 @@
               "anyOf": [
                 {
                   "$ref": "#/definitions/TimeUnit"
+                },
+                {
+                  "$ref": "#/definitions/BinnedTimeUnit"
                 },
                 {
                   "$ref": "#/definitions/TimeUnitParams"
@@ -27171,6 +27510,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
@@ -28280,7 +28622,12 @@
     },
     "TimeUnitParams": {
       "additionalProperties": false,
+      "description": "Time Unit Params for encoding predicate, which can specified if the data is  already \"binned\".",
       "properties": {
+        "binned": {
+          "description": "Whether the data has already been binned to this time unit. If true, Vega-Lite will only format the data, marks, and guides, without applying the timeUnit transform to re-bin the data again.",
+          "type": "boolean"
+        },
         "maxbins": {
           "description": "If no `unit` is specified, maxbins is used to infer time units.",
           "type": "number"
@@ -28317,7 +28664,7 @@
               "$ref": "#/definitions/TimeUnit"
             },
             {
-              "$ref": "#/definitions/TimeUnitParams"
+              "$ref": "#/definitions/TimeUnitTransformParams"
             }
           ],
           "description": "The timeUnit."
@@ -28328,6 +28675,28 @@
         "field",
         "as"
       ],
+      "type": "object"
+    },
+    "TimeUnitTransformParams": {
+      "additionalProperties": false,
+      "properties": {
+        "maxbins": {
+          "description": "If no `unit` is specified, maxbins is used to infer time units.",
+          "type": "number"
+        },
+        "step": {
+          "description": "The number of steps between bins, in terms of the least significant unit provided.",
+          "type": "number"
+        },
+        "unit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Defines how date-time values should be binned."
+        },
+        "utc": {
+          "description": "True to use UTC timezone. Equivalent to using a `utc` prefixed `TimeUnit`.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "TitleAnchor": {
@@ -30138,6 +30507,9 @@
           "$ref": "#/definitions/DensityTransform"
         },
         {
+          "$ref": "#/definitions/ExtentTransform"
+        },
+        {
           "$ref": "#/definitions/FilterTransform"
         },
         {
@@ -30240,6 +30612,9 @@
           "anyOf": [
             {
               "$ref": "#/definitions/TimeUnit"
+            },
+            {
+              "$ref": "#/definitions/BinnedTimeUnit"
             },
             {
               "$ref": "#/definitions/TimeUnitParams"
