@@ -97,7 +97,7 @@ Transform                                  Supported
 :ref:`user-guide-bin-transform`              ✔
 :ref:`user-guide-calculate-transform`        ✔
 :ref:`user-guide-density-transform`
-:ref:`user-guide-extent-transform`
+:ref:`user-guide-extent-transform`           ✔
 :ref:`user-guide-filter-transform`           ✔
 :ref:`user-guide-flatten-transform`
 :ref:`user-guide-fold-transform`             ✔
