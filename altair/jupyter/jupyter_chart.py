@@ -270,7 +270,7 @@ def collect_transform_params(chart: TopLevelSpec) -> Set[str]:
     transforms = getattr(chart, "transform", [])
     transforms = transforms if transforms != alt.Undefined else []
     for tx in transforms:
-        if isinstance(tx, alt.ExtentTransform):
+        if hasattr(tx, "param"):
             transform_params.add(tx.param)
 
     return transform_params
