@@ -276,6 +276,7 @@ For example, to show a pattern of data change over time between gasoline price a
         alt.X("miles").scale(zero=False),
         alt.Y("gas").scale(zero=False),
         order="year",
+        tooltip=["miles", "gas", "year"],
     )
 
 Line interpolation
