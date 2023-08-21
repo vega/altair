@@ -49,6 +49,14 @@ of some docstrings.
 Major version updates (e.g. Vega-Lite 1.X->2.X) have required substantial
 rewrites, because the internal structure of the schema changed appreciably.
 
+### Updating vl-convert version bound
+When updating the version of Vega-Lite, it's important to ensure that 
+[vl-convert](https://github.com/vega/vl-convert) includes support for the new Vega-Lite version. 
+Check the [vl-convert releases](https://github.com/vega/vl-convert/releases) to find the minimum
+version of vl-convert that includes support for the desired version of Vega-Lite (and [open
+an issue](https://github.com/vega/vl-convert/issues) if this version hasn't been
+included in a released yet.). Update the vl-convert version check in `altair/utils/_importers.py` 
+with the new minimum required version of vl-convert.
 
 ## Releasing the Package
 
