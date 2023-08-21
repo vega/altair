@@ -127,7 +127,6 @@ def transformed_data(chart, row_limit=None, exclude=None):
     datasets, warnings = vf.runtime.pre_transform_datasets(
         vega_spec,
         dataset_names,
-        get_local_tz(),
         row_limit=row_limit,
         inline_datasets=inline_datasets,
     )
