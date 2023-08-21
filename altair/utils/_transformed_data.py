@@ -24,7 +24,7 @@ from altair import (
     FacetSpec,
     data_transformers,
 )
-from altair.utils._vegafusion_data import get_inline_tables
+from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
 from altair.utils.core import _DataFrameLike
 from altair.utils.schemapi import Undefined
 
@@ -91,16 +91,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
         transformed data. Otherwise, returns a list of DataFrames of the
         transformed data
     """
-    try:
-        from vegafusion import runtime, get_local_tz  # type: ignore
-    except ImportError as err:
-        raise ImportError(
-            "transformed_data requires the vegafusion-python-embed and vegafusion packages\n"
-            "These can be installed with pip using:\n"
-            "    pip install vegafusion[embed]\n"
-            "Or with conda using:\n"
-            "    conda install -c conda-forge vegafusion-python-embed vegafusion"
-        ) from err
+    vf = import_vegafusion()
 
     if isinstance(chart, Chart):
         # Add mark if none is specified to satisfy Vega-Lite
@@ -133,7 +124,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
             raise ValueError("Failed to locate all datasets")
 
     # Extract transformed datasets with VegaFusion
-    datasets, warnings = runtime.pre_transform_datasets(
+    datasets, warnings = vf.runtime.pre_transform_datasets(
         vega_spec,
         dataset_names,
         get_local_tz(),

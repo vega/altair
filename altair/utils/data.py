@@ -3,15 +3,13 @@ import os
 import random
 import hashlib
 import warnings
-from importlib.metadata import version as importlib_version, PackageNotFoundError
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
-from types import ModuleType
 
 import pandas as pd
 from toolz import curried
 from typing import TypeVar
-from packaging.version import Version
 
+from ._importers import import_pyarrow_interchange
 from .core import sanitize_dataframe, sanitize_arrow_table, _DataFrameLike
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
@@ -348,31 +346,3 @@ def curry(*args, **kwargs):
         stacklevel=1,
     )
     return curried.curry(*args, **kwargs)
-
-
-def import_pyarrow_interchange() -> ModuleType:
-    try:
-        pyarrow_version_str = importlib_version("pyarrow")
-    except PackageNotFoundError as err:
-        raise ImportError(
-            "Usage of the DataFrame Interchange Protocol requires the package"
-            + " 'pyarrow', but it is not installed."
-        ) from err
-    else:
-        if Version(pyarrow_version_str) < Version("11.0.0"):
-            raise ImportError(
-                "The installed version of 'pyarrow' does not meet the minimum requirement of version 11.0.0. "
-                "Please update 'pyarrow' to use the DataFrame Interchange Protocol."
-            )
-        else:
-            import pyarrow.interchange as pi
-
-            return pi
-
-
-def pyarrow_available() -> bool:
-    try:
-        import_pyarrow_interchange()
-        return True
-    except ImportError:
-        return False

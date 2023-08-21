@@ -6,6 +6,7 @@ from typing import Union, Dict, Set, MutableMapping
 
 from typing import TypedDict, Final
 
+from altair.utils._importers import import_vegafusion
 from altair.utils.core import _DataFrameLike
 from altair.utils.data import _DataType, _ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
@@ -145,16 +146,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     # Local import to avoid circular ImportError
     from altair import vegalite_compilers, data_transformers
 
-    try:
-        import vegafusion as vf  # type: ignore
-    except ImportError as e:
-        raise ImportError(
-            'The "vegafusion" data transformer requires the vegafusion-python-embed\n'
-            "and vegafusion packages. These can be installed with pip using:\n"
-            '    pip install "vegafusion[embed]"\n'
-            "Or with conda using:\n"
-            "    conda install -c conda-forge vegafusion-python-embed vegafusion"
-        ) from e
+    vf = import_vegafusion()
 
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()

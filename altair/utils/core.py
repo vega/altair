@@ -519,7 +519,7 @@ def parse_shorthand(
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
-    from altair.utils.data import pyarrow_available
+    from altair.utils._importers import pyarrow_available
 
     if not shorthand:
         return {}
