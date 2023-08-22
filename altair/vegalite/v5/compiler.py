@@ -1,3 +1,4 @@
+from ...utils._importers import import_vl_convert
 from ...utils.compiler import VegaLiteCompilerRegistry
 
 from typing import Final
@@ -13,12 +14,7 @@ def vl_convert_compiler(vegalite_spec: dict) -> dict:
     """
     from . import SCHEMA_VERSION
 
-    try:
-        import vl_convert as vlc
-    except ImportError as err:
-        raise ImportError(
-            "The vl-convert Vega-Lite compiler requires the vl-convert-python package"
-        ) from err
+    vlc = import_vl_convert()
 
     # Compute vl-convert's vl_version string (of the form 'v5_8')
     # from SCHEMA_VERSION (of the form 'v5.8.0')
