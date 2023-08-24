@@ -9,7 +9,18 @@ import re
 import sys
 import traceback
 import warnings
-from typing import Callable, TypeVar, Any, Union, Dict, Optional, Tuple, Sequence, Type
+from typing import (
+    Callable,
+    TypeVar,
+    Any,
+    Union,
+    Dict,
+    Optional,
+    Tuple,
+    Sequence,
+    Type,
+    cast,
+)
 from types import ModuleType
 
 import jsonschema
@@ -304,11 +315,11 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     if isinstance(df.columns, pd.RangeIndex):
         df.columns = df.columns.astype(str)
 
-    for col in df.columns:
-        if not isinstance(col, str):
+    for col_name in df.columns:
+        if not isinstance(col_name, str):
             raise ValueError(
                 "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col)
+                "Column names must be strings".format(col_name)
             )
 
     if isinstance(df.index, pd.MultiIndex):
@@ -322,7 +333,12 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         else:
             return val
 
-    for col_name, dtype in df.dtypes.items():
+    for dtype_item in df.dtypes.items():
+        # We know that the column names are strings from the isinstance check
+        # further above but mypy thinks it is of type Hashable and therefore does not
+        # let us assign it to the col_name variable which is already of type str.
+        col_name = cast(str, dtype_item[0])
+        dtype = dtype_item[1]
         dtype_name = str(dtype)
         if dtype_name == "category":
             # Work around bug in to_json for categorical types in older versions
@@ -503,7 +519,7 @@ def parse_shorthand(
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
-    from altair.utils.data import pyarrow_available
+    from altair.utils._importers import pyarrow_available
 
     if not shorthand:
         return {}

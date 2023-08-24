@@ -160,7 +160,7 @@ We can also use line grouping to create a line chart that has multiple parts wit
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({ 
+    source = pd.DataFrame({
         "a": ["A", "B", "D", "E", "E", "G", "H"],
         "b": [28, 55, 91, 81, 81, 19, 87],
         "predicted": [False, False, False, False, True, True, True]
@@ -259,12 +259,14 @@ Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to
         color="symbol:N"
     )
 
-Connected Scatter Plot (Line Chart with Custom Path)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Custom Ordering
+^^^^^^^^^^^^^^^
 
-The line’s path (order of points in the line) is determined by data values on the temporal/ordinal field by default. However, a field can be mapped to the ``order`` channel for determining a custom path.
+By default, the line's path (order of points in the line) is determined by data values on the temporal/ordinal field. However, a field can be mapped to the ``order`` channel for determining a custom path.
 
-For example, to show a pattern of data change over time between gasoline price and average miles driven per capita we use ``order`` channel to sort the points in the line by time field (year). In this example, we also use the ``point`` property to overlay point marks over the line marks to highlight each data point.
+For example, to show a pattern of data change over time between gasoline price and miles driven per capita we use ``order`` channel to sort the points in the line by the year field. In this example, we also use the ``point`` property to overlay point marks over the line marks to highlight each data point.
+Now, the earliest datapoint (1956) is one endpoint of the line, and the latest
+datapoint (2010) is the other endpoint of the line.
 
 .. altair-plot::
     import altair as alt
@@ -276,9 +278,10 @@ For example, to show a pattern of data change over time between gasoline price a
         alt.X("miles").scale(zero=False),
         alt.Y("gas").scale(zero=False),
         order="year",
+        tooltip=["miles", "gas", "year"],
     )
 
-Line interpolation
+Line Interpolation
 ^^^^^^^^^^^^^^^^^^
 The ``interpolate`` property of a mark definition can be used to change line interpolation method. For example, we can set ``interpolate`` to ``"monotone"``.
 
@@ -351,6 +354,5 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
         lookup="airport",
         from_=lookup_data
     )
-    
-    background + line
 
+    background + line
