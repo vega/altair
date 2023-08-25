@@ -171,11 +171,6 @@ or::
 
     pip install vl-convert-python
 
-.. note::
-   
-   Conda packages are not yet available for the Apple Silicon architecture.
-   See `conda-forge/vl-convert-python-feedstock#9 <https://github.com/conda-forge/vl-convert-python-feedstock/issues/9>`_.
-
 Unlike altair_saver_, vl-convert_ does not require any external dependencies.
 However, it only supports saving charts to PNG and SVG formats. To save directly to
 PDF, altair_saver_ is still required. See the vl-convert documentation for information
