@@ -4,7 +4,7 @@ This document lists the members of the Organization's Steering Committee. Voting
 
 | **NAME** | **Handle** | **Affiliated Organization** |
 | --- | --- | --- |
-| Stefan Binder | @binste | - |
+| Stefan Binder (Chair) | @binste | - |
 | Joel Ostblom | @joelostblom  | - |
 | Jon Mease | @jonmmease | [Hex Technologies](https://hex.tech/) |
 | Mattijn van Hoek | @mattijn | - |
