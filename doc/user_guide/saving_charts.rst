@@ -205,17 +205,25 @@ installed you can use::
     chart.save('chart.png', engine="altair_saver")
 
 
-Figure Size/Resolution
-^^^^^^^^^^^^^^^^^^^^^^
-When using ``chart.save()`` above, the resolution of the resulting PNG is
-controlled by the resolution of your screen. The easiest way to produce a
-higher-resolution PNG image is to scale the image to make it larger, and thus
-to contain more pixels at a given resolution.
+PNG Figure Size/Resolution
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+When using ``chart.save()`` to create a PNG image, the resolution of the resulting image
+defaults to 72 pixels per inch (ppi). To change the resolution of the image, while maintaining
+the same physical size, the ``ppi`` argument may be provided to ``chart.save``. For example,
+to save the image with a resolution of 200 pixels-per-inch::
 
-This can be done with the ``scale_factor`` argument, which defaults to 1.0::
+    chart.save('chart.png', ppi=200)
 
-    chart.save('chart.png', scale_factor=2.0)
+.. note::
 
+    The ``ppi`` argument is only supported by the ``vl-convert`` engine. It will be ignored if
+    the ``altair_saver`` engine is enabled.
+
+To change the physical size of the resulting image while preserving the resolution, the
+``scale_factor`` argument may be used. For example, to save the image at double the default
+size at the default resolution of 72 ppi::
+
+    chart.save('chart.png', scale_factor=2)
 
 .. _vl-convert: https://github.com/vega/vl-convert
 .. _altair_saver: http://github.com/altair-viz/altair_saver/
