@@ -483,17 +483,17 @@ def selection(
 
 def selection_interval(
     name: Optional[str] = None,
-    value: Union[UndefinedType, Any] = Undefined,
-    bind: Union[UndefinedType, core.Binding] = Undefined,
-    empty: Union[UndefinedType, bool] = Undefined,
-    expr: Union[UndefinedType, core.Expr] = Undefined,
-    encodings: Union[UndefinedType, List[str]] = Undefined,
-    on: Union[UndefinedType, str] = Undefined,
-    clear: Union[UndefinedType, str, bool] = Undefined,
-    resolve: Union[UndefinedType, Literal["global", "union", "intersect"]] = Undefined,
-    mark: Union[UndefinedType, core.Mark] = Undefined,
-    translate: Union[UndefinedType, str, bool] = Undefined,
-    zoom: Union[UndefinedType, str, bool] = Undefined,
+    value: Union[Any, UndefinedType] = Undefined,
+    bind: Union[core.Binding, UndefinedType] = Undefined,
+    empty: Union[bool, UndefinedType] = Undefined,
+    expr: Union[core.Expr, UndefinedType] = Undefined,
+    encodings: Union[List[str], UndefinedType] = Undefined,
+    on: Union[str, UndefinedType] = Undefined,
+    clear: Union[str, bool, UndefinedType] = Undefined,
+    resolve: Union[Literal["global", "union", "intersect"], UndefinedType] = Undefined,
+    mark: Union[core.Mark, UndefinedType] = Undefined,
+    translate: Union[str, bool, UndefinedType] = Undefined,
+    zoom: Union[str, bool, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
@@ -594,20 +594,20 @@ def selection_interval(
 
 
 def selection_point(
-    name=None,
-    value=Undefined,
-    bind=Undefined,
-    empty=Undefined,
-    expr=Undefined,
-    encodings=Undefined,
-    fields=Undefined,
-    on=Undefined,
-    clear=Undefined,
-    resolve=Undefined,
-    toggle=Undefined,
-    nearest=Undefined,
+    name: Optional[str] = None,
+    value: Union[Any, UndefinedType] = Undefined,
+    bind: Union[core.Binding, UndefinedType] = Undefined,
+    empty: Union[bool, UndefinedType] = Undefined,
+    expr: Union[core.Expr, UndefinedType] = Undefined,
+    encodings: Union[List[str], UndefinedType] = Undefined,
+    fields: Union[List[str], UndefinedType] = Undefined,
+    on: Union[str, UndefinedType] = Undefined,
+    clear: Union[str, bool, UndefinedType] = Undefined,
+    resolve: Union[Literal["global", "union", "intersect"], UndefinedType] = Undefined,
+    toggle: Union[str, bool, UndefinedType] = Undefined,
+    nearest: Union[bool, UndefinedType] = Undefined,
     **kwds,
-):
+) -> Parameter:
     """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
 
     Parameters
