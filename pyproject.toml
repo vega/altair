@@ -72,8 +72,7 @@ dev = [
     "types-setuptools",
     "pyarrow>=11",
     "vegafusion[embed]>=1.4.0",
-    "anywidget",
-    "watchfiles"
+    "anywidget"
 ]
 doc = [
     "sphinx",
