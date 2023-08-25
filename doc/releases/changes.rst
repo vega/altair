@@ -13,6 +13,7 @@ Enhancements
 ~~~~~~~~~~~~
 - Add ``chart.transformed_data()`` method to extract transformed chart data using VegaFusion (#3081, #3084, #3102)
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
+- Add ``JupyterChart`` to support accessing params and selections from Python (See :ref:`user-guide-jupyterchart`)  (#3151)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
 - Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
 - Add new transform method `transform_extent` (#3148)
