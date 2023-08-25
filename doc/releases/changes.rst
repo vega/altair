@@ -17,6 +17,7 @@ Enhancements
 - Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
 - Add new transform method `transform_extent` (#3148)
 - Add support for new referencing logic in version 4.18 of the jsonschema package
+- Add configurable pixels-per-inch (ppi) metadata to saved and displayed PNG images (#3163)
 
 Bug Fixes
 ~~~~~~~~~

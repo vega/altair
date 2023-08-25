@@ -1,4 +1,5 @@
 from .html import spec_to_html
+import struct
 
 
 def spec_to_mimebundle(
@@ -121,18 +122,28 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
                 svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
             return {"image/svg+xml": svg}
         elif format == "png":
+            scale = kwargs.get("scale_factor", 1)
+            # The default ppi for a PNG file is 72
+            default_ppi = 72
+            ppi = kwargs.get("ppi", default_ppi)
             if mode == "vega":
                 png = vlc.vega_to_png(
                     spec,
-                    scale=kwargs.get("scale_factor", 1),
+                    scale=scale,
+                    ppi=ppi,
                 )
             else:
                 png = vlc.vegalite_to_png(
                     spec,
                     vl_version=vl_version,
-                    scale=kwargs.get("scale_factor", 1),
+                    scale=scale,
+                    ppi=ppi,
                 )
-            return {"image/png": png}
+            factor = ppi / default_ppi
+            w, h = _pngxy(png)
+            return {"image/png": png}, {
+                "image/png": {"width": w / factor, "height": h / factor}
+            }
         else:
             # This should be validated above
             # but raise exception for the sake of future development
@@ -213,3 +224,13 @@ def _validate_normalize_engine(engine, format):
             )
         )
     return normalized_engine
+
+
+def _pngxy(data):
+    """read the (width, height) from a PNG header
+
+    Taken from IPython.display
+    """
+    ihdr = data.index(b"IHDR")
+    # next 8 bytes are width/height
+    return struct.unpack(">ii", data[ihdr + 4 : ihdr + 12])
