@@ -162,7 +162,7 @@ def save(
                 **kwargs,
             )
             if format == "png":
-                write_file_or_filename(fp, mimebundle["image/png"], mode="wb")
+                write_file_or_filename(fp, mimebundle[0]["image/png"], mode="wb")
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
