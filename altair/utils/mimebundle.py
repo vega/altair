@@ -123,7 +123,9 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             return {"image/svg+xml": svg}
         elif format == "png":
             scale = kwargs.get("scale_factor", 1)
-            ppi = kwargs.get("ppi", 72)
+            # The default ppi for a PNG file is 72
+            default_ppi = 72
+            ppi = kwargs.get("ppi", default_ppi)
             if mode == "vega":
                 png = vlc.vega_to_png(
                     spec,
@@ -137,7 +139,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
                     scale=scale,
                     ppi=ppi,
                 )
-            factor = ppi / 72
+            factor = ppi / default_ppi
             w, h = _pngxy(png)
             return {"image/png": png}, {
                 "image/png": {"width": w / factor, "height": h / factor}
