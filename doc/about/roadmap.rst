@@ -32,9 +32,7 @@ Areas of focus:
   predicates.
 
 * Explore the possibility of a new operator, ``*``, for modular compositing of sub components.
-  See this composition proposal
-  `queryverse/VegaLite.jl#411 <https://github.com/queryverse/VegaLite.jl/pull/411>`_ and
-  also https://aog.makie.org/stable/generated/penguins/#Tutorial.
+  See also `Deneb.jl <https://brucala.github.io/Deneb.jl/dev>`_ by @brucala.
 
 * Standardize the API of methods that convert charts into other formats (``alt.Chart().to_<format>``).
 
