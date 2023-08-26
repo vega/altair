@@ -27,7 +27,8 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Drop support for Python 3.7 which is end-of-life (#3100)
-- Increase minimum required Pandas version to 0.25 (#3130)
+- Hard dependencies: Increase minimum required pandas version to 0.25 (#3130)
+- Soft dependencies: Increase minimum required vl-convert-python version to 0.13.0 and increase minimum required vegafusion version to 1.4.0 (#3163, #3160)
 
 Version 5.0.1 (released May 26, 2023)
 -------------------------------------
