@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, List, Optional, Any, Iterable, Union, Type, Dict, Literal
+from typing import cast, List, Optional, Any, Iterable, Union, Type, Dict, Literal, IO
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -758,12 +758,19 @@ def binding_range(**kwargs):
 
 
 # TODO: update the docstring
-def condition(predicate, if_true, if_false, **kwargs):
+def condition(
+    predicate: Union[Parameter, str, expr.Expression, core.PredicateComposition, dict],
+    # Types of these depends on where the condition is used so we probably
+    # can't be more specific here.
+    if_true: Any,
+    if_false: Any,
+    **kwargs,
+) -> Union[dict, core.SchemaBase]:
     """A conditional attribute or encoding
 
     Parameters
     ----------
-    predicate: Selection, PredicateComposition, expr.Expression, dict, or string
+    predicate: Parameter, PredicateComposition, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -833,7 +840,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 class TopLevelMixin(mixins.ConfigMethodMixin):
     """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
 
-    _class_is_valid_at_instantiation = False
+    _class_is_valid_at_instantiation: bool = False
 
     def to_dict(
         self,
@@ -1001,12 +1008,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def to_html(
         self,
-        base_url="https://cdn.jsdelivr.net/npm",
-        output_div="vis",
-        embed_options=None,
-        json_kwds=None,
-        fullhtml=True,
-        requirejs=False,
+        base_url: str = "https://cdn.jsdelivr.net/npm",
+        output_div: str = "vis",
+        embed_options: Optional[dict] = None,
+        json_kwds: Optional[dict] = None,
+        fullhtml: bool = True,
+        requirejs: bool = False,
     ) -> str:
         return utils.spec_to_html(
             self.to_dict(),
@@ -1024,15 +1031,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp,
-        format=None,
-        override_data_transformer=True,
-        scale_factor=1.0,
-        vegalite_version=VEGALITE_VERSION,
-        vega_version=VEGA_VERSION,
-        vegaembed_version=VEGAEMBED_VERSION,
+        fp: Union[str, IO],
+        format: Literal["json", "html", "png", "svg", "pdf"] = None,
+        override_data_transformer: bool = True,
+        scale_factor: float = 1.0,
+        vegalite_version: str = VEGALITE_VERSION,
+        vega_version: str = VEGA_VERSION,
+        vegaembed_version: str = VEGAEMBED_VERSION,
         **kwargs,
-    ):
+    ) -> None:
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg, pdf; the last three require
@@ -1083,32 +1090,32 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Fallback for when rendering fails; the full repr is too long to be
     # useful in nearly all cases.
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "alt.{}(...)".format(self.__class__.__name__)
 
     # Layering and stacking
-    def __add__(self, other):
+    def __add__(self, other) -> "LayerChart":
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be layered.")
         return layer(self, other)
 
-    def __and__(self, other):
+    def __and__(self, other) -> "VConcatChart":
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be concatenated.")
         return vconcat(self, other)
 
-    def __or__(self, other):
+    def __or__(self, other) -> "HConcatChart":
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be concatenated.")
         return hconcat(self, other)
 
     def repeat(
         self,
-        repeat=Undefined,
-        row=Undefined,
-        column=Undefined,
-        layer=Undefined,
-        columns=Undefined,
+        repeat: Union[List[str], UndefinedType] = Undefined,
+        row: Union[List[str], UndefinedType] = Undefined,
+        column: Union[List[str], UndefinedType] = Undefined,
+        layer: Union[List[str], UndefinedType] = Undefined,
+        columns: Union[int, UndefinedType] = Undefined,
         **kwargs,
     ) -> "RepeatChart":
         """Return a RepeatChart built from the chart
@@ -1182,25 +1189,25 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type=Undefined,
-        center=Undefined,
-        clipAngle=Undefined,
-        clipExtent=Undefined,
-        coefficient=Undefined,
-        distance=Undefined,
-        fraction=Undefined,
-        lobes=Undefined,
-        parallel=Undefined,
-        precision=Undefined,
-        radius=Undefined,
-        ratio=Undefined,
-        reflectX=Undefined,
-        reflectY=Undefined,
-        rotate=Undefined,
-        scale=Undefined,
-        spacing=Undefined,
-        tilt=Undefined,
-        translate=Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        center: Union[List[float], UndefinedType] = Undefined,
+        clipAngle: Union[float, UndefinedType] = Undefined,
+        clipExtent: Union[List[List[float]], UndefinedType] = Undefined,
+        coefficient: Union[float, UndefinedType] = Undefined,
+        distance: Union[float, UndefinedType] = Undefined,
+        fraction: Union[float, UndefinedType] = Undefined,
+        lobes: Union[float, UndefinedType] = Undefined,
+        parallel: Union[float, UndefinedType] = Undefined,
+        precision: Union[float, UndefinedType] = Undefined,
+        radius: Union[float, UndefinedType] = Undefined,
+        ratio: Union[float, UndefinedType] = Undefined,
+        reflectX: Union[bool, UndefinedType] = Undefined,
+        reflectY: Union[bool, UndefinedType] = Undefined,
+        rotate: Union[List[float], UndefinedType] = Undefined,
+        scale: Union[float, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        tilt: Union[float, UndefinedType] = Undefined,
+        translate: Union[List[float], UndefinedType] = Undefined,
         **kwds,
     ) -> Self:
         """Add a geographic projection to the chart.
@@ -1215,7 +1222,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
-        type : ProjectionType
+        type : str
             The cartographic projection to use. This value is case-insensitive, for example
             `"albers"` and `"Albers"` indicate the same projection type. You can find all valid
             projection types [in the
@@ -1237,16 +1244,28 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             left-side of the viewport, `y0` is the top, `x1` is the right and `y1` is the
             bottom. If `null`, no viewport clipping is performed.
         coefficient : float
+            The coefficient parameter for the ``hammer`` projection.
 
+            **Default value:** ``2``
         distance : float
+            For the ``satellite`` projection, the distance from the center of the sphere to the
+            point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+            angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
+            is also applied, then more conservative clipping may be necessary.
 
+            **Default value:** ``2.0``
         fraction : float
+            The fraction parameter for the ``bottomley`` projection.
 
+            **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
         lobes : float
-
+            The number of lobes in projections that support multi-lobe views: ``berghaus``,
+            ``gingery``, or ``healpix``. The default value varies based on the projection type.
         parallel : float
-
-        precision : Mapping(required=[length])
+            For conic projections, the `two standard parallels
+            <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
+            The default depends on the specific conic projection used.
+        precision : float
             Sets the threshold for the projection’s [adaptive
             resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels.
             This value corresponds to the [Douglas–Peucker
@@ -1254,13 +1273,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
              If precision is not specified, returns the projection’s current resampling
             precision which defaults to `√0.5 ≅ 0.70710…`.
         radius : float
-
+            The radius parameter for the ``airy`` or ``gingery`` projection. The default value
+            varies based on the projection type.
         ratio : float
-
+            The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
+            default value varies based on the projection type.
         reflectX : boolean
-
+            Sets whether or not the x-dimension is reflected (negated) in the output.
         reflectY : boolean
-
+            Sets whether or not the y-dimension is reflected (negated) in the output.
         rotate : List(float)
             Sets the projection’s three-axis rotation to the specified angles, which must be a
             two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the
@@ -1269,14 +1290,21 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             **Default value:** `[0, 0, 0]`
         scale : float
-            Sets the projection's scale (zoom) value, overriding automatic fitting.
-
+            The projection’s scale (zoom) factor, overriding automatic fitting. The default
+            scale is projection-specific. The scale factor corresponds linearly to the distance
+            between projected points; however, scale factor values are not equivalent across
+            projections.
         spacing : float
+            The spacing parameter for the ``lagrange`` projection.
 
+            **Default value:** ``0.5``
         tilt : float
+            The tilt angle (in degrees) for the ``satellite`` projection.
 
+            **Default value:** ``0``.
         translate : List(float)
-            Sets the projection's translation (pan) value, overriding automatic fitting.
+            The projection’s translation offset as a two-element array ``[tx, ty]``,
+            overriding automatic fitting.
 
         """
         projection = core.Projection(
@@ -1303,7 +1331,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.properties(projection=projection)
 
-    def _add_transform(self, *transforms):
+    def _add_transform(self, *transforms: core.Transform) -> Self:
         """Copy the chart and add specified transforms to chart.transform"""
         copy = self.copy(deep=["transform"])
         if copy.transform is Undefined:
@@ -1312,7 +1340,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     def transform_aggregate(
-        self, aggregate=Undefined, groupby=Undefined, **kwds
+        self,
+        aggregate: Union[List[core.AggregatedFieldDef], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        **kwds: Union[Dict[str, Any], str],
     ) -> Self:
         """
         Add an :class:`AggregateTransform` to the schema.
@@ -1324,7 +1355,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby : List(string)
             The data fields to group by. If not specified, a single group containing all data
             objects will be used.
-        **kwds :
+        **kwds : Union[Dict[str, Any], str]
             additional keywords are converted to aggregates using standard
             shorthand parsing.
 
@@ -1387,7 +1418,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
 
-    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs) -> Self:
+    def transform_bin(
+        self,
+        as_: Union[str, List[str], UndefinedType] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        bin: Union[Literal[True], core.BinParams] = True,
+        **kwargs,
+    ) -> Self:
         """
         Add a :class:`BinTransform` to the schema.
 
@@ -1443,7 +1480,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs["field"] = field
         return self._add_transform(core.BinTransform(**kwargs))
 
-    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs) -> Self:
+    def transform_calculate(
+        self,
+        as_: Union[str, UndefinedType] = Undefined,
+        calculate: Union[str, expr.core.Expression, UndefinedType] = Undefined,
+        **kwargs: Union[str, expr.core.Expression],
+    ) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
 
@@ -1451,8 +1493,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         as_ : string
             The field for storing the computed formula value.
-        calculate : string or alt.expr expression
-            A `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
+        calculate : string or alt.expr.Expression
+            An `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
             string. Use the variable ``datum`` to refer to the current data object.
         **kwargs
             transforms can also be passed by keyword argument; see Examples
@@ -1476,7 +1518,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         It's also possible to pass the ``CalculateTransform`` arguments directly:
 
-        >>> kwds = {'as': 'y', 'calculate': '2 * sin(datum.x)'}
+        >>> kwds = {'as_': 'y', 'calculate': '2 * sin(datum.x)'}
         >>> chart = alt.Chart().transform_calculate(**kwds)
         >>> chart.transform[0]
         CalculateTransform({
@@ -1507,16 +1549,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_density(
         self,
-        density,
-        as_=Undefined,
-        bandwidth=Undefined,
-        counts=Undefined,
-        cumulative=Undefined,
-        extent=Undefined,
-        groupby=Undefined,
-        maxsteps=Undefined,
-        minsteps=Undefined,
-        steps=Undefined,
+        density: str,
+        as_: Union[List[str], UndefinedType] = Undefined,
+        bandwidth: Union[float, UndefinedType] = Undefined,
+        counts: Union[bool, UndefinedType] = Undefined,
+        cumulative: Union[bool, UndefinedType] = Undefined,
+        extent: Union[List[float], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        maxsteps: Union[int, UndefinedType] = Undefined,
+        minsteps: Union[int, UndefinedType] = Undefined,
+        steps: Union[int, UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`DensityTransform` to the spec.
 
@@ -1546,13 +1588,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby : List(str)
             The data fields to group by. If not specified, a single group containing all data
             objects will be used.
-        maxsteps : float
+        maxsteps : int
             The maximum number of samples to take along the extent domain for plotting the
             density. **Default value:** ``200``
-        minsteps : float
+        minsteps : int
             The minimum number of samples to take along the extent domain for plotting the
             density. **Default value:** ``25``
-        steps : float
+        steps : int
             The exact number of samples to take along the extent domain for plotting the
             density. If specified, overrides both minsteps and maxsteps to set an exact number
             of uniform samples. Potentially useful in conjunction with a fixed extent to ensure
@@ -1575,12 +1617,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_impute(
         self,
-        impute,
-        key,
-        frame=Undefined,
-        groupby=Undefined,
-        keyvals=Undefined,
-        method=Undefined,
+        impute: str,
+        key: str,
+        frame: Union[List[Optional[int]], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        keyvals: Union[List[Any], core.ImputeSequence, UndefinedType] = Undefined,
+        method: Union[
+            Literal["value", "mean", "median", "max", "min"], UndefinedType
+        ] = Undefined,
         value=Undefined,
     ) -> Self:
         """
@@ -1594,7 +1638,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             A key field that uniquely identifies data objects within a group.
             Missing key values (those occurring in the data but not in the current group) will
             be imputed.
-        frame : List(anyOf(None, float))
+        frame : List(anyOf(None, int))
             A frame specification as a two-element array used to control the window over which
             the specified method is applied. The array entries should either be a number
             indicating the offset from the current data object, or null to indicate unbounded
@@ -1644,7 +1688,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_joinaggregate(
-        self, joinaggregate=Undefined, groupby=Undefined, **kwargs
+        self,
+        joinaggregate: Union[
+            List[core.JoinAggregateFieldDef], UndefinedType
+        ] = Undefined,
+        groupby: Union[str, UndefinedType] = Undefined,
+        **kwargs: str,
     ) -> Self:
         """
         Add a :class:`JoinAggregateTransform` to the schema.
@@ -1695,7 +1744,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
-    def transform_extent(self, extent: str, param: str):
+    def transform_extent(self, extent: str, param: str) -> Self:
         """Add a :class:`ExtentTransform` to the spec.
 
         Parameters
@@ -1714,6 +1763,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
     # TODO: Update docstring
+    # TODO: Add type hints. Was too complex to type hint `filter` for now
     def transform_filter(self, filter, **kwargs) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
@@ -1732,11 +1782,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         -------
         self : Chart object
             returns chart to allow for chaining
-
-        See Also
-        --------
-        alt.FilterTransform : underlying transform object
-
         """
         if isinstance(filter, Parameter):
             new_filter = {"param": filter.name}
@@ -1747,7 +1792,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = new_filter
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_flatten(self, flatten, as_=Undefined) -> Self:
+    def transform_flatten(
+        self, flatten: List[str], as_: Union[List[str], UndefinedType] = Undefined
+    ) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
         Parameters
@@ -1775,7 +1822,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.FlattenTransform(flatten=flatten, **{"as": as_})
         )
 
-    def transform_fold(self, fold, as_=Undefined) -> Self:
+    def transform_fold(
+        self, fold: List[str], as_: Union[List[str], UndefinedType] = Undefined
+    ) -> Self:
         """Add a :class:`FoldTransform` to the spec.
 
         Parameters
@@ -1800,11 +1849,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_loess(
         self,
-        on,
-        loess,
-        as_=Undefined,
-        bandwidth=Undefined,
-        groupby=Undefined,
+        on: str,
+        loess: str,
+        as_: Union[List[str], UndefinedType] = Undefined,
+        bandwidth: Union[float, UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`LoessTransform` to the spec.
 
@@ -1842,10 +1891,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_lookup(
         self,
-        lookup=Undefined,
-        from_=Undefined,
-        as_=Undefined,
-        default=Undefined,
+        lookup: Union[str, UndefinedType] = Undefined,
+        from_: Union[core.LookupData, core.LookupSelection, UndefinedType] = Undefined,
+        as_: Union[str, List[str], UndefinedType] = Undefined,
+        default: Union[str, UndefinedType] = Undefined,
         **kwargs,
     ) -> Self:
         """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
@@ -1897,11 +1946,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_pivot(
         self,
-        pivot,
-        value,
-        groupby=Undefined,
-        limit=Undefined,
-        op=Undefined,
+        pivot: str,
+        value: str,
+        groupby: Union[List[str], UndefinedType]=Undefined,
+        limit: Union[int, UndefinedType]=Undefined,
+        op: Union[str, UndefinedType]=Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -1916,7 +1965,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby : List(str)
             The optional data fields to group by. If not specified, a single group containing
             all data objects will be used.
-        limit : float
+        limit : int
             An optional parameter indicating the maximum number of pivoted fields to generate.
             The default ( ``0`` ) applies no limit. The pivoted ``pivot`` names are sorted in
             ascending order prior to enforcing the limit.
@@ -1943,11 +1992,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_quantile(
         self,
-        quantile,
-        as_=Undefined,
-        groupby=Undefined,
-        probs=Undefined,
-        step=Undefined,
+        quantile: str,
+        as_: Union[List[str], UndefinedType]=Undefined,
+        groupby: Union[List[str], UndefinedType]=Undefined,
+        probs: Union[List[float], UndefinedType]=Undefined,
+        step: Union[float, UndefinedType]=Undefined,
     ) -> Self:
         """Add a :class:`QuantileTransform` to the chart
 
