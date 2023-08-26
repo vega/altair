@@ -1,9 +1,8 @@
 """
 World Projections
 -----------------
-This example shows a map of the countries of the world using four available
-geographic projections. For more details on the projections available in
-Altair, see https://vega.github.io/vega-lite/docs/projection.html
+This example shows a map of the countries of the world. 
+Use the dropdown menu to compare projections. For more details on the `project` arguments, see the API of `altair.Projection <https://altair-viz.github.io/user_guide/generated/core/altair.Projection.html>`_.
 """
 # category: maps
 import altair as alt
@@ -11,16 +10,27 @@ from vega_datasets import data
 
 source = alt.topo_feature(data.world_110m.url, 'countries')
 
-base = alt.Chart(source).mark_geoshape(
-    fill='#666666',
-    stroke='white'
-).properties(
-    width=300,
-    height=180
-)
+input_dropdown = alt.binding_select(options=[
+    "albers",
+    "albersUsa",
+    "azimuthalEqualArea",
+    "azimuthalEquidistant",
+    "conicEqualArea",
+    "conicEquidistant",
+    "equalEarth",
+    "equirectangular",
+    "gnomonic",
+    "mercator",
+    "naturalEarth1",
+    "orthographic",
+    "stereographic",
+    "transverseMercator"
+], name='Projection ')
+param_projection = alt.param(value="equalEarth", bind=input_dropdown)
 
-projections = ['equirectangular', 'mercator', 'orthographic', 'gnomonic']
-charts = [base.project(proj).properties(title=proj)
-          for proj in projections]
-
-alt.concat(*charts, columns=2)
+alt.Chart(source, width=500, height=300).mark_geoshape(
+    fill='lightgray',
+    stroke='gray'
+).project(
+    type=alt.expr(param_projection.name)
+).add_params(param_projection)
