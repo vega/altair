@@ -1,4 +1,5 @@
 from .html import spec_to_html
+from ._importers import import_vl_convert
 import struct
 
 
@@ -103,7 +104,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
     normalized_engine = _validate_normalize_engine(engine, format)
 
     if normalized_engine == "vlconvert":
-        import vl_convert as vlc
+        vlc = import_vl_convert()
         from ..vegalite import SCHEMA_VERSION
 
         # Compute VlConvert's vl_version string (of the form 'v5_2')
@@ -170,7 +171,7 @@ def _validate_normalize_engine(engine, format):
     """
     # Try to import vl_convert
     try:
-        import vl_convert as vlc
+        vlc = import_vl_convert()
     except ImportError:
         vlc = None
 
