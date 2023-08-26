@@ -171,7 +171,7 @@ def _validate_normalize_engine(engine, format):
     """
     # Try to import vl_convert
     try:
-        import vl_convert as vlc
+        vlc = import_vl_convert()
     except ImportError:
         vlc = None
 
