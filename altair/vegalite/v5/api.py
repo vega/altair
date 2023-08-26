@@ -1948,9 +1948,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         pivot: str,
         value: str,
-        groupby: Union[List[str], UndefinedType]=Undefined,
-        limit: Union[int, UndefinedType]=Undefined,
-        op: Union[str, UndefinedType]=Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        limit: Union[int, UndefinedType] = Undefined,
+        op: Union[str, UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -1993,10 +1993,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_quantile(
         self,
         quantile: str,
-        as_: Union[List[str], UndefinedType]=Undefined,
-        groupby: Union[List[str], UndefinedType]=Undefined,
-        probs: Union[List[float], UndefinedType]=Undefined,
-        step: Union[float, UndefinedType]=Undefined,
+        as_: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        probs: Union[List[float], UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`QuantileTransform` to the chart
 
@@ -2038,14 +2038,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_regression(
         self,
-        on,
-        regression,
-        as_=Undefined,
-        extent=Undefined,
-        groupby=Undefined,
-        method=Undefined,
-        order=Undefined,
-        params=Undefined,
+        on: str,
+        regression: str,
+        as_: Union[List[str], UndefinedType] = Undefined,
+        extent: Union[List[float], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        method: Union[
+            Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
+        ] = Undefined,
+        order: Union[int, UndefinedType] = Undefined,
+        params: Union[bool, UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`RegressionTransform` to the chart.
 
@@ -2067,7 +2069,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         method : enum('linear', 'log', 'exp', 'pow', 'quad', 'poly')
             The functional form of the regression model. One of ``"linear"``, ``"log"``,
             ``"exp"``, ``"pow"``, ``"quad"``, or ``"poly"``.  **Default value:** ``"linear"``
-        order : float
+        order : int
             The polynomial order (number of coefficients) for the 'poly' method.
             **Default value:** ``3``
         params : boolean
@@ -2101,13 +2103,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         )
 
-    def transform_sample(self, sample=1000) -> Self:
+    def transform_sample(self, sample: int = 1000) -> Self:
         """
         Add a :class:`SampleTransform` to the schema.
 
         Parameters
         ----------
-        sample : float
+        sample : int
             The maximum number of data objects to include in the sample. Default: 1000.
 
         Returns
@@ -2122,7 +2124,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.SampleTransform(sample))
 
     def transform_stack(
-        self, as_, stack, groupby, offset=Undefined, sort=Undefined
+        self,
+        as_: Union[str, List[str]],
+        stack: str,
+        groupby: List[str],
+        offset: Union[
+            Literal["zero", "center", "normalize"], UndefinedType
+        ] = Undefined,
+        sort: Union[List[core.SortField], UndefinedType] = Undefined,
     ) -> Self:
         """
         Add a :class:`StackTransform` to the schema.
@@ -2160,10 +2169,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_timeunit(
         self,
-        as_=Undefined,
-        field=Undefined,
-        timeUnit=Undefined,
-        **kwargs,
+        as_: Union[str, UndefinedType] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[str, core.TimeUnit, UndefinedType] = Undefined,
+        **kwargs: str,
     ) -> Self:
         """
         Add a :class:`TimeUnitTransform` to the schema.
@@ -2174,7 +2183,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The output field to write the timeUnit value.
         field : string
             The data field to apply time unit.
-        timeUnit : :class:`TimeUnit`
+        timeUnit : str or :class:`TimeUnit`
             The timeUnit.
         **kwargs
             transforms can also be passed by keyword argument; see Examples
@@ -2244,12 +2253,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_window(
         self,
-        window=Undefined,
-        frame=Undefined,
-        groupby=Undefined,
-        ignorePeers=Undefined,
-        sort=Undefined,
-        **kwargs,
+        window: Union[List[core.WindowFieldDef], UndefinedType] = Undefined,
+        frame: Union[List[Optional[int]], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        ignorePeers: Union[bool, UndefinedType] = Undefined,
+        sort: Union[List[core.SortField], UndefinedType] = Undefined,
+        **kwargs: str,
     ) -> Self:
         """Add a :class:`WindowTransform` to the schema
 
@@ -2257,7 +2266,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         window : List(:class:`WindowFieldDef`)
             The definition of the fields in the window, and what calculations to use.
-        frame : List(anyOf(None, float))
+        frame : List(anyOf(None, int))
             A frame specification as a two-element array indicating how the sliding window
             should proceed. The array entries should either be a number indicating the offset
             from the current data object, or null to indicate unbounded rows preceding or
