@@ -2367,7 +2367,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             return renderers.get()(dct)
 
-    def display(self, renderer=Undefined, theme=Undefined, actions=Undefined, **kwargs):
+    def display(
+        self,
+        renderer: Union[Literal["canvas", "svg"], UndefinedType] = Undefined,
+        theme: Union[str, UndefinedType] = Undefined,
+        actions: Union[bool, dict, UndefinedType] = Undefined,
+        **kwargs,
+    ) -> None:
         """Display chart in Jupyter notebook or JupyterLab
 
         Parameters are passed as options to vega-embed within supported frontends.
@@ -2463,7 +2469,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             http_server=http_server,
         )
 
-    def show(self, embed_opt=None, open_browser=None):
+    def show(
+        self, embed_opt: Optional[dict] = None, open_browser: Optional[bool] = None
+    ) -> None:
         """Show the chart in an external browser window.
 
         This requires a recent version of the altair_viewer package.
@@ -2471,7 +2479,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         embed_opt : dict (optional)
-            The Vega embed options that control the dispay of the chart.
+            The Vega embed options that control the display of the chart.
         open_browser : bool (optional)
             Specify whether a browser window should be opened. If not specified,
             a browser window will be opened only if the server is not already
@@ -2554,7 +2562,7 @@ class _EncodingMixin:
         column : string or alt.Column (optional)
             The data column to use as an encoding for a column facet.
             May be combined with row argument, but not with facet argument.
-        row : string or alt.Column (optional)
+        row : string or alt.Row (optional)
             The data column to use as an encoding for a row facet.
             May be combined with column argument, but not with facet argument.
         data : string or dataframe (optional)
@@ -2676,12 +2684,12 @@ class Chart(
     _counter = 0
 
     @classmethod
-    def _get_name(cls):
+    def _get_name(cls) -> str:
         cls._counter += 1
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct, validate=True) -> core.SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
+    def from_dict(cls, dct: dict, validate: bool = True) -> core.SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters
@@ -2793,7 +2801,7 @@ class Chart(
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params:
             return self
@@ -2812,7 +2820,9 @@ class Chart(
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -2839,7 +2849,7 @@ class Chart(
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
 
-def _check_if_valid_subspec(spec, classname):
+def _check_if_valid_subspec(spec: Union[dict, core.SchemaBase], classname: str) -> None:
     """Check if the spec is a valid sub-spec.
 
     If it is not, then raise a ValueError
@@ -2860,7 +2870,7 @@ def _check_if_valid_subspec(spec, classname):
             raise ValueError(err.format(attr, classname))
 
 
-def _check_if_can_be_layered(spec):
+def _check_if_can_be_layered(spec: Union[dict, core.SchemaBase]) -> None:
     """Check if the spec can be layered."""
 
     def _get(spec, attr):
@@ -2994,7 +3004,9 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             "transformed_data is not yet implemented for RepeatChart"
         )
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3017,7 +3029,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -3033,7 +3045,9 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         return self.add_params(*selections)
 
 
-def repeat(repeater="repeat"):
+def repeat(
+    repeater: Literal["row", "column", "repeat", "layer"] = "repeat"
+) -> core.RepeatRef:
     """Tie a channel to the row or column within a repeated chart
 
     The output of this should be passed to the ``field`` attribute of
@@ -3067,14 +3081,14 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
-    def __ior__(self, other):
+    def __ior__(self, other: core.NonNormalizedSpec) -> Self:
         _check_if_valid_subspec(other, "ConcatChart")
         self.concat.append(other)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
         return self
 
-    def __or__(self, other):
+    def __or__(self, other: core.NonNormalizedSpec) -> Self:
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
@@ -3105,7 +3119,9 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3131,7 +3147,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.concat:
             return self
@@ -3147,7 +3163,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self.add_params(*selections)
 
 
-def concat(*charts, **kwargs):
+def concat(*charts: core.NonNormalizedSpec, **kwargs) -> ConcatChart:
     """Concatenate charts horizontally"""
     return ConcatChart(concat=charts, **kwargs)
 
@@ -3164,14 +3180,14 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
-    def __ior__(self, other):
+    def __ior__(self, other: core.NonNormalizedSpec) -> Self:
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
-    def __or__(self, other):
+    def __or__(self, other: core.NonNormalizedSpec) -> Self:
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
@@ -3202,7 +3218,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3228,7 +3246,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.hconcat:
             return self
@@ -3244,7 +3262,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self.add_params(*selections)
 
 
-def hconcat(*charts, **kwargs):
+def hconcat(*charts: core.NonNormalizedSpec, **kwargs) -> HConcatChart:
     """Concatenate charts horizontally"""
     return HConcatChart(hconcat=charts, **kwargs)
 
@@ -3261,14 +3279,14 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
-    def __iand__(self, other):
+    def __iand__(self, other: core.NonNormalizedSpec) -> Self:
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
-    def __and__(self, other):
+    def __and__(self, other: core.NonNormalizedSpec) -> Self:
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
@@ -3299,7 +3317,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3325,7 +3345,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             encodings.append("y")
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.vconcat:
             return self
@@ -3341,7 +3361,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self.add_params(*selections)
 
 
-def vconcat(*charts, **kwargs):
+def vconcat(*charts: core.NonNormalizedSpec, **kwargs) -> VConcatChart:
     """Concatenate charts vertically"""
     return VConcatChart(vconcat=charts, **kwargs)
 
@@ -3395,7 +3415,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -3403,18 +3423,20 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other):
+    def __add__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
 
-    def add_layers(self, *layers) -> Self:
+    def add_layers(self, *layers: Union[core.LayerSpec, core.UnitSpec]) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
         return copy
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3443,7 +3465,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         )
         return copy
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or not self.layer:
             return self
@@ -3459,7 +3481,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return self.add_params(*selections)
 
 
-def layer(*charts, **kwargs):
+def layer(*charts: Union[core.LayerSpec, core.UnitSpec], **kwargs) -> LayerChart:
     """layer multiple charts"""
     return LayerChart(layer=charts, **kwargs)
 
@@ -3510,7 +3532,9 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def interactive(self, name=None, bind_x=True, bind_y=True) -> Self:
+    def interactive(
+        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+    ) -> Self:
         """Make chart axes scales interactive
 
         Parameters
@@ -3533,7 +3557,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
-    def add_params(self, *params) -> Self:
+    def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
         if not params or self.spec is Undefined:
             return self
@@ -3549,7 +3573,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return self.add_params(*selections)
 
 
-def topo_feature(url, feature, **kwargs):
+def topo_feature(url: str, feature: str, **kwargs) -> core.UrlData:
     """A convenience function for extracting features from a topojson url
 
     Parameters
@@ -3597,7 +3621,7 @@ def _combine_subchart_data(data, subcharts):
     return data, subcharts
 
 
-def _viewless_dict(param):
+def _viewless_dict(param: Parameter) -> dict:
     d = param.to_dict()
     d.pop("views", None)
     return d
@@ -3859,6 +3883,6 @@ def graticule(**kwds):
     return core.GraticuleGenerator(graticule=graticule)
 
 
-def sphere():
+def sphere() -> core.SphereGenerator:
     """Sphere generator."""
     return core.SphereGenerator(sphere=True)
