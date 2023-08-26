@@ -1682,7 +1682,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
-    def transform_extent(self, extent: str, param: str):
+    def transform_extent(self, extent: str, param: str) -> Self:
         """Add a :class:`ExtentTransform` to the spec.
 
         Parameters
