@@ -328,10 +328,10 @@ def value(value, **kwargs) -> dict:
 
 def param(
     name: Optional[str] = None,
-    value: Union[UndefinedType, Any] = Undefined,
-    bind: Union[UndefinedType, core.Binding] = Undefined,
-    empty: Union[UndefinedType, bool] = Undefined,
-    expr: Union[UndefinedType, core.Expr] = Undefined,
+    value: Union[Any, UndefinedType] = Undefined,
+    bind: Union[core.Binding, UndefinedType] = Undefined,
+    empty: Union[bool, UndefinedType] = Undefined,
+    expr: Union[core.Expr, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -424,7 +424,7 @@ def param(
 
 
 def _selection(
-    type: Union[UndefinedType, Literal["interval", "point"]] = Undefined, **kwds
+    type: Union[Literal["interval", "point"], UndefinedType] = Undefined, **kwds
 ) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
     param_kwds = {}
@@ -457,7 +457,7 @@ def _selection(
    Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
 )
 def selection(
-    type: Union[UndefinedType, Literal["interval", "point"]] = Undefined, **kwds
+    type: Union[Literal["interval", "point"], UndefinedType] = Undefined, **kwds
 ) -> Parameter:
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
