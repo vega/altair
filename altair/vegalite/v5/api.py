@@ -1763,8 +1763,19 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
     # TODO: Update docstring
-    # TODO: Add type hints. Was too complex to type hint `filter` for now
-    def transform_filter(self, filter, **kwargs) -> Self:
+    def transform_filter(
+        self,
+        filter: Union[
+            str,
+            expr.core.Expression,
+            core.Predicate,
+            Parameter,
+            core.PredicateComposition,
+            # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
+            Dict[str, core.Predicate],
+        ],
+        **kwargs,
+    ) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
 
