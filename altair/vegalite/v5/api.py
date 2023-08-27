@@ -26,6 +26,7 @@ from ...utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from ...utils.core import _DataFrameLike
+from ...utils.data import _DataType
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -2676,13 +2677,15 @@ class Chart(
 
     def __init__(
         self,
-        data=Undefined,
-        encoding=Undefined,
-        mark=Undefined,
-        width=Undefined,
-        height=Undefined,
+        data: Union[
+            _DataType, core.Data, str, UndefinedType, core.Generator
+        ] = Undefined,
+        encoding: Union[core.FacetedEncoding, UndefinedType] = Undefined,
+        mark: Union[str, core.AnyMark, UndefinedType] = Undefined,
+        width: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
+        height: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
         **kwargs,
-    ):
+    ) -> None:
         super(Chart, self).__init__(
             data=data,
             encoding=encoding,
@@ -2692,7 +2695,7 @@ class Chart(
             **kwargs,
         )
 
-    _counter = 0
+    _counter: int = 0
 
     @classmethod
     def _get_name(cls) -> str:
