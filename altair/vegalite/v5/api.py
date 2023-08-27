@@ -33,6 +33,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+_ChartDataType = Union[_DataType, core.Data, str, UndefinedType, core.Generator]
+
 
 # ------------------------------------------------------------------------
 # Data Utilities
@@ -2553,11 +2555,13 @@ class _EncodingMixin:
 
     def facet(
         self,
-        facet=Undefined,
-        row=Undefined,
-        column=Undefined,
-        data=Undefined,
-        columns=Undefined,
+        facet: Union[str, channels.Facet, UndefinedType] = Undefined,
+        row: Union[str, core.FacetFieldDef, channels.Row, UndefinedType] = Undefined,
+        column: Union[
+            str, core.FacetFieldDef, channels.Column, UndefinedType
+        ] = Undefined,
+        data: Union[_ChartDataType, UndefinedType] = Undefined,
+        columns: Union[int, UndefinedType] = Undefined,
         **kwargs,
     ) -> "FacetChart":
         """Create a facet chart from the current chart.
@@ -2568,13 +2572,13 @@ class _EncodingMixin:
 
         Parameters
         ----------
-        facet : string or alt.Facet (optional)
+        facet : string, Facet (optional)
             The data column to use as an encoding for a wrapped facet.
             If specified, then neither row nor column may be specified.
-        column : string or alt.Column (optional)
+        column : string, Column, FacetFieldDef (optional)
             The data column to use as an encoding for a column facet.
             May be combined with row argument, but not with facet argument.
-        row : string or alt.Row (optional)
+        row : string or Row, FacetFieldDef (optional)
             The data column to use as an encoding for a row facet.
             May be combined with column argument, but not with facet argument.
         data : string or dataframe (optional)
@@ -2677,9 +2681,7 @@ class Chart(
 
     def __init__(
         self,
-        data: Union[
-            _DataType, core.Data, str, UndefinedType, core.Generator
-        ] = Undefined,
+        data: Union[_ChartDataType, UndefinedType] = Undefined,
         encoding: Union[core.FacetedEncoding, UndefinedType] = Undefined,
         mark: Union[str, core.AnyMark, UndefinedType] = Undefined,
         width: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
