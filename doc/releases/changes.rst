@@ -3,8 +3,19 @@
 Release Notes
 =============
 
-Version 5.1.0 (released August 28, 2023)
+Version 5.2.0 (unreleased month date, year)
 -------------------------------------------
+Enhancements
+~~~~~~~~~~~~
+
+Bug Fixes
+~~~~~~~~~
+
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Version 5.1.0 (released August 28, 2023)
+----------------------------------------
 
 - Update Vega-Lite from version 5.8.0 to version 5.14.1;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
