@@ -8,13 +8,13 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, List, Optional, Any, Iterable
+from typing import cast, List, Optional, Any, Iterable, Union, Literal, Dict
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
 from typing import Dict as TypingDict
 
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL
+from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
 from ... import utils, expr
@@ -186,26 +186,40 @@ def _get_channels_mapping():
 class Parameter(expr.core.OperatorMixin, object):
     """A Parameter object"""
 
-    _counter = 0
+    _counter: int = 0
 
     @classmethod
-    def _get_name(cls):
+    def _get_name(cls) -> str:
         cls._counter += 1
         return f"param_{cls._counter}"
 
-    def __init__(self, name):
+    def __init__(
+        self,
+        name: Optional[str] = None,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[
+            core.VariableParameter,
+            core.TopLevelSelectionParameter,
+            core.SelectionParameter,
+            UndefinedType,
+        ] = Undefined,
+        param_type: Union[Literal["variable", "selection"], UndefinedType] = Undefined,
+    ) -> None:
         if name is None:
             name = self._get_name()
         self.name = name
+        self.empty = empty
+        self.param = param
+        self.param_type = param_type
 
     @utils.deprecation.deprecated(
         message="'ref' is deprecated. No need to call '.ref()' anymore."
     )
-    def ref(self):
+    def ref(self) -> dict:
         "'ref' is deprecated. No need to call '.ref()' anymore."
         return self.to_dict()
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Union[str, dict]]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -214,6 +228,8 @@ class Parameter(expr.core.OperatorMixin, object):
                 if hasattr(self.name, "to_dict")
                 else self.name
             }
+        else:
+            raise ValueError(f"Unrecognized parameter type: {self.param_type}")
 
     def __invert__(self):
         if self.param_type == "selection":
@@ -237,16 +253,18 @@ class Parameter(expr.core.OperatorMixin, object):
         else:
             return expr.core.OperatorMixin.__or__(self, other)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Parameter({0!r}, {1})".format(self.name, self.param)
 
-    def _to_expr(self):
+    def _to_expr(self) -> str:
         return self.name
 
-    def _from_expr(self, expr):
+    def _from_expr(self, expr) -> "ParameterExpression":
         return ParameterExpression(expr=expr)
 
-    def __getattr__(self, field_name):
+    def __getattr__(
+        self, field_name: str
+    ) -> Union[expr.core.GetAttrExpression, "SelectionExpression"]:
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
         _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
@@ -258,7 +276,7 @@ class Parameter(expr.core.OperatorMixin, object):
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
-    def __getitem__(self, field_name):
+    def __getitem__(self, field_name: str) -> expr.core.GetItemExpression:
         return expr.core.GetItemExpression(self.name, field_name)
 
 
