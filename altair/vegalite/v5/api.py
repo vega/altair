@@ -334,7 +334,7 @@ def param(
     value: Union[Any, UndefinedType] = Undefined,
     bind: Union[core.Binding, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[core.Expr, UndefinedType] = Undefined,
+    expr: Union[core.Expr, expr.core.Expression, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -489,7 +489,7 @@ def selection_interval(
     value: Union[Any, UndefinedType] = Undefined,
     bind: Union[core.Binding, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[core.Expr, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
     encodings: Union[List[str], UndefinedType] = Undefined,
     on: Union[str, UndefinedType] = Undefined,
     clear: Union[str, bool, UndefinedType] = Undefined,
