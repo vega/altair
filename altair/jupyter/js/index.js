@@ -36,9 +36,10 @@ export async function render({ model, el }) {
 
         const initialSelections = {};
         for (const selectionName of Object.keys(model.get("_vl_selections"))) {
+            const storeName = `${selectionName}_store`;
             const selectionHandler = (_, value) => {
-                const newSelections = JSON.parse(JSON.stringify(model.get("_vl_selections"))) || {};
-                const store = JSON.parse(JSON.stringify(api.view.data(`${selectionName}_store`)));
+                const newSelections = cleanJson(model.get("_vl_selections") ?? {});
+                const store = cleanJson(api.view.data(storeName) ?? []);
 
                 newSelections[selectionName] = {value, store};
                 model.set("_vl_selections", newSelections);
@@ -46,7 +47,10 @@ export async function render({ model, el }) {
             };
             api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, {maxWait}));
 
-            initialSelections[selectionName] = {value: {}, store: []}
+            initialSelections[selectionName] = {
+                value: cleanJson(api.view.signal(selectionName) ?? {}),
+                store: cleanJson(api.view.data(storeName) ?? [])
+            }
         }
         model.set("_vl_selections", initialSelections);
 
@@ -77,4 +81,8 @@ export async function render({ model, el }) {
     model.on('change:spec', reembed);
     model.on('change:debounce_wait', reembed);
     await reembed();
+}
+
+function cleanJson(data) {
+    return JSON.parse(JSON.stringify(data))
 }
