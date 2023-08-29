@@ -8,7 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
-from typing import cast, List, Optional, Any, Iterable, Union, Literal, Dict
+from typing import cast, List, Optional, Any, Iterable, Union, Literal
 
 # Have to rename it here as else it overlaps with schema.core.Type
 from typing import Type as TypingType
@@ -219,7 +219,7 @@ class Parameter(expr.core.OperatorMixin, object):
         "'ref' is deprecated. No need to call '.ref()' anymore."
         return self.to_dict()
 
-    def to_dict(self) -> Dict[str, Union[str, dict]]:
+    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -1744,7 +1744,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         """
         if isinstance(filter, Parameter):
-            new_filter = {"param": filter.name}
+            new_filter: TypingDict[str, Union[bool, str]] = {"param": filter.name}
             if "empty" in kwargs:
                 new_filter["empty"] = kwargs.pop("empty")
             elif isinstance(filter.empty, bool):
