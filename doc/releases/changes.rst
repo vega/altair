@@ -3,16 +3,12 @@
 Release Notes
 =============
 
-Version 5.2.0 (unreleased month date, year)
+Version 5.1.1 (unreleased month date, year)
 -------------------------------------------
-Enhancements
-~~~~~~~~~~~~
 
 Bug Fixes
 ~~~~~~~~~
-
-Backward-Incompatible Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Fall back to type inference logic of the pandas-based implementation to infer object data types (#3179)
 
 Version 5.1.0 (released August 28, 2023)
 ----------------------------------------
