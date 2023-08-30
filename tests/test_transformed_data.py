@@ -58,7 +58,7 @@ except ImportError:
     ("top_k_letters.py", 9, ["rank", "letters"]),
     ("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"]),
     ("area_faceted.py", 492, ["date", "price"]),
-    ("trellis_histogram.py", 20, ["Origin", "__count"]),
+    ("distributions_faceted_histogram.py", 20, ["Origin", "__count"]),
     ("us_population_over_time.py", 38, ["sex", "people_start"]),
     ("us_population_over_time_facet.py", 285, ["year", "sum_people"]),
     ("wilkinson-dot-plot.py", 21, ["data", "id"]),
