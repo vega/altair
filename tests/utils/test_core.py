@@ -134,7 +134,8 @@ def test_parse_shorthand():
     )
 
 
-def test_parse_shorthand_with_data():
+@pytest.mark.parametrize("object_dtype", [False, True])
+def test_parse_shorthand_with_data(object_dtype):
     def check(s, data, **kwargs):
         assert parse_shorthand(s, data) == kwargs
 
@@ -146,6 +147,9 @@ def test_parse_shorthand_with_data():
             "t": pd.date_range("2018-01-01", periods=5, freq="D").tz_localize("UTC"),
         }
     )
+
+    if object_dtype:
+        data = data.astype("object")
 
     check("x", data, field="x", type="quantitative")
     check("y", data, field="y", type="nominal")
