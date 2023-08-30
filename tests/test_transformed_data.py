@@ -20,7 +20,7 @@ except ImportError:
     ("anscombe_plot.py", 44, ["Series", "X", "Y"]),
     ("bar_chart_sorted.py", 6, ["site", "sum_yield"]),
     ("bar_chart_faceted_compact.py", 27, ["p", "p_end"]),
-    ("beckers_barley_trellis_plot.py", 120, ["year", "site"]),
+    ("beckers_barley_facet.py", 120, ["year", "site"]),
     ("beckers_barley_wrapped_facet.py", 120, ["site", "median_yield"]),
     ("bump_chart.py", 100, ["rank", "yearmonth_date"]),
     ("comet_chart.py", 120, ["variety", "delta"]),
