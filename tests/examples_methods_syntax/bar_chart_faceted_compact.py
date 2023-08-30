@@ -1,7 +1,8 @@
 """
-Compact Trellis Grid of Bar Charts
+Compact Faceted Grid of Bar Charts
 ==================================
-This example shows a simple grid of bar charts to compare performance data..
+A simple grid of bar charts to compare performance data,
+one subchart for each subset of the data.
 """
 # category: bar charts
 import altair as alt
@@ -40,11 +41,9 @@ source = pd.DataFrame(
 )
 
 alt.Chart(source, width=60, height=alt.Step(8)).mark_bar().encode(
-    y=alt.Y("c:N", axis=None),
-    x=alt.X("p:Q", title=None, axis=alt.Axis(format="%")),
-    color=alt.Color(
-        "c:N", title="settings", legend=alt.Legend(orient="bottom", titleOrient="left")
-    ),
-    row=alt.Row("a:N", title="Factor A", header=alt.Header(labelAngle=0)),
-    column=alt.Column("b:N", title="Factor B"),
+    alt.Y("c:N").axis(None),
+    alt.X("p:Q").title(None).axis(format="%"),
+    alt.Color("c:N").title("settings").legend(orient="bottom", titleOrient="left"),
+    alt.Row("a:N").title("Factor A").header(labelAngle=0),
+    alt.Column("b:N").title("Factor B"),
 )
