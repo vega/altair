@@ -3,6 +3,19 @@
 Release Notes
 =============
 
+Version 5.2.0 (unreleased month date, year)
+-------------------------------------------
+
+Enhancements
+~~~~~~~~~~~~
+
+Bug Fixes
+~~~~~~~~~
+
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 Version 5.1.1 (released August 30, 2023)
 ----------------------------------------
 
