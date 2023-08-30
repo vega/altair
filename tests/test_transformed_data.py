@@ -1,9 +1,11 @@
-from altair.utils.execeval import eval_block
-import altair as alt
-from tests import examples_methods_syntax
-from vega_datasets import data
 import pkgutil
+
 import pytest
+from vega_datasets import data
+
+import altair as alt
+from altair.utils.execeval import eval_block
+from tests import examples_methods_syntax
 
 try:
     import vegafusion as vf  # type: ignore
@@ -55,7 +57,7 @@ except ImportError:
     ("top_k_items.py", 10, ["rank", "IMDB_Rating_start"]),
     ("top_k_letters.py", 9, ["rank", "letters"]),
     ("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"]),
-    ("trellis_area_sort_array.py", 492, ["date", "price"]),
+    ("area_faceted.py", 492, ["date", "price"]),
     ("trellis_histogram.py", 20, ["Origin", "__count"]),
     ("us_population_over_time.py", 38, ["sex", "people_start"]),
     ("us_population_over_time_facet.py", 285, ["year", "sum_people"]),
