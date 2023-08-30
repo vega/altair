@@ -269,7 +269,7 @@ encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
 Another option to use the ``repeat`` method is for layering. Here below the
 columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
-using ``alt.repeat('layer')``: 
+using ``alt.repeat('layer')``:
 
 .. altair-plot::
 
@@ -292,9 +292,13 @@ more general in the future.
 
 Faceted Charts
 ~~~~~~~~~~~~~~
-Like repeated charts, Faceted charts provide a more convenient API for creating
-multiple views of a dataset for a specific type of chart: one where each panel
-contains a different subset of data.
+Like repeated charts, Faceted charts provide multiple views of a dataset.
+But instead of having different panels for different encodings,
+we have different panels for different subsets of data. For example,
+one panel for each of the three species of flower in the iris dataset.
+
+This is also called a `small multiple <https://en.wikipedia.org/wiki/Small_multiple>`_
+chart, trellis chart, lattice chart, grid chart, or panel chart.
 
 We could do this manually using a filter transform along with a horizontal
 concatenation:
@@ -323,7 +327,7 @@ concatenation:
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,
 if a bit verbose.
 
-Using ``alt.facet`` it becomes a bit cleaner:
+Using ``.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
@@ -353,7 +357,7 @@ can give the same results:
         height=180
     )
 
-The advantage of using ``alt.facet`` is that it can create faceted views of
+The advantage of using ``.facet`` is that it can create faceted views of
 more complicated compound charts. For example, here is a faceted view of a
 layered chart with a hover selection:
 
