@@ -95,7 +95,7 @@ For example here is a line chart showing stock prices of 5 tech companies over t
 We map the ``symbol`` variable to ``detail`` to use them to group lines.
 
 .. altair-plot::
-    
+
     import altair as alt
     from vega_datasets import data
 
@@ -187,7 +187,7 @@ For more information, see :ref:`facet-chart`.
 =======  ================  ===============================================  =============================================
 Channel  Altair Class      Description                                      Example
 =======  ================  ===============================================  =============================================
-column   :class:`Column`   The column of a faceted plot                     :ref:`gallery_trellis_scatter_plot`
-row      :class:`Row`      The row of a faceted plot                        :ref:`gallery_beckers_barley_trellis_plot`
+column   :class:`Column`   The column of a faceted plot                     :ref:`gallery_scatter_faceted`
+row      :class:`Row`      The row of a faceted plot                        :ref:`gallery_beckers_barley_facet`
 facet    :class:`Facet`    The row and/or column of a general faceted plot  :ref:`gallery_us_population_over_time_facet`
 =======  ================  ===============================================  =============================================
