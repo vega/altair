@@ -407,7 +407,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         elif dtype == object:
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
-            col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+            col = df[col_name].astype(object).apply(to_list_if_array)
             df[col_name] = col.where(col.notnull(), None)
     return df
 
