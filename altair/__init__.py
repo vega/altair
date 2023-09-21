@@ -489,6 +489,7 @@ __all__ = [
     "TypedFieldDef",
     "URI",
     "Undefined",
+    "UndefinedType",
     "UnitSpec",
     "UnitSpecWithFrame",
     "Url",

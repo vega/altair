@@ -1,7 +1,7 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from altair.utils.schemapi import SchemaBase, Undefined, _subclasses
+from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
 
 import pkgutil
 import json

@@ -391,7 +391,7 @@ def generate_vegalite_schema_wrapper(schema_file):
 
     contents = [
         HEADER,
-        "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
+        "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
     contents.append(BASE_SCHEMA.format(basename=basename))
