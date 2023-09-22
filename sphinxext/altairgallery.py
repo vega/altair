@@ -86,7 +86,7 @@ If you can't find the plots you are looking for here, make sure to check out the
    :hidden:
 
    Gallery <self>
-   Tutorials <../case_studies/exploring-weather>
+   Tutorials <../case_studies/index>
 """
 )
 
