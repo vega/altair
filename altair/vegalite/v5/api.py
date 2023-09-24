@@ -14,7 +14,7 @@ from typing import cast, List, Optional, Any, Iterable, Union, Type, Dict, Liter
 from typing import Type as TypingType
 from typing import Dict as TypingDict
 
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL, UndefinedType
+from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
 from ... import utils, expr
@@ -189,17 +189,31 @@ def _get_channels_mapping() -> Dict[Type[core.SchemaBase], str]:
 class Parameter(expr.core.OperatorMixin, object):
     """A Parameter object"""
 
-    _counter = 0
+    _counter: int = 0
 
     @classmethod
     def _get_name(cls) -> str:
         cls._counter += 1
         return f"param_{cls._counter}"
 
-    def __init__(self, name: Optional[str]) -> None:
+    def __init__(
+        self,
+        name: Optional[str] = None,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[
+            core.VariableParameter,
+            core.TopLevelSelectionParameter,
+            core.SelectionParameter,
+            UndefinedType,
+        ] = Undefined,
+        param_type: Union[Literal["variable", "selection"], UndefinedType] = Undefined,
+    ) -> None:
         if name is None:
             name = self._get_name()
         self.name = name
+        self.empty = empty
+        self.param = param
+        self.param_type = param_type
 
     @utils.deprecation.deprecated(
         message="'ref' is deprecated. No need to call '.ref()' anymore."
@@ -208,7 +222,7 @@ class Parameter(expr.core.OperatorMixin, object):
         "'ref' is deprecated. No need to call '.ref()' anymore."
         return self.to_dict()
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -253,7 +267,7 @@ class Parameter(expr.core.OperatorMixin, object):
 
     def __getattr__(
         self, field_name: str
-    ) -> Union["SelectionExpression", expr.core.GetAttrExpression]:
+    ) -> Union[expr.core.GetAttrExpression, "SelectionExpression"]:
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
         _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
@@ -1798,7 +1812,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             returns chart to allow for chaining
         """
         if isinstance(filter, Parameter):
-            new_filter = {"param": filter.name}
+            new_filter: TypingDict[str, Union[bool, str]] = {"param": filter.name}
             if "empty" in kwargs:
                 new_filter["empty"] = kwargs.pop("empty")
             elif isinstance(filter.empty, bool):

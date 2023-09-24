@@ -1,7 +1,13 @@
 """
-Becker's Barley Trellis Plot
+Becker's Barley Faceted Plot
 ----------------------------
-The example demonstrates the trellis charts created by Richard Becker, William Cleveland and others in the 1990s. Using the visualization technique below they identified an anomoly in a widely used agriculatural dataset, which they termed `"The Morris Mistake." <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_. It became their favored way of showcasing the power of this pioneering plot.
+The example demonstrates the faceted charts created by Richard Becker,
+William Cleveland and others in the 1990s. Using the visualization technique
+where each row is a different site (i.e. the chart is faceted by site),
+they identified an anomaly in a widely used agriculatural dataset,
+where the "Morris" site accidentally had the years 1931 and 1932 swapped.
+They named this
+`"The Morris Mistake." <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_.
 """
 # category: case studies
 import altair as alt

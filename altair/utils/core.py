@@ -407,7 +407,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         elif dtype == object:
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
-            col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+            col = df[col_name].astype(object).apply(to_list_if_array)
             df[col_name] = col.where(col.notnull(), None)
     return df
 
@@ -586,7 +586,15 @@ def parse_shorthand(
                 unescaped_field = attrs["field"].replace("\\", "")
                 if unescaped_field in dfi.column_names():
                     column = dfi.get_column_by_name(unescaped_field)
-                    attrs["type"] = infer_vegalite_type_for_dfi_column(column)
+                    try:
+                        attrs["type"] = infer_vegalite_type_for_dfi_column(column)
+                    except NotImplementedError:
+                        # Fall back to pandas-based inference
+                        if isinstance(data, pd.DataFrame):
+                            attrs["type"] = infer_vegalite_type(data[unescaped_field])
+                        else:
+                            raise
+
                     if isinstance(attrs["type"], tuple):
                         attrs["sort"] = attrs["type"][1]
                         attrs["type"] = attrs["type"][0]

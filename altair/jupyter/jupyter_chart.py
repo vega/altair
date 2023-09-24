@@ -92,7 +92,7 @@ class Selections(traitlets.HasTraits):
 
 
 class JupyterChart(anywidget.AnyWidget):
-    _esm = _here / "js" / "index.js"
+    _esm = (_here / "js" / "index.js").read_text()
     _css = r"""
     .vega-embed {
         /* Make sure action menu isn't cut off */

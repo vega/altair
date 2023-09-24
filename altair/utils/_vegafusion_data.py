@@ -72,7 +72,7 @@ def get_inline_table_names(vega_spec: dict) -> Set[str]:
     ...         },
     ...         {
     ...             "name": "bar",
-    ...             "url": "table://inline_dataset_123"
+    ...             "url": "vegafusion+dataset://inline_dataset_123"
     ...         }
     ...     ]
     ... }

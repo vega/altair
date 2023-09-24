@@ -1,5 +1,5 @@
 # ruff: noqa
-__version__ = "5.1.0dev"
+__version__ = "5.2.0dev"
 
 from typing import Any
 
@@ -489,6 +489,7 @@ __all__ = [
     "TypedFieldDef",
     "URI",
     "Undefined",
+    "UndefinedType",
     "UnitSpec",
     "UnitSpecWithFrame",
     "Url",

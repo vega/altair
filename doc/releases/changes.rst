@@ -3,8 +3,28 @@
 Release Notes
 =============
 
-Version 5.1.0 (unreleased month date, year)
+Version 5.2.0 (unreleased month date, year)
 -------------------------------------------
+
+Enhancements
+~~~~~~~~~~~~
+
+Bug Fixes
+~~~~~~~~~
+
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Version 5.1.1 (released August 30, 2023)
+----------------------------------------
+
+Bug Fixes
+~~~~~~~~~
+- Fall back to type inference logic of the pandas-based implementation to infer object data types (#3179)
+
+Version 5.1.0 (released August 28, 2023)
+----------------------------------------
 
 - Update Vega-Lite from version 5.8.0 to version 5.14.1;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
@@ -13,10 +33,12 @@ Enhancements
 ~~~~~~~~~~~~
 - Add ``chart.transformed_data()`` method to extract transformed chart data using VegaFusion (#3081, #3084, #3102)
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
+- Add ``JupyterChart`` to support accessing params and selections from Python (See :ref:`user-guide-jupyterchart`)  (#3151)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
 - Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
 - Add new transform method `transform_extent` (#3148)
 - Add support for new referencing logic in version 4.18 of the jsonschema package
+- Add configurable pixels-per-inch (ppi) metadata to saved and displayed PNG images (#3163)
 
 Bug Fixes
 ~~~~~~~~~
@@ -25,7 +47,8 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Drop support for Python 3.7 which is end-of-life (#3100)
-- Increase minimum required Pandas version to 0.25 (#3130)
+- Hard dependencies: Increase minimum required pandas version to 0.25 (#3130)
+- Soft dependencies: Increase minimum required vl-convert-python version to 0.13.0 and increase minimum required vegafusion version to 1.4.0 (#3163, #3160)
 
 Version 5.0.1 (released May 26, 2023)
 -------------------------------------

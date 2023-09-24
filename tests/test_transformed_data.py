@@ -1,9 +1,11 @@
-from altair.utils.execeval import eval_block
-import altair as alt
-from tests import examples_methods_syntax
-from vega_datasets import data
 import pkgutil
+
 import pytest
+from vega_datasets import data
+
+import altair as alt
+from altair.utils.execeval import eval_block
+from tests import examples_methods_syntax
 
 try:
     import vegafusion as vf  # type: ignore
@@ -17,8 +19,8 @@ except ImportError:
     ("annual_weather_heatmap.py", 366, ["monthdate_date_end", "max_temp_max"]),
     ("anscombe_plot.py", 44, ["Series", "X", "Y"]),
     ("bar_chart_sorted.py", 6, ["site", "sum_yield"]),
-    ("bar_chart_trellis_compact.py", 27, ["p", "p_end"]),
-    ("beckers_barley_trellis_plot.py", 120, ["year", "site"]),
+    ("bar_chart_faceted_compact.py", 27, ["p", "p_end"]),
+    ("beckers_barley_facet.py", 120, ["year", "site"]),
     ("beckers_barley_wrapped_facet.py", 120, ["site", "median_yield"]),
     ("bump_chart.py", 100, ["rank", "yearmonth_date"]),
     ("comet_chart.py", 120, ["variety", "delta"]),
@@ -55,8 +57,8 @@ except ImportError:
     ("top_k_items.py", 10, ["rank", "IMDB_Rating_start"]),
     ("top_k_letters.py", 9, ["rank", "letters"]),
     ("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"]),
-    ("trellis_area_sort_array.py", 492, ["date", "price"]),
-    ("trellis_histogram.py", 20, ["Origin", "__count"]),
+    ("area_faceted.py", 492, ["date", "price"]),
+    ("distributions_faceted_histogram.py", 20, ["Origin", "__count"]),
     ("us_population_over_time.py", 38, ["sex", "people_start"]),
     ("us_population_over_time_facet.py", 285, ["year", "sum_people"]),
     ("wilkinson-dot-plot.py", 21, ["data", "id"]),
