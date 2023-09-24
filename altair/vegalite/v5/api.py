@@ -1121,8 +1121,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def __add__(self, other) -> "LayerChart":
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be layered.")
-        # Too difficult to type check this
-        return layer(self, other)  # type: ignore[arg-type]
+        return layer(self, other)
 
     def __and__(self, other) -> "VConcatChart":
         if not isinstance(other, TopLevelMixin):
@@ -1133,8 +1132,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def __or__(self, other) -> "HConcatChart":
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be concatenated.")
-        # Too difficult to type check this
-        return hconcat(self, other)  # type: ignore[arg-type]
+        return hconcat(self, other)
 
     def repeat(
         self,
@@ -1726,7 +1724,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         joinaggregate: Union[
             List[core.JoinAggregateFieldDef], UndefinedType
         ] = Undefined,
-        groupby: Union[str, UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -1807,7 +1805,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Parameter,
             core.PredicateComposition,
             # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
-            TypingDict[str, Union[core.Predicate, str, bool]],
+            TypingDict[str, Union[core.Predicate, str, list, bool]],
         ],
         **kwargs,
     ) -> Self:
@@ -3214,7 +3212,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self.add_params(*selections)
 
 
-def concat(*charts: core.NonNormalizedSpec, **kwargs) -> ConcatChart:
+def concat(*charts, **kwargs) -> ConcatChart:
     """Concatenate charts horizontally"""
     return ConcatChart(concat=charts, **kwargs)
 
@@ -3313,7 +3311,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self.add_params(*selections)
 
 
-def hconcat(*charts: core.NonNormalizedSpec, **kwargs) -> HConcatChart:
+def hconcat(*charts, **kwargs) -> HConcatChart:
     """Concatenate charts horizontally"""
     return HConcatChart(hconcat=charts, **kwargs)
 
@@ -3532,7 +3530,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return self.add_params(*selections)
 
 
-def layer(*charts: Union[core.LayerSpec, core.UnitSpec], **kwargs) -> LayerChart:
+def layer(*charts, **kwargs) -> LayerChart:
     """layer multiple charts"""
     return LayerChart(layer=charts, **kwargs)
 
