@@ -116,6 +116,15 @@ as expected.
         title='Comparison of blob areas'
     )
 
+Note that when including images as part of the chart data,
+the chart size often increases several-fold.
+The size of the chart above would have been 19 Kb without the images,
+but with the images added it is 760 Kb.
+While this is a 20x size increase,
+the base64 encoding is still quite storage efficient;
+if we would have included the images in their original Numpy array format
+the chart size would have been 35Mb!
+
 If we want to have even more fun and get a bit more sophisticated,
 we could show one chart at a time
 and update what is shown on the y-axis
