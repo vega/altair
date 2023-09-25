@@ -86,6 +86,7 @@ doc = [
     "myst-parser",
     "sphinx_copybutton",
     "sphinx-design",
+    "scipy",
 ]
 
 [tool.hatch.version]
