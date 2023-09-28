@@ -346,9 +346,9 @@ def value(value, **kwargs) -> dict:
 def param(
     name: Optional[str] = None,
     value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, UndefinedType] = Undefined,
+    bind: Union[core.Binding, str, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[core.Expr, expr.core.Expression, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -365,14 +365,14 @@ def param(
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
-    bind : :class:`Binding` (optional)
+    bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
     empty : boolean (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
         'empty=False'.
-    expr : :class:`Expr` (optional)
+    expr : str, Expression (optional)
         An expression for the value of the parameter. This expression may
         include other parameters, in which case the parameter will
         automatically update in response to upstream parameter changes.
@@ -776,7 +776,9 @@ def binding_range(**kwargs):
 
 # TODO: update the docstring
 def condition(
-    predicate: Union[Parameter, str, expr.Expression, core.PredicateComposition, dict],
+    predicate: Union[
+        Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
+    ],
     # Types of these depends on where the condition is used so we probably
     # can't be more specific here.
     if_true: Any,
@@ -1216,25 +1218,39 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type: Union[str, UndefinedType] = Undefined,
-        center: Union[List[float], UndefinedType] = Undefined,
-        clipAngle: Union[float, UndefinedType] = Undefined,
-        clipExtent: Union[List[List[float]], UndefinedType] = Undefined,
-        coefficient: Union[float, UndefinedType] = Undefined,
-        distance: Union[float, UndefinedType] = Undefined,
-        fraction: Union[float, UndefinedType] = Undefined,
-        lobes: Union[float, UndefinedType] = Undefined,
-        parallel: Union[float, UndefinedType] = Undefined,
-        precision: Union[float, UndefinedType] = Undefined,
-        radius: Union[float, UndefinedType] = Undefined,
-        ratio: Union[float, UndefinedType] = Undefined,
-        reflectX: Union[bool, UndefinedType] = Undefined,
-        reflectY: Union[bool, UndefinedType] = Undefined,
-        rotate: Union[List[float], UndefinedType] = Undefined,
-        scale: Union[float, UndefinedType] = Undefined,
-        spacing: Union[float, UndefinedType] = Undefined,
-        tilt: Union[float, UndefinedType] = Undefined,
-        translate: Union[List[float], UndefinedType] = Undefined,
+        type: Union[str, core.ProjectionType, core.ExprRef, UndefinedType] = Undefined,
+        center: Union[
+            List[float], core.Vector2number, core.ExprRef, UndefinedType
+        ] = Undefined,
+        clipAngle: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        clipExtent: Union[
+            List[List[float]], core.Vector2Vector2number, core.ExprRef, UndefinedType
+        ] = Undefined,
+        coefficient: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        distance: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        fraction: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        lobes: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        parallel: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        precision: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        radius: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        ratio: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        reflectX: Union[bool, core.ExprRef, UndefinedType] = Undefined,
+        reflectY: Union[bool, core.ExprRef, UndefinedType] = Undefined,
+        rotate: Union[
+            List[float],
+            core.Vector2number,
+            core.Vector3number,
+            core.ExprRef,
+            UndefinedType,
+        ] = Undefined,
+        scale: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        spacing: Union[
+            float, core.Vector2number, core.ExprRef, UndefinedType
+        ] = Undefined,
+        tilt: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        translate: Union[
+            List[float], core.Vector2number, core.ExprRef, UndefinedType
+        ] = Undefined,
         **kwds,
     ) -> Self:
         """Add a geographic projection to the chart.
@@ -1369,7 +1385,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_aggregate(
         self,
         aggregate: Union[List[core.AggregatedFieldDef], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         **kwds: Union[TypingDict[str, Any], str],
     ) -> Self:
         """
@@ -1448,8 +1464,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_bin(
         self,
-        as_: Union[str, List[str], UndefinedType] = Undefined,
-        field: Union[str, UndefinedType] = Undefined,
+        as_: Union[
+            str, core.FieldName, List[Union[str, core.FieldName]], UndefinedType
+        ] = Undefined,
+        field: Union[str, core.FieldName, UndefinedType] = Undefined,
         bin: Union[Literal[True], core.BinParams] = True,
         **kwargs,
     ) -> Self:
@@ -1510,9 +1528,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_calculate(
         self,
-        as_: Union[str, UndefinedType] = Undefined,
-        calculate: Union[str, expr.core.Expression, UndefinedType] = Undefined,
-        **kwargs: Union[str, expr.core.Expression],
+        as_: Union[str, core.FieldName, UndefinedType] = Undefined,
+        calculate: Union[
+            str, core.Expr, expr.core.Expression, UndefinedType
+        ] = Undefined,
+        **kwargs: Union[str, core.Expr, expr.core.Expression],
     ) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
@@ -1581,13 +1601,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_density(
         self,
-        density: str,
-        as_: Union[List[str], UndefinedType] = Undefined,
+        density: Union[str, core.FieldName],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
         counts: Union[bool, UndefinedType] = Undefined,
         cumulative: Union[bool, UndefinedType] = Undefined,
         extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         maxsteps: Union[int, UndefinedType] = Undefined,
         minsteps: Union[int, UndefinedType] = Undefined,
         steps: Union[int, UndefinedType] = Undefined,
@@ -1649,13 +1669,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_impute(
         self,
-        impute: str,
-        key: str,
+        impute: Union[str, core.FieldName],
+        key: Union[str, core.FieldName],
         frame: Union[List[Optional[int]], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         keyvals: Union[List[Any], core.ImputeSequence, UndefinedType] = Undefined,
         method: Union[
-            Literal["value", "mean", "median", "max", "min"], UndefinedType
+            Literal["value", "mean", "median", "max", "min"],
+            core.ImputeMethod,
+            UndefinedType,
         ] = Undefined,
         value=Undefined,
     ) -> Self:
@@ -1724,7 +1746,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         joinaggregate: Union[
             List[core.JoinAggregateFieldDef], UndefinedType
         ] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -1777,7 +1799,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
-    def transform_extent(self, extent: str, param: str) -> Self:
+    def transform_extent(
+        self, extent: Union[str, core.FieldName], param: Union[str, core.ParameterName]
+    ) -> Self:
         """Add a :class:`ExtentTransform` to the spec.
 
         Parameters
@@ -1800,6 +1824,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         filter: Union[
             str,
+            core.Expr,
             expr.core.Expression,
             core.Predicate,
             Parameter,
@@ -1837,7 +1862,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(
-        self, flatten: List[str], as_: Union[List[str], UndefinedType] = Undefined
+        self,
+        flatten: List[Union[str, core.FieldName]],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
@@ -1867,7 +1894,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_fold(
-        self, fold: List[str], as_: Union[List[str], UndefinedType] = Undefined
+        self,
+        fold: List[Union[str, core.FieldName]],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`FoldTransform` to the spec.
 
@@ -1893,11 +1922,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_loess(
         self,
-        on: str,
-        loess: str,
-        as_: Union[List[str], UndefinedType] = Undefined,
+        on: Union[str, core.FieldName],
+        loess: Union[str, core.FieldName],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`LoessTransform` to the spec.
 
@@ -1937,7 +1966,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         lookup: Union[str, UndefinedType] = Undefined,
         from_: Union[core.LookupData, core.LookupSelection, UndefinedType] = Undefined,
-        as_: Union[str, List[str], UndefinedType] = Undefined,
+        as_: Union[
+            Union[str, core.FieldName], List[Union[str, core.FieldName]], UndefinedType
+        ] = Undefined,
         default: Union[str, UndefinedType] = Undefined,
         **kwargs,
     ) -> Self:
@@ -1990,11 +2021,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_pivot(
         self,
-        pivot: str,
-        value: str,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        pivot: Union[str, core.FieldName],
+        value: Union[str, core.FieldName],
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         limit: Union[int, UndefinedType] = Undefined,
-        op: Union[str, UndefinedType] = Undefined,
+        op: Union[str, core.AggregateOp, UndefinedType] = Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -2036,9 +2067,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_quantile(
         self,
-        quantile: str,
-        as_: Union[List[str], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        quantile: Union[str, core.FieldName],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         probs: Union[List[float], UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
     ) -> Self:
@@ -2082,11 +2113,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_regression(
         self,
-        on: str,
-        regression: str,
-        as_: Union[List[str], UndefinedType] = Undefined,
+        on: Union[str, core.FieldName],
+        regression: Union[str, core.FieldName],
+        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
+        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
         method: Union[
             Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
         ] = Undefined,
@@ -2169,9 +2200,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_stack(
         self,
-        as_: Union[str, List[str]],
-        stack: str,
-        groupby: List[str],
+        as_: Union[str, core.FieldName, List[str]],
+        stack: Union[str, core.FieldName],
+        groupby: List[Union[str, core.FieldName]],
         offset: Union[
             Literal["zero", "center", "normalize"], UndefinedType
         ] = Undefined,
@@ -2213,8 +2244,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_timeunit(
         self,
-        as_: Union[str, UndefinedType] = Undefined,
-        field: Union[str, UndefinedType] = Undefined,
+        as_: Union[str, core.FieldName, UndefinedType] = Undefined,
+        field: Union[str, core.FieldName, UndefinedType] = Undefined,
         timeUnit: Union[str, core.TimeUnit, UndefinedType] = Undefined,
         **kwargs: str,
     ) -> Self:
@@ -2301,7 +2332,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         frame: Union[List[Optional[int]], UndefinedType] = Undefined,
         groupby: Union[List[str], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
-        sort: Union[List[Union[core.SortField, dict[str, str]]], UndefinedType] = Undefined,
+        sort: Union[
+            List[Union[core.SortField, dict[str, str]]], UndefinedType
+        ] = Undefined,
         **kwargs: str,
     ) -> Self:
         """Add a :class:`WindowTransform` to the schema
