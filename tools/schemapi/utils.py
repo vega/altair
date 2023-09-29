@@ -197,16 +197,6 @@ class SchemaInfo:
             return "anyOf({})".format(
                 ", ".join(s.short_description for s in self.anyOf)
             )
-        elif self.is_oneOf():
-            return "oneOf({})".format(
-                ", ".join(s.short_description for s in self.oneOf)
-            )
-        elif self.is_allOf():
-            return "allOf({})".format(
-                ", ".join(s.short_description for s in self.allOf)
-            )
-        elif self.is_not():
-            return "not {}".format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))

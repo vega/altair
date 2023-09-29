@@ -10,7 +10,7 @@ from .utils import (
     indent_docstring,
     indent_arglist,
     SchemaProperties,
-    jsonschema_to_python_types
+    jsonschema_to_python_types,
 )
 
 
@@ -182,12 +182,17 @@ class SchemaGenerator:
             **self.kwargs,
         )
 
+    @property
+    def info(self) -> SchemaInfo:
+        return SchemaInfo(self.schema, self.rootschema)
+    
+    @property
+    def arg_info(self) -> ArgInfo:
+        return get_args(self.info)
+
     def docstring(self, indent: int = 0) -> str:
-        # TODO: add a general description at the top, derived from the schema.
-        #       for example, a non-object definition should list valid type, enum
-        #       values, etc.
         # TODO: use get_args here for more information on allOf objects
-        info = SchemaInfo(self.schema, self.rootschema)
+        info = self.info
         doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
         if info.description:
             doc += self._process_description(  # remove condition description
@@ -220,7 +225,7 @@ class SchemaGenerator:
 
     def init_code(self, indent: int = 0) -> str:
         """Return code suitable for the __init__ function of a Schema class"""
-        info = SchemaInfo(self.schema, rootschema=self.rootschema)
+        info = self.info
         arg_info = get_args(info)
 
         nodefault = set(self.nodefault)
