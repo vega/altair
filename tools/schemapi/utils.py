@@ -136,12 +136,7 @@ class SchemaInfo:
     def __init__(
         self, schema: dict, rootschema: Optional[dict] = None
     ) -> None:
-        if hasattr(schema, "_schema"):
-            if hasattr(schema, "_rootschema"):
-                schema, rootschema = schema._schema, schema._rootschema
-            else:
-                schema, rootschema = schema._schema, schema._schema
-        elif not rootschema:
+        if not rootschema:
             rootschema = schema
         self.raw_schema = schema
         self.rootschema = rootschema
@@ -234,11 +229,6 @@ class SchemaInfo:
                 stacklevel=1,
             )
             return "any"
-
-    @property
-    def long_description(self) -> str:
-        # TODO
-        return "Long description including arguments and their types"
 
     @property
     def properties(self) -> SchemaProperties:
@@ -371,36 +361,6 @@ class SchemaInfo:
 
     def is_array(self) -> bool:
         return self.type == "array"
-
-    def schema_type(
-        self,
-    ) -> Literal["empty", "anyOf", "oneOf", "allOf", "object", "array", "value"]:
-        if self.is_empty():
-            return "empty"
-        elif self.is_compound():
-            for key in ["anyOf", "oneOf", "allOf"]:
-                if key in self.schema:
-                    return key
-            else:
-                raise ValueError("Unclear why schema.is_compound() is True")
-        elif self.is_object():
-            return "object"
-        elif self.is_array():
-            return "array"
-        elif self.is_value():
-            return "value"
-        else:
-            raise ValueError("Unknown type with keys {}".format(self.schema))
-
-    def property_name_map(self) -> Dict[str, str]:
-        """
-        Return a mapping of schema property names to valid Python attribute names
-
-        Only properties which are not valid Python identifiers will be included in
-        the dictionary.
-        """
-        pairs = [(prop, get_valid_identifier(prop)) for prop in self.properties]
-        return {prop: val for prop, val in pairs if prop != val}
 
 
 def indent_arglist(

@@ -29,10 +29,7 @@ from schemapi.utils import (  # noqa: E402
     resolve_references,
 )
 
-# Map of version name to github branch name.
-SCHEMA_VERSION: Final = {
-    "vega-lite": {"v5": "v5.14.1"},
-}
+SCHEMA_VERSION: Final = "v5.14.1"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
@@ -262,18 +259,17 @@ def schema_class(*args, **kwargs) -> str:
     return SchemaGenerator(*args, **kwargs).schema_class()
 
 
-def schema_url(library: str, version: str) -> str:
-    version = SCHEMA_VERSION[library][version]
-    return SCHEMA_URL_TEMPLATE.format(library=library, version=version)
+def schema_url(version: str = SCHEMA_VERSION) -> str:
+    return SCHEMA_URL_TEMPLATE.format(library="vega-lite", version=version)
 
 
 def download_schemafile(
-    library: str, version: str, schemapath: str, skip_download: bool = False
+    version: str, schemapath: str, skip_download: bool = False
 ) -> str:
-    url = schema_url(library, version)
+    url = schema_url(version=version)
     if not os.path.exists(schemapath):
         os.makedirs(schemapath)
-    filename = os.path.join(schemapath, "{library}-schema.json".format(library=library))
+    filename = os.path.join(schemapath, "vega-lite-schema.json")
     if not skip_download:
         request.urlretrieve(url, filename)
     elif not os.path.exists(filename):
@@ -576,73 +572,65 @@ def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
 
 
 def vegalite_main(skip_download: bool = False) -> None:
-    library = "vega-lite"
+    version = SCHEMA_VERSION
+    path = abspath(
+        join(dirname(__file__), "..", "altair", "vegalite", version.split(".")[0])
+    )
+    schemapath = os.path.join(path, "schema")
+    schemafile = download_schemafile(
+        version=version,
+        schemapath=schemapath,
+        skip_download=skip_download,
+    )
 
-    for version in SCHEMA_VERSION[library]:
-        path = abspath(join(dirname(__file__), "..", "altair", "vegalite", version))
-        schemapath = os.path.join(path, "schema")
-        schemafile = download_schemafile(
-            library=library,
-            version=version,
-            schemapath=schemapath,
-            skip_download=skip_download,
-        )
+    # Generate __init__.py file
+    outfile = join(schemapath, "__init__.py")
+    print("Writing {}".format(outfile))
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write("# ruff: noqa\n")
+        f.write("from .core import *\nfrom .channels import *\n")
+        f.write(f"SCHEMA_VERSION = '{version}'\n")
+        f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(version)))
 
-        # Generate __init__.py file
-        outfile = join(schemapath, "__init__.py")
-        print("Writing {}".format(outfile))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write("# ruff: noqa\n")
-            f.write("from .core import *\nfrom .channels import *\n")
-            f.write(
-                "SCHEMA_VERSION = {!r}\n" "".format(SCHEMA_VERSION[library][version])
-            )
-            f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(library, version)))
+    # Generate the core schema wrappers
+    outfile = join(schemapath, "core.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    file_contents = generate_vegalite_schema_wrapper(schemafile)
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(file_contents)
 
-        # Generate the core schema wrappers
-        outfile = join(schemapath, "core.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        file_contents = generate_vegalite_schema_wrapper(schemafile)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(file_contents)
+    # Generate the channel wrappers
+    outfile = join(schemapath, "channels.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    code = generate_vegalite_channel_wrappers(schemafile, version=version)
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(code)
 
-        # Generate the channel wrappers
-        outfile = join(schemapath, "channels.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        code = generate_vegalite_channel_wrappers(schemafile, version=version)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(code)
-
-        # generate the mark mixin
-        if version == "v2":
-            markdefs = {"Mark": "MarkDef"}
-        else:
-            markdefs = {
-                k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]
-            }
-        outfile = join(schemapath, "mixins.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
-        config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
-        try_except_imports = [
-            "if sys.version_info >= (3, 11):",
-            "    from typing import Self",
-            "else:",
-            "    from typing_extensions import Self",
-        ]
-        stdlib_imports = ["import sys"]
-        imports = sorted(set(mark_imports + config_imports))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(HEADER)
-            f.write("\n".join(stdlib_imports))
-            f.write("\n\n")
-            f.write("\n".join(imports))
-            f.write("\n\n")
-            f.write("\n".join(try_except_imports))
-            f.write("\n\n\n")
-            f.write(mark_mixin)
-            f.write("\n\n\n")
-            f.write(config_mixin)
+    # generate the mark mixin
+    markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
+    outfile = join(schemapath, "mixins.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+    config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+    try_except_imports = [
+        "if sys.version_info >= (3, 11):",
+        "    from typing import Self",
+        "else:",
+        "    from typing_extensions import Self",
+    ]
+    stdlib_imports = ["import sys"]
+    imports = sorted(set(mark_imports + config_imports))
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(HEADER)
+        f.write("\n".join(stdlib_imports))
+        f.write("\n\n")
+        f.write("\n".join(imports))
+        f.write("\n\n")
+        f.write("\n".join(try_except_imports))
+        f.write("\n\n\n")
+        f.write(mark_mixin)
+        f.write("\n\n\n")
+        f.write(config_mixin)
 
 
 def main() -> None:
