@@ -4,16 +4,20 @@ import keyword
 import re
 import textwrap
 import urllib
+from typing import Final, Optional, List, Dict, Literal, Union
 
 from .schemapi import _resolve_references as resolve_references
 
 
-EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
+EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
 
 def get_valid_identifier(
-    prop, replacement_character="", allow_unicode=False, url_decode=True
-):
+    prop: str,
+    replacement_character: str = "",
+    allow_unicode: bool = False,
+    url_decode: bool = True,
+) -> str:
     """Given a string property, generate a valid Python identifier
 
     Parameters
@@ -70,7 +74,7 @@ def get_valid_identifier(
     return valid
 
 
-def is_valid_identifier(var, allow_unicode=False):
+def is_valid_identifier(var: str, allow_unicode: bool = False):
     """Return true if var contains a valid Python identifier
 
     Parameters
@@ -88,15 +92,17 @@ def is_valid_identifier(var, allow_unicode=False):
 class SchemaProperties:
     """A wrapper for properties within a schema"""
 
-    def __init__(self, properties, schema, rootschema=None):
+    def __init__(
+        self, properties: dict, schema: dict, rootschema: Optional[dict] = None
+    ) -> None:
         self._properties = properties
         self._schema = schema
         self._rootschema = rootschema or schema
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return bool(self._properties)
 
-    def __dir__(self):
+    def __dir__(self) -> List[str]:
         return list(self._properties.keys())
 
     def __getattr__(self, attr):
@@ -127,7 +133,9 @@ class SchemaProperties:
 class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
-    def __init__(self, schema, rootschema=None):
+    def __init__(
+        self, schema: dict, rootschema: Optional[dict] = None
+    ) -> None:
         if hasattr(schema, "_schema"):
             if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -139,10 +147,10 @@ class SchemaInfo:
         self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
 
-    def child(self, schema):
+    def child(self, schema: dict) -> "SchemaInfo":
         return self.__class__(schema, rootschema=self.rootschema)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         keys = []
         for key in sorted(self.schema.keys()):
             val = self.schema[key]
@@ -157,21 +165,21 @@ class SchemaInfo:
         return "SchemaInfo({\n  " + "\n  ".join(keys) + "\n})"
 
     @property
-    def title(self):
+    def title(self) -> str:
         if self.is_reference():
             return get_valid_identifier(self.refname)
         else:
             return ""
 
     @property
-    def short_description(self):
+    def short_description(self) -> str:
         if self.title:
             # use RST syntax for generated sphinx docs
             return ":class:`{}`".format(self.title)
         else:
             return self.medium_description
 
-    _simple_types = {
+    _simple_types: Dict[str, str] = {
         "string": "string",
         "number": "float",
         "integer": "integer",
@@ -182,7 +190,7 @@ class SchemaInfo:
     }
 
     @property
-    def medium_description(self):
+    def medium_description(self) -> str:
         if self.is_list():
             return "[{0}]".format(
                 ", ".join(self.child(s).short_description for s in self.schema)
@@ -228,79 +236,79 @@ class SchemaInfo:
             return "any"
 
     @property
-    def long_description(self):
+    def long_description(self) -> str:
         # TODO
         return "Long description including arguments and their types"
 
     @property
-    def properties(self):
+    def properties(self) -> SchemaProperties:
         return SchemaProperties(
             self.schema.get("properties", {}), self.schema, self.rootschema
         )
 
     @property
-    def definitions(self):
+    def definitions(self) -> SchemaProperties:
         return SchemaProperties(
             self.schema.get("definitions", {}), self.schema, self.rootschema
         )
 
     @property
-    def required(self):
+    def required(self) -> list:
         return self.schema.get("required", [])
 
     @property
-    def patternProperties(self):
+    def patternProperties(self) -> dict:
         return self.schema.get("patternProperties", {})
 
     @property
-    def additionalProperties(self):
+    def additionalProperties(self) -> bool:
         return self.schema.get("additionalProperties", True)
 
     @property
-    def type(self):
+    def type(self) -> Optional[str]:
         return self.schema.get("type", None)
 
     @property
-    def anyOf(self):
+    def anyOf(self) -> list:
         return [self.child(s) for s in self.schema.get("anyOf", [])]
 
     @property
-    def oneOf(self):
+    def oneOf(self) -> list:
         return [self.child(s) for s in self.schema.get("oneOf", [])]
 
     @property
-    def allOf(self):
+    def allOf(self) -> list:
         return [self.child(s) for s in self.schema.get("allOf", [])]
 
     @property
-    def not_(self):
+    def not_(self) -> dict:
         return self.child(self.schema.get("not", {}))
 
     @property
-    def items(self):
+    def items(self) -> dict:
         return self.schema.get("items", {})
 
     @property
-    def enum(self):
+    def enum(self) -> list:
         return self.schema.get("enum", [])
 
     @property
-    def refname(self):
+    def refname(self) -> str:
         return self.raw_schema.get("$ref", "#/").split("/")[-1]
 
     @property
-    def ref(self):
+    def ref(self) -> Optional[str]:
         return self.raw_schema.get("$ref", None)
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self._get_description(include_sublevels=False)
 
     @property
-    def deep_description(self):
+    def deep_description(self) -> str:
         return self._get_description(include_sublevels=True)
 
-    def _get_description(self, include_sublevels: bool = False):
+    def _get_description(self, include_sublevels: bool = False) -> str:
         desc = self.raw_schema.get("description", self.schema.get("description", ""))
         if not desc and include_sublevels:
             for item in self.anyOf:
@@ -316,34 +324,34 @@ class SchemaInfo:
                     desc = sub_desc
         return desc
 
-    def is_list(self):
+    def is_list(self) -> bool:
         return isinstance(self.schema, list)
 
-    def is_reference(self):
+    def is_reference(self) -> bool:
         return "$ref" in self.raw_schema
 
-    def is_enum(self):
+    def is_enum(self) -> bool:
         return "enum" in self.schema
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
 
-    def is_compound(self):
+    def is_compound(self) -> bool:
         return any(key in self.schema for key in ["anyOf", "allOf", "oneOf"])
 
-    def is_anyOf(self):
+    def is_anyOf(self) -> bool:
         return "anyOf" in self.schema
 
-    def is_allOf(self):
+    def is_allOf(self) -> bool:
         return "allOf" in self.schema
 
-    def is_oneOf(self):
+    def is_oneOf(self) -> bool:
         return "oneOf" in self.schema
 
-    def is_not(self):
+    def is_not(self) -> bool:
         return "not" in self.schema
 
-    def is_object(self):
+    def is_object(self) -> bool:
         if self.type == "object":
             return True
         elif self.type is not None:
@@ -358,19 +366,23 @@ class SchemaInfo:
         else:
             raise ValueError("Unclear whether schema.is_object() is True")
 
-    def is_value(self):
+    def is_value(self) -> bool:
         return not self.is_object()
 
-    def is_array(self):
+    def is_array(self) -> bool:
         return self.type == "array"
 
-    def schema_type(self):
+    def schema_type(
+        self,
+    ) -> Literal["empty", "anyOf", "oneOf", "allOf", "object", "array", "value"]:
         if self.is_empty():
             return "empty"
         elif self.is_compound():
             for key in ["anyOf", "oneOf", "allOf"]:
                 if key in self.schema:
                     return key
+            else:
+                raise ValueError("Unclear why schema.is_compound() is True")
         elif self.is_object():
             return "object"
         elif self.is_array():
@@ -380,7 +392,7 @@ class SchemaInfo:
         else:
             raise ValueError("Unknown type with keys {}".format(self.schema))
 
-    def property_name_map(self):
+    def property_name_map(self) -> Dict[str, str]:
         """
         Return a mapping of schema property names to valid Python attribute names
 
@@ -391,7 +403,9 @@ class SchemaInfo:
         return {prop: val for prop, val in pairs if prop != val}
 
 
-def indent_arglist(args, indent_level, width=100, lstrip=True):
+def indent_arglist(
+    args: List[str], indent_level: int, width: int = 100, lstrip: bool = True
+) -> str:
     """Indent an argument list for use in generated code"""
     wrapper = textwrap.TextWrapper(
         width=width,
@@ -405,7 +419,9 @@ def indent_arglist(args, indent_level, width=100, lstrip=True):
     return wrapped
 
 
-def indent_docstring(lines, indent_level, width=100, lstrip=True):
+def indent_docstring(
+    lines: List[str], indent_level: int, width: int = 100, lstrip=True
+) -> str:
     """Indent a docstring for use in generated code"""
     final_lines = []
 
@@ -467,7 +483,7 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
     return wrapped
 
 
-def fix_docstring_issues(docstring):
+def fix_docstring_issues(docstring: str) -> str:
     # All lists should start with '*' followed by a whitespace. Fixes the ones
     # which either do not have a whitespace or/and start with '-' by first replacing
     # "-" with "*" and then adding a whitespace where necessary
