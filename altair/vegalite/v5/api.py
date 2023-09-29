@@ -2340,7 +2340,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby: Union[List[str], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
         sort: Union[
-            List[Union[core.SortField, dict[str, str]]], UndefinedType
+            List[Union[core.SortField, TypingDict[str, str]]], UndefinedType
         ] = Undefined,
         **kwargs: str,
     ) -> Self:
