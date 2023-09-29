@@ -1,39 +1,56 @@
 """Code generation utilities"""
-from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
-
-import textwrap
 import re
+import textwrap
+from typing import Set, Final, Optional, List, Iterable, Union
+from dataclasses import dataclass
+
+from .utils import (
+    SchemaInfo,
+    is_valid_identifier,
+    indent_docstring,
+    indent_arglist,
+    SchemaProperties,
+)
 
 
 class CodeSnippet:
     """Object whose repr() is a string of code"""
 
-    def __init__(self, code):
+    def __init__(self, code: str):
         self.code = code
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.code
 
 
-def _get_args(info):
+@dataclass
+class ArgInfo:
+    nonkeyword: bool
+    required: Set[str]
+    kwds: Set[str]
+    invalid_kwds: Set[str]
+    additional: bool
+
+
+def get_args(info: SchemaInfo) -> ArgInfo:
     """Return the list of args & kwds for building the __init__ function"""
     # TODO: - set additional properties correctly
     #       - handle patternProperties etc.
-    required = set()
-    kwds = set()
-    invalid_kwds = set()
+    required: Set[str] = set()
+    kwds: Set[str] = set()
+    invalid_kwds: Set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
 
     if info.is_allOf():
         # recursively call function on all children
-        arginfo = [_get_args(child) for child in info.allOf]
-        nonkeyword = all(args[0] for args in arginfo)
-        required = set.union(set(), *(args[1] for args in arginfo))
-        kwds = set.union(set(), *(args[2] for args in arginfo))
+        arginfo = [get_args(child) for child in info.allOf]
+        nonkeyword = all(args.nonkeyword for args in arginfo)
+        required = set.union(set(), *(args.required for args in arginfo))
+        kwds = set.union(set(), *(args.kwds for args in arginfo))
         kwds -= required
-        invalid_kwds = set.union(set(), *(args[3] for args in arginfo))
-        additional = all(args[4] for args in arginfo)
+        invalid_kwds = set.union(set(), *(args.invalid_kwds for args in arginfo))
+        additional = all(args.additional for args in arginfo)
     elif info.is_empty() or info.is_compound():
         nonkeyword = True
         additional = True
@@ -53,7 +70,13 @@ def _get_args(info):
     else:
         raise ValueError("Schema object not understood")
 
-    return (nonkeyword, required, kwds, invalid_kwds, additional)
+    return ArgInfo(
+        nonkeyword=nonkeyword,
+        required=required,
+        kwds=kwds,
+        invalid_kwds=invalid_kwds,
+        additional=additional,
+    )
 
 
 class SchemaGenerator:
@@ -67,7 +90,7 @@ class SchemaGenerator:
         The dictionary defining the schema class
     rootschema : dict (optional)
         The root schema for the class
-    basename : string or tuple (default: "SchemaBase")
+    basename : string or list of strings (default: "SchemaBase")
         The name(s) of the base class(es) to use in the class definition
     schemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit schema.
@@ -92,47 +115,51 @@ class SchemaGenerator:
     '''
     )
 
-    init_template = textwrap.dedent(
+    init_template: Final = textwrap.dedent(
         """
     def __init__({arglist}):
         super({classname}, self).__init__({super_arglist})
     """
     ).lstrip()
 
-    def _process_description(self, description):
+    def _process_description(self, description: str):
         return description
 
     def __init__(
         self,
-        classname,
-        schema,
-        rootschema=None,
-        basename="SchemaBase",
-        schemarepr=None,
-        rootschemarepr=None,
-        nodefault=(),
-        haspropsetters=False,
+        classname: str,
+        schema: dict,
+        rootschema: Optional[dict] = None,
+        basename: Union[str, List[str]] = "SchemaBase",
+        schemarepr: Optional[object] = None,
+        rootschemarepr: Optional[object] = None,
+        nodefault: Optional[List[str]] = None,
+        haspropsetters: bool = False,
         **kwargs,
-    ):
+    ) -> None:
         self.classname = classname
         self.schema = schema
         self.rootschema = rootschema
         self.basename = basename
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
-        self.nodefault = nodefault
+        self.nodefault = nodefault or ()
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
-    def subclasses(self):
+    def subclasses(self) -> List[str]:
         """Return a list of subclass names, if any."""
         info = SchemaInfo(self.schema, self.rootschema)
         return [child.refname for child in info.anyOf if child.is_reference()]
 
-    def schema_class(self):
+    def schema_class(self) -> str:
         """Generate code for a schema class"""
-        rootschema = self.rootschema if self.rootschema is not None else self.schema
-        schemarepr = self.schemarepr if self.schemarepr is not None else self.schema
+        rootschema: dict = (
+            self.rootschema if self.rootschema is not None else self.schema
+        )
+        schemarepr: object = (
+            self.schemarepr if self.schemarepr is not None else self.schema
+        )
         rootschemarepr = self.rootschemarepr
         if rootschemarepr is None:
             if rootschema is self.schema:
@@ -154,11 +181,11 @@ class SchemaGenerator:
             **self.kwargs,
         )
 
-    def docstring(self, indent=0):
+    def docstring(self, indent: int = 0) -> str:
         # TODO: add a general description at the top, derived from the schema.
         #       for example, a non-object definition should list valid type, enum
         #       values, etc.
-        # TODO: use _get_args here for more information on allOf objects
+        # TODO: use get_args here for more information on allOf objects
         info = SchemaInfo(self.schema, self.rootschema)
         doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
         if info.description:
@@ -172,9 +199,13 @@ class SchemaGenerator:
         doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
-            nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
+            arg_info = get_args(info)
             doc += ["", "Parameters", "----------", ""]
-            for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
+            for prop in (
+                sorted(arg_info.required)
+                + sorted(arg_info.kwds)
+                + sorted(arg_info.invalid_kwds)
+            ):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
@@ -186,33 +217,38 @@ class SchemaGenerator:
             doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
-    def init_code(self, indent=0):
+    def init_code(self, indent: int = 0) -> str:
         """Return code suitable for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
-        nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
+        arg_info = get_args(info)
 
         nodefault = set(self.nodefault)
-        required -= nodefault
-        kwds -= nodefault
+        arg_info.required -= nodefault
+        arg_info.kwds -= nodefault
 
-        args = ["self"]
-        super_args = []
+        args: List[str] = ["self"]
+        super_args: List[str] = []
 
-        self.init_kwds = sorted(kwds)
+        self.init_kwds = sorted(arg_info.kwds)
 
         if nodefault:
             args.extend(sorted(nodefault))
-        elif nonkeyword:
+        elif arg_info.nonkeyword:
             args.append("*args")
             super_args.append("*args")
 
-        args.extend("{}=Undefined".format(p) for p in sorted(required) + sorted(kwds))
+        args.extend(
+            "{}=Undefined".format(p)
+            for p in sorted(arg_info.required) + sorted(arg_info.kwds)
+        )
         super_args.extend(
             "{0}={0}".format(p)
-            for p in sorted(nodefault) + sorted(required) + sorted(kwds)
+            for p in sorted(nodefault)
+            + sorted(arg_info.required)
+            + sorted(arg_info.kwds)
         )
 
-        if additional:
+        if arg_info.additional:
             args.append("**kwds")
             super_args.append("**kwds")
 
@@ -240,9 +276,9 @@ class SchemaGenerator:
         "null": "None",
     }
 
-    def get_args(self, si):
+    def get_args(self, si: SchemaInfo) -> List[str]:
         contents = ["self"]
-        props = []
+        props: Union[List[str], SchemaProperties] = []
         if si.is_anyOf():
             props = sorted({p for si_sub in si.anyOf for p in si_sub.properties})
         elif si.properties:
@@ -275,7 +311,9 @@ class SchemaGenerator:
 
         return contents
 
-    def get_signature(self, attr, sub_si, indent, has_overload=False):
+    def get_signature(
+        self, attr: str, sub_si: SchemaInfo, indent: int, has_overload: bool = False
+    ) -> List[str]:
         lines = []
         if has_overload:
             lines.append("@overload  # type: ignore[no-overload-impl]")
@@ -284,14 +322,16 @@ class SchemaGenerator:
         lines.append(indent * " " + "...\n")
         return lines
 
-    def setter_hint(self, attr, indent):
+    def setter_hint(self, attr: str, indent: int) -> List[str]:
         si = SchemaInfo(self.schema, self.rootschema).properties[attr]
         if si.is_anyOf():
             return self._get_signature_any_of(si, attr, indent)
         else:
             return self.get_signature(attr, si, indent)
 
-    def _get_signature_any_of(self, si: SchemaInfo, attr, indent):
+    def _get_signature_any_of(
+        self, si: SchemaInfo, attr: str, indent: int
+    ) -> List[str]:
         signatures = []
         for sub_si in si.anyOf:
             if sub_si.is_anyOf():
@@ -303,7 +343,7 @@ class SchemaGenerator:
                 )
         return list(flatten(signatures))
 
-    def method_code(self, indent=0):
+    def method_code(self, indent: int = 0) -> Optional[str]:
         """Return code to assist setter methods"""
         if not self.haspropsetters:
             return None
@@ -313,7 +353,7 @@ class SchemaGenerator:
         return ("\n" + indent * " ").join(type_hints)
 
 
-def flatten(container):
+def flatten(container: Iterable) -> Iterable:
     """Flatten arbitrarily flattened list
 
     From https://stackoverflow.com/a/10824420
