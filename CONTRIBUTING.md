@@ -53,6 +53,28 @@ git switch -c <your-branch-name>
 
 With this branch checked-out, make the desired changes to the package.
 
+### Updating the Vega-Lite version
+
+If your desired changes include updating the Vega-Lite that Altair uses
+you need to change the following section in ``tools/generate_schema_wrapper.py``
+to the desired version number
+
+```python
+SCHEMA_VERSION = {
+    "vega-lite": {"v5": "v5.15.0"},
+}
+```
+
+Then regenerate any automatically generated files
+as described in the next section.
+
+### Updating any automatically generated files
+
+A large part of Altair's code base is automatically generated.
+After you have made your manual changes,
+make sure to run the following to see if there are any changes
+to the automatically generated files: ``tools/generate_schema_wrapper.py``.
+
 ### Testing your Changes
 
 Before suggesting your contributing your changing to the main Altair repository,
