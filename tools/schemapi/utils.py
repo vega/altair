@@ -192,9 +192,9 @@ class SchemaInfo:
         if self.is_empty():
             return "Any"
         elif self.is_enum():
-            return "enum({})".format(", ".join(map(repr, self.enum)))
+            return "Literal[{}]".format(", ".join(map(repr, self.enum)))
         elif self.is_anyOf():
-            return "anyOf({})".format(
+            return "Union[{}]".format(
                 ", ".join(s.short_description for s in self.anyOf)
             )
         elif isinstance(self.type, list):
@@ -203,24 +203,16 @@ class SchemaInfo:
             for typ_ in self.type:
                 subschema.schema["type"] = typ_
                 options.append(subschema.short_description)
-            return "anyOf({})".format(", ".join(options))
+            return "Union[{}]".format(", ".join(options))
         elif self.is_object():
-            return "Mapping(required=[{}])".format(", ".join(self.required))
+            return "Dict[required=[{}]]".format(", ".join(self.required))
         elif self.is_array():
-            return "List({})".format(self.child(self.items).short_description)
+            return "List[{}]".format(self.child(self.items).short_description)
         elif self.type in jsonschema_to_python_types:
             return jsonschema_to_python_types[self.type]
-        elif not self.type:
-            import warnings
-
-            warnings.warn(
-                "no short_description for schema\n{}" "".format(self.schema),
-                stacklevel=1,
-            )
-            return "any"
         else:
             raise ValueError(
-                "No medium_description available for this schema for schema"
+                "No medium_description available for this schema"
             )
 
     @property
