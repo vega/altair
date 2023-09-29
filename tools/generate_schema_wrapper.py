@@ -6,6 +6,7 @@ import sys
 import json
 import re
 from os.path import abspath, join, dirname
+from typing import Final, Optional, List, Dict, Tuple, Literal, Union, Type
 
 import textwrap
 from urllib import request
@@ -28,22 +29,19 @@ from schemapi.utils import (  # noqa: E402
     resolve_references,
 )
 
-# Map of version name to github branch name.
-SCHEMA_VERSION = {
-    "vega-lite": {"v5": "v5.15.0"},
-}
+SCHEMA_VERSION: Final = "v5.15.0"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
 
-HEADER = """\
+HEADER: Final = """\
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 """
 
-SCHEMA_URL_TEMPLATE = "https://vega.github.io/schema/" "{library}/{version}.json"
+SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/" "{library}/{version}.json"
 
-BASE_SCHEMA = """
+BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
     _rootschema = load_schema()
     @classmethod
@@ -51,7 +49,7 @@ class {basename}(SchemaBase):
         return _subclasses({basename})
 """
 
-LOAD_SCHEMA = '''
+LOAD_SCHEMA: Final = '''
 import pkgutil
 import json
 
@@ -61,7 +59,7 @@ def load_schema():
 '''
 
 
-CHANNEL_MIXINS = """
+CHANNEL_MIXINS: Final = """
 class FieldChannelMixin:
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -146,7 +144,7 @@ class DatumChannelMixin:
                                                       context=context)
 """
 
-MARK_METHOD = '''
+MARK_METHOD: Final = '''
 def mark_{mark}({def_arglist}) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
     """
@@ -159,7 +157,7 @@ def mark_{mark}({def_arglist}) -> Self:
     return copy
 '''
 
-CONFIG_METHOD = """
+CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
     copy = self.copy(deep=False)
@@ -167,7 +165,7 @@ def {method}(self, *args, **kwargs) -> Self:
     return copy
 """
 
-CONFIG_PROP_METHOD = """
+CONFIG_PROP_METHOD: Final = """
 @use_signature(core.{classname})
 def configure_{prop}(self, *args, **kwargs) -> Self:
     copy = self.copy(deep=['config'])
@@ -189,7 +187,7 @@ class SchemaGenerator(codegen.SchemaGenerator):
     '''
     )
 
-    def _process_description(self, description):
+    def _process_description(self, description: str):
         description = "".join(
             [
                 reSpecial.sub("", d) if i % 2 else d
@@ -257,20 +255,21 @@ class DatumSchemaGenerator(SchemaGenerator):
     )
 
 
-def schema_class(*args, **kwargs):
+def schema_class(*args, **kwargs) -> str:
     return SchemaGenerator(*args, **kwargs).schema_class()
 
 
-def schema_url(library, version):
-    version = SCHEMA_VERSION[library][version]
-    return SCHEMA_URL_TEMPLATE.format(library=library, version=version)
+def schema_url(version: str = SCHEMA_VERSION) -> str:
+    return SCHEMA_URL_TEMPLATE.format(library="vega-lite", version=version)
 
 
-def download_schemafile(library, version, schemapath, skip_download=False):
-    url = schema_url(library, version)
+def download_schemafile(
+    version: str, schemapath: str, skip_download: bool = False
+) -> str:
+    url = schema_url(version=version)
     if not os.path.exists(schemapath):
         os.makedirs(schemapath)
-    filename = os.path.join(schemapath, "{library}-schema.json".format(library=library))
+    filename = os.path.join(schemapath, "vega-lite-schema.json")
     if not skip_download:
         request.urlretrieve(url, filename)
     elif not os.path.exists(filename):
@@ -278,7 +277,7 @@ def download_schemafile(library, version, schemapath, skip_download=False):
     return filename
 
 
-def copy_schemapi_util():
+def copy_schemapi_util() -> None:
     """
     Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
     """
@@ -295,7 +294,7 @@ def copy_schemapi_util():
             dest.writelines(source.readlines())
 
 
-def recursive_dict_update(schema, root, def_dict):
+def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
     if "$ref" in schema:
         next_schema = resolve_references(schema, root)
         if "properties" in next_schema:
@@ -311,8 +310,8 @@ def recursive_dict_update(schema, root, def_dict):
             recursive_dict_update(sub_schema, root, def_dict)
 
 
-def get_field_datum_value_defs(propschema, root):
-    def_dict = {k: None for k in ("field", "datum", "value")}
+def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict:
+    def_dict: Dict[str, Optional[str]] = {k: None for k in ("field", "datum", "value")}
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:
@@ -325,7 +324,7 @@ def get_field_datum_value_defs(propschema, root):
     return {i: j for i, j in def_dict.items() if j}
 
 
-def toposort(graph):
+def toposort(graph: Dict[str, List[str]]) -> List[str]:
     """Topological sort of a directed acyclic graph.
 
     Parameters
@@ -339,8 +338,10 @@ def toposort(graph):
     order : list
         topological order of input graph.
     """
-    stack = []
-    visited = {}
+    # Once we drop support for Python 3.8, this can potentially be replaced
+    # with graphlib.TopologicalSorter from the standard library.
+    stack: List[str] = []
+    visited: Dict[str, Literal[True]] = {}
 
     def visit(nodes):
         for node in sorted(nodes, reverse=True):
@@ -353,7 +354,7 @@ def toposort(graph):
     return stack
 
 
-def generate_vegalite_schema_wrapper(schema_file):
+def generate_vegalite_schema_wrapper(schema_file: str) -> str:
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
@@ -361,7 +362,7 @@ def generate_vegalite_schema_wrapper(schema_file):
     with open(schema_file, encoding="utf8") as f:
         rootschema = json.load(f)
 
-    definitions = {}
+    definitions: Dict[str, SchemaGenerator] = {}
 
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
@@ -376,17 +377,18 @@ def generate_vegalite_schema_wrapper(schema_file):
             rootschemarepr=CodeSnippet("{}._rootschema".format(basename)),
         )
 
-    graph = {}
+    graph: Dict[str, List[str]] = {}
 
     for name, schema in definitions.items():
         graph[name] = []
-        for child in schema.subclasses():
-            child = get_valid_identifier(child)
-            graph[name].append(child)
-            child = definitions[child]
+        for child_name in schema.subclasses():
+            child_name = get_valid_identifier(child_name)
+            graph[name].append(child_name)
+            child: SchemaGenerator = definitions[child_name]
             if child.basename == basename:
                 child.basename = [name]
             else:
+                assert isinstance(child.basename, list)
                 child.basename.append(name)
 
     contents = [
@@ -411,7 +413,9 @@ def generate_vegalite_schema_wrapper(schema_file):
     return "\n".join(contents)
 
 
-def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
+def generate_vegalite_channel_wrappers(
+    schemafile: str, version: str, imports: Optional[List[str]] = None
+) -> str:
     # TODO: generate __all__ for top of file
     with open(schemafile, encoding="utf8") as f:
         schema = json.load(f)
@@ -449,6 +453,11 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
 
             defschema = {"$ref": definition}
 
+            Generator: Union[
+                Type[FieldSchemaGenerator],
+                Type[DatumSchemaGenerator],
+                Type[ValueSchemaGenerator],
+            ]
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
@@ -485,7 +494,9 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     return "\n".join(contents)
 
 
-def generate_vegalite_mark_mixin(schemafile, markdefs):
+def generate_vegalite_mark_mixin(
+    schemafile: str, markdefs: Dict[str, str]
+) -> Tuple[List[str], str]:
     with open(schemafile, encoding="utf8") as f:
         schema = json.load(f)
 
@@ -509,16 +520,20 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
         info = SchemaInfo({"$ref": "#/definitions/" + mark_def}, rootschema=schema)
 
         # adapted from SchemaInfo.init_code
-        nonkeyword, required, kwds, invalid_kwds, additional = codegen._get_args(info)
-        required -= {"type"}
-        kwds -= {"type"}
+        arg_info = codegen.get_args(info)
+        arg_info.required -= {"type"}
+        arg_info.kwds -= {"type"}
 
         def_args = ["self"] + [
-            "{}=Undefined".format(p) for p in (sorted(required) + sorted(kwds))
+            "{}=Undefined".format(p)
+            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
-        dict_args = ["{0}={0}".format(p) for p in (sorted(required) + sorted(kwds))]
+        dict_args = [
+            "{0}={0}".format(p)
+            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
+        ]
 
-        if additional or invalid_kwds:
+        if arg_info.additional or arg_info.invalid_kwds:
             def_args.append("**kwds")
             dict_args.append("**kwds")
 
@@ -535,7 +550,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
     return imports, "\n".join(code)
 
 
-def generate_vegalite_config_mixin(schemafile):
+def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
     imports = ["from . import core", "from altair.utils import use_signature"]
 
     class_name = "ConfigMethodMixin"
@@ -561,77 +576,69 @@ def generate_vegalite_config_mixin(schemafile):
     return imports, "\n".join(code)
 
 
-def vegalite_main(skip_download=False):
-    library = "vega-lite"
+def vegalite_main(skip_download: bool = False) -> None:
+    version = SCHEMA_VERSION
+    path = abspath(
+        join(dirname(__file__), "..", "altair", "vegalite", version.split(".")[0])
+    )
+    schemapath = os.path.join(path, "schema")
+    schemafile = download_schemafile(
+        version=version,
+        schemapath=schemapath,
+        skip_download=skip_download,
+    )
 
-    for version in SCHEMA_VERSION[library]:
-        path = abspath(join(dirname(__file__), "..", "altair", "vegalite", version))
-        schemapath = os.path.join(path, "schema")
-        schemafile = download_schemafile(
-            library=library,
-            version=version,
-            schemapath=schemapath,
-            skip_download=skip_download,
-        )
+    # Generate __init__.py file
+    outfile = join(schemapath, "__init__.py")
+    print("Writing {}".format(outfile))
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write("# ruff: noqa\n")
+        f.write("from .core import *\nfrom .channels import *\n")
+        f.write(f"SCHEMA_VERSION = '{version}'\n")
+        f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(version)))
 
-        # Generate __init__.py file
-        outfile = join(schemapath, "__init__.py")
-        print("Writing {}".format(outfile))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write("# ruff: noqa\n")
-            f.write("from .core import *\nfrom .channels import *\n")
-            f.write(
-                "SCHEMA_VERSION = {!r}\n" "".format(SCHEMA_VERSION[library][version])
-            )
-            f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(library, version)))
+    # Generate the core schema wrappers
+    outfile = join(schemapath, "core.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    file_contents = generate_vegalite_schema_wrapper(schemafile)
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(file_contents)
 
-        # Generate the core schema wrappers
-        outfile = join(schemapath, "core.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        file_contents = generate_vegalite_schema_wrapper(schemafile)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(file_contents)
+    # Generate the channel wrappers
+    outfile = join(schemapath, "channels.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    code = generate_vegalite_channel_wrappers(schemafile, version=version)
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(code)
 
-        # Generate the channel wrappers
-        outfile = join(schemapath, "channels.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        code = generate_vegalite_channel_wrappers(schemafile, version=version)
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(code)
-
-        # generate the mark mixin
-        if version == "v2":
-            markdefs = {"Mark": "MarkDef"}
-        else:
-            markdefs = {
-                k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]
-            }
-        outfile = join(schemapath, "mixins.py")
-        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
-        config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
-        try_except_imports = [
-            "if sys.version_info >= (3, 11):",
-            "    from typing import Self",
-            "else:",
-            "    from typing_extensions import Self",
-        ]
-        stdlib_imports = ["import sys"]
-        imports = sorted(set(mark_imports + config_imports))
-        with open(outfile, "w", encoding="utf8") as f:
-            f.write(HEADER)
-            f.write("\n".join(stdlib_imports))
-            f.write("\n\n")
-            f.write("\n".join(imports))
-            f.write("\n\n")
-            f.write("\n".join(try_except_imports))
-            f.write("\n\n\n")
-            f.write(mark_mixin)
-            f.write("\n\n\n")
-            f.write(config_mixin)
+    # generate the mark mixin
+    markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
+    outfile = join(schemapath, "mixins.py")
+    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+    config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+    try_except_imports = [
+        "if sys.version_info >= (3, 11):",
+        "    from typing import Self",
+        "else:",
+        "    from typing_extensions import Self",
+    ]
+    stdlib_imports = ["import sys"]
+    imports = sorted(set(mark_imports + config_imports))
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(HEADER)
+        f.write("\n".join(stdlib_imports))
+        f.write("\n\n")
+        f.write("\n".join(imports))
+        f.write("\n\n")
+        f.write("\n".join(try_except_imports))
+        f.write("\n\n\n")
+        f.write(mark_mixin)
+        f.write("\n\n\n")
+        f.write(config_mixin)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
     )
