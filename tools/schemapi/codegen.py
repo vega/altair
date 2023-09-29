@@ -8,7 +8,6 @@ from .utils import (
     SchemaInfo,
     is_valid_identifier,
     indent_docstring,
-    indent_arglist,
     SchemaProperties,
     jsonschema_to_python_types,
 )
@@ -101,6 +100,7 @@ class SchemaGenerator:
     rootschemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit root
         schema.
+    altair_classes_prefix : string, optional
     **kwargs : dict
         Additional keywords for derived classes.
     """
@@ -136,6 +136,7 @@ class SchemaGenerator:
         rootschemarepr: Optional[object] = None,
         nodefault: Optional[List[str]] = None,
         haspropsetters: bool = False,
+        altair_classes_prefix: Optional[str] = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -147,6 +148,7 @@ class SchemaGenerator:
         self.nodefault = nodefault or ()
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
+        self.altair_classes_prefix = altair_classes_prefix
 
     def subclasses(self) -> List[str]:
         """Return a list of subclass names, if any."""
@@ -185,7 +187,7 @@ class SchemaGenerator:
     @property
     def info(self) -> SchemaInfo:
         return SchemaInfo(self.schema, self.rootschema)
-    
+
     @property
     def arg_info(self) -> ArgInfo:
         return get_args(self.info)
@@ -193,7 +195,13 @@ class SchemaGenerator:
     def docstring(self, indent: int = 0) -> str:
         # TODO: use get_args here for more information on allOf objects
         info = self.info
-        doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
+        doc = [
+            "{} schema wrapper".format(self.classname),
+            "",
+            info.get_python_type_representation(
+                altair_classes_prefix=self.altair_classes_prefix
+            ),
+        ]
         if info.description:
             doc += self._process_description(  # remove condition description
                 re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
@@ -205,7 +213,7 @@ class SchemaGenerator:
         doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
-            arg_info = get_args(info)
+            arg_info = self.arg_info
             doc += ["", "Parameters", "----------", ""]
             for prop in (
                 sorted(arg_info.required)
@@ -214,7 +222,13 @@ class SchemaGenerator:
             ):
                 propinfo = info.properties[prop]
                 doc += [
-                    "{} : {}".format(prop, propinfo.short_description),
+                    "{} : {}".format(
+                        prop,
+                        propinfo.get_python_type_representation(
+                            use_title=True,
+                            altair_classes_prefix=self.altair_classes_prefix,
+                        ),
+                    ),
                     "    {}".format(
                         self._process_description(propinfo.deep_description)
                     ),
@@ -226,7 +240,7 @@ class SchemaGenerator:
     def init_code(self, indent: int = 0) -> str:
         """Return code suitable for the __init__ function of a Schema class"""
         info = self.info
-        arg_info = get_args(info)
+        arg_info = self.arg_info
 
         nodefault = set(self.nodefault)
         arg_info.required -= nodefault
@@ -244,7 +258,7 @@ class SchemaGenerator:
             super_args.append("*args")
 
         args.extend(
-            "{}=Undefined".format(p)
+            f"{p}: {info.properties[p].get_python_type_representation(strictly_valid=True, altair_classes_prefix=self.altair_classes_prefix)} = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
@@ -258,15 +272,10 @@ class SchemaGenerator:
             args.append("**kwds")
             super_args.append("**kwds")
 
-        arg_indent_level = 9 + indent
-        super_arg_indent_level = 23 + len(self.classname) + indent
-
         initfunc = self.init_template.format(
             classname=self.classname,
-            arglist=indent_arglist(args, indent_level=arg_indent_level),
-            super_arglist=indent_arglist(
-                super_args, indent_level=super_arg_indent_level
-            ),
+            arglist=", ".join(args),
+            super_arglist=", ".join(super_args),
         )
         if indent:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())

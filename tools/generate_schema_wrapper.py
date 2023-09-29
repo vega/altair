@@ -12,7 +12,7 @@ import textwrap
 from urllib import request
 
 import m2r
-
+import black
 
 # Add path so that schemapi can be imported from the tools folder
 current_dir = dirname(__file__)
@@ -25,7 +25,6 @@ from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
     get_valid_identifier,
     SchemaInfo,
-    indent_arglist,
     resolve_references,
 )
 
@@ -393,6 +392,8 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     contents = [
         HEADER,
+        "from typing import Any, Literal, Union, List",
+        "",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
@@ -426,9 +427,7 @@ def generate_vegalite_channel_wrappers(
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, with_property_setters",
             "from altair.utils import parse_shorthand",
-            "from typing import overload, List",
-            "",
-            "from typing import Literal",
+            "from typing import Any, overload, List, Literal, Union",
         ]
     contents = [HEADER]
     contents.extend(imports)
@@ -489,6 +488,7 @@ def generate_vegalite_channel_wrappers(
                 encodingname=prop,
                 nodefault=nodefault,
                 haspropsetters=True,
+                altair_classes_prefix="core",
             )
             contents.append(gen.schema_class())
     return "\n".join(contents)
@@ -542,8 +542,8 @@ def generate_vegalite_mark_mixin(
             mark_method = MARK_METHOD.format(
                 mark=mark,
                 mark_def=mark_def,
-                def_arglist=indent_arglist(def_args, indent_level=10 + len(mark)),
-                dict_arglist=indent_arglist(dict_args, indent_level=16),
+                def_arglist=", ".join(def_args),
+                dict_arglist=", ".join(dict_args),
             )
             code.append("\n    ".join(mark_method.splitlines()))
 
@@ -576,6 +576,12 @@ def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
     return imports, "\n".join(code)
 
 
+def format_code(code: Union[str, List[str]]) -> str:
+    if isinstance(code, list):
+        code = "\n".join(code)
+    return black.format_str(code, mode=black.Mode())
+
+
 def vegalite_main(skip_download: bool = False) -> None:
     version = SCHEMA_VERSION
     path = abspath(
@@ -591,25 +597,28 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate __init__.py file
     outfile = join(schemapath, "__init__.py")
     print("Writing {}".format(outfile))
+    content = [
+        "# ruff: noqa\n",
+        "from .core import *\nfrom .channels import *\n",
+        f"SCHEMA_VERSION = '{version}'\n",
+        "SCHEMA_URL = {!r}\n" "".format(schema_url(version)),
+    ]
     with open(outfile, "w", encoding="utf8") as f:
-        f.write("# ruff: noqa\n")
-        f.write("from .core import *\nfrom .channels import *\n")
-        f.write(f"SCHEMA_VERSION = '{version}'\n")
-        f.write("SCHEMA_URL = {!r}\n" "".format(schema_url(version)))
+        f.write(format_code(content))
 
     # Generate the core schema wrappers
     outfile = join(schemapath, "core.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
     file_contents = generate_vegalite_schema_wrapper(schemafile)
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(file_contents)
+        f.write(format_code(file_contents))
 
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(code)
+        f.write(format_code(code))
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
@@ -625,17 +634,20 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     stdlib_imports = ["import sys"]
     imports = sorted(set(mark_imports + config_imports))
+    content = [
+        HEADER,
+        "\n".join(stdlib_imports),
+        "\n\n",
+        "\n".join(imports),
+        "\n\n",
+        "\n".join(try_except_imports),
+        "\n\n\n",
+        mark_mixin,
+        "\n\n\n",
+        config_mixin,
+    ]
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(HEADER)
-        f.write("\n".join(stdlib_imports))
-        f.write("\n\n")
-        f.write("\n".join(imports))
-        f.write("\n\n")
-        f.write("\n".join(try_except_imports))
-        f.write("\n\n\n")
-        f.write(mark_mixin)
-        f.write("\n\n\n")
-        f.write(config_mixin)
+        f.write(format_code(content))
 
 
 def main() -> None:

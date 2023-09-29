@@ -12,14 +12,14 @@ from .schemapi import _resolve_references as resolve_references
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
 jsonschema_to_python_types = {
-        "string": "str",
-        "number": "float",
-        "integer": "int",
-        "object": "dict",
-        "boolean": "bool",
-        "array": "list",
-        "null": "None",
-    }
+    "string": "str",
+    "number": "float",
+    "integer": "int",
+    "object": "dict",
+    "boolean": "bool",
+    "array": "list",
+    "null": "None",
+}
 
 
 def get_valid_identifier(
@@ -179,41 +179,64 @@ class SchemaInfo:
         else:
             return ""
 
-    @property
-    def short_description(self) -> str:
-        if self.title:
-            # use RST syntax for generated sphinx docs
-            return ":class:`{}`".format(self.title)
-        else:
-            return self.medium_description
-
-    @property
-    def medium_description(self) -> str:
+    def get_python_type_representation(
+        self,
+        strictly_valid: bool = False,
+        use_title: bool = False,
+        altair_classes_prefix: Optional[str] = None,
+    ) -> str:
+        if self.title and use_title:
+            if strictly_valid:
+                prefix = (
+                    "" if not altair_classes_prefix else altair_classes_prefix + "."
+                )
+                return f"{prefix}{self.title}"
+            else:
+                # use RST syntax for generated sphinx docs
+                return ":class:`{}`".format(self.title)
         if self.is_empty():
             return "Any"
         elif self.is_enum():
             return "Literal[{}]".format(", ".join(map(repr, self.enum)))
         elif self.is_anyOf():
             return "Union[{}]".format(
-                ", ".join(s.short_description for s in self.anyOf)
+                ", ".join(
+                    s.get_python_type_representation(
+                        # We always use title if possible for nested objects
+                        strictly_valid=strictly_valid,
+                        use_title=True,
+                    )
+                    for s in self.anyOf
+                )
             )
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema["type"] = typ_
-                options.append(subschema.short_description)
+                options.append(
+                    subschema.get_python_type_representation(
+                        # We always use title if possible for nested objects
+                        strictly_valid=strictly_valid,
+                        use_title=True,
+                    )
+                )
             return "Union[{}]".format(", ".join(options))
         elif self.is_object():
-            return "Dict[required=[{}]]".format(", ".join(self.required))
+            if strictly_valid:
+                return "dict"
+            else:
+                return "Dict[required=[{}]]".format(", ".join(self.required))
         elif self.is_array():
-            return "List[{}]".format(self.child(self.items).short_description)
+            return "List[{}]".format(
+                self.child(self.items).get_python_type_representation(
+                    strictly_valid=strictly_valid, use_title=use_title
+                )
+            )
         elif self.type in jsonschema_to_python_types:
             return jsonschema_to_python_types[self.type]
         else:
-            raise ValueError(
-                "No medium_description available for this schema"
-            )
+            raise ValueError("No medium_description available for this schema")
 
     @property
     def properties(self) -> SchemaProperties:
@@ -343,22 +366,6 @@ class SchemaInfo:
 
     def is_array(self) -> bool:
         return self.type == "array"
-
-
-def indent_arglist(
-    args: List[str], indent_level: int, width: int = 100, lstrip: bool = True
-) -> str:
-    """Indent an argument list for use in generated code"""
-    wrapper = textwrap.TextWrapper(
-        width=width,
-        initial_indent=indent_level * " ",
-        subsequent_indent=indent_level * " ",
-        break_long_words=False,
-    )
-    wrapped = "\n".join(wrapper.wrap(", ".join(args)))
-    if lstrip:
-        wrapped = wrapped.lstrip()
-    return wrapped
 
 
 def indent_docstring(
