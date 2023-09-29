@@ -425,7 +425,7 @@ def generate_vegalite_channel_wrappers(
             "import sys",
             "from . import core",
             "import pandas as pd",
-            "from altair.utils.schemapi import Undefined, with_property_setters",
+            "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
             "from altair.utils import parse_shorthand",
             "from typing import Any, overload, List, Literal, Union",
         ]
@@ -503,7 +503,7 @@ def generate_vegalite_mark_mixin(
     class_name = "MarkMethodMixin"
 
     imports = [
-        "from altair.utils.schemapi import Undefined",
+        "from altair.utils.schemapi import Undefined, UndefinedType",
         "from . import core",
     ]
 

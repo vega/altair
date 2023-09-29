@@ -190,7 +190,13 @@ class SchemaInfo:
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
                 )
-                return f"{prefix}{self.title}"
+                class_name = f'{prefix}{self.title}'
+                # If there is no prefix, it might be that the class is defined
+                # in the same script and potentially after this line -> We use
+                # deferred type annotations using quotation marks.
+                if not prefix:
+                    class_name = '"' + class_name + '"'
+                return class_name
             else:
                 # use RST syntax for generated sphinx docs
                 return ":class:`{}`".format(self.title)
@@ -205,6 +211,7 @@ class SchemaInfo:
                         # We always use title if possible for nested objects
                         strictly_valid=strictly_valid,
                         use_title=True,
+                        altair_classes_prefix=altair_classes_prefix,
                     )
                     for s in self.anyOf
                 )
@@ -219,6 +226,7 @@ class SchemaInfo:
                         # We always use title if possible for nested objects
                         strictly_valid=strictly_valid,
                         use_title=True,
+                        altair_classes_prefix=altair_classes_prefix,
                     )
                 )
             return "Union[{}]".format(", ".join(options))
@@ -230,7 +238,9 @@ class SchemaInfo:
         elif self.is_array():
             return "List[{}]".format(
                 self.child(self.items).get_python_type_representation(
-                    strictly_valid=strictly_valid, use_title=use_title
+                    strictly_valid=strictly_valid,
+                    use_title=use_title,
+                    altair_classes_prefix=altair_classes_prefix,
                 )
             )
         elif self.type in jsonschema_to_python_types:

@@ -258,7 +258,11 @@ class SchemaGenerator:
             super_args.append("*args")
 
         args.extend(
-            f"{p}: {info.properties[p].get_python_type_representation(strictly_valid=True, altair_classes_prefix=self.altair_classes_prefix)} = Undefined"
+            f"{p}: Union["
+            + info.properties[p].get_python_type_representation(
+                strictly_valid=True, altair_classes_prefix=self.altair_classes_prefix
+            )
+            + ", UndefinedType] = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(

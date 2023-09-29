@@ -1,18 +1,24 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+from typing import Any, Literal, Union, List
+
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
 
 import pkgutil
 import json
 
+
 def load_schema():
     """Load the json schema associated with this module's functions"""
-    return json.loads(pkgutil.get_data(__name__, 'vega-lite-schema.json').decode('utf-8'))
+    return json.loads(
+        pkgutil.get_data(__name__, "vega-lite-schema.json").decode("utf-8")
+    )
 
 
 class VegaLiteSchema(SchemaBase):
     _rootschema = load_schema()
+
     @classmethod
     def _default_wrapper_classes(cls):
         return _subclasses(VegaLiteSchema)
@@ -27,6 +33,7 @@ class Root(VegaLiteSchema):
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
+
     _schema = VegaLiteSchema._rootschema
 
     def __init__(self, *args, **kwds):
@@ -38,7 +45,8 @@ class Aggregate(VegaLiteSchema):
 
     Union[:class:`NonArgAggregateOp`, :class:`ArgmaxDef`, :class:`ArgminDef`]
     """
-    _schema = {'$ref': '#/definitions/Aggregate'}
+
+    _schema = {"$ref": "#/definitions/Aggregate"}
 
     def __init__(self, *args, **kwds):
         super(Aggregate, self).__init__(*args, **kwds)
@@ -51,7 +59,8 @@ class AggregateOp(VegaLiteSchema):
     'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid',
     'values', 'variance', 'variancep']
     """
-    _schema = {'$ref': '#/definitions/AggregateOp'}
+
+    _schema = {"$ref": "#/definitions/AggregateOp"}
 
     def __init__(self, *args):
         super(AggregateOp, self).__init__(*args)
@@ -75,9 +84,42 @@ class AggregatedFieldDef(VegaLiteSchema):
     as : :class:`FieldName`
         The output field names to use for each aggregated field.
     """
-    _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
 
-    def __init__(self, op=Undefined, field=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/AggregatedFieldDef"}
+
+    def __init__(
+        self,
+        op: Union[
+            Literal[
+                "argmax",
+                "argmin",
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(AggregatedFieldDef, self).__init__(op=op, field=field, **kwds)
 
 
@@ -86,7 +128,8 @@ class Align(VegaLiteSchema):
 
     Literal['left', 'center', 'right']
     """
-    _schema = {'$ref': '#/definitions/Align'}
+
+    _schema = {"$ref": "#/definitions/Align"}
 
     def __init__(self, *args):
         super(Align, self).__init__(*args)
@@ -97,7 +140,8 @@ class AnyMark(VegaLiteSchema):
 
     Union[:class:`CompositeMark`, :class:`CompositeMarkDef`, :class:`Mark`, :class:`MarkDef`]
     """
-    _schema = {'$ref': '#/definitions/AnyMark'}
+
+    _schema = {"$ref": "#/definitions/AnyMark"}
 
     def __init__(self, *args, **kwds):
         super(AnyMark, self).__init__(*args, **kwds)
@@ -109,7 +153,8 @@ class AnyMarkConfig(VegaLiteSchema):
     Union[:class:`MarkConfig`, :class:`AreaConfig`, :class:`BarConfig`, :class:`RectConfig`,
     :class:`LineConfig`, :class:`TickConfig`]
     """
-    _schema = {'$ref': '#/definitions/AnyMarkConfig'}
+
+    _schema = {"$ref": "#/definitions/AnyMarkConfig"}
 
     def __init__(self, *args, **kwds):
         super(AnyMarkConfig, self).__init__(*args, **kwds)
@@ -504,54 +549,170 @@ class AreaConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/AreaConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined, blend=Undefined,
-                 color=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
-                 dx=Undefined, dy=Undefined, ellipsis=Undefined, endAngle=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                 innerRadius=Undefined, interpolate=Undefined, invalid=Undefined, limit=Undefined,
-                 line=Undefined, lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, outerRadius=Undefined, padAngle=Undefined,
-                 point=Undefined, radius=Undefined, radius2=Undefined, shape=Undefined, size=Undefined,
-                 smooth=Undefined, startAngle=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 theta2=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                 tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                 y=Undefined, y2=Undefined, **kwds):
-        super(AreaConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                         ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                         baseline=baseline, blend=blend, color=color,
-                                         cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         description=description, dir=dir, dx=dx, dy=dy,
-                                         ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, innerRadius=innerRadius,
-                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                         line=line, lineBreak=lineBreak, lineHeight=lineHeight,
-                                         opacity=opacity, order=order, orient=orient,
-                                         outerRadius=outerRadius, padAngle=padAngle, point=point,
-                                         radius=radius, radius2=radius2, shape=shape, size=size,
-                                         smooth=smooth, startAngle=startAngle, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, theta2=theta2,
-                                         timeUnitBandPosition=timeUnitBandPosition,
-                                         timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/AreaConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        line: Union[Union[bool, "OverlayMarkDef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(AreaConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            blend=blend,
+            color=color,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            line=line,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            point=point,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class ArgmaxDef(Aggregate):
@@ -565,9 +726,10 @@ class ArgmaxDef(Aggregate):
     argmax : :class:`FieldName`
 
     """
-    _schema = {'$ref': '#/definitions/ArgmaxDef'}
 
-    def __init__(self, argmax=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ArgmaxDef"}
+
+    def __init__(self, argmax: Union[str, UndefinedType] = Undefined, **kwds):
         super(ArgmaxDef, self).__init__(argmax=argmax, **kwds)
 
 
@@ -582,9 +744,10 @@ class ArgminDef(Aggregate):
     argmin : :class:`FieldName`
 
     """
-    _schema = {'$ref': '#/definitions/ArgminDef'}
 
-    def __init__(self, argmin=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ArgminDef"}
+
+    def __init__(self, argmin: Union[str, UndefinedType] = Undefined, **kwds):
         super(ArgminDef, self).__init__(argmin=argmin, **kwds)
 
 
@@ -618,10 +781,21 @@ class AutoSizeParams(VegaLiteSchema):
 
         **Default value** : ``"pad"``
     """
-    _schema = {'$ref': '#/definitions/AutoSizeParams'}
 
-    def __init__(self, contains=Undefined, resize=Undefined, type=Undefined, **kwds):
-        super(AutoSizeParams, self).__init__(contains=contains, resize=resize, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/AutoSizeParams"}
+
+    def __init__(
+        self,
+        contains: Union[Literal["content", "padding"], UndefinedType] = Undefined,
+        resize: Union[bool, UndefinedType] = Undefined,
+        type: Union[
+            Literal["pad", "none", "fit", "fit-x", "fit-y"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(AutoSizeParams, self).__init__(
+            contains=contains, resize=resize, type=type, **kwds
+        )
 
 
 class AutosizeType(VegaLiteSchema):
@@ -629,7 +803,8 @@ class AutosizeType(VegaLiteSchema):
 
     Literal['pad', 'none', 'fit', 'fit-x', 'fit-y']
     """
-    _schema = {'$ref': '#/definitions/AutosizeType'}
+
+    _schema = {"$ref": "#/definitions/AutosizeType"}
 
     def __init__(self, *args):
         super(AutosizeType, self).__init__(*args)
@@ -1011,63 +1186,239 @@ class Axis(VegaLiteSchema):
 
         **Default value:** ``0`` (behind the marks).
     """
-    _schema = {'$ref': '#/definitions/Axis'}
 
-    def __init__(self, aria=Undefined, bandPosition=Undefined, description=Undefined, domain=Undefined,
-                 domainCap=Undefined, domainColor=Undefined, domainDash=Undefined,
-                 domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined,
-                 format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined,
-                 gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined,
-                 gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined,
-                 labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined,
-                 labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined,
-                 labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
-                 labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined,
-                 labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined,
-                 maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined,
-                 position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined,
-                 tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined,
-                 tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined,
-                 tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined,
-                 ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
-                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
-                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined,
-                 titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined,
-                 translate=Undefined, values=Undefined, zindex=Undefined, **kwds):
-        super(Axis, self).__init__(aria=aria, bandPosition=bandPosition, description=description,
-                                   domain=domain, domainCap=domainCap, domainColor=domainColor,
-                                   domainDash=domainDash, domainDashOffset=domainDashOffset,
-                                   domainOpacity=domainOpacity, domainWidth=domainWidth, format=format,
-                                   formatType=formatType, grid=grid, gridCap=gridCap,
-                                   gridColor=gridColor, gridDash=gridDash,
-                                   gridDashOffset=gridDashOffset, gridOpacity=gridOpacity,
-                                   gridWidth=gridWidth, labelAlign=labelAlign, labelAngle=labelAngle,
-                                   labelBaseline=labelBaseline, labelBound=labelBound,
-                                   labelColor=labelColor, labelExpr=labelExpr, labelFlush=labelFlush,
-                                   labelFlushOffset=labelFlushOffset, labelFont=labelFont,
-                                   labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
-                                   labelFontWeight=labelFontWeight, labelLimit=labelLimit,
-                                   labelLineHeight=labelLineHeight, labelOffset=labelOffset,
-                                   labelOpacity=labelOpacity, labelOverlap=labelOverlap,
-                                   labelPadding=labelPadding, labelSeparation=labelSeparation,
-                                   labels=labels, maxExtent=maxExtent, minExtent=minExtent,
-                                   offset=offset, orient=orient, position=position, style=style,
-                                   tickBand=tickBand, tickCap=tickCap, tickColor=tickColor,
-                                   tickCount=tickCount, tickDash=tickDash,
-                                   tickDashOffset=tickDashOffset, tickExtra=tickExtra,
-                                   tickMinStep=tickMinStep, tickOffset=tickOffset,
-                                   tickOpacity=tickOpacity, tickRound=tickRound, tickSize=tickSize,
-                                   tickWidth=tickWidth, ticks=ticks, title=title, titleAlign=titleAlign,
-                                   titleAnchor=titleAnchor, titleAngle=titleAngle,
-                                   titleBaseline=titleBaseline, titleColor=titleColor,
-                                   titleFont=titleFont, titleFontSize=titleFontSize,
-                                   titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
-                                   titleLimit=titleLimit, titleLineHeight=titleLineHeight,
-                                   titleOpacity=titleOpacity, titlePadding=titlePadding, titleX=titleX,
-                                   titleY=titleY, translate=translate, values=values, zindex=zindex,
-                                   **kwds)
+    _schema = {"$ref": "#/definitions/Axis"}
+
+    def __init__(
+        self,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        domainColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "ConditionalAxisLabelAlign"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef", "ConditionalAxisLabelBaseline"],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, "ExprRef", "ConditionalAxisString"], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "ConditionalAxisLabelFontStyle"],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef", "ConditionalAxisLabelFontWeight"],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union["LabelOverlap", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[Union["AxisOrient", "ExprRef"], UndefinedType] = Undefined,
+        position: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, "TimeInterval", "TimeIntervalStep", "ExprRef"], UndefinedType
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        translate: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        values: Union[
+            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Axis, self).__init__(
+            aria=aria,
+            bandPosition=bandPosition,
+            description=description,
+            domain=domain,
+            domainCap=domainCap,
+            domainColor=domainColor,
+            domainDash=domainDash,
+            domainDashOffset=domainDashOffset,
+            domainOpacity=domainOpacity,
+            domainWidth=domainWidth,
+            format=format,
+            formatType=formatType,
+            grid=grid,
+            gridCap=gridCap,
+            gridColor=gridColor,
+            gridDash=gridDash,
+            gridDashOffset=gridDashOffset,
+            gridOpacity=gridOpacity,
+            gridWidth=gridWidth,
+            labelAlign=labelAlign,
+            labelAngle=labelAngle,
+            labelBaseline=labelBaseline,
+            labelBound=labelBound,
+            labelColor=labelColor,
+            labelExpr=labelExpr,
+            labelFlush=labelFlush,
+            labelFlushOffset=labelFlushOffset,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelLineHeight=labelLineHeight,
+            labelOffset=labelOffset,
+            labelOpacity=labelOpacity,
+            labelOverlap=labelOverlap,
+            labelPadding=labelPadding,
+            labelSeparation=labelSeparation,
+            labels=labels,
+            maxExtent=maxExtent,
+            minExtent=minExtent,
+            offset=offset,
+            orient=orient,
+            position=position,
+            style=style,
+            tickBand=tickBand,
+            tickCap=tickCap,
+            tickColor=tickColor,
+            tickCount=tickCount,
+            tickDash=tickDash,
+            tickDashOffset=tickDashOffset,
+            tickExtra=tickExtra,
+            tickMinStep=tickMinStep,
+            tickOffset=tickOffset,
+            tickOpacity=tickOpacity,
+            tickRound=tickRound,
+            tickSize=tickSize,
+            tickWidth=tickWidth,
+            ticks=ticks,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleAngle=titleAngle,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOpacity=titleOpacity,
+            titlePadding=titlePadding,
+            titleX=titleX,
+            titleY=titleY,
+            translate=translate,
+            values=values,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class AxisConfig(VegaLiteSchema):
@@ -1448,65 +1799,241 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value:** ``0`` (behind the marks).
     """
-    _schema = {'$ref': '#/definitions/AxisConfig'}
 
-    def __init__(self, aria=Undefined, bandPosition=Undefined, description=Undefined, disable=Undefined,
-                 domain=Undefined, domainCap=Undefined, domainColor=Undefined, domainDash=Undefined,
-                 domainDashOffset=Undefined, domainOpacity=Undefined, domainWidth=Undefined,
-                 format=Undefined, formatType=Undefined, grid=Undefined, gridCap=Undefined,
-                 gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined,
-                 gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined,
-                 labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined,
-                 labelExpr=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined,
-                 labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
-                 labelFontWeight=Undefined, labelLimit=Undefined, labelLineHeight=Undefined,
-                 labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined,
-                 maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined,
-                 position=Undefined, style=Undefined, tickBand=Undefined, tickCap=Undefined,
-                 tickColor=Undefined, tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined,
-                 tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined,
-                 tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined,
-                 ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
-                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
-                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined,
-                 titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined,
-                 translate=Undefined, values=Undefined, zindex=Undefined, **kwds):
-        super(AxisConfig, self).__init__(aria=aria, bandPosition=bandPosition, description=description,
-                                         disable=disable, domain=domain, domainCap=domainCap,
-                                         domainColor=domainColor, domainDash=domainDash,
-                                         domainDashOffset=domainDashOffset, domainOpacity=domainOpacity,
-                                         domainWidth=domainWidth, format=format, formatType=formatType,
-                                         grid=grid, gridCap=gridCap, gridColor=gridColor,
-                                         gridDash=gridDash, gridDashOffset=gridDashOffset,
-                                         gridOpacity=gridOpacity, gridWidth=gridWidth,
-                                         labelAlign=labelAlign, labelAngle=labelAngle,
-                                         labelBaseline=labelBaseline, labelBound=labelBound,
-                                         labelColor=labelColor, labelExpr=labelExpr,
-                                         labelFlush=labelFlush, labelFlushOffset=labelFlushOffset,
-                                         labelFont=labelFont, labelFontSize=labelFontSize,
-                                         labelFontStyle=labelFontStyle, labelFontWeight=labelFontWeight,
-                                         labelLimit=labelLimit, labelLineHeight=labelLineHeight,
-                                         labelOffset=labelOffset, labelOpacity=labelOpacity,
-                                         labelOverlap=labelOverlap, labelPadding=labelPadding,
-                                         labelSeparation=labelSeparation, labels=labels,
-                                         maxExtent=maxExtent, minExtent=minExtent, offset=offset,
-                                         orient=orient, position=position, style=style,
-                                         tickBand=tickBand, tickCap=tickCap, tickColor=tickColor,
-                                         tickCount=tickCount, tickDash=tickDash,
-                                         tickDashOffset=tickDashOffset, tickExtra=tickExtra,
-                                         tickMinStep=tickMinStep, tickOffset=tickOffset,
-                                         tickOpacity=tickOpacity, tickRound=tickRound,
-                                         tickSize=tickSize, tickWidth=tickWidth, ticks=ticks,
-                                         title=title, titleAlign=titleAlign, titleAnchor=titleAnchor,
-                                         titleAngle=titleAngle, titleBaseline=titleBaseline,
-                                         titleColor=titleColor, titleFont=titleFont,
-                                         titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
-                                         titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                         titleLineHeight=titleLineHeight, titleOpacity=titleOpacity,
-                                         titlePadding=titlePadding, titleX=titleX, titleY=titleY,
-                                         translate=translate, values=values, zindex=zindex, **kwds)
+    _schema = {"$ref": "#/definitions/AxisConfig"}
+
+    def __init__(
+        self,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        disable: Union[bool, UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        domainColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "ConditionalAxisLabelAlign"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef", "ConditionalAxisLabelBaseline"],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, "ExprRef", "ConditionalAxisString"], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "ConditionalAxisLabelFontStyle"],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef", "ConditionalAxisLabelFontWeight"],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union["LabelOverlap", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[Union["AxisOrient", "ExprRef"], UndefinedType] = Undefined,
+        position: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, "TimeInterval", "TimeIntervalStep", "ExprRef"], UndefinedType
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        translate: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        values: Union[
+            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(AxisConfig, self).__init__(
+            aria=aria,
+            bandPosition=bandPosition,
+            description=description,
+            disable=disable,
+            domain=domain,
+            domainCap=domainCap,
+            domainColor=domainColor,
+            domainDash=domainDash,
+            domainDashOffset=domainDashOffset,
+            domainOpacity=domainOpacity,
+            domainWidth=domainWidth,
+            format=format,
+            formatType=formatType,
+            grid=grid,
+            gridCap=gridCap,
+            gridColor=gridColor,
+            gridDash=gridDash,
+            gridDashOffset=gridDashOffset,
+            gridOpacity=gridOpacity,
+            gridWidth=gridWidth,
+            labelAlign=labelAlign,
+            labelAngle=labelAngle,
+            labelBaseline=labelBaseline,
+            labelBound=labelBound,
+            labelColor=labelColor,
+            labelExpr=labelExpr,
+            labelFlush=labelFlush,
+            labelFlushOffset=labelFlushOffset,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelLineHeight=labelLineHeight,
+            labelOffset=labelOffset,
+            labelOpacity=labelOpacity,
+            labelOverlap=labelOverlap,
+            labelPadding=labelPadding,
+            labelSeparation=labelSeparation,
+            labels=labels,
+            maxExtent=maxExtent,
+            minExtent=minExtent,
+            offset=offset,
+            orient=orient,
+            position=position,
+            style=style,
+            tickBand=tickBand,
+            tickCap=tickCap,
+            tickColor=tickColor,
+            tickCount=tickCount,
+            tickDash=tickDash,
+            tickDashOffset=tickDashOffset,
+            tickExtra=tickExtra,
+            tickMinStep=tickMinStep,
+            tickOffset=tickOffset,
+            tickOpacity=tickOpacity,
+            tickRound=tickRound,
+            tickSize=tickSize,
+            tickWidth=tickWidth,
+            ticks=ticks,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleAngle=titleAngle,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOpacity=titleOpacity,
+            titlePadding=titlePadding,
+            titleX=titleX,
+            titleY=titleY,
+            translate=translate,
+            values=values,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class AxisOrient(VegaLiteSchema):
@@ -1514,7 +2041,8 @@ class AxisOrient(VegaLiteSchema):
 
     Literal['top', 'bottom', 'left', 'right']
     """
-    _schema = {'$ref': '#/definitions/AxisOrient'}
+
+    _schema = {"$ref": "#/definitions/AxisOrient"}
 
     def __init__(self, *args):
         super(AxisOrient, self).__init__(*args)
@@ -1533,9 +2061,15 @@ class AxisResolveMap(VegaLiteSchema):
     y : :class:`ResolveMode`
 
     """
-    _schema = {'$ref': '#/definitions/AxisResolveMap'}
 
-    def __init__(self, x=Undefined, y=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/AxisResolveMap"}
+
+    def __init__(
+        self,
+        x: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        y: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
 
 
@@ -1545,7 +2079,8 @@ class BBox(VegaLiteSchema):
     Union[List[float], List[float]]
     Bounding box https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/BBox'}
+
+    _schema = {"$ref": "#/definitions/BBox"}
 
     def __init__(self, *args, **kwds):
         super(BBox, self).__init__(*args, **kwds)
@@ -1932,59 +2467,178 @@ class BarConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/BarConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined,
-                 binSpacing=Undefined, blend=Undefined, color=Undefined, continuousBandSize=Undefined,
-                 cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
-                 cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                 description=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                 dy=Undefined, ellipsis=Undefined, endAngle=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                 innerRadius=Undefined, interpolate=Undefined, invalid=Undefined, limit=Undefined,
-                 lineBreak=Undefined, lineHeight=Undefined, minBandSize=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, outerRadius=Undefined, padAngle=Undefined,
-                 radius=Undefined, radius2=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                 startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined,
-                 **kwds):
-        super(BarConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                        ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                        baseline=baseline, binSpacing=binSpacing, blend=blend,
-                                        color=color, continuousBandSize=continuousBandSize,
-                                        cornerRadius=cornerRadius,
-                                        cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                        cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                        cornerRadiusEnd=cornerRadiusEnd,
-                                        cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                        cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                        description=description, dir=dir,
-                                        discreteBandSize=discreteBandSize, dx=dx, dy=dy,
-                                        ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                        fillOpacity=fillOpacity, filled=filled, font=font,
-                                        fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                        height=height, href=href, innerRadius=innerRadius,
-                                        interpolate=interpolate, invalid=invalid, limit=limit,
-                                        lineBreak=lineBreak, lineHeight=lineHeight,
-                                        minBandSize=minBandSize, opacity=opacity, order=order,
-                                        orient=orient, outerRadius=outerRadius, padAngle=padAngle,
-                                        radius=radius, radius2=radius2, shape=shape, size=size,
-                                        smooth=smooth, startAngle=startAngle, stroke=stroke,
-                                        strokeCap=strokeCap, strokeDash=strokeDash,
-                                        strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                        strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                        tension=tension, text=text, theta=theta, theta2=theta2,
-                                        timeUnitBandPosition=timeUnitBandPosition,
-                                        timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                        width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/BarConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        binSpacing: Union[float, UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        continuousBandSize: Union[float, UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusEnd: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        discreteBandSize: Union[
+            Union[float, "RelativeBandSize"], UndefinedType
+        ] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BarConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            binSpacing=binSpacing,
+            blend=blend,
+            color=color,
+            continuousBandSize=continuousBandSize,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusEnd=cornerRadiusEnd,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            discreteBandSize=discreteBandSize,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            minBandSize=minBandSize,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class BaseTitleNoValueRefs(VegaLiteSchema):
@@ -2069,28 +2723,74 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 
         **Default value:** ``0``.
     """
-    _schema = {'$ref': '#/definitions/BaseTitleNoValueRefs'}
 
-    def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, aria=Undefined,
-                 baseline=Undefined, color=Undefined, dx=Undefined, dy=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, frame=Undefined,
-                 limit=Undefined, lineHeight=Undefined, offset=Undefined, orient=Undefined,
-                 subtitleColor=Undefined, subtitleFont=Undefined, subtitleFontSize=Undefined,
-                 subtitleFontStyle=Undefined, subtitleFontWeight=Undefined,
-                 subtitleLineHeight=Undefined, subtitlePadding=Undefined, zindex=Undefined, **kwds):
-        super(BaseTitleNoValueRefs, self).__init__(align=align, anchor=anchor, angle=angle, aria=aria,
-                                                   baseline=baseline, color=color, dx=dx, dy=dy,
-                                                   font=font, fontSize=fontSize, fontStyle=fontStyle,
-                                                   fontWeight=fontWeight, frame=frame, limit=limit,
-                                                   lineHeight=lineHeight, offset=offset, orient=orient,
-                                                   subtitleColor=subtitleColor,
-                                                   subtitleFont=subtitleFont,
-                                                   subtitleFontSize=subtitleFontSize,
-                                                   subtitleFontStyle=subtitleFontStyle,
-                                                   subtitleFontWeight=subtitleFontWeight,
-                                                   subtitleLineHeight=subtitleLineHeight,
-                                                   subtitlePadding=subtitlePadding, zindex=zindex,
-                                                   **kwds)
+    _schema = {"$ref": "#/definitions/BaseTitleNoValueRefs"}
+
+    def __init__(
+        self,
+        align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
+        anchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
+        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        frame: Union[
+            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        subtitleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontStyle: Union[
+            Union["FontStyle", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BaseTitleNoValueRefs, self).__init__(
+            align=align,
+            anchor=anchor,
+            angle=angle,
+            aria=aria,
+            baseline=baseline,
+            color=color,
+            dx=dx,
+            dy=dy,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            frame=frame,
+            limit=limit,
+            lineHeight=lineHeight,
+            offset=offset,
+            orient=orient,
+            subtitleColor=subtitleColor,
+            subtitleFont=subtitleFont,
+            subtitleFontSize=subtitleFontSize,
+            subtitleFontStyle=subtitleFontStyle,
+            subtitleFontWeight=subtitleFontWeight,
+            subtitleLineHeight=subtitleLineHeight,
+            subtitlePadding=subtitlePadding,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class BinExtent(VegaLiteSchema):
@@ -2098,7 +2798,8 @@ class BinExtent(VegaLiteSchema):
 
     Union[List[float], :class:`ParameterExtent`]
     """
-    _schema = {'$ref': '#/definitions/BinExtent'}
+
+    _schema = {"$ref": "#/definitions/BinExtent"}
 
     def __init__(self, *args, **kwds):
         super(BinExtent, self).__init__(*args, **kwds)
@@ -2153,14 +2854,36 @@ class BinParams(VegaLiteSchema):
     steps : List[float]
         An array of allowable step sizes to choose from.
     """
-    _schema = {'$ref': '#/definitions/BinParams'}
 
-    def __init__(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined,
-                 extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined,
-                 steps=Undefined, **kwds):
-        super(BinParams, self).__init__(anchor=anchor, base=base, binned=binned, divide=divide,
-                                        extent=extent, maxbins=maxbins, minstep=minstep, nice=nice,
-                                        step=step, steps=steps, **kwds)
+    _schema = {"$ref": "#/definitions/BinParams"}
+
+    def __init__(
+        self,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[Union[List[float], "ParameterExtent"], UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BinParams, self).__init__(
+            anchor=anchor,
+            base=base,
+            binned=binned,
+            divide=divide,
+            extent=extent,
+            maxbins=maxbins,
+            minstep=minstep,
+            nice=nice,
+            step=step,
+            steps=steps,
+            **kwds
+        )
 
 
 class Binding(VegaLiteSchema):
@@ -2169,7 +2892,8 @@ class Binding(VegaLiteSchema):
     Union[:class:`BindCheckbox`, :class:`BindRadioSelect`, :class:`BindRange`,
     :class:`BindInput`, :class:`BindDirect`]
     """
-    _schema = {'$ref': '#/definitions/Binding'}
+
+    _schema = {"$ref": "#/definitions/Binding"}
 
     def __init__(self, *args, **kwds):
         super(Binding, self).__init__(*args, **kwds)
@@ -2196,11 +2920,20 @@ class BindCheckbox(Binding):
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
     """
-    _schema = {'$ref': '#/definitions/BindCheckbox'}
 
-    def __init__(self, input=Undefined, debounce=Undefined, element=Undefined, name=Undefined, **kwds):
-        super(BindCheckbox, self).__init__(input=input, debounce=debounce, element=element, name=name,
-                                           **kwds)
+    _schema = {"$ref": "#/definitions/BindCheckbox"}
+
+    def __init__(
+        self,
+        input: Union[str, UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        element: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BindCheckbox, self).__init__(
+            input=input, debounce=debounce, element=element, name=name, **kwds
+        )
 
 
 class BindDirect(Binding):
@@ -2225,10 +2958,19 @@ class BindDirect(Binding):
         The event (default ``"input"`` ) to listen for to track changes on the external
         element.
     """
-    _schema = {'$ref': '#/definitions/BindDirect'}
 
-    def __init__(self, element=Undefined, debounce=Undefined, event=Undefined, **kwds):
-        super(BindDirect, self).__init__(element=element, debounce=debounce, event=event, **kwds)
+    _schema = {"$ref": "#/definitions/BindDirect"}
+
+    def __init__(
+        self,
+        element: Union[Union["Element", dict], UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        event: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BindDirect, self).__init__(
+            element=element, debounce=debounce, event=event, **kwds
+        )
 
 
 class BindInput(Binding):
@@ -2260,12 +3002,28 @@ class BindInput(Binding):
     placeholder : str
         Text that appears in the form control when it has no value set.
     """
-    _schema = {'$ref': '#/definitions/BindInput'}
 
-    def __init__(self, autocomplete=Undefined, debounce=Undefined, element=Undefined, input=Undefined,
-                 name=Undefined, placeholder=Undefined, **kwds):
-        super(BindInput, self).__init__(autocomplete=autocomplete, debounce=debounce, element=element,
-                                        input=input, name=name, placeholder=placeholder, **kwds)
+    _schema = {"$ref": "#/definitions/BindInput"}
+
+    def __init__(
+        self,
+        autocomplete: Union[str, UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        element: Union[str, UndefinedType] = Undefined,
+        input: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        placeholder: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BindInput, self).__init__(
+            autocomplete=autocomplete,
+            debounce=debounce,
+            element=element,
+            input=input,
+            name=name,
+            placeholder=placeholder,
+            **kwds
+        )
 
 
 class BindRadioSelect(Binding):
@@ -2294,12 +3052,28 @@ class BindRadioSelect(Binding):
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
     """
-    _schema = {'$ref': '#/definitions/BindRadioSelect'}
 
-    def __init__(self, input=Undefined, options=Undefined, debounce=Undefined, element=Undefined,
-                 labels=Undefined, name=Undefined, **kwds):
-        super(BindRadioSelect, self).__init__(input=input, options=options, debounce=debounce,
-                                              element=element, labels=labels, name=name, **kwds)
+    _schema = {"$ref": "#/definitions/BindRadioSelect"}
+
+    def __init__(
+        self,
+        input: Union[Literal["radio", "select"], UndefinedType] = Undefined,
+        options: Union[List[Any], UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        element: Union[str, UndefinedType] = Undefined,
+        labels: Union[List[str], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BindRadioSelect, self).__init__(
+            input=input,
+            options=options,
+            debounce=debounce,
+            element=element,
+            labels=labels,
+            name=name,
+            **kwds
+        )
 
 
 class BindRange(Binding):
@@ -2332,12 +3106,30 @@ class BindRange(Binding):
         Sets the minimum slider increment. If undefined, the step size will be automatically
         determined based on the ``min`` and ``max`` values.
     """
-    _schema = {'$ref': '#/definitions/BindRange'}
 
-    def __init__(self, input=Undefined, debounce=Undefined, element=Undefined, max=Undefined,
-                 min=Undefined, name=Undefined, step=Undefined, **kwds):
-        super(BindRange, self).__init__(input=input, debounce=debounce, element=element, max=max,
-                                        min=min, name=name, step=step, **kwds)
+    _schema = {"$ref": "#/definitions/BindRange"}
+
+    def __init__(
+        self,
+        input: Union[str, UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        element: Union[str, UndefinedType] = Undefined,
+        max: Union[float, UndefinedType] = Undefined,
+        min: Union[float, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BindRange, self).__init__(
+            input=input,
+            debounce=debounce,
+            element=element,
+            max=max,
+            min=min,
+            name=name,
+            step=step,
+            **kwds
+        )
 
 
 class BinnedTimeUnit(VegaLiteSchema):
@@ -2355,7 +3147,8 @@ class BinnedTimeUnit(VegaLiteSchema):
     'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes',
     'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear']]
     """
-    _schema = {'$ref': '#/definitions/BinnedTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/BinnedTimeUnit"}
 
     def __init__(self, *args, **kwds):
         super(BinnedTimeUnit, self).__init__(*args, **kwds)
@@ -2368,7 +3161,8 @@ class Blend(VegaLiteSchema):
     'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation',
     'color', 'luminosity']
     """
-    _schema = {'$ref': '#/definitions/Blend'}
+
+    _schema = {"$ref": "#/definitions/Blend"}
 
     def __init__(self, *args):
         super(Blend, self).__init__(*args)
@@ -2407,12 +3201,30 @@ class BoxPlotConfig(VegaLiteSchema):
     ticks : Union[bool, :class:`AnyMarkConfig`]
 
     """
-    _schema = {'$ref': '#/definitions/BoxPlotConfig'}
 
-    def __init__(self, box=Undefined, extent=Undefined, median=Undefined, outliers=Undefined,
-                 rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
-        super(BoxPlotConfig, self).__init__(box=box, extent=extent, median=median, outliers=outliers,
-                                            rule=rule, size=size, ticks=ticks, **kwds)
+    _schema = {"$ref": "#/definitions/BoxPlotConfig"}
+
+    def __init__(
+        self,
+        box: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        extent: Union[Union[str, float], UndefinedType] = Undefined,
+        median: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        outliers: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        size: Union[float, UndefinedType] = Undefined,
+        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BoxPlotConfig, self).__init__(
+            box=box,
+            extent=extent,
+            median=median,
+            outliers=outliers,
+            rule=rule,
+            size=size,
+            ticks=ticks,
+            **kwds
+        )
 
 
 class BrushConfig(VegaLiteSchema):
@@ -2448,15 +3260,72 @@ class BrushConfig(VegaLiteSchema):
     strokeWidth : float
         The stroke width of the interval mark.
     """
-    _schema = {'$ref': '#/definitions/BrushConfig'}
 
-    def __init__(self, cursor=Undefined, fill=Undefined, fillOpacity=Undefined, stroke=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, **kwds):
-        super(BrushConfig, self).__init__(cursor=cursor, fill=fill, fillOpacity=fillOpacity,
-                                          stroke=stroke, strokeDash=strokeDash,
-                                          strokeDashOffset=strokeDashOffset,
-                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, **kwds)
+    _schema = {"$ref": "#/definitions/BrushConfig"}
+
+    def __init__(
+        self,
+        cursor: Union[
+            Literal[
+                "auto",
+                "default",
+                "none",
+                "context-menu",
+                "help",
+                "pointer",
+                "progress",
+                "wait",
+                "cell",
+                "crosshair",
+                "text",
+                "vertical-text",
+                "alias",
+                "copy",
+                "move",
+                "no-drop",
+                "not-allowed",
+                "e-resize",
+                "n-resize",
+                "ne-resize",
+                "nw-resize",
+                "s-resize",
+                "se-resize",
+                "sw-resize",
+                "w-resize",
+                "ew-resize",
+                "ns-resize",
+                "nesw-resize",
+                "nwse-resize",
+                "col-resize",
+                "row-resize",
+                "all-scroll",
+                "zoom-in",
+                "zoom-out",
+                "grab",
+                "grabbing",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fill: Union[Union["ColorName", "HexColor", str], UndefinedType] = Undefined,
+        fillOpacity: Union[float, UndefinedType] = Undefined,
+        stroke: Union[Union["ColorName", "HexColor", str], UndefinedType] = Undefined,
+        strokeDash: Union[List[float], UndefinedType] = Undefined,
+        strokeDashOffset: Union[float, UndefinedType] = Undefined,
+        strokeOpacity: Union[float, UndefinedType] = Undefined,
+        strokeWidth: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BrushConfig, self).__init__(
+            cursor=cursor,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            **kwds
+        )
 
 
 class Color(VegaLiteSchema):
@@ -2464,7 +3333,8 @@ class Color(VegaLiteSchema):
 
     Union[:class:`ColorName`, :class:`HexColor`, str]
     """
-    _schema = {'$ref': '#/definitions/Color'}
+
+    _schema = {"$ref": "#/definitions/Color"}
 
     def __init__(self, *args, **kwds):
         super(Color, self).__init__(*args, **kwds)
@@ -2477,7 +3347,8 @@ class ColorDef(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`]
     """
-    _schema = {'$ref': '#/definitions/ColorDef'}
+
+    _schema = {"$ref": "#/definitions/ColorDef"}
 
     def __init__(self, *args, **kwds):
         super(ColorDef, self).__init__(*args, **kwds)
@@ -2510,7 +3381,8 @@ class ColorName(Color):
     'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat',
     'whitesmoke', 'yellowgreen', 'rebeccapurple']
     """
-    _schema = {'$ref': '#/definitions/ColorName'}
+
+    _schema = {"$ref": "#/definitions/ColorName"}
 
     def __init__(self, *args):
         super(ColorName, self).__init__(*args)
@@ -2522,7 +3394,8 @@ class ColorScheme(VegaLiteSchema):
     Union[:class:`Categorical`, :class:`SequentialSingleHue`, :class:`SequentialMultiHue`,
     :class:`Diverging`, :class:`Cyclical`]
     """
-    _schema = {'$ref': '#/definitions/ColorScheme'}
+
+    _schema = {"$ref": "#/definitions/ColorScheme"}
 
     def __init__(self, *args, **kwds):
         super(ColorScheme, self).__init__(*args, **kwds)
@@ -2534,7 +3407,8 @@ class Categorical(ColorScheme):
     Literal['accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2',
     'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20']
     """
-    _schema = {'$ref': '#/definitions/Categorical'}
+
+    _schema = {"$ref": "#/definitions/Categorical"}
 
     def __init__(self, *args):
         super(Categorical, self).__init__(*args)
@@ -2545,7 +3419,8 @@ class CompositeMark(AnyMark):
 
     Union[:class:`BoxPlot`, :class:`ErrorBar`, :class:`ErrorBand`]
     """
-    _schema = {'$ref': '#/definitions/CompositeMark'}
+
+    _schema = {"$ref": "#/definitions/CompositeMark"}
 
     def __init__(self, *args, **kwds):
         super(CompositeMark, self).__init__(*args, **kwds)
@@ -2556,7 +3431,8 @@ class BoxPlot(CompositeMark):
 
     str
     """
-    _schema = {'$ref': '#/definitions/BoxPlot'}
+
+    _schema = {"$ref": "#/definitions/BoxPlot"}
 
     def __init__(self, *args):
         super(BoxPlot, self).__init__(*args)
@@ -2567,7 +3443,8 @@ class CompositeMarkDef(AnyMark):
 
     Union[:class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`]
     """
-    _schema = {'$ref': '#/definitions/CompositeMarkDef'}
+
+    _schema = {"$ref": "#/definitions/CompositeMarkDef"}
 
     def __init__(self, *args, **kwds):
         super(CompositeMarkDef, self).__init__(*args, **kwds)
@@ -2643,14 +3520,42 @@ class BoxPlotDef(CompositeMarkDef):
     ticks : Union[bool, :class:`AnyMarkConfig`]
 
     """
-    _schema = {'$ref': '#/definitions/BoxPlotDef'}
 
-    def __init__(self, type=Undefined, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
-                 invalid=Undefined, median=Undefined, opacity=Undefined, orient=Undefined,
-                 outliers=Undefined, rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
-        super(BoxPlotDef, self).__init__(type=type, box=box, clip=clip, color=color, extent=extent,
-                                         invalid=invalid, median=median, opacity=opacity, orient=orient,
-                                         outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
+    _schema = {"$ref": "#/definitions/BoxPlotDef"}
+
+    def __init__(
+        self,
+        type: Union[str, UndefinedType] = Undefined,
+        box: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        clip: Union[bool, UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        extent: Union[Union[str, float], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        median: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        opacity: Union[float, UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outliers: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        size: Union[float, UndefinedType] = Undefined,
+        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(BoxPlotDef, self).__init__(
+            type=type,
+            box=box,
+            clip=clip,
+            color=color,
+            extent=extent,
+            invalid=invalid,
+            median=median,
+            opacity=opacity,
+            orient=orient,
+            outliers=outliers,
+            rule=rule,
+            size=size,
+            ticks=ticks,
+            **kwds
+        )
 
 
 class CompositionConfig(VegaLiteSchema):
@@ -2684,10 +3589,18 @@ class CompositionConfig(VegaLiteSchema):
 
         **Default value** : ``20``
     """
-    _schema = {'$ref': '#/definitions/CompositionConfig'}
 
-    def __init__(self, columns=Undefined, spacing=Undefined, **kwds):
-        super(CompositionConfig, self).__init__(columns=columns, spacing=spacing, **kwds)
+    _schema = {"$ref": "#/definitions/CompositionConfig"}
+
+    def __init__(
+        self,
+        columns: Union[float, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(CompositionConfig, self).__init__(
+            columns=columns, spacing=spacing, **kwds
+        )
 
 
 class ConditionalAxisColor(VegaLiteSchema):
@@ -2695,7 +3608,8 @@ class ConditionalAxisColor(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisColor'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisColor"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisColor, self).__init__(*args, **kwds)
@@ -2706,7 +3620,8 @@ class ConditionalAxisLabelAlign(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisLabelAlign'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisLabelAlign"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisLabelAlign, self).__init__(*args, **kwds)
@@ -2717,7 +3632,8 @@ class ConditionalAxisLabelBaseline(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisLabelBaseline'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisLabelBaseline"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisLabelBaseline, self).__init__(*args, **kwds)
@@ -2728,7 +3644,8 @@ class ConditionalAxisLabelFontStyle(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisLabelFontStyle'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontStyle"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisLabelFontStyle, self).__init__(*args, **kwds)
@@ -2739,7 +3656,8 @@ class ConditionalAxisLabelFontWeight(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisLabelFontWeight'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontWeight"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisLabelFontWeight, self).__init__(*args, **kwds)
@@ -2750,7 +3668,8 @@ class ConditionalAxisNumber(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisNumber'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisNumber"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisNumber, self).__init__(*args, **kwds)
@@ -2761,7 +3680,8 @@ class ConditionalAxisNumberArray(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisNumberArray'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisNumberArray"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisNumberArray, self).__init__(*args, **kwds)
@@ -2772,7 +3692,8 @@ class ConditionalAxisPropertyAlignnull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(Align|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Align|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertyAlignnull, self).__init__(*args, **kwds)
@@ -2783,7 +3704,8 @@ class ConditionalAxisPropertyColornull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(Color|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Color|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertyColornull, self).__init__(*args, **kwds)
@@ -2794,7 +3716,8 @@ class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(FontStyle|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontStyle|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertyFontStylenull, self).__init__(*args, **kwds)
@@ -2805,7 +3728,8 @@ class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(FontWeight|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontWeight|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertyFontWeightnull, self).__init__(*args, **kwds)
@@ -2816,7 +3740,8 @@ class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(TextBaseline|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(TextBaseline|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertyTextBaselinenull, self).__init__(*args, **kwds)
@@ -2827,7 +3752,8 @@ class ConditionalAxisPropertynumberArraynull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(number[]|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number[]|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertynumberArraynull, self).__init__(*args, **kwds)
@@ -2838,7 +3764,8 @@ class ConditionalAxisPropertynumbernull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(number|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertynumbernull, self).__init__(*args, **kwds)
@@ -2849,7 +3776,8 @@ class ConditionalAxisPropertystringnull(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(string|null)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(string|null)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisPropertystringnull, self).__init__(*args, **kwds)
@@ -2860,7 +3788,8 @@ class ConditionalAxisString(VegaLiteSchema):
 
     Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisString'}
+
+    _schema = {"$ref": "#/definitions/ConditionalAxisString"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalAxisString, self).__init__(*args, **kwds)
@@ -2872,7 +3801,8 @@ class ConditionalMarkPropFieldOrDatumDef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`,
     :class:`ConditionalParameterMarkPropFieldOrDatumDef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldOrDatumDef'}
+
+    _schema = {"$ref": "#/definitions/ConditionalMarkPropFieldOrDatumDef"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalMarkPropFieldOrDatumDef, self).__init__(*args, **kwds)
@@ -2884,10 +3814,13 @@ class ConditionalMarkPropFieldOrDatumDefTypeForShape(VegaLiteSchema):
     Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`,
     :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldOrDatumDef<TypeForShape>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalMarkPropFieldOrDatumDef<TypeForShape>"}
 
     def __init__(self, *args, **kwds):
-        super(ConditionalMarkPropFieldOrDatumDefTypeForShape, self).__init__(*args, **kwds)
+        super(ConditionalMarkPropFieldOrDatumDefTypeForShape, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalParameterMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatumDef):
@@ -2895,21 +3828,29 @@ class ConditionalParameterMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatu
 
     Union[Dict[required=[param]], Dict[required=[param]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalParameterMarkPropFieldOrDatumDef, self).__init__(*args, **kwds)
 
 
-class ConditionalParameterMarkPropFieldOrDatumDefTypeForShape(ConditionalMarkPropFieldOrDatumDefTypeForShape):
+class ConditionalParameterMarkPropFieldOrDatumDefTypeForShape(
+    ConditionalMarkPropFieldOrDatumDefTypeForShape
+):
     """ConditionalParameterMarkPropFieldOrDatumDefTypeForShape schema wrapper
 
     Union[Dict[required=[param]], Dict[required=[param]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef<TypeForShape>>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef<TypeForShape>>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalParameterMarkPropFieldOrDatumDefTypeForShape, self).__init__(*args, **kwds)
+        super(ConditionalParameterMarkPropFieldOrDatumDefTypeForShape, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatumDef):
@@ -2917,21 +3858,29 @@ class ConditionalPredicateMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatu
 
     Union[Dict[required=[test]], Dict[required=[test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalPredicateMarkPropFieldOrDatumDef, self).__init__(*args, **kwds)
 
 
-class ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape(ConditionalMarkPropFieldOrDatumDefTypeForShape):
+class ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape(
+    ConditionalMarkPropFieldOrDatumDefTypeForShape
+):
     """ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape schema wrapper
 
     Union[Dict[required=[test]], Dict[required=[test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef<TypeForShape>>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef<TypeForShape>>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape, self).__init__(*args, **kwds)
+        super(ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefAlignnullExprRef(VegaLiteSchema):
@@ -2939,10 +3888,15 @@ class ConditionalPredicateValueDefAlignnullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(Align|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(Align|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefAlignnullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefAlignnullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefColornullExprRef(VegaLiteSchema):
@@ -2950,10 +3904,15 @@ class ConditionalPredicateValueDefColornullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(Color|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(Color|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefColornullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefColornullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefFontStylenullExprRef(VegaLiteSchema):
@@ -2961,10 +3920,15 @@ class ConditionalPredicateValueDefFontStylenullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(FontStyle|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(FontStyle|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefFontStylenullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefFontStylenullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefFontWeightnullExprRef(VegaLiteSchema):
@@ -2972,10 +3936,15 @@ class ConditionalPredicateValueDefFontWeightnullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(FontWeight|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(FontWeight|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefFontWeightnullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefFontWeightnullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefTextBaselinenullExprRef(VegaLiteSchema):
@@ -2983,10 +3952,15 @@ class ConditionalPredicateValueDefTextBaselinenullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(TextBaseline|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(TextBaseline|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefTextBaselinenullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefTextBaselinenullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefnumberArraynullExprRef(VegaLiteSchema):
@@ -2994,10 +3968,15 @@ class ConditionalPredicateValueDefnumberArraynullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(number[]|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(number[]|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefnumberArraynullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefnumberArraynullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalPredicateValueDefnumbernullExprRef(VegaLiteSchema):
@@ -3005,10 +3984,15 @@ class ConditionalPredicateValueDefnumbernullExprRef(VegaLiteSchema):
 
     Union[Dict[required=[test, value]], Dict[required=[expr, test]]]
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<(ValueDef<(number|null)>|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(number|null)>|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalPredicateValueDefnumbernullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalPredicateValueDefnumbernullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
 class ConditionalStringFieldDef(VegaLiteSchema):
@@ -3017,7 +4001,8 @@ class ConditionalStringFieldDef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateStringFieldDef`,
     :class:`ConditionalParameterStringFieldDef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalStringFieldDef'}
+
+    _schema = {"$ref": "#/definitions/ConditionalStringFieldDef"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalStringFieldDef, self).__init__(*args, **kwds)
@@ -3217,17 +4202,44 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<StringFieldDef>'}
 
-    def __init__(self, param=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
-                 empty=Undefined, field=Undefined, format=Undefined, formatType=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(ConditionalParameterStringFieldDef, self).__init__(param=param, aggregate=aggregate,
-                                                                 bandPosition=bandPosition, bin=bin,
-                                                                 empty=empty, field=field,
-                                                                 format=format, formatType=formatType,
-                                                                 timeUnit=timeUnit, title=title,
-                                                                 type=type, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalParameter<StringFieldDef>"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterStringFieldDef, self).__init__(
+            param=param,
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            empty=empty,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
@@ -3421,17 +4433,50 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<StringFieldDef>'}
 
-    def __init__(self, test=Undefined, aggregate=Undefined, bandPosition=Undefined, bin=Undefined,
-                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(ConditionalPredicateStringFieldDef, self).__init__(test=test, aggregate=aggregate,
-                                                                 bandPosition=bandPosition, bin=bin,
-                                                                 field=field, format=format,
-                                                                 formatType=formatType,
-                                                                 timeUnit=timeUnit, title=title,
-                                                                 type=type, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<StringFieldDef>"}
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateStringFieldDef, self).__init__(
+            test=test,
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class ConditionalValueDefGradientstringnullExprRef(VegaLiteSchema):
@@ -3440,13 +4485,20 @@ class ConditionalValueDefGradientstringnullExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`,
     :class:`ConditionalParameterValueDefGradientstringnullExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(Gradient|string|null|ExprRef)>'}
+
+    _schema = {
+        "$ref": "#/definitions/ConditionalValueDef<(Gradient|string|null|ExprRef)>"
+    }
 
     def __init__(self, *args, **kwds):
-        super(ConditionalValueDefGradientstringnullExprRef, self).__init__(*args, **kwds)
+        super(ConditionalValueDefGradientstringnullExprRef, self).__init__(
+            *args, **kwds
+        )
 
 
-class ConditionalParameterValueDefGradientstringnullExprRef(ConditionalValueDefGradientstringnullExprRef):
+class ConditionalParameterValueDefGradientstringnullExprRef(
+    ConditionalValueDefGradientstringnullExprRef
+):
     """ConditionalParameterValueDefGradientstringnullExprRef schema wrapper
 
     Dict[required=[param, value]]
@@ -3464,15 +4516,28 @@ class ConditionalParameterValueDefGradientstringnullExprRef(ConditionalValueDefG
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(Gradient|string|null|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefGradientstringnullExprRef, self).__init__(param=param,
-                                                                                    value=value,
-                                                                                    empty=empty, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalParameter<ValueDef<(Gradient|string|null|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union["Gradient", str, None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefGradientstringnullExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
-class ConditionalPredicateValueDefGradientstringnullExprRef(ConditionalValueDefGradientstringnullExprRef):
+class ConditionalPredicateValueDefGradientstringnullExprRef(
+    ConditionalValueDefGradientstringnullExprRef
+):
     """ConditionalPredicateValueDefGradientstringnullExprRef schema wrapper
 
     Dict[required=[test, value]]
@@ -3487,11 +4552,30 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(ConditionalValueDefG
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(Gradient|string|null|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefGradientstringnullExprRef, self).__init__(test=test,
-                                                                                    value=value, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<ValueDef<(Gradient|string|null|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union["Gradient", str, None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefGradientstringnullExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefTextExprRef(VegaLiteSchema):
@@ -3500,7 +4584,8 @@ class ConditionalValueDefTextExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefTextExprRef`,
     :class:`ConditionalParameterValueDefTextExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(Text|ExprRef)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<(Text|ExprRef)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefTextExprRef, self).__init__(*args, **kwds)
@@ -3524,11 +4609,19 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(Text|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefTextExprRef, self).__init__(param=param, value=value,
-                                                                      empty=empty, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalParameter<ValueDef<(Text|ExprRef)>>"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefTextExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
 class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
@@ -3546,10 +4639,26 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(Text|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefTextExprRef, self).__init__(test=test, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<ValueDef<(Text|ExprRef)>>"}
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefTextExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefnumber(VegaLiteSchema):
@@ -3558,7 +4667,8 @@ class ConditionalValueDefnumber(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefnumber`,
     :class:`ConditionalParameterValueDefnumber`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<number>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<number>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefnumber, self).__init__(*args, **kwds)
@@ -3582,11 +4692,19 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<number>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefnumber, self).__init__(param=param, value=value, empty=empty,
-                                                                 **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalParameter<ValueDef<number>>"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[float, UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefnumber, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
 class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
@@ -3604,10 +4722,26 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<number>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefnumber, self).__init__(test=test, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<ValueDef<number>>"}
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefnumber, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefnumberArrayExprRef(VegaLiteSchema):
@@ -3616,13 +4750,16 @@ class ConditionalValueDefnumberArrayExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`,
     :class:`ConditionalParameterValueDefnumberArrayExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(number[]|ExprRef)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<(number[]|ExprRef)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefnumberArrayExprRef, self).__init__(*args, **kwds)
 
 
-class ConditionalParameterValueDefnumberArrayExprRef(ConditionalValueDefnumberArrayExprRef):
+class ConditionalParameterValueDefnumberArrayExprRef(
+    ConditionalValueDefnumberArrayExprRef
+):
     """ConditionalParameterValueDefnumberArrayExprRef schema wrapper
 
     Dict[required=[param, value]]
@@ -3640,14 +4777,26 @@ class ConditionalParameterValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(number[]|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefnumberArrayExprRef, self).__init__(param=param, value=value,
-                                                                             empty=empty, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalParameter<ValueDef<(number[]|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefnumberArrayExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
-class ConditionalPredicateValueDefnumberArrayExprRef(ConditionalValueDefnumberArrayExprRef):
+class ConditionalPredicateValueDefnumberArrayExprRef(
+    ConditionalValueDefnumberArrayExprRef
+):
     """ConditionalPredicateValueDefnumberArrayExprRef schema wrapper
 
     Dict[required=[test, value]]
@@ -3662,11 +4811,28 @@ class ConditionalPredicateValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(number[]|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefnumberArrayExprRef, self).__init__(test=test, value=value,
-                                                                             **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<ValueDef<(number[]|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefnumberArrayExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefnumberExprRef(VegaLiteSchema):
@@ -3675,7 +4841,8 @@ class ConditionalValueDefnumberExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefnumberExprRef`,
     :class:`ConditionalParameterValueDefnumberExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(number|ExprRef)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<(number|ExprRef)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefnumberExprRef, self).__init__(*args, **kwds)
@@ -3699,11 +4866,19 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(number|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefnumberExprRef, self).__init__(param=param, value=value,
-                                                                        empty=empty, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalParameter<ValueDef<(number|ExprRef)>>"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefnumberExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
 class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef):
@@ -3721,10 +4896,26 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(number|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefnumberExprRef, self).__init__(test=test, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<ValueDef<(number|ExprRef)>>"}
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefnumberExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefstringExprRef(VegaLiteSchema):
@@ -3733,7 +4924,8 @@ class ConditionalValueDefstringExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefstringExprRef`,
     :class:`ConditionalParameterValueDefstringExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(string|ExprRef)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<(string|ExprRef)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefstringExprRef, self).__init__(*args, **kwds)
@@ -3757,11 +4949,19 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(string|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefstringExprRef, self).__init__(param=param, value=value,
-                                                                        empty=empty, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalParameter<ValueDef<(string|ExprRef)>>"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefstringExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
 class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef):
@@ -3779,10 +4979,26 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(string|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefstringExprRef, self).__init__(test=test, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/ConditionalPredicate<ValueDef<(string|ExprRef)>>"}
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefstringExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class ConditionalValueDefstringnullExprRef(VegaLiteSchema):
@@ -3791,13 +5007,16 @@ class ConditionalValueDefstringnullExprRef(VegaLiteSchema):
     Union[:class:`ConditionalPredicateValueDefstringnullExprRef`,
     :class:`ConditionalParameterValueDefstringnullExprRef`]
     """
-    _schema = {'$ref': '#/definitions/ConditionalValueDef<(string|null|ExprRef)>'}
+
+    _schema = {"$ref": "#/definitions/ConditionalValueDef<(string|null|ExprRef)>"}
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDefstringnullExprRef, self).__init__(*args, **kwds)
 
 
-class ConditionalParameterValueDefstringnullExprRef(ConditionalValueDefstringnullExprRef):
+class ConditionalParameterValueDefstringnullExprRef(
+    ConditionalValueDefstringnullExprRef
+):
     """ConditionalParameterValueDefstringnullExprRef schema wrapper
 
     Dict[required=[param, value]]
@@ -3815,14 +5034,26 @@ class ConditionalParameterValueDefstringnullExprRef(ConditionalValueDefstringnul
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ConditionalParameter<ValueDef<(string|null|ExprRef)>>'}
 
-    def __init__(self, param=Undefined, value=Undefined, empty=Undefined, **kwds):
-        super(ConditionalParameterValueDefstringnullExprRef, self).__init__(param=param, value=value,
-                                                                            empty=empty, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalParameter<ValueDef<(string|null|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalParameterValueDefstringnullExprRef, self).__init__(
+            param=param, value=value, empty=empty, **kwds
+        )
 
 
-class ConditionalPredicateValueDefstringnullExprRef(ConditionalValueDefstringnullExprRef):
+class ConditionalPredicateValueDefstringnullExprRef(
+    ConditionalValueDefstringnullExprRef
+):
     """ConditionalPredicateValueDefstringnullExprRef schema wrapper
 
     Dict[required=[test, value]]
@@ -3837,11 +5068,28 @@ class ConditionalPredicateValueDefstringnullExprRef(ConditionalValueDefstringnul
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(string|null|ExprRef)>>'}
 
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefstringnullExprRef, self).__init__(test=test, value=value,
-                                                                            **kwds)
+    _schema = {
+        "$ref": "#/definitions/ConditionalPredicate<ValueDef<(string|null|ExprRef)>>"
+    }
+
+    def __init__(
+        self,
+        test: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ConditionalPredicateValueDefstringnullExprRef, self).__init__(
+            test=test, value=value, **kwds
+        )
 
 
 class Config(VegaLiteSchema):
@@ -4121,55 +5369,167 @@ class Config(VegaLiteSchema):
         Default properties for `single view plots
         <https://vega.github.io/vega-lite/docs/spec.html#single>`__.
     """
-    _schema = {'$ref': '#/definitions/Config'}
 
-    def __init__(self, arc=Undefined, area=Undefined, aria=Undefined, autosize=Undefined,
-                 axis=Undefined, axisBand=Undefined, axisBottom=Undefined, axisDiscrete=Undefined,
-                 axisLeft=Undefined, axisPoint=Undefined, axisQuantitative=Undefined,
-                 axisRight=Undefined, axisTemporal=Undefined, axisTop=Undefined, axisX=Undefined,
-                 axisXBand=Undefined, axisXDiscrete=Undefined, axisXPoint=Undefined,
-                 axisXQuantitative=Undefined, axisXTemporal=Undefined, axisY=Undefined,
-                 axisYBand=Undefined, axisYDiscrete=Undefined, axisYPoint=Undefined,
-                 axisYQuantitative=Undefined, axisYTemporal=Undefined, background=Undefined,
-                 bar=Undefined, boxplot=Undefined, circle=Undefined, concat=Undefined,
-                 countTitle=Undefined, customFormatTypes=Undefined, errorband=Undefined,
-                 errorbar=Undefined, facet=Undefined, fieldTitle=Undefined, font=Undefined,
-                 geoshape=Undefined, header=Undefined, headerColumn=Undefined, headerFacet=Undefined,
-                 headerRow=Undefined, image=Undefined, legend=Undefined, line=Undefined,
-                 lineBreak=Undefined, locale=Undefined, mark=Undefined,
-                 normalizedNumberFormat=Undefined, normalizedNumberFormatType=Undefined,
-                 numberFormat=Undefined, numberFormatType=Undefined, padding=Undefined,
-                 params=Undefined, point=Undefined, projection=Undefined, range=Undefined,
-                 rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined, square=Undefined,
-                 style=Undefined, text=Undefined, tick=Undefined, timeFormat=Undefined,
-                 timeFormatType=Undefined, title=Undefined, tooltipFormat=Undefined, trail=Undefined,
-                 view=Undefined, **kwds):
-        super(Config, self).__init__(arc=arc, area=area, aria=aria, autosize=autosize, axis=axis,
-                                     axisBand=axisBand, axisBottom=axisBottom,
-                                     axisDiscrete=axisDiscrete, axisLeft=axisLeft, axisPoint=axisPoint,
-                                     axisQuantitative=axisQuantitative, axisRight=axisRight,
-                                     axisTemporal=axisTemporal, axisTop=axisTop, axisX=axisX,
-                                     axisXBand=axisXBand, axisXDiscrete=axisXDiscrete,
-                                     axisXPoint=axisXPoint, axisXQuantitative=axisXQuantitative,
-                                     axisXTemporal=axisXTemporal, axisY=axisY, axisYBand=axisYBand,
-                                     axisYDiscrete=axisYDiscrete, axisYPoint=axisYPoint,
-                                     axisYQuantitative=axisYQuantitative, axisYTemporal=axisYTemporal,
-                                     background=background, bar=bar, boxplot=boxplot, circle=circle,
-                                     concat=concat, countTitle=countTitle,
-                                     customFormatTypes=customFormatTypes, errorband=errorband,
-                                     errorbar=errorbar, facet=facet, fieldTitle=fieldTitle, font=font,
-                                     geoshape=geoshape, header=header, headerColumn=headerColumn,
-                                     headerFacet=headerFacet, headerRow=headerRow, image=image,
-                                     legend=legend, line=line, lineBreak=lineBreak, locale=locale,
-                                     mark=mark, normalizedNumberFormat=normalizedNumberFormat,
-                                     normalizedNumberFormatType=normalizedNumberFormatType,
-                                     numberFormat=numberFormat, numberFormatType=numberFormatType,
-                                     padding=padding, params=params, point=point, projection=projection,
-                                     range=range, rect=rect, rule=rule, scale=scale,
-                                     selection=selection, square=square, style=style, text=text,
-                                     tick=tick, timeFormat=timeFormat, timeFormatType=timeFormatType,
-                                     title=title, tooltipFormat=tooltipFormat, trail=trail, view=view,
-                                     **kwds)
+    _schema = {"$ref": "#/definitions/Config"}
+
+    def __init__(
+        self,
+        arc: Union[dict, UndefinedType] = Undefined,
+        area: Union[dict, UndefinedType] = Undefined,
+        aria: Union[bool, UndefinedType] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        axis: Union[dict, UndefinedType] = Undefined,
+        axisBand: Union[dict, UndefinedType] = Undefined,
+        axisBottom: Union[dict, UndefinedType] = Undefined,
+        axisDiscrete: Union[dict, UndefinedType] = Undefined,
+        axisLeft: Union[dict, UndefinedType] = Undefined,
+        axisPoint: Union[dict, UndefinedType] = Undefined,
+        axisQuantitative: Union[dict, UndefinedType] = Undefined,
+        axisRight: Union[dict, UndefinedType] = Undefined,
+        axisTemporal: Union[dict, UndefinedType] = Undefined,
+        axisTop: Union[dict, UndefinedType] = Undefined,
+        axisX: Union[dict, UndefinedType] = Undefined,
+        axisXBand: Union[dict, UndefinedType] = Undefined,
+        axisXDiscrete: Union[dict, UndefinedType] = Undefined,
+        axisXPoint: Union[dict, UndefinedType] = Undefined,
+        axisXQuantitative: Union[dict, UndefinedType] = Undefined,
+        axisXTemporal: Union[dict, UndefinedType] = Undefined,
+        axisY: Union[dict, UndefinedType] = Undefined,
+        axisYBand: Union[dict, UndefinedType] = Undefined,
+        axisYDiscrete: Union[dict, UndefinedType] = Undefined,
+        axisYPoint: Union[dict, UndefinedType] = Undefined,
+        axisYQuantitative: Union[dict, UndefinedType] = Undefined,
+        axisYTemporal: Union[dict, UndefinedType] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bar: Union[dict, UndefinedType] = Undefined,
+        boxplot: Union[dict, UndefinedType] = Undefined,
+        circle: Union[dict, UndefinedType] = Undefined,
+        concat: Union[dict, UndefinedType] = Undefined,
+        countTitle: Union[str, UndefinedType] = Undefined,
+        customFormatTypes: Union[bool, UndefinedType] = Undefined,
+        errorband: Union[dict, UndefinedType] = Undefined,
+        errorbar: Union[dict, UndefinedType] = Undefined,
+        facet: Union[dict, UndefinedType] = Undefined,
+        fieldTitle: Union[
+            Literal["verbal", "functional", "plain"], UndefinedType
+        ] = Undefined,
+        font: Union[str, UndefinedType] = Undefined,
+        geoshape: Union[dict, UndefinedType] = Undefined,
+        header: Union[dict, UndefinedType] = Undefined,
+        headerColumn: Union[dict, UndefinedType] = Undefined,
+        headerFacet: Union[dict, UndefinedType] = Undefined,
+        headerRow: Union[dict, UndefinedType] = Undefined,
+        image: Union[dict, UndefinedType] = Undefined,
+        legend: Union[dict, UndefinedType] = Undefined,
+        line: Union[dict, UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        locale: Union[dict, UndefinedType] = Undefined,
+        mark: Union[dict, UndefinedType] = Undefined,
+        normalizedNumberFormat: Union[str, UndefinedType] = Undefined,
+        normalizedNumberFormatType: Union[str, UndefinedType] = Undefined,
+        numberFormat: Union[str, UndefinedType] = Undefined,
+        numberFormatType: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        point: Union[dict, UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        range: Union[dict, UndefinedType] = Undefined,
+        rect: Union[dict, UndefinedType] = Undefined,
+        rule: Union[dict, UndefinedType] = Undefined,
+        scale: Union[dict, UndefinedType] = Undefined,
+        selection: Union[dict, UndefinedType] = Undefined,
+        square: Union[dict, UndefinedType] = Undefined,
+        style: Union[dict, UndefinedType] = Undefined,
+        text: Union[dict, UndefinedType] = Undefined,
+        tick: Union[dict, UndefinedType] = Undefined,
+        timeFormat: Union[str, UndefinedType] = Undefined,
+        timeFormatType: Union[str, UndefinedType] = Undefined,
+        title: Union[dict, UndefinedType] = Undefined,
+        tooltipFormat: Union[dict, UndefinedType] = Undefined,
+        trail: Union[dict, UndefinedType] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Config, self).__init__(
+            arc=arc,
+            area=area,
+            aria=aria,
+            autosize=autosize,
+            axis=axis,
+            axisBand=axisBand,
+            axisBottom=axisBottom,
+            axisDiscrete=axisDiscrete,
+            axisLeft=axisLeft,
+            axisPoint=axisPoint,
+            axisQuantitative=axisQuantitative,
+            axisRight=axisRight,
+            axisTemporal=axisTemporal,
+            axisTop=axisTop,
+            axisX=axisX,
+            axisXBand=axisXBand,
+            axisXDiscrete=axisXDiscrete,
+            axisXPoint=axisXPoint,
+            axisXQuantitative=axisXQuantitative,
+            axisXTemporal=axisXTemporal,
+            axisY=axisY,
+            axisYBand=axisYBand,
+            axisYDiscrete=axisYDiscrete,
+            axisYPoint=axisYPoint,
+            axisYQuantitative=axisYQuantitative,
+            axisYTemporal=axisYTemporal,
+            background=background,
+            bar=bar,
+            boxplot=boxplot,
+            circle=circle,
+            concat=concat,
+            countTitle=countTitle,
+            customFormatTypes=customFormatTypes,
+            errorband=errorband,
+            errorbar=errorbar,
+            facet=facet,
+            fieldTitle=fieldTitle,
+            font=font,
+            geoshape=geoshape,
+            header=header,
+            headerColumn=headerColumn,
+            headerFacet=headerFacet,
+            headerRow=headerRow,
+            image=image,
+            legend=legend,
+            line=line,
+            lineBreak=lineBreak,
+            locale=locale,
+            mark=mark,
+            normalizedNumberFormat=normalizedNumberFormat,
+            normalizedNumberFormatType=normalizedNumberFormatType,
+            numberFormat=numberFormat,
+            numberFormatType=numberFormatType,
+            padding=padding,
+            params=params,
+            point=point,
+            projection=projection,
+            range=range,
+            rect=rect,
+            rule=rule,
+            scale=scale,
+            selection=selection,
+            square=square,
+            style=style,
+            text=text,
+            tick=tick,
+            timeFormat=timeFormat,
+            timeFormatType=timeFormatType,
+            title=title,
+            tooltipFormat=tooltipFormat,
+            trail=trail,
+            view=view,
+            **kwds
+        )
 
 
 class Cursor(VegaLiteSchema):
@@ -4181,7 +5541,8 @@ class Cursor(VegaLiteSchema):
     'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
     'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing']
     """
-    _schema = {'$ref': '#/definitions/Cursor'}
+
+    _schema = {"$ref": "#/definitions/Cursor"}
 
     def __init__(self, *args):
         super(Cursor, self).__init__(*args)
@@ -4192,7 +5553,8 @@ class Cyclical(ColorScheme):
 
     Literal['rainbow', 'sinebow']
     """
-    _schema = {'$ref': '#/definitions/Cyclical'}
+
+    _schema = {"$ref": "#/definitions/Cyclical"}
 
     def __init__(self, *args):
         super(Cyclical, self).__init__(*args)
@@ -4203,7 +5565,8 @@ class Data(VegaLiteSchema):
 
     Union[:class:`DataSource`, :class:`Generator`]
     """
-    _schema = {'$ref': '#/definitions/Data'}
+
+    _schema = {"$ref": "#/definitions/Data"}
 
     def __init__(self, *args, **kwds):
         super(Data, self).__init__(*args, **kwds)
@@ -4215,7 +5578,8 @@ class DataFormat(VegaLiteSchema):
     Union[:class:`CsvDataFormat`, :class:`DsvDataFormat`, :class:`JsonDataFormat`,
     :class:`TopoDataFormat`]
     """
-    _schema = {'$ref': '#/definitions/DataFormat'}
+
+    _schema = {"$ref": "#/definitions/DataFormat"}
 
     def __init__(self, *args, **kwds):
         super(DataFormat, self).__init__(*args, **kwds)
@@ -4251,9 +5615,15 @@ class CsvDataFormat(DataFormat):
         **Default value:**  The default format type is determined by the extension of the
         file URL. If no extension is detected, ``"json"`` will be used by default.
     """
-    _schema = {'$ref': '#/definitions/CsvDataFormat'}
 
-    def __init__(self, parse=Undefined, type=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/CsvDataFormat"}
+
+    def __init__(
+        self,
+        parse: Union[Union["Parse", None], UndefinedType] = Undefined,
+        type: Union[Literal["csv", "tsv"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
 
 
@@ -4262,7 +5632,8 @@ class DataSource(Data):
 
     Union[:class:`UrlData`, :class:`InlineData`, :class:`NamedData`]
     """
-    _schema = {'$ref': '#/definitions/DataSource'}
+
+    _schema = {"$ref": "#/definitions/DataSource"}
 
     def __init__(self, *args, **kwds):
         super(DataSource, self).__init__(*args, **kwds)
@@ -4273,7 +5644,8 @@ class Datasets(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Datasets'}
+
+    _schema = {"$ref": "#/definitions/Datasets"}
 
     def __init__(self, **kwds):
         super(Datasets, self).__init__(**kwds)
@@ -4284,7 +5656,8 @@ class Day(VegaLiteSchema):
 
     float
     """
-    _schema = {'$ref': '#/definitions/Day'}
+
+    _schema = {"$ref": "#/definitions/Day"}
 
     def __init__(self, *args):
         super(Day, self).__init__(*args)
@@ -4295,7 +5668,8 @@ class Dict(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Dict'}
+
+    _schema = {"$ref": "#/definitions/Dict"}
 
     def __init__(self, **kwds):
         super(Dict, self).__init__(**kwds)
@@ -4306,7 +5680,8 @@ class DictInlineDataset(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Dict<InlineDataset>'}
+
+    _schema = {"$ref": "#/definitions/Dict<InlineDataset>"}
 
     def __init__(self, **kwds):
         super(DictInlineDataset, self).__init__(**kwds)
@@ -4317,7 +5692,8 @@ class DictSelectionInit(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Dict<SelectionInit>'}
+
+    _schema = {"$ref": "#/definitions/Dict<SelectionInit>"}
 
     def __init__(self, **kwds):
         super(DictSelectionInit, self).__init__(**kwds)
@@ -4328,7 +5704,8 @@ class DictSelectionInitInterval(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Dict<SelectionInitInterval>'}
+
+    _schema = {"$ref": "#/definitions/Dict<SelectionInitInterval>"}
 
     def __init__(self, **kwds):
         super(DictSelectionInitInterval, self).__init__(**kwds)
@@ -4359,7 +5736,8 @@ class Diverging(ColorScheme):
     'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9',
     'spectral-10', 'spectral-11']
     """
-    _schema = {'$ref': '#/definitions/Diverging'}
+
+    _schema = {"$ref": "#/definitions/Diverging"}
 
     def __init__(self, *args):
         super(Diverging, self).__init__(*args)
@@ -4377,9 +5755,16 @@ class DomainUnionWith(VegaLiteSchema):
         Customized domain values to be union with the field's values or explicitly defined
         domain. Should be an array of valid scale domain values.
     """
-    _schema = {'$ref': '#/definitions/DomainUnionWith'}
 
-    def __init__(self, unionWith=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/DomainUnionWith"}
+
+    def __init__(
+        self,
+        unionWith: Union[
+            Union[List[float], List[str], List[bool], List["DateTime"]], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
         super(DomainUnionWith, self).__init__(unionWith=unionWith, **kwds)
 
 
@@ -4417,10 +5802,19 @@ class DsvDataFormat(DataFormat):
         **Default value:**  The default format type is determined by the extension of the
         file URL. If no extension is detected, ``"json"`` will be used by default.
     """
-    _schema = {'$ref': '#/definitions/DsvDataFormat'}
 
-    def __init__(self, delimiter=Undefined, parse=Undefined, type=Undefined, **kwds):
-        super(DsvDataFormat, self).__init__(delimiter=delimiter, parse=parse, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/DsvDataFormat"}
+
+    def __init__(
+        self,
+        delimiter: Union[str, UndefinedType] = Undefined,
+        parse: Union[Union["Parse", None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(DsvDataFormat, self).__init__(
+            delimiter=delimiter, parse=parse, type=type, **kwds
+        )
 
 
 class Element(VegaLiteSchema):
@@ -4428,7 +5822,8 @@ class Element(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/Element'}
+
+    _schema = {"$ref": "#/definitions/Element"}
 
     def __init__(self, *args):
         super(Element, self).__init__(*args)
@@ -4632,27 +6027,238 @@ class Encoding(VegaLiteSchema):
     yOffset : :class:`OffsetDef`
         Offset of y-position of the marks
     """
-    _schema = {'$ref': '#/definitions/Encoding'}
 
-    def __init__(self, angle=Undefined, color=Undefined, description=Undefined, detail=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, href=Undefined, key=Undefined,
-                 latitude=Undefined, latitude2=Undefined, longitude=Undefined, longitude2=Undefined,
-                 opacity=Undefined, order=Undefined, radius=Undefined, radius2=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined, theta=Undefined,
-                 theta2=Undefined, tooltip=Undefined, url=Undefined, x=Undefined, x2=Undefined,
-                 xError=Undefined, xError2=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                 yError=Undefined, yError2=Undefined, yOffset=Undefined, **kwds):
-        super(Encoding, self).__init__(angle=angle, color=color, description=description, detail=detail,
-                                       fill=fill, fillOpacity=fillOpacity, href=href, key=key,
-                                       latitude=latitude, latitude2=latitude2, longitude=longitude,
-                                       longitude2=longitude2, opacity=opacity, order=order,
-                                       radius=radius, radius2=radius2, shape=shape, size=size,
-                                       stroke=stroke, strokeDash=strokeDash,
-                                       strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, text=text,
-                                       theta=theta, theta2=theta2, tooltip=tooltip, url=url, x=x, x2=x2,
-                                       xError=xError, xError2=xError2, xOffset=xOffset, y=y, y2=y2,
-                                       yError=yError, yError2=yError2, yOffset=yOffset, **kwds)
+    _schema = {"$ref": "#/definitions/Encoding"}
+
+    def __init__(
+        self,
+        angle: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        color: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        description: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        detail: Union[
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
+        ] = Undefined,
+        fill: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        href: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        key: Union[dict, UndefinedType] = Undefined,
+        latitude: Union[
+            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+        ] = Undefined,
+        latitude2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        longitude: Union[
+            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+        ] = Undefined,
+        longitude2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[
+            Union[
+                "OrderFieldDef", List["OrderFieldDef"], "OrderValueDef", "OrderOnlyDef"
+            ],
+            UndefinedType,
+        ] = Undefined,
+        radius: Union[
+            Union["PositionFieldDefBase", "PositionDatumDefBase", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        radius2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        shape: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
+                "FieldOrDatumDefWithConditionDatumDefstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        size: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        stroke: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeDash: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
+                "FieldOrDatumDefWithConditionDatumDefnumberArray",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        text: Union[
+            Union[
+                "FieldOrDatumDefWithConditionStringFieldDefText",
+                "FieldOrDatumDefWithConditionStringDatumDefText",
+                "ValueDefWithConditionStringFieldDefText",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        theta: Union[
+            Union["PositionFieldDefBase", "PositionDatumDefBase", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        theta2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        tooltip: Union[
+            Union[
+                "StringFieldDefWithCondition",
+                "StringValueDefWithCondition",
+                List["StringFieldDef"],
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        url: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        x: Union[
+            Union["PositionFieldDef", "PositionDatumDef", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        x2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        xError: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        xError2: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        xOffset: Union[
+            Union["ScaleFieldDef", "ScaleDatumDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union["PositionFieldDef", "PositionDatumDef", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        y2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        yError: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        yError2: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        yOffset: Union[
+            Union["ScaleFieldDef", "ScaleDatumDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(Encoding, self).__init__(
+            angle=angle,
+            color=color,
+            description=description,
+            detail=detail,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            href=href,
+            key=key,
+            latitude=latitude,
+            latitude2=latitude2,
+            longitude=longitude,
+            longitude2=longitude2,
+            opacity=opacity,
+            order=order,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            tooltip=tooltip,
+            url=url,
+            x=x,
+            x2=x2,
+            xError=xError,
+            xError2=xError2,
+            xOffset=xOffset,
+            y=y,
+            y2=y2,
+            yError=yError,
+            yError2=yError2,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class ErrorBand(CompositeMark):
@@ -4660,7 +6266,8 @@ class ErrorBand(CompositeMark):
 
     str
     """
-    _schema = {'$ref': '#/definitions/ErrorBand'}
+
+    _schema = {"$ref": "#/definitions/ErrorBand"}
 
     def __init__(self, *args):
         super(ErrorBand, self).__init__(*args)
@@ -4716,12 +6323,47 @@ class ErrorBandConfig(VegaLiteSchema):
     tension : float
         The tension parameter for the interpolation type of the error band.
     """
-    _schema = {'$ref': '#/definitions/ErrorBandConfig'}
 
-    def __init__(self, band=Undefined, borders=Undefined, extent=Undefined, interpolate=Undefined,
-                 tension=Undefined, **kwds):
-        super(ErrorBandConfig, self).__init__(band=band, borders=borders, extent=extent,
-                                              interpolate=interpolate, tension=tension, **kwds)
+    _schema = {"$ref": "#/definitions/ErrorBandConfig"}
+
+    def __init__(
+        self,
+        band: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        borders: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        extent: Union[
+            Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Literal[
+                "basis",
+                "basis-open",
+                "basis-closed",
+                "bundle",
+                "cardinal",
+                "cardinal-open",
+                "cardinal-closed",
+                "catmull-rom",
+                "linear",
+                "linear-closed",
+                "monotone",
+                "natural",
+                "step",
+                "step-before",
+                "step-after",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        tension: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ErrorBandConfig, self).__init__(
+            band=band,
+            borders=borders,
+            extent=extent,
+            interpolate=interpolate,
+            tension=tension,
+            **kwds
+        )
 
 
 class ErrorBandDef(CompositeMarkDef):
@@ -4799,14 +6441,57 @@ class ErrorBandDef(CompositeMarkDef):
     tension : float
         The tension parameter for the interpolation type of the error band.
     """
-    _schema = {'$ref': '#/definitions/ErrorBandDef'}
 
-    def __init__(self, type=Undefined, band=Undefined, borders=Undefined, clip=Undefined,
-                 color=Undefined, extent=Undefined, interpolate=Undefined, opacity=Undefined,
-                 orient=Undefined, tension=Undefined, **kwds):
-        super(ErrorBandDef, self).__init__(type=type, band=band, borders=borders, clip=clip,
-                                           color=color, extent=extent, interpolate=interpolate,
-                                           opacity=opacity, orient=orient, tension=tension, **kwds)
+    _schema = {"$ref": "#/definitions/ErrorBandDef"}
+
+    def __init__(
+        self,
+        type: Union[str, UndefinedType] = Undefined,
+        band: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        borders: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        clip: Union[bool, UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        extent: Union[
+            Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Literal[
+                "basis",
+                "basis-open",
+                "basis-closed",
+                "bundle",
+                "cardinal",
+                "cardinal-open",
+                "cardinal-closed",
+                "catmull-rom",
+                "linear",
+                "linear-closed",
+                "monotone",
+                "natural",
+                "step",
+                "step-before",
+                "step-after",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        opacity: Union[float, UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        tension: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ErrorBandDef, self).__init__(
+            type=type,
+            band=band,
+            borders=borders,
+            clip=clip,
+            color=color,
+            extent=extent,
+            interpolate=interpolate,
+            opacity=opacity,
+            orient=orient,
+            tension=tension,
+            **kwds
+        )
 
 
 class ErrorBar(CompositeMark):
@@ -4814,7 +6499,8 @@ class ErrorBar(CompositeMark):
 
     str
     """
-    _schema = {'$ref': '#/definitions/ErrorBar'}
+
+    _schema = {"$ref": "#/definitions/ErrorBar"}
 
     def __init__(self, *args):
         super(ErrorBar, self).__init__(*args)
@@ -4849,12 +6535,28 @@ class ErrorBarConfig(VegaLiteSchema):
     ticks : Union[bool, :class:`AnyMarkConfig`]
 
     """
-    _schema = {'$ref': '#/definitions/ErrorBarConfig'}
 
-    def __init__(self, extent=Undefined, rule=Undefined, size=Undefined, thickness=Undefined,
-                 ticks=Undefined, **kwds):
-        super(ErrorBarConfig, self).__init__(extent=extent, rule=rule, size=size, thickness=thickness,
-                                             ticks=ticks, **kwds)
+    _schema = {"$ref": "#/definitions/ErrorBarConfig"}
+
+    def __init__(
+        self,
+        extent: Union[
+            Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
+        ] = Undefined,
+        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        size: Union[float, UndefinedType] = Undefined,
+        thickness: Union[float, UndefinedType] = Undefined,
+        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ErrorBarConfig, self).__init__(
+            extent=extent,
+            rule=rule,
+            size=size,
+            thickness=thickness,
+            ticks=ticks,
+            **kwds
+        )
 
 
 class ErrorBarDef(CompositeMarkDef):
@@ -4911,14 +6613,38 @@ class ErrorBarDef(CompositeMarkDef):
     ticks : Union[bool, :class:`AnyMarkConfig`]
 
     """
-    _schema = {'$ref': '#/definitions/ErrorBarDef'}
 
-    def __init__(self, type=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
-                 opacity=Undefined, orient=Undefined, rule=Undefined, size=Undefined,
-                 thickness=Undefined, ticks=Undefined, **kwds):
-        super(ErrorBarDef, self).__init__(type=type, clip=clip, color=color, extent=extent,
-                                          opacity=opacity, orient=orient, rule=rule, size=size,
-                                          thickness=thickness, ticks=ticks, **kwds)
+    _schema = {"$ref": "#/definitions/ErrorBarDef"}
+
+    def __init__(
+        self,
+        type: Union[str, UndefinedType] = Undefined,
+        clip: Union[bool, UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        extent: Union[
+            Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
+        ] = Undefined,
+        opacity: Union[float, UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        size: Union[float, UndefinedType] = Undefined,
+        thickness: Union[float, UndefinedType] = Undefined,
+        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ErrorBarDef, self).__init__(
+            type=type,
+            clip=clip,
+            color=color,
+            extent=extent,
+            opacity=opacity,
+            orient=orient,
+            rule=rule,
+            size=size,
+            thickness=thickness,
+            ticks=ticks,
+            **kwds
+        )
 
 
 class ErrorBarExtent(VegaLiteSchema):
@@ -4926,7 +6652,8 @@ class ErrorBarExtent(VegaLiteSchema):
 
     Literal['ci', 'iqr', 'stderr', 'stdev']
     """
-    _schema = {'$ref': '#/definitions/ErrorBarExtent'}
+
+    _schema = {"$ref": "#/definitions/ErrorBarExtent"}
 
     def __init__(self, *args):
         super(ErrorBarExtent, self).__init__(*args)
@@ -4937,7 +6664,8 @@ class Expr(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/Expr'}
+
+    _schema = {"$ref": "#/definitions/Expr"}
 
     def __init__(self, *args):
         super(Expr, self).__init__(*args)
@@ -4954,9 +6682,10 @@ class ExprRef(VegaLiteSchema):
     expr : str
         Vega expression (which can refer to Vega-Lite parameters).
     """
-    _schema = {'$ref': '#/definitions/ExprRef'}
 
-    def __init__(self, expr=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ExprRef"}
+
+    def __init__(self, expr: Union[str, UndefinedType] = Undefined, **kwds):
         super(ExprRef, self).__init__(expr=expr, **kwds)
 
 
@@ -5207,17 +6936,54 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FacetEncodingFieldDef'}
 
-    def __init__(self, aggregate=Undefined, align=Undefined, bandPosition=Undefined, bin=Undefined,
-                 bounds=Undefined, center=Undefined, columns=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, spacing=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FacetEncodingFieldDef, self).__init__(aggregate=aggregate, align=align,
-                                                    bandPosition=bandPosition, bin=bin, bounds=bounds,
-                                                    center=center, columns=columns, field=field,
-                                                    header=header, sort=sort, spacing=spacing,
-                                                    timeUnit=timeUnit, title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/FacetEncodingFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        header: Union[Union["Header", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
+        ] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FacetEncodingFieldDef, self).__init__(
+            aggregate=aggregate,
+            align=align,
+            bandPosition=bandPosition,
+            bin=bin,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            field=field,
+            header=header,
+            sort=sort,
+            spacing=spacing,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class FacetFieldDef(VegaLiteSchema):
@@ -5404,14 +7170,42 @@ class FacetFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FacetFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
-                 **kwds):
-        super(FacetFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                            field=field, header=header, sort=sort, timeUnit=timeUnit,
-                                            title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/FacetFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        header: Union[Union["Header", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FacetFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            header=header,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class FacetMapping(VegaLiteSchema):
@@ -5427,9 +7221,15 @@ class FacetMapping(VegaLiteSchema):
     row : :class:`FacetFieldDef`
         A field definition for the vertical facet of trellis plots.
     """
-    _schema = {'$ref': '#/definitions/FacetMapping'}
 
-    def __init__(self, column=Undefined, row=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/FacetMapping"}
+
+    def __init__(
+        self,
+        column: Union[dict, UndefinedType] = Undefined,
+        row: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
 
 
@@ -5639,31 +7439,244 @@ class FacetedEncoding(VegaLiteSchema):
     yOffset : :class:`OffsetDef`
         Offset of y-position of the marks
     """
-    _schema = {'$ref': '#/definitions/FacetedEncoding'}
 
-    def __init__(self, angle=Undefined, color=Undefined, column=Undefined, description=Undefined,
-                 detail=Undefined, facet=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 href=Undefined, key=Undefined, latitude=Undefined, latitude2=Undefined,
-                 longitude=Undefined, longitude2=Undefined, opacity=Undefined, order=Undefined,
-                 radius=Undefined, radius2=Undefined, row=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeDash=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 text=Undefined, theta=Undefined, theta2=Undefined, tooltip=Undefined, url=Undefined,
-                 x=Undefined, x2=Undefined, xError=Undefined, xError2=Undefined, xOffset=Undefined,
-                 y=Undefined, y2=Undefined, yError=Undefined, yError2=Undefined, yOffset=Undefined,
-                 **kwds):
-        super(FacetedEncoding, self).__init__(angle=angle, color=color, column=column,
-                                              description=description, detail=detail, facet=facet,
-                                              fill=fill, fillOpacity=fillOpacity, href=href, key=key,
-                                              latitude=latitude, latitude2=latitude2,
-                                              longitude=longitude, longitude2=longitude2,
-                                              opacity=opacity, order=order, radius=radius,
-                                              radius2=radius2, row=row, shape=shape, size=size,
-                                              stroke=stroke, strokeDash=strokeDash,
-                                              strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                              text=text, theta=theta, theta2=theta2, tooltip=tooltip,
-                                              url=url, x=x, x2=x2, xError=xError, xError2=xError2,
-                                              xOffset=xOffset, y=y, y2=y2, yError=yError,
-                                              yError2=yError2, yOffset=yOffset, **kwds)
+    _schema = {"$ref": "#/definitions/FacetedEncoding"}
+
+    def __init__(
+        self,
+        angle: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        color: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        column: Union[dict, UndefinedType] = Undefined,
+        description: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        detail: Union[
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
+        ] = Undefined,
+        facet: Union[dict, UndefinedType] = Undefined,
+        fill: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        href: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        key: Union[dict, UndefinedType] = Undefined,
+        latitude: Union[
+            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+        ] = Undefined,
+        latitude2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        longitude: Union[
+            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+        ] = Undefined,
+        longitude2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[
+            Union[
+                "OrderFieldDef", List["OrderFieldDef"], "OrderValueDef", "OrderOnlyDef"
+            ],
+            UndefinedType,
+        ] = Undefined,
+        radius: Union[
+            Union["PositionFieldDefBase", "PositionDatumDefBase", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        radius2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        row: Union[dict, UndefinedType] = Undefined,
+        shape: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
+                "FieldOrDatumDefWithConditionDatumDefstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        size: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        stroke: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
+                "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeDash: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
+                "FieldOrDatumDefWithConditionDatumDefnumberArray",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
+                "FieldOrDatumDefWithConditionDatumDefnumber",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        text: Union[
+            Union[
+                "FieldOrDatumDefWithConditionStringFieldDefText",
+                "FieldOrDatumDefWithConditionStringDatumDefText",
+                "ValueDefWithConditionStringFieldDefText",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        theta: Union[
+            Union["PositionFieldDefBase", "PositionDatumDefBase", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        theta2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        tooltip: Union[
+            Union[
+                "StringFieldDefWithCondition",
+                "StringValueDefWithCondition",
+                List["StringFieldDef"],
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        url: Union[
+            Union["StringFieldDefWithCondition", "StringValueDefWithCondition"],
+            UndefinedType,
+        ] = Undefined,
+        x: Union[
+            Union["PositionFieldDef", "PositionDatumDef", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        x2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        xError: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        xError2: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        xOffset: Union[
+            Union["ScaleFieldDef", "ScaleDatumDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union["PositionFieldDef", "PositionDatumDef", "PositionValueDef"],
+            UndefinedType,
+        ] = Undefined,
+        y2: Union[
+            Union["SecondaryFieldDef", "DatumDef", "PositionValueDef"], UndefinedType
+        ] = Undefined,
+        yError: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        yError2: Union[
+            Union["SecondaryFieldDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        yOffset: Union[
+            Union["ScaleFieldDef", "ScaleDatumDef", "ValueDefnumber"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FacetedEncoding, self).__init__(
+            angle=angle,
+            color=color,
+            column=column,
+            description=description,
+            detail=detail,
+            facet=facet,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            href=href,
+            key=key,
+            latitude=latitude,
+            latitude2=latitude2,
+            longitude=longitude,
+            longitude2=longitude2,
+            opacity=opacity,
+            order=order,
+            radius=radius,
+            radius2=radius2,
+            row=row,
+            shape=shape,
+            size=size,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            tooltip=tooltip,
+            url=url,
+            x=x,
+            x2=x2,
+            xError=xError,
+            xError2=xError2,
+            xOffset=xOffset,
+            y=y,
+            y2=y2,
+            yError=yError,
+            yError2=yError2,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class Feature(VegaLiteSchema):
@@ -5689,12 +7702,37 @@ class Feature(VegaLiteSchema):
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
-    _schema = {'$ref': '#/definitions/Feature'}
 
-    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
-                 id=Undefined, **kwds):
-        super(Feature, self).__init__(geometry=geometry, properties=properties, type=type, bbox=bbox,
-                                      id=id, **kwds)
+    _schema = {"$ref": "#/definitions/Feature"}
+
+    def __init__(
+        self,
+        geometry: Union[
+            Union[
+                "Point",
+                "MultiPoint",
+                "LineString",
+                "MultiLineString",
+                "Polygon",
+                "MultiPolygon",
+                "GeometryCollection",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Feature, self).__init__(
+            geometry=geometry,
+            properties=properties,
+            type=type,
+            bbox=bbox,
+            id=id,
+            **kwds
+        )
 
 
 class FeatureCollection(VegaLiteSchema):
@@ -5714,10 +7752,19 @@ class FeatureCollection(VegaLiteSchema):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/FeatureCollection'}
 
-    def __init__(self, features=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(FeatureCollection, self).__init__(features=features, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/FeatureCollection"}
+
+    def __init__(
+        self,
+        features: Union[List[dict], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(FeatureCollection, self).__init__(
+            features=features, type=type, bbox=bbox, **kwds
+        )
 
 
 class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
@@ -5743,12 +7790,37 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
-    _schema = {'$ref': '#/definitions/Feature<Geometry,GeoJsonProperties>'}
 
-    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
-                 id=Undefined, **kwds):
-        super(FeatureGeometryGeoJsonProperties, self).__init__(geometry=geometry, properties=properties,
-                                                               type=type, bbox=bbox, id=id, **kwds)
+    _schema = {"$ref": "#/definitions/Feature<Geometry,GeoJsonProperties>"}
+
+    def __init__(
+        self,
+        geometry: Union[
+            Union[
+                "Point",
+                "MultiPoint",
+                "LineString",
+                "MultiLineString",
+                "Polygon",
+                "MultiPolygon",
+                "GeometryCollection",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(FeatureGeometryGeoJsonProperties, self).__init__(
+            geometry=geometry,
+            properties=properties,
+            type=type,
+            bbox=bbox,
+            id=id,
+            **kwds
+        )
 
 
 class Field(VegaLiteSchema):
@@ -5756,7 +7828,8 @@ class Field(VegaLiteSchema):
 
     Union[:class:`FieldName`, :class:`RepeatRef`]
     """
-    _schema = {'$ref': '#/definitions/Field'}
+
+    _schema = {"$ref": "#/definitions/Field"}
 
     def __init__(self, *args, **kwds):
         super(Field, self).__init__(*args, **kwds)
@@ -5918,13 +7991,36 @@ class FieldDefWithoutScale(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldDefWithoutScale'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(FieldDefWithoutScale, self).__init__(aggregate=aggregate, bandPosition=bandPosition,
-                                                   bin=bin, field=field, timeUnit=timeUnit, title=title,
-                                                   type=type, **kwds)
+    _schema = {"$ref": "#/definitions/FieldDefWithoutScale"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldDefWithoutScale, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class FieldName(Field):
@@ -5932,7 +8028,8 @@ class FieldName(Field):
 
     str
     """
-    _schema = {'$ref': '#/definitions/FieldName'}
+
+    _schema = {"$ref": "#/definitions/FieldName"}
 
     def __init__(self, *args):
         super(FieldName, self).__init__(*args)
@@ -6134,21 +8231,50 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<StringFieldDef,string>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionStringFieldDefstring, self).__init__(aggregate=aggregate,
-                                                                               bandPosition=bandPosition,
-                                                                               bin=bin,
-                                                                               condition=condition,
-                                                                               field=field,
-                                                                               format=format,
-                                                                               formatType=formatType,
-                                                                               timeUnit=timeUnit,
-                                                                               title=title, type=type,
-                                                                               **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<StringFieldDef,string>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefstringExprRef",
+                List["ConditionalValueDefstringExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionStringFieldDefstring, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class FieldRange(VegaLiteSchema):
@@ -6162,9 +8288,10 @@ class FieldRange(VegaLiteSchema):
     field : str
 
     """
-    _schema = {'$ref': '#/definitions/FieldRange'}
 
-    def __init__(self, field=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/FieldRange"}
+
+    def __init__(self, field: Union[str, UndefinedType] = Undefined, **kwds):
         super(FieldRange, self).__init__(field=field, **kwds)
 
 
@@ -6174,7 +8301,8 @@ class Fit(VegaLiteSchema):
     Union[:class:`GeoJsonFeature`, :class:`GeoJsonFeatureCollection`,
     List[:class:`GeoJsonFeature`]]
     """
-    _schema = {'$ref': '#/definitions/Fit'}
+
+    _schema = {"$ref": "#/definitions/Fit"}
 
     def __init__(self, *args, **kwds):
         super(Fit, self).__init__(*args, **kwds)
@@ -6185,7 +8313,8 @@ class FontStyle(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/FontStyle'}
+
+    _schema = {"$ref": "#/definitions/FontStyle"}
 
     def __init__(self, *args):
         super(FontStyle, self).__init__(*args)
@@ -6196,7 +8325,8 @@ class FontWeight(VegaLiteSchema):
 
     Literal['normal', 'bold', 'lighter', 'bolder', 100, 200, 300, 400, 500, 600, 700, 800, 900]
     """
-    _schema = {'$ref': '#/definitions/FontWeight'}
+
+    _schema = {"$ref": "#/definitions/FontWeight"}
 
     def __init__(self, *args):
         super(FontWeight, self).__init__(*args)
@@ -6264,15 +8394,28 @@ class FormatConfig(VegaLiteSchema):
         also set ``customFormatTypes`` to ``true`` and there must *not* be a ``timeUnit``
         defined to use this feature.
     """
-    _schema = {'$ref': '#/definitions/FormatConfig'}
 
-    def __init__(self, normalizedNumberFormat=Undefined, normalizedNumberFormatType=Undefined,
-                 numberFormat=Undefined, numberFormatType=Undefined, timeFormat=Undefined,
-                 timeFormatType=Undefined, **kwds):
-        super(FormatConfig, self).__init__(normalizedNumberFormat=normalizedNumberFormat,
-                                           normalizedNumberFormatType=normalizedNumberFormatType,
-                                           numberFormat=numberFormat, numberFormatType=numberFormatType,
-                                           timeFormat=timeFormat, timeFormatType=timeFormatType, **kwds)
+    _schema = {"$ref": "#/definitions/FormatConfig"}
+
+    def __init__(
+        self,
+        normalizedNumberFormat: Union[str, UndefinedType] = Undefined,
+        normalizedNumberFormatType: Union[str, UndefinedType] = Undefined,
+        numberFormat: Union[str, UndefinedType] = Undefined,
+        numberFormatType: Union[str, UndefinedType] = Undefined,
+        timeFormat: Union[str, UndefinedType] = Undefined,
+        timeFormatType: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(FormatConfig, self).__init__(
+            normalizedNumberFormat=normalizedNumberFormat,
+            normalizedNumberFormatType=normalizedNumberFormatType,
+            numberFormat=numberFormat,
+            numberFormatType=numberFormatType,
+            timeFormat=timeFormat,
+            timeFormatType=timeFormatType,
+            **kwds
+        )
 
 
 class Generator(Data):
@@ -6280,7 +8423,8 @@ class Generator(Data):
 
     Union[:class:`SequenceGenerator`, :class:`SphereGenerator`, :class:`GraticuleGenerator`]
     """
-    _schema = {'$ref': '#/definitions/Generator'}
+
+    _schema = {"$ref": "#/definitions/Generator"}
 
     def __init__(self, *args, **kwds):
         super(Generator, self).__init__(*args, **kwds)
@@ -6321,16 +8465,61 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/GenericUnitSpec<Encoding,AnyMark>'}
 
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 name=Undefined, params=Undefined, projection=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(GenericUnitSpecEncodingAnyMark, self).__init__(mark=mark, data=data,
-                                                             description=description, encoding=encoding,
-                                                             name=name, params=params,
-                                                             projection=projection, title=title,
-                                                             transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/GenericUnitSpec<Encoding,AnyMark>"}
+
+    def __init__(
+        self,
+        mark: Union[
+            Union["CompositeMark", "CompositeMarkDef", "Mark", "MarkDef"], UndefinedType
+        ] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        params: Union[List[dict], UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(GenericUnitSpecEncodingAnyMark, self).__init__(
+            mark=mark,
+            data=data,
+            description=description,
+            encoding=encoding,
+            name=name,
+            params=params,
+            projection=projection,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class GeoJsonFeature(Fit):
@@ -6356,12 +8545,37 @@ class GeoJsonFeature(Fit):
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
-    _schema = {'$ref': '#/definitions/GeoJsonFeature'}
 
-    def __init__(self, geometry=Undefined, properties=Undefined, type=Undefined, bbox=Undefined,
-                 id=Undefined, **kwds):
-        super(GeoJsonFeature, self).__init__(geometry=geometry, properties=properties, type=type,
-                                             bbox=bbox, id=id, **kwds)
+    _schema = {"$ref": "#/definitions/GeoJsonFeature"}
+
+    def __init__(
+        self,
+        geometry: Union[
+            Union[
+                "Point",
+                "MultiPoint",
+                "LineString",
+                "MultiLineString",
+                "Polygon",
+                "MultiPolygon",
+                "GeometryCollection",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(GeoJsonFeature, self).__init__(
+            geometry=geometry,
+            properties=properties,
+            type=type,
+            bbox=bbox,
+            id=id,
+            **kwds
+        )
 
 
 class GeoJsonFeatureCollection(Fit):
@@ -6381,10 +8595,19 @@ class GeoJsonFeatureCollection(Fit):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/GeoJsonFeatureCollection'}
 
-    def __init__(self, features=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(GeoJsonFeatureCollection, self).__init__(features=features, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/GeoJsonFeatureCollection"}
+
+    def __init__(
+        self,
+        features: Union[List[dict], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(GeoJsonFeatureCollection, self).__init__(
+            features=features, type=type, bbox=bbox, **kwds
+        )
 
 
 class GeoJsonProperties(VegaLiteSchema):
@@ -6392,7 +8615,8 @@ class GeoJsonProperties(VegaLiteSchema):
 
     Union[Dict[required=[]], None]
     """
-    _schema = {'$ref': '#/definitions/GeoJsonProperties'}
+
+    _schema = {"$ref": "#/definitions/GeoJsonProperties"}
 
     def __init__(self, *args, **kwds):
         super(GeoJsonProperties, self).__init__(*args, **kwds)
@@ -6405,7 +8629,8 @@ class Geometry(VegaLiteSchema):
     :class:`Polygon`, :class:`MultiPolygon`, :class:`GeometryCollection`]
     Union of geometry objects. https://tools.ietf.org/html/rfc7946#section-3
     """
-    _schema = {'$ref': '#/definitions/Geometry'}
+
+    _schema = {"$ref": "#/definitions/Geometry"}
 
     def __init__(self, *args, **kwds):
         super(Geometry, self).__init__(*args, **kwds)
@@ -6428,10 +8653,32 @@ class GeometryCollection(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/GeometryCollection'}
 
-    def __init__(self, geometries=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(GeometryCollection, self).__init__(geometries=geometries, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/GeometryCollection"}
+
+    def __init__(
+        self,
+        geometries: Union[
+            List[
+                Union[
+                    "Point",
+                    "MultiPoint",
+                    "LineString",
+                    "MultiLineString",
+                    "Polygon",
+                    "MultiPolygon",
+                    "GeometryCollection",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(GeometryCollection, self).__init__(
+            geometries=geometries, type=type, bbox=bbox, **kwds
+        )
 
 
 class Gradient(VegaLiteSchema):
@@ -6439,7 +8686,8 @@ class Gradient(VegaLiteSchema):
 
     Union[:class:`LinearGradient`, :class:`RadialGradient`]
     """
-    _schema = {'$ref': '#/definitions/Gradient'}
+
+    _schema = {"$ref": "#/definitions/Gradient"}
 
     def __init__(self, *args, **kwds):
         super(Gradient, self).__init__(*args, **kwds)
@@ -6458,9 +8706,15 @@ class GradientStop(VegaLiteSchema):
     offset : float
         The offset fraction for the color stop, indicating its position within the gradient.
     """
-    _schema = {'$ref': '#/definitions/GradientStop'}
 
-    def __init__(self, color=Undefined, offset=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/GradientStop"}
+
+    def __init__(
+        self,
+        color: Union[Union["ColorName", "HexColor", str], UndefinedType] = Undefined,
+        offset: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(GradientStop, self).__init__(color=color, offset=offset, **kwds)
 
 
@@ -6477,9 +8731,15 @@ class GraticuleGenerator(Generator):
     name : str
         Provide a placeholder name and bind data at runtime.
     """
-    _schema = {'$ref': '#/definitions/GraticuleGenerator'}
 
-    def __init__(self, graticule=Undefined, name=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/GraticuleGenerator"}
+
+    def __init__(
+        self,
+        graticule: Union[Union[bool, "GraticuleParams"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(GraticuleGenerator, self).__init__(graticule=graticule, name=name, **kwds)
 
 
@@ -6512,13 +8772,30 @@ class GraticuleParams(VegaLiteSchema):
 
         **Default value:** ``[10, 10]``
     """
-    _schema = {'$ref': '#/definitions/GraticuleParams'}
 
-    def __init__(self, extent=Undefined, extentMajor=Undefined, extentMinor=Undefined,
-                 precision=Undefined, step=Undefined, stepMajor=Undefined, stepMinor=Undefined, **kwds):
-        super(GraticuleParams, self).__init__(extent=extent, extentMajor=extentMajor,
-                                              extentMinor=extentMinor, precision=precision, step=step,
-                                              stepMajor=stepMajor, stepMinor=stepMinor, **kwds)
+    _schema = {"$ref": "#/definitions/GraticuleParams"}
+
+    def __init__(
+        self,
+        extent: Union[List[List[float]], UndefinedType] = Undefined,
+        extentMajor: Union[List[List[float]], UndefinedType] = Undefined,
+        extentMinor: Union[List[List[float]], UndefinedType] = Undefined,
+        precision: Union[float, UndefinedType] = Undefined,
+        step: Union[List[float], UndefinedType] = Undefined,
+        stepMajor: Union[List[float], UndefinedType] = Undefined,
+        stepMinor: Union[List[float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(GraticuleParams, self).__init__(
+            extent=extent,
+            extentMajor=extentMajor,
+            extentMinor=extentMinor,
+            precision=precision,
+            step=step,
+            stepMajor=stepMajor,
+            stepMinor=stepMinor,
+            **kwds
+        )
 
 
 class Header(VegaLiteSchema):
@@ -6684,34 +8961,98 @@ class Header(VegaLiteSchema):
 
         **Default value:** ``10``
     """
-    _schema = {'$ref': '#/definitions/Header'}
 
-    def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
-                 labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined,
-                 labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined,
-                 labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined,
-                 labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined,
-                 titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined,
-                 titlePadding=Undefined, **kwds):
-        super(Header, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
-                                     labelAnchor=labelAnchor, labelAngle=labelAngle,
-                                     labelBaseline=labelBaseline, labelColor=labelColor,
-                                     labelExpr=labelExpr, labelFont=labelFont,
-                                     labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
-                                     labelFontWeight=labelFontWeight, labelLimit=labelLimit,
-                                     labelLineHeight=labelLineHeight, labelOrient=labelOrient,
-                                     labelPadding=labelPadding, labels=labels, orient=orient,
-                                     title=title, titleAlign=titleAlign, titleAnchor=titleAnchor,
-                                     titleAngle=titleAngle, titleBaseline=titleBaseline,
-                                     titleColor=titleColor, titleFont=titleFont,
-                                     titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
-                                     titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                     titleLineHeight=titleLineHeight, titleOrient=titleOrient,
-                                     titlePadding=titlePadding, **kwds)
+    _schema = {"$ref": "#/definitions/Header"}
+
+    def __init__(
+        self,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[float, UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        orient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[float, UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Header, self).__init__(
+            format=format,
+            formatType=formatType,
+            labelAlign=labelAlign,
+            labelAnchor=labelAnchor,
+            labelAngle=labelAngle,
+            labelBaseline=labelBaseline,
+            labelColor=labelColor,
+            labelExpr=labelExpr,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelLineHeight=labelLineHeight,
+            labelOrient=labelOrient,
+            labelPadding=labelPadding,
+            labels=labels,
+            orient=orient,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleAngle=titleAngle,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOrient=titleOrient,
+            titlePadding=titlePadding,
+            **kwds
+        )
 
 
 class HeaderConfig(VegaLiteSchema):
@@ -6858,34 +9199,98 @@ class HeaderConfig(VegaLiteSchema):
 
         **Default value:** ``10``
     """
-    _schema = {'$ref': '#/definitions/HeaderConfig'}
 
-    def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
-                 labelAnchor=Undefined, labelAngle=Undefined, labelBaseline=Undefined,
-                 labelColor=Undefined, labelExpr=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined,
-                 labelLimit=Undefined, labelLineHeight=Undefined, labelOrient=Undefined,
-                 labelPadding=Undefined, labels=Undefined, orient=Undefined, title=Undefined,
-                 titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined,
-                 titlePadding=Undefined, **kwds):
-        super(HeaderConfig, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
-                                           labelAnchor=labelAnchor, labelAngle=labelAngle,
-                                           labelBaseline=labelBaseline, labelColor=labelColor,
-                                           labelExpr=labelExpr, labelFont=labelFont,
-                                           labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
-                                           labelFontWeight=labelFontWeight, labelLimit=labelLimit,
-                                           labelLineHeight=labelLineHeight, labelOrient=labelOrient,
-                                           labelPadding=labelPadding, labels=labels, orient=orient,
-                                           title=title, titleAlign=titleAlign, titleAnchor=titleAnchor,
-                                           titleAngle=titleAngle, titleBaseline=titleBaseline,
-                                           titleColor=titleColor, titleFont=titleFont,
-                                           titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
-                                           titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                           titleLineHeight=titleLineHeight, titleOrient=titleOrient,
-                                           titlePadding=titlePadding, **kwds)
+    _schema = {"$ref": "#/definitions/HeaderConfig"}
+
+    def __init__(
+        self,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[float, UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        orient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        title: Union[None, UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[float, UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(HeaderConfig, self).__init__(
+            format=format,
+            formatType=formatType,
+            labelAlign=labelAlign,
+            labelAnchor=labelAnchor,
+            labelAngle=labelAngle,
+            labelBaseline=labelBaseline,
+            labelColor=labelColor,
+            labelExpr=labelExpr,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelLineHeight=labelLineHeight,
+            labelOrient=labelOrient,
+            labelPadding=labelPadding,
+            labels=labels,
+            orient=orient,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleAngle=titleAngle,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOrient=titleOrient,
+            titlePadding=titlePadding,
+            **kwds
+        )
 
 
 class HexColor(Color):
@@ -6893,7 +9298,8 @@ class HexColor(Color):
 
     str
     """
-    _schema = {'$ref': '#/definitions/HexColor'}
+
+    _schema = {"$ref": "#/definitions/HexColor"}
 
     def __init__(self, *args):
         super(HexColor, self).__init__(*args)
@@ -6904,7 +9310,8 @@ class ImputeMethod(VegaLiteSchema):
 
     Literal['value', 'median', 'max', 'min', 'mean']
     """
-    _schema = {'$ref': '#/definitions/ImputeMethod'}
+
+    _schema = {"$ref": "#/definitions/ImputeMethod"}
 
     def __init__(self, *args):
         super(ImputeMethod, self).__init__(*args)
@@ -6947,11 +9354,22 @@ class ImputeParams(VegaLiteSchema):
     value : Any
         The field value to use when the imputation ``method`` is ``"value"``.
     """
-    _schema = {'$ref': '#/definitions/ImputeParams'}
 
-    def __init__(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds):
-        super(ImputeParams, self).__init__(frame=frame, keyvals=keyvals, method=method, value=value,
-                                           **kwds)
+    _schema = {"$ref": "#/definitions/ImputeParams"}
+
+    def __init__(
+        self,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        keyvals: Union[Union[List[Any], "ImputeSequence"], UndefinedType] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ImputeParams, self).__init__(
+            frame=frame, keyvals=keyvals, method=method, value=value, **kwds
+        )
 
 
 class ImputeSequence(VegaLiteSchema):
@@ -6970,9 +9388,16 @@ class ImputeSequence(VegaLiteSchema):
         The step value between sequence entries. **Default value:** ``1`` or ``-1`` if
         ``stop < start``
     """
-    _schema = {'$ref': '#/definitions/ImputeSequence'}
 
-    def __init__(self, stop=Undefined, start=Undefined, step=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ImputeSequence"}
+
+    def __init__(
+        self,
+        stop: Union[float, UndefinedType] = Undefined,
+        start: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ImputeSequence, self).__init__(stop=stop, start=start, step=step, **kwds)
 
 
@@ -6993,10 +9418,25 @@ class InlineData(DataSource):
     name : str
         Provide a placeholder name and bind data at runtime.
     """
-    _schema = {'$ref': '#/definitions/InlineData'}
 
-    def __init__(self, values=Undefined, format=Undefined, name=Undefined, **kwds):
-        super(InlineData, self).__init__(values=values, format=format, name=name, **kwds)
+    _schema = {"$ref": "#/definitions/InlineData"}
+
+    def __init__(
+        self,
+        values: Union[
+            Union[List[float], List[str], List[bool], List[dict], str, dict],
+            UndefinedType,
+        ] = Undefined,
+        format: Union[
+            Union["CsvDataFormat", "DsvDataFormat", "JsonDataFormat", "TopoDataFormat"],
+            UndefinedType,
+        ] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(InlineData, self).__init__(
+            values=values, format=format, name=name, **kwds
+        )
 
 
 class InlineDataset(VegaLiteSchema):
@@ -7004,7 +9444,8 @@ class InlineDataset(VegaLiteSchema):
 
     Union[List[float], List[str], List[bool], List[Dict[required=[]]], str, Dict[required=[]]]
     """
-    _schema = {'$ref': '#/definitions/InlineDataset'}
+
+    _schema = {"$ref": "#/definitions/InlineDataset"}
 
     def __init__(self, *args, **kwds):
         super(InlineDataset, self).__init__(*args, **kwds)
@@ -7017,7 +9458,8 @@ class Interpolate(VegaLiteSchema):
     'cardinal-closed', 'catmull-rom', 'linear', 'linear-closed', 'monotone', 'natural', 'step',
     'step-before', 'step-after']
     """
-    _schema = {'$ref': '#/definitions/Interpolate'}
+
+    _schema = {"$ref": "#/definitions/Interpolate"}
 
     def __init__(self, *args):
         super(Interpolate, self).__init__(*args)
@@ -7118,13 +9560,70 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `zoom examples
         <https://vega.github.io/vega-lite/docs/selection.html#zoom>`__ in the documentation.
     """
-    _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
 
-    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, mark=Undefined,
-                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
-        super(IntervalSelectionConfig, self).__init__(type=type, clear=clear, encodings=encodings,
-                                                      mark=mark, on=on, resolve=resolve,
-                                                      translate=translate, zoom=zoom, **kwds)
+    _schema = {"$ref": "#/definitions/IntervalSelectionConfig"}
+
+    def __init__(
+        self,
+        type: Union[str, UndefinedType] = Undefined,
+        clear: Union[Union["Stream", str, bool], UndefinedType] = Undefined,
+        encodings: Union[
+            List[
+                Literal[
+                    "x",
+                    "y",
+                    "xOffset",
+                    "yOffset",
+                    "x2",
+                    "y2",
+                    "longitude",
+                    "latitude",
+                    "longitude2",
+                    "latitude2",
+                    "theta",
+                    "theta2",
+                    "radius",
+                    "radius2",
+                    "color",
+                    "fill",
+                    "stroke",
+                    "opacity",
+                    "fillOpacity",
+                    "strokeOpacity",
+                    "strokeWidth",
+                    "strokeDash",
+                    "size",
+                    "angle",
+                    "shape",
+                    "key",
+                    "text",
+                    "href",
+                    "url",
+                    "description",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        mark: Union[dict, UndefinedType] = Undefined,
+        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        resolve: Union[
+            Literal["global", "union", "intersect"], UndefinedType
+        ] = Undefined,
+        translate: Union[Union[str, bool], UndefinedType] = Undefined,
+        zoom: Union[Union[str, bool], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(IntervalSelectionConfig, self).__init__(
+            type=type,
+            clear=clear,
+            encodings=encodings,
+            mark=mark,
+            on=on,
+            resolve=resolve,
+            translate=translate,
+            zoom=zoom,
+            **kwds
+        )
 
 
 class IntervalSelectionConfigWithoutType(VegaLiteSchema):
@@ -7214,13 +9713,68 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `zoom examples
         <https://vega.github.io/vega-lite/docs/selection.html#zoom>`__ in the documentation.
     """
-    _schema = {'$ref': '#/definitions/IntervalSelectionConfigWithoutType'}
 
-    def __init__(self, clear=Undefined, encodings=Undefined, mark=Undefined, on=Undefined,
-                 resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
-        super(IntervalSelectionConfigWithoutType, self).__init__(clear=clear, encodings=encodings,
-                                                                 mark=mark, on=on, resolve=resolve,
-                                                                 translate=translate, zoom=zoom, **kwds)
+    _schema = {"$ref": "#/definitions/IntervalSelectionConfigWithoutType"}
+
+    def __init__(
+        self,
+        clear: Union[Union["Stream", str, bool], UndefinedType] = Undefined,
+        encodings: Union[
+            List[
+                Literal[
+                    "x",
+                    "y",
+                    "xOffset",
+                    "yOffset",
+                    "x2",
+                    "y2",
+                    "longitude",
+                    "latitude",
+                    "longitude2",
+                    "latitude2",
+                    "theta",
+                    "theta2",
+                    "radius",
+                    "radius2",
+                    "color",
+                    "fill",
+                    "stroke",
+                    "opacity",
+                    "fillOpacity",
+                    "strokeOpacity",
+                    "strokeWidth",
+                    "strokeDash",
+                    "size",
+                    "angle",
+                    "shape",
+                    "key",
+                    "text",
+                    "href",
+                    "url",
+                    "description",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        mark: Union[dict, UndefinedType] = Undefined,
+        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        resolve: Union[
+            Literal["global", "union", "intersect"], UndefinedType
+        ] = Undefined,
+        translate: Union[Union[str, bool], UndefinedType] = Undefined,
+        zoom: Union[Union[str, bool], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(IntervalSelectionConfigWithoutType, self).__init__(
+            clear=clear,
+            encodings=encodings,
+            mark=mark,
+            on=on,
+            resolve=resolve,
+            translate=translate,
+            zoom=zoom,
+            **kwds
+        )
 
 
 class JoinAggregateFieldDef(VegaLiteSchema):
@@ -7241,9 +9795,42 @@ class JoinAggregateFieldDef(VegaLiteSchema):
     as : :class:`FieldName`
         The output name for the join aggregate operation.
     """
-    _schema = {'$ref': '#/definitions/JoinAggregateFieldDef'}
 
-    def __init__(self, op=Undefined, field=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/JoinAggregateFieldDef"}
+
+    def __init__(
+        self,
+        op: Union[
+            Literal[
+                "argmax",
+                "argmin",
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(JoinAggregateFieldDef, self).__init__(op=op, field=field, **kwds)
 
 
@@ -7282,10 +9869,19 @@ class JsonDataFormat(DataFormat):
         **Default value:**  The default format type is determined by the extension of the
         file URL. If no extension is detected, ``"json"`` will be used by default.
     """
-    _schema = {'$ref': '#/definitions/JsonDataFormat'}
 
-    def __init__(self, parse=Undefined, property=Undefined, type=Undefined, **kwds):
-        super(JsonDataFormat, self).__init__(parse=parse, property=property, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/JsonDataFormat"}
+
+    def __init__(
+        self,
+        parse: Union[Union["Parse", None], UndefinedType] = Undefined,
+        property: Union[str, UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(JsonDataFormat, self).__init__(
+            parse=parse, property=property, type=type, **kwds
+        )
 
 
 class LabelOverlap(VegaLiteSchema):
@@ -7293,7 +9889,8 @@ class LabelOverlap(VegaLiteSchema):
 
     Union[bool, str, str]
     """
-    _schema = {'$ref': '#/definitions/LabelOverlap'}
+
+    _schema = {"$ref": "#/definitions/LabelOverlap"}
 
     def __init__(self, *args, **kwds):
         super(LabelOverlap, self).__init__(*args, **kwds)
@@ -7304,7 +9901,8 @@ class LatLongDef(VegaLiteSchema):
 
     Union[:class:`LatLongFieldDef`, :class:`DatumDef`]
     """
-    _schema = {'$ref': '#/definitions/LatLongDef'}
+
+    _schema = {"$ref": "#/definitions/LatLongDef"}
 
     def __init__(self, *args, **kwds):
         super(LatLongDef, self).__init__(*args, **kwds)
@@ -7465,13 +10063,34 @@ class LatLongFieldDef(LatLongDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/LatLongFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(LatLongFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                              field=field, timeUnit=timeUnit, title=title, type=type,
-                                              **kwds)
+    _schema = {"$ref": "#/definitions/LatLongFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[None, UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LatLongFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class LayerRepeatMapping(VegaLiteSchema):
@@ -7489,10 +10108,19 @@ class LayerRepeatMapping(VegaLiteSchema):
     row : List[str]
         An array of fields to be repeated vertically.
     """
-    _schema = {'$ref': '#/definitions/LayerRepeatMapping'}
 
-    def __init__(self, layer=Undefined, column=Undefined, row=Undefined, **kwds):
-        super(LayerRepeatMapping, self).__init__(layer=layer, column=column, row=row, **kwds)
+    _schema = {"$ref": "#/definitions/LayerRepeatMapping"}
+
+    def __init__(
+        self,
+        layer: Union[List[str], UndefinedType] = Undefined,
+        column: Union[List[str], UndefinedType] = Undefined,
+        row: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LayerRepeatMapping, self).__init__(
+            layer=layer, column=column, row=row, **kwds
+        )
 
 
 class LayoutAlign(VegaLiteSchema):
@@ -7500,7 +10128,8 @@ class LayoutAlign(VegaLiteSchema):
 
     Literal['all', 'each', 'none']
     """
-    _schema = {'$ref': '#/definitions/LayoutAlign'}
+
+    _schema = {"$ref": "#/definitions/LayoutAlign"}
 
     def __init__(self, *args):
         super(LayoutAlign, self).__init__(*args)
@@ -7804,60 +10433,188 @@ class Legend(VegaLiteSchema):
         A non-negative integer indicating the z-index of the legend. If zindex is 0, legend
         should be drawn behind all chart elements. To put them in front, use zindex = 1.
     """
-    _schema = {'$ref': '#/definitions/Legend'}
 
-    def __init__(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
-                 cornerRadius=Undefined, description=Undefined, direction=Undefined,
-                 fillColor=Undefined, format=Undefined, formatType=Undefined, gradientLength=Undefined,
-                 gradientOpacity=Undefined, gradientStrokeColor=Undefined,
-                 gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined,
-                 labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined,
-                 labelExpr=Undefined, labelFont=Undefined, labelFontSize=Undefined,
-                 labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
-                 labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, legendX=Undefined,
-                 legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined,
-                 rowPadding=Undefined, strokeColor=Undefined, symbolDash=Undefined,
-                 symbolDashOffset=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined,
-                 symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined,
-                 symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined,
-                 tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined,
-                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined,
-                 titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined,
-                 values=Undefined, zindex=Undefined, **kwds):
-        super(Legend, self).__init__(aria=aria, clipHeight=clipHeight, columnPadding=columnPadding,
-                                     columns=columns, cornerRadius=cornerRadius,
-                                     description=description, direction=direction, fillColor=fillColor,
-                                     format=format, formatType=formatType,
-                                     gradientLength=gradientLength, gradientOpacity=gradientOpacity,
-                                     gradientStrokeColor=gradientStrokeColor,
-                                     gradientStrokeWidth=gradientStrokeWidth,
-                                     gradientThickness=gradientThickness, gridAlign=gridAlign,
-                                     labelAlign=labelAlign, labelBaseline=labelBaseline,
-                                     labelColor=labelColor, labelExpr=labelExpr, labelFont=labelFont,
-                                     labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
-                                     labelFontWeight=labelFontWeight, labelLimit=labelLimit,
-                                     labelOffset=labelOffset, labelOpacity=labelOpacity,
-                                     labelOverlap=labelOverlap, labelPadding=labelPadding,
-                                     labelSeparation=labelSeparation, legendX=legendX, legendY=legendY,
-                                     offset=offset, orient=orient, padding=padding,
-                                     rowPadding=rowPadding, strokeColor=strokeColor,
-                                     symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
-                                     symbolFillColor=symbolFillColor, symbolLimit=symbolLimit,
-                                     symbolOffset=symbolOffset, symbolOpacity=symbolOpacity,
-                                     symbolSize=symbolSize, symbolStrokeColor=symbolStrokeColor,
-                                     symbolStrokeWidth=symbolStrokeWidth, symbolType=symbolType,
-                                     tickCount=tickCount, tickMinStep=tickMinStep, title=title,
-                                     titleAlign=titleAlign, titleAnchor=titleAnchor,
-                                     titleBaseline=titleBaseline, titleColor=titleColor,
-                                     titleFont=titleFont, titleFontSize=titleFontSize,
-                                     titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
-                                     titleLimit=titleLimit, titleLineHeight=titleLineHeight,
-                                     titleOpacity=titleOpacity, titleOrient=titleOrient,
-                                     titlePadding=titlePadding, type=type, values=values, zindex=zindex,
-                                     **kwds)
+    _schema = {"$ref": "#/definitions/Legend"}
+
+    def __init__(
+        self,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        columns: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientThickness: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gridAlign: Union[Union["LayoutAlign", "ExprRef"], UndefinedType] = Undefined,
+        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union["LabelOverlap", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        legendX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        legendY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolType: Union[Union["SymbolShape", "ExprRef"], UndefinedType] = Undefined,
+        tickCount: Union[Union["TickCount", "ExprRef"], UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOrient: Union[Union["Orient", "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Legend, self).__init__(
+            aria=aria,
+            clipHeight=clipHeight,
+            columnPadding=columnPadding,
+            columns=columns,
+            cornerRadius=cornerRadius,
+            description=description,
+            direction=direction,
+            fillColor=fillColor,
+            format=format,
+            formatType=formatType,
+            gradientLength=gradientLength,
+            gradientOpacity=gradientOpacity,
+            gradientStrokeColor=gradientStrokeColor,
+            gradientStrokeWidth=gradientStrokeWidth,
+            gradientThickness=gradientThickness,
+            gridAlign=gridAlign,
+            labelAlign=labelAlign,
+            labelBaseline=labelBaseline,
+            labelColor=labelColor,
+            labelExpr=labelExpr,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelOffset=labelOffset,
+            labelOpacity=labelOpacity,
+            labelOverlap=labelOverlap,
+            labelPadding=labelPadding,
+            labelSeparation=labelSeparation,
+            legendX=legendX,
+            legendY=legendY,
+            offset=offset,
+            orient=orient,
+            padding=padding,
+            rowPadding=rowPadding,
+            strokeColor=strokeColor,
+            symbolDash=symbolDash,
+            symbolDashOffset=symbolDashOffset,
+            symbolFillColor=symbolFillColor,
+            symbolLimit=symbolLimit,
+            symbolOffset=symbolOffset,
+            symbolOpacity=symbolOpacity,
+            symbolSize=symbolSize,
+            symbolStrokeColor=symbolStrokeColor,
+            symbolStrokeWidth=symbolStrokeWidth,
+            symbolType=symbolType,
+            tickCount=tickCount,
+            tickMinStep=tickMinStep,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOpacity=titleOpacity,
+            titleOrient=titleOrient,
+            titlePadding=titlePadding,
+            type=type,
+            values=values,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class LegendBinding(VegaLiteSchema):
@@ -7865,7 +10622,8 @@ class LegendBinding(VegaLiteSchema):
 
     Union[str, :class:`LegendStreamBinding`]
     """
-    _schema = {'$ref': '#/definitions/LegendBinding'}
+
+    _schema = {"$ref": "#/definitions/LegendBinding"}
 
     def __init__(self, *args, **kwds):
         super(LegendBinding, self).__init__(*args, **kwds)
@@ -8151,77 +10909,211 @@ class LegendConfig(VegaLiteSchema):
         The integer z-index indicating the layering of the legend group relative to other
         axis, mark, and legend groups.
     """
-    _schema = {'$ref': '#/definitions/LegendConfig'}
 
-    def __init__(self, aria=Undefined, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
-                 cornerRadius=Undefined, description=Undefined, direction=Undefined, disable=Undefined,
-                 fillColor=Undefined, gradientDirection=Undefined,
-                 gradientHorizontalMaxLength=Undefined, gradientHorizontalMinLength=Undefined,
-                 gradientLabelLimit=Undefined, gradientLabelOffset=Undefined, gradientLength=Undefined,
-                 gradientOpacity=Undefined, gradientStrokeColor=Undefined,
-                 gradientStrokeWidth=Undefined, gradientThickness=Undefined,
-                 gradientVerticalMaxLength=Undefined, gradientVerticalMinLength=Undefined,
-                 gridAlign=Undefined, labelAlign=Undefined, labelBaseline=Undefined,
-                 labelColor=Undefined, labelFont=Undefined, labelFontSize=Undefined,
-                 labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
-                 labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, layout=Undefined, legendX=Undefined,
-                 legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined,
-                 rowPadding=Undefined, strokeColor=Undefined, strokeDash=Undefined,
-                 strokeWidth=Undefined, symbolBaseFillColor=Undefined, symbolBaseStrokeColor=Undefined,
-                 symbolDash=Undefined, symbolDashOffset=Undefined, symbolDirection=Undefined,
-                 symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined,
-                 symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined,
-                 symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined,
-                 title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined,
-                 titlePadding=Undefined, unselectedOpacity=Undefined, zindex=Undefined, **kwds):
-        super(LegendConfig, self).__init__(aria=aria, clipHeight=clipHeight,
-                                           columnPadding=columnPadding, columns=columns,
-                                           cornerRadius=cornerRadius, description=description,
-                                           direction=direction, disable=disable, fillColor=fillColor,
-                                           gradientDirection=gradientDirection,
-                                           gradientHorizontalMaxLength=gradientHorizontalMaxLength,
-                                           gradientHorizontalMinLength=gradientHorizontalMinLength,
-                                           gradientLabelLimit=gradientLabelLimit,
-                                           gradientLabelOffset=gradientLabelOffset,
-                                           gradientLength=gradientLength,
-                                           gradientOpacity=gradientOpacity,
-                                           gradientStrokeColor=gradientStrokeColor,
-                                           gradientStrokeWidth=gradientStrokeWidth,
-                                           gradientThickness=gradientThickness,
-                                           gradientVerticalMaxLength=gradientVerticalMaxLength,
-                                           gradientVerticalMinLength=gradientVerticalMinLength,
-                                           gridAlign=gridAlign, labelAlign=labelAlign,
-                                           labelBaseline=labelBaseline, labelColor=labelColor,
-                                           labelFont=labelFont, labelFontSize=labelFontSize,
-                                           labelFontStyle=labelFontStyle,
-                                           labelFontWeight=labelFontWeight, labelLimit=labelLimit,
-                                           labelOffset=labelOffset, labelOpacity=labelOpacity,
-                                           labelOverlap=labelOverlap, labelPadding=labelPadding,
-                                           labelSeparation=labelSeparation, layout=layout,
-                                           legendX=legendX, legendY=legendY, offset=offset,
-                                           orient=orient, padding=padding, rowPadding=rowPadding,
-                                           strokeColor=strokeColor, strokeDash=strokeDash,
-                                           strokeWidth=strokeWidth,
-                                           symbolBaseFillColor=symbolBaseFillColor,
-                                           symbolBaseStrokeColor=symbolBaseStrokeColor,
-                                           symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
-                                           symbolDirection=symbolDirection,
-                                           symbolFillColor=symbolFillColor, symbolLimit=symbolLimit,
-                                           symbolOffset=symbolOffset, symbolOpacity=symbolOpacity,
-                                           symbolSize=symbolSize, symbolStrokeColor=symbolStrokeColor,
-                                           symbolStrokeWidth=symbolStrokeWidth, symbolType=symbolType,
-                                           tickCount=tickCount, title=title, titleAlign=titleAlign,
-                                           titleAnchor=titleAnchor, titleBaseline=titleBaseline,
-                                           titleColor=titleColor, titleFont=titleFont,
-                                           titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
-                                           titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                           titleLineHeight=titleLineHeight, titleOpacity=titleOpacity,
-                                           titleOrient=titleOrient, titlePadding=titlePadding,
-                                           unselectedOpacity=unselectedOpacity, zindex=zindex, **kwds)
+    _schema = {"$ref": "#/definitions/LegendConfig"}
+
+    def __init__(
+        self,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        columns: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        disable: Union[bool, UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        gradientDirection: Union[
+            Union["Orientation", "ExprRef"], UndefinedType
+        ] = Undefined,
+        gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
+        gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
+        gradientLabelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientLabelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientThickness: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
+        gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
+        gridAlign: Union[Union["LayoutAlign", "ExprRef"], UndefinedType] = Undefined,
+        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union["LabelOverlap", "ExprRef"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        layout: Union[dict, UndefinedType] = Undefined,
+        legendX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        legendY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolBaseFillColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolBaseStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolDirection: Union[
+            Union["Orientation", "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolType: Union[Union["SymbolShape", "ExprRef"], UndefinedType] = Undefined,
+        tickCount: Union[Union["TickCount", "ExprRef"], UndefinedType] = Undefined,
+        title: Union[None, UndefinedType] = Undefined,
+        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union["TextBaseline", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleOrient: Union[Union["Orient", "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        unselectedOpacity: Union[float, UndefinedType] = Undefined,
+        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LegendConfig, self).__init__(
+            aria=aria,
+            clipHeight=clipHeight,
+            columnPadding=columnPadding,
+            columns=columns,
+            cornerRadius=cornerRadius,
+            description=description,
+            direction=direction,
+            disable=disable,
+            fillColor=fillColor,
+            gradientDirection=gradientDirection,
+            gradientHorizontalMaxLength=gradientHorizontalMaxLength,
+            gradientHorizontalMinLength=gradientHorizontalMinLength,
+            gradientLabelLimit=gradientLabelLimit,
+            gradientLabelOffset=gradientLabelOffset,
+            gradientLength=gradientLength,
+            gradientOpacity=gradientOpacity,
+            gradientStrokeColor=gradientStrokeColor,
+            gradientStrokeWidth=gradientStrokeWidth,
+            gradientThickness=gradientThickness,
+            gradientVerticalMaxLength=gradientVerticalMaxLength,
+            gradientVerticalMinLength=gradientVerticalMinLength,
+            gridAlign=gridAlign,
+            labelAlign=labelAlign,
+            labelBaseline=labelBaseline,
+            labelColor=labelColor,
+            labelFont=labelFont,
+            labelFontSize=labelFontSize,
+            labelFontStyle=labelFontStyle,
+            labelFontWeight=labelFontWeight,
+            labelLimit=labelLimit,
+            labelOffset=labelOffset,
+            labelOpacity=labelOpacity,
+            labelOverlap=labelOverlap,
+            labelPadding=labelPadding,
+            labelSeparation=labelSeparation,
+            layout=layout,
+            legendX=legendX,
+            legendY=legendY,
+            offset=offset,
+            orient=orient,
+            padding=padding,
+            rowPadding=rowPadding,
+            strokeColor=strokeColor,
+            strokeDash=strokeDash,
+            strokeWidth=strokeWidth,
+            symbolBaseFillColor=symbolBaseFillColor,
+            symbolBaseStrokeColor=symbolBaseStrokeColor,
+            symbolDash=symbolDash,
+            symbolDashOffset=symbolDashOffset,
+            symbolDirection=symbolDirection,
+            symbolFillColor=symbolFillColor,
+            symbolLimit=symbolLimit,
+            symbolOffset=symbolOffset,
+            symbolOpacity=symbolOpacity,
+            symbolSize=symbolSize,
+            symbolStrokeColor=symbolStrokeColor,
+            symbolStrokeWidth=symbolStrokeWidth,
+            symbolType=symbolType,
+            tickCount=tickCount,
+            title=title,
+            titleAlign=titleAlign,
+            titleAnchor=titleAnchor,
+            titleBaseline=titleBaseline,
+            titleColor=titleColor,
+            titleFont=titleFont,
+            titleFontSize=titleFontSize,
+            titleFontStyle=titleFontStyle,
+            titleFontWeight=titleFontWeight,
+            titleLimit=titleLimit,
+            titleLineHeight=titleLineHeight,
+            titleOpacity=titleOpacity,
+            titleOrient=titleOrient,
+            titlePadding=titlePadding,
+            unselectedOpacity=unselectedOpacity,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class LegendOrient(VegaLiteSchema):
@@ -8230,7 +11122,8 @@ class LegendOrient(VegaLiteSchema):
     Literal['none', 'left', 'right', 'top', 'bottom', 'top-left', 'top-right', 'bottom-left',
     'bottom-right']
     """
-    _schema = {'$ref': '#/definitions/LegendOrient'}
+
+    _schema = {"$ref": "#/definitions/LegendOrient"}
 
     def __init__(self, *args):
         super(LegendOrient, self).__init__(*args)
@@ -8267,16 +11160,40 @@ class LegendResolveMap(VegaLiteSchema):
     strokeWidth : :class:`ResolveMode`
 
     """
-    _schema = {'$ref': '#/definitions/LegendResolveMap'}
 
-    def __init__(self, angle=Undefined, color=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 opacity=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeDash=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined, **kwds):
-        super(LegendResolveMap, self).__init__(angle=angle, color=color, fill=fill,
-                                               fillOpacity=fillOpacity, opacity=opacity, shape=shape,
-                                               size=size, stroke=stroke, strokeDash=strokeDash,
-                                               strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                               **kwds)
+    _schema = {"$ref": "#/definitions/LegendResolveMap"}
+
+    def __init__(
+        self,
+        angle: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        color: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        fill: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        fillOpacity: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        opacity: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        shape: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        size: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        stroke: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        strokeDash: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        strokeOpacity: Union[
+            Literal["independent", "shared"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LegendResolveMap, self).__init__(
+            angle=angle,
+            color=color,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            opacity=opacity,
+            shape=shape,
+            size=size,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            **kwds
+        )
 
 
 class LegendStreamBinding(LegendBinding):
@@ -8290,9 +11207,12 @@ class LegendStreamBinding(LegendBinding):
     legend : Union[str, :class:`Stream`]
 
     """
-    _schema = {'$ref': '#/definitions/LegendStreamBinding'}
 
-    def __init__(self, legend=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/LegendStreamBinding"}
+
+    def __init__(
+        self, legend: Union[Union[str, "Stream"], UndefinedType] = Undefined, **kwds
+    ):
         super(LegendStreamBinding, self).__init__(legend=legend, **kwds)
 
 
@@ -8674,53 +11594,168 @@ class LineConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/LineConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined, blend=Undefined,
-                 color=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
-                 dx=Undefined, dy=Undefined, ellipsis=Undefined, endAngle=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                 innerRadius=Undefined, interpolate=Undefined, invalid=Undefined, limit=Undefined,
-                 lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                 orient=Undefined, outerRadius=Undefined, padAngle=Undefined, point=Undefined,
-                 radius=Undefined, radius2=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                 startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined,
-                 **kwds):
-        super(LineConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                         ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                         baseline=baseline, blend=blend, color=color,
-                                         cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         description=description, dir=dir, dx=dx, dy=dy,
-                                         ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, innerRadius=innerRadius,
-                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                         lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity,
-                                         order=order, orient=orient, outerRadius=outerRadius,
-                                         padAngle=padAngle, point=point, radius=radius, radius2=radius2,
-                                         shape=shape, size=size, smooth=smooth, startAngle=startAngle,
-                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, theta2=theta2,
-                                         timeUnitBandPosition=timeUnitBandPosition,
-                                         timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/LineConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LineConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            blend=blend,
+            color=color,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            point=point,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class LineString(Geometry):
@@ -8740,10 +11775,19 @@ class LineString(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/LineString'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(LineString, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/LineString"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[List[float]], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LineString, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class LinearGradient(Gradient):
@@ -8777,12 +11821,23 @@ class LinearGradient(Gradient):
 
         **Default value:** ``0``
     """
-    _schema = {'$ref': '#/definitions/LinearGradient'}
 
-    def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, x1=Undefined, x2=Undefined,
-                 y1=Undefined, y2=Undefined, **kwds):
-        super(LinearGradient, self).__init__(gradient=gradient, stops=stops, id=id, x1=x1, x2=x2, y1=y1,
-                                             y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/LinearGradient"}
+
+    def __init__(
+        self,
+        gradient: Union[str, UndefinedType] = Undefined,
+        stops: Union[List[dict], UndefinedType] = Undefined,
+        id: Union[str, UndefinedType] = Undefined,
+        x1: Union[float, UndefinedType] = Undefined,
+        x2: Union[float, UndefinedType] = Undefined,
+        y1: Union[float, UndefinedType] = Undefined,
+        y2: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LinearGradient, self).__init__(
+            gradient=gradient, stops=stops, id=id, x1=x1, x2=x2, y1=y1, y2=y2, **kwds
+        )
 
 
 class Locale(VegaLiteSchema):
@@ -8798,9 +11853,15 @@ class Locale(VegaLiteSchema):
     time : :class:`TimeLocale`
         Locale definition for formatting dates and times.
     """
-    _schema = {'$ref': '#/definitions/Locale'}
 
-    def __init__(self, number=Undefined, time=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/Locale"}
+
+    def __init__(
+        self,
+        number: Union[dict, UndefinedType] = Undefined,
+        time: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(Locale, self).__init__(number=number, time=time, **kwds)
 
 
@@ -8820,9 +11881,16 @@ class LookupData(VegaLiteSchema):
         Fields in foreign data or selection to lookup. If not specified, the entire object
         is queried.
     """
-    _schema = {'$ref': '#/definitions/LookupData'}
 
-    def __init__(self, data=Undefined, key=Undefined, fields=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/LookupData"}
+
+    def __init__(
+        self,
+        data: Union[Union["DataSource", "Generator"], UndefinedType] = Undefined,
+        key: Union[str, UndefinedType] = Undefined,
+        fields: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
 
 
@@ -8842,10 +11910,19 @@ class LookupSelection(VegaLiteSchema):
         Fields in foreign data or selection to lookup. If not specified, the entire object
         is queried.
     """
-    _schema = {'$ref': '#/definitions/LookupSelection'}
 
-    def __init__(self, key=Undefined, param=Undefined, fields=Undefined, **kwds):
-        super(LookupSelection, self).__init__(key=key, param=param, fields=fields, **kwds)
+    _schema = {"$ref": "#/definitions/LookupSelection"}
+
+    def __init__(
+        self,
+        key: Union[str, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        fields: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LookupSelection, self).__init__(
+            key=key, param=param, fields=fields, **kwds
+        )
 
 
 class Mark(AnyMark):
@@ -8855,7 +11932,8 @@ class Mark(AnyMark):
     'trail', 'circle', 'square', 'geoshape']
     All types of primitive marks.
     """
-    _schema = {'$ref': '#/definitions/Mark'}
+
+    _schema = {"$ref": "#/definitions/Mark"}
 
     def __init__(self, *args):
         super(Mark, self).__init__(*args)
@@ -9224,53 +12302,166 @@ class MarkConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/MarkConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined, blend=Undefined,
-                 color=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
-                 dx=Undefined, dy=Undefined, ellipsis=Undefined, endAngle=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
-                 innerRadius=Undefined, interpolate=Undefined, invalid=Undefined, limit=Undefined,
-                 lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined, order=Undefined,
-                 orient=Undefined, outerRadius=Undefined, padAngle=Undefined, radius=Undefined,
-                 radius2=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                 startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined,
-                 **kwds):
-        super(MarkConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                         ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                         baseline=baseline, blend=blend, color=color,
-                                         cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         description=description, dir=dir, dx=dx, dy=dy,
-                                         ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, innerRadius=innerRadius,
-                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                         lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity,
-                                         order=order, orient=orient, outerRadius=outerRadius,
-                                         padAngle=padAngle, radius=radius, radius2=radius2, shape=shape,
-                                         size=size, smooth=smooth, startAngle=startAngle, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, theta2=theta2,
-                                         timeUnitBandPosition=timeUnitBandPosition,
-                                         timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/MarkConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MarkConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            blend=blend,
+            color=color,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class MarkDef(AnyMark):
@@ -9732,64 +12923,226 @@ class MarkDef(AnyMark):
     yOffset : Union[float, :class:`ExprRef`]
         Offset for y-position.
     """
-    _schema = {'$ref': '#/definitions/MarkDef'}
 
-    def __init__(self, type=Undefined, align=Undefined, angle=Undefined, aria=Undefined,
-                 ariaRole=Undefined, ariaRoleDescription=Undefined, aspect=Undefined,
-                 bandSize=Undefined, baseline=Undefined, binSpacing=Undefined, blend=Undefined,
-                 clip=Undefined, color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                 cornerRadiusEnd=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
-                 discreteBandSize=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
-                 href=Undefined, innerRadius=Undefined, interpolate=Undefined, invalid=Undefined,
-                 limit=Undefined, line=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 minBandSize=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                 outerRadius=Undefined, padAngle=Undefined, point=Undefined, radius=Undefined,
-                 radius2=Undefined, radius2Offset=Undefined, radiusOffset=Undefined, shape=Undefined,
-                 size=Undefined, smooth=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, theta2=Undefined, theta2Offset=Undefined, thetaOffset=Undefined,
-                 thickness=Undefined, timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined,
-                 tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
-                 x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
-                 yOffset=Undefined, **kwds):
-        super(MarkDef, self).__init__(type=type, align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                      ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                      bandSize=bandSize, baseline=baseline, binSpacing=binSpacing,
-                                      blend=blend, clip=clip, color=color,
-                                      continuousBandSize=continuousBandSize, cornerRadius=cornerRadius,
-                                      cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                      cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                      cornerRadiusEnd=cornerRadiusEnd,
-                                      cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                      cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                      description=description, dir=dir,
-                                      discreteBandSize=discreteBandSize, dx=dx, dy=dy,
-                                      ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
-                                      filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                                      fontWeight=fontWeight, height=height, href=href,
-                                      innerRadius=innerRadius, interpolate=interpolate, invalid=invalid,
-                                      limit=limit, line=line, lineBreak=lineBreak,
-                                      lineHeight=lineHeight, minBandSize=minBandSize, opacity=opacity,
-                                      order=order, orient=orient, outerRadius=outerRadius,
-                                      padAngle=padAngle, point=point, radius=radius, radius2=radius2,
-                                      radius2Offset=radius2Offset, radiusOffset=radiusOffset,
-                                      shape=shape, size=size, smooth=smooth, stroke=stroke,
-                                      strokeCap=strokeCap, strokeDash=strokeDash,
-                                      strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                      strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                      strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style,
-                                      tension=tension, text=text, theta=theta, theta2=theta2,
-                                      theta2Offset=theta2Offset, thetaOffset=thetaOffset,
-                                      thickness=thickness, timeUnitBandPosition=timeUnitBandPosition,
-                                      timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                      width=width, x=x, x2=x2, x2Offset=x2Offset, xOffset=xOffset, y=y,
-                                      y2=y2, y2Offset=y2Offset, yOffset=yOffset, **kwds)
+    _schema = {"$ref": "#/definitions/MarkDef"}
+
+    def __init__(
+        self,
+        type: Union[
+            Literal[
+                "arc",
+                "area",
+                "bar",
+                "image",
+                "line",
+                "point",
+                "rect",
+                "rule",
+                "text",
+                "tick",
+                "trail",
+                "circle",
+                "square",
+                "geoshape",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        bandSize: Union[float, UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        binSpacing: Union[float, UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        clip: Union[bool, UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        continuousBandSize: Union[float, UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusEnd: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        discreteBandSize: Union[
+            Union[float, "RelativeBandSize"], UndefinedType
+        ] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "RelativeBandSize"], UndefinedType
+        ] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        line: Union[Union[bool, "OverlayMarkDef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radiusOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        thetaOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        thickness: Union[float, UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "RelativeBandSize"], UndefinedType
+        ] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        xOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        yOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MarkDef, self).__init__(
+            type=type,
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            bandSize=bandSize,
+            baseline=baseline,
+            binSpacing=binSpacing,
+            blend=blend,
+            clip=clip,
+            color=color,
+            continuousBandSize=continuousBandSize,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusEnd=cornerRadiusEnd,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            discreteBandSize=discreteBandSize,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            line=line,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            minBandSize=minBandSize,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            point=point,
+            radius=radius,
+            radius2=radius2,
+            radius2Offset=radius2Offset,
+            radiusOffset=radiusOffset,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            style=style,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            theta2Offset=theta2Offset,
+            thetaOffset=thetaOffset,
+            thickness=thickness,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            x2Offset=x2Offset,
+            xOffset=xOffset,
+            y=y,
+            y2=y2,
+            y2Offset=y2Offset,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class MarkPropDefGradientstringnull(VegaLiteSchema):
@@ -9799,13 +13152,16 @@ class MarkPropDefGradientstringnull(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`]
     """
-    _schema = {'$ref': '#/definitions/MarkPropDef<(Gradient|string|null)>'}
+
+    _schema = {"$ref": "#/definitions/MarkPropDef<(Gradient|string|null)>"}
 
     def __init__(self, *args, **kwds):
         super(MarkPropDefGradientstringnull, self).__init__(*args, **kwds)
 
 
-class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropDefGradientstringnull):
+class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
+    ColorDef, MarkPropDefGradientstringnull
+):
     """FieldOrDatumDefWithConditionDatumDefGradientstringnull schema wrapper
 
     Dict[required=[]]
@@ -9916,18 +13272,44 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(ColorDef, MarkPropD
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,(Gradient|string|null)>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionDatumDefGradientstringnull, self).__init__(bandPosition=bandPosition,
-                                                                                     condition=condition,
-                                                                                     datum=datum,
-                                                                                     title=title,
-                                                                                     type=type, **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<DatumDef,(Gradient|string|null)>"
+    }
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionDatumDefGradientstringnull, self).__init__(
+            bandPosition=bandPosition,
+            condition=condition,
+            datum=datum,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
-class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, MarkPropDefGradientstringnull):
+class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
+    ColorDef, MarkPropDefGradientstringnull
+):
     """FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull schema wrapper
 
     Dict[required=[]]
@@ -10150,23 +13532,63 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,(Gradient|string|null)>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull, self).__init__(aggregate=aggregate,
-                                                                                             bandPosition=bandPosition,
-                                                                                             bin=bin,
-                                                                                             condition=condition,
-                                                                                             field=field,
-                                                                                             legend=legend,
-                                                                                             scale=scale,
-                                                                                             sort=sort,
-                                                                                             timeUnit=timeUnit,
-                                                                                             title=title,
-                                                                                             type=type,
-                                                                                             **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,(Gradient|string|null)>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(
+            FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull, self
+        ).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            legend=legend,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class MarkPropDefnumber(VegaLiteSchema):
@@ -10176,7 +13598,8 @@ class MarkPropDefnumber(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`]
     """
-    _schema = {'$ref': '#/definitions/MarkPropDef<number>'}
+
+    _schema = {"$ref": "#/definitions/MarkPropDef<number>"}
 
     def __init__(self, *args, **kwds):
         super(MarkPropDefnumber, self).__init__(*args, **kwds)
@@ -10189,7 +13612,8 @@ class MarkPropDefnumberArray(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`]
     """
-    _schema = {'$ref': '#/definitions/MarkPropDef<number[]>'}
+
+    _schema = {"$ref": "#/definitions/MarkPropDef<number[]>"}
 
     def __init__(self, *args, **kwds):
         super(MarkPropDefnumberArray, self).__init__(*args, **kwds)
@@ -10202,7 +13626,8 @@ class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`]
     """
-    _schema = {'$ref': '#/definitions/MarkPropDef<(string|null),TypeForShape>'}
+
+    _schema = {"$ref": "#/definitions/MarkPropDef<(string|null),TypeForShape>"}
 
     def __init__(self, *args, **kwds):
         super(MarkPropDefstringnullTypeForShape, self).__init__(*args, **kwds)
@@ -10214,7 +13639,8 @@ class MarkType(VegaLiteSchema):
     Literal['arc', 'area', 'image', 'group', 'line', 'path', 'rect', 'rule', 'shape', 'symbol',
     'text', 'trail']
     """
-    _schema = {'$ref': '#/definitions/MarkType'}
+
+    _schema = {"$ref": "#/definitions/MarkType"}
 
     def __init__(self, *args):
         super(MarkType, self).__init__(*args)
@@ -10225,7 +13651,8 @@ class Month(VegaLiteSchema):
 
     float
     """
-    _schema = {'$ref': '#/definitions/Month'}
+
+    _schema = {"$ref": "#/definitions/Month"}
 
     def __init__(self, *args):
         super(Month, self).__init__(*args)
@@ -10248,10 +13675,19 @@ class MultiLineString(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/MultiLineString'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(MultiLineString, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/MultiLineString"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[List[List[float]]], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MultiLineString, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class MultiPoint(Geometry):
@@ -10271,10 +13707,19 @@ class MultiPoint(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/MultiPoint'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(MultiPoint, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/MultiPoint"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[List[float]], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MultiPoint, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class MultiPolygon(Geometry):
@@ -10294,10 +13739,19 @@ class MultiPolygon(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/MultiPolygon'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(MultiPolygon, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/MultiPolygon"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[List[List[List[float]]]], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MultiPolygon, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class NamedData(DataSource):
@@ -10318,9 +13772,18 @@ class NamedData(DataSource):
     format : :class:`DataFormat`
         An object that specifies the format for parsing the data.
     """
-    _schema = {'$ref': '#/definitions/NamedData'}
 
-    def __init__(self, name=Undefined, format=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/NamedData"}
+
+    def __init__(
+        self,
+        name: Union[str, UndefinedType] = Undefined,
+        format: Union[
+            Union["CsvDataFormat", "DsvDataFormat", "JsonDataFormat", "TopoDataFormat"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
         super(NamedData, self).__init__(name=name, format=format, **kwds)
 
 
@@ -10331,7 +13794,8 @@ class NonArgAggregateOp(Aggregate):
     'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
     'variance', 'variancep']
     """
-    _schema = {'$ref': '#/definitions/NonArgAggregateOp'}
+
+    _schema = {"$ref": "#/definitions/NonArgAggregateOp"}
 
     def __init__(self, *args):
         super(NonArgAggregateOp, self).__init__(*args)
@@ -10345,7 +13809,8 @@ class NonNormalizedSpec(VegaLiteSchema):
     :class:`HConcatSpecGenericSpec`]
     Any specification in Vega-Lite.
     """
-    _schema = {'$ref': '#/definitions/NonNormalizedSpec'}
+
+    _schema = {"$ref": "#/definitions/NonNormalizedSpec"}
 
     def __init__(self, *args, **kwds):
         super(NonNormalizedSpec, self).__init__(*args, **kwds)
@@ -10377,13 +13842,32 @@ class NumberLocale(VegaLiteSchema):
     percent : str
         The percent sign (defaults to "%").
     """
-    _schema = {'$ref': '#/definitions/NumberLocale'}
 
-    def __init__(self, currency=Undefined, decimal=Undefined, grouping=Undefined, thousands=Undefined,
-                 minus=Undefined, nan=Undefined, numerals=Undefined, percent=Undefined, **kwds):
-        super(NumberLocale, self).__init__(currency=currency, decimal=decimal, grouping=grouping,
-                                           thousands=thousands, minus=minus, nan=nan, numerals=numerals,
-                                           percent=percent, **kwds)
+    _schema = {"$ref": "#/definitions/NumberLocale"}
+
+    def __init__(
+        self,
+        currency: Union[List[str], UndefinedType] = Undefined,
+        decimal: Union[str, UndefinedType] = Undefined,
+        grouping: Union[List[float], UndefinedType] = Undefined,
+        thousands: Union[str, UndefinedType] = Undefined,
+        minus: Union[str, UndefinedType] = Undefined,
+        nan: Union[str, UndefinedType] = Undefined,
+        numerals: Union[List[str], UndefinedType] = Undefined,
+        percent: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(NumberLocale, self).__init__(
+            currency=currency,
+            decimal=decimal,
+            grouping=grouping,
+            thousands=thousands,
+            minus=minus,
+            nan=nan,
+            numerals=numerals,
+            percent=percent,
+            **kwds
+        )
 
 
 class NumericArrayMarkPropDef(VegaLiteSchema):
@@ -10393,13 +13877,16 @@ class NumericArrayMarkPropDef(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`]
     """
-    _schema = {'$ref': '#/definitions/NumericArrayMarkPropDef'}
+
+    _schema = {"$ref": "#/definitions/NumericArrayMarkPropDef"}
 
     def __init__(self, *args, **kwds):
         super(NumericArrayMarkPropDef, self).__init__(*args, **kwds)
 
 
-class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, NumericArrayMarkPropDef):
+class FieldOrDatumDefWithConditionDatumDefnumberArray(
+    MarkPropDefnumberArray, NumericArrayMarkPropDef
+):
     """FieldOrDatumDefWithConditionDatumDefnumberArray schema wrapper
 
     Dict[required=[]]
@@ -10510,17 +13997,42 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(MarkPropDefnumberArray, Nu
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,number[]>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionDatumDefnumberArray, self).__init__(bandPosition=bandPosition,
-                                                                              condition=condition,
-                                                                              datum=datum, title=title,
-                                                                              type=type, **kwds)
+    _schema = {"$ref": "#/definitions/FieldOrDatumDefWithCondition<DatumDef,number[]>"}
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefnumberArrayExprRef",
+                List["ConditionalValueDefnumberArrayExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionDatumDefnumberArray, self).__init__(
+            bandPosition=bandPosition,
+            condition=condition,
+            datum=datum,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
-class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberArray, NumericArrayMarkPropDef):
+class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
+    MarkPropDefnumberArray, NumericArrayMarkPropDef
+):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray schema wrapper
 
     Dict[required=[]]
@@ -10743,22 +14255,61 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,number[]>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray, self).__init__(aggregate=aggregate,
-                                                                                      bandPosition=bandPosition,
-                                                                                      bin=bin,
-                                                                                      condition=condition,
-                                                                                      field=field,
-                                                                                      legend=legend,
-                                                                                      scale=scale,
-                                                                                      sort=sort,
-                                                                                      timeUnit=timeUnit,
-                                                                                      title=title,
-                                                                                      type=type, **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,number[]>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefnumberArrayExprRef",
+                List["ConditionalValueDefnumberArrayExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            legend=legend,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class NumericMarkPropDef(VegaLiteSchema):
@@ -10768,7 +14319,8 @@ class NumericMarkPropDef(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`]
     """
-    _schema = {'$ref': '#/definitions/NumericMarkPropDef'}
+
+    _schema = {"$ref": "#/definitions/NumericMarkPropDef"}
 
     def __init__(self, *args, **kwds):
         super(NumericMarkPropDef, self).__init__(*args, **kwds)
@@ -10885,17 +14437,42 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,number>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionDatumDefnumber, self).__init__(bandPosition=bandPosition,
-                                                                         condition=condition,
-                                                                         datum=datum, title=title,
-                                                                         type=type, **kwds)
+    _schema = {"$ref": "#/definitions/FieldOrDatumDefWithCondition<DatumDef,number>"}
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefnumberExprRef",
+                List["ConditionalValueDefnumberExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionDatumDefnumber, self).__init__(
+            bandPosition=bandPosition,
+            condition=condition,
+            datum=datum,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
-class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, NumericMarkPropDef):
+class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
+    MarkPropDefnumber, NumericMarkPropDef
+):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumber schema wrapper
 
     Dict[required=[]]
@@ -11118,21 +14695,61 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,number>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionMarkPropFieldDefnumber, self).__init__(aggregate=aggregate,
-                                                                                 bandPosition=bandPosition,
-                                                                                 bin=bin,
-                                                                                 condition=condition,
-                                                                                 field=field,
-                                                                                 legend=legend,
-                                                                                 scale=scale, sort=sort,
-                                                                                 timeUnit=timeUnit,
-                                                                                 title=title, type=type,
-                                                                                 **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef,number>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefnumberExprRef",
+                List["ConditionalValueDefnumberExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionMarkPropFieldDefnumber, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            legend=legend,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class OffsetDef(VegaLiteSchema):
@@ -11140,7 +14757,8 @@ class OffsetDef(VegaLiteSchema):
 
     Union[:class:`ScaleFieldDef`, :class:`ScaleDatumDef`, :class:`ValueDefnumber`]
     """
-    _schema = {'$ref': '#/definitions/OffsetDef'}
+
+    _schema = {"$ref": "#/definitions/OffsetDef"}
 
     def __init__(self, *args, **kwds):
         super(OffsetDef, self).__init__(*args, **kwds)
@@ -11303,13 +14921,38 @@ class OrderFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/OrderFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(OrderFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                            field=field, sort=sort, timeUnit=timeUnit, title=title,
-                                            type=type, **kwds)
+    _schema = {"$ref": "#/definitions/OrderFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        sort: Union[Literal["ascending", "descending"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(OrderFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class OrderOnlyDef(VegaLiteSchema):
@@ -11323,9 +14966,14 @@ class OrderOnlyDef(VegaLiteSchema):
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
     """
-    _schema = {'$ref': '#/definitions/OrderOnlyDef'}
 
-    def __init__(self, sort=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/OrderOnlyDef"}
+
+    def __init__(
+        self,
+        sort: Union[Literal["ascending", "descending"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(OrderOnlyDef, self).__init__(sort=sort, **kwds)
 
 
@@ -11349,9 +14997,18 @@ class OrderValueDef(VegaLiteSchema):
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     """
-    _schema = {'$ref': '#/definitions/OrderValueDef'}
 
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/OrderValueDef"}
+
+    def __init__(
+        self,
+        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        condition: Union[
+            Union["ConditionalValueDefnumber", List["ConditionalValueDefnumber"]],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
         super(OrderValueDef, self).__init__(value=value, condition=condition, **kwds)
 
 
@@ -11360,7 +15017,8 @@ class Orient(VegaLiteSchema):
 
     Literal['left', 'right', 'top', 'bottom']
     """
-    _schema = {'$ref': '#/definitions/Orient'}
+
+    _schema = {"$ref": "#/definitions/Orient"}
 
     def __init__(self, *args):
         super(Orient, self).__init__(*args)
@@ -11371,7 +15029,8 @@ class Orientation(VegaLiteSchema):
 
     Literal['horizontal', 'vertical']
     """
-    _schema = {'$ref': '#/definitions/Orientation'}
+
+    _schema = {"$ref": "#/definitions/Orientation"}
 
     def __init__(self, *args):
         super(Orientation, self).__init__(*args)
@@ -11772,61 +15431,186 @@ class OverlayMarkDef(VegaLiteSchema):
     yOffset : Union[float, :class:`ExprRef`]
         Offset for y-position.
     """
-    _schema = {'$ref': '#/definitions/OverlayMarkDef'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined, blend=Undefined,
-                 clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                 cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                 description=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
-                 endAngle=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                 invalid=Undefined, limit=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
-                 padAngle=Undefined, radius=Undefined, radius2=Undefined, radius2Offset=Undefined,
-                 radiusOffset=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
-                 startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 theta2Offset=Undefined, thetaOffset=Undefined, timeUnitBandPosition=Undefined,
-                 timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                 x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                 y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
-        super(OverlayMarkDef, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                             ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                             baseline=baseline, blend=blend, clip=clip, color=color,
-                                             cornerRadius=cornerRadius,
-                                             cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                             cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                             cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                             cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                             description=description, dir=dir, dx=dx, dy=dy,
-                                             ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                             fillOpacity=fillOpacity, filled=filled, font=font,
-                                             fontSize=fontSize, fontStyle=fontStyle,
-                                             fontWeight=fontWeight, height=height, href=href,
-                                             innerRadius=innerRadius, interpolate=interpolate,
-                                             invalid=invalid, limit=limit, lineBreak=lineBreak,
-                                             lineHeight=lineHeight, opacity=opacity, order=order,
-                                             orient=orient, outerRadius=outerRadius, padAngle=padAngle,
-                                             radius=radius, radius2=radius2,
-                                             radius2Offset=radius2Offset, radiusOffset=radiusOffset,
-                                             shape=shape, size=size, smooth=smooth,
-                                             startAngle=startAngle, stroke=stroke, strokeCap=strokeCap,
-                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                             strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
-                                             strokeOffset=strokeOffset, strokeOpacity=strokeOpacity,
-                                             strokeWidth=strokeWidth, style=style, tension=tension,
-                                             text=text, theta=theta, theta2=theta2,
-                                             theta2Offset=theta2Offset, thetaOffset=thetaOffset,
-                                             timeUnitBandPosition=timeUnitBandPosition,
-                                             timeUnitBandSize=timeUnitBandSize, tooltip=tooltip,
-                                             url=url, width=width, x=x, x2=x2, x2Offset=x2Offset,
-                                             xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                                             yOffset=yOffset, **kwds)
+    _schema = {"$ref": "#/definitions/OverlayMarkDef"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        clip: Union[bool, UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radiusOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        thetaOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        xOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        yOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(OverlayMarkDef, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            blend=blend,
+            clip=clip,
+            color=color,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            radius=radius,
+            radius2=radius2,
+            radius2Offset=radius2Offset,
+            radiusOffset=radiusOffset,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            style=style,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            theta2Offset=theta2Offset,
+            thetaOffset=thetaOffset,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            x2Offset=x2Offset,
+            xOffset=xOffset,
+            y=y,
+            y2=y2,
+            y2Offset=y2Offset,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class Padding(VegaLiteSchema):
@@ -11834,7 +15618,8 @@ class Padding(VegaLiteSchema):
 
     Union[float, Dict[required=[]]]
     """
-    _schema = {'$ref': '#/definitions/Padding'}
+
+    _schema = {"$ref": "#/definitions/Padding"}
 
     def __init__(self, *args, **kwds):
         super(Padding, self).__init__(*args, **kwds)
@@ -11845,7 +15630,8 @@ class ParameterExtent(BinExtent):
 
     Union[Dict[required=[param]], Dict[required=[param]]]
     """
-    _schema = {'$ref': '#/definitions/ParameterExtent'}
+
+    _schema = {"$ref": "#/definitions/ParameterExtent"}
 
     def __init__(self, *args, **kwds):
         super(ParameterExtent, self).__init__(*args, **kwds)
@@ -11856,7 +15642,8 @@ class ParameterName(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/ParameterName'}
+
+    _schema = {"$ref": "#/definitions/ParameterName"}
 
     def __init__(self, *args):
         super(ParameterName, self).__init__(*args)
@@ -11867,7 +15654,8 @@ class Parse(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/Parse'}
+
+    _schema = {"$ref": "#/definitions/Parse"}
 
     def __init__(self, **kwds):
         super(Parse, self).__init__(**kwds)
@@ -11878,7 +15666,8 @@ class ParseValue(VegaLiteSchema):
 
     Union[None, str, str, str, str, str]
     """
-    _schema = {'$ref': '#/definitions/ParseValue'}
+
+    _schema = {"$ref": "#/definitions/ParseValue"}
 
     def __init__(self, *args, **kwds):
         super(ParseValue, self).__init__(*args, **kwds)
@@ -11905,10 +15694,19 @@ class Point(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/Point'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(Point, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/Point"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[float], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Point, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class PointSelectionConfig(VegaLiteSchema):
@@ -12013,13 +15811,70 @@ class PointSelectionConfig(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/selection.html#toggle>`__ in the
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PointSelectionConfig'}
 
-    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, fields=Undefined,
-                 nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined, **kwds):
-        super(PointSelectionConfig, self).__init__(type=type, clear=clear, encodings=encodings,
-                                                   fields=fields, nearest=nearest, on=on,
-                                                   resolve=resolve, toggle=toggle, **kwds)
+    _schema = {"$ref": "#/definitions/PointSelectionConfig"}
+
+    def __init__(
+        self,
+        type: Union[str, UndefinedType] = Undefined,
+        clear: Union[Union["Stream", str, bool], UndefinedType] = Undefined,
+        encodings: Union[
+            List[
+                Literal[
+                    "x",
+                    "y",
+                    "xOffset",
+                    "yOffset",
+                    "x2",
+                    "y2",
+                    "longitude",
+                    "latitude",
+                    "longitude2",
+                    "latitude2",
+                    "theta",
+                    "theta2",
+                    "radius",
+                    "radius2",
+                    "color",
+                    "fill",
+                    "stroke",
+                    "opacity",
+                    "fillOpacity",
+                    "strokeOpacity",
+                    "strokeWidth",
+                    "strokeDash",
+                    "size",
+                    "angle",
+                    "shape",
+                    "key",
+                    "text",
+                    "href",
+                    "url",
+                    "description",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fields: Union[List[str], UndefinedType] = Undefined,
+        nearest: Union[bool, UndefinedType] = Undefined,
+        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        resolve: Union[
+            Literal["global", "union", "intersect"], UndefinedType
+        ] = Undefined,
+        toggle: Union[Union[str, bool], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(PointSelectionConfig, self).__init__(
+            type=type,
+            clear=clear,
+            encodings=encodings,
+            fields=fields,
+            nearest=nearest,
+            on=on,
+            resolve=resolve,
+            toggle=toggle,
+            **kwds
+        )
 
 
 class PointSelectionConfigWithoutType(VegaLiteSchema):
@@ -12116,13 +15971,68 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/selection.html#toggle>`__ in the
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PointSelectionConfigWithoutType'}
 
-    def __init__(self, clear=Undefined, encodings=Undefined, fields=Undefined, nearest=Undefined,
-                 on=Undefined, resolve=Undefined, toggle=Undefined, **kwds):
-        super(PointSelectionConfigWithoutType, self).__init__(clear=clear, encodings=encodings,
-                                                              fields=fields, nearest=nearest, on=on,
-                                                              resolve=resolve, toggle=toggle, **kwds)
+    _schema = {"$ref": "#/definitions/PointSelectionConfigWithoutType"}
+
+    def __init__(
+        self,
+        clear: Union[Union["Stream", str, bool], UndefinedType] = Undefined,
+        encodings: Union[
+            List[
+                Literal[
+                    "x",
+                    "y",
+                    "xOffset",
+                    "yOffset",
+                    "x2",
+                    "y2",
+                    "longitude",
+                    "latitude",
+                    "longitude2",
+                    "latitude2",
+                    "theta",
+                    "theta2",
+                    "radius",
+                    "radius2",
+                    "color",
+                    "fill",
+                    "stroke",
+                    "opacity",
+                    "fillOpacity",
+                    "strokeOpacity",
+                    "strokeWidth",
+                    "strokeDash",
+                    "size",
+                    "angle",
+                    "shape",
+                    "key",
+                    "text",
+                    "href",
+                    "url",
+                    "description",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fields: Union[List[str], UndefinedType] = Undefined,
+        nearest: Union[bool, UndefinedType] = Undefined,
+        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        resolve: Union[
+            Literal["global", "union", "intersect"], UndefinedType
+        ] = Undefined,
+        toggle: Union[Union[str, bool], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(PointSelectionConfigWithoutType, self).__init__(
+            clear=clear,
+            encodings=encodings,
+            fields=fields,
+            nearest=nearest,
+            on=on,
+            resolve=resolve,
+            toggle=toggle,
+            **kwds
+        )
 
 
 class PolarDef(VegaLiteSchema):
@@ -12131,7 +16041,8 @@ class PolarDef(VegaLiteSchema):
     Union[:class:`PositionFieldDefBase`, :class:`PositionDatumDefBase`,
     :class:`PositionValueDef`]
     """
-    _schema = {'$ref': '#/definitions/PolarDef'}
+
+    _schema = {"$ref": "#/definitions/PolarDef"}
 
     def __init__(self, *args, **kwds):
         super(PolarDef, self).__init__(*args, **kwds)
@@ -12154,10 +16065,19 @@ class Polygon(Geometry):
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
-    _schema = {'$ref': '#/definitions/Polygon'}
 
-    def __init__(self, coordinates=Undefined, type=Undefined, bbox=Undefined, **kwds):
-        super(Polygon, self).__init__(coordinates=coordinates, type=type, bbox=bbox, **kwds)
+    _schema = {"$ref": "#/definitions/Polygon"}
+
+    def __init__(
+        self,
+        coordinates: Union[List[List[List[float]]], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        bbox: Union[Union[List[float], List[float]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Polygon, self).__init__(
+            coordinates=coordinates, type=type, bbox=bbox, **kwds
+        )
 
 
 class Position(VegaLiteSchema):
@@ -12169,7 +16089,8 @@ class Position(VegaLiteSchema):
     allowed more elements (e.g., which could be used to represent M values), but the current
     specification only allows X, Y, and (optionally) Z to be defined.
     """
-    _schema = {'$ref': '#/definitions/Position'}
+
+    _schema = {"$ref": "#/definitions/Position"}
 
     def __init__(self, *args):
         super(Position, self).__init__(*args)
@@ -12180,7 +16101,8 @@ class Position2Def(VegaLiteSchema):
 
     Union[:class:`SecondaryFieldDef`, :class:`DatumDef`, :class:`PositionValueDef`]
     """
-    _schema = {'$ref': '#/definitions/Position2Def'}
+
+    _schema = {"$ref": "#/definitions/Position2Def"}
 
     def __init__(self, *args, **kwds):
         super(Position2Def, self).__init__(*args, **kwds)
@@ -12290,11 +16212,25 @@ class DatumDef(LatLongDef, Position2Def):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/DatumDef'}
 
-    def __init__(self, bandPosition=Undefined, datum=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(DatumDef, self).__init__(bandPosition=bandPosition, datum=datum, title=title, type=type,
-                                       **kwds)
+    _schema = {"$ref": "#/definitions/DatumDef"}
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(DatumDef, self).__init__(
+            bandPosition=bandPosition, datum=datum, title=title, type=type, **kwds
+        )
 
 
 class PositionDatumDefBase(PolarDef):
@@ -12445,12 +16381,33 @@ class PositionDatumDefBase(PolarDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PositionDatumDefBase'}
 
-    def __init__(self, bandPosition=Undefined, datum=Undefined, scale=Undefined, stack=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(PositionDatumDefBase, self).__init__(bandPosition=bandPosition, datum=datum, scale=scale,
-                                                   stack=stack, title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/PositionDatumDefBase"}
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", None, bool], UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(PositionDatumDefBase, self).__init__(
+            bandPosition=bandPosition,
+            datum=datum,
+            scale=scale,
+            stack=stack,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class PositionDef(VegaLiteSchema):
@@ -12458,7 +16415,8 @@ class PositionDef(VegaLiteSchema):
 
     Union[:class:`PositionFieldDef`, :class:`PositionDatumDef`, :class:`PositionValueDef`]
     """
-    _schema = {'$ref': '#/definitions/PositionDef'}
+
+    _schema = {"$ref": "#/definitions/PositionDef"}
 
     def __init__(self, *args, **kwds):
         super(PositionDef, self).__init__(*args, **kwds)
@@ -12629,13 +16587,37 @@ class PositionDatumDef(PositionDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PositionDatumDef'}
 
-    def __init__(self, axis=Undefined, bandPosition=Undefined, datum=Undefined, impute=Undefined,
-                 scale=Undefined, stack=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(PositionDatumDef, self).__init__(axis=axis, bandPosition=bandPosition, datum=datum,
-                                               impute=impute, scale=scale, stack=stack, title=title,
-                                               type=type, **kwds)
+    _schema = {"$ref": "#/definitions/PositionDatumDef"}
+
+    def __init__(
+        self,
+        axis: Union[Union["Axis", None], UndefinedType] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        impute: Union[Union["ImputeParams", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", None, bool], UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(PositionDatumDef, self).__init__(
+            axis=axis,
+            bandPosition=bandPosition,
+            datum=datum,
+            impute=impute,
+            scale=scale,
+            stack=stack,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class PositionFieldDef(PositionDef):
@@ -12893,15 +16875,55 @@ class PositionFieldDef(PositionDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PositionFieldDef'}
 
-    def __init__(self, aggregate=Undefined, axis=Undefined, bandPosition=Undefined, bin=Undefined,
-                 field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(PositionFieldDef, self).__init__(aggregate=aggregate, axis=axis,
-                                               bandPosition=bandPosition, bin=bin, field=field,
-                                               impute=impute, scale=scale, sort=sort, stack=stack,
-                                               timeUnit=timeUnit, title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/PositionFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        axis: Union[Union["Axis", None], UndefinedType] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        impute: Union[Union["ImputeParams", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        stack: Union[Union["StackOffset", None, bool], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(PositionFieldDef, self).__init__(
+            aggregate=aggregate,
+            axis=axis,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            impute=impute,
+            scale=scale,
+            sort=sort,
+            stack=stack,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class PositionFieldDefBase(PolarDef):
@@ -13142,15 +17164,51 @@ class PositionFieldDefBase(PolarDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/PositionFieldDefBase'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(PositionFieldDefBase, self).__init__(aggregate=aggregate, bandPosition=bandPosition,
-                                                   bin=bin, field=field, scale=scale, sort=sort,
-                                                   stack=stack, timeUnit=timeUnit, title=title,
-                                                   type=type, **kwds)
+    _schema = {"$ref": "#/definitions/PositionFieldDefBase"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        stack: Union[Union["StackOffset", None, bool], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(PositionFieldDefBase, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            scale=scale,
+            sort=sort,
+            stack=stack,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class PositionValueDef(PolarDef, Position2Def, PositionDef):
@@ -13168,9 +17226,14 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/PositionValueDef'}
 
-    def __init__(self, value=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/PositionValueDef"}
+
+    def __init__(
+        self,
+        value: Union[Union[float, str, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(PositionValueDef, self).__init__(value=value, **kwds)
 
 
@@ -13180,7 +17243,8 @@ class PredicateComposition(VegaLiteSchema):
     Union[:class:`LogicalNotPredicate`, :class:`LogicalAndPredicate`,
     :class:`LogicalOrPredicate`, :class:`Predicate`]
     """
-    _schema = {'$ref': '#/definitions/PredicateComposition'}
+
+    _schema = {"$ref": "#/definitions/PredicateComposition"}
 
     def __init__(self, *args, **kwds):
         super(PredicateComposition, self).__init__(*args, **kwds)
@@ -13197,7 +17261,8 @@ class LogicalAndPredicate(PredicateComposition):
     and : List[:class:`PredicateComposition`]
 
     """
-    _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
+
+    _schema = {"$ref": "#/definitions/LogicalAnd<Predicate>"}
 
     def __init__(self, **kwds):
         super(LogicalAndPredicate, self).__init__(**kwds)
@@ -13214,7 +17279,8 @@ class LogicalNotPredicate(PredicateComposition):
     not : :class:`PredicateComposition`
 
     """
-    _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
+
+    _schema = {"$ref": "#/definitions/LogicalNot<Predicate>"}
 
     def __init__(self, **kwds):
         super(LogicalNotPredicate, self).__init__(**kwds)
@@ -13231,7 +17297,8 @@ class LogicalOrPredicate(PredicateComposition):
     or : List[:class:`PredicateComposition`]
 
     """
-    _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
+
+    _schema = {"$ref": "#/definitions/LogicalOr<Predicate>"}
 
     def __init__(self, **kwds):
         super(LogicalOrPredicate, self).__init__(**kwds)
@@ -13245,7 +17312,8 @@ class Predicate(PredicateComposition):
     :class:`FieldLTEPredicate`, :class:`FieldGTEPredicate`, :class:`FieldValidPredicate`,
     :class:`ParameterPredicate`, str]
     """
-    _schema = {'$ref': '#/definitions/Predicate'}
+
+    _schema = {"$ref": "#/definitions/Predicate"}
 
     def __init__(self, *args, **kwds):
         super(Predicate, self).__init__(*args, **kwds)
@@ -13266,10 +17334,23 @@ class FieldEqualPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldEqualPredicate'}
 
-    def __init__(self, equal=Undefined, field=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldEqualPredicate, self).__init__(equal=equal, field=field, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldEqualPredicate"}
+
+    def __init__(
+        self,
+        equal: Union[
+            Union[str, float, bool, "DateTime", "ExprRef"], UndefinedType
+        ] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldEqualPredicate, self).__init__(
+            equal=equal, field=field, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldGTEPredicate(Predicate):
@@ -13287,10 +17368,21 @@ class FieldGTEPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldGTEPredicate'}
 
-    def __init__(self, field=Undefined, gte=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldGTEPredicate, self).__init__(field=field, gte=gte, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldGTEPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        gte: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldGTEPredicate, self).__init__(
+            field=field, gte=gte, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldGTPredicate(Predicate):
@@ -13308,10 +17400,21 @@ class FieldGTPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldGTPredicate'}
 
-    def __init__(self, field=Undefined, gt=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldGTPredicate, self).__init__(field=field, gt=gt, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldGTPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        gt: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldGTPredicate, self).__init__(
+            field=field, gt=gt, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldLTEPredicate(Predicate):
@@ -13329,10 +17432,21 @@ class FieldLTEPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldLTEPredicate'}
 
-    def __init__(self, field=Undefined, lte=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldLTEPredicate, self).__init__(field=field, lte=lte, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldLTEPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        lte: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldLTEPredicate, self).__init__(
+            field=field, lte=lte, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldLTPredicate(Predicate):
@@ -13350,10 +17464,21 @@ class FieldLTPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldLTPredicate'}
 
-    def __init__(self, field=Undefined, lt=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldLTPredicate, self).__init__(field=field, lt=lt, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldLTPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        lt: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldLTPredicate, self).__init__(
+            field=field, lt=lt, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldOneOfPredicate(Predicate):
@@ -13372,10 +17497,23 @@ class FieldOneOfPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldOneOfPredicate'}
 
-    def __init__(self, field=Undefined, oneOf=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldOneOfPredicate, self).__init__(field=field, oneOf=oneOf, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldOneOfPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        oneOf: Union[
+            Union[List[str], List[float], List[bool], List["DateTime"]], UndefinedType
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOneOfPredicate, self).__init__(
+            field=field, oneOf=oneOf, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldRangePredicate(Predicate):
@@ -13394,10 +17532,24 @@ class FieldRangePredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldRangePredicate'}
 
-    def __init__(self, field=Undefined, range=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldRangePredicate, self).__init__(field=field, range=range, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldRangePredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        range: Union[
+            Union[List[Union[float, "DateTime", None, "ExprRef"]], "ExprRef"],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldRangePredicate, self).__init__(
+            field=field, range=range, timeUnit=timeUnit, **kwds
+        )
 
 
 class FieldValidPredicate(Predicate):
@@ -13417,10 +17569,21 @@ class FieldValidPredicate(Predicate):
     timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
         Time unit for the field to be tested.
     """
-    _schema = {'$ref': '#/definitions/FieldValidPredicate'}
 
-    def __init__(self, field=Undefined, valid=Undefined, timeUnit=Undefined, **kwds):
-        super(FieldValidPredicate, self).__init__(field=field, valid=valid, timeUnit=timeUnit, **kwds)
+    _schema = {"$ref": "#/definitions/FieldValidPredicate"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        valid: Union[bool, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldValidPredicate, self).__init__(
+            field=field, valid=valid, timeUnit=timeUnit, **kwds
+        )
 
 
 class ParameterPredicate(Predicate):
@@ -13437,9 +17600,15 @@ class ParameterPredicate(Predicate):
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
-    _schema = {'$ref': '#/definitions/ParameterPredicate'}
 
-    def __init__(self, param=Undefined, empty=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ParameterPredicate"}
+
+    def __init__(
+        self,
+        param: Union[str, UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ParameterPredicate, self).__init__(param=param, empty=empty, **kwds)
 
 
@@ -13552,23 +17721,70 @@ class Projection(VegaLiteSchema):
 
         **Default value:** ``equalEarth``
     """
-    _schema = {'$ref': '#/definitions/Projection'}
 
-    def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
-                 coefficient=Undefined, distance=Undefined, extent=Undefined, fit=Undefined,
-                 fraction=Undefined, lobes=Undefined, parallel=Undefined, parallels=Undefined,
-                 pointRadius=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
-                 size=Undefined, spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined,
-                 **kwds):
-        super(Projection, self).__init__(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
-                                         coefficient=coefficient, distance=distance, extent=extent,
-                                         fit=fit, fraction=fraction, lobes=lobes, parallel=parallel,
-                                         parallels=parallels, pointRadius=pointRadius,
-                                         precision=precision, radius=radius, ratio=ratio,
-                                         reflectX=reflectX, reflectY=reflectY, rotate=rotate,
-                                         scale=scale, size=size, spacing=spacing, tilt=tilt,
-                                         translate=translate, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/Projection"}
+
+    def __init__(
+        self,
+        center: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        clipAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        clipExtent: Union[
+            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+        ] = Undefined,
+        coefficient: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        distance: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        extent: Union[
+            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+        ] = Undefined,
+        fit: Union[Union["Fit", List["Fit"], "ExprRef"], UndefinedType] = Undefined,
+        fraction: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lobes: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        parallel: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        parallels: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        pointRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        precision: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ratio: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        reflectX: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        reflectY: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        rotate: Union[
+            Union[Union["Vector2number", "Vector3number"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tilt: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        translate: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        type: Union[Union["ProjectionType", "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Projection, self).__init__(
+            center=center,
+            clipAngle=clipAngle,
+            clipExtent=clipExtent,
+            coefficient=coefficient,
+            distance=distance,
+            extent=extent,
+            fit=fit,
+            fraction=fraction,
+            lobes=lobes,
+            parallel=parallel,
+            parallels=parallels,
+            pointRadius=pointRadius,
+            precision=precision,
+            radius=radius,
+            ratio=ratio,
+            reflectX=reflectX,
+            reflectY=reflectY,
+            rotate=rotate,
+            scale=scale,
+            size=size,
+            spacing=spacing,
+            tilt=tilt,
+            translate=translate,
+            type=type,
+            **kwds
+        )
 
 
 class ProjectionConfig(VegaLiteSchema):
@@ -13680,24 +17896,70 @@ class ProjectionConfig(VegaLiteSchema):
 
         **Default value:** ``equalEarth``
     """
-    _schema = {'$ref': '#/definitions/ProjectionConfig'}
 
-    def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
-                 coefficient=Undefined, distance=Undefined, extent=Undefined, fit=Undefined,
-                 fraction=Undefined, lobes=Undefined, parallel=Undefined, parallels=Undefined,
-                 pointRadius=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
-                 size=Undefined, spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined,
-                 **kwds):
-        super(ProjectionConfig, self).__init__(center=center, clipAngle=clipAngle,
-                                               clipExtent=clipExtent, coefficient=coefficient,
-                                               distance=distance, extent=extent, fit=fit,
-                                               fraction=fraction, lobes=lobes, parallel=parallel,
-                                               parallels=parallels, pointRadius=pointRadius,
-                                               precision=precision, radius=radius, ratio=ratio,
-                                               reflectX=reflectX, reflectY=reflectY, rotate=rotate,
-                                               scale=scale, size=size, spacing=spacing, tilt=tilt,
-                                               translate=translate, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/ProjectionConfig"}
+
+    def __init__(
+        self,
+        center: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        clipAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        clipExtent: Union[
+            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+        ] = Undefined,
+        coefficient: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        distance: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        extent: Union[
+            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+        ] = Undefined,
+        fit: Union[Union["Fit", List["Fit"], "ExprRef"], UndefinedType] = Undefined,
+        fraction: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lobes: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        parallel: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        parallels: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        pointRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        precision: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ratio: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        reflectX: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        reflectY: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        rotate: Union[
+            Union[Union["Vector2number", "Vector3number"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tilt: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        translate: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
+        type: Union[Union["ProjectionType", "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ProjectionConfig, self).__init__(
+            center=center,
+            clipAngle=clipAngle,
+            clipExtent=clipExtent,
+            coefficient=coefficient,
+            distance=distance,
+            extent=extent,
+            fit=fit,
+            fraction=fraction,
+            lobes=lobes,
+            parallel=parallel,
+            parallels=parallels,
+            pointRadius=pointRadius,
+            precision=precision,
+            radius=radius,
+            ratio=ratio,
+            reflectX=reflectX,
+            reflectY=reflectY,
+            rotate=rotate,
+            scale=scale,
+            size=size,
+            spacing=spacing,
+            tilt=tilt,
+            translate=translate,
+            type=type,
+            **kwds
+        )
 
 
 class ProjectionType(VegaLiteSchema):
@@ -13708,7 +17970,8 @@ class ProjectionType(VegaLiteSchema):
     'gnomonic', 'identity', 'mercator', 'naturalEarth1', 'orthographic', 'stereographic',
     'transverseMercator']
     """
-    _schema = {'$ref': '#/definitions/ProjectionType'}
+
+    _schema = {"$ref": "#/definitions/ProjectionType"}
 
     def __init__(self, *args):
         super(ProjectionType, self).__init__(*args)
@@ -13759,12 +18022,34 @@ class RadialGradient(Gradient):
 
         **Default value:** ``0.5``
     """
-    _schema = {'$ref': '#/definitions/RadialGradient'}
 
-    def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, r1=Undefined, r2=Undefined,
-                 x1=Undefined, x2=Undefined, y1=Undefined, y2=Undefined, **kwds):
-        super(RadialGradient, self).__init__(gradient=gradient, stops=stops, id=id, r1=r1, r2=r2, x1=x1,
-                                             x2=x2, y1=y1, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/RadialGradient"}
+
+    def __init__(
+        self,
+        gradient: Union[str, UndefinedType] = Undefined,
+        stops: Union[List[dict], UndefinedType] = Undefined,
+        id: Union[str, UndefinedType] = Undefined,
+        r1: Union[float, UndefinedType] = Undefined,
+        r2: Union[float, UndefinedType] = Undefined,
+        x1: Union[float, UndefinedType] = Undefined,
+        x2: Union[float, UndefinedType] = Undefined,
+        y1: Union[float, UndefinedType] = Undefined,
+        y2: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(RadialGradient, self).__init__(
+            gradient=gradient,
+            stops=stops,
+            id=id,
+            r1=r1,
+            r2=r2,
+            x1=x1,
+            x2=x2,
+            y1=y1,
+            y2=y2,
+            **kwds
+        )
 
 
 class RangeConfig(VegaLiteSchema):
@@ -13794,12 +18079,30 @@ class RangeConfig(VegaLiteSchema):
         Array of `symbol <https://vega.github.io/vega/docs/marks/symbol/>`__ names or paths
         for the default shape palette.
     """
-    _schema = {'$ref': '#/definitions/RangeConfig'}
 
-    def __init__(self, category=Undefined, diverging=Undefined, heatmap=Undefined, ordinal=Undefined,
-                 ramp=Undefined, symbol=Undefined, **kwds):
-        super(RangeConfig, self).__init__(category=category, diverging=diverging, heatmap=heatmap,
-                                          ordinal=ordinal, ramp=ramp, symbol=symbol, **kwds)
+    _schema = {"$ref": "#/definitions/RangeConfig"}
+
+    def __init__(
+        self,
+        category: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        diverging: Union[
+            Union["RangeScheme", List["Color"]], UndefinedType
+        ] = Undefined,
+        heatmap: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        ordinal: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        ramp: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        symbol: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(RangeConfig, self).__init__(
+            category=category,
+            diverging=diverging,
+            heatmap=heatmap,
+            ordinal=ordinal,
+            ramp=ramp,
+            symbol=symbol,
+            **kwds
+        )
 
 
 class RangeRawArray(VegaLiteSchema):
@@ -13807,7 +18110,8 @@ class RangeRawArray(VegaLiteSchema):
 
     List[float]
     """
-    _schema = {'$ref': '#/definitions/RangeRawArray'}
+
+    _schema = {"$ref": "#/definitions/RangeRawArray"}
 
     def __init__(self, *args):
         super(RangeRawArray, self).__init__(*args)
@@ -13818,7 +18122,8 @@ class RangeScheme(VegaLiteSchema):
 
     Union[:class:`RangeEnum`, :class:`RangeRaw`, Dict[required=[scheme]]]
     """
-    _schema = {'$ref': '#/definitions/RangeScheme'}
+
+    _schema = {"$ref": "#/definitions/RangeScheme"}
 
     def __init__(self, *args, **kwds):
         super(RangeScheme, self).__init__(*args, **kwds)
@@ -13829,7 +18134,8 @@ class RangeEnum(RangeScheme):
 
     Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']
     """
-    _schema = {'$ref': '#/definitions/RangeEnum'}
+
+    _schema = {"$ref": "#/definitions/RangeEnum"}
 
     def __init__(self, *args):
         super(RangeEnum, self).__init__(*args)
@@ -13840,7 +18146,8 @@ class RangeRaw(RangeScheme):
 
     List[Union[None, bool, str, float, :class:`RangeRawArray`]]
     """
-    _schema = {'$ref': '#/definitions/RangeRaw'}
+
+    _schema = {"$ref": "#/definitions/RangeRaw"}
 
     def __init__(self, *args):
         super(RangeRaw, self).__init__(*args)
@@ -14223,58 +18530,176 @@ class RectConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/RectConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, baseline=Undefined,
-                 binSpacing=Undefined, blend=Undefined, color=Undefined, continuousBandSize=Undefined,
-                 cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, description=Undefined, dir=Undefined,
-                 discreteBandSize=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
-                 endAngle=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                 invalid=Undefined, limit=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 minBandSize=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
-                 outerRadius=Undefined, padAngle=Undefined, radius=Undefined, radius2=Undefined,
-                 shape=Undefined, size=Undefined, smooth=Undefined, startAngle=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, theta2=Undefined,
-                 timeUnitBandPosition=Undefined, timeUnitBandSize=Undefined, tooltip=Undefined,
-                 url=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined,
-                 **kwds):
-        super(RectConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                         ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                         baseline=baseline, binSpacing=binSpacing, blend=blend,
-                                         color=color, continuousBandSize=continuousBandSize,
-                                         cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         description=description, dir=dir,
-                                         discreteBandSize=discreteBandSize, dx=dx, dy=dy,
-                                         ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, innerRadius=innerRadius,
-                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                         lineBreak=lineBreak, lineHeight=lineHeight,
-                                         minBandSize=minBandSize, opacity=opacity, order=order,
-                                         orient=orient, outerRadius=outerRadius, padAngle=padAngle,
-                                         radius=radius, radius2=radius2, shape=shape, size=size,
-                                         smooth=smooth, startAngle=startAngle, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, theta2=theta2,
-                                         timeUnitBandPosition=timeUnitBandPosition,
-                                         timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/RectConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        binSpacing: Union[float, UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        continuousBandSize: Union[float, UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        discreteBandSize: Union[
+            Union[float, "RelativeBandSize"], UndefinedType
+        ] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(RectConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            baseline=baseline,
+            binSpacing=binSpacing,
+            blend=blend,
+            color=color,
+            continuousBandSize=continuousBandSize,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            discreteBandSize=discreteBandSize,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            minBandSize=minBandSize,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class RelativeBandSize(VegaLiteSchema):
@@ -14289,9 +18714,10 @@ class RelativeBandSize(VegaLiteSchema):
         The relative band size.  For example ``0.5`` means half of the band scale's band
         width.
     """
-    _schema = {'$ref': '#/definitions/RelativeBandSize'}
 
-    def __init__(self, band=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RelativeBandSize"}
+
+    def __init__(self, band: Union[float, UndefinedType] = Undefined, **kwds):
         super(RelativeBandSize, self).__init__(band=band, **kwds)
 
 
@@ -14308,9 +18734,15 @@ class RepeatMapping(VegaLiteSchema):
     row : List[str]
         An array of fields to be repeated vertically.
     """
-    _schema = {'$ref': '#/definitions/RepeatMapping'}
 
-    def __init__(self, column=Undefined, row=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RepeatMapping"}
+
+    def __init__(
+        self,
+        column: Union[List[str], UndefinedType] = Undefined,
+        row: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(RepeatMapping, self).__init__(column=column, row=row, **kwds)
 
 
@@ -14326,9 +18758,16 @@ class RepeatRef(Field):
     repeat : Literal['row', 'column', 'repeat', 'layer']
 
     """
-    _schema = {'$ref': '#/definitions/RepeatRef'}
 
-    def __init__(self, repeat=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RepeatRef"}
+
+    def __init__(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
         super(RepeatRef, self).__init__(repeat=repeat, **kwds)
 
 
@@ -14350,9 +18789,16 @@ class Resolve(VegaLiteSchema):
     scale : :class:`ScaleResolveMap`
 
     """
-    _schema = {'$ref': '#/definitions/Resolve'}
 
-    def __init__(self, axis=Undefined, legend=Undefined, scale=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/Resolve"}
+
+    def __init__(
+        self,
+        axis: Union[dict, UndefinedType] = Undefined,
+        legend: Union[dict, UndefinedType] = Undefined,
+        scale: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
 
 
@@ -14361,7 +18807,8 @@ class ResolveMode(VegaLiteSchema):
 
     Literal['independent', 'shared']
     """
-    _schema = {'$ref': '#/definitions/ResolveMode'}
+
+    _schema = {"$ref": "#/definitions/ResolveMode"}
 
     def __init__(self, *args):
         super(ResolveMode, self).__init__(*args)
@@ -14380,9 +18827,15 @@ class RowColLayoutAlign(VegaLiteSchema):
     row : :class:`LayoutAlign`
 
     """
-    _schema = {'$ref': '#/definitions/RowCol<LayoutAlign>'}
 
-    def __init__(self, column=Undefined, row=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RowCol<LayoutAlign>"}
+
+    def __init__(
+        self,
+        column: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
+        row: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(RowColLayoutAlign, self).__init__(column=column, row=row, **kwds)
 
 
@@ -14399,9 +18852,15 @@ class RowColboolean(VegaLiteSchema):
     row : bool
 
     """
-    _schema = {'$ref': '#/definitions/RowCol<boolean>'}
 
-    def __init__(self, column=Undefined, row=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RowCol<boolean>"}
+
+    def __init__(
+        self,
+        column: Union[bool, UndefinedType] = Undefined,
+        row: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(RowColboolean, self).__init__(column=column, row=row, **kwds)
 
 
@@ -14418,9 +18877,15 @@ class RowColnumber(VegaLiteSchema):
     row : float
 
     """
-    _schema = {'$ref': '#/definitions/RowCol<number>'}
 
-    def __init__(self, column=Undefined, row=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/RowCol<number>"}
+
+    def __init__(
+        self,
+        column: Union[float, UndefinedType] = Undefined,
+        row: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(RowColnumber, self).__init__(column=column, row=row, **kwds)
 
 
@@ -14633,16 +19098,48 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/RowColumnEncodingFieldDef'}
 
-    def __init__(self, aggregate=Undefined, align=Undefined, bandPosition=Undefined, bin=Undefined,
-                 center=Undefined, field=Undefined, header=Undefined, sort=Undefined, spacing=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(RowColumnEncodingFieldDef, self).__init__(aggregate=aggregate, align=align,
-                                                        bandPosition=bandPosition, bin=bin,
-                                                        center=center, field=field, header=header,
-                                                        sort=sort, spacing=spacing, timeUnit=timeUnit,
-                                                        title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/RowColumnEncodingFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        align: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        center: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        header: Union[Union["Header", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
+        ] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(RowColumnEncodingFieldDef, self).__init__(
+            aggregate=aggregate,
+            align=align,
+            bandPosition=bandPosition,
+            bin=bin,
+            center=center,
+            field=field,
+            header=header,
+            sort=sort,
+            spacing=spacing,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class Scale(VegaLiteSchema):
@@ -14908,21 +19405,112 @@ class Scale(VegaLiteSchema):
 
         **Note:** Log, time, and utc scales do not support ``zero``.
     """
-    _schema = {'$ref': '#/definitions/Scale'}
 
-    def __init__(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined,
-                 constant=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined,
-                 domainMin=Undefined, domainRaw=Undefined, exponent=Undefined, interpolate=Undefined,
-                 nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined,
-                 range=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined,
-                 round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined, **kwds):
-        super(Scale, self).__init__(align=align, base=base, bins=bins, clamp=clamp, constant=constant,
-                                    domain=domain, domainMax=domainMax, domainMid=domainMid,
-                                    domainMin=domainMin, domainRaw=domainRaw, exponent=exponent,
-                                    interpolate=interpolate, nice=nice, padding=padding,
-                                    paddingInner=paddingInner, paddingOuter=paddingOuter, range=range,
-                                    rangeMax=rangeMax, rangeMin=rangeMin, reverse=reverse, round=round,
-                                    scheme=scheme, type=type, zero=zero, **kwds)
+    _schema = {"$ref": "#/definitions/Scale"}
+
+    def __init__(
+        self,
+        align: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        base: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], "ScaleBinParams"], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        constant: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, "DateTime", "ExprRef"]],
+                str,
+                "ParameterExtent",
+                "DomainUnionWith",
+                "ExprRef",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, "DateTime", "ExprRef"], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, "DateTime", "ExprRef"], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union["ScaleInterpolateEnum", "ExprRef", "ScaleInterpolateParams"],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, "TimeInterval", "TimeIntervalStep", "ExprRef"],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                "RangeEnum",
+                List[Union[float, str, List[float], "ExprRef"]],
+                "FieldRange",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        round: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        scheme: Union[
+            Union["ColorScheme", "SchemeParams", "ExprRef"], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(Scale, self).__init__(
+            align=align,
+            base=base,
+            bins=bins,
+            clamp=clamp,
+            constant=constant,
+            domain=domain,
+            domainMax=domainMax,
+            domainMid=domainMid,
+            domainMin=domainMin,
+            domainRaw=domainRaw,
+            exponent=exponent,
+            interpolate=interpolate,
+            nice=nice,
+            padding=padding,
+            paddingInner=paddingInner,
+            paddingOuter=paddingOuter,
+            range=range,
+            rangeMax=rangeMax,
+            rangeMin=rangeMin,
+            reverse=reverse,
+            round=round,
+            scheme=scheme,
+            type=type,
+            zero=zero,
+            **kwds
+        )
 
 
 class ScaleBins(VegaLiteSchema):
@@ -14930,7 +19518,8 @@ class ScaleBins(VegaLiteSchema):
 
     Union[List[float], :class:`ScaleBinParams`]
     """
-    _schema = {'$ref': '#/definitions/ScaleBins'}
+
+    _schema = {"$ref": "#/definitions/ScaleBins"}
 
     def __init__(self, *args, **kwds):
         super(ScaleBins, self).__init__(*args, **kwds)
@@ -14955,9 +19544,16 @@ class ScaleBinParams(ScaleBins):
 
         **Default value:** The highest value of the scale domain will be used.
     """
-    _schema = {'$ref': '#/definitions/ScaleBinParams'}
 
-    def __init__(self, step=Undefined, start=Undefined, stop=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ScaleBinParams"}
+
+    def __init__(
+        self,
+        step: Union[float, UndefinedType] = Undefined,
+        start: Union[float, UndefinedType] = Undefined,
+        stop: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ScaleBinParams, self).__init__(step=step, start=start, stop=stop, **kwds)
 
 
@@ -15099,36 +19695,78 @@ class ScaleConfig(VegaLiteSchema):
 
         **Default value:** ``true``
     """
-    _schema = {'$ref': '#/definitions/ScaleConfig'}
 
-    def __init__(self, bandPaddingInner=Undefined, bandPaddingOuter=Undefined,
-                 bandWithNestedOffsetPaddingInner=Undefined, bandWithNestedOffsetPaddingOuter=Undefined,
-                 barBandPaddingInner=Undefined, clamp=Undefined, continuousPadding=Undefined,
-                 maxBandSize=Undefined, maxFontSize=Undefined, maxOpacity=Undefined, maxSize=Undefined,
-                 maxStrokeWidth=Undefined, minBandSize=Undefined, minFontSize=Undefined,
-                 minOpacity=Undefined, minSize=Undefined, minStrokeWidth=Undefined,
-                 offsetBandPaddingInner=Undefined, offsetBandPaddingOuter=Undefined,
-                 pointPadding=Undefined, quantileCount=Undefined, quantizeCount=Undefined,
-                 rectBandPaddingInner=Undefined, round=Undefined, useUnaggregatedDomain=Undefined,
-                 xReverse=Undefined, zero=Undefined, **kwds):
-        super(ScaleConfig, self).__init__(bandPaddingInner=bandPaddingInner,
-                                          bandPaddingOuter=bandPaddingOuter,
-                                          bandWithNestedOffsetPaddingInner=bandWithNestedOffsetPaddingInner,
-                                          bandWithNestedOffsetPaddingOuter=bandWithNestedOffsetPaddingOuter,
-                                          barBandPaddingInner=barBandPaddingInner, clamp=clamp,
-                                          continuousPadding=continuousPadding, maxBandSize=maxBandSize,
-                                          maxFontSize=maxFontSize, maxOpacity=maxOpacity,
-                                          maxSize=maxSize, maxStrokeWidth=maxStrokeWidth,
-                                          minBandSize=minBandSize, minFontSize=minFontSize,
-                                          minOpacity=minOpacity, minSize=minSize,
-                                          minStrokeWidth=minStrokeWidth,
-                                          offsetBandPaddingInner=offsetBandPaddingInner,
-                                          offsetBandPaddingOuter=offsetBandPaddingOuter,
-                                          pointPadding=pointPadding, quantileCount=quantileCount,
-                                          quantizeCount=quantizeCount,
-                                          rectBandPaddingInner=rectBandPaddingInner, round=round,
-                                          useUnaggregatedDomain=useUnaggregatedDomain,
-                                          xReverse=xReverse, zero=zero, **kwds)
+    _schema = {"$ref": "#/definitions/ScaleConfig"}
+
+    def __init__(
+        self,
+        bandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        bandPaddingOuter: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        bandWithNestedOffsetPaddingInner: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        bandWithNestedOffsetPaddingOuter: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        barBandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        continuousPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        maxBandSize: Union[float, UndefinedType] = Undefined,
+        maxFontSize: Union[float, UndefinedType] = Undefined,
+        maxOpacity: Union[float, UndefinedType] = Undefined,
+        maxSize: Union[float, UndefinedType] = Undefined,
+        maxStrokeWidth: Union[float, UndefinedType] = Undefined,
+        minBandSize: Union[float, UndefinedType] = Undefined,
+        minFontSize: Union[float, UndefinedType] = Undefined,
+        minOpacity: Union[float, UndefinedType] = Undefined,
+        minSize: Union[float, UndefinedType] = Undefined,
+        minStrokeWidth: Union[float, UndefinedType] = Undefined,
+        offsetBandPaddingInner: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        offsetBandPaddingOuter: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        pointPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        quantileCount: Union[float, UndefinedType] = Undefined,
+        quantizeCount: Union[float, UndefinedType] = Undefined,
+        rectBandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        round: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
+        xReverse: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        zero: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ScaleConfig, self).__init__(
+            bandPaddingInner=bandPaddingInner,
+            bandPaddingOuter=bandPaddingOuter,
+            bandWithNestedOffsetPaddingInner=bandWithNestedOffsetPaddingInner,
+            bandWithNestedOffsetPaddingOuter=bandWithNestedOffsetPaddingOuter,
+            barBandPaddingInner=barBandPaddingInner,
+            clamp=clamp,
+            continuousPadding=continuousPadding,
+            maxBandSize=maxBandSize,
+            maxFontSize=maxFontSize,
+            maxOpacity=maxOpacity,
+            maxSize=maxSize,
+            maxStrokeWidth=maxStrokeWidth,
+            minBandSize=minBandSize,
+            minFontSize=minFontSize,
+            minOpacity=minOpacity,
+            minSize=minSize,
+            minStrokeWidth=minStrokeWidth,
+            offsetBandPaddingInner=offsetBandPaddingInner,
+            offsetBandPaddingOuter=offsetBandPaddingOuter,
+            pointPadding=pointPadding,
+            quantileCount=quantileCount,
+            quantizeCount=quantizeCount,
+            rectBandPaddingInner=rectBandPaddingInner,
+            round=round,
+            useUnaggregatedDomain=useUnaggregatedDomain,
+            xReverse=xReverse,
+            zero=zero,
+            **kwds
+        )
 
 
 class ScaleDatumDef(OffsetDef):
@@ -15248,12 +19886,31 @@ class ScaleDatumDef(OffsetDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/ScaleDatumDef'}
 
-    def __init__(self, bandPosition=Undefined, datum=Undefined, scale=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(ScaleDatumDef, self).__init__(bandPosition=bandPosition, datum=datum, scale=scale,
-                                            title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/ScaleDatumDef"}
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(ScaleDatumDef, self).__init__(
+            bandPosition=bandPosition,
+            datum=datum,
+            scale=scale,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class ScaleFieldDef(OffsetDef):
@@ -15463,14 +20120,49 @@ class ScaleFieldDef(OffsetDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/ScaleFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
-                 **kwds):
-        super(ScaleFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                            field=field, scale=scale, sort=sort, timeUnit=timeUnit,
-                                            title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/ScaleFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(ScaleFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class ScaleInterpolateEnum(VegaLiteSchema):
@@ -15478,7 +20170,8 @@ class ScaleInterpolateEnum(VegaLiteSchema):
 
     Literal['rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long', 'cubehelix', 'cubehelix-long']
     """
-    _schema = {'$ref': '#/definitions/ScaleInterpolateEnum'}
+
+    _schema = {"$ref": "#/definitions/ScaleInterpolateEnum"}
 
     def __init__(self, *args):
         super(ScaleInterpolateEnum, self).__init__(*args)
@@ -15497,9 +20190,17 @@ class ScaleInterpolateParams(VegaLiteSchema):
     gamma : float
 
     """
-    _schema = {'$ref': '#/definitions/ScaleInterpolateParams'}
 
-    def __init__(self, type=Undefined, gamma=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ScaleInterpolateParams"}
+
+    def __init__(
+        self,
+        type: Union[
+            Literal["rgb", "cubehelix", "cubehelix-long"], UndefinedType
+        ] = Undefined,
+        gamma: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ScaleInterpolateParams, self).__init__(type=type, gamma=gamma, **kwds)
 
 
@@ -15546,18 +20247,52 @@ class ScaleResolveMap(VegaLiteSchema):
     yOffset : :class:`ResolveMode`
 
     """
-    _schema = {'$ref': '#/definitions/ScaleResolveMap'}
 
-    def __init__(self, angle=Undefined, color=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 opacity=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeDash=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined, theta=Undefined,
-                 x=Undefined, xOffset=Undefined, y=Undefined, yOffset=Undefined, **kwds):
-        super(ScaleResolveMap, self).__init__(angle=angle, color=color, fill=fill,
-                                              fillOpacity=fillOpacity, opacity=opacity, radius=radius,
-                                              shape=shape, size=size, stroke=stroke,
-                                              strokeDash=strokeDash, strokeOpacity=strokeOpacity,
-                                              strokeWidth=strokeWidth, theta=theta, x=x,
-                                              xOffset=xOffset, y=y, yOffset=yOffset, **kwds)
+    _schema = {"$ref": "#/definitions/ScaleResolveMap"}
+
+    def __init__(
+        self,
+        angle: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        color: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        fill: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        fillOpacity: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        opacity: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        radius: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        shape: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        size: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        stroke: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        strokeDash: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        strokeOpacity: Union[
+            Literal["independent", "shared"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        theta: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        x: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        xOffset: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        y: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        yOffset: Union[Literal["independent", "shared"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ScaleResolveMap, self).__init__(
+            angle=angle,
+            color=color,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            opacity=opacity,
+            radius=radius,
+            shape=shape,
+            size=size,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            theta=theta,
+            x=x,
+            xOffset=xOffset,
+            y=y,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class ScaleType(VegaLiteSchema):
@@ -15566,7 +20301,8 @@ class ScaleType(VegaLiteSchema):
     Literal['linear', 'log', 'pow', 'sqrt', 'symlog', 'identity', 'sequential', 'time', 'utc',
     'quantile', 'quantize', 'threshold', 'bin-ordinal', 'ordinal', 'point', 'band']
     """
-    _schema = {'$ref': '#/definitions/ScaleType'}
+
+    _schema = {"$ref": "#/definitions/ScaleType"}
 
     def __init__(self, *args):
         super(ScaleType, self).__init__(*args)
@@ -15594,10 +20330,28 @@ class SchemeParams(VegaLiteSchema):
         color scheme such that color values in the range *[0, 0.2)* are excluded from the
         scheme.
     """
-    _schema = {'$ref': '#/definitions/SchemeParams'}
 
-    def __init__(self, name=Undefined, count=Undefined, extent=Undefined, **kwds):
-        super(SchemeParams, self).__init__(name=name, count=count, extent=extent, **kwds)
+    _schema = {"$ref": "#/definitions/SchemeParams"}
+
+    def __init__(
+        self,
+        name: Union[
+            Union[
+                "Categorical",
+                "SequentialSingleHue",
+                "SequentialMultiHue",
+                "Diverging",
+                "Cyclical",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        count: Union[float, UndefinedType] = Undefined,
+        extent: Union[List[float], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(SchemeParams, self).__init__(
+            name=name, count=count, extent=extent, **kwds
+        )
 
 
 class SecondaryFieldDef(Position2Def):
@@ -15688,12 +20442,32 @@ class SecondaryFieldDef(Position2Def):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     """
-    _schema = {'$ref': '#/definitions/SecondaryFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, title=Undefined, **kwds):
-        super(SecondaryFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                                field=field, timeUnit=timeUnit, title=title, **kwds)
+    _schema = {"$ref": "#/definitions/SecondaryFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[None, UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(SecondaryFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            timeUnit=timeUnit,
+            title=title,
+            **kwds
+        )
 
 
 class SelectionConfig(VegaLiteSchema):
@@ -15721,9 +20495,15 @@ class SelectionConfig(VegaLiteSchema):
         For instance, setting ``point`` to ``{"on": "dblclick"}`` populates point selections
         on double-click by default.
     """
-    _schema = {'$ref': '#/definitions/SelectionConfig'}
 
-    def __init__(self, interval=Undefined, point=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SelectionConfig"}
+
+    def __init__(
+        self,
+        interval: Union[dict, UndefinedType] = Undefined,
+        point: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SelectionConfig, self).__init__(interval=interval, point=point, **kwds)
 
 
@@ -15732,7 +20512,8 @@ class SelectionInit(VegaLiteSchema):
 
     Union[:class:`PrimitiveValue`, :class:`DateTime`]
     """
-    _schema = {'$ref': '#/definitions/SelectionInit'}
+
+    _schema = {"$ref": "#/definitions/SelectionInit"}
 
     def __init__(self, *args, **kwds):
         super(SelectionInit, self).__init__(*args, **kwds)
@@ -15778,14 +20559,36 @@ class DateTime(SelectionInit):
     year : float
         Integer value representing the year.
     """
-    _schema = {'$ref': '#/definitions/DateTime'}
 
-    def __init__(self, date=Undefined, day=Undefined, hours=Undefined, milliseconds=Undefined,
-                 minutes=Undefined, month=Undefined, quarter=Undefined, seconds=Undefined,
-                 utc=Undefined, year=Undefined, **kwds):
-        super(DateTime, self).__init__(date=date, day=day, hours=hours, milliseconds=milliseconds,
-                                       minutes=minutes, month=month, quarter=quarter, seconds=seconds,
-                                       utc=utc, year=year, **kwds)
+    _schema = {"$ref": "#/definitions/DateTime"}
+
+    def __init__(
+        self,
+        date: Union[float, UndefinedType] = Undefined,
+        day: Union[Union["Day", str], UndefinedType] = Undefined,
+        hours: Union[float, UndefinedType] = Undefined,
+        milliseconds: Union[float, UndefinedType] = Undefined,
+        minutes: Union[float, UndefinedType] = Undefined,
+        month: Union[Union["Month", str], UndefinedType] = Undefined,
+        quarter: Union[float, UndefinedType] = Undefined,
+        seconds: Union[float, UndefinedType] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
+        year: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(DateTime, self).__init__(
+            date=date,
+            day=day,
+            hours=hours,
+            milliseconds=milliseconds,
+            minutes=minutes,
+            month=month,
+            quarter=quarter,
+            seconds=seconds,
+            utc=utc,
+            year=year,
+            **kwds
+        )
 
 
 class PrimitiveValue(SelectionInit):
@@ -15793,7 +20596,8 @@ class PrimitiveValue(SelectionInit):
 
     Union[float, str, bool, None]
     """
-    _schema = {'$ref': '#/definitions/PrimitiveValue'}
+
+    _schema = {"$ref": "#/definitions/PrimitiveValue"}
 
     def __init__(self, *args):
         super(PrimitiveValue, self).__init__(*args)
@@ -15805,7 +20609,8 @@ class SelectionInitInterval(VegaLiteSchema):
     Union[:class:`Vector2boolean`, :class:`Vector2number`, :class:`Vector2string`,
     :class:`Vector2DateTime`]
     """
-    _schema = {'$ref': '#/definitions/SelectionInitInterval'}
+
+    _schema = {"$ref": "#/definitions/SelectionInitInterval"}
 
     def __init__(self, *args, **kwds):
         super(SelectionInitInterval, self).__init__(*args, **kwds)
@@ -15816,7 +20621,8 @@ class SelectionInitIntervalMapping(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/SelectionInitIntervalMapping'}
+
+    _schema = {"$ref": "#/definitions/SelectionInitIntervalMapping"}
 
     def __init__(self, **kwds):
         super(SelectionInitIntervalMapping, self).__init__(**kwds)
@@ -15827,7 +20633,8 @@ class SelectionInitMapping(VegaLiteSchema):
 
     Dict[required=[]]
     """
-    _schema = {'$ref': '#/definitions/SelectionInitMapping'}
+
+    _schema = {"$ref": "#/definitions/SelectionInitMapping"}
 
     def __init__(self, **kwds):
         super(SelectionInitMapping, self).__init__(**kwds)
@@ -15878,11 +20685,32 @@ class SelectionParameter(VegaLiteSchema):
         **See also:** `init <https://vega.github.io/vega-lite/docs/value.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/SelectionParameter'}
 
-    def __init__(self, name=Undefined, select=Undefined, bind=Undefined, value=Undefined, **kwds):
-        super(SelectionParameter, self).__init__(name=name, select=select, bind=bind, value=value,
-                                                 **kwds)
+    _schema = {"$ref": "#/definitions/SelectionParameter"}
+
+    def __init__(
+        self,
+        name: Union[str, UndefinedType] = Undefined,
+        select: Union[
+            Union["SelectionType", "PointSelectionConfig", "IntervalSelectionConfig"],
+            UndefinedType,
+        ] = Undefined,
+        bind: Union[
+            Union["Binding", dict, "LegendBinding", str], UndefinedType
+        ] = Undefined,
+        value: Union[
+            Union[
+                "SelectionInit",
+                List["SelectionInitMapping"],
+                "SelectionInitIntervalMapping",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(SelectionParameter, self).__init__(
+            name=name, select=select, bind=bind, value=value, **kwds
+        )
 
 
 class SelectionResolution(VegaLiteSchema):
@@ -15890,7 +20718,8 @@ class SelectionResolution(VegaLiteSchema):
 
     Literal['global', 'union', 'intersect']
     """
-    _schema = {'$ref': '#/definitions/SelectionResolution'}
+
+    _schema = {"$ref": "#/definitions/SelectionResolution"}
 
     def __init__(self, *args):
         super(SelectionResolution, self).__init__(*args)
@@ -15901,7 +20730,8 @@ class SelectionType(VegaLiteSchema):
 
     Literal['point', 'interval']
     """
-    _schema = {'$ref': '#/definitions/SelectionType'}
+
+    _schema = {"$ref": "#/definitions/SelectionType"}
 
     def __init__(self, *args):
         super(SelectionType, self).__init__(*args)
@@ -15920,9 +20750,15 @@ class SequenceGenerator(Generator):
     name : str
         Provide a placeholder name and bind data at runtime.
     """
-    _schema = {'$ref': '#/definitions/SequenceGenerator'}
 
-    def __init__(self, sequence=Undefined, name=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SequenceGenerator"}
+
+    def __init__(
+        self,
+        sequence: Union[dict, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SequenceGenerator, self).__init__(sequence=sequence, name=name, **kwds)
 
 
@@ -15947,9 +20783,16 @@ class SequenceParams(VegaLiteSchema):
 
         **Default value:** ``"data"``
     """
-    _schema = {'$ref': '#/definitions/SequenceParams'}
 
-    def __init__(self, start=Undefined, stop=Undefined, step=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SequenceParams"}
+
+    def __init__(
+        self,
+        start: Union[float, UndefinedType] = Undefined,
+        stop: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SequenceParams, self).__init__(start=start, stop=stop, step=step, **kwds)
 
 
@@ -15996,7 +20839,8 @@ class SequentialMultiHue(ColorScheme):
     'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6',
     'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
     """
-    _schema = {'$ref': '#/definitions/SequentialMultiHue'}
+
+    _schema = {"$ref": "#/definitions/SequentialMultiHue"}
 
     def __init__(self, *args):
         super(SequentialMultiHue, self).__init__(*args)
@@ -16008,7 +20852,8 @@ class SequentialSingleHue(ColorScheme):
     Literal['blues', 'tealblues', 'teals', 'greens', 'browns', 'greys', 'purples', 'warmgreys',
     'reds', 'oranges']
     """
-    _schema = {'$ref': '#/definitions/SequentialSingleHue'}
+
+    _schema = {"$ref": "#/definitions/SequentialSingleHue"}
 
     def __init__(self, *args):
         super(SequentialSingleHue, self).__init__(*args)
@@ -16021,13 +20866,16 @@ class ShapeDef(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`]
     """
-    _schema = {'$ref': '#/definitions/ShapeDef'}
+
+    _schema = {"$ref": "#/definitions/ShapeDef"}
 
     def __init__(self, *args, **kwds):
         super(ShapeDef, self).__init__(*args, **kwds)
 
 
-class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeForShape, ShapeDef):
+class FieldOrDatumDefWithConditionDatumDefstringnull(
+    MarkPropDefstringnullTypeForShape, ShapeDef
+):
     """FieldOrDatumDefWithConditionDatumDefstringnull schema wrapper
 
     Dict[required=[]]
@@ -16138,17 +20986,44 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(MarkPropDefstringnullTypeFo
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<DatumDef,(string|null)>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionDatumDefstringnull, self).__init__(bandPosition=bandPosition,
-                                                                             condition=condition,
-                                                                             datum=datum, title=title,
-                                                                             type=type, **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<DatumDef,(string|null)>"
+    }
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefstringnullExprRef",
+                List["ConditionalValueDefstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionDatumDefstringnull, self).__init__(
+            bandPosition=bandPosition,
+            condition=condition,
+            datum=datum,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
-class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPropDefstringnullTypeForShape, ShapeDef):
+class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
+    MarkPropDefstringnullTypeForShape, ShapeDef
+):
     """FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
 
     Dict[required=[]]
@@ -16371,23 +21246,63 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull, self).__init__(aggregate=aggregate,
-                                                                                                 bandPosition=bandPosition,
-                                                                                                 bin=bin,
-                                                                                                 condition=condition,
-                                                                                                 field=field,
-                                                                                                 legend=legend,
-                                                                                                 scale=scale,
-                                                                                                 sort=sort,
-                                                                                                 timeUnit=timeUnit,
-                                                                                                 title=title,
-                                                                                                 type=type,
-                                                                                                 **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefstringnullExprRef",
+                List["ConditionalValueDefstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
+        scale: Union[Union["Scale", None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                "SortArray",
+                "AllSortString",
+                "EncodingSortField",
+                "SortByEncoding",
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["nominal", "ordinal", "geojson"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(
+            FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull, self
+        ).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            legend=legend,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class SharedEncoding(VegaLiteSchema):
@@ -16492,29 +21407,105 @@ class SharedEncoding(VegaLiteSchema):
     yOffset : Dict[required=[]]
 
     """
-    _schema = {'$ref': '#/definitions/SharedEncoding'}
 
-    def __init__(self, angle=Undefined, color=Undefined, description=Undefined, detail=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, href=Undefined, key=Undefined,
-                 latitude=Undefined, latitude2=Undefined, longitude=Undefined, longitude2=Undefined,
-                 opacity=Undefined, order=Undefined, radius=Undefined, radius2=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined, theta=Undefined,
-                 theta2=Undefined, tooltip=Undefined, url=Undefined, x=Undefined, x2=Undefined,
-                 xError=Undefined, xError2=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                 yError=Undefined, yError2=Undefined, yOffset=Undefined, **kwds):
-        super(SharedEncoding, self).__init__(angle=angle, color=color, description=description,
-                                             detail=detail, fill=fill, fillOpacity=fillOpacity,
-                                             href=href, key=key, latitude=latitude, latitude2=latitude2,
-                                             longitude=longitude, longitude2=longitude2,
-                                             opacity=opacity, order=order, radius=radius,
-                                             radius2=radius2, shape=shape, size=size, stroke=stroke,
-                                             strokeDash=strokeDash, strokeOpacity=strokeOpacity,
-                                             strokeWidth=strokeWidth, text=text, theta=theta,
-                                             theta2=theta2, tooltip=tooltip, url=url, x=x, x2=x2,
-                                             xError=xError, xError2=xError2, xOffset=xOffset, y=y,
-                                             y2=y2, yError=yError, yError2=yError2, yOffset=yOffset,
-                                             **kwds)
+    _schema = {"$ref": "#/definitions/SharedEncoding"}
+
+    def __init__(
+        self,
+        angle: Union[dict, UndefinedType] = Undefined,
+        color: Union[dict, UndefinedType] = Undefined,
+        description: Union[dict, UndefinedType] = Undefined,
+        detail: Union[
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
+        ] = Undefined,
+        fill: Union[dict, UndefinedType] = Undefined,
+        fillOpacity: Union[dict, UndefinedType] = Undefined,
+        href: Union[dict, UndefinedType] = Undefined,
+        key: Union[dict, UndefinedType] = Undefined,
+        latitude: Union[dict, UndefinedType] = Undefined,
+        latitude2: Union[dict, UndefinedType] = Undefined,
+        longitude: Union[dict, UndefinedType] = Undefined,
+        longitude2: Union[dict, UndefinedType] = Undefined,
+        opacity: Union[dict, UndefinedType] = Undefined,
+        order: Union[
+            Union[
+                "OrderFieldDef", List["OrderFieldDef"], "OrderValueDef", "OrderOnlyDef"
+            ],
+            UndefinedType,
+        ] = Undefined,
+        radius: Union[dict, UndefinedType] = Undefined,
+        radius2: Union[dict, UndefinedType] = Undefined,
+        shape: Union[dict, UndefinedType] = Undefined,
+        size: Union[dict, UndefinedType] = Undefined,
+        stroke: Union[dict, UndefinedType] = Undefined,
+        strokeDash: Union[dict, UndefinedType] = Undefined,
+        strokeOpacity: Union[dict, UndefinedType] = Undefined,
+        strokeWidth: Union[dict, UndefinedType] = Undefined,
+        text: Union[dict, UndefinedType] = Undefined,
+        theta: Union[dict, UndefinedType] = Undefined,
+        theta2: Union[dict, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[
+                "StringFieldDefWithCondition",
+                "StringValueDefWithCondition",
+                List["StringFieldDef"],
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        url: Union[dict, UndefinedType] = Undefined,
+        x: Union[dict, UndefinedType] = Undefined,
+        x2: Union[dict, UndefinedType] = Undefined,
+        xError: Union[dict, UndefinedType] = Undefined,
+        xError2: Union[dict, UndefinedType] = Undefined,
+        xOffset: Union[dict, UndefinedType] = Undefined,
+        y: Union[dict, UndefinedType] = Undefined,
+        y2: Union[dict, UndefinedType] = Undefined,
+        yError: Union[dict, UndefinedType] = Undefined,
+        yError2: Union[dict, UndefinedType] = Undefined,
+        yOffset: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(SharedEncoding, self).__init__(
+            angle=angle,
+            color=color,
+            description=description,
+            detail=detail,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            href=href,
+            key=key,
+            latitude=latitude,
+            latitude2=latitude2,
+            longitude=longitude,
+            longitude2=longitude2,
+            opacity=opacity,
+            order=order,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            stroke=stroke,
+            strokeDash=strokeDash,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            tooltip=tooltip,
+            url=url,
+            x=x,
+            x2=x2,
+            xError=xError,
+            xError2=xError2,
+            xOffset=xOffset,
+            y=y,
+            y2=y2,
+            yError=yError,
+            yError2=yError2,
+            yOffset=yOffset,
+            **kwds
+        )
 
 
 class SingleDefUnitChannel(VegaLiteSchema):
@@ -16525,7 +21516,8 @@ class SingleDefUnitChannel(VegaLiteSchema):
     'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape',
     'key', 'text', 'href', 'url', 'description']
     """
-    _schema = {'$ref': '#/definitions/SingleDefUnitChannel'}
+
+    _schema = {"$ref": "#/definitions/SingleDefUnitChannel"}
 
     def __init__(self, *args):
         super(SingleDefUnitChannel, self).__init__(*args)
@@ -16537,7 +21529,8 @@ class Sort(VegaLiteSchema):
     Union[:class:`SortArray`, :class:`AllSortString`, :class:`EncodingSortField`,
     :class:`SortByEncoding`, None]
     """
-    _schema = {'$ref': '#/definitions/Sort'}
+
+    _schema = {"$ref": "#/definitions/Sort"}
 
     def __init__(self, *args, **kwds):
         super(Sort, self).__init__(*args, **kwds)
@@ -16548,7 +21541,8 @@ class AllSortString(Sort):
 
     Union[:class:`SortOrder`, :class:`SortByChannel`, :class:`SortByChannelDesc`]
     """
-    _schema = {'$ref': '#/definitions/AllSortString'}
+
+    _schema = {"$ref": "#/definitions/AllSortString"}
 
     def __init__(self, *args, **kwds):
         super(AllSortString, self).__init__(*args, **kwds)
@@ -16584,9 +21578,41 @@ class EncodingSortField(Sort):
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
-    _schema = {'$ref': '#/definitions/EncodingSortField'}
 
-    def __init__(self, field=Undefined, op=Undefined, order=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/EncodingSortField"}
+
+    def __init__(
+        self,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union["SortOrder", None], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(EncodingSortField, self).__init__(field=field, op=op, order=order, **kwds)
 
 
@@ -16595,7 +21621,8 @@ class SortArray(Sort):
 
     Union[List[float], List[str], List[bool], List[:class:`DateTime`]]
     """
-    _schema = {'$ref': '#/definitions/SortArray'}
+
+    _schema = {"$ref": "#/definitions/SortArray"}
 
     def __init__(self, *args, **kwds):
         super(SortArray, self).__init__(*args, **kwds)
@@ -16607,7 +21634,8 @@ class SortByChannel(AllSortString):
     Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity',
     'strokeOpacity', 'opacity', 'text']
     """
-    _schema = {'$ref': '#/definitions/SortByChannel'}
+
+    _schema = {"$ref": "#/definitions/SortByChannel"}
 
     def __init__(self, *args):
         super(SortByChannel, self).__init__(*args)
@@ -16619,7 +21647,8 @@ class SortByChannelDesc(AllSortString):
     Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape',
     '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
     """
-    _schema = {'$ref': '#/definitions/SortByChannelDesc'}
+
+    _schema = {"$ref": "#/definitions/SortByChannelDesc"}
 
     def __init__(self, *args):
         super(SortByChannelDesc, self).__init__(*args)
@@ -16641,9 +21670,31 @@ class SortByEncoding(Sort):
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
-    _schema = {'$ref': '#/definitions/SortByEncoding'}
 
-    def __init__(self, encoding=Undefined, order=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SortByEncoding"}
+
+    def __init__(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union["SortOrder", None], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SortByEncoding, self).__init__(encoding=encoding, order=order, **kwds)
 
 
@@ -16662,9 +21713,15 @@ class SortField(VegaLiteSchema):
         Whether to sort the field in ascending or descending order. One of ``"ascending"``
         (default), ``"descending"``, or ``null`` (no not sort).
     """
-    _schema = {'$ref': '#/definitions/SortField'}
 
-    def __init__(self, field=Undefined, order=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SortField"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        order: Union[Union["SortOrder", None], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SortField, self).__init__(field=field, order=order, **kwds)
 
 
@@ -16673,7 +21730,8 @@ class SortOrder(AllSortString):
 
     Literal['ascending', 'descending']
     """
-    _schema = {'$ref': '#/definitions/SortOrder'}
+
+    _schema = {"$ref": "#/definitions/SortOrder"}
 
     def __init__(self, *args):
         super(SortOrder, self).__init__(*args)
@@ -16687,7 +21745,8 @@ class Spec(VegaLiteSchema):
     :class:`HConcatSpecGenericSpec`]
     Any specification in Vega-Lite.
     """
-    _schema = {'$ref': '#/definitions/Spec'}
+
+    _schema = {"$ref": "#/definitions/Spec"}
 
     def __init__(self, *args, **kwds):
         super(Spec, self).__init__(*args, **kwds)
@@ -16781,16 +21840,80 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/ConcatSpec<GenericSpec>'}
 
-    def __init__(self, concat=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
-                 columns=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
-        super(ConcatSpecGenericSpec, self).__init__(concat=concat, align=align, bounds=bounds,
-                                                    center=center, columns=columns, data=data,
-                                                    description=description, name=name, resolve=resolve,
-                                                    spacing=spacing, title=title, transform=transform,
-                                                    **kwds)
+    _schema = {"$ref": "#/definitions/ConcatSpec<GenericSpec>"}
+
+    def __init__(
+        self,
+        concat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(ConcatSpecGenericSpec, self).__init__(
+            concat=concat,
+            align=align,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class FacetSpec(Spec, NonNormalizedSpec):
@@ -16887,16 +22010,69 @@ class FacetSpec(Spec, NonNormalizedSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/FacetSpec'}
 
-    def __init__(self, facet=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
-                 center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
-                 name=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(FacetSpec, self).__init__(facet=facet, spec=spec, align=align, bounds=bounds,
-                                        center=center, columns=columns, data=data,
-                                        description=description, name=name, resolve=resolve,
-                                        spacing=spacing, title=title, transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/FacetSpec"}
+
+    def __init__(
+        self,
+        facet: Union[Union["FacetFieldDef", "FacetMapping"], UndefinedType] = Undefined,
+        spec: Union[Union["LayerSpec", "FacetedUnitSpec"], UndefinedType] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FacetSpec, self).__init__(
+            facet=facet,
+            spec=spec,
+            align=align,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class FacetedUnitSpec(Spec, NonNormalizedSpec):
@@ -17026,19 +22202,79 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FacetedUnitSpec'}
 
-    def __init__(self, mark=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
-                 data=Undefined, description=Undefined, encoding=Undefined, height=Undefined,
-                 name=Undefined, params=Undefined, projection=Undefined, resolve=Undefined,
-                 spacing=Undefined, title=Undefined, transform=Undefined, view=Undefined,
-                 width=Undefined, **kwds):
-        super(FacetedUnitSpec, self).__init__(mark=mark, align=align, bounds=bounds, center=center,
-                                              data=data, description=description, encoding=encoding,
-                                              height=height, name=name, params=params,
-                                              projection=projection, resolve=resolve, spacing=spacing,
-                                              title=title, transform=transform, view=view, width=width,
-                                              **kwds)
+    _schema = {"$ref": "#/definitions/FacetedUnitSpec"}
+
+    def __init__(
+        self,
+        mark: Union[
+            Union["CompositeMark", "CompositeMarkDef", "Mark", "MarkDef"], UndefinedType
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        params: Union[List[dict], UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        width: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(FacetedUnitSpec, self).__init__(
+            mark=mark,
+            align=align,
+            bounds=bounds,
+            center=center,
+            data=data,
+            description=description,
+            encoding=encoding,
+            height=height,
+            name=name,
+            params=params,
+            projection=projection,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            view=view,
+            width=width,
+            **kwds
+        )
 
 
 class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
@@ -17087,15 +22323,74 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/HConcatSpec<GenericSpec>'}
 
-    def __init__(self, hconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
-                 description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
-                 title=Undefined, transform=Undefined, **kwds):
-        super(HConcatSpecGenericSpec, self).__init__(hconcat=hconcat, bounds=bounds, center=center,
-                                                     data=data, description=description, name=name,
-                                                     resolve=resolve, spacing=spacing, title=title,
-                                                     transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/HConcatSpec<GenericSpec>"}
+
+    def __init__(
+        self,
+        hconcat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[bool, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(HConcatSpecGenericSpec, self).__init__(
+            hconcat=hconcat,
+            bounds=bounds,
+            center=center,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class LayerSpec(Spec, NonNormalizedSpec):
@@ -17179,15 +22474,65 @@ class LayerSpec(Spec, NonNormalizedSpec):
         **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/LayerSpec'}
 
-    def __init__(self, layer=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(LayerSpec, self).__init__(layer=layer, data=data, description=description,
-                                        encoding=encoding, height=height, name=name,
-                                        projection=projection, resolve=resolve, title=title,
-                                        transform=transform, view=view, width=width, **kwds)
+    _schema = {"$ref": "#/definitions/LayerSpec"}
+
+    def __init__(
+        self,
+        layer: Union[List[Union["LayerSpec", "UnitSpec"]], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        width: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LayerSpec, self).__init__(
+            layer=layer,
+            data=data,
+            description=description,
+            encoding=encoding,
+            height=height,
+            name=name,
+            projection=projection,
+            resolve=resolve,
+            title=title,
+            transform=transform,
+            view=view,
+            width=width,
+            **kwds
+        )
 
 
 class RepeatSpec(Spec, NonNormalizedSpec):
@@ -17195,7 +22540,8 @@ class RepeatSpec(Spec, NonNormalizedSpec):
 
     Union[:class:`NonLayerRepeatSpec`, :class:`LayerRepeatSpec`]
     """
-    _schema = {'$ref': '#/definitions/RepeatSpec'}
+
+    _schema = {"$ref": "#/definitions/RepeatSpec"}
 
     def __init__(self, *args, **kwds):
         super(RepeatSpec, self).__init__(*args, **kwds)
@@ -17296,16 +22642,69 @@ class LayerRepeatSpec(RepeatSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/LayerRepeatSpec'}
 
-    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
-                 center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
-                 name=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(LayerRepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align, bounds=bounds,
-                                              center=center, columns=columns, data=data,
-                                              description=description, name=name, resolve=resolve,
-                                              spacing=spacing, title=title, transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/LayerRepeatSpec"}
+
+    def __init__(
+        self,
+        repeat: Union[dict, UndefinedType] = Undefined,
+        spec: Union[Union["LayerSpec", "UnitSpecWithFrame"], UndefinedType] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(LayerRepeatSpec, self).__init__(
+            repeat=repeat,
+            spec=spec,
+            align=align,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class NonLayerRepeatSpec(RepeatSpec):
@@ -17404,17 +22803,80 @@ class NonLayerRepeatSpec(RepeatSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/NonLayerRepeatSpec'}
 
-    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
-                 center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
-                 name=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(NonLayerRepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align, bounds=bounds,
-                                                 center=center, columns=columns, data=data,
-                                                 description=description, name=name, resolve=resolve,
-                                                 spacing=spacing, title=title, transform=transform,
-                                                 **kwds)
+    _schema = {"$ref": "#/definitions/NonLayerRepeatSpec"}
+
+    def __init__(
+        self,
+        repeat: Union[Union[List[str], "RepeatMapping"], UndefinedType] = Undefined,
+        spec: Union[
+            Union[
+                "FacetedUnitSpec",
+                "LayerSpec",
+                "RepeatSpec",
+                "FacetSpec",
+                "ConcatSpecGenericSpec",
+                "VConcatSpecGenericSpec",
+                "HConcatSpecGenericSpec",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(NonLayerRepeatSpec, self).__init__(
+            repeat=repeat,
+            spec=spec,
+            align=align,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class SphereGenerator(Generator):
@@ -17430,9 +22892,15 @@ class SphereGenerator(Generator):
     name : str
         Provide a placeholder name and bind data at runtime.
     """
-    _schema = {'$ref': '#/definitions/SphereGenerator'}
 
-    def __init__(self, sphere=Undefined, name=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SphereGenerator"}
+
+    def __init__(
+        self,
+        sphere: Union[Union[bool, dict], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(SphereGenerator, self).__init__(sphere=sphere, name=name, **kwds)
 
 
@@ -17441,7 +22909,8 @@ class StackOffset(VegaLiteSchema):
 
     Literal['zero', 'center', 'normalize']
     """
-    _schema = {'$ref': '#/definitions/StackOffset'}
+
+    _schema = {"$ref": "#/definitions/StackOffset"}
 
     def __init__(self, *args):
         super(StackOffset, self).__init__(*args)
@@ -17452,7 +22921,8 @@ class StandardType(VegaLiteSchema):
 
     Literal['quantitative', 'ordinal', 'temporal', 'nominal']
     """
-    _schema = {'$ref': '#/definitions/StandardType'}
+
+    _schema = {"$ref": "#/definitions/StandardType"}
 
     def __init__(self, *args):
         super(StandardType, self).__init__(*args)
@@ -17472,9 +22942,10 @@ class Step(VegaLiteSchema):
         Whether to apply the step to position scale or offset scale when there are both
         ``x`` and ``xOffset`` or both ``y`` and ``yOffset`` encodings.
     """
-    _schema = {'$ref': '#/definitions/Step'}
 
-    def __init__(self, step=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/Step"}
+
+    def __init__(self, step: Union[float, UndefinedType] = Undefined, **kwds):
         super(Step, self).__init__(step=step, **kwds)
 
 
@@ -17483,7 +22954,8 @@ class StepFor(VegaLiteSchema):
 
     Literal['position', 'offset']
     """
-    _schema = {'$ref': '#/definitions/StepFor'}
+
+    _schema = {"$ref": "#/definitions/StepFor"}
 
     def __init__(self, *args):
         super(StepFor, self).__init__(*args)
@@ -17494,7 +22966,8 @@ class Stream(VegaLiteSchema):
 
     Union[:class:`EventStream`, :class:`DerivedStream`, :class:`MergedStream`]
     """
-    _schema = {'$ref': '#/definitions/Stream'}
+
+    _schema = {"$ref": "#/definitions/Stream"}
 
     def __init__(self, *args, **kwds):
         super(Stream, self).__init__(*args, **kwds)
@@ -17525,13 +22998,52 @@ class DerivedStream(Stream):
     throttle : float
 
     """
-    _schema = {'$ref': '#/definitions/DerivedStream'}
 
-    def __init__(self, stream=Undefined, between=Undefined, consume=Undefined, debounce=Undefined,
-                 filter=Undefined, markname=Undefined, marktype=Undefined, throttle=Undefined, **kwds):
-        super(DerivedStream, self).__init__(stream=stream, between=between, consume=consume,
-                                            debounce=debounce, filter=filter, markname=markname,
-                                            marktype=marktype, throttle=throttle, **kwds)
+    _schema = {"$ref": "#/definitions/DerivedStream"}
+
+    def __init__(
+        self,
+        stream: Union[
+            Union["EventStream", "DerivedStream", "MergedStream"], UndefinedType
+        ] = Undefined,
+        between: Union[
+            List[Union["EventStream", "DerivedStream", "MergedStream"]], UndefinedType
+        ] = Undefined,
+        consume: Union[bool, UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        filter: Union[Union["Expr", List["Expr"]], UndefinedType] = Undefined,
+        markname: Union[str, UndefinedType] = Undefined,
+        marktype: Union[
+            Literal[
+                "arc",
+                "area",
+                "image",
+                "group",
+                "line",
+                "path",
+                "rect",
+                "rule",
+                "shape",
+                "symbol",
+                "text",
+                "trail",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        throttle: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(DerivedStream, self).__init__(
+            stream=stream,
+            between=between,
+            consume=consume,
+            debounce=debounce,
+            filter=filter,
+            markname=markname,
+            marktype=marktype,
+            throttle=throttle,
+            **kwds
+        )
 
 
 class EventStream(Stream):
@@ -17539,7 +23051,8 @@ class EventStream(Stream):
 
     Union[Dict[required=[type]], Dict[required=[source, type]]]
     """
-    _schema = {'$ref': '#/definitions/EventStream'}
+
+    _schema = {"$ref": "#/definitions/EventStream"}
 
     def __init__(self, *args, **kwds):
         super(EventStream, self).__init__(*args, **kwds)
@@ -17570,13 +23083,52 @@ class MergedStream(Stream):
     throttle : float
 
     """
-    _schema = {'$ref': '#/definitions/MergedStream'}
 
-    def __init__(self, merge=Undefined, between=Undefined, consume=Undefined, debounce=Undefined,
-                 filter=Undefined, markname=Undefined, marktype=Undefined, throttle=Undefined, **kwds):
-        super(MergedStream, self).__init__(merge=merge, between=between, consume=consume,
-                                           debounce=debounce, filter=filter, markname=markname,
-                                           marktype=marktype, throttle=throttle, **kwds)
+    _schema = {"$ref": "#/definitions/MergedStream"}
+
+    def __init__(
+        self,
+        merge: Union[
+            List[Union["EventStream", "DerivedStream", "MergedStream"]], UndefinedType
+        ] = Undefined,
+        between: Union[
+            List[Union["EventStream", "DerivedStream", "MergedStream"]], UndefinedType
+        ] = Undefined,
+        consume: Union[bool, UndefinedType] = Undefined,
+        debounce: Union[float, UndefinedType] = Undefined,
+        filter: Union[Union["Expr", List["Expr"]], UndefinedType] = Undefined,
+        markname: Union[str, UndefinedType] = Undefined,
+        marktype: Union[
+            Literal[
+                "arc",
+                "area",
+                "image",
+                "group",
+                "line",
+                "path",
+                "rect",
+                "rule",
+                "shape",
+                "symbol",
+                "text",
+                "trail",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        throttle: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(MergedStream, self).__init__(
+            merge=merge,
+            between=between,
+            consume=consume,
+            debounce=debounce,
+            filter=filter,
+            markname=markname,
+            marktype=marktype,
+            throttle=throttle,
+            **kwds
+        )
 
 
 class StringFieldDef(VegaLiteSchema):
@@ -17768,14 +23320,40 @@ class StringFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/StringFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 format=Undefined, formatType=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, **kwds):
-        super(StringFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                             field=field, format=format, formatType=formatType,
-                                             timeUnit=timeUnit, title=title, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/StringFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(StringFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class StringFieldDefWithCondition(VegaLiteSchema):
@@ -17974,17 +23552,48 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/StringFieldDefWithCondition'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(StringFieldDefWithCondition, self).__init__(aggregate=aggregate,
-                                                          bandPosition=bandPosition, bin=bin,
-                                                          condition=condition, field=field,
-                                                          format=format, formatType=formatType,
-                                                          timeUnit=timeUnit, title=title, type=type,
-                                                          **kwds)
+    _schema = {"$ref": "#/definitions/StringFieldDefWithCondition"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefstringExprRef",
+                List["ConditionalValueDefstringExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(StringFieldDefWithCondition, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class StringValueDefWithCondition(VegaLiteSchema):
@@ -18002,10 +23611,25 @@ class StringValueDefWithCondition(VegaLiteSchema):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/StringValueDefWithCondition'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(StringValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/StringValueDefWithCondition"}
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefstringnullExprRef",
+                List["ConditionalValueDefstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(StringValueDefWithCondition, self).__init__(
+            condition=condition, value=value, **kwds
+        )
 
 
 class StrokeCap(VegaLiteSchema):
@@ -18013,7 +23637,8 @@ class StrokeCap(VegaLiteSchema):
 
     Literal['butt', 'round', 'square']
     """
-    _schema = {'$ref': '#/definitions/StrokeCap'}
+
+    _schema = {"$ref": "#/definitions/StrokeCap"}
 
     def __init__(self, *args):
         super(StrokeCap, self).__init__(*args)
@@ -18024,7 +23649,8 @@ class StrokeJoin(VegaLiteSchema):
 
     Literal['miter', 'round', 'bevel']
     """
-    _schema = {'$ref': '#/definitions/StrokeJoin'}
+
+    _schema = {"$ref": "#/definitions/StrokeJoin"}
 
     def __init__(self, *args):
         super(StrokeJoin, self).__init__(*args)
@@ -18077,16 +23703,46 @@ class StyleConfigIndex(VegaLiteSchema):
     guide-title : :class:`MarkConfig`
         Default style for axis, legend, and header titles.
     """
-    _schema = {'$ref': '#/definitions/StyleConfigIndex'}
 
-    def __init__(self, arc=Undefined, area=Undefined, bar=Undefined, circle=Undefined,
-                 geoshape=Undefined, image=Undefined, line=Undefined, mark=Undefined, point=Undefined,
-                 rect=Undefined, rule=Undefined, square=Undefined, text=Undefined, tick=Undefined,
-                 trail=Undefined, **kwds):
-        super(StyleConfigIndex, self).__init__(arc=arc, area=area, bar=bar, circle=circle,
-                                               geoshape=geoshape, image=image, line=line, mark=mark,
-                                               point=point, rect=rect, rule=rule, square=square,
-                                               text=text, tick=tick, trail=trail, **kwds)
+    _schema = {"$ref": "#/definitions/StyleConfigIndex"}
+
+    def __init__(
+        self,
+        arc: Union[dict, UndefinedType] = Undefined,
+        area: Union[dict, UndefinedType] = Undefined,
+        bar: Union[dict, UndefinedType] = Undefined,
+        circle: Union[dict, UndefinedType] = Undefined,
+        geoshape: Union[dict, UndefinedType] = Undefined,
+        image: Union[dict, UndefinedType] = Undefined,
+        line: Union[dict, UndefinedType] = Undefined,
+        mark: Union[dict, UndefinedType] = Undefined,
+        point: Union[dict, UndefinedType] = Undefined,
+        rect: Union[dict, UndefinedType] = Undefined,
+        rule: Union[dict, UndefinedType] = Undefined,
+        square: Union[dict, UndefinedType] = Undefined,
+        text: Union[dict, UndefinedType] = Undefined,
+        tick: Union[dict, UndefinedType] = Undefined,
+        trail: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(StyleConfigIndex, self).__init__(
+            arc=arc,
+            area=area,
+            bar=bar,
+            circle=circle,
+            geoshape=geoshape,
+            image=image,
+            line=line,
+            mark=mark,
+            point=point,
+            rect=rect,
+            rule=rule,
+            square=square,
+            text=text,
+            tick=tick,
+            trail=trail,
+            **kwds
+        )
 
 
 class SymbolShape(VegaLiteSchema):
@@ -18094,7 +23750,8 @@ class SymbolShape(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/SymbolShape'}
+
+    _schema = {"$ref": "#/definitions/SymbolShape"}
 
     def __init__(self, *args):
         super(SymbolShape, self).__init__(*args)
@@ -18105,7 +23762,8 @@ class Text(VegaLiteSchema):
 
     Union[str, List[str]]
     """
-    _schema = {'$ref': '#/definitions/Text'}
+
+    _schema = {"$ref": "#/definitions/Text"}
 
     def __init__(self, *args, **kwds):
         super(Text, self).__init__(*args, **kwds)
@@ -18116,7 +23774,8 @@ class TextBaseline(VegaLiteSchema):
 
     Union[str, :class:`Baseline`, str, str]
     """
-    _schema = {'$ref': '#/definitions/TextBaseline'}
+
+    _schema = {"$ref": "#/definitions/TextBaseline"}
 
     def __init__(self, *args, **kwds):
         super(TextBaseline, self).__init__(*args, **kwds)
@@ -18127,7 +23786,8 @@ class Baseline(TextBaseline):
 
     Literal['top', 'middle', 'bottom']
     """
-    _schema = {'$ref': '#/definitions/Baseline'}
+
+    _schema = {"$ref": "#/definitions/Baseline"}
 
     def __init__(self, *args):
         super(Baseline, self).__init__(*args)
@@ -18140,7 +23800,8 @@ class TextDef(VegaLiteSchema):
     :class:`FieldOrDatumDefWithConditionStringDatumDefText`,
     :class:`ValueDefWithConditionStringFieldDefText`]
     """
-    _schema = {'$ref': '#/definitions/TextDef'}
+
+    _schema = {"$ref": "#/definitions/TextDef"}
 
     def __init__(self, *args, **kwds):
         super(TextDef, self).__init__(*args, **kwds)
@@ -18291,16 +23952,42 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<StringDatumDef,Text>'}
 
-    def __init__(self, bandPosition=Undefined, condition=Undefined, datum=Undefined, format=Undefined,
-                 formatType=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionStringDatumDefText, self).__init__(bandPosition=bandPosition,
-                                                                             condition=condition,
-                                                                             datum=datum, format=format,
-                                                                             formatType=formatType,
-                                                                             title=title, type=type,
-                                                                             **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<StringDatumDef,Text>"
+    }
+
+    def __init__(
+        self,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefTextExprRef", List["ConditionalValueDefTextExprRef"]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        datum: Union[
+            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionStringDatumDefText, self).__init__(
+            bandPosition=bandPosition,
+            condition=condition,
+            datum=datum,
+            format=format,
+            formatType=formatType,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
@@ -18499,20 +24186,49 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/FieldOrDatumDefWithCondition<StringFieldDef,Text>'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, **kwds):
-        super(FieldOrDatumDefWithConditionStringFieldDefText, self).__init__(aggregate=aggregate,
-                                                                             bandPosition=bandPosition,
-                                                                             bin=bin,
-                                                                             condition=condition,
-                                                                             field=field, format=format,
-                                                                             formatType=formatType,
-                                                                             timeUnit=timeUnit,
-                                                                             title=title, type=type,
-                                                                             **kwds)
+    _schema = {
+        "$ref": "#/definitions/FieldOrDatumDefWithCondition<StringFieldDef,Text>"
+    }
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        condition: Union[
+            Union[
+                "ConditionalValueDefTextExprRef", List["ConditionalValueDefTextExprRef"]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(FieldOrDatumDefWithConditionStringFieldDefText, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            condition=condition,
+            field=field,
+            format=format,
+            formatType=formatType,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class TextDirection(VegaLiteSchema):
@@ -18520,7 +24236,8 @@ class TextDirection(VegaLiteSchema):
 
     Literal['ltr', 'rtl']
     """
-    _schema = {'$ref': '#/definitions/TextDirection'}
+
+    _schema = {"$ref": "#/definitions/TextDirection"}
 
     def __init__(self, *args):
         super(TextDirection, self).__init__(*args)
@@ -18898,53 +24615,170 @@ class TickConfig(AnyMarkConfig):
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
     """
-    _schema = {'$ref': '#/definitions/TickConfig'}
 
-    def __init__(self, align=Undefined, angle=Undefined, aria=Undefined, ariaRole=Undefined,
-                 ariaRoleDescription=Undefined, aspect=Undefined, bandSize=Undefined,
-                 baseline=Undefined, blend=Undefined, color=Undefined, cornerRadius=Undefined,
-                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
-                 cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
-                 description=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
-                 endAngle=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
-                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 height=Undefined, href=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                 invalid=Undefined, limit=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, outerRadius=Undefined,
-                 padAngle=Undefined, radius=Undefined, radius2=Undefined, shape=Undefined,
-                 size=Undefined, smooth=Undefined, startAngle=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, theta2=Undefined, thickness=Undefined, timeUnitBandPosition=Undefined,
-                 timeUnitBandSize=Undefined, tooltip=Undefined, url=Undefined, width=Undefined,
-                 x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
-        super(TickConfig, self).__init__(align=align, angle=angle, aria=aria, ariaRole=ariaRole,
-                                         ariaRoleDescription=ariaRoleDescription, aspect=aspect,
-                                         bandSize=bandSize, baseline=baseline, blend=blend, color=color,
-                                         cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         description=description, dir=dir, dx=dx, dy=dy,
-                                         ellipsis=ellipsis, endAngle=endAngle, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, innerRadius=innerRadius,
-                                         interpolate=interpolate, invalid=invalid, limit=limit,
-                                         lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity,
-                                         order=order, orient=orient, outerRadius=outerRadius,
-                                         padAngle=padAngle, radius=radius, radius2=radius2, shape=shape,
-                                         size=size, smooth=smooth, startAngle=startAngle, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, theta2=theta2,
-                                         thickness=thickness, timeUnitBandPosition=timeUnitBandPosition,
-                                         timeUnitBandSize=timeUnitBandSize, tooltip=tooltip, url=url,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+    _schema = {"$ref": "#/definitions/TickConfig"}
+
+    def __init__(
+        self,
+        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        bandSize: Union[float, UndefinedType] = Undefined,
+        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusBottomLeft: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusBottomRight: Union[
+            Union[float, "ExprRef"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
+        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        filled: Union[bool, UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        shape: Union[
+            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        thickness: Union[float, UndefinedType] = Undefined,
+        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
+        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
+        tooltip: Union[
+            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+        ] = Undefined,
+        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TickConfig, self).__init__(
+            align=align,
+            angle=angle,
+            aria=aria,
+            ariaRole=ariaRole,
+            ariaRoleDescription=ariaRoleDescription,
+            aspect=aspect,
+            bandSize=bandSize,
+            baseline=baseline,
+            blend=blend,
+            color=color,
+            cornerRadius=cornerRadius,
+            cornerRadiusBottomLeft=cornerRadiusBottomLeft,
+            cornerRadiusBottomRight=cornerRadiusBottomRight,
+            cornerRadiusTopLeft=cornerRadiusTopLeft,
+            cornerRadiusTopRight=cornerRadiusTopRight,
+            cursor=cursor,
+            description=description,
+            dir=dir,
+            dx=dx,
+            dy=dy,
+            ellipsis=ellipsis,
+            endAngle=endAngle,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            filled=filled,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            height=height,
+            href=href,
+            innerRadius=innerRadius,
+            interpolate=interpolate,
+            invalid=invalid,
+            limit=limit,
+            lineBreak=lineBreak,
+            lineHeight=lineHeight,
+            opacity=opacity,
+            order=order,
+            orient=orient,
+            outerRadius=outerRadius,
+            padAngle=padAngle,
+            radius=radius,
+            radius2=radius2,
+            shape=shape,
+            size=size,
+            smooth=smooth,
+            startAngle=startAngle,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOffset=strokeOffset,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            tension=tension,
+            text=text,
+            theta=theta,
+            theta2=theta2,
+            thickness=thickness,
+            timeUnitBandPosition=timeUnitBandPosition,
+            timeUnitBandSize=timeUnitBandSize,
+            tooltip=tooltip,
+            url=url,
+            width=width,
+            x=x,
+            x2=x2,
+            y=y,
+            y2=y2,
+            **kwds
+        )
 
 
 class TickCount(VegaLiteSchema):
@@ -18952,7 +24786,8 @@ class TickCount(VegaLiteSchema):
 
     Union[float, :class:`TimeInterval`, :class:`TimeIntervalStep`]
     """
-    _schema = {'$ref': '#/definitions/TickCount'}
+
+    _schema = {"$ref": "#/definitions/TickCount"}
 
     def __init__(self, *args, **kwds):
         super(TickCount, self).__init__(*args, **kwds)
@@ -18963,7 +24798,8 @@ class TimeInterval(TickCount):
 
     Literal['millisecond', 'second', 'minute', 'hour', 'day', 'week', 'month', 'year']
     """
-    _schema = {'$ref': '#/definitions/TimeInterval'}
+
+    _schema = {"$ref": "#/definitions/TimeInterval"}
 
     def __init__(self, *args):
         super(TimeInterval, self).__init__(*args)
@@ -18982,9 +24818,27 @@ class TimeIntervalStep(TickCount):
     step : float
 
     """
-    _schema = {'$ref': '#/definitions/TimeIntervalStep'}
 
-    def __init__(self, interval=Undefined, step=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/TimeIntervalStep"}
+
+    def __init__(
+        self,
+        interval: Union[
+            Literal[
+                "millisecond",
+                "second",
+                "minute",
+                "hour",
+                "day",
+                "week",
+                "month",
+                "year",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(TimeIntervalStep, self).__init__(interval=interval, step=step, **kwds)
 
 
@@ -19014,13 +24868,32 @@ class TimeLocale(VegaLiteSchema):
     time : str
         The time (%X) format specifier (e.g., "%H:%M:%S").
     """
-    _schema = {'$ref': '#/definitions/TimeLocale'}
 
-    def __init__(self, date=Undefined, dateTime=Undefined, days=Undefined, months=Undefined,
-                 periods=Undefined, shortDays=Undefined, shortMonths=Undefined, time=Undefined, **kwds):
-        super(TimeLocale, self).__init__(date=date, dateTime=dateTime, days=days, months=months,
-                                         periods=periods, shortDays=shortDays, shortMonths=shortMonths,
-                                         time=time, **kwds)
+    _schema = {"$ref": "#/definitions/TimeLocale"}
+
+    def __init__(
+        self,
+        date: Union[str, UndefinedType] = Undefined,
+        dateTime: Union[str, UndefinedType] = Undefined,
+        days: Union[List[str], UndefinedType] = Undefined,
+        months: Union[List[str], UndefinedType] = Undefined,
+        periods: Union[List[str], UndefinedType] = Undefined,
+        shortDays: Union[List[str], UndefinedType] = Undefined,
+        shortMonths: Union[List[str], UndefinedType] = Undefined,
+        time: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TimeLocale, self).__init__(
+            date=date,
+            dateTime=dateTime,
+            days=days,
+            months=months,
+            periods=periods,
+            shortDays=shortDays,
+            shortMonths=shortMonths,
+            time=time,
+            **kwds
+        )
 
 
 class TimeUnit(VegaLiteSchema):
@@ -19028,7 +24901,8 @@ class TimeUnit(VegaLiteSchema):
 
     Union[:class:`SingleTimeUnit`, :class:`MultiTimeUnit`]
     """
-    _schema = {'$ref': '#/definitions/TimeUnit'}
+
+    _schema = {"$ref": "#/definitions/TimeUnit"}
 
     def __init__(self, *args, **kwds):
         super(TimeUnit, self).__init__(*args, **kwds)
@@ -19039,7 +24913,8 @@ class MultiTimeUnit(TimeUnit):
 
     Union[:class:`LocalMultiTimeUnit`, :class:`UtcMultiTimeUnit`]
     """
-    _schema = {'$ref': '#/definitions/MultiTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/MultiTimeUnit"}
 
     def __init__(self, *args, **kwds):
         super(MultiTimeUnit, self).__init__(*args, **kwds)
@@ -19057,7 +24932,8 @@ class LocalMultiTimeUnit(MultiTimeUnit):
     'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds',
     'minutesseconds', 'secondsmilliseconds']
     """
-    _schema = {'$ref': '#/definitions/LocalMultiTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/LocalMultiTimeUnit"}
 
     def __init__(self, *args):
         super(LocalMultiTimeUnit, self).__init__(*args)
@@ -19068,7 +24944,8 @@ class SingleTimeUnit(TimeUnit):
 
     Union[:class:`LocalSingleTimeUnit`, :class:`UtcSingleTimeUnit`]
     """
-    _schema = {'$ref': '#/definitions/SingleTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/SingleTimeUnit"}
 
     def __init__(self, *args, **kwds):
         super(SingleTimeUnit, self).__init__(*args, **kwds)
@@ -19080,7 +24957,8 @@ class LocalSingleTimeUnit(SingleTimeUnit):
     Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes',
     'seconds', 'milliseconds']
     """
-    _schema = {'$ref': '#/definitions/LocalSingleTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/LocalSingleTimeUnit"}
 
     def __init__(self, *args):
         super(LocalSingleTimeUnit, self).__init__(*args)
@@ -19109,12 +24987,23 @@ class TimeUnitParams(VegaLiteSchema):
     utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
     """
-    _schema = {'$ref': '#/definitions/TimeUnitParams'}
 
-    def __init__(self, binned=Undefined, maxbins=Undefined, step=Undefined, unit=Undefined,
-                 utc=Undefined, **kwds):
-        super(TimeUnitParams, self).__init__(binned=binned, maxbins=maxbins, step=step, unit=unit,
-                                             utc=utc, **kwds)
+    _schema = {"$ref": "#/definitions/TimeUnitParams"}
+
+    def __init__(
+        self,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union["SingleTimeUnit", "MultiTimeUnit"], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TimeUnitParams, self).__init__(
+            binned=binned, maxbins=maxbins, step=step, unit=unit, utc=utc, **kwds
+        )
 
 
 class TimeUnitTransformParams(VegaLiteSchema):
@@ -19134,11 +25023,22 @@ class TimeUnitTransformParams(VegaLiteSchema):
     utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
     """
-    _schema = {'$ref': '#/definitions/TimeUnitTransformParams'}
 
-    def __init__(self, maxbins=Undefined, step=Undefined, unit=Undefined, utc=Undefined, **kwds):
-        super(TimeUnitTransformParams, self).__init__(maxbins=maxbins, step=step, unit=unit, utc=utc,
-                                                      **kwds)
+    _schema = {"$ref": "#/definitions/TimeUnitTransformParams"}
+
+    def __init__(
+        self,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union["SingleTimeUnit", "MultiTimeUnit"], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TimeUnitTransformParams, self).__init__(
+            maxbins=maxbins, step=step, unit=unit, utc=utc, **kwds
+        )
 
 
 class TitleAnchor(VegaLiteSchema):
@@ -19146,7 +25046,8 @@ class TitleAnchor(VegaLiteSchema):
 
     Literal[None, 'start', 'middle', 'end']
     """
-    _schema = {'$ref': '#/definitions/TitleAnchor'}
+
+    _schema = {"$ref": "#/definitions/TitleAnchor"}
 
     def __init__(self, *args):
         super(TitleAnchor, self).__init__(*args)
@@ -19234,25 +25135,74 @@ class TitleConfig(VegaLiteSchema):
 
         **Default value:** ``0``.
     """
-    _schema = {'$ref': '#/definitions/TitleConfig'}
 
-    def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, aria=Undefined,
-                 baseline=Undefined, color=Undefined, dx=Undefined, dy=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, frame=Undefined,
-                 limit=Undefined, lineHeight=Undefined, offset=Undefined, orient=Undefined,
-                 subtitleColor=Undefined, subtitleFont=Undefined, subtitleFontSize=Undefined,
-                 subtitleFontStyle=Undefined, subtitleFontWeight=Undefined,
-                 subtitleLineHeight=Undefined, subtitlePadding=Undefined, zindex=Undefined, **kwds):
-        super(TitleConfig, self).__init__(align=align, anchor=anchor, angle=angle, aria=aria,
-                                          baseline=baseline, color=color, dx=dx, dy=dy, font=font,
-                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                          frame=frame, limit=limit, lineHeight=lineHeight,
-                                          offset=offset, orient=orient, subtitleColor=subtitleColor,
-                                          subtitleFont=subtitleFont, subtitleFontSize=subtitleFontSize,
-                                          subtitleFontStyle=subtitleFontStyle,
-                                          subtitleFontWeight=subtitleFontWeight,
-                                          subtitleLineHeight=subtitleLineHeight,
-                                          subtitlePadding=subtitlePadding, zindex=zindex, **kwds)
+    _schema = {"$ref": "#/definitions/TitleConfig"}
+
+    def __init__(
+        self,
+        align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
+        anchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
+        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        frame: Union[
+            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        subtitleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontStyle: Union[
+            Union["FontStyle", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TitleConfig, self).__init__(
+            align=align,
+            anchor=anchor,
+            angle=angle,
+            aria=aria,
+            baseline=baseline,
+            color=color,
+            dx=dx,
+            dy=dy,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            frame=frame,
+            limit=limit,
+            lineHeight=lineHeight,
+            offset=offset,
+            orient=orient,
+            subtitleColor=subtitleColor,
+            subtitleFont=subtitleFont,
+            subtitleFontSize=subtitleFontSize,
+            subtitleFontStyle=subtitleFontStyle,
+            subtitleFontWeight=subtitleFontWeight,
+            subtitleLineHeight=subtitleLineHeight,
+            subtitlePadding=subtitlePadding,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class TitleFrame(VegaLiteSchema):
@@ -19260,7 +25210,8 @@ class TitleFrame(VegaLiteSchema):
 
     Literal['bounds', 'group']
     """
-    _schema = {'$ref': '#/definitions/TitleFrame'}
+
+    _schema = {"$ref": "#/definitions/TitleFrame"}
 
     def __init__(self, *args):
         super(TitleFrame, self).__init__(*args)
@@ -19271,7 +25222,8 @@ class TitleOrient(VegaLiteSchema):
 
     Literal['none', 'left', 'right', 'top', 'bottom']
     """
-    _schema = {'$ref': '#/definitions/TitleOrient'}
+
+    _schema = {"$ref": "#/definitions/TitleOrient"}
 
     def __init__(self, *args):
         super(TitleOrient, self).__init__(*args)
@@ -19379,27 +25331,82 @@ class TitleParams(VegaLiteSchema):
 
         **Default value:** ``0``.
     """
-    _schema = {'$ref': '#/definitions/TitleParams'}
 
-    def __init__(self, text=Undefined, align=Undefined, anchor=Undefined, angle=Undefined,
-                 aria=Undefined, baseline=Undefined, color=Undefined, dx=Undefined, dy=Undefined,
-                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 frame=Undefined, limit=Undefined, lineHeight=Undefined, offset=Undefined,
-                 orient=Undefined, style=Undefined, subtitle=Undefined, subtitleColor=Undefined,
-                 subtitleFont=Undefined, subtitleFontSize=Undefined, subtitleFontStyle=Undefined,
-                 subtitleFontWeight=Undefined, subtitleLineHeight=Undefined, subtitlePadding=Undefined,
-                 zindex=Undefined, **kwds):
-        super(TitleParams, self).__init__(text=text, align=align, anchor=anchor, angle=angle, aria=aria,
-                                          baseline=baseline, color=color, dx=dx, dy=dy, font=font,
-                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                          frame=frame, limit=limit, lineHeight=lineHeight,
-                                          offset=offset, orient=orient, style=style, subtitle=subtitle,
-                                          subtitleColor=subtitleColor, subtitleFont=subtitleFont,
-                                          subtitleFontSize=subtitleFontSize,
-                                          subtitleFontStyle=subtitleFontStyle,
-                                          subtitleFontWeight=subtitleFontWeight,
-                                          subtitleLineHeight=subtitleLineHeight,
-                                          subtitlePadding=subtitlePadding, zindex=zindex, **kwds)
+    _schema = {"$ref": "#/definitions/TitleParams"}
+
+    def __init__(
+        self,
+        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
+        anchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
+        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        frame: Union[
+            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+        ] = Undefined,
+        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        subtitle: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        subtitleColor: Union[
+            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFontStyle: Union[
+            Union["FontStyle", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleFontWeight: Union[
+            Union["FontWeight", "ExprRef"], UndefinedType
+        ] = Undefined,
+        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TitleParams, self).__init__(
+            text=text,
+            align=align,
+            anchor=anchor,
+            angle=angle,
+            aria=aria,
+            baseline=baseline,
+            color=color,
+            dx=dx,
+            dy=dy,
+            font=font,
+            fontSize=fontSize,
+            fontStyle=fontStyle,
+            fontWeight=fontWeight,
+            frame=frame,
+            limit=limit,
+            lineHeight=lineHeight,
+            offset=offset,
+            orient=orient,
+            style=style,
+            subtitle=subtitle,
+            subtitleColor=subtitleColor,
+            subtitleFont=subtitleFont,
+            subtitleFontSize=subtitleFontSize,
+            subtitleFontStyle=subtitleFontStyle,
+            subtitleFontWeight=subtitleFontWeight,
+            subtitleLineHeight=subtitleLineHeight,
+            subtitlePadding=subtitlePadding,
+            zindex=zindex,
+            **kwds
+        )
 
 
 class TooltipContent(VegaLiteSchema):
@@ -19413,9 +25420,14 @@ class TooltipContent(VegaLiteSchema):
     content : Literal['encoding', 'data']
 
     """
-    _schema = {'$ref': '#/definitions/TooltipContent'}
 
-    def __init__(self, content=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/TooltipContent"}
+
+    def __init__(
+        self,
+        content: Union[Literal["encoding", "data"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(TooltipContent, self).__init__(content=content, **kwds)
 
 
@@ -19424,7 +25436,8 @@ class TopLevelParameter(VegaLiteSchema):
 
     Union[:class:`VariableParameter`, :class:`TopLevelSelectionParameter`]
     """
-    _schema = {'$ref': '#/definitions/TopLevelParameter'}
+
+    _schema = {"$ref": "#/definitions/TopLevelParameter"}
 
     def __init__(self, *args, **kwds):
         super(TopLevelParameter, self).__init__(*args, **kwds)
@@ -19479,12 +25492,33 @@ class TopLevelSelectionParameter(TopLevelParameter):
         this property is specified, selections will only be applied to views with the given
         names.
     """
-    _schema = {'$ref': '#/definitions/TopLevelSelectionParameter'}
 
-    def __init__(self, name=Undefined, select=Undefined, bind=Undefined, value=Undefined,
-                 views=Undefined, **kwds):
-        super(TopLevelSelectionParameter, self).__init__(name=name, select=select, bind=bind,
-                                                         value=value, views=views, **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelSelectionParameter"}
+
+    def __init__(
+        self,
+        name: Union[str, UndefinedType] = Undefined,
+        select: Union[
+            Union["SelectionType", "PointSelectionConfig", "IntervalSelectionConfig"],
+            UndefinedType,
+        ] = Undefined,
+        bind: Union[
+            Union["Binding", dict, "LegendBinding", str], UndefinedType
+        ] = Undefined,
+        value: Union[
+            Union[
+                "SelectionInit",
+                List["SelectionInitMapping"],
+                "SelectionInitIntervalMapping",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        views: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelSelectionParameter, self).__init__(
+            name=name, select=select, bind=bind, value=value, views=views, **kwds
+        )
 
 
 class TopLevelSpec(VegaLiteSchema):
@@ -19496,7 +25530,8 @@ class TopLevelSpec(VegaLiteSchema):
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
-    _schema = {'$ref': '#/definitions/TopLevelSpec'}
+
+    _schema = {"$ref": "#/definitions/TopLevelSpec"}
 
     def __init__(self, *args, **kwds):
         super(TopLevelSpec, self).__init__(*args, **kwds)
@@ -19624,20 +25659,99 @@ class TopLevelConcatSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelConcatSpec'}
 
-    def __init__(self, concat=Undefined, align=Undefined, autosize=Undefined, background=Undefined,
-                 bounds=Undefined, center=Undefined, columns=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, params=Undefined, resolve=Undefined, spacing=Undefined,
-                 title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
-        super(TopLevelConcatSpec, self).__init__(concat=concat, align=align, autosize=autosize,
-                                                 background=background, bounds=bounds, center=center,
-                                                 columns=columns, config=config, data=data,
-                                                 datasets=datasets, description=description, name=name,
-                                                 padding=padding, params=params, resolve=resolve,
-                                                 spacing=spacing, title=title, transform=transform,
-                                                 usermeta=usermeta, **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelConcatSpec"}
+
+    def __init__(
+        self,
+        concat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelConcatSpec, self).__init__(
+            concat=concat,
+            align=align,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds
+        )
 
 
 class TopLevelFacetSpec(TopLevelSpec):
@@ -19768,20 +25882,88 @@ class TopLevelFacetSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
 
-    def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, align=Undefined,
-                 autosize=Undefined, background=Undefined, bounds=Undefined, center=Undefined,
-                 columns=Undefined, config=Undefined, datasets=Undefined, description=Undefined,
-                 name=Undefined, padding=Undefined, params=Undefined, resolve=Undefined,
-                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
-        super(TopLevelFacetSpec, self).__init__(data=data, facet=facet, spec=spec, align=align,
-                                                autosize=autosize, background=background, bounds=bounds,
-                                                center=center, columns=columns, config=config,
-                                                datasets=datasets, description=description, name=name,
-                                                padding=padding, params=params, resolve=resolve,
-                                                spacing=spacing, title=title, transform=transform,
-                                                usermeta=usermeta, **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelFacetSpec"}
+
+    def __init__(
+        self,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        facet: Union[Union["FacetFieldDef", "FacetMapping"], UndefinedType] = Undefined,
+        spec: Union[Union["LayerSpec", "UnitSpecWithFrame"], UndefinedType] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        columns: Union[float, UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelFacetSpec, self).__init__(
+            data=data,
+            facet=facet,
+            spec=spec,
+            align=align,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            columns=columns,
+            config=config,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds
+        )
 
 
 class TopLevelHConcatSpec(TopLevelSpec):
@@ -19864,20 +26046,93 @@ class TopLevelHConcatSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
 
-    def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
-                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
-                 description=Undefined, name=Undefined, padding=Undefined, params=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined,
-                 usermeta=Undefined, **kwds):
-        super(TopLevelHConcatSpec, self).__init__(hconcat=hconcat, autosize=autosize,
-                                                  background=background, bounds=bounds, center=center,
-                                                  config=config, data=data, datasets=datasets,
-                                                  description=description, name=name, padding=padding,
-                                                  params=params, resolve=resolve, spacing=spacing,
-                                                  title=title, transform=transform, usermeta=usermeta,
-                                                  **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelHConcatSpec"}
+
+    def __init__(
+        self,
+        hconcat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[bool, UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelHConcatSpec, self).__init__(
+            hconcat=hconcat,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds
+        )
 
 
 class TopLevelLayerSpec(TopLevelSpec):
@@ -19994,20 +26249,84 @@ class TopLevelLayerSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelLayerSpec'}
 
-    def __init__(self, layer=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, padding=Undefined, params=Undefined,
-                 projection=Undefined, resolve=Undefined, title=Undefined, transform=Undefined,
-                 usermeta=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(TopLevelLayerSpec, self).__init__(layer=layer, autosize=autosize, background=background,
-                                                config=config, data=data, datasets=datasets,
-                                                description=description, encoding=encoding,
-                                                height=height, name=name, padding=padding,
-                                                params=params, projection=projection, resolve=resolve,
-                                                title=title, transform=transform, usermeta=usermeta,
-                                                view=view, width=width, **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelLayerSpec"}
+
+    def __init__(
+        self,
+        layer: Union[List[Union["LayerSpec", "UnitSpec"]], UndefinedType] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        width: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelLayerSpec, self).__init__(
+            layer=layer,
+            autosize=autosize,
+            background=background,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            encoding=encoding,
+            height=height,
+            name=name,
+            padding=padding,
+            params=params,
+            projection=projection,
+            resolve=resolve,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            view=view,
+            width=width,
+            **kwds
+        )
 
 
 class TopLevelRepeatSpec(TopLevelSpec):
@@ -20015,7 +26334,8 @@ class TopLevelRepeatSpec(TopLevelSpec):
 
     Union[Dict[required=[repeat, spec]], Dict[required=[repeat, spec]]]
     """
-    _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
+
+    _schema = {"$ref": "#/definitions/TopLevelRepeatSpec"}
 
     def __init__(self, *args, **kwds):
         super(TopLevelRepeatSpec, self).__init__(*args, **kwds)
@@ -20179,22 +26499,96 @@ class TopLevelUnitSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelUnitSpec'}
 
-    def __init__(self, data=Undefined, mark=Undefined, align=Undefined, autosize=Undefined,
-                 background=Undefined, bounds=Undefined, center=Undefined, config=Undefined,
-                 datasets=Undefined, description=Undefined, encoding=Undefined, height=Undefined,
-                 name=Undefined, padding=Undefined, params=Undefined, projection=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined,
-                 usermeta=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(TopLevelUnitSpec, self).__init__(data=data, mark=mark, align=align, autosize=autosize,
-                                               background=background, bounds=bounds, center=center,
-                                               config=config, datasets=datasets,
-                                               description=description, encoding=encoding,
-                                               height=height, name=name, padding=padding, params=params,
-                                               projection=projection, resolve=resolve, spacing=spacing,
-                                               title=title, transform=transform, usermeta=usermeta,
-                                               view=view, width=width, **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelUnitSpec"}
+
+    def __init__(
+        self,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        mark: Union[
+            Union["CompositeMark", "CompositeMarkDef", "Mark", "MarkDef"], UndefinedType
+        ] = Undefined,
+        align: Union[
+            Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
+        ] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        width: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelUnitSpec, self).__init__(
+            data=data,
+            mark=mark,
+            align=align,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            config=config,
+            datasets=datasets,
+            description=description,
+            encoding=encoding,
+            height=height,
+            name=name,
+            padding=padding,
+            params=params,
+            projection=projection,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            view=view,
+            width=width,
+            **kwds
+        )
 
 
 class TopLevelVConcatSpec(TopLevelSpec):
@@ -20277,20 +26671,93 @@ class TopLevelVConcatSpec(TopLevelSpec):
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
-    _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
 
-    def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
-                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
-                 description=Undefined, name=Undefined, padding=Undefined, params=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined,
-                 usermeta=Undefined, **kwds):
-        super(TopLevelVConcatSpec, self).__init__(vconcat=vconcat, autosize=autosize,
-                                                  background=background, bounds=bounds, center=center,
-                                                  config=config, data=data, datasets=datasets,
-                                                  description=description, name=name, padding=padding,
-                                                  params=params, resolve=resolve, spacing=spacing,
-                                                  title=title, transform=transform, usermeta=usermeta,
-                                                  **kwds)
+    _schema = {"$ref": "#/definitions/TopLevelVConcatSpec"}
+
+    def __init__(
+        self,
+        vconcat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        autosize: Union[
+            Union["AutosizeType", "AutoSizeParams"], UndefinedType
+        ] = Undefined,
+        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[bool, UndefinedType] = Undefined,
+        config: Union[dict, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        datasets: Union[dict, UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        params: Union[
+            List[Union["VariableParameter", "TopLevelSelectionParameter"]],
+            UndefinedType,
+        ] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        usermeta: Union[dict, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopLevelVConcatSpec, self).__init__(
+            vconcat=vconcat,
+            autosize=autosize,
+            background=background,
+            bounds=bounds,
+            center=center,
+            config=config,
+            data=data,
+            datasets=datasets,
+            description=description,
+            name=name,
+            padding=padding,
+            params=params,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            usermeta=usermeta,
+            **kwds
+        )
 
 
 class TopoDataFormat(DataFormat):
@@ -20335,10 +26802,20 @@ class TopoDataFormat(DataFormat):
         **Default value:**  The default format type is determined by the extension of the
         file URL. If no extension is detected, ``"json"`` will be used by default.
     """
-    _schema = {'$ref': '#/definitions/TopoDataFormat'}
 
-    def __init__(self, feature=Undefined, mesh=Undefined, parse=Undefined, type=Undefined, **kwds):
-        super(TopoDataFormat, self).__init__(feature=feature, mesh=mesh, parse=parse, type=type, **kwds)
+    _schema = {"$ref": "#/definitions/TopoDataFormat"}
+
+    def __init__(
+        self,
+        feature: Union[str, UndefinedType] = Undefined,
+        mesh: Union[str, UndefinedType] = Undefined,
+        parse: Union[Union["Parse", None], UndefinedType] = Undefined,
+        type: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(TopoDataFormat, self).__init__(
+            feature=feature, mesh=mesh, parse=parse, type=type, **kwds
+        )
 
 
 class Transform(VegaLiteSchema):
@@ -20352,7 +26829,8 @@ class Transform(VegaLiteSchema):
     :class:`SampleTransform`, :class:`StackTransform`, :class:`WindowTransform`,
     :class:`PivotTransform`]
     """
-    _schema = {'$ref': '#/definitions/Transform'}
+
+    _schema = {"$ref": "#/definitions/Transform"}
 
     def __init__(self, *args, **kwds):
         super(Transform, self).__init__(*args, **kwds)
@@ -20372,10 +26850,18 @@ class AggregateTransform(Transform):
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
     """
-    _schema = {'$ref': '#/definitions/AggregateTransform'}
 
-    def __init__(self, aggregate=Undefined, groupby=Undefined, **kwds):
-        super(AggregateTransform, self).__init__(aggregate=aggregate, groupby=groupby, **kwds)
+    _schema = {"$ref": "#/definitions/AggregateTransform"}
+
+    def __init__(
+        self,
+        aggregate: Union[List[dict], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(AggregateTransform, self).__init__(
+            aggregate=aggregate, groupby=groupby, **kwds
+        )
 
 
 class BinTransform(Transform):
@@ -20397,9 +26883,15 @@ class BinTransform(Transform):
         for bin start and bin end respectively. If a single string (e.g., ``"val"`` ) is
         provided, the end field will be ``"val_end"``.
     """
-    _schema = {'$ref': '#/definitions/BinTransform'}
 
-    def __init__(self, bin=Undefined, field=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/BinTransform"}
+
+    def __init__(
+        self,
+        bin: Union[Union[bool, "BinParams"], UndefinedType] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
 
 
@@ -20417,9 +26909,10 @@ class CalculateTransform(Transform):
     as : :class:`FieldName`
         The field for storing the computed formula value.
     """
-    _schema = {'$ref': '#/definitions/CalculateTransform'}
 
-    def __init__(self, calculate=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/CalculateTransform"}
+
+    def __init__(self, calculate: Union[str, UndefinedType] = Undefined, **kwds):
         super(CalculateTransform, self).__init__(calculate=calculate, **kwds)
 
 
@@ -20474,14 +26967,34 @@ class DensityTransform(Transform):
 
         **Default value:** ``["value", "density"]``
     """
-    _schema = {'$ref': '#/definitions/DensityTransform'}
 
-    def __init__(self, density=Undefined, bandwidth=Undefined, counts=Undefined, cumulative=Undefined,
-                 extent=Undefined, groupby=Undefined, maxsteps=Undefined, minsteps=Undefined,
-                 steps=Undefined, **kwds):
-        super(DensityTransform, self).__init__(density=density, bandwidth=bandwidth, counts=counts,
-                                               cumulative=cumulative, extent=extent, groupby=groupby,
-                                               maxsteps=maxsteps, minsteps=minsteps, steps=steps, **kwds)
+    _schema = {"$ref": "#/definitions/DensityTransform"}
+
+    def __init__(
+        self,
+        density: Union[str, UndefinedType] = Undefined,
+        bandwidth: Union[float, UndefinedType] = Undefined,
+        counts: Union[bool, UndefinedType] = Undefined,
+        cumulative: Union[bool, UndefinedType] = Undefined,
+        extent: Union[List[float], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        maxsteps: Union[float, UndefinedType] = Undefined,
+        minsteps: Union[float, UndefinedType] = Undefined,
+        steps: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(DensityTransform, self).__init__(
+            density=density,
+            bandwidth=bandwidth,
+            counts=counts,
+            cumulative=cumulative,
+            extent=extent,
+            groupby=groupby,
+            maxsteps=maxsteps,
+            minsteps=minsteps,
+            steps=steps,
+            **kwds
+        )
 
 
 class ExtentTransform(Transform):
@@ -20497,9 +27010,15 @@ class ExtentTransform(Transform):
     param : :class:`ParameterName`
         The output parameter produced by the extent transform.
     """
-    _schema = {'$ref': '#/definitions/ExtentTransform'}
 
-    def __init__(self, extent=Undefined, param=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ExtentTransform"}
+
+    def __init__(
+        self,
+        extent: Union[str, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ExtentTransform, self).__init__(extent=extent, param=param, **kwds)
 
 
@@ -20540,9 +27059,22 @@ class FilterTransform(Transform):
         <https://vega.github.io/vega-lite/docs/predicate.html#composition>`__ of (1), (2),
         or (3).
     """
-    _schema = {'$ref': '#/definitions/FilterTransform'}
 
-    def __init__(self, filter=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/FilterTransform"}
+
+    def __init__(
+        self,
+        filter: Union[
+            Union[
+                "LogicalNotPredicate",
+                "LogicalAndPredicate",
+                "LogicalOrPredicate",
+                "Predicate",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
         super(FilterTransform, self).__init__(filter=filter, **kwds)
 
 
@@ -20564,9 +27096,10 @@ class FlattenTransform(Transform):
 
         **Default value:** The field name of the corresponding array field
     """
-    _schema = {'$ref': '#/definitions/FlattenTransform'}
 
-    def __init__(self, flatten=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/FlattenTransform"}
+
+    def __init__(self, flatten: Union[List[str], UndefinedType] = Undefined, **kwds):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
 
 
@@ -20584,9 +27117,10 @@ class FoldTransform(Transform):
         The output field names for the key and value properties produced by the fold
         transform. **Default value:** ``["key", "value"]``
     """
-    _schema = {'$ref': '#/definitions/FoldTransform'}
 
-    def __init__(self, fold=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/FoldTransform"}
+
+    def __init__(self, fold: Union[List[str], UndefinedType] = Undefined, **kwds):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
 
 
@@ -20635,12 +27169,32 @@ class ImputeTransform(Transform):
     value : Any
         The field value to use when the imputation ``method`` is ``"value"``.
     """
-    _schema = {'$ref': '#/definitions/ImputeTransform'}
 
-    def __init__(self, impute=Undefined, key=Undefined, frame=Undefined, groupby=Undefined,
-                 keyvals=Undefined, method=Undefined, value=Undefined, **kwds):
-        super(ImputeTransform, self).__init__(impute=impute, key=key, frame=frame, groupby=groupby,
-                                              keyvals=keyvals, method=method, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/ImputeTransform"}
+
+    def __init__(
+        self,
+        impute: Union[str, UndefinedType] = Undefined,
+        key: Union[str, UndefinedType] = Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        keyvals: Union[Union[List[Any], "ImputeSequence"], UndefinedType] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ImputeTransform, self).__init__(
+            impute=impute,
+            key=key,
+            frame=frame,
+            groupby=groupby,
+            keyvals=keyvals,
+            method=method,
+            value=value,
+            **kwds
+        )
 
 
 class JoinAggregateTransform(Transform):
@@ -20657,11 +27211,18 @@ class JoinAggregateTransform(Transform):
         The data fields for partitioning the data objects into separate groups. If
         unspecified, all data points will be in a single group.
     """
-    _schema = {'$ref': '#/definitions/JoinAggregateTransform'}
 
-    def __init__(self, joinaggregate=Undefined, groupby=Undefined, **kwds):
-        super(JoinAggregateTransform, self).__init__(joinaggregate=joinaggregate, groupby=groupby,
-                                                     **kwds)
+    _schema = {"$ref": "#/definitions/JoinAggregateTransform"}
+
+    def __init__(
+        self,
+        joinaggregate: Union[List[dict], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(JoinAggregateTransform, self).__init__(
+            joinaggregate=joinaggregate, groupby=groupby, **kwds
+        )
 
 
 class LoessTransform(Transform):
@@ -20689,11 +27250,20 @@ class LoessTransform(Transform):
 
         **Default value:** The field names of the input x and y values.
     """
-    _schema = {'$ref': '#/definitions/LoessTransform'}
 
-    def __init__(self, loess=Undefined, on=Undefined, bandwidth=Undefined, groupby=Undefined, **kwds):
-        super(LoessTransform, self).__init__(loess=loess, on=on, bandwidth=bandwidth, groupby=groupby,
-                                             **kwds)
+    _schema = {"$ref": "#/definitions/LoessTransform"}
+
+    def __init__(
+        self,
+        loess: Union[str, UndefinedType] = Undefined,
+        on: Union[str, UndefinedType] = Undefined,
+        bandwidth: Union[float, UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(LoessTransform, self).__init__(
+            loess=loess, on=on, bandwidth=bandwidth, groupby=groupby, **kwds
+        )
 
 
 class LookupTransform(Transform):
@@ -20723,9 +27293,15 @@ class LookupTransform(Transform):
     from : Union[:class:`LookupData`, :class:`LookupSelection`]
         Data source or selection for secondary data reference.
     """
-    _schema = {'$ref': '#/definitions/LookupTransform'}
 
-    def __init__(self, lookup=Undefined, default=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/LookupTransform"}
+
+    def __init__(
+        self,
+        lookup: Union[str, UndefinedType] = Undefined,
+        default: Union[Any, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
 
 
@@ -20754,12 +27330,48 @@ class PivotTransform(Transform):
         The aggregation operation to apply to grouped ``value`` field values. **Default
         value:** ``sum``
     """
-    _schema = {'$ref': '#/definitions/PivotTransform'}
 
-    def __init__(self, pivot=Undefined, value=Undefined, groupby=Undefined, limit=Undefined,
-                 op=Undefined, **kwds):
-        super(PivotTransform, self).__init__(pivot=pivot, value=value, groupby=groupby, limit=limit,
-                                             op=op, **kwds)
+    _schema = {"$ref": "#/definitions/PivotTransform"}
+
+    def __init__(
+        self,
+        pivot: Union[str, UndefinedType] = Undefined,
+        value: Union[str, UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        limit: Union[float, UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "argmax",
+                "argmin",
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(PivotTransform, self).__init__(
+            pivot=pivot, value=value, groupby=groupby, limit=limit, op=op, **kwds
+        )
 
 
 class QuantileTransform(Transform):
@@ -20787,11 +27399,20 @@ class QuantileTransform(Transform):
 
         **Default value:** ``["prob", "value"]``
     """
-    _schema = {'$ref': '#/definitions/QuantileTransform'}
 
-    def __init__(self, quantile=Undefined, groupby=Undefined, probs=Undefined, step=Undefined, **kwds):
-        super(QuantileTransform, self).__init__(quantile=quantile, groupby=groupby, probs=probs,
-                                                step=step, **kwds)
+    _schema = {"$ref": "#/definitions/QuantileTransform"}
+
+    def __init__(
+        self,
+        quantile: Union[str, UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        probs: Union[List[float], UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(QuantileTransform, self).__init__(
+            quantile=quantile, groupby=groupby, probs=probs, step=step, **kwds
+        )
 
 
 class RegressionTransform(Transform):
@@ -20835,13 +27456,32 @@ class RegressionTransform(Transform):
 
         **Default value:** The field names of the input x and y values.
     """
-    _schema = {'$ref': '#/definitions/RegressionTransform'}
 
-    def __init__(self, on=Undefined, regression=Undefined, extent=Undefined, groupby=Undefined,
-                 method=Undefined, order=Undefined, params=Undefined, **kwds):
-        super(RegressionTransform, self).__init__(on=on, regression=regression, extent=extent,
-                                                  groupby=groupby, method=method, order=order,
-                                                  params=params, **kwds)
+    _schema = {"$ref": "#/definitions/RegressionTransform"}
+
+    def __init__(
+        self,
+        on: Union[str, UndefinedType] = Undefined,
+        regression: Union[str, UndefinedType] = Undefined,
+        extent: Union[List[float], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        method: Union[
+            Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
+        ] = Undefined,
+        order: Union[float, UndefinedType] = Undefined,
+        params: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(RegressionTransform, self).__init__(
+            on=on,
+            regression=regression,
+            extent=extent,
+            groupby=groupby,
+            method=method,
+            order=order,
+            params=params,
+            **kwds
+        )
 
 
 class SampleTransform(Transform):
@@ -20857,9 +27497,10 @@ class SampleTransform(Transform):
 
         **Default value:** ``1000``
     """
-    _schema = {'$ref': '#/definitions/SampleTransform'}
 
-    def __init__(self, sample=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/SampleTransform"}
+
+    def __init__(self, sample: Union[float, UndefinedType] = Undefined, **kwds):
         super(SampleTransform, self).__init__(sample=sample, **kwds)
 
 
@@ -20890,11 +27531,22 @@ class StackTransform(Transform):
         respectively. If a single string(e.g., ``"val"`` ) is provided, the end field will
         be ``"val_end"``.
     """
-    _schema = {'$ref': '#/definitions/StackTransform'}
 
-    def __init__(self, groupby=Undefined, stack=Undefined, offset=Undefined, sort=Undefined, **kwds):
-        super(StackTransform, self).__init__(groupby=groupby, stack=stack, offset=offset, sort=sort,
-                                             **kwds)
+    _schema = {"$ref": "#/definitions/StackTransform"}
+
+    def __init__(
+        self,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        stack: Union[str, UndefinedType] = Undefined,
+        offset: Union[
+            Literal["zero", "center", "normalize"], UndefinedType
+        ] = Undefined,
+        sort: Union[List[dict], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(StackTransform, self).__init__(
+            groupby=groupby, stack=stack, offset=offset, sort=sort, **kwds
+        )
 
 
 class TimeUnitTransform(Transform):
@@ -20912,9 +27564,17 @@ class TimeUnitTransform(Transform):
     as : :class:`FieldName`
         The output field to write the timeUnit value.
     """
-    _schema = {'$ref': '#/definitions/TimeUnitTransform'}
 
-    def __init__(self, field=Undefined, timeUnit=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/TimeUnitTransform"}
+
+    def __init__(
+        self,
+        field: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "TimeUnitTransformParams"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
         super(TimeUnitTransform, self).__init__(field=field, timeUnit=timeUnit, **kwds)
 
 
@@ -20924,7 +27584,8 @@ class Type(VegaLiteSchema):
     Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
     Data type based on level of measurement
     """
-    _schema = {'$ref': '#/definitions/Type'}
+
+    _schema = {"$ref": "#/definitions/Type"}
 
     def __init__(self, *args):
         super(Type, self).__init__(*args)
@@ -20935,7 +27596,8 @@ class TypeForShape(VegaLiteSchema):
 
     Literal['nominal', 'ordinal', 'geojson']
     """
-    _schema = {'$ref': '#/definitions/TypeForShape'}
+
+    _schema = {"$ref": "#/definitions/TypeForShape"}
 
     def __init__(self, *args):
         super(TypeForShape, self).__init__(*args)
@@ -21097,13 +27759,36 @@ class TypedFieldDef(VegaLiteSchema):
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/TypedFieldDef'}
 
-    def __init__(self, aggregate=Undefined, bandPosition=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
-        super(TypedFieldDef, self).__init__(aggregate=aggregate, bandPosition=bandPosition, bin=bin,
-                                            field=field, timeUnit=timeUnit, title=title, type=type,
-                                            **kwds)
+    _schema = {"$ref": "#/definitions/TypedFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Union[
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, "BinParams", str, None], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
+        ] = Undefined,
+        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(TypedFieldDef, self).__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds
+        )
 
 
 class URI(VegaLiteSchema):
@@ -21111,7 +27796,8 @@ class URI(VegaLiteSchema):
 
     str
     """
-    _schema = {'$ref': '#/definitions/URI'}
+
+    _schema = {"$ref": "#/definitions/URI"}
 
     def __init__(self, *args):
         super(URI, self).__init__(*args)
@@ -21152,14 +27838,61 @@ class UnitSpec(VegaLiteSchema):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/UnitSpec'}
 
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 name=Undefined, params=Undefined, projection=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(UnitSpec, self).__init__(mark=mark, data=data, description=description, encoding=encoding,
-                                       name=name, params=params, projection=projection, title=title,
-                                       transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/UnitSpec"}
+
+    def __init__(
+        self,
+        mark: Union[
+            Union["CompositeMark", "CompositeMarkDef", "Mark", "MarkDef"], UndefinedType
+        ] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        params: Union[List[dict], UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(UnitSpec, self).__init__(
+            mark=mark,
+            data=data,
+            description=description,
+            encoding=encoding,
+            name=name,
+            params=params,
+            projection=projection,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
 class UnitSpecWithFrame(VegaLiteSchema):
@@ -21240,15 +27973,67 @@ class UnitSpecWithFrame(VegaLiteSchema):
         **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
     """
-    _schema = {'$ref': '#/definitions/UnitSpecWithFrame'}
 
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, params=Undefined, projection=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(UnitSpecWithFrame, self).__init__(mark=mark, data=data, description=description,
-                                                encoding=encoding, height=height, name=name,
-                                                params=params, projection=projection, title=title,
-                                                transform=transform, view=view, width=width, **kwds)
+    _schema = {"$ref": "#/definitions/UnitSpecWithFrame"}
+
+    def __init__(
+        self,
+        mark: Union[
+            Union["CompositeMark", "CompositeMarkDef", "Mark", "MarkDef"], UndefinedType
+        ] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        encoding: Union[dict, UndefinedType] = Undefined,
+        height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        params: Union[List[dict], UndefinedType] = Undefined,
+        projection: Union[dict, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        view: Union[dict, UndefinedType] = Undefined,
+        width: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(UnitSpecWithFrame, self).__init__(
+            mark=mark,
+            data=data,
+            description=description,
+            encoding=encoding,
+            height=height,
+            name=name,
+            params=params,
+            projection=projection,
+            title=title,
+            transform=transform,
+            view=view,
+            width=width,
+            **kwds
+        )
 
 
 class UrlData(DataSource):
@@ -21267,9 +28052,19 @@ class UrlData(DataSource):
     name : str
         Provide a placeholder name and bind data at runtime.
     """
-    _schema = {'$ref': '#/definitions/UrlData'}
 
-    def __init__(self, url=Undefined, format=Undefined, name=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/UrlData"}
+
+    def __init__(
+        self,
+        url: Union[str, UndefinedType] = Undefined,
+        format: Union[
+            Union["CsvDataFormat", "DsvDataFormat", "JsonDataFormat", "TopoDataFormat"],
+            UndefinedType,
+        ] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(UrlData, self).__init__(url=url, format=format, name=name, **kwds)
 
 
@@ -21286,7 +28081,8 @@ class UtcMultiTimeUnit(MultiTimeUnit):
     'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes',
     'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
     """
-    _schema = {'$ref': '#/definitions/UtcMultiTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/UtcMultiTimeUnit"}
 
     def __init__(self, *args):
         super(UtcMultiTimeUnit, self).__init__(*args)
@@ -21298,7 +28094,8 @@ class UtcSingleTimeUnit(SingleTimeUnit):
     Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate',
     'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']
     """
-    _schema = {'$ref': '#/definitions/UtcSingleTimeUnit'}
+
+    _schema = {"$ref": "#/definitions/UtcSingleTimeUnit"}
 
     def __init__(self, *args):
         super(UtcSingleTimeUnit, self).__init__(*args)
@@ -21350,18 +28147,79 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/VConcatSpec<GenericSpec>'}
 
-    def __init__(self, vconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
-                 description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
-                 title=Undefined, transform=Undefined, **kwds):
-        super(VConcatSpecGenericSpec, self).__init__(vconcat=vconcat, bounds=bounds, center=center,
-                                                     data=data, description=description, name=name,
-                                                     resolve=resolve, spacing=spacing, title=title,
-                                                     transform=transform, **kwds)
+    _schema = {"$ref": "#/definitions/VConcatSpec<GenericSpec>"}
+
+    def __init__(
+        self,
+        vconcat: Union[
+            List[
+                Union[
+                    "FacetedUnitSpec",
+                    "LayerSpec",
+                    "RepeatSpec",
+                    "FacetSpec",
+                    "ConcatSpecGenericSpec",
+                    "VConcatSpecGenericSpec",
+                    "HConcatSpecGenericSpec",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
+        center: Union[bool, UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
+        description: Union[str, UndefinedType] = Undefined,
+        name: Union[str, UndefinedType] = Undefined,
+        resolve: Union[dict, UndefinedType] = Undefined,
+        spacing: Union[float, UndefinedType] = Undefined,
+        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        transform: Union[
+            List[
+                Union[
+                    "AggregateTransform",
+                    "BinTransform",
+                    "CalculateTransform",
+                    "DensityTransform",
+                    "ExtentTransform",
+                    "FilterTransform",
+                    "FlattenTransform",
+                    "FoldTransform",
+                    "ImputeTransform",
+                    "JoinAggregateTransform",
+                    "LoessTransform",
+                    "LookupTransform",
+                    "QuantileTransform",
+                    "RegressionTransform",
+                    "TimeUnitTransform",
+                    "SampleTransform",
+                    "StackTransform",
+                    "WindowTransform",
+                    "PivotTransform",
+                ]
+            ],
+            UndefinedType,
+        ] = Undefined,
+        **kwds
+    ):
+        super(VConcatSpecGenericSpec, self).__init__(
+            vconcat=vconcat,
+            bounds=bounds,
+            center=center,
+            data=data,
+            description=description,
+            name=name,
+            resolve=resolve,
+            spacing=spacing,
+            title=title,
+            transform=transform,
+            **kwds
+        )
 
 
-class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, MarkPropDefGradientstringnull):
+class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
+    ColorDef, MarkPropDefGradientstringnull
+):
     """ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull schema wrapper
 
     Dict[required=[]]
@@ -21376,15 +28234,34 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, M
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,(Gradient|string|null)>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull, self).__init__(condition=condition,
-                                                                                             value=value,
-                                                                                             **kwds)
+    _schema = {
+        "$ref": "#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,(Gradient|string|null)>"
+    }
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union["Gradient", str, None, "ExprRef"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ):
+        super(
+            ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull, self
+        ).__init__(condition=condition, value=value, **kwds)
 
 
-class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPropDefstringnullTypeForShape, ShapeDef):
+class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
+    MarkPropDefstringnullTypeForShape, ShapeDef
+):
     """ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull schema wrapper
 
     Dict[required=[]]
@@ -21399,15 +28276,32 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPro
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef<TypeForShape>,(string|null)>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull, self).__init__(condition=condition,
-                                                                                                 value=value,
-                                                                                                 **kwds)
+    _schema = {
+        "$ref": "#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef<TypeForShape>,(string|null)>"
+    }
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDefTypeForShape",
+                "ConditionalValueDefstringnullExprRef",
+                List["ConditionalValueDefstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(
+            ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull, self
+        ).__init__(condition=condition, value=value, **kwds)
 
 
-class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(MarkPropDefnumber, NumericMarkPropDef):
+class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
+    MarkPropDefnumber, NumericMarkPropDef
+):
     """ValueDefWithConditionMarkPropFieldOrDatumDefnumber schema wrapper
 
     Dict[required=[]]
@@ -21422,14 +28316,32 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(MarkPropDefnumber, Nume
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,number>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionMarkPropFieldOrDatumDefnumber, self).__init__(condition=condition,
-                                                                                 value=value, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,number>"
+    }
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefnumberExprRef",
+                List["ConditionalValueDefnumberExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ValueDefWithConditionMarkPropFieldOrDatumDefnumber, self).__init__(
+            condition=condition, value=value, **kwds
+        )
 
 
-class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(MarkPropDefnumberArray, NumericArrayMarkPropDef):
+class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
+    MarkPropDefnumberArray, NumericArrayMarkPropDef
+):
     """ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray schema wrapper
 
     Dict[required=[]]
@@ -21444,12 +28356,27 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(MarkPropDefnumberA
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,number[]>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray, self).__init__(condition=condition,
-                                                                                      value=value,
-                                                                                      **kwds)
+    _schema = {
+        "$ref": "#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,number[]>"
+    }
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefnumberArrayExprRef",
+                List["ConditionalValueDefnumberArrayExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray, self).__init__(
+            condition=condition, value=value, **kwds
+        )
 
 
 class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
@@ -21467,11 +28394,27 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,(string|null)>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionMarkPropFieldOrDatumDefstringnull, self).__init__(condition=condition,
-                                                                                     value=value, **kwds)
+    _schema = {
+        "$ref": "#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,(string|null)>"
+    }
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefstringnullExprRef",
+                List["ConditionalValueDefstringnullExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ValueDefWithConditionMarkPropFieldOrDatumDefstringnull, self).__init__(
+            condition=condition, value=value, **kwds
+        )
 
 
 class ValueDefWithConditionStringFieldDefText(TextDef):
@@ -21489,11 +28432,25 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<StringFieldDef,Text>'}
 
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ValueDefWithConditionStringFieldDefText, self).__init__(condition=condition, value=value,
-                                                                      **kwds)
+    _schema = {"$ref": "#/definitions/ValueDefWithCondition<StringFieldDef,Text>"}
+
+    def __init__(
+        self,
+        condition: Union[
+            Union[
+                "ConditionalStringFieldDef",
+                "ConditionalValueDefTextExprRef",
+                List["ConditionalValueDefTextExprRef"],
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ValueDefWithConditionStringFieldDefText, self).__init__(
+            condition=condition, value=value, **kwds
+        )
 
 
 class ValueDefnumber(OffsetDef):
@@ -21511,9 +28468,10 @@ class ValueDefnumber(OffsetDef):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDef<number>'}
 
-    def __init__(self, value=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/ValueDef<number>"}
+
+    def __init__(self, value: Union[float, UndefinedType] = Undefined, **kwds):
         super(ValueDefnumber, self).__init__(value=value, **kwds)
 
 
@@ -21532,9 +28490,14 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ValueDef<(number|"width"|"height"|ExprRef)>'}
 
-    def __init__(self, value=Undefined, **kwds):
+    _schema = {"$ref": '#/definitions/ValueDef<(number|"width"|"height"|ExprRef)>'}
+
+    def __init__(
+        self,
+        value: Union[Union[float, str, str, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
         super(ValueDefnumberwidthheightExprRef, self).__init__(value=value, **kwds)
 
 
@@ -21564,10 +28527,29 @@ class VariableParameter(TopLevelParameter):
 
         **Default value:** ``undefined``
     """
-    _schema = {'$ref': '#/definitions/VariableParameter'}
 
-    def __init__(self, name=Undefined, bind=Undefined, expr=Undefined, value=Undefined, **kwds):
-        super(VariableParameter, self).__init__(name=name, bind=bind, expr=expr, value=value, **kwds)
+    _schema = {"$ref": "#/definitions/VariableParameter"}
+
+    def __init__(
+        self,
+        name: Union[str, UndefinedType] = Undefined,
+        bind: Union[
+            Union[
+                "BindCheckbox",
+                "BindRadioSelect",
+                "BindRange",
+                "BindInput",
+                "BindDirect",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        expr: Union[str, UndefinedType] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(VariableParameter, self).__init__(
+            name=name, bind=bind, expr=expr, value=value, **kwds
+        )
 
 
 class Vector10string(VegaLiteSchema):
@@ -21575,7 +28557,8 @@ class Vector10string(VegaLiteSchema):
 
     List[str]
     """
-    _schema = {'$ref': '#/definitions/Vector10<string>'}
+
+    _schema = {"$ref": "#/definitions/Vector10<string>"}
 
     def __init__(self, *args):
         super(Vector10string, self).__init__(*args)
@@ -21586,7 +28569,8 @@ class Vector12string(VegaLiteSchema):
 
     List[str]
     """
-    _schema = {'$ref': '#/definitions/Vector12<string>'}
+
+    _schema = {"$ref": "#/definitions/Vector12<string>"}
 
     def __init__(self, *args):
         super(Vector12string, self).__init__(*args)
@@ -21595,9 +28579,10 @@ class Vector12string(VegaLiteSchema):
 class Vector2DateTime(SelectionInitInterval):
     """Vector2DateTime schema wrapper
 
-    List[:class:`DateTime`]
+    List[Dict[required=[]]]
     """
-    _schema = {'$ref': '#/definitions/Vector2<DateTime>'}
+
+    _schema = {"$ref": "#/definitions/Vector2<DateTime>"}
 
     def __init__(self, *args):
         super(Vector2DateTime, self).__init__(*args)
@@ -21606,9 +28591,10 @@ class Vector2DateTime(SelectionInitInterval):
 class Vector2Vector2number(VegaLiteSchema):
     """Vector2Vector2number schema wrapper
 
-    List[:class:`Vector2number`]
+    List[List[float]]
     """
-    _schema = {'$ref': '#/definitions/Vector2<Vector2<number>>'}
+
+    _schema = {"$ref": "#/definitions/Vector2<Vector2<number>>"}
 
     def __init__(self, *args):
         super(Vector2Vector2number, self).__init__(*args)
@@ -21619,7 +28605,8 @@ class Vector2boolean(SelectionInitInterval):
 
     List[bool]
     """
-    _schema = {'$ref': '#/definitions/Vector2<boolean>'}
+
+    _schema = {"$ref": "#/definitions/Vector2<boolean>"}
 
     def __init__(self, *args):
         super(Vector2boolean, self).__init__(*args)
@@ -21630,7 +28617,8 @@ class Vector2number(SelectionInitInterval):
 
     List[float]
     """
-    _schema = {'$ref': '#/definitions/Vector2<number>'}
+
+    _schema = {"$ref": "#/definitions/Vector2<number>"}
 
     def __init__(self, *args):
         super(Vector2number, self).__init__(*args)
@@ -21641,7 +28629,8 @@ class Vector2string(SelectionInitInterval):
 
     List[str]
     """
-    _schema = {'$ref': '#/definitions/Vector2<string>'}
+
+    _schema = {"$ref": "#/definitions/Vector2<string>"}
 
     def __init__(self, *args):
         super(Vector2string, self).__init__(*args)
@@ -21652,7 +28641,8 @@ class Vector3number(VegaLiteSchema):
 
     List[float]
     """
-    _schema = {'$ref': '#/definitions/Vector3<number>'}
+
+    _schema = {"$ref": "#/definitions/Vector3<number>"}
 
     def __init__(self, *args):
         super(Vector3number, self).__init__(*args)
@@ -21663,7 +28653,8 @@ class Vector7string(VegaLiteSchema):
 
     List[str]
     """
-    _schema = {'$ref': '#/definitions/Vector7<string>'}
+
+    _schema = {"$ref": "#/definitions/Vector7<string>"}
 
     def __init__(self, *args):
         super(Vector7string, self).__init__(*args)
@@ -21732,19 +28723,84 @@ class ViewBackground(VegaLiteSchema):
         **Default value:** ``"cell"`` **Note:** Any specified view background properties
         will augment the default style.
     """
-    _schema = {'$ref': '#/definitions/ViewBackground'}
 
-    def __init__(self, cornerRadius=Undefined, cursor=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 opacity=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, **kwds):
-        super(ViewBackground, self).__init__(cornerRadius=cornerRadius, cursor=cursor, fill=fill,
-                                             fillOpacity=fillOpacity, opacity=opacity, stroke=stroke,
-                                             strokeCap=strokeCap, strokeDash=strokeDash,
-                                             strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                             strokeMiterLimit=strokeMiterLimit,
-                                             strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                             style=style, **kwds)
+    _schema = {"$ref": "#/definitions/ViewBackground"}
+
+    def __init__(
+        self,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[
+            Literal[
+                "auto",
+                "default",
+                "none",
+                "context-menu",
+                "help",
+                "pointer",
+                "progress",
+                "wait",
+                "cell",
+                "crosshair",
+                "text",
+                "vertical-text",
+                "alias",
+                "copy",
+                "move",
+                "no-drop",
+                "not-allowed",
+                "e-resize",
+                "n-resize",
+                "ne-resize",
+                "nw-resize",
+                "s-resize",
+                "se-resize",
+                "sw-resize",
+                "w-resize",
+                "ew-resize",
+                "ns-resize",
+                "nesw-resize",
+                "nwse-resize",
+                "col-resize",
+                "row-resize",
+                "all-scroll",
+                "zoom-in",
+                "zoom-out",
+                "grab",
+                "grabbing",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        fill: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ViewBackground, self).__init__(
+            cornerRadius=cornerRadius,
+            cursor=cursor,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            opacity=opacity,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            style=style,
+            **kwds
+        )
 
 
 class ViewConfig(VegaLiteSchema):
@@ -21827,23 +28883,94 @@ class ViewConfig(VegaLiteSchema):
     strokeWidth : Union[float, :class:`ExprRef`]
         The stroke width, in pixels.
     """
-    _schema = {'$ref': '#/definitions/ViewConfig'}
 
-    def __init__(self, clip=Undefined, continuousHeight=Undefined, continuousWidth=Undefined,
-                 cornerRadius=Undefined, cursor=Undefined, discreteHeight=Undefined,
-                 discreteWidth=Undefined, fill=Undefined, fillOpacity=Undefined, opacity=Undefined,
-                 step=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, **kwds):
-        super(ViewConfig, self).__init__(clip=clip, continuousHeight=continuousHeight,
-                                         continuousWidth=continuousWidth, cornerRadius=cornerRadius,
-                                         cursor=cursor, discreteHeight=discreteHeight,
-                                         discreteWidth=discreteWidth, fill=fill,
-                                         fillOpacity=fillOpacity, opacity=opacity, step=step,
-                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, **kwds)
+    _schema = {"$ref": "#/definitions/ViewConfig"}
+
+    def __init__(
+        self,
+        clip: Union[bool, UndefinedType] = Undefined,
+        continuousHeight: Union[float, UndefinedType] = Undefined,
+        continuousWidth: Union[float, UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cursor: Union[
+            Literal[
+                "auto",
+                "default",
+                "none",
+                "context-menu",
+                "help",
+                "pointer",
+                "progress",
+                "wait",
+                "cell",
+                "crosshair",
+                "text",
+                "vertical-text",
+                "alias",
+                "copy",
+                "move",
+                "no-drop",
+                "not-allowed",
+                "e-resize",
+                "n-resize",
+                "ne-resize",
+                "nw-resize",
+                "s-resize",
+                "se-resize",
+                "sw-resize",
+                "w-resize",
+                "ew-resize",
+                "ns-resize",
+                "nesw-resize",
+                "nwse-resize",
+                "col-resize",
+                "row-resize",
+                "all-scroll",
+                "zoom-in",
+                "zoom-out",
+                "grab",
+                "grabbing",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        discreteHeight: Union[Union[float, dict], UndefinedType] = Undefined,
+        discreteWidth: Union[Union[float, dict], UndefinedType] = Undefined,
+        fill: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        stroke: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
+        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(ViewConfig, self).__init__(
+            clip=clip,
+            continuousHeight=continuousHeight,
+            continuousWidth=continuousWidth,
+            cornerRadius=cornerRadius,
+            cursor=cursor,
+            discreteHeight=discreteHeight,
+            discreteWidth=discreteWidth,
+            fill=fill,
+            fillOpacity=fillOpacity,
+            opacity=opacity,
+            step=step,
+            stroke=stroke,
+            strokeCap=strokeCap,
+            strokeDash=strokeDash,
+            strokeDashOffset=strokeDashOffset,
+            strokeJoin=strokeJoin,
+            strokeMiterLimit=strokeMiterLimit,
+            strokeOpacity=strokeOpacity,
+            strokeWidth=strokeWidth,
+            **kwds
+        )
 
 
 class WindowEventType(VegaLiteSchema):
@@ -21851,7 +28978,8 @@ class WindowEventType(VegaLiteSchema):
 
     Union[:class:`EventType`, str]
     """
-    _schema = {'$ref': '#/definitions/WindowEventType'}
+
+    _schema = {"$ref": "#/definitions/WindowEventType"}
 
     def __init__(self, *args, **kwds):
         super(WindowEventType, self).__init__(*args, **kwds)
@@ -21864,7 +28992,8 @@ class EventType(WindowEventType):
     'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'mousewheel',
     'timer', 'touchend', 'touchmove', 'touchstart', 'wheel']
     """
-    _schema = {'$ref': '#/definitions/EventType'}
+
+    _schema = {"$ref": "#/definitions/EventType"}
 
     def __init__(self, *args):
         super(EventType, self).__init__(*args)
@@ -21895,9 +29024,16 @@ class WindowFieldDef(VegaLiteSchema):
     as : :class:`FieldName`
         The output name for the window operation.
     """
-    _schema = {'$ref': '#/definitions/WindowFieldDef'}
 
-    def __init__(self, op=Undefined, field=Undefined, param=Undefined, **kwds):
+    _schema = {"$ref": "#/definitions/WindowFieldDef"}
+
+    def __init__(
+        self,
+        op: Union[Union["AggregateOp", "WindowOnlyOp"], UndefinedType] = Undefined,
+        field: Union[str, UndefinedType] = Undefined,
+        param: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ):
         super(WindowFieldDef, self).__init__(op=op, field=field, param=param, **kwds)
 
 
@@ -21907,7 +29043,8 @@ class WindowOnlyOp(VegaLiteSchema):
     Literal['row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist', 'ntile', 'lag',
     'lead', 'first_value', 'last_value', 'nth_value']
     """
-    _schema = {'$ref': '#/definitions/WindowOnlyOp'}
+
+    _schema = {"$ref": "#/definitions/WindowOnlyOp"}
 
     def __init__(self, *args):
         super(WindowOnlyOp, self).__init__(*args)
@@ -21959,10 +29096,23 @@ class WindowTransform(Transform):
         processed in the order they are observed and none are considered peers (the
         ignorePeers parameter is ignored and treated as if set to ``true`` ).
     """
-    _schema = {'$ref': '#/definitions/WindowTransform'}
 
-    def __init__(self, window=Undefined, frame=Undefined, groupby=Undefined, ignorePeers=Undefined,
-                 sort=Undefined, **kwds):
-        super(WindowTransform, self).__init__(window=window, frame=frame, groupby=groupby,
-                                              ignorePeers=ignorePeers, sort=sort, **kwds)
+    _schema = {"$ref": "#/definitions/WindowTransform"}
 
+    def __init__(
+        self,
+        window: Union[List[dict], UndefinedType] = Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        groupby: Union[List[str], UndefinedType] = Undefined,
+        ignorePeers: Union[bool, UndefinedType] = Undefined,
+        sort: Union[List[dict], UndefinedType] = Undefined,
+        **kwds
+    ):
+        super(WindowTransform, self).__init__(
+            window=window,
+            frame=frame,
+            groupby=groupby,
+            ignorePeers=ignorePeers,
+            sort=sort,
+            **kwds
+        )
