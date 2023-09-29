@@ -266,10 +266,3 @@ If you want to further customize your charts, you can refer to Altair's
 :ref:`api`.
 
 .. _Pandas: http://pandas.pydata.org/
-
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-
-   self
