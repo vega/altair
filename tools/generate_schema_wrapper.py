@@ -311,7 +311,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
 
 
 def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict:
-    def_dict = {k: None for k in ("field", "datum", "value")}
+    def_dict: Dict[str, Optional[str]] = {k: None for k in ("field", "datum", "value")}
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:
@@ -381,13 +381,14 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     for name, schema in definitions.items():
         graph[name] = []
-        for child in schema.subclasses():
-            child = get_valid_identifier(child)
-            graph[name].append(child)
-            child = definitions[child]
+        for child_name in schema.subclasses():
+            child_name = get_valid_identifier(child_name)
+            graph[name].append(child_name)
+            child: SchemaGenerator = definitions[child_name]
             if child.basename == basename:
                 child.basename = [name]
             else:
+                assert isinstance(child.basename, list)
                 child.basename.append(name)
 
     contents = [
@@ -524,9 +525,13 @@ def generate_vegalite_mark_mixin(
         arg_info.kwds -= {"type"}
 
         def_args = ["self"] + [
-            "{}=Undefined".format(p) for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
+            "{}=Undefined".format(p)
+            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
-        dict_args = ["{0}={0}".format(p) for p in (sorted(arg_info.required) + sorted(arg_info.kwds))]
+        dict_args = [
+            "{0}={0}".format(p)
+            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
+        ]
 
         if arg_info.additional or arg_info.invalid_kwds:
             def_args.append("**kwds")

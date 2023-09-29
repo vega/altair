@@ -4,7 +4,7 @@ import keyword
 import re
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Literal, Union
+from typing import Final, Optional, List, Dict, Any
 
 from .schemapi import _resolve_references as resolve_references
 
@@ -93,7 +93,10 @@ class SchemaProperties:
     """A wrapper for properties within a schema"""
 
     def __init__(
-        self, properties: dict, schema: dict, rootschema: Optional[dict] = None
+        self,
+        properties: Dict[str, Any],
+        schema: dict,
+        rootschema: Optional[dict] = None,
     ) -> None:
         self._properties = properties
         self._schema = schema
@@ -134,7 +137,7 @@ class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
     def __init__(
-        self, schema: dict, rootschema: Optional[dict] = None
+        self, schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
     ) -> None:
         if not rootschema:
             rootschema = schema
@@ -186,11 +189,7 @@ class SchemaInfo:
 
     @property
     def medium_description(self) -> str:
-        if self.is_list():
-            return "[{0}]".format(
-                ", ".join(self.child(s).short_description for s in self.schema)
-            )
-        elif self.is_empty():
+        if self.is_empty():
             return "Any"
         elif self.is_enum():
             return "enum({})".format(", ".join(map(repr, self.enum)))
@@ -229,6 +228,10 @@ class SchemaInfo:
                 stacklevel=1,
             )
             return "any"
+        else:
+            raise ValueError(
+                "No medium_description available for this schema for schema"
+            )
 
     @property
     def properties(self) -> SchemaProperties:
@@ -259,19 +262,19 @@ class SchemaInfo:
         return self.schema.get("type", None)
 
     @property
-    def anyOf(self) -> list:
+    def anyOf(self) -> List["SchemaInfo"]:
         return [self.child(s) for s in self.schema.get("anyOf", [])]
 
     @property
-    def oneOf(self) -> list:
+    def oneOf(self) -> List["SchemaInfo"]:
         return [self.child(s) for s in self.schema.get("oneOf", [])]
 
     @property
-    def allOf(self) -> list:
+    def allOf(self) -> List["SchemaInfo"]:
         return [self.child(s) for s in self.schema.get("allOf", [])]
 
     @property
-    def not_(self) -> dict:
+    def not_(self) -> "SchemaInfo":
         return self.child(self.schema.get("not", {}))
 
     @property
@@ -313,9 +316,6 @@ class SchemaInfo:
                 if sub_desc:
                     desc = sub_desc
         return desc
-
-    def is_list(self) -> bool:
-        return isinstance(self.schema, list)
 
     def is_reference(self) -> bool:
         return "$ref" in self.raw_schema
