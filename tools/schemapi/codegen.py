@@ -1,39 +1,50 @@
 """Code generation utilities"""
-from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
-
-import textwrap
 import re
+import textwrap
+from typing import Tuple, Set
+from dataclasses import dataclass
+
+from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 
 class CodeSnippet:
     """Object whose repr() is a string of code"""
 
-    def __init__(self, code):
+    def __init__(self, code: str):
         self.code = code
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.code
 
 
-def _get_args(info):
+@dataclass
+class ArgInfo:
+    nonkeyword: bool
+    required: Set[str]
+    kwds: Set[str]
+    invalid_kwds: Set[str]
+    additional: bool
+
+
+def get_args(info: SchemaInfo) -> ArgInfo:
     """Return the list of args & kwds for building the __init__ function"""
     # TODO: - set additional properties correctly
     #       - handle patternProperties etc.
-    required = set()
-    kwds = set()
-    invalid_kwds = set()
+    required: Set[str] = set()
+    kwds: Set[str] = set()
+    invalid_kwds: Set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
 
     if info.is_allOf():
         # recursively call function on all children
-        arginfo = [_get_args(child) for child in info.allOf]
-        nonkeyword = all(args[0] for args in arginfo)
-        required = set.union(set(), *(args[1] for args in arginfo))
-        kwds = set.union(set(), *(args[2] for args in arginfo))
+        arginfo = [get_args(child) for child in info.allOf]
+        nonkeyword = all(args.nonkeyword for args in arginfo)
+        required = set.union(set(), *(args.required for args in arginfo))
+        kwds = set.union(set(), *(args.kwds for args in arginfo))
         kwds -= required
-        invalid_kwds = set.union(set(), *(args[3] for args in arginfo))
-        additional = all(args[4] for args in arginfo)
+        invalid_kwds = set.union(set(), *(args.invalid_kwds for args in arginfo))
+        additional = all(args.additional for args in arginfo)
     elif info.is_empty() or info.is_compound():
         nonkeyword = True
         additional = True
@@ -53,7 +64,13 @@ def _get_args(info):
     else:
         raise ValueError("Schema object not understood")
 
-    return (nonkeyword, required, kwds, invalid_kwds, additional)
+    return ArgInfo(
+        nonkeyword=nonkeyword,
+        required=required,
+        kwds=kwds,
+        invalid_kwds=invalid_kwds,
+        additional=additional,
+    )
 
 
 class SchemaGenerator:
@@ -158,7 +175,7 @@ class SchemaGenerator:
         # TODO: add a general description at the top, derived from the schema.
         #       for example, a non-object definition should list valid type, enum
         #       values, etc.
-        # TODO: use _get_args here for more information on allOf objects
+        # TODO: use get_args here for more information on allOf objects
         info = SchemaInfo(self.schema, self.rootschema)
         doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
         if info.description:
@@ -172,9 +189,13 @@ class SchemaGenerator:
         doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
-            nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
+            arg_info = get_args(info)
             doc += ["", "Parameters", "----------", ""]
-            for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
+            for prop in (
+                sorted(arg_info.required)
+                + sorted(arg_info.kwds)
+                + sorted(arg_info.invalid_kwds)
+            ):
                 propinfo = info.properties[prop]
                 doc += [
                     "{} : {}".format(prop, propinfo.short_description),
@@ -189,30 +210,30 @@ class SchemaGenerator:
     def init_code(self, indent=0):
         """Return code suitable for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
-        nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
+        arg_info = get_args(info)
 
         nodefault = set(self.nodefault)
-        required -= nodefault
-        kwds -= nodefault
+        arg_info.required -= nodefault
+        arg_info.kwds -= nodefault
 
         args = ["self"]
         super_args = []
 
-        self.init_kwds = sorted(kwds)
+        self.init_kwds = sorted(arg_info.kwds)
 
         if nodefault:
             args.extend(sorted(nodefault))
-        elif nonkeyword:
+        elif arg_info.nonkeyword:
             args.append("*args")
             super_args.append("*args")
 
-        args.extend("{}=Undefined".format(p) for p in sorted(required) + sorted(kwds))
+        args.extend("{}=Undefined".format(p) for p in sorted(arg_info.required) + sorted(arg_info.kwds))
         super_args.extend(
             "{0}={0}".format(p)
-            for p in sorted(nodefault) + sorted(required) + sorted(kwds)
+            for p in sorted(nodefault) + sorted(arg_info.required) + sorted(arg_info.kwds)
         )
 
-        if additional:
+        if arg_info.additional:
             args.append("**kwds")
             super_args.append("**kwds")
 

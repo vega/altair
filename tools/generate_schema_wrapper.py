@@ -519,16 +519,16 @@ def generate_vegalite_mark_mixin(
         info = SchemaInfo({"$ref": "#/definitions/" + mark_def}, rootschema=schema)
 
         # adapted from SchemaInfo.init_code
-        nonkeyword, required, kwds, invalid_kwds, additional = codegen._get_args(info)
-        required -= {"type"}
-        kwds -= {"type"}
+        arg_info = codegen.get_args(info)
+        arg_info.required -= {"type"}
+        arg_info.kwds -= {"type"}
 
         def_args = ["self"] + [
-            "{}=Undefined".format(p) for p in (sorted(required) + sorted(kwds))
+            "{}=Undefined".format(p) for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
-        dict_args = ["{0}={0}".format(p) for p in (sorted(required) + sorted(kwds))]
+        dict_args = ["{0}={0}".format(p) for p in (sorted(arg_info.required) + sorted(arg_info.kwds))]
 
-        if additional or invalid_kwds:
+        if arg_info.additional or arg_info.invalid_kwds:
             def_args.append("**kwds")
             dict_args.append("**kwds")
 
