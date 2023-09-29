@@ -230,5 +230,6 @@ module = [
     "pandas.lib.*",
     "nbformat.*",
     "ipykernel.*",
+    "m2r.*",
 ]
 ignore_missing_imports = true

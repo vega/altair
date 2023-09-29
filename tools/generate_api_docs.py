@@ -5,15 +5,17 @@ based on the updated Altair schema.
 import sys
 import types
 from os.path import abspath, dirname, join
+from typing import Final, Optional, Iterator, List
+from types import ModuleType
 
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
 import altair as alt  # noqa: E402
 
-API_FILENAME = join(ROOT_DIR, "doc", "user_guide", "api.rst")
+API_FILENAME: Final = join(ROOT_DIR, "doc", "user_guide", "api.rst")
 
-API_TEMPLATE = """\
+API_TEMPLATE: Final = """\
 .. _api:
 
 API Reference
@@ -68,8 +70,11 @@ Low-Level Schema Wrappers
 
 
 def iter_objects(
-    mod, ignore_private=True, restrict_to_type=None, restrict_to_subclass=None
-):
+    mod: ModuleType,
+    ignore_private: bool = True,
+    restrict_to_type: Optional[type] = None,
+    restrict_to_subclass: Optional[type] = None,
+) -> Iterator[str]:
     for name in dir(mod):
         obj = getattr(mod, name)
         if ignore_private:
@@ -84,26 +89,26 @@ def iter_objects(
         yield name
 
 
-def toplevel_charts():
-    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))
+def toplevel_charts() -> List[str]:
+    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))  # type: ignore[attr-defined]
 
 
-def encoding_wrappers():
+def encoding_wrappers() -> List[str]:
     return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))
 
 
-def api_functions():
+def api_functions() -> List[str]:
     # Exclude typing.cast
     altair_api_functions = [
         obj_name
-        for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)
+        for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
         if obj_name != "cast"
     ]
     return sorted(altair_api_functions)
 
 
-def lowlevel_wrappers():
-    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
+def lowlevel_wrappers() -> List[str]:
+    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
     # The names of these two classes are also used for classes in alt.channels. Due to
     # how imports are set up, these channel classes overwrite the two low-level classes
     # in the top-level Altair namespace. Therefore, they cannot be imported as e.g.
@@ -113,7 +118,7 @@ def lowlevel_wrappers():
     return objects
 
 
-def write_api_file():
+def write_api_file() -> None:
     print("Updating API docs\n  ->{}".format(API_FILENAME))
     sep = "\n   "
     with open(API_FILENAME, "w") as f:

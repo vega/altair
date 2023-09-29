@@ -2859,7 +2859,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
     # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
     # we set the arguments explicitly here.
-    # TODO: Should we instead use tools/schemapi/codegen._get_args?
+    # TODO: Should we instead use tools/schemapi/codegen.get_args?
     @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
