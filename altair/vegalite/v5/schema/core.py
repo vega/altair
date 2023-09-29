@@ -7057,6 +7057,13 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
+    fields : List(:class:`FieldName`)
+        An array of field names whose values must match for a data tuple to fall within the
+        selection.
+
+        **See also:** The `projection with encodings and fields section
+        <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
+        documentation.
     mark : :class:`BrushConfig`
         An interval selection also adds a rectangle mark to depict the extents of the
         interval. The ``mark`` property can be used to customize the appearance of the mark.
@@ -7121,10 +7128,11 @@ class IntervalSelectionConfig(VegaLiteSchema):
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
 
-    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, mark=Undefined,
-                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
+    def __init__(self, type=Undefined, clear=Undefined, encodings=Undefined, fields=Undefined,
+                 mark=Undefined, on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined,
+                 **kwds):
         super(IntervalSelectionConfig, self).__init__(type=type, clear=clear, encodings=encodings,
-                                                      mark=mark, on=on, resolve=resolve,
+                                                      fields=fields, mark=mark, on=on, resolve=resolve,
                                                       translate=translate, zoom=zoom, **kwds)
 
 
@@ -7149,6 +7157,13 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
+
+        **See also:** The `projection with encodings and fields section
+        <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
+        documentation.
+    fields : List(:class:`FieldName`)
+        An array of field names whose values must match for a data tuple to fall within the
+        selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
@@ -7217,11 +7232,12 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfigWithoutType'}
 
-    def __init__(self, clear=Undefined, encodings=Undefined, mark=Undefined, on=Undefined,
-                 resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
+    def __init__(self, clear=Undefined, encodings=Undefined, fields=Undefined, mark=Undefined,
+                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
         super(IntervalSelectionConfigWithoutType, self).__init__(clear=clear, encodings=encodings,
-                                                                 mark=mark, on=on, resolve=resolve,
-                                                                 translate=translate, zoom=zoom, **kwds)
+                                                                 fields=fields, mark=mark, on=on,
+                                                                 resolve=resolve, translate=translate,
+                                                                 zoom=zoom, **kwds)
 
 
 class JoinAggregateFieldDef(VegaLiteSchema):
@@ -21862,7 +21878,8 @@ class EventType(WindowEventType):
 
     enum('click', 'dblclick', 'dragenter', 'dragleave', 'dragover', 'keydown', 'keypress',
     'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'mousewheel',
-    'timer', 'touchend', 'touchmove', 'touchstart', 'wheel')
+    'pointerdown', 'pointermove', 'pointerout', 'pointerover', 'pointerup', 'timer', 'touchend',
+    'touchmove', 'touchstart', 'wheel')
     """
     _schema = {'$ref': '#/definitions/EventType'}
 
