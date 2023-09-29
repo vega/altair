@@ -232,7 +232,3 @@ module = [
     "ipykernel.*",
 ]
 ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["altair.vegalite.v5.schema.*"]
-ignore_errors = true
