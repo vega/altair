@@ -11,6 +11,16 @@ from .schemapi import _resolve_references as resolve_references
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
+jsonschema_to_python_types = {
+        "string": "str",
+        "number": "float",
+        "integer": "int",
+        "object": "dict",
+        "boolean": "bool",
+        "array": "list",
+        "null": "None",
+    }
+
 
 def get_valid_identifier(
     prop: str,
@@ -177,16 +187,6 @@ class SchemaInfo:
         else:
             return self.medium_description
 
-    _simple_types: Dict[str, str] = {
-        "string": "string",
-        "number": "float",
-        "integer": "integer",
-        "object": "mapping",
-        "boolean": "boolean",
-        "array": "list",
-        "null": "None",
-    }
-
     @property
     def medium_description(self) -> str:
         if self.is_empty():
@@ -218,8 +218,8 @@ class SchemaInfo:
             return "Mapping(required=[{}])".format(", ".join(self.required))
         elif self.is_array():
             return "List({})".format(self.child(self.items).short_description)
-        elif self.type in self._simple_types:
-            return self._simple_types[self.type]
+        elif self.type in jsonschema_to_python_types:
+            return jsonschema_to_python_types[self.type]
         elif not self.type:
             import warnings
 

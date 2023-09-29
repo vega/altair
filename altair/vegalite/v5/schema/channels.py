@@ -104,7 +104,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -118,7 +118,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -693,7 +693,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -707,7 +707,7 @@ class Color(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -1232,7 +1232,7 @@ class ColorValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -1282,7 +1282,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -1310,7 +1310,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -1331,7 +1331,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    center : boolean
+    center : bool
         Boolean flag indicating if facet's subviews should be centered relative to their
         respective rows or columns.
 
@@ -1631,7 +1631,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -1645,7 +1645,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -1688,7 +1688,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -1711,7 +1711,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -1950,7 +1950,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -2001,7 +2001,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -2015,7 +2015,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2252,7 +2252,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -2283,7 +2283,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2316,7 +2316,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -2660,7 +2660,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -2674,7 +2674,7 @@ class Fill(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefG
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3199,7 +3199,7 @@ class FillValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatu
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -3249,7 +3249,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -3263,7 +3263,7 @@ class FillOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3838,7 +3838,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -3852,7 +3852,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3895,7 +3895,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -3918,7 +3918,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -4157,7 +4157,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4208,7 +4208,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -4222,7 +4222,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4459,7 +4459,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -4538,7 +4538,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : string
+    type : str
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -4831,7 +4831,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -5131,7 +5131,7 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5154,7 +5154,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -5233,7 +5233,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : string
+    type : str
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -5526,7 +5526,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -5826,7 +5826,7 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5849,7 +5849,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -5863,7 +5863,7 @@ class Opacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6438,7 +6438,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -6452,7 +6452,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6736,7 +6736,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -6750,7 +6750,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6838,7 +6838,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -7151,7 +7151,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -7331,7 +7331,7 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -7356,7 +7356,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -7656,7 +7656,7 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -7679,7 +7679,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -7707,7 +7707,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7728,7 +7728,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    center : boolean
+    center : bool
         Boolean flag indicating if facet's subviews should be centered relative to their
         respective rows or columns.
 
@@ -8028,7 +8028,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -8042,7 +8042,7 @@ class Shape(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8567,7 +8567,7 @@ class ShapeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDat
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -8617,7 +8617,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -8631,7 +8631,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9206,7 +9206,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -9220,7 +9220,7 @@ class Stroke(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDe
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9745,7 +9745,7 @@ class StrokeValue(ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDa
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -9795,7 +9795,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -9809,7 +9809,7 @@ class StrokeDash(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFie
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10384,7 +10384,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -10398,7 +10398,7 @@ class StrokeOpacity(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkProp
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10973,7 +10973,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -10987,7 +10987,7 @@ class StrokeWidth(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFi
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11562,7 +11562,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -11576,7 +11576,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11619,7 +11619,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -11642,7 +11642,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -11892,7 +11892,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -11915,7 +11915,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -12121,7 +12121,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -12135,7 +12135,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12223,7 +12223,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -12535,7 +12535,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -12715,7 +12715,7 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -12740,7 +12740,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13040,7 +13040,7 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13063,7 +13063,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13077,7 +13077,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13120,7 +13120,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -13143,7 +13143,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -13382,7 +13382,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13432,7 +13432,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13446,7 +13446,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13489,7 +13489,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -13512,7 +13512,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -13751,7 +13751,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13801,7 +13801,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13824,7 +13824,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13920,7 +13920,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -14266,7 +14266,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -14462,7 +14462,7 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -14487,7 +14487,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -14786,7 +14786,7 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -14811,7 +14811,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -15004,7 +15004,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -15195,7 +15195,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -15209,7 +15209,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15722,7 +15722,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -15745,7 +15745,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15841,7 +15841,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -16187,7 +16187,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -16383,7 +16383,7 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -16408,7 +16408,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -16707,7 +16707,7 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -16732,7 +16732,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -16925,7 +16925,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -17116,7 +17116,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : string
+    shorthand : str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -17130,7 +17130,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into

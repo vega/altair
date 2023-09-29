@@ -10,6 +10,7 @@ from .utils import (
     indent_docstring,
     indent_arglist,
     SchemaProperties,
+    jsonschema_to_python_types
 )
 
 
@@ -266,16 +267,6 @@ class SchemaGenerator:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
 
-    _equiv_python_types = {
-        "string": "str",
-        "number": "float",
-        "integer": "int",
-        "object": "dict",
-        "boolean": "bool",
-        "array": "list",
-        "null": "None",
-    }
-
     def get_args(self, si: SchemaInfo) -> List[str]:
         contents = ["self"]
         props: Union[List[str], SchemaProperties] = []
@@ -287,13 +278,13 @@ class SchemaGenerator:
         if props:
             contents.extend([p + "=Undefined" for p in props])
         elif si.type:
-            py_type = self._equiv_python_types[si.type]
+            py_type = jsonschema_to_python_types[si.type]
             if py_type == "list":
                 # Try to get a type hint like "List[str]" which is more specific
                 # then just "list"
                 item_vl_type = si.items.get("type", None)
                 if item_vl_type is not None:
-                    item_type = self._equiv_python_types[item_vl_type]
+                    item_type = jsonschema_to_python_types[item_vl_type]
                 else:
                     item_si = SchemaInfo(si.items, self.rootschema)
                     assert item_si.is_reference()

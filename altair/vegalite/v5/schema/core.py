@@ -130,23 +130,23 @@ class AreaConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -201,7 +201,7 @@ class AreaConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -218,7 +218,7 @@ class AreaConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -234,7 +234,7 @@ class AreaConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -244,7 +244,7 @@ class AreaConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -301,7 +301,7 @@ class AreaConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    line : anyOf(boolean, :class:`OverlayMarkDef`)
+    line : anyOf(bool, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
 
@@ -312,7 +312,7 @@ class AreaConfig(AnyMarkConfig):
         If this value is ``false``, no lines would be automatically added to area marks.
 
         **Default value:** ``false``.
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -323,7 +323,7 @@ class AreaConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -344,7 +344,7 @@ class AreaConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
         The angular padding applied to sides of the arc, in radians.
-    point : anyOf(boolean, :class:`OverlayMarkDef`, string)
+    point : anyOf(bool, :class:`OverlayMarkDef`, str)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -370,7 +370,7 @@ class AreaConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -402,7 +402,7 @@ class AreaConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -462,7 +462,7 @@ class AreaConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -481,24 +481,24 @@ class AreaConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -605,7 +605,7 @@ class AutoSizeParams(VegaLiteSchema):
         intended size of the view.
 
         **Default value** : ``"content"``
-    resize : boolean
+    resize : bool
         A boolean flag indicating if autosize layout should be re-calculated on every view
         update.
 
@@ -643,7 +643,7 @@ class Axis(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -656,14 +656,14 @@ class Axis(VegaLiteSchema):
         value of ``0.5`` places ticks in the middle of their bands.
 
         **Default value:** ``0.5``
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of this axis for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
         will be set to this description. If the description is unspecified it will be
         automatically generated.
-    domain : boolean
+    domain : bool
         A boolean flag indicating if the domain (the axis baseline) should be included as
         part of the axis.
 
@@ -687,7 +687,7 @@ class Axis(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -710,7 +710,7 @@ class Axis(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -721,7 +721,7 @@ class Axis(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    grid : boolean
+    grid : bool
         A boolean flag indicating if grid lines should be included as part of the axis
 
         **Default value:** ``true`` for `continuous scales
@@ -761,7 +761,7 @@ class Axis(VegaLiteSchema):
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
         and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
         are calculated relative to the *lineHeight* rather than *fontSize* alone.
-    labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
+    labelBound : anyOf(anyOf(float, bool), :class:`ExprRef`)
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
         (the default) no bounds overlap analysis is performed. If ``true``, labels will be
         hidden if they exceed the axis range by more than 1 pixel. If this property is a
@@ -771,13 +771,13 @@ class Axis(VegaLiteSchema):
         **Default value:** ``false``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
         The color of the tick label, can be in hex color code or regular color name.
-    labelExpr : string
+    labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    labelFlush : anyOf(boolean, float)
+    labelFlush : anyOf(bool, float)
         Indicates if the first and last axis labels should be aligned flush with the scale
         range. Flush alignment for a horizontal axis will left-align the first label and
         right-align the last label. For vertical axes, bottom and top text baselines are
@@ -795,7 +795,7 @@ class Axis(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : anyOf(string, :class:`ExprRef`, :class:`ConditionalAxisString`)
+    labelFont : anyOf(str, :class:`ExprRef`, :class:`ConditionalAxisString`)
         The font of the tick label.
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         The font size of the label, in pixels.
@@ -834,7 +834,7 @@ class Axis(VegaLiteSchema):
         The minimum separation that must be between label bounding boxes for them to be
         considered non-overlapping (default ``0`` ). This property is ignored if
         *labelOverlap* resolution is not enabled.
-    labels : boolean
+    labels : bool
         A boolean flag indicating if labels should be included as part of the axis.
 
         **Default value:** ``true``.
@@ -867,7 +867,7 @@ class Axis(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -906,7 +906,7 @@ class Axis(VegaLiteSchema):
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         The pixel offset at which to start drawing with the tick mark dash array.
-    tickExtra : boolean
+    tickExtra : bool
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
         that ticks are placed on band boundaries rather in the middle of a band. Use in
@@ -920,7 +920,7 @@ class Axis(VegaLiteSchema):
         Position offset in pixels to apply to ticks, labels, and gridlines.
     tickOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         Opacity of the ticks.
-    tickRound : boolean
+    tickRound : bool
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
@@ -933,7 +933,7 @@ class Axis(VegaLiteSchema):
         The width, in pixels, of ticks.
 
         **Default value:** ``1``
-    ticks : boolean
+    ticks : bool
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
@@ -971,7 +971,7 @@ class Axis(VegaLiteSchema):
         alone.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Color of the title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
         Font size of the title.
@@ -1002,7 +1002,7 @@ class Axis(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
+    values : anyOf(List(float), List(str), List(bool), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -1078,7 +1078,7 @@ class AxisConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -1091,16 +1091,16 @@ class AxisConfig(VegaLiteSchema):
         value of ``0.5`` places ticks in the middle of their bands.
 
         **Default value:** ``0.5``
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of this axis for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__
         will be set to this description. If the description is unspecified it will be
         automatically generated.
-    disable : boolean
+    disable : bool
         Disable axis by default.
-    domain : boolean
+    domain : bool
         A boolean flag indicating if the domain (the axis baseline) should be included as
         part of the axis.
 
@@ -1124,7 +1124,7 @@ class AxisConfig(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -1147,7 +1147,7 @@ class AxisConfig(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -1158,7 +1158,7 @@ class AxisConfig(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    grid : boolean
+    grid : bool
         A boolean flag indicating if grid lines should be included as part of the axis
 
         **Default value:** ``true`` for `continuous scales
@@ -1198,7 +1198,7 @@ class AxisConfig(VegaLiteSchema):
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
         and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
         are calculated relative to the *lineHeight* rather than *fontSize* alone.
-    labelBound : anyOf(anyOf(float, boolean), :class:`ExprRef`)
+    labelBound : anyOf(anyOf(float, bool), :class:`ExprRef`)
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
         (the default) no bounds overlap analysis is performed. If ``true``, labels will be
         hidden if they exceed the axis range by more than 1 pixel. If this property is a
@@ -1208,13 +1208,13 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** ``false``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`, :class:`ConditionalAxisColor`)
         The color of the tick label, can be in hex color code or regular color name.
-    labelExpr : string
+    labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    labelFlush : anyOf(boolean, float)
+    labelFlush : anyOf(bool, float)
         Indicates if the first and last axis labels should be aligned flush with the scale
         range. Flush alignment for a horizontal axis will left-align the first label and
         right-align the last label. For vertical axes, bottom and top text baselines are
@@ -1232,7 +1232,7 @@ class AxisConfig(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : anyOf(string, :class:`ExprRef`, :class:`ConditionalAxisString`)
+    labelFont : anyOf(str, :class:`ExprRef`, :class:`ConditionalAxisString`)
         The font of the tick label.
     labelFontSize : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         The font size of the label, in pixels.
@@ -1271,7 +1271,7 @@ class AxisConfig(VegaLiteSchema):
         The minimum separation that must be between label bounding boxes for them to be
         considered non-overlapping (default ``0`` ). This property is ignored if
         *labelOverlap* resolution is not enabled.
-    labels : boolean
+    labels : bool
         A boolean flag indicating if labels should be included as part of the axis.
 
         **Default value:** ``true``.
@@ -1304,7 +1304,7 @@ class AxisConfig(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -1343,7 +1343,7 @@ class AxisConfig(VegaLiteSchema):
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         The pixel offset at which to start drawing with the tick mark dash array.
-    tickExtra : boolean
+    tickExtra : bool
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
         that ticks are placed on band boundaries rather in the middle of a band. Use in
@@ -1357,7 +1357,7 @@ class AxisConfig(VegaLiteSchema):
         Position offset in pixels to apply to ticks, labels, and gridlines.
     tickOpacity : anyOf(float, :class:`ExprRef`, :class:`ConditionalAxisNumber`)
         Opacity of the ticks.
-    tickRound : boolean
+    tickRound : bool
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
@@ -1370,7 +1370,7 @@ class AxisConfig(VegaLiteSchema):
         The width, in pixels, of ticks.
 
         **Default value:** ``1``
-    ticks : boolean
+    ticks : bool
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
@@ -1408,7 +1408,7 @@ class AxisConfig(VegaLiteSchema):
         alone.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Color of the title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
         Font size of the title.
@@ -1439,7 +1439,7 @@ class AxisConfig(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
+    values : anyOf(List(float), List(str), List(bool), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -1566,23 +1566,23 @@ class BarConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -1650,7 +1650,7 @@ class BarConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -1670,7 +1670,7 @@ class BarConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -1686,7 +1686,7 @@ class BarConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -1696,7 +1696,7 @@ class BarConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -1753,7 +1753,7 @@ class BarConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -1766,7 +1766,7 @@ class BarConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -1798,7 +1798,7 @@ class BarConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -1830,7 +1830,7 @@ class BarConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -1890,7 +1890,7 @@ class BarConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -1909,24 +1909,24 @@ class BarConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -2004,7 +2004,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         positions map to a left-, center-, or right-aligned title.
     angle : anyOf(float, :class:`ExprRef`)
         Angle in degrees of title and subtitle text.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -2023,7 +2023,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
         Delta offset for title and subtitle text y-coordinate.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for title text.
@@ -2033,7 +2033,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
+    frame : anyOf(anyOf(:class:`TitleFrame`, str), :class:`ExprRef`)
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -2049,7 +2049,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Text color for subtitle text.
-    subtitleFont : anyOf(string, :class:`ExprRef`)
+    subtitleFont : anyOf(str, :class:`ExprRef`)
         Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for subtitle text.
@@ -2122,7 +2122,7 @@ class BinParams(VegaLiteSchema):
         The number base to use for automatic bin determination (default is base 10).
 
         **Default value:** ``10``
-    binned : boolean
+    binned : bool
         When set to ``true``, Vega-Lite treats the input data as already binned.
     divide : List(float)
         Scale factors indicating allowable subdivisions. The default value is [5, 2], which
@@ -2141,7 +2141,7 @@ class BinParams(VegaLiteSchema):
         other channels
     minstep : float
         A minimum allowable step size (particularly useful for integer values).
-    nice : boolean
+    nice : bool
         If true, attempts to make the bin boundaries use human-friendly boundaries, such as
         multiples of ten.
 
@@ -2183,7 +2183,7 @@ class BindCheckbox(Binding):
     Parameters
     ----------
 
-    input : string
+    input : str
 
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
@@ -2192,7 +2192,7 @@ class BindCheckbox(Binding):
         An optional CSS selector string indicating the parent element to which the input
         element should be added. By default, all input elements are added within the parent
         container of the Vega view.
-    name : string
+    name : str
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
     """
@@ -2221,7 +2221,7 @@ class BindDirect(Binding):
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
         since the last event was fired.
-    event : string
+    event : str
         The event (default ``"input"`` ) to listen for to track changes on the external
         element.
     """
@@ -2239,7 +2239,7 @@ class BindInput(Binding):
     Parameters
     ----------
 
-    autocomplete : string
+    autocomplete : str
         A hint for form autofill. See the `HTML autocomplete attribute
         <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete>`__ for
         additional information.
@@ -2250,14 +2250,14 @@ class BindInput(Binding):
         An optional CSS selector string indicating the parent element to which the input
         element should be added. By default, all input elements are added within the parent
         container of the Vega view.
-    input : string
+    input : str
         The type of input element to use. The valid values are ``"checkbox"``, ``"radio"``,
         ``"range"``, ``"select"``, and any other legal `HTML form input type
         <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`__.
-    name : string
+    name : str
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
-    placeholder : string
+    placeholder : str
         Text that appears in the form control when it has no value set.
     """
     _schema = {'$ref': '#/definitions/BindInput'}
@@ -2287,10 +2287,10 @@ class BindRadioSelect(Binding):
         An optional CSS selector string indicating the parent element to which the input
         element should be added. By default, all input elements are added within the parent
         container of the Vega view.
-    labels : List(string)
+    labels : List(str)
         An array of label strings to represent the ``options`` values. If unspecified, the
         ``options`` value will be coerced to a string and used as the label.
-    name : string
+    name : str
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
     """
@@ -2310,7 +2310,7 @@ class BindRange(Binding):
     Parameters
     ----------
 
-    input : string
+    input : str
 
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
@@ -2325,7 +2325,7 @@ class BindRange(Binding):
     min : float
         Sets the minimum slider value. Defaults to the smaller of the signal value and
         ``0``.
-    name : string
+    name : str
         By default, the signal name is used to label input elements. This ``name`` property
         can be used instead to specify a custom label for the bound signal.
     step : float
@@ -2382,9 +2382,9 @@ class BoxPlotConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    box : anyOf(boolean, :class:`AnyMarkConfig`)
+    box : anyOf(bool, :class:`AnyMarkConfig`)
 
-    extent : anyOf(string, float)
+    extent : anyOf(str, float)
         The extent of the whiskers. Available options include:
 
 
@@ -2396,15 +2396,15 @@ class BoxPlotConfig(VegaLiteSchema):
           range ( *Q3-Q1* ).
 
         **Default value:** ``1.5``.
-    median : anyOf(boolean, :class:`AnyMarkConfig`)
+    median : anyOf(bool, :class:`AnyMarkConfig`)
 
-    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
+    outliers : anyOf(bool, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`AnyMarkConfig`)
+    rule : anyOf(bool, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
+    ticks : anyOf(bool, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotConfig'}
@@ -2462,7 +2462,7 @@ class BrushConfig(VegaLiteSchema):
 class Color(VegaLiteSchema):
     """Color schema wrapper
 
-    anyOf(:class:`ColorName`, :class:`HexColor`, string)
+    anyOf(:class:`ColorName`, :class:`HexColor`, str)
     """
     _schema = {'$ref': '#/definitions/Color'}
 
@@ -2554,7 +2554,7 @@ class CompositeMark(AnyMark):
 class BoxPlot(CompositeMark):
     """BoxPlot schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/BoxPlot'}
 
@@ -2586,9 +2586,9 @@ class BoxPlotDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    box : anyOf(boolean, :class:`AnyMarkConfig`)
+    box : anyOf(bool, :class:`AnyMarkConfig`)
 
-    clip : boolean
+    clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
@@ -2603,7 +2603,7 @@ class BoxPlotDef(CompositeMarkDef):
           <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
-    extent : anyOf(string, float)
+    extent : anyOf(str, float)
         The extent of the whiskers. Available options include:
 
 
@@ -2624,7 +2624,7 @@ class BoxPlotDef(CompositeMarkDef):
           (for line, trail, and area marks) or filtered (for other marks).
         * If ``null``, all data items are included. In this case, invalid values will be
           interpreted as zeroes.
-    median : anyOf(boolean, :class:`AnyMarkConfig`)
+    median : anyOf(bool, :class:`AnyMarkConfig`)
 
     opacity : float
         The opacity (value between [0,1]) of the mark.
@@ -2634,13 +2634,13 @@ class BoxPlotDef(CompositeMarkDef):
         when the orientation is ambiguous.
 
         **Default value:** ``"vertical"``.
-    outliers : anyOf(boolean, :class:`AnyMarkConfig`)
+    outliers : anyOf(bool, :class:`AnyMarkConfig`)
 
-    rule : anyOf(boolean, :class:`AnyMarkConfig`)
+    rule : anyOf(bool, :class:`AnyMarkConfig`)
 
     size : float
         Size of the box and median tick of a box plot
-    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
+    ticks : anyOf(bool, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotDef'}
@@ -3045,7 +3045,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3066,7 +3066,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     field : :class:`Field`
@@ -3084,7 +3084,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -3107,7 +3107,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -3252,7 +3252,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3288,7 +3288,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -3311,7 +3311,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -3456,11 +3456,11 @@ class ConditionalParameterValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3482,7 +3482,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(ConditionalValueDefG
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -3520,7 +3520,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3578,7 +3578,7 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3636,7 +3636,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(ConditionalValueDefnumberAr
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3695,7 +3695,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3749,11 +3749,11 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : anyOf(string, :class:`ExprRef`)
+    value : anyOf(str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3774,7 +3774,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : anyOf(string, :class:`ExprRef`)
+    value : anyOf(str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -3807,11 +3807,11 @@ class ConditionalParameterValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -3832,7 +3832,7 @@ class ConditionalPredicateValueDefstringnullExprRef(ConditionalValueDefstringnul
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -3856,7 +3856,7 @@ class Config(VegaLiteSchema):
         Arc-specific Config
     area : :class:`AreaConfig`
         Area-Specific Config
-    aria : boolean
+    aria : bool
         A boolean flag indicating if ARIA default attributes should be included for marks
         and guides (SVG output only). If false, the ``"aria-hidden"`` attribute will be set
         for all guides, removing them from the ARIA accessibility tree and Vega-Lite will
@@ -3929,11 +3929,11 @@ class Config(VegaLiteSchema):
     concat : :class:`CompositionConfig`
         Default configuration for all concatenation and repeat view composition operators (
         ``concat``, ``hconcat``, ``vconcat``, and ``repeat`` )
-    countTitle : string
+    countTitle : str
         Default axis and legend title for count fields.
 
         **Default value:** ``'Count of Records``.
-    customFormatTypes : boolean
+    customFormatTypes : bool
         Allow the ``formatType`` property for text marks and guides to accept a custom
         formatter function `registered as a Vega expression
         <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__.
@@ -3953,7 +3953,7 @@ class Config(VegaLiteSchema):
           "SUM(field)", "YEARMONTH(date)", "BIN(field)").
         * ``"plain"`` - displays only the field name without functions (e.g., "field",
           "date", "field").
-    font : string
+    font : str
         Default font for all text marks, titles, and labels.
     geoshape : :class:`MarkConfig`
         Geoshape-Specific Config
@@ -3994,7 +3994,7 @@ class Config(VegaLiteSchema):
         documentation <https://vega.github.io/vega-lite/docs/legend.html#config>`__.
     line : :class:`LineConfig`
         Line-Specific Config
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property provides a global default for text marks, which is
         overridden by mark or style config settings, and by the lineBreak mark encoding
@@ -4008,7 +4008,7 @@ class Config(VegaLiteSchema):
         option.
     mark : :class:`MarkConfig`
         Mark Config
-    normalizedNumberFormat : string
+    normalizedNumberFormat : str
         If normalizedNumberFormatType is not specified, D3 number format for axis labels,
         text marks, and tooltips of normalized stacked fields (fields with ``stack:
         "normalize"`` ). For example ``"s"`` for SI units. Use `D3's number format pattern
@@ -4018,7 +4018,7 @@ class Config(VegaLiteSchema):
         ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
         alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
         value:** ``%``
-    normalizedNumberFormatType : string
+    normalizedNumberFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.normalizedNumberFormat``.
@@ -4027,7 +4027,7 @@ class Config(VegaLiteSchema):
         exposed as `format in Vega-Expression
         <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
         set ``customFormatTypes`` to ``true`` to use this feature.
-    numberFormat : string
+    numberFormat : str
         If numberFormatType is not specified, D3 number format for guide labels, text marks,
         and tooltips of non-normalized fields (fields *without* ``stack: "normalize"`` ).
         For example ``"s"`` for SI units. Use `D3's number format pattern
@@ -4036,7 +4036,7 @@ class Config(VegaLiteSchema):
         If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
         ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
         ``config.numberFormatType`` function.
-    numberFormatType : string
+    numberFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.numberFormat``.
@@ -4090,13 +4090,13 @@ class Config(VegaLiteSchema):
         Text-Specific Config
     tick : :class:`TickConfig`
         Tick-Specific Config
-    timeFormat : string
+    timeFormat : str
         Default time format for raw time values (without time units) in text marks, legend
         labels and header labels.
 
         **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
         for each label automatically so this config does not affect axes.
-    timeFormatType : string
+    timeFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.timeFormat``.
@@ -4373,7 +4373,7 @@ class DomainUnionWith(VegaLiteSchema):
     Parameters
     ----------
 
-    unionWith : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
+    unionWith : anyOf(List(float), List(str), List(bool), List(:class:`DateTime`))
         Customized domain values to be union with the field's values or explicitly defined
         domain. Should be an array of valid scale domain values.
     """
@@ -4391,7 +4391,7 @@ class DsvDataFormat(DataFormat):
     Parameters
     ----------
 
-    delimiter : string
+    delimiter : str
         The delimiter between records. The delimiter must be a single character (i.e., a
         single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are
         not.
@@ -4411,7 +4411,7 @@ class DsvDataFormat(DataFormat):
         UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
-    type : string
+    type : str
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -4426,7 +4426,7 @@ class DsvDataFormat(DataFormat):
 class Element(VegaLiteSchema):
     """Element schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/Element'}
 
@@ -4658,7 +4658,7 @@ class Encoding(VegaLiteSchema):
 class ErrorBand(CompositeMark):
     """ErrorBand schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/ErrorBand'}
 
@@ -4674,9 +4674,9 @@ class ErrorBandConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    band : anyOf(boolean, :class:`AnyMarkConfig`)
+    band : anyOf(bool, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`AnyMarkConfig`)
+    borders : anyOf(bool, :class:`AnyMarkConfig`)
 
     extent : :class:`ErrorBarExtent`
         The extent of the band. Available options include:
@@ -4737,11 +4737,11 @@ class ErrorBandDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    band : anyOf(boolean, :class:`AnyMarkConfig`)
+    band : anyOf(bool, :class:`AnyMarkConfig`)
 
-    borders : anyOf(boolean, :class:`AnyMarkConfig`)
+    borders : anyOf(bool, :class:`AnyMarkConfig`)
 
-    clip : boolean
+    clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
@@ -4812,7 +4812,7 @@ class ErrorBandDef(CompositeMarkDef):
 class ErrorBar(CompositeMark):
     """ErrorBar schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/ErrorBar'}
 
@@ -4840,13 +4840,13 @@ class ErrorBarConfig(VegaLiteSchema):
         * ``"iqr"`` : Extend the rule to the q1 and q3.
 
         **Default value:** ``"stderr"``.
-    rule : anyOf(boolean, :class:`AnyMarkConfig`)
+    rule : anyOf(bool, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
+    ticks : anyOf(bool, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarConfig'}
@@ -4870,7 +4870,7 @@ class ErrorBarDef(CompositeMarkDef):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    clip : boolean
+    clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
@@ -4902,13 +4902,13 @@ class ErrorBarDef(CompositeMarkDef):
     orient : :class:`Orientation`
         Orientation of the error bar. This is normally automatically determined, but can be
         specified when the orientation is ambiguous and cannot be automatically determined.
-    rule : anyOf(boolean, :class:`AnyMarkConfig`)
+    rule : anyOf(bool, :class:`AnyMarkConfig`)
 
     size : float
         Size of the ticks of an error bar
     thickness : float
         Thickness of the ticks and the bar of an error bar
-    ticks : anyOf(boolean, :class:`AnyMarkConfig`)
+    ticks : anyOf(bool, :class:`AnyMarkConfig`)
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarDef'}
@@ -4935,7 +4935,7 @@ class ErrorBarExtent(VegaLiteSchema):
 class Expr(VegaLiteSchema):
     """Expr schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/Expr'}
 
@@ -4951,7 +4951,7 @@ class ExprRef(VegaLiteSchema):
     Parameters
     ----------
 
-    expr : string
+    expr : str
         Vega expression (which can refer to Vega-Lite parameters).
     """
     _schema = {'$ref': '#/definitions/ExprRef'}
@@ -4997,7 +4997,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -5030,7 +5030,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -5240,7 +5240,7 @@ class FacetFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -5680,12 +5680,12 @@ class Feature(VegaLiteSchema):
         The feature's geometry
     properties : :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : anyOf(string, float)
+    id : anyOf(str, float)
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -5708,7 +5708,7 @@ class FeatureCollection(VegaLiteSchema):
 
     features : List(:class:`FeatureGeometryGeoJsonProperties`)
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -5734,12 +5734,12 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         The feature's geometry
     properties : :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : anyOf(string, float)
+    id : anyOf(str, float)
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -5783,7 +5783,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -5930,7 +5930,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 class FieldName(Field):
     """FieldName schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/FieldName'}
 
@@ -5958,7 +5958,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6001,7 +6001,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -6024,7 +6024,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -6159,7 +6159,7 @@ class FieldRange(VegaLiteSchema):
     Parameters
     ----------
 
-    field : string
+    field : str
 
     """
     _schema = {'$ref': '#/definitions/FieldRange'}
@@ -6183,7 +6183,7 @@ class Fit(VegaLiteSchema):
 class FontStyle(VegaLiteSchema):
     """FontStyle schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/FontStyle'}
 
@@ -6210,7 +6210,7 @@ class FormatConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    normalizedNumberFormat : string
+    normalizedNumberFormat : str
         If normalizedNumberFormatType is not specified, D3 number format for axis labels,
         text marks, and tooltips of normalized stacked fields (fields with ``stack:
         "normalize"`` ). For example ``"s"`` for SI units. Use `D3's number format pattern
@@ -6220,7 +6220,7 @@ class FormatConfig(VegaLiteSchema):
         ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
         alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
         value:** ``%``
-    normalizedNumberFormatType : string
+    normalizedNumberFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.normalizedNumberFormat``.
@@ -6229,7 +6229,7 @@ class FormatConfig(VegaLiteSchema):
         exposed as `format in Vega-Expression
         <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
         set ``customFormatTypes`` to ``true`` to use this feature.
-    numberFormat : string
+    numberFormat : str
         If numberFormatType is not specified, D3 number format for guide labels, text marks,
         and tooltips of non-normalized fields (fields *without* ``stack: "normalize"`` ).
         For example ``"s"`` for SI units. Use `D3's number format pattern
@@ -6238,7 +6238,7 @@ class FormatConfig(VegaLiteSchema):
         If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
         ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
         ``config.numberFormatType`` function.
-    numberFormatType : string
+    numberFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.numberFormat``.
@@ -6247,13 +6247,13 @@ class FormatConfig(VegaLiteSchema):
         exposed as `format in Vega-Expression
         <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
         set ``customFormatTypes`` to ``true`` to use this feature.
-    timeFormat : string
+    timeFormat : str
         Default time format for raw time values (without time units) in text marks, legend
         labels and header labels.
 
         **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
         for each label automatically so this config does not affect axes.
-    timeFormatType : string
+    timeFormatType : str
         `Custom format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
         ``config.timeFormat``.
@@ -6303,11 +6303,11 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
-    name : string
+    name : str
         Name of the visualization for later reference.
     params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
@@ -6347,12 +6347,12 @@ class GeoJsonFeature(Fit):
         The feature's geometry
     properties : :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : anyOf(string, float)
+    id : anyOf(str, float)
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -6375,7 +6375,7 @@ class GeoJsonFeatureCollection(Fit):
 
     features : List(:class:`FeatureGeometryGeoJsonProperties`)
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -6422,7 +6422,7 @@ class GeometryCollection(Geometry):
 
     geometries : List(:class:`Geometry`)
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -6472,9 +6472,9 @@ class GraticuleGenerator(Generator):
     Parameters
     ----------
 
-    graticule : anyOf(boolean, :class:`GraticuleParams`)
+    graticule : anyOf(bool, :class:`GraticuleParams`)
         Generate graticule GeoJSON data for geographic reference lines.
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/GraticuleGenerator'}
@@ -6530,7 +6530,7 @@ class Header(VegaLiteSchema):
     Parameters
     ----------
 
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -6553,7 +6553,7 @@ class Header(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -6583,13 +6583,13 @@ class Header(VegaLiteSchema):
         ``titleFontSize`` alone.
     labelColor : anyOf(:class:`Color`, :class:`ExprRef`)
         The color of the header label, can be in hex color code or regular color name.
-    labelExpr : string
+    labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the header's backing ``datum`` object.
-    labelFont : anyOf(string, :class:`ExprRef`)
+    labelFont : anyOf(str, :class:`ExprRef`)
         The font of the header label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
         The font size of the header label, in pixels.
@@ -6612,7 +6612,7 @@ class Header(VegaLiteSchema):
         The padding, in pixel, between facet header's label and the plot.
 
         **Default value:** ``10``
-    labels : boolean
+    labels : bool
         A boolean flag indicating if labels should be included as part of the header.
 
         **Default value:** ``true``.
@@ -6658,7 +6658,7 @@ class Header(VegaLiteSchema):
         **Default value:** ``"middle"``
     titleColor : anyOf(:class:`Color`, :class:`ExprRef`)
         Color of the header title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
         Font size of the header title.
@@ -6722,7 +6722,7 @@ class HeaderConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -6745,7 +6745,7 @@ class HeaderConfig(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -6775,13 +6775,13 @@ class HeaderConfig(VegaLiteSchema):
         ``titleFontSize`` alone.
     labelColor : anyOf(:class:`Color`, :class:`ExprRef`)
         The color of the header label, can be in hex color code or regular color name.
-    labelExpr : string
+    labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the header's backing ``datum`` object.
-    labelFont : anyOf(string, :class:`ExprRef`)
+    labelFont : anyOf(str, :class:`ExprRef`)
         The font of the header label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
         The font size of the header label, in pixels.
@@ -6804,7 +6804,7 @@ class HeaderConfig(VegaLiteSchema):
         The padding, in pixel, between facet header's label and the plot.
 
         **Default value:** ``10``
-    labels : boolean
+    labels : bool
         A boolean flag indicating if labels should be included as part of the header.
 
         **Default value:** ``true``.
@@ -6832,7 +6832,7 @@ class HeaderConfig(VegaLiteSchema):
         **Default value:** ``"middle"``
     titleColor : anyOf(:class:`Color`, :class:`ExprRef`)
         Color of the header title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : anyOf(float, :class:`ExprRef`)
         Font size of the header title.
@@ -6891,7 +6891,7 @@ class HeaderConfig(VegaLiteSchema):
 class HexColor(Color):
     """HexColor schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/HexColor'}
 
@@ -6990,7 +6990,7 @@ class InlineData(DataSource):
         with a ``data`` property. Strings are parsed according to the specified format type.
     format : :class:`DataFormat`
         An object that specifies the format for parsing the data.
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/InlineData'}
@@ -7002,7 +7002,7 @@ class InlineData(DataSource):
 class InlineDataset(VegaLiteSchema):
     """InlineDataset schema wrapper
 
-    anyOf(List(float), List(string), List(boolean), List(Mapping(required=[])), string,
+    anyOf(List(float), List(str), List(bool), List(Mapping(required=[])), str,
     Mapping(required=[]))
     """
     _schema = {'$ref': '#/definitions/InlineDataset'}
@@ -7032,7 +7032,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    type : string
+    type : str
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -7040,7 +7040,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    clear : anyOf(:class:`Stream`, string, boolean)
+    clear : anyOf(:class:`Stream`, str, bool)
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -7063,7 +7063,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
         **See also:** `mark examples
         <https://vega.github.io/vega-lite/docs/selection.html#mark>`__ in the documentation.
-    on : anyOf(:class:`Stream`, string)
+    on : anyOf(:class:`Stream`, str)
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -7091,7 +7091,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    translate : anyOf(string, boolean)
+    translate : anyOf(str, bool)
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a `Vega event
         stream definition <https://vega.github.io/vega/docs/event-streams/>`__ which must
@@ -7105,7 +7105,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `translate examples
         <https://vega.github.io/vega-lite/docs/selection.html#translate>`__ in the
         documentation.
-    zoom : anyOf(string, boolean)
+    zoom : anyOf(str, bool)
         When truthy, allows a user to interactively resize an interval selection. Can be
         ``true``, ``false`` (to disable zooming), or a `Vega event stream definition
         <https://vega.github.io/vega/docs/event-streams/>`__. Currently, only ``wheel``
@@ -7136,7 +7136,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     Parameters
     ----------
 
-    clear : anyOf(:class:`Stream`, string, boolean)
+    clear : anyOf(:class:`Stream`, str, bool)
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -7159,7 +7159,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 
         **See also:** `mark examples
         <https://vega.github.io/vega-lite/docs/selection.html#mark>`__ in the documentation.
-    on : anyOf(:class:`Stream`, string)
+    on : anyOf(:class:`Stream`, str)
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -7187,7 +7187,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    translate : anyOf(string, boolean)
+    translate : anyOf(str, bool)
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a `Vega event
         stream definition <https://vega.github.io/vega/docs/event-streams/>`__ which must
@@ -7201,7 +7201,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `translate examples
         <https://vega.github.io/vega-lite/docs/selection.html#translate>`__ in the
         documentation.
-    zoom : anyOf(string, boolean)
+    zoom : anyOf(str, bool)
         When truthy, allows a user to interactively resize an interval selection. Can be
         ``true``, ``false`` (to disable zooming), or a `Vega event stream definition
         <https://vega.github.io/vega/docs/event-streams/>`__. Currently, only ``wheel``
@@ -7272,12 +7272,12 @@ class JsonDataFormat(DataFormat):
         UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
-    property : string
+    property : str
         The JSON property containing the desired data. This parameter can be used when the
         loaded JSON file may have surrounding structure or meta-data. For example
         ``"property": "values.features"`` is equivalent to retrieving
         ``json.values.features`` from the loaded JSON object.
-    type : string
+    type : str
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -7292,7 +7292,7 @@ class JsonDataFormat(DataFormat):
 class LabelOverlap(VegaLiteSchema):
     """LabelOverlap schema wrapper
 
-    anyOf(boolean, string, string)
+    anyOf(bool, str, str)
     """
     _schema = {'$ref': '#/definitions/LabelOverlap'}
 
@@ -7396,7 +7396,7 @@ class LatLongFieldDef(LatLongDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : string
+    type : str
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -7483,11 +7483,11 @@ class LayerRepeatMapping(VegaLiteSchema):
     Parameters
     ----------
 
-    layer : List(string)
+    layer : List(str)
         An array of fields to be repeated as layers.
-    column : List(string)
+    column : List(str)
         An array of fields to be repeated horizontally.
-    row : List(string)
+    row : List(str)
         An array of fields to be repeated vertically.
     """
     _schema = {'$ref': '#/definitions/LayerRepeatMapping'}
@@ -7516,7 +7516,7 @@ class Legend(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -7534,7 +7534,7 @@ class Legend(VegaLiteSchema):
         lower indicates a single row with one column per entry.
     cornerRadius : anyOf(float, :class:`ExprRef`)
         Corner radius for the full legend.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of this legend for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
@@ -7553,7 +7553,7 @@ class Legend(VegaLiteSchema):
           legends and ``"vertical"`` for symbol legends.
     fillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Background fill color for the full legend.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -7576,7 +7576,7 @@ class Legend(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -7622,13 +7622,13 @@ class Legend(VegaLiteSchema):
         **Default value:** ``"middle"``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         The color of the legend label, can be in hex color code or regular color name.
-    labelExpr : string
+    labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
         labels.
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the legend's backing ``datum`` object.
-    labelFont : anyOf(string, :class:`ExprRef`)
+    labelFont : anyOf(str, :class:`ExprRef`)
         The font of the legend label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
         The font size of legend label.
@@ -7768,7 +7768,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``"top"``.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         The color of the legend title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         The font of the legend title.
     titleFontSize : anyOf(float, :class:`ExprRef`)
         The font size of the legend title.
@@ -7799,7 +7799,7 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
-    values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`), :class:`ExprRef`)
+    values : anyOf(List(float), List(str), List(bool), List(:class:`DateTime`), :class:`ExprRef`)
         Explicitly set the visible legend values.
     zindex : float
         A non-negative integer indicating the z-index of the legend. If zindex is 0, legend
@@ -7864,7 +7864,7 @@ class Legend(VegaLiteSchema):
 class LegendBinding(VegaLiteSchema):
     """LegendBinding schema wrapper
 
-    anyOf(string, :class:`LegendStreamBinding`)
+    anyOf(str, :class:`LegendStreamBinding`)
     """
     _schema = {'$ref': '#/definitions/LegendBinding'}
 
@@ -7880,7 +7880,7 @@ class LegendConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -7898,7 +7898,7 @@ class LegendConfig(VegaLiteSchema):
         lower indicates a single row with one column per entry.
     cornerRadius : anyOf(float, :class:`ExprRef`)
         Corner radius for the full legend.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of this legend for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If the ``aria`` property is true, for SVG output the `"aria-label" attribute
@@ -7915,7 +7915,7 @@ class LegendConfig(VegaLiteSchema):
         * For left-/right- ``orient`` ed legends, ``"vertical"``
         * For top/bottom-left/right- ``orient`` ed legends, ``"horizontal"`` for gradient
           legends and ``"vertical"`` for symbol legends.
-    disable : boolean
+    disable : bool
         Disable legend by default
     fillColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Background fill color for the full legend.
@@ -7984,7 +7984,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``"middle"``.
     labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         The color of the legend label, can be in hex color code or regular color name.
-    labelFont : anyOf(string, :class:`ExprRef`)
+    labelFont : anyOf(str, :class:`ExprRef`)
         The font of the legend label.
     labelFontSize : anyOf(float, :class:`ExprRef`)
         The font size of legend label.
@@ -8119,7 +8119,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``"top"``.
     titleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         The color of the legend title, can be in hex color code or regular color name.
-    titleFont : anyOf(string, :class:`ExprRef`)
+    titleFont : anyOf(str, :class:`ExprRef`)
         The font of the legend title.
     titleFontSize : anyOf(float, :class:`ExprRef`)
         The font size of the legend title.
@@ -8288,7 +8288,7 @@ class LegendStreamBinding(LegendBinding):
     Parameters
     ----------
 
-    legend : anyOf(string, :class:`Stream`)
+    legend : anyOf(str, :class:`Stream`)
 
     """
     _schema = {'$ref': '#/definitions/LegendStreamBinding'}
@@ -8312,23 +8312,23 @@ class LineConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -8383,7 +8383,7 @@ class LineConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -8400,7 +8400,7 @@ class LineConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -8416,7 +8416,7 @@ class LineConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -8426,7 +8426,7 @@ class LineConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -8483,7 +8483,7 @@ class LineConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -8494,7 +8494,7 @@ class LineConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -8515,7 +8515,7 @@ class LineConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
         The angular padding applied to sides of the arc, in radians.
-    point : anyOf(boolean, :class:`OverlayMarkDef`, string)
+    point : anyOf(bool, :class:`OverlayMarkDef`, str)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -8541,7 +8541,7 @@ class LineConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -8573,7 +8573,7 @@ class LineConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -8633,7 +8633,7 @@ class LineConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -8652,24 +8652,24 @@ class LineConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -8735,7 +8735,7 @@ class LineString(Geometry):
 
     coordinates : List(:class:`Position`)
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -8755,11 +8755,11 @@ class LinearGradient(Gradient):
     Parameters
     ----------
 
-    gradient : string
+    gradient : str
         The type of gradient. Use ``"linear"`` for a linear gradient.
     stops : List(:class:`GradientStop`)
         An array of gradient stops defining the gradient color sequence.
-    id : string
+    id : str
 
     x1 : float
         The starting x-coordinate, in normalized [0, 1] coordinates, of the linear gradient.
@@ -8877,23 +8877,23 @@ class MarkConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -8948,7 +8948,7 @@ class MarkConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -8965,7 +8965,7 @@ class MarkConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -8981,7 +8981,7 @@ class MarkConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -8991,7 +8991,7 @@ class MarkConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -9048,7 +9048,7 @@ class MarkConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -9059,7 +9059,7 @@ class MarkConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -9091,7 +9091,7 @@ class MarkConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -9123,7 +9123,7 @@ class MarkConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -9183,7 +9183,7 @@ class MarkConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -9202,24 +9202,24 @@ class MarkConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -9294,23 +9294,23 @@ class MarkDef(AnyMark):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
@@ -9339,7 +9339,7 @@ class MarkDef(AnyMark):
         value can be used.
 
         __Default value:__ ``"source-over"``
-    clip : boolean
+    clip : bool
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
@@ -9385,7 +9385,7 @@ class MarkDef(AnyMark):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -9405,7 +9405,7 @@ class MarkDef(AnyMark):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -9418,7 +9418,7 @@ class MarkDef(AnyMark):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -9428,7 +9428,7 @@ class MarkDef(AnyMark):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -9491,7 +9491,7 @@ class MarkDef(AnyMark):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    line : anyOf(boolean, :class:`OverlayMarkDef`)
+    line : anyOf(bool, :class:`OverlayMarkDef`)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
 
@@ -9502,7 +9502,7 @@ class MarkDef(AnyMark):
         If this value is ``false``, no lines would be automatically added to area marks.
 
         **Default value:** ``false``.
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -9515,7 +9515,7 @@ class MarkDef(AnyMark):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -9536,7 +9536,7 @@ class MarkDef(AnyMark):
         **Default value:** ``0``
     padAngle : anyOf(float, :class:`ExprRef`)
         The angular padding applied to sides of the arc, in radians.
-    point : anyOf(boolean, :class:`OverlayMarkDef`, string)
+    point : anyOf(bool, :class:`OverlayMarkDef`, str)
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -9566,7 +9566,7 @@ class MarkDef(AnyMark):
         Offset for radius2.
     radiusOffset : anyOf(float, :class:`ExprRef`)
         Offset for radius.
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -9598,7 +9598,7 @@ class MarkDef(AnyMark):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -9633,7 +9633,7 @@ class MarkDef(AnyMark):
         **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
         The stroke width, in pixels.
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -9677,7 +9677,7 @@ class MarkDef(AnyMark):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -9702,13 +9702,13 @@ class MarkDef(AnyMark):
 
         A relative band size definition.  For example, ``{band: 0.5}`` represents half of
         the band.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
@@ -9717,13 +9717,13 @@ class MarkDef(AnyMark):
         Offset for x2-position.
     xOffset : anyOf(float, :class:`ExprRef`)
         Offset for x-position.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -9948,7 +9948,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(ColorDef, M
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10243,7 +10243,7 @@ class MultiLineString(Geometry):
 
     coordinates : List(List(:class:`Position`))
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -10266,7 +10266,7 @@ class MultiPoint(Geometry):
 
     coordinates : List(:class:`Position`)
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -10289,7 +10289,7 @@ class MultiPolygon(Geometry):
 
     coordinates : List(List(List(:class:`Position`)))
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -10309,7 +10309,7 @@ class NamedData(DataSource):
     Parameters
     ----------
 
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
 
         New data may change the layout but Vega does not always resize the chart. To update
@@ -10363,19 +10363,19 @@ class NumberLocale(VegaLiteSchema):
 
     currency : :class:`Vector2string`
         The currency prefix and suffix (e.g., ["$", ""]).
-    decimal : string
+    decimal : str
         The decimal point (e.g., ".").
     grouping : List(float)
         The array of group sizes (e.g., [3]), cycled as needed.
-    thousands : string
+    thousands : str
         The group separator (e.g., ",").
-    minus : string
+    minus : str
         The minus sign (defaults to hyphen-minus, "-").
-    nan : string
+    nan : str
         The not-a-number value (defaults to "NaN").
     numerals : :class:`Vector10string`
         An array of ten strings to replace the numerals 0-9.
-    percent : string
+    percent : str
         The percent sign (defaults to "%").
     """
     _schema = {'$ref': '#/definitions/NumberLocale'}
@@ -10541,7 +10541,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(MarkPropDefnumberA
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10916,7 +10916,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(MarkPropDefnumber, Nume
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11167,7 +11167,7 @@ class OrderFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11393,23 +11393,23 @@ class OverlayMarkDef(VegaLiteSchema):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -11428,7 +11428,7 @@ class OverlayMarkDef(VegaLiteSchema):
         value can be used.
 
         __Default value:__ ``"source-over"``
-    clip : boolean
+    clip : bool
         Whether a mark be clipped to the enclosing group’s width and height.
     color : anyOf(:class:`Color`, :class:`Gradient`, :class:`ExprRef`)
         Default color.
@@ -11466,7 +11466,7 @@ class OverlayMarkDef(VegaLiteSchema):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -11483,7 +11483,7 @@ class OverlayMarkDef(VegaLiteSchema):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -11499,7 +11499,7 @@ class OverlayMarkDef(VegaLiteSchema):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -11509,7 +11509,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -11566,7 +11566,7 @@ class OverlayMarkDef(VegaLiteSchema):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -11577,7 +11577,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -11613,7 +11613,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for radius2.
     radiusOffset : anyOf(float, :class:`ExprRef`)
         Offset for radius.
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -11645,7 +11645,7 @@ class OverlayMarkDef(VegaLiteSchema):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -11683,7 +11683,7 @@ class OverlayMarkDef(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
         The stroke width, in pixels.
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -11723,7 +11723,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -11742,13 +11742,13 @@ class OverlayMarkDef(VegaLiteSchema):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
@@ -11757,13 +11757,13 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for x2-position.
     xOffset : anyOf(float, :class:`ExprRef`)
         Offset for x-position.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -11855,7 +11855,7 @@ class ParameterExtent(BinExtent):
 class ParameterName(VegaLiteSchema):
     """ParameterName schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/ParameterName'}
 
@@ -11877,7 +11877,7 @@ class Parse(VegaLiteSchema):
 class ParseValue(VegaLiteSchema):
     """ParseValue schema wrapper
 
-    anyOf(None, string, string, string, string, string)
+    anyOf(None, str, str, str, str, str)
     """
     _schema = {'$ref': '#/definitions/ParseValue'}
 
@@ -11900,7 +11900,7 @@ class Point(Geometry):
         and three elements. The previous GeoJSON specification allowed more elements (e.g.,
         which could be used to represent M values), but the current specification only
         allows X, Y, and (optionally) Z to be defined.
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -11920,7 +11920,7 @@ class PointSelectionConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    type : string
+    type : str
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -11928,7 +11928,7 @@ class PointSelectionConfig(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    clear : anyOf(:class:`Stream`, string, boolean)
+    clear : anyOf(:class:`Stream`, str, bool)
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -11952,7 +11952,7 @@ class PointSelectionConfig(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    nearest : boolean
+    nearest : bool
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
@@ -11961,7 +11961,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
         **See also:** `nearest examples
         <https://vega.github.io/vega-lite/docs/selection.html#nearest>`__ documentation.
-    on : anyOf(:class:`Stream`, string)
+    on : anyOf(:class:`Stream`, str)
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -11989,7 +11989,7 @@ class PointSelectionConfig(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    toggle : anyOf(string, boolean)
+    toggle : anyOf(str, bool)
         Controls whether data values should be toggled (inserted or removed from a point
         selection) or only ever inserted into point selections.
 
@@ -12031,7 +12031,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
     Parameters
     ----------
 
-    clear : anyOf(:class:`Stream`, string, boolean)
+    clear : anyOf(:class:`Stream`, str, bool)
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -12055,7 +12055,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    nearest : boolean
+    nearest : bool
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
@@ -12064,7 +12064,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
         **See also:** `nearest examples
         <https://vega.github.io/vega-lite/docs/selection.html#nearest>`__ documentation.
-    on : anyOf(:class:`Stream`, string)
+    on : anyOf(:class:`Stream`, str)
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -12092,7 +12092,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    toggle : anyOf(string, boolean)
+    toggle : anyOf(str, bool)
         Controls whether data values should be toggled (inserted or removed from a point
         selection) or only ever inserted into point selections.
 
@@ -12149,7 +12149,7 @@ class Polygon(Geometry):
 
     coordinates : List(List(:class:`Position`))
 
-    type : string
+    type : str
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -12325,7 +12325,7 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -12509,7 +12509,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -12668,7 +12668,7 @@ class PositionFieldDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12764,7 +12764,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -12925,7 +12925,7 @@ class PositionFieldDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13013,7 +13013,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : anyOf(:class:`StackOffset`, None, boolean)
+    stack : anyOf(:class:`StackOffset`, None, bool)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -13164,7 +13164,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13244,7 +13244,7 @@ class Predicate(PredicateComposition):
     anyOf(:class:`FieldEqualPredicate`, :class:`FieldRangePredicate`,
     :class:`FieldOneOfPredicate`, :class:`FieldLTPredicate`, :class:`FieldGTPredicate`,
     :class:`FieldLTEPredicate`, :class:`FieldGTEPredicate`, :class:`FieldValidPredicate`,
-    :class:`ParameterPredicate`, string)
+    :class:`ParameterPredicate`, str)
     """
     _schema = {'$ref': '#/definitions/Predicate'}
 
@@ -13260,7 +13260,7 @@ class FieldEqualPredicate(Predicate):
     Parameters
     ----------
 
-    equal : anyOf(string, float, boolean, :class:`DateTime`, :class:`ExprRef`)
+    equal : anyOf(str, float, bool, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be equal to.
     field : :class:`FieldName`
         Field to be tested.
@@ -13283,7 +13283,7 @@ class FieldGTEPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    gte : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
+    gte : anyOf(str, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be greater than or equals to.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
@@ -13304,7 +13304,7 @@ class FieldGTPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    gt : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
+    gt : anyOf(str, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be greater than.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
@@ -13325,7 +13325,7 @@ class FieldLTEPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    lte : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
+    lte : anyOf(str, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be less than or equals to.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
@@ -13346,7 +13346,7 @@ class FieldLTPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    lt : anyOf(string, float, :class:`DateTime`, :class:`ExprRef`)
+    lt : anyOf(str, float, :class:`DateTime`, :class:`ExprRef`)
         The value that the field should be less than.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
         Time unit for the field to be tested.
@@ -13367,7 +13367,7 @@ class FieldOneOfPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    oneOf : anyOf(List(string), List(float), List(boolean), List(:class:`DateTime`))
+    oneOf : anyOf(List(str), List(float), List(bool), List(:class:`DateTime`))
         A set of values that the ``field`` 's value should be a member of, for a data item
         included in the filtered data.
     timeUnit : anyOf(:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`)
@@ -13411,7 +13411,7 @@ class FieldValidPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    valid : boolean
+    valid : bool
         If set to true the field's value has to be valid, meaning both not ``null`` and not
         `NaN
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN>`__.
@@ -13434,7 +13434,7 @@ class ParameterPredicate(Predicate):
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    empty : boolean
+    empty : bool
         For selection parameters, the predicate of empty selections returns true by default.
         Override this behavior, by setting this property ``empty: false``.
     """
@@ -13516,9 +13516,9 @@ class Projection(VegaLiteSchema):
     ratio : anyOf(float, :class:`ExprRef`)
         The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
         default value varies based on the projection type.
-    reflectX : anyOf(boolean, :class:`ExprRef`)
+    reflectX : anyOf(bool, :class:`ExprRef`)
         Sets whether or not the x-dimension is reflected (negated) in the output.
-    reflectY : anyOf(boolean, :class:`ExprRef`)
+    reflectY : anyOf(bool, :class:`ExprRef`)
         Sets whether or not the y-dimension is reflected (negated) in the output.
     rotate : anyOf(anyOf(:class:`Vector2number`, :class:`Vector3number`), :class:`ExprRef`)
         The projection's three-axis rotation to the specified angles, which must be a two-
@@ -13644,9 +13644,9 @@ class ProjectionConfig(VegaLiteSchema):
     ratio : anyOf(float, :class:`ExprRef`)
         The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
         default value varies based on the projection type.
-    reflectX : anyOf(boolean, :class:`ExprRef`)
+    reflectX : anyOf(bool, :class:`ExprRef`)
         Sets whether or not the x-dimension is reflected (negated) in the output.
-    reflectY : anyOf(boolean, :class:`ExprRef`)
+    reflectY : anyOf(bool, :class:`ExprRef`)
         Sets whether or not the y-dimension is reflected (negated) in the output.
     rotate : anyOf(anyOf(:class:`Vector2number`, :class:`Vector3number`), :class:`ExprRef`)
         The projection's three-axis rotation to the specified angles, which must be a two-
@@ -13723,11 +13723,11 @@ class RadialGradient(Gradient):
     Parameters
     ----------
 
-    gradient : string
+    gradient : str
         The type of gradient. Use ``"radial"`` for a radial gradient.
     stops : List(:class:`GradientStop`)
         An array of gradient stops defining the gradient color sequence.
-    id : string
+    id : str
 
     r1 : float
         The radius length, in normalized [0, 1] coordinates, of the inner circle for the
@@ -13839,7 +13839,7 @@ class RangeEnum(RangeScheme):
 class RangeRaw(RangeScheme):
     """RangeRaw schema wrapper
 
-    List(anyOf(None, boolean, string, float, :class:`RangeRawArray`))
+    List(anyOf(None, bool, str, float, :class:`RangeRawArray`))
     """
     _schema = {'$ref': '#/definitions/RangeRaw'}
 
@@ -13862,23 +13862,23 @@ class RectConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     baseline : anyOf(:class:`TextBaseline`, :class:`ExprRef`)
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
@@ -13942,7 +13942,7 @@ class RectConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -13962,7 +13962,7 @@ class RectConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -13978,7 +13978,7 @@ class RectConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -13988,7 +13988,7 @@ class RectConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -14045,7 +14045,7 @@ class RectConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -14058,7 +14058,7 @@ class RectConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -14090,7 +14090,7 @@ class RectConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -14122,7 +14122,7 @@ class RectConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -14182,7 +14182,7 @@ class RectConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -14201,24 +14201,24 @@ class RectConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -14304,9 +14304,9 @@ class RepeatMapping(VegaLiteSchema):
     Parameters
     ----------
 
-    column : List(string)
+    column : List(str)
         An array of fields to be repeated horizontally.
-    row : List(string)
+    row : List(str)
         An array of fields to be repeated vertically.
     """
     _schema = {'$ref': '#/definitions/RepeatMapping'}
@@ -14395,9 +14395,9 @@ class RowColboolean(VegaLiteSchema):
     Parameters
     ----------
 
-    column : boolean
+    column : bool
 
-    row : boolean
+    row : bool
 
     """
     _schema = {'$ref': '#/definitions/RowCol<boolean>'}
@@ -14459,7 +14459,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14480,7 +14480,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    center : boolean
+    center : bool
         Boolean flag indicating if facet's subviews should be centered relative to their
         respective rows or columns.
 
@@ -14679,7 +14679,7 @@ class Scale(VegaLiteSchema):
           *step* size, and optionally the *start* and *stop* boundaries.
         * An array of bin boundaries over the scale domain. If provided, axes and legends
           will use the bin boundaries to inform the choice of tick marks and text labels.
-    clamp : anyOf(boolean, :class:`ExprRef`)
+    clamp : anyOf(bool, :class:`ExprRef`)
         If ``true``, values that exceed the data domain are clamped to either the minimum or
         maximum range value
 
@@ -14691,7 +14691,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : anyOf(List(anyOf(None, string, float, boolean, :class:`DateTime`, :class:`ExprRef`)), string, :class:`ParameterExtent`, :class:`DomainUnionWith`, :class:`ExprRef`)
+    domain : anyOf(List(anyOf(None, str, float, bool, :class:`DateTime`, :class:`ExprRef`)), str, :class:`ParameterExtent`, :class:`DomainUnionWith`, :class:`ExprRef`)
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -14756,7 +14756,7 @@ class Scale(VegaLiteSchema):
 
 
         * **Default value:** ``hcl``
-    nice : anyOf(boolean, float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
+    nice : anyOf(bool, float, :class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`)
         Extending the domain so that it starts and ends on nice round values. This method
         typically modifies the scale’s domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
@@ -14815,7 +14815,7 @@ class Scale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's ``bandPaddingOuter``
         for band scales and ``pointPadding`` for point scales. By default, Vega-Lite sets
         outer padding such that *width/height = number of unique values * step*.
-    range : anyOf(:class:`RangeEnum`, List(anyOf(float, string, List(float), :class:`ExprRef`)), :class:`FieldRange`)
+    range : anyOf(:class:`RangeEnum`, List(anyOf(float, str, List(float), :class:`ExprRef`)), :class:`FieldRange`)
         The range of the scale. One of:
 
 
@@ -14843,17 +14843,17 @@ class Scale(VegaLiteSchema):
         2) Any directly specified ``range`` for ``x`` and ``y`` channels will be ignored.
         Range can be customized via the view's corresponding `size
         <https://vega.github.io/vega-lite/docs/size.html>`__ ( ``width`` and ``height`` ).
-    rangeMax : anyOf(float, string, :class:`ExprRef`)
+    rangeMax : anyOf(float, str, :class:`ExprRef`)
         Sets the maximum value in the scale range, overriding the ``range`` property or the
         default range. This property is only intended for use with scales having continuous
         ranges.
-    rangeMin : anyOf(float, string, :class:`ExprRef`)
+    rangeMin : anyOf(float, str, :class:`ExprRef`)
         Sets the minimum value in the scale range, overriding the ``range`` property or the
         default range. This property is only intended for use with scales having continuous
         ranges.
-    reverse : anyOf(boolean, :class:`ExprRef`)
+    reverse : anyOf(bool, :class:`ExprRef`)
         If true, reverses the order of the scale range. **Default value:** ``false``.
-    round : anyOf(boolean, :class:`ExprRef`)
+    round : anyOf(bool, :class:`ExprRef`)
         If ``true``, rounds numeric output values to integers. This can be helpful for
         snapping to the pixel grid.
 
@@ -14901,7 +14901,7 @@ class Scale(VegaLiteSchema):
 
         **Default value:** please see the `scale type table
         <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
-    zero : anyOf(boolean, :class:`ExprRef`)
+    zero : anyOf(bool, :class:`ExprRef`)
         If ``true``, ensures that a zero baseline value is included in the scale domain.
 
         **Default value:** ``true`` for x and y channels if the quantitative field is not
@@ -14998,7 +14998,7 @@ class ScaleConfig(VegaLiteSchema):
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"bar"`` marks.
 
         **Default value:** ``0.1``
-    clamp : anyOf(boolean, :class:`ExprRef`)
+    clamp : anyOf(bool, :class:`ExprRef`)
         If true, values that exceed the data domain are clamped to either the minimum or
         maximum range value
     continuousPadding : anyOf(float, :class:`ExprRef`)
@@ -15075,10 +15075,10 @@ class ScaleConfig(VegaLiteSchema):
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"rect"`` marks.
 
         **Default value:** ``0``
-    round : anyOf(boolean, :class:`ExprRef`)
+    round : anyOf(bool, :class:`ExprRef`)
         If true, rounds numeric output values to integers. This can be helpful for snapping
         to the pixel grid. (Only available for ``x``, ``y``, and ``size`` scales.)
-    useUnaggregatedDomain : boolean
+    useUnaggregatedDomain : bool
         Use the source data range before aggregation as scale domain instead of aggregated
         data for aggregate axis.
 
@@ -15091,9 +15091,9 @@ class ScaleConfig(VegaLiteSchema):
         raw data domain (e.g. ``"count"``, ``"sum"`` ), this property is ignored.
 
         **Default value:** ``false``
-    xReverse : anyOf(boolean, :class:`ExprRef`)
+    xReverse : anyOf(bool, :class:`ExprRef`)
         Reverse x-scale by default (useful for right-to-left charts).
-    zero : boolean
+    zero : bool
         Default ``scale.zero`` for `continuous
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ scales except for
         (1) x/y-scales of non-ranged bar or area charts and (2) size scales.
@@ -15277,7 +15277,7 @@ class ScaleFieldDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15752,7 +15752,7 @@ class DateTime(SelectionInit):
 
     date : float
         Integer value representing the date (day of the month) from 1-31.
-    day : anyOf(:class:`Day`, string)
+    day : anyOf(:class:`Day`, str)
         Value representing the day of a week. This can be one of: (1) integer value -- ``1``
         represents Monday; (2) case-insensitive day name (e.g., ``"Monday"`` ); (3)
         case-insensitive, 3-character short day name (e.g., ``"Mon"`` ).
@@ -15765,7 +15765,7 @@ class DateTime(SelectionInit):
         Integer value representing the millisecond segment of time.
     minutes : float
         Integer value representing the minute segment of time from 0-59.
-    month : anyOf(:class:`Month`, string)
+    month : anyOf(:class:`Month`, str)
         One of: (1) integer value representing the month from ``1`` - ``12``. ``1``
         represents January; (2) case-insensitive month name (e.g., ``"January"`` ); (3)
         case-insensitive, 3-character short month name (e.g., ``"Jan"`` ).
@@ -15773,7 +15773,7 @@ class DateTime(SelectionInit):
         Integer value representing the quarter of the year (from 1-4).
     seconds : float
         Integer value representing the second segment (0-59) of a time value
-    utc : boolean
+    utc : bool
         A boolean flag indicating if date time is in utc time. If false, the date time is in
         local time
     year : float
@@ -15792,7 +15792,7 @@ class DateTime(SelectionInit):
 class PrimitiveValue(SelectionInit):
     """PrimitiveValue schema wrapper
 
-    anyOf(float, string, boolean, None)
+    anyOf(float, str, bool, None)
     """
     _schema = {'$ref': '#/definitions/PrimitiveValue'}
 
@@ -15855,7 +15855,7 @@ class SelectionParameter(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`, string)
+    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`, str)
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -15918,7 +15918,7 @@ class SequenceGenerator(Generator):
 
     sequence : :class:`SequenceParams`
         Generate a sequence of numbers.
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/SequenceGenerator'}
@@ -16169,7 +16169,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(MarkPro
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, None)
+    bin : anyOf(bool, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -16594,7 +16594,7 @@ class EncodingSortField(Sort):
 class SortArray(Sort):
     """SortArray schema wrapper
 
-    anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
+    anyOf(List(float), List(str), List(bool), List(:class:`DateTime`))
     """
     _schema = {'$ref': '#/definitions/SortArray'}
 
@@ -16734,7 +16734,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -16763,9 +16763,9 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -16840,7 +16840,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -16869,9 +16869,9 @@ class FacetSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -16944,7 +16944,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -16955,11 +16955,11 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : anyOf(float, string, :class:`Step`)
+    height : anyOf(float, str, :class:`Step`)
         The height of a visualization.
 
 
@@ -16979,7 +16979,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
 
         **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    name : string
+    name : str
         Name of the visualization for later reference.
     params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
@@ -17006,7 +17006,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : anyOf(float, string, :class:`Step`)
+    width : anyOf(float, str, :class:`Step`)
         The width of a visualization.
 
 
@@ -17065,7 +17065,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : boolean
+    center : bool
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -17073,9 +17073,9 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -17119,12 +17119,12 @@ class LayerSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : anyOf(float, string, :class:`Step`)
+    height : anyOf(float, str, :class:`Step`)
         The height of a visualization.
 
 
@@ -17144,7 +17144,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
 
         **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    name : string
+    name : str
         Name of the visualization for later reference.
     projection : :class:`Projection`
         An object defining properties of the geographic projection shared by underlying
@@ -17159,7 +17159,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : anyOf(float, string, :class:`Step`)
+    width : anyOf(float, str, :class:`Step`)
         The width of a visualization.
 
 
@@ -17249,7 +17249,7 @@ class LayerRepeatSpec(RepeatSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -17278,9 +17278,9 @@ class LayerRepeatSpec(RepeatSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -17318,7 +17318,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     Parameters
     ----------
 
-    repeat : anyOf(List(string), :class:`RepeatMapping`)
+    repeat : anyOf(List(str), :class:`RepeatMapping`)
         Definition for fields to be repeated. One of: 1) An array of fields to be repeated.
         If ``"repeat"`` is an array, the field can be referred to as ``{"repeat":
         "repeat"}``. The repeated views are laid out in a wrapped row. You can set the
@@ -17357,7 +17357,7 @@ class NonLayerRepeatSpec(RepeatSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -17386,9 +17386,9 @@ class NonLayerRepeatSpec(RepeatSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -17426,9 +17426,9 @@ class SphereGenerator(Generator):
     Parameters
     ----------
 
-    sphere : anyOf(boolean, Mapping(required=[]))
+    sphere : anyOf(bool, Mapping(required=[]))
         Generate sphere GeoJSON data for the full globe.
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/SphereGenerator'}
@@ -17513,13 +17513,13 @@ class DerivedStream(Stream):
 
     between : List(:class:`Stream`)
 
-    consume : boolean
+    consume : bool
 
     debounce : float
 
     filter : anyOf(:class:`Expr`, List(:class:`Expr`))
 
-    markname : string
+    markname : str
 
     marktype : :class:`MarkType`
 
@@ -17558,13 +17558,13 @@ class MergedStream(Stream):
 
     between : List(:class:`Stream`)
 
-    consume : boolean
+    consume : bool
 
     debounce : float
 
     filter : anyOf(:class:`Expr`, List(:class:`Expr`))
 
-    markname : string
+    markname : str
 
     marktype : :class:`MarkType`
 
@@ -17600,7 +17600,7 @@ class StringFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -17636,7 +17636,7 @@ class StringFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -17659,7 +17659,7 @@ class StringFieldDef(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -17799,7 +17799,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -17842,7 +17842,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -17865,7 +17865,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -17998,7 +17998,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -18093,7 +18093,7 @@ class StyleConfigIndex(VegaLiteSchema):
 class SymbolShape(VegaLiteSchema):
     """SymbolShape schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/SymbolShape'}
 
@@ -18104,7 +18104,7 @@ class SymbolShape(VegaLiteSchema):
 class Text(VegaLiteSchema):
     """Text schema wrapper
 
-    anyOf(string, List(string))
+    anyOf(str, List(str))
     """
     _schema = {'$ref': '#/definitions/Text'}
 
@@ -18115,7 +18115,7 @@ class Text(VegaLiteSchema):
 class TextBaseline(VegaLiteSchema):
     """TextBaseline schema wrapper
 
-    anyOf(string, :class:`Baseline`, string, string)
+    anyOf(str, :class:`Baseline`, str, str)
     """
     _schema = {'$ref': '#/definitions/TextBaseline'}
 
@@ -18168,7 +18168,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : anyOf(:class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`, :class:`RepeatRef`)
         A constant value in data domain.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -18191,7 +18191,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -18324,7 +18324,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18367,7 +18367,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : anyOf(string, :class:`Dict`)
+    format : anyOf(str, :class:`Dict`)
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -18390,7 +18390,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : string
+    formatType : str
         The format type for labels. One of ``"number"``, ``"time"``, or a `registered custom
         format type
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__.
@@ -18542,23 +18542,23 @@ class TickConfig(AnyMarkConfig):
         **Note:** Expression reference is *not* supported for range marks.
     angle : anyOf(float, :class:`ExprRef`)
         The rotation angle of the text, in degrees.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
         the output SVG element, removing the mark item from the ARIA accessibility tree.
-    ariaRole : anyOf(string, :class:`ExprRef`)
+    ariaRole : anyOf(str, :class:`ExprRef`)
         Sets the type of user interface element of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "role" attribute. Warning: this
         property is experimental and may be changed in the future.
-    ariaRoleDescription : anyOf(string, :class:`ExprRef`)
+    ariaRoleDescription : anyOf(str, :class:`ExprRef`)
         A human-readable, author-localized description for the role of the mark item for
         `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : anyOf(boolean, :class:`ExprRef`)
+    aspect : anyOf(bool, :class:`ExprRef`)
         Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
@@ -18618,7 +18618,7 @@ class TickConfig(AnyMarkConfig):
     cursor : anyOf(:class:`Cursor`, :class:`ExprRef`)
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    description : anyOf(string, :class:`ExprRef`)
+    description : anyOf(str, :class:`ExprRef`)
         A text description of the mark item for `ARIA accessibility
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
@@ -18635,7 +18635,7 @@ class TickConfig(AnyMarkConfig):
     dy : anyOf(float, :class:`ExprRef`)
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
-    ellipsis : anyOf(string, :class:`ExprRef`)
+    ellipsis : anyOf(str, :class:`ExprRef`)
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
@@ -18651,7 +18651,7 @@ class TickConfig(AnyMarkConfig):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
-    filled : boolean
+    filled : bool
         Whether the mark's color should be used as fill color instead of stroke color.
 
         **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
@@ -18661,7 +18661,7 @@ class TickConfig(AnyMarkConfig):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : anyOf(float, :class:`ExprRef`)
         The font size, in pixels.
@@ -18718,7 +18718,7 @@ class TickConfig(AnyMarkConfig):
         truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0`` -- indicating no limit
-    lineBreak : anyOf(string, :class:`ExprRef`)
+    lineBreak : anyOf(str, :class:`ExprRef`)
         A delimiter, such as a newline character, upon which to break text strings into
         multiple lines. This property is ignored if the text is array-valued.
     lineHeight : anyOf(float, :class:`ExprRef`)
@@ -18729,7 +18729,7 @@ class TickConfig(AnyMarkConfig):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
+    order : anyOf(None, bool)
         For line and trail marks, this ``order`` property can be set to ``null`` or
         ``false`` to make the lines use the original order in the data sources.
     orient : :class:`Orientation`
@@ -18761,7 +18761,7 @@ class TickConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : anyOf(anyOf(:class:`SymbolShape`, string), :class:`ExprRef`)
+    shape : anyOf(anyOf(:class:`SymbolShape`, str), :class:`ExprRef`)
         Shape of the point marks. Supported values include:
 
 
@@ -18793,7 +18793,7 @@ class TickConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : anyOf(boolean, :class:`ExprRef`)
+    smooth : anyOf(bool, :class:`ExprRef`)
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -18857,7 +18857,7 @@ class TickConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : anyOf(float, string, boolean, :class:`TooltipContent`, :class:`ExprRef`, None)
+    tooltip : anyOf(float, str, bool, :class:`TooltipContent`, :class:`ExprRef`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -18876,24 +18876,24 @@ class TickConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : anyOf(float, :class:`ExprRef`)
         Width of the marks.
-    x : anyOf(float, string, :class:`ExprRef`)
+    x : anyOf(float, str, :class:`ExprRef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : anyOf(float, string, :class:`ExprRef`)
+    x2 : anyOf(float, str, :class:`ExprRef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : anyOf(float, string, :class:`ExprRef`)
+    y : anyOf(float, str, :class:`ExprRef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : anyOf(float, string, :class:`ExprRef`)
+    y2 : anyOf(float, str, :class:`ExprRef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -18998,9 +18998,9 @@ class TimeLocale(VegaLiteSchema):
     Parameters
     ----------
 
-    date : string
+    date : str
         The date (%x) format specifier (e.g., "%m/%d/%Y").
-    dateTime : string
+    dateTime : str
         The date and time (%c) format specifier (e.g., "%a %b %e %X %Y").
     days : :class:`Vector7string`
         The full names of the weekdays, starting with Sunday.
@@ -19012,7 +19012,7 @@ class TimeLocale(VegaLiteSchema):
         The abbreviated names of the weekdays, starting with Sunday.
     shortMonths : :class:`Vector12string`
         The abbreviated names of the months (starting with January).
-    time : string
+    time : str
         The time (%X) format specifier (e.g., "%H:%M:%S").
     """
     _schema = {'$ref': '#/definitions/TimeLocale'}
@@ -19096,7 +19096,7 @@ class TimeUnitParams(VegaLiteSchema):
     Parameters
     ----------
 
-    binned : boolean
+    binned : bool
         Whether the data has already been binned to this time unit. If true, Vega-Lite will
         only format the data, marks, and guides, without applying the timeUnit transform to
         re-bin the data again.
@@ -19106,7 +19106,7 @@ class TimeUnitParams(VegaLiteSchema):
         The number of steps between bins, in terms of the least significant unit provided.
     unit : :class:`TimeUnit`
         Defines how date-time values should be binned.
-    utc : boolean
+    utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
     """
     _schema = {'$ref': '#/definitions/TimeUnitParams'}
@@ -19131,7 +19131,7 @@ class TimeUnitTransformParams(VegaLiteSchema):
         The number of steps between bins, in terms of the least significant unit provided.
     unit : :class:`TimeUnit`
         Defines how date-time values should be binned.
-    utc : boolean
+    utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
     """
     _schema = {'$ref': '#/definitions/TimeUnitTransformParams'}
@@ -19169,7 +19169,7 @@ class TitleConfig(VegaLiteSchema):
         positions map to a left-, center-, or right-aligned title.
     angle : anyOf(float, :class:`ExprRef`)
         Angle in degrees of title and subtitle text.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -19188,7 +19188,7 @@ class TitleConfig(VegaLiteSchema):
         Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
         Delta offset for title and subtitle text y-coordinate.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for title text.
@@ -19198,7 +19198,7 @@ class TitleConfig(VegaLiteSchema):
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
+    frame : anyOf(anyOf(:class:`TitleFrame`, str), :class:`ExprRef`)
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -19214,7 +19214,7 @@ class TitleConfig(VegaLiteSchema):
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Text color for subtitle text.
-    subtitleFont : anyOf(string, :class:`ExprRef`)
+    subtitleFont : anyOf(str, :class:`ExprRef`)
         Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for subtitle text.
@@ -19307,7 +19307,7 @@ class TitleParams(VegaLiteSchema):
         views, ``anchor`` is always ``"start"``.
     angle : anyOf(float, :class:`ExprRef`)
         Angle in degrees of title and subtitle text.
-    aria : anyOf(boolean, :class:`ExprRef`)
+    aria : anyOf(bool, :class:`ExprRef`)
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -19326,7 +19326,7 @@ class TitleParams(VegaLiteSchema):
         Delta offset for title and subtitle text x-coordinate.
     dy : anyOf(float, :class:`ExprRef`)
         Delta offset for title and subtitle text y-coordinate.
-    font : anyOf(string, :class:`ExprRef`)
+    font : anyOf(str, :class:`ExprRef`)
         Font name for title text.
     fontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for title text.
@@ -19336,7 +19336,7 @@ class TitleParams(VegaLiteSchema):
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : anyOf(anyOf(:class:`TitleFrame`, string), :class:`ExprRef`)
+    frame : anyOf(anyOf(:class:`TitleFrame`, str), :class:`ExprRef`)
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -19350,7 +19350,7 @@ class TitleParams(VegaLiteSchema):
         position along the edge of the chart.
     orient : anyOf(:class:`TitleOrient`, :class:`ExprRef`)
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`__
         to apply to the title text mark.
 
@@ -19359,7 +19359,7 @@ class TitleParams(VegaLiteSchema):
         The subtitle Text.
     subtitleColor : anyOf(anyOf(None, :class:`Color`), :class:`ExprRef`)
         Text color for subtitle text.
-    subtitleFont : anyOf(string, :class:`ExprRef`)
+    subtitleFont : anyOf(str, :class:`ExprRef`)
         Font name for subtitle text.
     subtitleFontSize : anyOf(float, :class:`ExprRef`)
         Font size in pixels for subtitle text.
@@ -19451,7 +19451,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`, string)
+    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`, str)
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -19474,7 +19474,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
         **See also:** `init <https://vega.github.io/vega-lite/docs/value.html>`__
         documentation.
-    views : List(string)
+    views : List(str)
         By default, top-level selections are applied to every view in the visualization. If
         this property is specified, selections will only be applied to views with the given
         names.
@@ -19551,7 +19551,7 @@ class TopLevelConcatSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -19587,9 +19587,9 @@ class TopLevelConcatSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -19617,7 +19617,7 @@ class TopLevelConcatSpec(TopLevelSpec):
     usermeta : :class:`Dict`
         Optional metadata that will be passed to Vega. This object is completely ignored by
         Vega and Vega-Lite and can be used for custom metadata.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -19698,7 +19698,7 @@ class TopLevelFacetSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -19731,9 +19731,9 @@ class TopLevelFacetSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -19761,7 +19761,7 @@ class TopLevelFacetSpec(TopLevelSpec):
     usermeta : :class:`Dict`
         Optional metadata that will be passed to Vega. This object is completely ignored by
         Vega and Vega-Lite and can be used for custom metadata.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -19816,7 +19816,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : boolean
+    center : bool
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -19831,9 +19831,9 @@ class TopLevelHConcatSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -19857,7 +19857,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
     usermeta : :class:`Dict`
         Optional metadata that will be passed to Vega. This object is completely ignored by
         Vega and Vega-Lite and can be used for custom metadata.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -19915,12 +19915,12 @@ class TopLevelLayerSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : anyOf(float, string, :class:`Step`)
+    height : anyOf(float, str, :class:`Step`)
         The height of a visualization.
 
 
@@ -19940,7 +19940,7 @@ class TopLevelLayerSpec(TopLevelSpec):
 
         **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -19967,7 +19967,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : anyOf(float, string, :class:`Step`)
+    width : anyOf(float, str, :class:`Step`)
         The width of a visualization.
 
 
@@ -19987,7 +19987,7 @@ class TopLevelLayerSpec(TopLevelSpec):
 
         **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -20076,7 +20076,7 @@ class TopLevelUnitSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
+    center : anyOf(bool, :class:`RowColboolean`)
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -20091,11 +20091,11 @@ class TopLevelUnitSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : anyOf(float, string, :class:`Step`)
+    height : anyOf(float, str, :class:`Step`)
         The height of a visualization.
 
 
@@ -20115,7 +20115,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
         **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -20152,7 +20152,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : anyOf(float, string, :class:`Step`)
+    width : anyOf(float, str, :class:`Step`)
         The width of a visualization.
 
 
@@ -20172,7 +20172,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
         **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -20229,7 +20229,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : boolean
+    center : bool
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -20244,9 +20244,9 @@ class TopLevelVConcatSpec(TopLevelSpec):
         A global data store for named datasets. This is a mapping from names to inline
         datasets. This can be an array of objects or primitive values or a string. Arrays of
         primitive values are ingested as objects with a ``data`` property.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     padding : anyOf(:class:`Padding`, :class:`ExprRef`)
         The default visualization padding, in pixels, from the edge of the visualization
@@ -20270,7 +20270,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
     usermeta : :class:`Dict`
         Optional metadata that will be passed to Vega. This object is completely ignored by
         Vega and Vega-Lite and can be used for custom metadata.
-    $schema : string
+    $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
         ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
@@ -20301,12 +20301,12 @@ class TopoDataFormat(DataFormat):
     Parameters
     ----------
 
-    feature : string
+    feature : str
         The name of the TopoJSON object set to convert to a GeoJSON feature collection. For
         example, in a map of the world, there may be an object set named ``"countries"``.
         Using the feature property, we can extract this set and generate a GeoJSON feature
         object for each country.
-    mesh : string
+    mesh : str
         The name of the TopoJSON object set to convert to mesh. Similar to the ``feature``
         option, ``mesh`` extracts a named TopoJSON object set.  Unlike the ``feature``
         option, the corresponding geo data is returned as a single, unified mesh instance,
@@ -20329,7 +20329,7 @@ class TopoDataFormat(DataFormat):
         UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
-    type : string
+    type : str
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -20386,7 +20386,7 @@ class BinTransform(Transform):
     Parameters
     ----------
 
-    bin : anyOf(boolean, :class:`BinParams`)
+    bin : anyOf(bool, :class:`BinParams`)
         An object indicating bin properties, or simply ``true`` for using default bin
         parameters.
     field : :class:`FieldName`
@@ -20411,7 +20411,7 @@ class CalculateTransform(Transform):
     Parameters
     ----------
 
-    calculate : string
+    calculate : str
         A `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
         string. Use the variable ``datum`` to refer to the current data object.
     as : :class:`FieldName`
@@ -20437,12 +20437,12 @@ class DensityTransform(Transform):
         The bandwidth (standard deviation) of the Gaussian kernel. If unspecified or set to
         zero, the bandwidth value is automatically estimated from the input data using
         Scott’s rule.
-    counts : boolean
+    counts : bool
         A boolean flag indicating if the output values should be probability estimates
         (false) or smoothed counts (true).
 
         **Default value:** ``false``
-    cumulative : boolean
+    cumulative : bool
         A boolean flag indicating whether to produce density estimates (false) or cumulative
         density estimates (true).
 
@@ -20704,7 +20704,7 @@ class LookupTransform(Transform):
     Parameters
     ----------
 
-    lookup : string
+    lookup : str
         Key in primary data source.
     default : Any
         The default value to use if lookup fails.
@@ -20821,7 +20821,7 @@ class RegressionTransform(Transform):
         The polynomial order (number of coefficients) for the 'poly' method.
 
         **Default value:** ``3``
-    params : boolean
+    params : bool
         A boolean flag indicating if the transform should return the regression model
         parameters (one object per group), rather than trend line points. The resulting
         objects include a ``coef`` array of fitted coefficient values (starting with the
@@ -20962,7 +20962,7 @@ class TypedFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : anyOf(boolean, :class:`BinParams`, string, None)
+    bin : anyOf(bool, :class:`BinParams`, str, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -21109,7 +21109,7 @@ class TypedFieldDef(VegaLiteSchema):
 class URI(VegaLiteSchema):
     """URI schema wrapper
 
-    string
+    str
     """
     _schema = {'$ref': '#/definitions/URI'}
 
@@ -21134,11 +21134,11 @@ class UnitSpec(VegaLiteSchema):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
-    name : string
+    name : str
         Name of the visualization for later reference.
     params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
@@ -21178,11 +21178,11 @@ class UnitSpecWithFrame(VegaLiteSchema):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : anyOf(float, string, :class:`Step`)
+    height : anyOf(float, str, :class:`Step`)
         The height of a visualization.
 
 
@@ -21202,7 +21202,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
         **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
         documentation.
-    name : string
+    name : str
         Name of the visualization for later reference.
     params : List(:class:`SelectionParameter`)
         An array of parameters that may either be simple variables, or more complex
@@ -21219,7 +21219,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : anyOf(float, string, :class:`Step`)
+    width : anyOf(float, str, :class:`Step`)
         The width of a visualization.
 
 
@@ -21259,12 +21259,12 @@ class UrlData(DataSource):
     Parameters
     ----------
 
-    url : string
+    url : str
         An URL from which to load the data set. Use the ``format.type`` property to ensure
         the loaded data is correctly parsed.
     format : :class:`DataFormat`
         An object that specifies the format for parsing the data.
-    name : string
+    name : str
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/UrlData'}
@@ -21327,7 +21327,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : boolean
+    center : bool
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -21335,9 +21335,9 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    description : string
+    description : str
         Description of this mark for commenting purpose.
-    name : string
+    name : str
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
@@ -21371,7 +21371,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(ColorDef, M
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, List(:class:`ConditionalValueDefGradientstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(:class:`Gradient`, string, None, :class:`ExprRef`)
+    value : anyOf(:class:`Gradient`, str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -21394,7 +21394,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(MarkPro
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -21462,7 +21462,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
 
     condition : anyOf(:class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, List(:class:`ConditionalValueDefstringnullExprRef`))
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : anyOf(string, None, :class:`ExprRef`)
+    value : anyOf(str, None, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -21527,7 +21527,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     Parameters
     ----------
 
-    value : anyOf(float, string, string, :class:`ExprRef`)
+    value : anyOf(float, str, str, :class:`ExprRef`)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -21573,7 +21573,7 @@ class VariableParameter(TopLevelParameter):
 class Vector10string(VegaLiteSchema):
     """Vector10string schema wrapper
 
-    List(string)
+    List(str)
     """
     _schema = {'$ref': '#/definitions/Vector10<string>'}
 
@@ -21584,7 +21584,7 @@ class Vector10string(VegaLiteSchema):
 class Vector12string(VegaLiteSchema):
     """Vector12string schema wrapper
 
-    List(string)
+    List(str)
     """
     _schema = {'$ref': '#/definitions/Vector12<string>'}
 
@@ -21617,7 +21617,7 @@ class Vector2Vector2number(VegaLiteSchema):
 class Vector2boolean(SelectionInitInterval):
     """Vector2boolean schema wrapper
 
-    List(boolean)
+    List(bool)
     """
     _schema = {'$ref': '#/definitions/Vector2<boolean>'}
 
@@ -21639,7 +21639,7 @@ class Vector2number(SelectionInitInterval):
 class Vector2string(SelectionInitInterval):
     """Vector2string schema wrapper
 
-    List(string)
+    List(str)
     """
     _schema = {'$ref': '#/definitions/Vector2<string>'}
 
@@ -21661,7 +21661,7 @@ class Vector3number(VegaLiteSchema):
 class Vector7string(VegaLiteSchema):
     """Vector7string schema wrapper
 
-    List(string)
+    List(str)
     """
     _schema = {'$ref': '#/definitions/Vector7<string>'}
 
@@ -21722,7 +21722,7 @@ class ViewBackground(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : anyOf(float, :class:`ExprRef`)
         The stroke width, in pixels.
-    style : anyOf(string, List(string))
+    style : anyOf(str, List(str))
         A string or array of strings indicating the name of custom styles to apply to the
         view background. A style is a named collection of mark property defaults defined
         within the `style configuration
@@ -21755,7 +21755,7 @@ class ViewConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    clip : boolean
+    clip : bool
         Whether the view should be clipped.
     continuousHeight : float
         The default height when the plot has a continuous y-field for x or latitude, or has
@@ -21849,7 +21849,7 @@ class ViewConfig(VegaLiteSchema):
 class WindowEventType(VegaLiteSchema):
     """WindowEventType schema wrapper
 
-    anyOf(:class:`EventType`, string)
+    anyOf(:class:`EventType`, str)
     """
     _schema = {'$ref': '#/definitions/WindowEventType'}
 
@@ -21943,7 +21943,7 @@ class WindowTransform(Transform):
     groupby : List(:class:`FieldName`)
         The data fields for partitioning the data objects into separate windows. If
         unspecified, all data points will be in a single window.
-    ignorePeers : boolean
+    ignorePeers : bool
         Indicates if the sliding window frame should ignore peer values (data that are
         considered identical by the sort criteria). The default is false, causing the window
         frame to expand to include all peer values. If set to true, the window frame will be
