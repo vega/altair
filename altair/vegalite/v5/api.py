@@ -1218,38 +1218,45 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type: Union[str, core.ProjectionType, core.ExprRef, UndefinedType] = Undefined,
+        type: Union[
+            str, core.ProjectionType, core.ExprRef, Parameter, UndefinedType
+        ] = Undefined,
         center: Union[
-            List[float], core.Vector2number, core.ExprRef, UndefinedType
+            List[float], core.Vector2number, core.ExprRef, Parameter, UndefinedType
         ] = Undefined,
-        clipAngle: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        clipAngle: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
         clipExtent: Union[
-            List[List[float]], core.Vector2Vector2number, core.ExprRef, UndefinedType
+            List[List[float]],
+            core.Vector2Vector2number,
+            core.ExprRef,
+            Parameter,
+            UndefinedType,
         ] = Undefined,
-        coefficient: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        distance: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        fraction: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        lobes: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        parallel: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        precision: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        radius: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        ratio: Union[float, core.ExprRef, UndefinedType] = Undefined,
-        reflectX: Union[bool, core.ExprRef, UndefinedType] = Undefined,
-        reflectY: Union[bool, core.ExprRef, UndefinedType] = Undefined,
+        coefficient: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        distance: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        fraction: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        lobes: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        parallel: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        precision: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        radius: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        ratio: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        reflectX: Union[bool, core.ExprRef, Parameter, UndefinedType] = Undefined,
+        reflectY: Union[bool, core.ExprRef, Parameter, UndefinedType] = Undefined,
         rotate: Union[
             List[float],
             core.Vector2number,
             core.Vector3number,
             core.ExprRef,
+            Parameter,
             UndefinedType,
         ] = Undefined,
-        scale: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        scale: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
         spacing: Union[
-            float, core.Vector2number, core.ExprRef, UndefinedType
+            float, core.Vector2number, core.ExprRef, Parameter, UndefinedType
         ] = Undefined,
-        tilt: Union[float, core.ExprRef, UndefinedType] = Undefined,
+        tilt: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
         translate: Union[
-            List[float], core.Vector2number, core.ExprRef, UndefinedType
+            List[float], core.Vector2number, core.ExprRef, Parameter, UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
