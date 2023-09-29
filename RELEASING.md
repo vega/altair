@@ -1,6 +1,5 @@
-1. Create a new virtual environment following the instructions in `CONTRIBUTING.md`. 
-   Make sure to also install all dependencies for the documentation including `altair_saver`
-   and uninstall `vl-convert-python` (this is not needed for normal contributions to the repo, see `CONTRIBUTING.md` for details).
+1. Create a new virtual environment following the instructions in `CONTRIBUTING.md`.
+   Make sure to also install all dependencies for the documentation.
 
 2. Make certain your branch is in sync with head:
  
