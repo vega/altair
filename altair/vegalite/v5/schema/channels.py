@@ -369,6 +369,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def aggregate(self, argmin=Undefined, **kwds) -> "Angle":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Angle":
         ...
 
@@ -793,6 +794,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def title(self, _: None, **kwds) -> "Angle":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Angle":
@@ -969,6 +971,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "AngleDatum":
         ...
 
@@ -1000,6 +1003,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def title(self, _: None, **kwds) -> "AngleDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -1426,6 +1430,7 @@ class Color(
     def aggregate(self, argmin=Undefined, **kwds) -> "Color":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Color":
         ...
 
@@ -1850,6 +1855,7 @@ class Color(
     def title(self, _: None, **kwds) -> "Color":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Color":
@@ -2028,6 +2034,7 @@ class ColorDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "ColorDatum":
         ...
 
@@ -2059,6 +2066,7 @@ class ColorDatum(
     def title(self, _: None, **kwds) -> "ColorDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -2469,9 +2477,11 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Column":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def align(self, _: Literal["all", "each", "none"], **kwds) -> "Column":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Column":
         ...
 
@@ -2500,6 +2510,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bin(self, _: None, **kwds) -> "Column":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def center(self, _: bool, **kwds) -> "Column":
         ...
 
@@ -2582,6 +2593,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def sort(self, _: None, **kwds) -> "Column":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, _: float, **kwds) -> "Column":
         ...
 
@@ -2771,6 +2783,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def title(self, _: None, **kwds) -> "Column":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Column":
@@ -3062,6 +3075,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(self, argmin=Undefined, **kwds) -> "Description":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Description":
         ...
 
@@ -3126,6 +3140,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: dict, **kwds) -> "Description":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "Description":
         ...
 
@@ -3315,6 +3330,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> "Description":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Description":
@@ -3683,6 +3699,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(self, argmin=Undefined, **kwds) -> "Detail":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Detail":
         ...
 
@@ -3909,6 +3926,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def title(self, _: None, **kwds) -> "Detail":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Detail":
@@ -4246,6 +4264,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def align(self, column=Undefined, row=Undefined, **kwds) -> "Facet":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Facet":
         ...
 
@@ -4274,6 +4293,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def bin(self, _: None, **kwds) -> "Facet":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bounds(self, _: Literal["full", "flush"], **kwds) -> "Facet":
         ...
 
@@ -4285,6 +4305,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def center(self, column=Undefined, row=Undefined, **kwds) -> "Facet":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def columns(self, _: float, **kwds) -> "Facet":
         ...
 
@@ -4561,6 +4582,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def title(self, _: None, **kwds) -> "Facet":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Facet":
@@ -4888,6 +4910,7 @@ class Fill(
     def aggregate(self, argmin=Undefined, **kwds) -> "Fill":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Fill":
         ...
 
@@ -5312,6 +5335,7 @@ class Fill(
     def title(self, _: None, **kwds) -> "Fill":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Fill":
@@ -5490,6 +5514,7 @@ class FillDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "FillDatum":
         ...
 
@@ -5521,6 +5546,7 @@ class FillDatum(
     def title(self, _: None, **kwds) -> "FillDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -5947,6 +5973,7 @@ class FillOpacity(
     def aggregate(self, argmin=Undefined, **kwds) -> "FillOpacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "FillOpacity":
         ...
 
@@ -6373,6 +6400,7 @@ class FillOpacity(
     def title(self, _: None, **kwds) -> "FillOpacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "FillOpacity":
@@ -6551,6 +6579,7 @@ class FillOpacityDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "FillOpacityDatum":
         ...
 
@@ -6582,6 +6611,7 @@ class FillOpacityDatum(
     def title(self, _: None, **kwds) -> "FillOpacityDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -6978,6 +7008,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(self, argmin=Undefined, **kwds) -> "Href":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Href":
         ...
 
@@ -7042,6 +7073,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: dict, **kwds) -> "Href":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "Href":
         ...
 
@@ -7231,6 +7263,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> "Href":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Href":
@@ -7599,6 +7632,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(self, argmin=Undefined, **kwds) -> "Key":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Key":
         ...
 
@@ -7825,6 +7859,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def title(self, _: None, **kwds) -> "Key":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Key":
@@ -8062,9 +8097,11 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Latitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Latitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Latitude":
         ...
 
@@ -8262,6 +8299,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def title(self, _: None, **kwds) -> "Latitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(self, _: str, **kwds) -> "Latitude":
         ...
 
@@ -8404,6 +8442,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "LatitudeDatum":
         ...
 
@@ -8419,6 +8458,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "LatitudeDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -8575,9 +8615,11 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Latitude2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Latitude2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Latitude2":
         ...
 
@@ -8912,6 +8954,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Latitude2Datum":
         ...
 
@@ -8927,6 +8970,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "Latitude2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -9174,9 +9218,11 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Longitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Longitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Longitude":
         ...
 
@@ -9374,6 +9420,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def title(self, _: None, **kwds) -> "Longitude":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(self, _: str, **kwds) -> "Longitude":
         ...
 
@@ -9516,6 +9563,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "LongitudeDatum":
         ...
 
@@ -9531,6 +9579,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "LongitudeDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -9687,9 +9736,11 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Longitude2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Longitude2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Longitude2":
         ...
 
@@ -10024,6 +10075,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Longitude2Datum":
         ...
 
@@ -10039,6 +10091,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "Longitude2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -10356,6 +10409,7 @@ class Opacity(
     def aggregate(self, argmin=Undefined, **kwds) -> "Opacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Opacity":
         ...
 
@@ -10780,6 +10834,7 @@ class Opacity(
     def title(self, _: None, **kwds) -> "Opacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Opacity":
@@ -10956,6 +11011,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "OpacityDatum":
         ...
 
@@ -10987,6 +11043,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def title(self, _: None, **kwds) -> "OpacityDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -11344,6 +11401,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Order":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Order":
         ...
 
@@ -11384,6 +11442,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def field(self, repeat=Undefined, **kwds) -> "Order":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Order":
         ...
 
@@ -11573,6 +11632,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def title(self, _: None, **kwds) -> "Order":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Order":
@@ -11948,6 +12008,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(self, argmin=Undefined, **kwds) -> "Radius":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Radius":
         ...
 
@@ -12295,6 +12356,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def title(self, _: None, **kwds) -> "Radius":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Radius":
@@ -12500,6 +12562,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "RadiusDatum":
         ...
 
@@ -12562,6 +12625,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def title(self, _: None, **kwds) -> "RadiusDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -12750,9 +12814,11 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Radius2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Radius2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Radius2":
         ...
 
@@ -13087,6 +13153,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Radius2Datum":
         ...
 
@@ -13102,6 +13169,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "Radius2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -13403,9 +13471,11 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Row":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def align(self, _: Literal["all", "each", "none"], **kwds) -> "Row":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Row":
         ...
 
@@ -13434,6 +13504,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bin(self, _: None, **kwds) -> "Row":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def center(self, _: bool, **kwds) -> "Row":
         ...
 
@@ -13516,6 +13587,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def sort(self, _: None, **kwds) -> "Row":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def spacing(self, _: float, **kwds) -> "Row":
         ...
 
@@ -13705,6 +13777,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def title(self, _: None, **kwds) -> "Row":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Row":
@@ -14026,6 +14099,7 @@ class Shape(
     def aggregate(self, argmin=Undefined, **kwds) -> "Shape":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Shape":
         ...
 
@@ -14450,6 +14524,7 @@ class Shape(
     def title(self, _: None, **kwds) -> "Shape":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> "Shape":
         ...
 
@@ -14626,6 +14701,7 @@ class ShapeDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "ShapeDatum":
         ...
 
@@ -14657,6 +14733,7 @@ class ShapeDatum(
     def title(self, _: None, **kwds) -> "ShapeDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -15081,6 +15158,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def aggregate(self, argmin=Undefined, **kwds) -> "Size":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Size":
         ...
 
@@ -15505,6 +15583,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def title(self, _: None, **kwds) -> "Size":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Size":
@@ -15681,6 +15760,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "SizeDatum":
         ...
 
@@ -15712,6 +15792,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def title(self, _: None, **kwds) -> "SizeDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -16138,6 +16219,7 @@ class Stroke(
     def aggregate(self, argmin=Undefined, **kwds) -> "Stroke":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Stroke":
         ...
 
@@ -16562,6 +16644,7 @@ class Stroke(
     def title(self, _: None, **kwds) -> "Stroke":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Stroke":
@@ -16740,6 +16823,7 @@ class StrokeDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeDatum":
         ...
 
@@ -16771,6 +16855,7 @@ class StrokeDatum(
     def title(self, _: None, **kwds) -> "StrokeDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -17197,6 +17282,7 @@ class StrokeDash(
     def aggregate(self, argmin=Undefined, **kwds) -> "StrokeDash":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeDash":
         ...
 
@@ -17623,6 +17709,7 @@ class StrokeDash(
     def title(self, _: None, **kwds) -> "StrokeDash":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeDash":
@@ -17801,6 +17888,7 @@ class StrokeDashDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeDashDatum":
         ...
 
@@ -17832,6 +17920,7 @@ class StrokeDashDatum(
     def title(self, _: None, **kwds) -> "StrokeDashDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -18257,6 +18346,7 @@ class StrokeOpacity(
     def aggregate(self, argmin=Undefined, **kwds) -> "StrokeOpacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeOpacity":
         ...
 
@@ -18683,6 +18773,7 @@ class StrokeOpacity(
     def title(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeOpacity":
@@ -18861,6 +18952,7 @@ class StrokeOpacityDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeOpacityDatum":
         ...
 
@@ -18894,6 +18986,7 @@ class StrokeOpacityDatum(
     def title(self, _: None, **kwds) -> "StrokeOpacityDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -19323,6 +19416,7 @@ class StrokeWidth(
     def aggregate(self, argmin=Undefined, **kwds) -> "StrokeWidth":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeWidth":
         ...
 
@@ -19749,6 +19843,7 @@ class StrokeWidth(
     def title(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeWidth":
@@ -19927,6 +20022,7 @@ class StrokeWidthDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "StrokeWidthDatum":
         ...
 
@@ -19958,6 +20054,7 @@ class StrokeWidthDatum(
     def title(self, _: None, **kwds) -> "StrokeWidthDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -20354,6 +20451,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def aggregate(self, argmin=Undefined, **kwds) -> "Text":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Text":
         ...
 
@@ -20416,6 +20514,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def format(self, _: dict, **kwds) -> "Text":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "Text":
         ...
 
@@ -20605,6 +20704,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def title(self, _: None, **kwds) -> "Text":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Text":
@@ -20804,6 +20904,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "TextDatum":
         ...
 
@@ -20831,6 +20932,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def format(self, _: dict, **kwds) -> "TextDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "TextDatum":
         ...
 
@@ -20846,6 +20948,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def title(self, _: None, **kwds) -> "TextDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -21255,6 +21358,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(self, argmin=Undefined, **kwds) -> "Theta":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Theta":
         ...
 
@@ -21602,6 +21706,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def title(self, _: None, **kwds) -> "Theta":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Theta":
@@ -21807,6 +21912,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "ThetaDatum":
         ...
 
@@ -21869,6 +21975,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def title(self, _: None, **kwds) -> "ThetaDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -22057,9 +22164,11 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Theta2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Theta2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Theta2":
         ...
 
@@ -22394,6 +22503,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Theta2Datum":
         ...
 
@@ -22409,6 +22519,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "Theta2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -22697,6 +22808,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(self, argmin=Undefined, **kwds) -> "Tooltip":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Tooltip":
         ...
 
@@ -22761,6 +22873,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: dict, **kwds) -> "Tooltip":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "Tooltip":
         ...
 
@@ -22950,6 +23063,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> "Tooltip":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Tooltip":
@@ -23358,6 +23472,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(self, argmin=Undefined, **kwds) -> "Url":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Url":
         ...
 
@@ -23422,6 +23537,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: dict, **kwds) -> "Url":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def formatType(self, _: str, **kwds) -> "Url":
         ...
 
@@ -23611,6 +23727,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> "Url":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Url":
@@ -24167,6 +24284,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def axis(self, _: None, **kwds) -> "X":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "X":
         ...
 
@@ -24529,6 +24647,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def title(self, _: None, **kwds) -> "X":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "X":
@@ -24844,6 +24963,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(self, _: None, **kwds) -> "XDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "XDatum":
         ...
 
@@ -24921,6 +25041,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def title(self, _: None, **kwds) -> "XDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -25113,9 +25234,11 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "X2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "X2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "X2":
         ...
 
@@ -25450,6 +25573,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "X2Datum":
         ...
 
@@ -25465,6 +25589,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "X2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -25645,9 +25770,11 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "XError":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "XError":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "XError":
         ...
 
@@ -26030,9 +26157,11 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "XError2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "XError2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "XError2":
         ...
 
@@ -26534,6 +26663,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "XOffset":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "XOffset":
         ...
 
@@ -26865,6 +26995,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def title(self, _: None, **kwds) -> "XOffset":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "XOffset":
@@ -27037,6 +27168,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "XOffsetDatum":
         ...
 
@@ -27087,6 +27219,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def title(self, _: None, **kwds) -> "XOffsetDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -27529,6 +27662,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def axis(self, _: None, **kwds) -> "Y":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Y":
         ...
 
@@ -27891,6 +28025,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def title(self, _: None, **kwds) -> "Y":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Y":
@@ -28206,6 +28341,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(self, _: None, **kwds) -> "YDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "YDatum":
         ...
 
@@ -28283,6 +28419,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def title(self, _: None, **kwds) -> "YDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -28475,9 +28612,11 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "Y2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Y2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "Y2":
         ...
 
@@ -28812,6 +28951,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "Y2Datum":
         ...
 
@@ -28827,6 +28967,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> "Y2Datum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -29007,9 +29148,11 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "YError":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "YError":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "YError":
         ...
 
@@ -29392,9 +29535,11 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "YError2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "YError2":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bin(self, _: None, **kwds) -> "YError2":
         ...
 
@@ -29896,6 +30041,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(self, argmin=Undefined, **kwds) -> "YOffset":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "YOffset":
         ...
 
@@ -30227,6 +30373,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def title(self, _: None, **kwds) -> "YOffset":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "YOffset":
@@ -30399,6 +30546,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
+    @overload  # type: ignore[no-overload-impl]
     def bandPosition(self, _: float, **kwds) -> "YOffsetDatum":
         ...
 
@@ -30449,6 +30597,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def title(self, _: None, **kwds) -> "YOffsetDatum":
         ...
 
+    @overload  # type: ignore[no-overload-impl]
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],

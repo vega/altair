@@ -336,7 +336,7 @@ class SchemaGenerator:
         if si.is_anyOf():
             return self._get_signature_any_of(si, attr, indent)
         else:
-            return self.get_signature(attr, si, indent)
+            return self.get_signature(attr, si, indent, has_overload=True)
 
     def _get_signature_any_of(
         self, si: SchemaInfo, attr: str, indent: int
