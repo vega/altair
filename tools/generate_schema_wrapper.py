@@ -43,7 +43,7 @@ SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/" "{library}/{versio
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
 # which trigger two kind of errors in mypy:
-# * all of them do not have an implementation in this file 
+# * all of them do not have an implementation in this file
 # * some of them are the only overload methods -> overloads usually only make
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works

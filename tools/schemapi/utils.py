@@ -4,7 +4,7 @@ import keyword
 import re
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Any, Iterable, Literal, overload
+from typing import Final, Optional, List, Dict, Any, Iterable
 
 from .schemapi import _resolve_references as resolve_references
 

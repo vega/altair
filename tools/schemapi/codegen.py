@@ -8,9 +8,8 @@ from .utils import (
     SchemaInfo,
     is_valid_identifier,
     indent_docstring,
-    SchemaProperties,
     jsonschema_to_python_types,
-    flatten
+    flatten,
 )
 
 
