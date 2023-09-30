@@ -336,7 +336,7 @@ class SchemaGenerator:
     ) -> List[str]:
         lines = []
         if has_overload:
-            lines.append("@overload  # type: ignore[no-overload-impl]")
+            lines.append("@overload")
         args = ", ".join(self.get_args(sub_si))
         lines.append(f"def {attr}({args}) -> '{self.classname}':")
         lines.append(indent * " " + "...\n")

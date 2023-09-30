@@ -331,7 +331,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -361,7 +361,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -369,7 +369,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -377,15 +377,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -405,11 +405,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -442,7 +442,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -455,17 +455,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -475,7 +475,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -1990,11 +1990,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -2553,31 +2553,31 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -2598,7 +2598,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -2619,7 +2619,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -2663,7 +2663,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -2694,11 +2694,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2718,7 +2718,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2738,7 +2738,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2776,7 +2776,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2814,7 +2814,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2837,7 +2837,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -2860,7 +2860,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -2983,19 +2983,19 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Angle":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Angle":
@@ -3414,11 +3414,11 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -3451,7 +3451,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     ) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -3464,25 +3464,25 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     ) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "AngleDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -3555,7 +3555,7 @@ class AngleValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "angle"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -3842,7 +3842,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -3893,7 +3893,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -4160,7 +4160,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -4191,7 +4191,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -4224,7 +4224,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -4237,7 +4237,7 @@ class AngleValue(
     ) -> "AngleValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "AngleValue":
@@ -4506,7 +4506,7 @@ class Color(
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -4536,7 +4536,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -4544,7 +4544,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -4552,15 +4552,15 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -4580,11 +4580,11 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -4626,7 +4626,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -4648,17 +4648,17 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -4668,7 +4668,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -6183,11 +6183,11 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -6746,31 +6746,31 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -6791,7 +6791,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -6812,7 +6812,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -6856,7 +6856,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -6887,11 +6887,11 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -6911,7 +6911,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -6931,7 +6931,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -6969,7 +6969,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -7007,7 +7007,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -7030,7 +7030,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -7053,7 +7053,7 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -7176,19 +7176,19 @@ class Color(
     ) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Color":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Color":
@@ -7619,11 +7619,11 @@ class ColorDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -7665,7 +7665,7 @@ class ColorDatum(
     ) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -7687,25 +7687,25 @@ class ColorDatum(
     ) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "ColorDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -7790,7 +7790,7 @@ class ColorValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -8077,7 +8077,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -8128,7 +8128,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -8395,7 +8395,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -8426,7 +8426,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -8468,7 +8468,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -8490,7 +8490,7 @@ class ColorValue(
     ) -> "ColorValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "ColorValue":
@@ -8752,7 +8752,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -8782,7 +8782,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -8790,7 +8790,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -8798,19 +8798,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def align(self, _: Literal["all", "each", "none"], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -8830,19 +8830,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def center(self, _: bool, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -8852,7 +8852,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(
         self,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
@@ -9351,31 +9351,31 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(self, _: None, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -9419,15 +9419,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def spacing(self, _: float, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9447,7 +9447,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9467,7 +9467,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9505,7 +9505,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9543,7 +9543,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9566,7 +9566,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -9589,7 +9589,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -9712,19 +9712,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Column":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Column":
@@ -10179,7 +10179,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -10209,7 +10209,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -10217,7 +10217,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -10225,15 +10225,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -10253,15 +10253,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -10294,7 +10294,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -10307,17 +10307,17 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -10327,19 +10327,19 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10359,7 +10359,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10379,7 +10379,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10417,7 +10417,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10455,7 +10455,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10478,7 +10478,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -10501,7 +10501,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -10624,19 +10624,19 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Description":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Description":
@@ -10904,7 +10904,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "description"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -11191,7 +11191,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -11242,7 +11242,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -11509,7 +11509,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -11540,7 +11540,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -11573,7 +11573,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -11586,7 +11586,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "DescriptionValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "DescriptionValue":
@@ -11785,7 +11785,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -11815,7 +11815,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -11823,7 +11823,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -11831,15 +11831,15 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -11859,19 +11859,19 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -11881,7 +11881,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -11901,7 +11901,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -11921,7 +11921,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -11959,7 +11959,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -11997,7 +11997,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -12020,7 +12020,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -12043,7 +12043,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -12166,19 +12166,19 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Detail":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Detail":
@@ -12658,7 +12658,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -12688,7 +12688,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -12696,7 +12696,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -12704,11 +12704,11 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def align(self, _: Literal["all", "each", "none"], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def align(
         self,
         column: Union[
@@ -12721,15 +12721,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -12749,19 +12749,19 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bounds(self, _: Literal["full", "flush"], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def center(self, _: bool, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def center(
         self,
         column: Union[bool, UndefinedType] = Undefined,
@@ -12770,15 +12770,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def columns(self, _: float, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -12788,7 +12788,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(
         self,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
@@ -13287,31 +13287,31 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(self, _: None, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -13355,15 +13355,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def spacing(self, _: float, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def spacing(
         self,
         column: Union[float, UndefinedType] = Undefined,
@@ -13372,7 +13372,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13392,7 +13392,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13412,7 +13412,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13450,7 +13450,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13488,7 +13488,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13511,7 +13511,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -13534,7 +13534,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -13657,19 +13657,19 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Facet":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Facet":
@@ -14166,7 +14166,7 @@ class Fill(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -14196,7 +14196,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -14204,7 +14204,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -14212,15 +14212,15 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -14240,11 +14240,11 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -14286,7 +14286,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -14308,17 +14308,17 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -14328,7 +14328,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -15843,11 +15843,11 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -16406,31 +16406,31 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -16451,7 +16451,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -16472,7 +16472,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -16516,7 +16516,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -16547,11 +16547,11 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16571,7 +16571,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16591,7 +16591,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16629,7 +16629,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16667,7 +16667,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16690,7 +16690,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -16713,7 +16713,7 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -16836,19 +16836,19 @@ class Fill(
     ) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Fill":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Fill":
@@ -17279,11 +17279,11 @@ class FillDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -17325,7 +17325,7 @@ class FillDatum(
     ) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -17347,25 +17347,25 @@ class FillDatum(
     ) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "FillDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -17450,7 +17450,7 @@ class FillValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -17737,7 +17737,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -17788,7 +17788,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -18055,7 +18055,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -18086,7 +18086,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -18128,7 +18128,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -18150,7 +18150,7 @@ class FillValue(
     ) -> "FillValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "FillValue":
@@ -18428,7 +18428,7 @@ class FillOpacity(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -18458,7 +18458,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -18466,7 +18466,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -18474,15 +18474,15 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -18502,11 +18502,11 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -18539,7 +18539,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -18552,17 +18552,17 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -18572,7 +18572,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -20087,11 +20087,11 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -20650,31 +20650,31 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -20695,7 +20695,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -20716,7 +20716,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -20760,7 +20760,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -20791,11 +20791,11 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20815,7 +20815,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20835,7 +20835,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20873,7 +20873,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20911,7 +20911,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20934,7 +20934,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -20957,7 +20957,7 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -21080,19 +21080,19 @@ class FillOpacity(
     ) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "FillOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "FillOpacity":
@@ -21513,11 +21513,11 @@ class FillOpacityDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -21550,7 +21550,7 @@ class FillOpacityDatum(
     ) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -21563,25 +21563,25 @@ class FillOpacityDatum(
     ) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "FillOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -21654,7 +21654,7 @@ class FillOpacityValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -21941,7 +21941,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -21992,7 +21992,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -22259,7 +22259,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -22290,7 +22290,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -22323,7 +22323,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -22336,7 +22336,7 @@ class FillOpacityValue(
     ) -> "FillOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "FillOpacityValue":
@@ -22575,7 +22575,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -22605,7 +22605,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -22613,7 +22613,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -22621,15 +22621,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -22649,15 +22649,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -22690,7 +22690,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -22703,17 +22703,17 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -22723,19 +22723,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22755,7 +22755,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22775,7 +22775,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22813,7 +22813,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22851,7 +22851,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22874,7 +22874,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -22897,7 +22897,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -23020,19 +23020,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Href":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Href":
@@ -23300,7 +23300,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -23587,7 +23587,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -23638,7 +23638,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -23905,7 +23905,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -23936,7 +23936,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -23969,7 +23969,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -23982,7 +23982,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "HrefValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "HrefValue":
@@ -24181,7 +24181,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -24211,7 +24211,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -24219,7 +24219,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -24227,15 +24227,15 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -24255,19 +24255,19 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -24277,7 +24277,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24297,7 +24297,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24317,7 +24317,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24355,7 +24355,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24393,7 +24393,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24416,7 +24416,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -24439,7 +24439,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -24562,19 +24562,19 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Key":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Key":
@@ -24962,7 +24962,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -24992,7 +24992,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -25000,7 +25000,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -25008,19 +25008,19 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -25030,7 +25030,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25050,7 +25050,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25070,7 +25070,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25108,7 +25108,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25146,7 +25146,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25169,7 +25169,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25192,7 +25192,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -25315,19 +25315,19 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Latitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(self, _: str, **kwds) -> "Latitude":
         ...
 
@@ -25652,23 +25652,23 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "LatitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "LatitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "LatitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "LatitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -25792,7 +25792,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -25822,7 +25822,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -25830,7 +25830,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -25838,19 +25838,19 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -25860,7 +25860,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25880,7 +25880,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25900,7 +25900,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25938,7 +25938,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25976,7 +25976,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -25999,7 +25999,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26022,7 +26022,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -26145,15 +26145,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Latitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Latitude2":
         ...
 
@@ -26476,23 +26476,23 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Latitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Latitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Latitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Latitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -26707,7 +26707,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -26737,7 +26737,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -26745,7 +26745,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -26753,19 +26753,19 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -26775,7 +26775,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26795,7 +26795,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26815,7 +26815,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26853,7 +26853,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26891,7 +26891,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26914,7 +26914,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -26937,7 +26937,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -27060,19 +27060,19 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Longitude":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(self, _: str, **kwds) -> "Longitude":
         ...
 
@@ -27397,23 +27397,23 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "LongitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "LongitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "LongitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "LongitudeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -27537,7 +27537,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -27567,7 +27567,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -27575,7 +27575,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -27583,19 +27583,19 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -27605,7 +27605,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27625,7 +27625,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27645,7 +27645,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27683,7 +27683,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27721,7 +27721,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27744,7 +27744,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -27767,7 +27767,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -27890,15 +27890,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Longitude2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Longitude2":
         ...
 
@@ -28221,23 +28221,23 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Longitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Longitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Longitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Longitude2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -28522,7 +28522,7 @@ class Opacity(
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -28552,7 +28552,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -28560,7 +28560,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -28568,15 +28568,15 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -28596,11 +28596,11 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -28633,7 +28633,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -28646,17 +28646,17 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -28666,7 +28666,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -30181,11 +30181,11 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -30744,31 +30744,31 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -30789,7 +30789,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -30810,7 +30810,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -30854,7 +30854,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -30885,11 +30885,11 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -30909,7 +30909,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -30929,7 +30929,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -30967,7 +30967,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -31005,7 +31005,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -31028,7 +31028,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -31051,7 +31051,7 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -31174,19 +31174,19 @@ class Opacity(
     ) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Opacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Opacity":
@@ -31605,11 +31605,11 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -31642,7 +31642,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     ) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -31655,25 +31655,25 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     ) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "OpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -31746,7 +31746,7 @@ class OpacityValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -32033,7 +32033,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -32084,7 +32084,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -32351,7 +32351,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -32382,7 +32382,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -32415,7 +32415,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -32428,7 +32428,7 @@ class OpacityValue(
     ) -> "OpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "OpacityValue":
@@ -32628,7 +32628,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -32658,7 +32658,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -32666,7 +32666,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -32674,15 +32674,15 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -32702,19 +32702,19 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -32724,11 +32724,11 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32748,7 +32748,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32768,7 +32768,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32806,7 +32806,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32844,7 +32844,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32867,7 +32867,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -32890,7 +32890,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -33013,19 +33013,19 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Order":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Order":
@@ -33280,7 +33280,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -33310,7 +33310,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     ) -> "OrderValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -33320,7 +33320,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     ) -> "OrderValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumber], **kwds
     ) -> "OrderValue":
@@ -33596,7 +33596,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -33626,7 +33626,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -33634,7 +33634,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -33642,15 +33642,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -33670,19 +33670,19 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -33692,7 +33692,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -34251,31 +34251,31 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -34296,7 +34296,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -34317,7 +34317,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -34361,7 +34361,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -34392,23 +34392,23 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34428,7 +34428,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34448,7 +34448,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34486,7 +34486,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34524,7 +34524,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34547,7 +34547,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -34570,7 +34570,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -34693,19 +34693,19 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Radius":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Radius":
@@ -35150,11 +35150,11 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -35713,35 +35713,35 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     ) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "RadiusDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -35904,7 +35904,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -35934,7 +35934,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -35942,7 +35942,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -35950,19 +35950,19 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -35972,7 +35972,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -35992,7 +35992,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -36012,7 +36012,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -36050,7 +36050,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -36088,7 +36088,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -36111,7 +36111,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -36134,7 +36134,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -36257,15 +36257,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Radius2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Radius2":
         ...
 
@@ -36588,23 +36588,23 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "radius2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Radius2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Radius2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Radius2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Radius2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -36873,7 +36873,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -36903,7 +36903,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -36911,7 +36911,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -36919,19 +36919,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def align(self, _: Literal["all", "each", "none"], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -36951,19 +36951,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def center(self, _: bool, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -36973,7 +36973,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(
         self,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
@@ -37472,31 +37472,31 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def header(self, _: None, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -37540,15 +37540,15 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def spacing(self, _: float, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37568,7 +37568,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37588,7 +37588,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37626,7 +37626,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37664,7 +37664,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37687,7 +37687,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -37710,7 +37710,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -37833,19 +37833,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Row":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Row":
@@ -38330,7 +38330,7 @@ class Shape(
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -38360,7 +38360,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -38368,7 +38368,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -38376,15 +38376,15 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -38404,11 +38404,11 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -38441,7 +38441,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -38454,17 +38454,17 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -38474,7 +38474,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -39989,11 +39989,11 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -40552,31 +40552,31 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -40597,7 +40597,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -40618,7 +40618,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -40662,7 +40662,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -40693,11 +40693,11 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40717,7 +40717,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40737,7 +40737,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40775,7 +40775,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40813,7 +40813,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40836,7 +40836,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -40859,7 +40859,7 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -40982,19 +40982,19 @@ class Shape(
     ) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Shape":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> "Shape":
         ...
 
@@ -41410,11 +41410,11 @@ class ShapeDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -41447,7 +41447,7 @@ class ShapeDatum(
     ) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -41460,25 +41460,25 @@ class ShapeDatum(
     ) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "ShapeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -41553,7 +41553,7 @@ class ShapeValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -41837,7 +41837,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -41888,7 +41888,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -42152,7 +42152,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -42183,7 +42183,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -42216,7 +42216,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -42229,7 +42229,7 @@ class ShapeValue(
     ) -> "ShapeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "ShapeValue":
@@ -42501,7 +42501,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -42531,7 +42531,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -42539,7 +42539,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -42547,15 +42547,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -42575,11 +42575,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -42612,7 +42612,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -42625,17 +42625,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -42645,7 +42645,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -44160,11 +44160,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -44723,31 +44723,31 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -44768,7 +44768,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -44789,7 +44789,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -44833,7 +44833,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -44864,11 +44864,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -44888,7 +44888,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -44908,7 +44908,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -44946,7 +44946,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -44984,7 +44984,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -45007,7 +45007,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -45030,7 +45030,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -45153,19 +45153,19 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Size":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Size":
@@ -45584,11 +45584,11 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -45621,7 +45621,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     ) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -45634,25 +45634,25 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     ) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "SizeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -45725,7 +45725,7 @@ class SizeValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -46012,7 +46012,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -46063,7 +46063,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -46330,7 +46330,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -46361,7 +46361,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -46394,7 +46394,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -46407,7 +46407,7 @@ class SizeValue(
     ) -> "SizeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "SizeValue":
@@ -46676,7 +46676,7 @@ class Stroke(
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -46706,7 +46706,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -46714,7 +46714,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -46722,15 +46722,15 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -46750,11 +46750,11 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -46796,7 +46796,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -46818,17 +46818,17 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -46838,7 +46838,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -48353,11 +48353,11 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -48916,31 +48916,31 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -48961,7 +48961,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -48982,7 +48982,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -49026,7 +49026,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -49057,11 +49057,11 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49081,7 +49081,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49101,7 +49101,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49139,7 +49139,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49177,7 +49177,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49200,7 +49200,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -49223,7 +49223,7 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -49346,19 +49346,19 @@ class Stroke(
     ) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Stroke":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Stroke":
@@ -49789,11 +49789,11 @@ class StrokeDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -49835,7 +49835,7 @@ class StrokeDatum(
     ) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -49857,25 +49857,25 @@ class StrokeDatum(
     ) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -49960,7 +49960,7 @@ class StrokeValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -50247,7 +50247,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -50298,7 +50298,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -50565,7 +50565,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -50596,7 +50596,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -50638,7 +50638,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -50660,7 +50660,7 @@ class StrokeValue(
     ) -> "StrokeValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> "StrokeValue":
@@ -50938,7 +50938,7 @@ class StrokeDash(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -50968,7 +50968,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -50976,7 +50976,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -50984,15 +50984,15 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -51012,11 +51012,11 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -51049,7 +51049,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -51062,17 +51062,17 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -51082,7 +51082,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -52597,11 +52597,11 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -53160,31 +53160,31 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -53205,7 +53205,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -53226,7 +53226,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -53270,7 +53270,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -53301,11 +53301,11 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53325,7 +53325,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53345,7 +53345,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53383,7 +53383,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53421,7 +53421,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53444,7 +53444,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -53467,7 +53467,7 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -53590,19 +53590,19 @@ class StrokeDash(
     ) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeDash":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeDash":
@@ -54027,11 +54027,11 @@ class StrokeDashDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -54064,7 +54064,7 @@ class StrokeDashDatum(
     ) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -54077,25 +54077,25 @@ class StrokeDashDatum(
     ) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
     ) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeDashDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -54172,7 +54172,7 @@ class StrokeDashValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeDash"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -54459,7 +54459,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -54510,7 +54510,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -54777,7 +54777,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -54808,7 +54808,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -54841,7 +54841,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -54854,7 +54854,7 @@ class StrokeDashValue(
     ) -> "StrokeDashValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
     ) -> "StrokeDashValue":
@@ -55126,7 +55126,7 @@ class StrokeOpacity(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -55156,7 +55156,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -55164,7 +55164,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -55172,15 +55172,15 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -55200,11 +55200,11 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -55237,7 +55237,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -55250,17 +55250,17 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -55270,7 +55270,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -56785,11 +56785,11 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -57348,31 +57348,31 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -57393,7 +57393,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -57414,7 +57414,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -57458,7 +57458,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -57489,11 +57489,11 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57513,7 +57513,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57533,7 +57533,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57571,7 +57571,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57609,7 +57609,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57632,7 +57632,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -57655,7 +57655,7 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -57778,19 +57778,19 @@ class StrokeOpacity(
     ) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeOpacity":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeOpacity":
@@ -58211,11 +58211,11 @@ class StrokeOpacityDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -58248,7 +58248,7 @@ class StrokeOpacityDatum(
     ) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -58261,25 +58261,25 @@ class StrokeOpacityDatum(
     ) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeOpacityDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -58352,7 +58352,7 @@ class StrokeOpacityValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -58639,7 +58639,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -58690,7 +58690,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -58957,7 +58957,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -58988,7 +58988,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -59021,7 +59021,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -59034,7 +59034,7 @@ class StrokeOpacityValue(
     ) -> "StrokeOpacityValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeOpacityValue":
@@ -59304,7 +59304,7 @@ class StrokeWidth(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -59334,7 +59334,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -59342,7 +59342,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -59350,15 +59350,15 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -59378,11 +59378,11 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -59415,7 +59415,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -59428,17 +59428,17 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -59448,7 +59448,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(
         self,
         aria: Union[
@@ -60963,11 +60963,11 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def legend(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -61526,31 +61526,31 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -61571,7 +61571,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -61592,7 +61592,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -61636,7 +61636,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -61667,11 +61667,11 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61691,7 +61691,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61711,7 +61711,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61749,7 +61749,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61787,7 +61787,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61810,7 +61810,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -61833,7 +61833,7 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -61956,19 +61956,19 @@ class StrokeWidth(
     ) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeWidth":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "StrokeWidth":
@@ -62389,11 +62389,11 @@ class StrokeWidthDatum(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -62426,7 +62426,7 @@ class StrokeWidthDatum(
     ) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -62439,25 +62439,25 @@ class StrokeWidthDatum(
     ) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "StrokeWidthDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -62530,7 +62530,7 @@ class StrokeWidthValue(
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -62817,7 +62817,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -62868,7 +62868,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -63135,7 +63135,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -63166,7 +63166,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -63199,7 +63199,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -63212,7 +63212,7 @@ class StrokeWidthValue(
     ) -> "StrokeWidthValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> "StrokeWidthValue":
@@ -63451,7 +63451,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -63481,7 +63481,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -63489,7 +63489,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -63497,15 +63497,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -63525,15 +63525,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -63569,7 +63569,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -63585,15 +63585,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -63603,19 +63603,19 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63635,7 +63635,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63655,7 +63655,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63693,7 +63693,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63731,7 +63731,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63754,7 +63754,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -63777,7 +63777,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -63900,19 +63900,19 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Text":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Text":
@@ -64310,11 +64310,11 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -64350,7 +64350,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     ) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -64366,37 +64366,37 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     ) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefTextExprRef], **kwds
     ) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "TextDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -64471,7 +64471,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -64704,7 +64704,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     ) -> "TextValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -64917,7 +64917,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     ) -> "TextValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -64953,7 +64953,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     ) -> "TextValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -64969,7 +64969,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     ) -> "TextValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefTextExprRef], **kwds
     ) -> "TextValue":
@@ -65250,7 +65250,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -65280,7 +65280,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -65288,7 +65288,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -65296,15 +65296,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -65324,19 +65324,19 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -65346,7 +65346,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -65905,31 +65905,31 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -65950,7 +65950,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -65971,7 +65971,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -66015,7 +66015,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -66046,23 +66046,23 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66082,7 +66082,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66102,7 +66102,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66140,7 +66140,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66178,7 +66178,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66201,7 +66201,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -66224,7 +66224,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -66347,19 +66347,19 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Theta":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Theta":
@@ -66804,11 +66804,11 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -67367,35 +67367,35 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     ) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "ThetaDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -67558,7 +67558,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -67588,7 +67588,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -67596,7 +67596,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -67604,19 +67604,19 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -67626,7 +67626,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67646,7 +67646,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67666,7 +67666,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67704,7 +67704,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67742,7 +67742,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67765,7 +67765,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -67788,7 +67788,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -67911,15 +67911,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Theta2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Theta2":
         ...
 
@@ -68242,23 +68242,23 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "theta2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Theta2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Theta2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Theta2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Theta2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -68514,7 +68514,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -68544,7 +68544,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -68552,7 +68552,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -68560,15 +68560,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -68588,15 +68588,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -68629,7 +68629,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -68642,17 +68642,17 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -68662,19 +68662,19 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68694,7 +68694,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68714,7 +68714,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68752,7 +68752,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68790,7 +68790,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68813,7 +68813,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -68836,7 +68836,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -68959,19 +68959,19 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Tooltip":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Tooltip":
@@ -69239,7 +69239,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -69526,7 +69526,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -69577,7 +69577,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -69844,7 +69844,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -69875,7 +69875,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -69908,7 +69908,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -69921,7 +69921,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "TooltipValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "TooltipValue":
@@ -70160,7 +70160,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -70190,7 +70190,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -70198,7 +70198,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -70206,15 +70206,15 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -70234,15 +70234,15 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -70275,7 +70275,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -70288,17 +70288,17 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -70308,19 +70308,19 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: str, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def format(self, _: dict, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def formatType(self, _: str, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70340,7 +70340,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70360,7 +70360,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70398,7 +70398,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70436,7 +70436,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70459,7 +70459,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -70482,7 +70482,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -70605,19 +70605,19 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Url":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Url":
@@ -70885,7 +70885,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     _class_is_valid_at_instantiation = False
     _encoding_name = "url"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -71172,7 +71172,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -71223,7 +71223,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         aggregate: Union[
@@ -71490,7 +71490,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
@@ -71521,7 +71521,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         test: Union[
@@ -71554,7 +71554,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -71567,7 +71567,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ) -> "UrlValue":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> "UrlValue":
@@ -71865,7 +71865,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -71895,7 +71895,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -71903,7 +71903,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -71911,7 +71911,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(
         self,
         aria: Union[
@@ -73183,19 +73183,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -73215,19 +73215,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -73237,7 +73237,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(
         self,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
@@ -73253,11 +73253,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -73816,31 +73816,31 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -73861,7 +73861,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -73882,7 +73882,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -73926,7 +73926,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -73957,23 +73957,23 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -73993,7 +73993,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -74013,7 +74013,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -74051,7 +74051,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -74089,7 +74089,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -74112,7 +74112,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -74135,7 +74135,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -74258,19 +74258,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "X":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "X":
@@ -74738,7 +74738,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(
         self,
         aria: Union[
@@ -76010,15 +76010,15 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(self, _: None, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(
         self,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
@@ -76034,11 +76034,11 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(self, _: None, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -76597,35 +76597,35 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "XDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -76794,7 +76794,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -76824,7 +76824,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -76832,7 +76832,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -76840,19 +76840,19 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -76862,7 +76862,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -76882,7 +76882,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -76902,7 +76902,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -76940,7 +76940,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -76978,7 +76978,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77001,7 +77001,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77024,7 +77024,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -77147,15 +77147,15 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "X2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "X2":
         ...
 
@@ -77478,23 +77478,23 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "x2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "X2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "X2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "X2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "X2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -77642,7 +77642,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -77672,7 +77672,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -77680,7 +77680,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -77688,19 +77688,19 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -77710,7 +77710,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77730,7 +77730,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77750,7 +77750,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77788,7 +77788,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77826,7 +77826,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77849,7 +77849,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -77872,7 +77872,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -77995,15 +77995,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "XError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "XError":
         ...
 
@@ -78336,7 +78336,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xError2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -78366,7 +78366,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -78374,7 +78374,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -78382,19 +78382,19 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -78404,7 +78404,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78424,7 +78424,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78444,7 +78444,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78482,7 +78482,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78520,7 +78520,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78543,7 +78543,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -78566,7 +78566,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -78689,15 +78689,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "XError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "XError2":
         ...
 
@@ -79149,7 +79149,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -79179,7 +79179,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -79187,7 +79187,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -79195,15 +79195,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -79223,15 +79223,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -79241,7 +79241,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -79800,31 +79800,31 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -79845,7 +79845,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -79866,7 +79866,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -79910,7 +79910,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -79941,11 +79941,11 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -79965,7 +79965,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -79985,7 +79985,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -80023,7 +80023,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -80061,7 +80061,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -80084,7 +80084,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -80107,7 +80107,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -80230,19 +80230,19 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "XOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "XOffset":
@@ -80647,11 +80647,11 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "xOffset"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -81210,23 +81210,23 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     ) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "XOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -81547,7 +81547,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -81577,7 +81577,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -81585,7 +81585,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -81593,7 +81593,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(
         self,
         aria: Union[
@@ -82865,19 +82865,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -82897,19 +82897,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: str, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -82919,7 +82919,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(
         self,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
@@ -82935,11 +82935,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -83498,31 +83498,31 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -83543,7 +83543,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -83564,7 +83564,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -83608,7 +83608,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -83639,23 +83639,23 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83675,7 +83675,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83695,7 +83695,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83733,7 +83733,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83771,7 +83771,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83794,7 +83794,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -83817,7 +83817,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -83940,19 +83940,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Y":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "Y":
@@ -84420,7 +84420,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(
         self,
         aria: Union[
@@ -85692,15 +85692,15 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def axis(self, _: None, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(
         self,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
@@ -85716,11 +85716,11 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def impute(self, _: None, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -86279,35 +86279,35 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: None, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def stack(self, _: bool, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "YDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -86476,7 +86476,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -86506,7 +86506,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -86514,7 +86514,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -86522,19 +86522,19 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -86544,7 +86544,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86564,7 +86564,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86584,7 +86584,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86622,7 +86622,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86660,7 +86660,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86683,7 +86683,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -86706,7 +86706,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -86829,15 +86829,15 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Y2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Y2":
         ...
 
@@ -87160,23 +87160,23 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "y2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "Y2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "Y2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "Y2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "Y2Datum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
@@ -87324,7 +87324,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -87354,7 +87354,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -87362,7 +87362,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -87370,19 +87370,19 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -87392,7 +87392,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87412,7 +87412,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87432,7 +87432,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87470,7 +87470,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87508,7 +87508,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87531,7 +87531,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -87554,7 +87554,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -87677,15 +87677,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "YError":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "YError":
         ...
 
@@ -88018,7 +88018,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yError2"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -88048,7 +88048,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -88056,7 +88056,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -88064,19 +88064,19 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -88086,7 +88086,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88106,7 +88106,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88126,7 +88126,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88164,7 +88164,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88202,7 +88202,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88225,7 +88225,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -88248,7 +88248,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -88371,15 +88371,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "YError2":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "YError2":
         ...
 
@@ -88831,7 +88831,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         _: Literal[
@@ -88861,7 +88861,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -88869,7 +88869,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
@@ -88877,15 +88877,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: bool, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(
         self,
         anchor: Union[float, UndefinedType] = Undefined,
@@ -88905,15 +88905,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bin(self, _: None, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(self, _: str, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def field(
         self,
         repeat: Union[
@@ -88923,7 +88923,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -89482,31 +89482,31 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[float], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[str], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[bool], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: List[core.DateTime], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: Literal["ascending", "descending"], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -89527,7 +89527,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         _: Literal[
@@ -89548,7 +89548,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         field: Union[
@@ -89592,7 +89592,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(
         self,
         encoding: Union[
@@ -89623,11 +89623,11 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def sort(self, _: None, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89647,7 +89647,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89667,7 +89667,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89705,7 +89705,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89743,7 +89743,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89766,7 +89766,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         _: Literal[
@@ -89789,7 +89789,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def timeUnit(
         self,
         binned: Union[bool, UndefinedType] = Undefined,
@@ -89912,19 +89912,19 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "YOffset":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
     ) -> "YOffset":
@@ -90329,11 +90329,11 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _class_is_valid_at_instantiation = False
     _encoding_name = "yOffset"
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def bandPosition(self, _: float, **kwds) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(
         self,
         align: Union[
@@ -90892,23 +90892,23 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     ) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def scale(self, _: None, **kwds) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: str, **kwds) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: List[str], **kwds) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def title(self, _: None, **kwds) -> "YOffsetDatum":
         ...
 
-    @overload  # type: ignore[no-overload-impl]
+    @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
