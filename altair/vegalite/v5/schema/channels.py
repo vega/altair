@@ -6,7 +6,7 @@ from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters
 from altair.utils import parse_shorthand
-from typing import Any, overload, List, Literal, Union
+from typing import Any, overload, Sequence, List, Literal, Union
 
 
 class FieldChannelMixin:
@@ -145,7 +145,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -189,7 +189,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -237,7 +237,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -391,16 +391,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Angle":
         ...
@@ -1321,7 +1321,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -1718,7 +1718,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -1977,10 +1977,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -2006,7 +2006,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -2019,13 +2019,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -2117,11 +2119,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -3040,10 +3044,12 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -3063,10 +3069,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -3264,7 +3270,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -3305,7 +3311,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3314,7 +3320,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -3490,10 +3496,12 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -3504,7 +3512,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -3536,7 +3544,7 @@ class AngleValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3598,10 +3606,10 @@ class AngleValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -3821,7 +3829,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -3872,7 +3880,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -3938,10 +3946,10 @@ class AngleValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -4139,7 +4147,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -4170,7 +4178,7 @@ class AngleValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -4240,10 +4248,12 @@ class AngleValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -4310,7 +4320,7 @@ class Color(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4354,7 +4364,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -4402,7 +4412,7 @@ class Color(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -4556,16 +4566,16 @@ class Color(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Color":
         ...
@@ -5504,7 +5514,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -5901,7 +5911,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -6160,10 +6170,10 @@ class Color(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -6189,7 +6199,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -6202,13 +6212,15 @@ class Color(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -6300,11 +6312,13 @@ class Color(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -7223,20 +7237,18 @@ class Color(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -7260,10 +7272,10 @@ class Color(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -7461,7 +7473,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -7504,7 +7516,7 @@ class ColorDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -7513,7 +7525,7 @@ class ColorDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -7707,20 +7719,18 @@ class ColorDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -7735,7 +7745,7 @@ class ColorDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -7769,7 +7779,7 @@ class ColorValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -7831,10 +7841,10 @@ class ColorValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -8054,7 +8064,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -8105,7 +8115,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -8171,10 +8181,10 @@ class ColorValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -8372,7 +8382,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -8403,7 +8413,7 @@ class ColorValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -8491,20 +8501,18 @@ class ColorValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -8608,7 +8616,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -8650,7 +8658,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -8808,16 +8816,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Column":
         ...
@@ -9096,7 +9104,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -9775,14 +9783,14 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         sort: Union[
             Union[
                 None,
+                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
-                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[core.EncodingSortField, dict],
             ],
             UndefinedType,
@@ -9939,7 +9947,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -10012,7 +10020,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -10077,7 +10085,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -10231,16 +10239,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Description":
         ...
@@ -10677,10 +10685,12 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
-                    List[core.ConditionalValueDefstringExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
+                        core.ConditionalValueDefstringExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -10847,7 +10857,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -10883,7 +10893,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -10945,10 +10955,10 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -11168,7 +11178,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -11219,7 +11229,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -11285,10 +11295,10 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -11486,7 +11496,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -11517,7 +11527,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -11587,14 +11597,12 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -11683,7 +11691,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -11837,16 +11845,16 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Detail":
         ...
@@ -12372,7 +12380,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -12512,7 +12520,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12556,7 +12564,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -12727,16 +12735,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Facet":
         ...
@@ -13032,7 +13040,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -13728,14 +13736,14 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         sort: Union[
             Union[
                 None,
+                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
-                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[core.EncodingSortField, dict],
             ],
             UndefinedType,
@@ -13894,7 +13902,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -13972,7 +13980,7 @@ class Fill(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -14016,7 +14024,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14064,7 +14072,7 @@ class Fill(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -14218,16 +14226,16 @@ class Fill(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Fill":
         ...
@@ -15166,7 +15174,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -15563,7 +15571,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -15822,10 +15830,10 @@ class Fill(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -15851,7 +15859,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -15864,13 +15872,15 @@ class Fill(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -15962,11 +15972,13 @@ class Fill(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -16885,20 +16897,18 @@ class Fill(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -16922,10 +16932,10 @@ class Fill(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -17123,7 +17133,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -17166,7 +17176,7 @@ class FillDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -17175,7 +17185,7 @@ class FillDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -17369,20 +17379,18 @@ class FillDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -17397,7 +17405,7 @@ class FillDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -17431,7 +17439,7 @@ class FillValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -17493,10 +17501,10 @@ class FillValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -17716,7 +17724,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -17767,7 +17775,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -17833,10 +17841,10 @@ class FillValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -18034,7 +18042,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -18065,7 +18073,7 @@ class FillValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -18153,20 +18161,18 @@ class FillValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -18236,7 +18242,7 @@ class FillOpacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -18280,7 +18286,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18328,7 +18334,7 @@ class FillOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18482,16 +18488,16 @@ class FillOpacity(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "FillOpacity":
         ...
@@ -19412,7 +19418,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -19809,7 +19815,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -20068,10 +20074,10 @@ class FillOpacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -20097,7 +20103,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -20110,13 +20116,15 @@ class FillOpacity(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -20208,11 +20216,13 @@ class FillOpacity(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -21131,10 +21141,12 @@ class FillOpacity(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -21154,10 +21166,10 @@ class FillOpacity(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -21355,7 +21367,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -21398,7 +21410,7 @@ class FillOpacityDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -21407,7 +21419,7 @@ class FillOpacityDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -21583,10 +21595,12 @@ class FillOpacityDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -21597,7 +21611,7 @@ class FillOpacityDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -21629,7 +21643,7 @@ class FillOpacityValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -21691,10 +21705,10 @@ class FillOpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -21914,7 +21928,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -21965,7 +21979,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -22031,10 +22045,10 @@ class FillOpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -22232,7 +22246,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -22263,7 +22277,7 @@ class FillOpacityValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -22333,10 +22347,12 @@ class FillOpacityValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -22400,7 +22416,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -22465,7 +22481,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -22619,16 +22635,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Href":
         ...
@@ -23065,10 +23081,12 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
-                    List[core.ConditionalValueDefstringExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
+                        core.ConditionalValueDefstringExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -23235,7 +23253,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -23271,7 +23289,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -23333,10 +23351,10 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -23556,7 +23574,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -23607,7 +23625,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -23673,10 +23691,10 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -23874,7 +23892,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -23905,7 +23923,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -23975,14 +23993,12 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -24071,7 +24087,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -24225,16 +24241,16 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Key":
         ...
@@ -24760,7 +24776,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -24852,7 +24868,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25509,7 +25525,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds
@@ -25542,7 +25558,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25665,7 +25681,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -25751,7 +25767,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -26335,7 +26351,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -26366,7 +26382,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -26489,7 +26505,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -26597,7 +26613,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27254,7 +27270,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds
@@ -27287,7 +27303,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27410,7 +27426,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -27496,7 +27512,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28080,7 +28096,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -28111,7 +28127,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28234,7 +28250,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -28320,7 +28336,7 @@ class Opacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -28364,7 +28380,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -28412,7 +28428,7 @@ class Opacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28566,16 +28582,16 @@ class Opacity(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Opacity":
         ...
@@ -29496,7 +29512,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -29893,7 +29909,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -30152,10 +30168,10 @@ class Opacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -30181,7 +30197,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -30194,13 +30210,15 @@ class Opacity(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -30292,11 +30310,13 @@ class Opacity(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -31215,10 +31235,12 @@ class Opacity(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -31238,10 +31260,10 @@ class Opacity(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -31439,7 +31461,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -31480,7 +31502,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -31489,7 +31511,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -31665,10 +31687,12 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -31679,7 +31703,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -31711,7 +31735,7 @@ class OpacityValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -31773,10 +31797,10 @@ class OpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -31996,7 +32020,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32047,7 +32071,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32113,10 +32137,10 @@ class OpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -32314,7 +32338,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32345,7 +32369,7 @@ class OpacityValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32415,10 +32439,12 @@ class OpacityValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -32508,7 +32534,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -32662,16 +32688,16 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Order":
         ...
@@ -33204,7 +33230,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -33242,7 +33268,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    condition : Union[List[Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -33305,10 +33331,12 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumber, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumber, dict]],
-                    List[core.ConditionalValueDefnumber],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumber, dict],
+                        Union[core.ConditionalPredicateValueDefnumber, dict],
+                        core.ConditionalValueDefnumber,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumber, dict],
@@ -33395,7 +33423,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -33474,7 +33502,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -33628,16 +33656,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Radius":
         ...
@@ -33676,7 +33704,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -33689,13 +33717,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -33787,11 +33817,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -34729,10 +34761,10 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -34938,7 +34970,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -35024,7 +35056,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -35134,7 +35166,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -35147,13 +35179,15 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -35245,11 +35279,13 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -35727,7 +35763,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -35843,7 +35879,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36427,7 +36463,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -36458,7 +36494,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36581,7 +36617,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -36701,7 +36737,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -36743,7 +36779,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36901,16 +36937,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Row":
         ...
@@ -37189,7 +37225,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -37868,14 +37904,14 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         sort: Union[
             Union[
                 None,
+                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
-                Union[Literal["ascending", "descending"], core.SortOrder],
                 Union[core.EncodingSortField, dict],
             ],
             UndefinedType,
@@ -38032,7 +38068,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -38108,7 +38144,7 @@ class Shape(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -38152,7 +38188,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -38200,7 +38236,7 @@ class Shape(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -38354,16 +38390,16 @@ class Shape(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Shape":
         ...
@@ -39284,7 +39320,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -39681,7 +39717,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -39940,10 +39976,10 @@ class Shape(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -39969,7 +40005,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -39982,13 +40018,15 @@ class Shape(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -40080,11 +40118,13 @@ class Shape(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -41001,14 +41041,12 @@ class Shape(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
@@ -41028,10 +41066,10 @@ class Shape(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -41229,7 +41267,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
@@ -41269,7 +41307,7 @@ class ShapeDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -41278,7 +41316,7 @@ class ShapeDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -41454,14 +41492,12 @@ class ShapeDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
@@ -41472,7 +41508,7 @@ class ShapeDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -41506,7 +41542,7 @@ class ShapeValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -41568,10 +41604,10 @@ class ShapeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -41791,7 +41827,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
@@ -41839,7 +41875,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -41905,10 +41941,10 @@ class ShapeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -42106,7 +42142,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
@@ -42134,7 +42170,7 @@ class ShapeValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -42204,14 +42240,12 @@ class ShapeValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -42281,7 +42315,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -42325,7 +42359,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -42373,7 +42407,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -42527,16 +42561,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Size":
         ...
@@ -43457,7 +43491,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -43854,7 +43888,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -44113,10 +44147,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -44142,7 +44176,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -44155,13 +44189,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -44253,11 +44289,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -45176,10 +45214,12 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -45199,10 +45239,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -45400,7 +45440,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -45441,7 +45481,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -45450,7 +45490,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -45626,10 +45666,12 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -45640,7 +45682,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -45672,7 +45714,7 @@ class SizeValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -45734,10 +45776,10 @@ class SizeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -45957,7 +45999,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46008,7 +46050,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46074,10 +46116,10 @@ class SizeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -46275,7 +46317,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46306,7 +46348,7 @@ class SizeValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46376,10 +46418,12 @@ class SizeValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -46446,7 +46490,7 @@ class Stroke(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -46490,7 +46534,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -46538,7 +46582,7 @@ class Stroke(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -46692,16 +46736,16 @@ class Stroke(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Stroke":
         ...
@@ -47640,7 +47684,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -48037,7 +48081,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -48296,10 +48340,10 @@ class Stroke(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -48325,7 +48369,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -48338,13 +48382,15 @@ class Stroke(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -48436,11 +48482,13 @@ class Stroke(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -49359,20 +49407,18 @@ class Stroke(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -49396,10 +49442,10 @@ class Stroke(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -49597,7 +49643,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -49640,7 +49686,7 @@ class StrokeDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -49649,7 +49695,7 @@ class StrokeDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -49843,20 +49889,18 @@ class StrokeDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[
@@ -49871,7 +49915,7 @@ class StrokeDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -49905,7 +49949,7 @@ class StrokeValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -49967,10 +50011,10 @@ class StrokeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -50190,7 +50234,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -50241,7 +50285,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -50307,10 +50351,10 @@ class StrokeValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -50508,7 +50552,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -50539,7 +50583,7 @@ class StrokeValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -50627,20 +50671,18 @@ class StrokeValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
+                Sequence[
+                    Union[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[
+                        ],
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ]
-                    ],
-                    List[core.ConditionalValueDefGradientstringnullExprRef],
+                        ],
+                        core.ConditionalValueDefGradientstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -50710,7 +50752,7 @@ class StrokeDash(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -50754,7 +50796,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -50802,7 +50844,7 @@ class StrokeDash(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -50956,16 +50998,16 @@ class StrokeDash(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeDash":
         ...
@@ -51000,7 +51042,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -51013,7 +51055,7 @@ class StrokeDash(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -51886,7 +51928,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -52283,7 +52325,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -52542,10 +52584,10 @@ class StrokeDash(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -52571,7 +52613,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -52584,13 +52626,15 @@ class StrokeDash(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -52682,11 +52726,13 @@ class StrokeDash(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -53605,14 +53651,16 @@ class StrokeDash(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefnumberArrayExprRef],
+                Sequence[
+                    Union[
+                        Union[
+                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
+                        ],
+                        Union[
+                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
+                        ],
+                        core.ConditionalValueDefnumberArrayExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict],
@@ -53632,10 +53680,10 @@ class StrokeDash(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -53833,7 +53881,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -53876,7 +53924,7 @@ class StrokeDashDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -53885,7 +53933,7 @@ class StrokeDashDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -54009,7 +54057,7 @@ class StrokeDashDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -54022,7 +54070,7 @@ class StrokeDashDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -54061,14 +54109,16 @@ class StrokeDashDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefnumberArrayExprRef],
+                Sequence[
+                    Union[
+                        Union[
+                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
+                        ],
+                        Union[
+                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
+                        ],
+                        core.ConditionalValueDefnumberArrayExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict],
@@ -54079,7 +54129,7 @@ class StrokeDashDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -54111,9 +54161,9 @@ class StrokeDashValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    value : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -54173,10 +54223,10 @@ class StrokeDashValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -54396,7 +54446,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -54447,7 +54497,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -54513,10 +54563,10 @@ class StrokeDashValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -54714,7 +54764,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -54745,7 +54795,7 @@ class StrokeDashValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -54784,7 +54834,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -54797,7 +54847,7 @@ class StrokeDashValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -54815,14 +54865,16 @@ class StrokeDashValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefnumberArrayExprRef],
+                Sequence[
+                    Union[
+                        Union[
+                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
+                        ],
+                        Union[
+                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
+                        ],
+                        core.ConditionalValueDefnumberArrayExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -54888,7 +54940,7 @@ class StrokeOpacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -54932,7 +54984,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -54980,7 +55032,7 @@ class StrokeOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -55134,16 +55186,16 @@ class StrokeOpacity(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeOpacity":
         ...
@@ -56064,7 +56116,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -56461,7 +56513,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -56720,10 +56772,10 @@ class StrokeOpacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -56749,7 +56801,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -56762,13 +56814,15 @@ class StrokeOpacity(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -56860,11 +56914,13 @@ class StrokeOpacity(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -57783,10 +57839,12 @@ class StrokeOpacity(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -57806,10 +57864,10 @@ class StrokeOpacity(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -58007,7 +58065,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58050,7 +58108,7 @@ class StrokeOpacityDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -58059,7 +58117,7 @@ class StrokeOpacityDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -58235,10 +58293,12 @@ class StrokeOpacityDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -58249,7 +58309,7 @@ class StrokeOpacityDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58281,7 +58341,7 @@ class StrokeOpacityValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -58343,10 +58403,10 @@ class StrokeOpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -58566,7 +58626,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58617,7 +58677,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58683,10 +58743,10 @@ class StrokeOpacityValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -58884,7 +58944,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58915,7 +58975,7 @@ class StrokeOpacityValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -58985,10 +59045,12 @@ class StrokeOpacityValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -59056,7 +59118,7 @@ class StrokeWidth(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -59100,7 +59162,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -59148,7 +59210,7 @@ class StrokeWidth(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -59302,16 +59364,16 @@ class StrokeWidth(
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeWidth":
         ...
@@ -60232,7 +60294,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -60629,7 +60691,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -60888,10 +60950,10 @@ class StrokeWidth(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -60917,7 +60979,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -60930,13 +60992,15 @@ class StrokeWidth(
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -61028,11 +61092,13 @@ class StrokeWidth(
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -61951,10 +62017,12 @@ class StrokeWidth(
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -61974,10 +62042,10 @@ class StrokeWidth(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -62175,7 +62243,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -62218,7 +62286,7 @@ class StrokeWidthDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -62227,7 +62295,7 @@ class StrokeWidthDatum(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -62403,10 +62471,12 @@ class StrokeWidthDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -62417,7 +62487,7 @@ class StrokeWidthDatum(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -62449,7 +62519,7 @@ class StrokeWidthValue(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -62511,10 +62581,10 @@ class StrokeWidthValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -62734,7 +62804,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -62785,7 +62855,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -62851,10 +62921,10 @@ class StrokeWidthValue(
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -63052,7 +63122,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -63083,7 +63153,7 @@ class StrokeWidthValue(
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -63153,10 +63223,12 @@ class StrokeWidthValue(
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
-                    List[core.ConditionalValueDefnumberExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
+                        core.ConditionalValueDefnumberExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -63220,7 +63292,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -63285,7 +63357,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -63439,16 +63511,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Text":
         ...
@@ -63488,7 +63560,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -63504,7 +63576,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -63889,10 +63961,12 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
-                    List[core.ConditionalValueDefTextExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
+                        core.ConditionalValueDefTextExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefTextExprRef, dict],
@@ -64059,7 +64133,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -64099,7 +64173,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -64142,7 +64216,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -64267,7 +64341,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -64283,7 +64357,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -64336,10 +64410,12 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
-                    List[core.ConditionalValueDefTextExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
+                        core.ConditionalValueDefTextExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefTextExprRef, dict],
@@ -64352,7 +64428,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -64384,9 +64460,9 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalStringFieldDef`, Union[:class:`ConditionalParameterStringFieldDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalStringFieldDef`, Union[:class:`ConditionalParameterStringFieldDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -64615,7 +64691,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -64828,7 +64904,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -64868,7 +64944,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         ] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -64884,7 +64960,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -64904,10 +64980,12 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
-                    List[core.ConditionalValueDefTextExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
+                        core.ConditionalValueDefTextExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterStringFieldDef, dict],
@@ -64999,7 +65077,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -65078,7 +65156,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -65232,16 +65310,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Theta":
         ...
@@ -65280,7 +65358,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -65293,13 +65371,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -65391,11 +65471,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -66333,10 +66415,10 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -66542,7 +66624,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -66628,7 +66710,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -66738,7 +66820,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -66751,13 +66833,15 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -66849,11 +66933,13 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -67331,7 +67417,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -67447,7 +67533,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68031,7 +68117,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -68062,7 +68148,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68185,7 +68271,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -68269,7 +68355,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -68334,7 +68420,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68488,16 +68574,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Tooltip":
         ...
@@ -68934,10 +69020,12 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
-                    List[core.ConditionalValueDefstringExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
+                        core.ConditionalValueDefstringExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -69104,7 +69192,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -69140,7 +69228,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -69202,10 +69290,10 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -69425,7 +69513,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -69476,7 +69564,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -69542,10 +69630,10 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -69743,7 +69831,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -69774,7 +69862,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -69844,14 +69932,12 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -69915,7 +70001,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -69980,7 +70066,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -70134,16 +70220,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Url":
         ...
@@ -70580,10 +70666,12 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                Union[
-                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
-                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
-                    List[core.ConditionalValueDefstringExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
+                        core.ConditionalValueDefstringExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -70750,7 +70838,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -70786,7 +70874,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -70848,10 +70936,10 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -71071,7 +71159,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -71122,7 +71210,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -71188,10 +71276,10 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -71389,7 +71477,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -71420,7 +71508,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -71490,14 +71578,12 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                Union[
-                    List[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
-                    ],
-                    List[
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
-                    ],
-                    List[core.ConditionalValueDefstringnullExprRef],
+                Sequence[
+                    Union[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
+                        core.ConditionalValueDefstringnullExprRef,
+                    ]
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -71606,7 +71692,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -71685,7 +71771,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -72016,7 +72102,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -72211,7 +72297,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -72561,7 +72647,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -72767,7 +72853,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -72817,7 +72903,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -73084,10 +73170,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -73115,16 +73201,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -73154,9 +73240,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
+            Union[Sequence[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union[Literal["value", "median", "max", "min", "mean"], core.ImputeMethod],
@@ -73183,7 +73269,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -73196,13 +73282,15 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -73294,11 +73382,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -74240,10 +74330,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -74449,7 +74539,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -74554,7 +74644,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -74839,7 +74929,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -75034,7 +75124,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -75384,7 +75474,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -75590,7 +75680,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -75640,7 +75730,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -75907,10 +75997,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -75931,9 +76021,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
+            Union[Sequence[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union[Literal["value", "median", "max", "min", "mean"], core.ImputeMethod],
@@ -75960,7 +76050,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -75973,13 +76063,15 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -76071,11 +76163,13 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -76557,7 +76651,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -76675,7 +76769,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -77259,7 +77353,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -77290,7 +77384,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -77413,7 +77507,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -77523,7 +77617,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -78107,7 +78201,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -78217,7 +78311,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -78801,7 +78895,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -78913,7 +79007,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -78961,7 +79055,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -79115,16 +79209,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "XOffset":
         ...
@@ -79159,7 +79253,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -79172,13 +79266,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -79270,11 +79366,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -80200,10 +80298,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -80401,7 +80499,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -80455,7 +80553,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -80565,7 +80663,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -80578,13 +80676,15 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -80676,11 +80776,13 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -81138,7 +81240,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -81272,7 +81374,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -81351,7 +81453,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -81682,7 +81784,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -81877,7 +81979,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -82227,7 +82329,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -82433,7 +82535,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -82483,7 +82585,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -82750,10 +82852,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -82781,16 +82883,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -82820,9 +82922,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
+            Union[Sequence[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union[Literal["value", "median", "max", "min", "mean"], core.ImputeMethod],
@@ -82849,7 +82951,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -82862,13 +82964,15 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -82960,11 +83064,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -83906,10 +84012,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -84115,7 +84221,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -84220,7 +84326,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -84505,7 +84611,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -84700,7 +84806,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -85050,7 +85156,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -85256,7 +85362,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
@@ -85306,7 +85412,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -85573,10 +85679,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
-                Union[List[core.DateTime], List[dict]],
+                Sequence[Union[core.DateTime, dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -85597,9 +85703,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
+            Union[Sequence[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union[Literal["value", "median", "max", "min", "mean"], core.ImputeMethod],
@@ -85626,7 +85732,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -85639,13 +85745,15 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -85737,11 +85845,13 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -86223,7 +86333,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -86341,7 +86451,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -86925,7 +87035,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -86956,7 +87066,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -87079,7 +87189,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -87189,7 +87299,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -87773,7 +87883,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -87883,7 +87993,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -88467,7 +88577,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -88579,7 +88689,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -88627,7 +88737,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -88781,16 +88891,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union[List[float], Union[core.ParameterExtent, dict], core.BinExtent],
+            Union[Sequence[float], Union[core.ParameterExtent, dict], core.BinExtent],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ) -> "YOffset":
         ...
@@ -88825,7 +88935,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -88838,13 +88948,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -88936,11 +89048,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -89866,10 +89980,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[
                 None,
                 Union[
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List[core.DateTime], List[dict]],
+                    Sequence[Union[core.DateTime, dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                     core.SortArray,
                 ],
                 Union[
@@ -90067,7 +90181,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -90121,7 +90235,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -90231,7 +90345,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         bins: Union[
-            Union[List[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
+            Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -90244,13 +90358,15 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                Union[
-                    List[None],
-                    List[Union[core.DateTime, dict]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        None,
+                        Union[core.DateTime, dict],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        bool,
+                        float,
+                        str,
+                    ]
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -90342,11 +90458,13 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                Union[
-                    List[List[float]],
-                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
-                    List[float],
-                    List[str],
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        float,
+                        str,
+                    ]
                 ],
                 Union[
                     Literal[
@@ -90804,7 +90922,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         scale: Union[Union[None, Union[core.Scale, dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union[List[str], core.Text, str]], UndefinedType
+            Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[

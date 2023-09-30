@@ -1,7 +1,7 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from typing import Any, List, Literal, Union, Protocol
+from typing import Any, Literal, Union, Protocol, Sequence, List
 from typing import Dict as TypingDict
 
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
@@ -504,7 +504,7 @@ class AreaConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -527,7 +527,7 @@ class AreaConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -1381,7 +1381,7 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -1412,7 +1412,7 @@ class AreaConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -1678,7 +1678,7 @@ class Axis(VegaLiteSchema):
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
-    domainDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    domainDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the domain dash array.
@@ -1737,7 +1737,7 @@ class Axis(VegaLiteSchema):
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
-    gridDash : Union[List[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    gridDash : Union[Sequence[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed grid lines.
     gridDashOffset : Union[Union[:class:`ConditionalAxisNumber`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the grid dash array.
@@ -1868,7 +1868,7 @@ class Axis(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -1903,7 +1903,7 @@ class Axis(VegaLiteSchema):
 
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
-    tickDash : Union[List[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    tickDash : Union[Sequence[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : Union[Union[:class:`ConditionalAxisNumber`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the tick mark dash array.
@@ -1938,7 +1938,7 @@ class Axis(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -2003,7 +2003,7 @@ class Axis(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : Union[List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    values : Union[Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -2202,7 +2202,7 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -2394,7 +2394,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
             ],
@@ -2733,7 +2733,7 @@ class Axis(VegaLiteSchema):
         position: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -2939,7 +2939,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
             ],
@@ -2987,7 +2987,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -3243,11 +3243,11 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
+                Sequence[Union["DateTime", dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -3381,7 +3381,7 @@ class AxisConfig(VegaLiteSchema):
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
-    domainDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    domainDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the domain dash array.
@@ -3440,7 +3440,7 @@ class AxisConfig(VegaLiteSchema):
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
-    gridDash : Union[List[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    gridDash : Union[Sequence[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed grid lines.
     gridDashOffset : Union[Union[:class:`ConditionalAxisNumber`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the grid dash array.
@@ -3571,7 +3571,7 @@ class AxisConfig(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -3606,7 +3606,7 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
-    tickDash : Union[List[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    tickDash : Union[Sequence[float], Union[:class:`ConditionalAxisNumberArray`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
     tickDashOffset : Union[Union[:class:`ConditionalAxisNumber`, Dict[required=[condition, expr]], Dict[required=[condition, value]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the tick mark dash array.
@@ -3641,7 +3641,7 @@ class AxisConfig(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -3706,7 +3706,7 @@ class AxisConfig(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : Union[List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    values : Union[Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -3906,7 +3906,7 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
@@ -4098,7 +4098,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
             ],
@@ -4437,7 +4437,7 @@ class AxisConfig(VegaLiteSchema):
         position: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
                 Literal["center", "extent"],
@@ -4643,7 +4643,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
+                Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
             ],
@@ -4691,7 +4691,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -4947,11 +4947,11 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
+                Sequence[Union["DateTime", dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5086,7 +5086,7 @@ class AxisResolveMap(VegaLiteSchema):
 class BBox(VegaLiteSchema):
     """BBox schema wrapper
 
-    Union[:class:`BBox`, List[float]]
+    Union[:class:`BBox`, Sequence[float]]
     Bounding box https://tools.ietf.org/html/rfc7946#section-5
     """
 
@@ -5393,7 +5393,7 @@ class BarConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -5416,7 +5416,7 @@ class BarConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -6275,7 +6275,7 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -6306,7 +6306,7 @@ class BarConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -7023,7 +7023,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 class BinExtent(VegaLiteSchema):
     """BinExtent schema wrapper
 
-    Union[:class:`BinExtent`, List[float], Union[:class:`ParameterExtent`,
+    Union[:class:`BinExtent`, Sequence[float], Union[:class:`ParameterExtent`,
     Dict[required=[param]]]]
     """
 
@@ -7053,7 +7053,7 @@ class BinParams(VegaLiteSchema):
         **Default value:** ``10``
     binned : bool
         When set to ``true``, Vega-Lite treats the input data as already binned.
-    divide : List[float]
+    divide : Sequence[float]
         Scale factors indicating allowable subdivisions. The default value is [5, 2], which
         indicates that for base 10 numbers (the default base), the method may consider
         dividing bin sizes by 5 and/or 2. For example, for an initial step size of 10, the
@@ -7061,7 +7061,7 @@ class BinParams(VegaLiteSchema):
         also satisfy the given constraints.
 
         **Default value:** ``[5, 2]``
-    extent : Union[:class:`BinExtent`, List[float], Union[:class:`ParameterExtent`, Dict[required=[param]]]]
+    extent : Union[:class:`BinExtent`, Sequence[float], Union[:class:`ParameterExtent`, Dict[required=[param]]]]
         A two-element ( ``[min, max]`` ) array indicating the range of desired bin values.
     maxbins : float
         Maximum number of bins.
@@ -7079,7 +7079,7 @@ class BinParams(VegaLiteSchema):
         An exact step size to use between bins.
 
         **Note:** If provided, options such as maxbins will be ignored.
-    steps : List[float]
+    steps : Sequence[float]
         An array of allowable step sizes to choose from.
     """
 
@@ -7090,16 +7090,16 @@ class BinParams(VegaLiteSchema):
         anchor: Union[float, UndefinedType] = Undefined,
         base: Union[float, UndefinedType] = Undefined,
         binned: Union[bool, UndefinedType] = Undefined,
-        divide: Union[List[float], UndefinedType] = Undefined,
+        divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union["BinExtent", List[float], Union["ParameterExtent", dict]],
+            Union["BinExtent", Sequence[float], Union["ParameterExtent", dict]],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        steps: Union[List[float], UndefinedType] = Undefined,
+        steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ):
         super(BinParams, self).__init__(
@@ -7269,7 +7269,7 @@ class BindRadioSelect(Binding):
 
     input : Literal['radio', 'select']
 
-    options : List[Any]
+    options : Sequence[Any]
         An array of options to select from.
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
@@ -7278,7 +7278,7 @@ class BindRadioSelect(Binding):
         An optional CSS selector string indicating the parent element to which the input
         element should be added. By default, all input elements are added within the parent
         container of the Vega view.
-    labels : List[str]
+    labels : Sequence[str]
         An array of label strings to represent the ``options`` values. If unspecified, the
         ``options`` value will be coerced to a string and used as the label.
     name : str
@@ -7291,10 +7291,10 @@ class BindRadioSelect(Binding):
     def __init__(
         self,
         input: Union[Literal["radio", "select"], UndefinedType] = Undefined,
-        options: Union[List[Any], UndefinedType] = Undefined,
+        options: Union[Sequence[Any], UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         element: Union[Union["Element", str], UndefinedType] = Undefined,
-        labels: Union[List[str], UndefinedType] = Undefined,
+        labels: Union[Sequence[str], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds
     ):
@@ -7553,7 +7553,7 @@ class BrushConfig(VegaLiteSchema):
         The stroke color of the interval mark.
 
         **Default value:** ``"#ffffff"``
-    strokeDash : List[float]
+    strokeDash : Sequence[float]
         An array of alternating stroke and space lengths, for creating dashed or dotted
         lines.
     strokeDashOffset : float
@@ -7935,7 +7935,7 @@ class BrushConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        strokeDash: Union[List[float], UndefinedType] = Undefined,
+        strokeDash: Union[Sequence[float], UndefinedType] = Undefined,
         strokeDashOffset: Union[float, UndefinedType] = Undefined,
         strokeOpacity: Union[float, UndefinedType] = Undefined,
         strokeWidth: Union[float, UndefinedType] = Undefined,
@@ -9100,7 +9100,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -9392,7 +9392,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -9520,7 +9520,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -9832,7 +9832,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -10018,7 +10018,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     param : Union[:class:`ParameterName`, str]
         Filter using a parameter name.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -10035,7 +10035,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         value: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -10057,7 +10057,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     test : Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]
         Predicate for triggering the condition
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -10092,7 +10092,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         value: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -10228,7 +10228,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
 
     param : Union[:class:`ParameterName`, str]
         Filter using a parameter name.
-    value : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    value : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -10245,7 +10245,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -10268,7 +10268,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
 
     test : Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]
         Predicate for triggering the condition
-    value : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    value : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -10303,7 +10303,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -10835,7 +10835,7 @@ class Config(VegaLiteSchema):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     point : Union[:class:`MarkConfig`, Dict[required=[]]]
         Point-Specific Config
@@ -11143,10 +11143,12 @@ class Config(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -11474,7 +11476,7 @@ class DomainUnionWith(VegaLiteSchema):
     Parameters
     ----------
 
-    unionWith : Union[List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]]
+    unionWith : Union[Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]]
         Customized domain values to be union with the field's values or explicitly defined
         domain. Should be an array of valid scale domain values.
     """
@@ -11485,7 +11487,10 @@ class DomainUnionWith(VegaLiteSchema):
         self,
         unionWith: Union[
             Union[
-                List[bool], List[float], List[str], Union[List["DateTime"], List[dict]]
+                Sequence[Union["DateTime", dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11584,7 +11589,7 @@ class Encoding(VegaLiteSchema):
     description : Union[Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
-    detail : Union[List[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
+    detail : Union[Sequence[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
     fill : Union[:class:`ColorDef`, Union[:class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict[required=[]]], Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[]]], Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict[required=[]]]]
@@ -11623,7 +11628,7 @@ class Encoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : Union[List[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
+    order : Union[Sequence[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
         Order of the marks.
 
 
@@ -11707,7 +11712,7 @@ class Encoding(VegaLiteSchema):
     theta2 : Union[:class:`Position2Def`, Union[:class:`DatumDef`, Dict[required=[]]], Union[:class:`PositionValueDef`, Dict[required=[value]]], Union[:class:`SecondaryFieldDef`, Dict[required=[]]]]
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : Union[List[Union[:class:`StringFieldDef`, Dict[required=[]]]], None, Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
+    tooltip : Union[None, Sequence[Union[:class:`StringFieldDef`, Dict[required=[]]]], Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -11791,8 +11796,8 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         detail: Union[
             Union[
+                Sequence[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
-                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11869,10 +11874,10 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         order: Union[
             Union[
+                Sequence[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
-                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11990,9 +11995,9 @@ class Encoding(VegaLiteSchema):
         tooltip: Union[
             Union[
                 None,
+                Sequence[Union["StringFieldDef", dict]],
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
-                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -13120,7 +13125,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13164,7 +13169,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -13320,10 +13325,10 @@ class FacetEncodingFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -13483,7 +13488,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -13571,7 +13576,7 @@ class FacetFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13607,7 +13612,7 @@ class FacetFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -13751,10 +13756,10 @@ class FacetFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -13911,7 +13916,7 @@ class FacetFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -13992,7 +13997,7 @@ class FacetedEncoding(VegaLiteSchema):
     description : Union[Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
-    detail : Union[List[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
+    detail : Union[Sequence[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
     facet : Union[:class:`FacetEncodingFieldDef`, Dict[required=[]]]
@@ -14035,7 +14040,7 @@ class FacetedEncoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : Union[List[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
+    order : Union[Sequence[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
         Order of the marks.
 
 
@@ -14121,7 +14126,7 @@ class FacetedEncoding(VegaLiteSchema):
     theta2 : Union[:class:`Position2Def`, Union[:class:`DatumDef`, Dict[required=[]]], Union[:class:`PositionValueDef`, Dict[required=[value]]], Union[:class:`SecondaryFieldDef`, Dict[required=[]]]]
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : Union[List[Union[:class:`StringFieldDef`, Dict[required=[]]]], None, Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
+    tooltip : Union[None, Sequence[Union[:class:`StringFieldDef`, Dict[required=[]]]], Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -14208,8 +14213,8 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         detail: Union[
             Union[
+                Sequence[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
-                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14287,10 +14292,10 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         order: Union[
             Union[
+                Sequence[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
-                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14409,9 +14414,9 @@ class FacetedEncoding(VegaLiteSchema):
         tooltip: Union[
             Union[
                 None,
+                Sequence[Union["StringFieldDef", dict]],
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
-                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14555,7 +14560,7 @@ class Feature(VegaLiteSchema):
         Properties associated with this feature.
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     id : Union[float, str]
@@ -14584,7 +14589,7 @@ class Feature(VegaLiteSchema):
             Union["GeoJsonProperties", None, dict], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds
     ):
@@ -14607,11 +14612,11 @@ class FeatureCollection(VegaLiteSchema):
     Parameters
     ----------
 
-    features : List[Union[:class:`FeatureGeometryGeoJsonProperties`, Dict[required=[geometry, properties, type]]]]
+    features : Sequence[Union[:class:`FeatureGeometryGeoJsonProperties`, Dict[required=[geometry, properties, type]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -14621,10 +14626,10 @@ class FeatureCollection(VegaLiteSchema):
     def __init__(
         self,
         features: Union[
-            Union[List["FeatureGeometryGeoJsonProperties"], List[dict]], UndefinedType
+            Sequence[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(FeatureCollection, self).__init__(
@@ -14649,7 +14654,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         Properties associated with this feature.
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     id : Union[float, str]
@@ -14678,7 +14683,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
             Union["GeoJsonProperties", None, dict], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds
     ):
@@ -14771,7 +14776,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -15059,7 +15064,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -15135,7 +15140,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -15200,7 +15205,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -15337,15 +15342,17 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringExprRef",
+                        Union["ConditionalParameterValueDefstringExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefstringExprRef",
                     Union["ConditionalParameterValueDefstringExprRef", dict],
                     Union["ConditionalPredicateValueDefstringExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringExprRef"],
-                    List[Union["ConditionalParameterValueDefstringExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -15507,7 +15514,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -15554,9 +15561,9 @@ class FieldRange(VegaLiteSchema):
 class Fit(VegaLiteSchema):
     """Fit schema wrapper
 
-    Union[:class:`Fit`, List[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties,
-    type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]],
-    Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]
+    Union[:class:`Fit`, Sequence[Union[:class:`GeoJsonFeature`, Dict[required=[geometry,
+    properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features,
+    type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]
     """
 
     _schema = {"$ref": "#/definitions/Fit"}
@@ -15713,16 +15720,16 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         A key-value mapping between encoding channels and definition of fields.
     name : str
         Name of the visualization for later reference.
-    params : List[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
+    params : Sequence[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : Union[:class:`Projection`, Dict[required=[]]]
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -15793,35 +15800,37 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            Union[List["SelectionParameter"], List[dict]], UndefinedType
+            Sequence[Union["SelectionParameter", dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15857,7 +15866,7 @@ class GeoJsonFeature(Fit):
         Properties associated with this feature.
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     id : Union[float, str]
@@ -15886,7 +15895,7 @@ class GeoJsonFeature(Fit):
             Union["GeoJsonProperties", None, dict], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds
     ):
@@ -15909,11 +15918,11 @@ class GeoJsonFeatureCollection(Fit):
     Parameters
     ----------
 
-    features : List[Union[:class:`FeatureGeometryGeoJsonProperties`, Dict[required=[geometry, properties, type]]]]
+    features : Sequence[Union[:class:`FeatureGeometryGeoJsonProperties`, Dict[required=[geometry, properties, type]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -15923,10 +15932,10 @@ class GeoJsonFeatureCollection(Fit):
     def __init__(
         self,
         features: Union[
-            Union[List["FeatureGeometryGeoJsonProperties"], List[dict]], UndefinedType
+            Sequence[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(GeoJsonFeatureCollection, self).__init__(
@@ -15973,11 +15982,11 @@ class GeometryCollection(Geometry):
     Parameters
     ----------
 
-    geometries : List[Union[:class:`Geometry`, Union[:class:`GeometryCollection`, Dict[required=[geometries, type]]], Union[:class:`LineString`, Dict[required=[coordinates, type]]], Union[:class:`MultiLineString`, Dict[required=[coordinates, type]]], Union[:class:`MultiPoint`, Dict[required=[coordinates, type]]], Union[:class:`MultiPolygon`, Dict[required=[coordinates, type]]], Union[:class:`Point`, Dict[required=[coordinates, type]]], Union[:class:`Polygon`, Dict[required=[coordinates, type]]]]]
+    geometries : Sequence[Union[:class:`Geometry`, Union[:class:`GeometryCollection`, Dict[required=[geometries, type]]], Union[:class:`LineString`, Dict[required=[coordinates, type]]], Union[:class:`MultiLineString`, Dict[required=[coordinates, type]]], Union[:class:`MultiPoint`, Dict[required=[coordinates, type]]], Union[:class:`MultiPolygon`, Dict[required=[coordinates, type]]], Union[:class:`Point`, Dict[required=[coordinates, type]]], Union[:class:`Polygon`, Dict[required=[coordinates, type]]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -15987,20 +15996,22 @@ class GeometryCollection(Geometry):
     def __init__(
         self,
         geometries: Union[
-            Union[
-                List["Geometry"],
-                List[Union["GeometryCollection", dict]],
-                List[Union["LineString", dict]],
-                List[Union["MultiLineString", dict]],
-                List[Union["MultiPoint", dict]],
-                List[Union["MultiPolygon", dict]],
-                List[Union["Point", dict]],
-                List[Union["Polygon", dict]],
+            Sequence[
+                Union[
+                    "Geometry",
+                    Union["GeometryCollection", dict],
+                    Union["LineString", dict],
+                    Union["MultiLineString", dict],
+                    Union["MultiPoint", dict],
+                    Union["MultiPolygon", dict],
+                    Union["Point", dict],
+                    Union["Polygon", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(GeometryCollection, self).__init__(
@@ -16241,23 +16252,23 @@ class GraticuleParams(VegaLiteSchema):
     Parameters
     ----------
 
-    extent : Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]
+    extent : Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]
         Sets both the major and minor extents to the same values.
-    extentMajor : Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]
+    extentMajor : Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]
         The major extent of the graticule as a two-element array of coordinates.
-    extentMinor : Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]
+    extentMinor : Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]
         The minor extent of the graticule as a two-element array of coordinates.
     precision : float
         The precision of the graticule in degrees.
 
         **Default value:** ``2.5``
-    step : Union[:class:`Vector2number`, List[float]]
+    step : Union[:class:`Vector2number`, Sequence[float]]
         Sets both the major and minor step angles to the same values.
-    stepMajor : Union[:class:`Vector2number`, List[float]]
+    stepMajor : Union[:class:`Vector2number`, Sequence[float]]
         The major step angles of the graticule.
 
         **Default value:** ``[90, 360]``
-    stepMinor : Union[:class:`Vector2number`, List[float]]
+    stepMinor : Union[:class:`Vector2number`, Sequence[float]]
         The minor step angles of the graticule.
 
         **Default value:** ``[10, 10]``
@@ -16268,24 +16279,33 @@ class GraticuleParams(VegaLiteSchema):
     def __init__(
         self,
         extent: Union[
-            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+            Union[
+                "Vector2Vector2number",
+                Sequence[Union["Vector2number", Sequence[float]]],
+            ],
             UndefinedType,
         ] = Undefined,
         extentMajor: Union[
-            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+            Union[
+                "Vector2Vector2number",
+                Sequence[Union["Vector2number", Sequence[float]]],
+            ],
             UndefinedType,
         ] = Undefined,
         extentMinor: Union[
-            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+            Union[
+                "Vector2Vector2number",
+                Sequence[Union["Vector2number", Sequence[float]]],
+            ],
             UndefinedType,
         ] = Undefined,
         precision: Union[float, UndefinedType] = Undefined,
-        step: Union[Union["Vector2number", List[float]], UndefinedType] = Undefined,
+        step: Union[Union["Vector2number", Sequence[float]], UndefinedType] = Undefined,
         stepMajor: Union[
-            Union["Vector2number", List[float]], UndefinedType
+            Union["Vector2number", Sequence[float]], UndefinedType
         ] = Undefined,
         stepMinor: Union[
-            Union["Vector2number", List[float]], UndefinedType
+            Union["Vector2number", Sequence[float]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -16398,7 +16418,7 @@ class Header(VegaLiteSchema):
         **Default value:** ``true``.
     orient : Union[:class:`Orient`, Literal['left', 'right', 'top', 'bottom']]
         Shortcut for setting both labelOrient and titleOrient.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -16711,7 +16731,7 @@ class Header(VegaLiteSchema):
             Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -17682,7 +17702,7 @@ class ImputeParams(VegaLiteSchema):
     Parameters
     ----------
 
-    frame : List[Union[None, float]]
+    frame : Sequence[Union[None, float]]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -17692,7 +17712,7 @@ class ImputeParams(VegaLiteSchema):
 
         **Default value:** :  ``[null, null]`` indicating that the window includes all
         objects.
-    keyvals : Union[List[Any], Union[:class:`ImputeSequence`, Dict[required=[stop]]]]
+    keyvals : Union[Sequence[Any], Union[:class:`ImputeSequence`, Dict[required=[stop]]]]
         Defines the key values that should be considered for imputation. An array of key
         values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -17716,9 +17736,9 @@ class ImputeParams(VegaLiteSchema):
 
     def __init__(
         self,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union["ImputeSequence", dict]], UndefinedType
+            Union[Sequence[Any], Union["ImputeSequence", dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union["ImputeMethod", Literal["value", "median", "max", "min", "mean"]],
@@ -17769,7 +17789,7 @@ class InlineData(DataSource):
     Parameters
     ----------
 
-    values : Union[:class:`InlineDataset`, Dict[required=[]], List[Dict[required=[]]], List[bool], List[float], List[str], str]
+    values : Union[:class:`InlineDataset`, Dict[required=[]], Sequence[Dict[required=[]]], Sequence[bool], Sequence[float], Sequence[str], str]
         The full data set, included inline. This can be an array of objects or primitive
         values, an object, or a string. Arrays of primitive values are ingested as objects
         with a ``data`` property. Strings are parsed according to the specified format type.
@@ -17786,10 +17806,10 @@ class InlineData(DataSource):
         values: Union[
             Union[
                 "InlineDataset",
-                List[bool],
-                List[dict],
-                List[float],
-                List[str],
+                Sequence[bool],
+                Sequence[dict],
+                Sequence[float],
+                Sequence[str],
                 dict,
                 str,
             ],
@@ -17816,8 +17836,8 @@ class InlineData(DataSource):
 class InlineDataset(VegaLiteSchema):
     """InlineDataset schema wrapper
 
-    Union[:class:`InlineDataset`, Dict[required=[]], List[Dict[required=[]]], List[bool],
-    List[float], List[str], str]
+    Union[:class:`InlineDataset`, Dict[required=[]], Sequence[Dict[required=[]]],
+    Sequence[bool], Sequence[float], Sequence[str], str]
     """
 
     _schema = {"$ref": "#/definitions/InlineDataset"}
@@ -17866,7 +17886,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : List[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
+    encodings : Sequence[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -17955,9 +17975,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            Union[
-                List["SingleDefUnitChannel"],
-                List[
+            Sequence[
+                Union[
+                    "SingleDefUnitChannel",
                     Literal[
                         "x",
                         "y",
@@ -17989,8 +18009,8 @@ class IntervalSelectionConfig(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ]
-                ],
+                    ],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -18046,7 +18066,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : List[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
+    encodings : Sequence[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -18134,9 +18154,9 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            Union[
-                List["SingleDefUnitChannel"],
-                List[
+            Sequence[
+                Union[
+                    "SingleDefUnitChannel",
                     Literal[
                         "x",
                         "y",
@@ -18168,8 +18188,8 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ]
-                ],
+                    ],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -18406,7 +18426,7 @@ class LatLongFieldDef(LatLongDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18692,7 +18712,7 @@ class LatLongFieldDef(LatLongDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds
@@ -18717,11 +18737,11 @@ class LayerRepeatMapping(VegaLiteSchema):
     Parameters
     ----------
 
-    layer : List[str]
+    layer : Sequence[str]
         An array of fields to be repeated as layers.
-    column : List[str]
+    column : Sequence[str]
         An array of fields to be repeated horizontally.
-    row : List[str]
+    row : Sequence[str]
         An array of fields to be repeated vertically.
     """
 
@@ -18729,9 +18749,9 @@ class LayerRepeatMapping(VegaLiteSchema):
 
     def __init__(
         self,
-        layer: Union[List[str], UndefinedType] = Undefined,
-        column: Union[List[str], UndefinedType] = Undefined,
-        row: Union[List[str], UndefinedType] = Undefined,
+        layer: Union[Sequence[str], UndefinedType] = Undefined,
+        column: Union[Sequence[str], UndefinedType] = Undefined,
+        row: Union[Sequence[str], UndefinedType] = Undefined,
         **kwds
     ):
         super(LayerRepeatMapping, self).__init__(
@@ -18931,7 +18951,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``2``.
     strokeColor : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[None, Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]]]
         Border stroke color for the full legend.
-    symbolDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    symbolDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the symbol stroke dash array.
@@ -18976,7 +18996,7 @@ class Legend(VegaLiteSchema):
         necessary, to enforce the minimum step value.
 
         **Default value** : ``undefined``
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -19043,7 +19063,7 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
-    values : Union[List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    values : Union[Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         Explicitly set the visible legend values.
     zindex : float
         A non-negative integer indicating the z-index of the legend. If zindex is 0, legend
@@ -19874,7 +19894,7 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -20263,7 +20283,7 @@ class Legend(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
@@ -20515,11 +20535,11 @@ class Legend(VegaLiteSchema):
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[bool],
-                List[float],
-                List[str],
+                Sequence[Union["DateTime", dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20783,7 +20803,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``2``.
     strokeColor : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[None, Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]]]
         Border stroke color for the full legend.
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         Border stroke dash pattern for the full legend.
     strokeWidth : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Border stroke width for the full legend.
@@ -20797,7 +20817,7 @@ class LegendConfig(VegaLiteSchema):
         scale color encoding for the legend.
 
         **Default value:** ``"gray"``.
-    symbolDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    symbolDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The pixel offset at which to start drawing with the symbol stroke dash array.
@@ -21733,7 +21753,7 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeWidth: Union[
@@ -22074,7 +22094,7 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
@@ -23227,7 +23247,7 @@ class LineConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -23250,7 +23270,7 @@ class LineConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -24101,7 +24121,7 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -24132,7 +24152,7 @@ class LineConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -24264,11 +24284,11 @@ class LineString(Geometry):
     Parameters
     ----------
 
-    coordinates : List[Union[:class:`Position`, List[float]]]
+    coordinates : Sequence[Union[:class:`Position`, Sequence[float]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -24278,10 +24298,10 @@ class LineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union[List["Position"], List[List[float]]], UndefinedType
+            Sequence[Union["Position", Sequence[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LineString, self).__init__(
@@ -24299,7 +24319,7 @@ class LinearGradient(Gradient):
 
     gradient : str
         The type of gradient. Use ``"linear"`` for a linear gradient.
-    stops : List[Union[:class:`GradientStop`, Dict[required=[offset, color]]]]
+    stops : Sequence[Union[:class:`GradientStop`, Dict[required=[offset, color]]]]
         An array of gradient stops defining the gradient color sequence.
     id : str
 
@@ -24326,9 +24346,7 @@ class LinearGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[
-            Union[List["GradientStop"], List[dict]], UndefinedType
-        ] = Undefined,
+        stops: Union[Sequence[Union["GradientStop", dict]], UndefinedType] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         x1: Union[float, UndefinedType] = Undefined,
         x2: Union[float, UndefinedType] = Undefined,
@@ -24378,7 +24396,7 @@ class LookupData(VegaLiteSchema):
         Secondary data source to lookup in.
     key : Union[:class:`FieldName`, str]
         Key in data to lookup.
-    fields : List[Union[:class:`FieldName`, str]]
+    fields : Sequence[Union[:class:`FieldName`, str]]
         Fields in foreign data or selection to lookup. If not specified, the entire object
         is queried.
     """
@@ -24406,7 +24424,7 @@ class LookupData(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
@@ -24424,7 +24442,7 @@ class LookupSelection(VegaLiteSchema):
         Key in data to lookup.
     param : Union[:class:`ParameterName`, str]
         Selection parameter name to look up.
-    fields : List[Union[:class:`FieldName`, str]]
+    fields : Sequence[Union[:class:`FieldName`, str]]
         Fields in foreign data or selection to lookup. If not specified, the entire object
         is queried.
     """
@@ -24435,7 +24453,7 @@ class LookupSelection(VegaLiteSchema):
         self,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
-        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LookupSelection, self).__init__(
@@ -24736,7 +24754,7 @@ class MarkConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -24759,7 +24777,7 @@ class MarkConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -25607,7 +25625,7 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -25638,7 +25656,7 @@ class MarkConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -26099,7 +26117,7 @@ class MarkDef(AnyMark):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -26119,7 +26137,7 @@ class MarkDef(AnyMark):
         **Default value:** ``1``
     strokeWidth : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -26136,7 +26154,7 @@ class MarkDef(AnyMark):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -27052,7 +27070,7 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -27077,14 +27095,14 @@ class MarkDef(AnyMark):
         strokeWidth: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -27279,7 +27297,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -27288,7 +27306,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27388,6 +27406,19 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefGradientstringnullExprRef",
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefGradientstringnullExprRef",
                     Union[
@@ -27395,21 +27426,6 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
-                Union[
-                    List["ConditionalValueDefGradientstringnullExprRef"],
-                    List[
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
-                    ],
-                    List[
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
                     ],
                 ],
             ],
@@ -27425,7 +27441,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -27490,7 +27506,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -27534,7 +27550,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -27582,7 +27598,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27719,6 +27735,19 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefGradientstringnullExprRef",
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefGradientstringnullExprRef",
                     Union[
@@ -27726,21 +27755,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
-                Union[
-                    List["ConditionalValueDefGradientstringnullExprRef"],
-                    List[
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
-                    ],
-                    List[
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
                     ],
                 ],
             ],
@@ -27797,10 +27811,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -27957,7 +27971,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -28067,11 +28081,11 @@ class MultiLineString(Geometry):
     Parameters
     ----------
 
-    coordinates : List[List[Union[:class:`Position`, List[float]]]]
+    coordinates : Sequence[Sequence[Union[:class:`Position`, Sequence[float]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -28081,10 +28095,10 @@ class MultiLineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union[List[List["Position"]], List[List[List[float]]]], UndefinedType
+            Sequence[Sequence[Union["Position", Sequence[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(MultiLineString, self).__init__(
@@ -28101,11 +28115,11 @@ class MultiPoint(Geometry):
     Parameters
     ----------
 
-    coordinates : List[Union[:class:`Position`, List[float]]]
+    coordinates : Sequence[Union[:class:`Position`, Sequence[float]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -28115,10 +28129,10 @@ class MultiPoint(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union[List["Position"], List[List[float]]], UndefinedType
+            Sequence[Union["Position", Sequence[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(MultiPoint, self).__init__(
@@ -28135,11 +28149,11 @@ class MultiPolygon(Geometry):
     Parameters
     ----------
 
-    coordinates : List[List[List[Union[:class:`Position`, List[float]]]]]
+    coordinates : Sequence[Sequence[Sequence[Union[:class:`Position`, Sequence[float]]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -28149,11 +28163,11 @@ class MultiPolygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union[List[List[List["Position"]]], List[List[List[List[float]]]]],
+            Sequence[Sequence[Sequence[Union["Position", Sequence[float]]]]],
             UndefinedType,
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(MultiPolygon, self).__init__(
@@ -28242,11 +28256,11 @@ class NumberLocale(VegaLiteSchema):
     Parameters
     ----------
 
-    currency : Union[:class:`Vector2string`, List[str]]
+    currency : Union[:class:`Vector2string`, Sequence[str]]
         The currency prefix and suffix (e.g., ["$", ""]).
     decimal : str
         The decimal point (e.g., ".").
-    grouping : List[float]
+    grouping : Sequence[float]
         The array of group sizes (e.g., [3]), cycled as needed.
     thousands : str
         The group separator (e.g., ",").
@@ -28254,7 +28268,7 @@ class NumberLocale(VegaLiteSchema):
         The minus sign (defaults to hyphen-minus, "-").
     nan : str
         The not-a-number value (defaults to "NaN").
-    numerals : Union[:class:`Vector10string`, List[str]]
+    numerals : Union[:class:`Vector10string`, Sequence[str]]
         An array of ten strings to replace the numerals 0-9.
     percent : str
         The percent sign (defaults to "%").
@@ -28264,13 +28278,17 @@ class NumberLocale(VegaLiteSchema):
 
     def __init__(
         self,
-        currency: Union[Union["Vector2string", List[str]], UndefinedType] = Undefined,
+        currency: Union[
+            Union["Vector2string", Sequence[str]], UndefinedType
+        ] = Undefined,
         decimal: Union[str, UndefinedType] = Undefined,
-        grouping: Union[List[float], UndefinedType] = Undefined,
+        grouping: Union[Sequence[float], UndefinedType] = Undefined,
         thousands: Union[str, UndefinedType] = Undefined,
         minus: Union[str, UndefinedType] = Undefined,
         nan: Union[str, UndefinedType] = Undefined,
-        numerals: Union[Union["Vector10string", List[str]], UndefinedType] = Undefined,
+        numerals: Union[
+            Union["Vector10string", Sequence[str]], UndefinedType
+        ] = Undefined,
         percent: Union[str, UndefinedType] = Undefined,
         **kwds
     ):
@@ -28316,7 +28334,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -28325,7 +28343,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28423,15 +28441,17 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberArrayExprRef",
+                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefnumberArrayExprRef",
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumberArrayExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -28446,7 +28466,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -28510,7 +28530,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -28554,7 +28574,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -28602,7 +28622,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28739,15 +28759,17 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberArrayExprRef",
+                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefnumberArrayExprRef",
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumberArrayExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -28803,10 +28825,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -28963,7 +28985,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -29017,7 +29039,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -29026,7 +29048,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -29124,15 +29146,17 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberExprRef",
+                        Union["ConditionalParameterValueDefnumberExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumberExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -29147,7 +29171,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -29211,7 +29235,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -29255,7 +29279,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -29303,7 +29327,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -29440,15 +29464,17 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberExprRef",
+                        Union["ConditionalParameterValueDefnumberExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumberExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -29504,10 +29530,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -29664,7 +29690,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -29772,7 +29798,7 @@ class OrderFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -30063,7 +30089,7 @@ class OrderFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -30123,7 +30149,7 @@ class OrderValueDef(VegaLiteSchema):
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    condition : Union[List[Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -30141,15 +30167,17 @@ class OrderValueDef(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumber",
+                        Union["ConditionalParameterValueDefnumber", dict],
+                        Union["ConditionalPredicateValueDefnumber", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefnumber",
                     Union["ConditionalParameterValueDefnumber", dict],
                     Union["ConditionalPredicateValueDefnumber", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumber"],
-                    List[Union["ConditionalParameterValueDefnumber", dict]],
-                    List[Union["ConditionalPredicateValueDefnumber", dict]],
                 ],
             ],
             UndefinedType,
@@ -30468,7 +30496,7 @@ class OverlayMarkDef(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -30488,7 +30516,7 @@ class OverlayMarkDef(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -30505,7 +30533,7 @@ class OverlayMarkDef(VegaLiteSchema):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -31372,7 +31400,7 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -31397,14 +31425,14 @@ class OverlayMarkDef(VegaLiteSchema):
         strokeWidth: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -31623,7 +31651,7 @@ class Point(Geometry):
     Parameters
     ----------
 
-    coordinates : Union[:class:`Position`, List[float]]
+    coordinates : Union[:class:`Position`, Sequence[float]]
         A Position is an array of coordinates.
         https://tools.ietf.org/html/rfc7946#section-3.1.1 Array should contain between two
         and three elements. The previous GeoJSON specification allowed more elements (e.g.,
@@ -31631,7 +31659,7 @@ class Point(Geometry):
         allows X, Y, and (optionally) Z to be defined.
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -31640,9 +31668,11 @@ class Point(Geometry):
 
     def __init__(
         self,
-        coordinates: Union[Union["Position", List[float]], UndefinedType] = Undefined,
+        coordinates: Union[
+            Union["Position", Sequence[float]], UndefinedType
+        ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(Point, self).__init__(
@@ -31676,14 +31706,14 @@ class PointSelectionConfig(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : List[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
+    encodings : Sequence[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    fields : List[Union[:class:`FieldName`, str]]
+    fields : Sequence[Union[:class:`FieldName`, str]]
         An array of field names whose values must match for a data tuple to fall within the
         selection.
 
@@ -31772,9 +31802,9 @@ class PointSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            Union[
-                List["SingleDefUnitChannel"],
-                List[
+            Sequence[
+                Union[
+                    "SingleDefUnitChannel",
                     Literal[
                         "x",
                         "y",
@@ -31806,12 +31836,12 @@ class PointSelectionConfig(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ]
-                ],
+                    ],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -31863,14 +31893,14 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : List[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
+    encodings : Sequence[Union[:class:`SingleDefUnitChannel`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']]]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    fields : List[Union[:class:`FieldName`, str]]
+    fields : Sequence[Union[:class:`FieldName`, str]]
         An array of field names whose values must match for a data tuple to fall within the
         selection.
 
@@ -31958,9 +31988,9 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            Union[
-                List["SingleDefUnitChannel"],
-                List[
+            Sequence[
+                Union[
+                    "SingleDefUnitChannel",
                     Literal[
                         "x",
                         "y",
@@ -31992,12 +32022,12 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ]
-                ],
+                    ],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -32053,11 +32083,11 @@ class Polygon(Geometry):
     Parameters
     ----------
 
-    coordinates : List[List[Union[:class:`Position`, List[float]]]]
+    coordinates : Sequence[Sequence[Union[:class:`Position`, Sequence[float]]]]
 
     type : str
         Specifies the type of GeoJSON object.
-    bbox : Union[:class:`BBox`, List[float]]
+    bbox : Union[:class:`BBox`, Sequence[float]]
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
     """
@@ -32067,10 +32097,10 @@ class Polygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union[List[List["Position"]], List[List[List[float]]]], UndefinedType
+            Sequence[Sequence[Union["Position", Sequence[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         **kwds
     ):
         super(Polygon, self).__init__(
@@ -32081,7 +32111,7 @@ class Polygon(Geometry):
 class Position(VegaLiteSchema):
     """Position schema wrapper
 
-    Union[:class:`Position`, List[float]]
+    Union[:class:`Position`, Sequence[float]]
     A Position is an array of coordinates. https://tools.ietf.org/html/rfc7946#section-3.1.1
     Array should contain between two and three elements. The previous GeoJSON specification
     allowed more elements (e.g., which could be used to represent M values), but the current
@@ -32122,7 +32152,7 @@ class DatumDef(LatLongDef, Position2Def):
         and at the middle of the band if set to ``0.5``.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -32228,7 +32258,7 @@ class DatumDef(LatLongDef, Position2Def):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32302,7 +32332,7 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -32415,7 +32445,7 @@ class PositionDatumDefBase(PolarDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32526,7 +32556,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -32643,7 +32673,7 @@ class PositionDatumDef(PositionDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -32753,7 +32783,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -32832,7 +32862,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -33019,10 +33049,10 @@ class PositionFieldDef(PositionDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -33185,7 +33215,7 @@ class PositionFieldDef(PositionDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -33282,7 +33312,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -33361,7 +33391,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -33544,10 +33574,10 @@ class PositionFieldDefBase(PolarDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -33710,7 +33740,7 @@ class PositionFieldDefBase(PolarDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -33796,7 +33826,7 @@ class LogicalAndPredicate(PredicateComposition):
     Parameters
     ----------
 
-    and : List[Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]]
+    and : Sequence[Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]]
 
     """
 
@@ -33832,7 +33862,7 @@ class LogicalOrPredicate(PredicateComposition):
     Parameters
     ----------
 
-    or : List[Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]]
+    or : Sequence[Union[:class:`PredicateComposition`, Union[:class:`LogicalAndPredicate`, Dict[required=[and]]], Union[:class:`LogicalNotPredicate`, Dict[required=[not]]], Union[:class:`LogicalOrPredicate`, Dict[required=[or]]], Union[:class:`Predicate`, Union[:class:`FieldEqualPredicate`, Dict[required=[equal, field]]], Union[:class:`FieldGTEPredicate`, Dict[required=[field, gte]]], Union[:class:`FieldGTPredicate`, Dict[required=[field, gt]]], Union[:class:`FieldLTEPredicate`, Dict[required=[field, lte]]], Union[:class:`FieldLTPredicate`, Dict[required=[field, lt]]], Union[:class:`FieldOneOfPredicate`, Dict[required=[field, oneOf]]], Union[:class:`FieldRangePredicate`, Dict[required=[field, range]]], Union[:class:`FieldValidPredicate`, Dict[required=[field, valid]]], Union[:class:`ParameterPredicate`, Dict[required=[param]]], str]]]
 
     """
 
@@ -34808,7 +34838,7 @@ class FieldOneOfPredicate(Predicate):
 
     field : Union[:class:`FieldName`, str]
         Field to be tested.
-    oneOf : Union[List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]]
+    oneOf : Union[Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]]
         A set of values that the ``field`` 's value should be a member of, for a data item
         included in the filtered data.
     timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
@@ -34822,7 +34852,10 @@ class FieldOneOfPredicate(Predicate):
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
         oneOf: Union[
             Union[
-                List[bool], List[float], List[str], Union[List["DateTime"], List[dict]]
+                Sequence[Union["DateTime", dict]],
+                Sequence[bool],
+                Sequence[float],
+                Sequence[str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34993,7 +35026,7 @@ class FieldRangePredicate(Predicate):
 
     field : Union[:class:`FieldName`, str]
         Field to be tested.
-    range : Union[List[Union[None, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    range : Union[Sequence[Union[None, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], float]], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
     timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
@@ -35007,13 +35040,15 @@ class FieldRangePredicate(Predicate):
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
         range: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union[
-                    List[None],
-                    List[Union["DateTime", dict]],
-                    List[Union["ExprRef", "_ParameterProtocol", dict]],
-                    List[float],
+                Sequence[
+                    Union[
+                        None,
+                        Union["DateTime", dict],
+                        Union["ExprRef", "_ParameterProtocol", dict],
+                        float,
+                    ]
                 ],
+                Union["ExprRef", "_ParameterProtocol", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35389,7 +35424,7 @@ class Projection(VegaLiteSchema):
     Parameters
     ----------
 
-    center : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    center : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         The projection's center, a two-element array of longitude and latitude in degrees.
 
         **Default value:** ``[0, 0]``
@@ -35397,7 +35432,7 @@ class Projection(VegaLiteSchema):
         The projection's clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]]
+    clipExtent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]]
         The projection's viewport clip extent to the specified bounds in pixels. The extent
         bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
         left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
@@ -35413,9 +35448,9 @@ class Projection(VegaLiteSchema):
         is also applied, then more conservative clipping may be necessary.
 
         **Default value:** ``2.0``
-    extent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]]
+    extent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]]
 
-    fit : Union[List[Union[:class:`Fit`, List[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Fit`, List[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]]
+    fit : Union[Sequence[Union[:class:`Fit`, Sequence[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Fit`, Sequence[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]]
 
     fraction : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The fraction parameter for the ``bottomley`` projection.
@@ -35429,7 +35464,7 @@ class Projection(VegaLiteSchema):
         ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
         ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
         value varies based on the projection type.
-    parallels : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    parallels : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         For conic projections, the `two standard parallels
         <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
         The default depends on the specific conic projection used.
@@ -35457,7 +35492,7 @@ class Projection(VegaLiteSchema):
         Sets whether or not the x-dimension is reflected (negated) in the output.
     reflectY : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], bool]
         Sets whether or not the y-dimension is reflected (negated) in the output.
-    rotate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[Union[:class:`Vector2number`, List[float]], Union[:class:`Vector3number`, List[float]]]]
+    rotate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[Union[:class:`Vector2number`, Sequence[float]], Union[:class:`Vector3number`, Sequence[float]]]]
         The projection's three-axis rotation to the specified angles, which must be a two-
         or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
         rotation angles in degrees about each spherical axis. (These correspond to yaw,
@@ -35469,7 +35504,7 @@ class Projection(VegaLiteSchema):
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
-    size : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    size : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         Used in conjunction with fit, provides the width and height in pixels of the area to
         which the projection should be automatically fit.
     spacing : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
@@ -35480,7 +35515,7 @@ class Projection(VegaLiteSchema):
         The tilt angle (in degrees) for the ``satellite`` projection.
 
         **Default value:** ``0``.
-    translate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    translate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`ProjectionType`, Literal['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular', 'gnomonic', 'identity', 'mercator', 'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator']]]
         The cartographic projection to use. This value is case-insensitive, for example
@@ -35498,7 +35533,7 @@ class Projection(VegaLiteSchema):
         center: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35508,7 +35543,10 @@ class Projection(VegaLiteSchema):
         clipExtent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+                Union[
+                    "Vector2Vector2number",
+                    Sequence[Union["Vector2number", Sequence[float]]],
+                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35521,24 +35559,29 @@ class Projection(VegaLiteSchema):
         extent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+                Union[
+                    "Vector2Vector2number",
+                    Sequence[Union["Vector2number", Sequence[float]]],
+                ],
             ],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             Union[
+                Sequence[
+                    Union[
+                        "Fit",
+                        Sequence[Union["GeoJsonFeature", dict]],
+                        Union["GeoJsonFeature", dict],
+                        Union["GeoJsonFeatureCollection", dict],
+                    ]
+                ],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
                     "Fit",
+                    Sequence[Union["GeoJsonFeature", dict]],
                     Union["GeoJsonFeature", dict],
                     Union["GeoJsonFeatureCollection", dict],
-                    Union[List["GeoJsonFeature"], List[dict]],
-                ],
-                Union[
-                    List["Fit"],
-                    List[Union["GeoJsonFeature", dict]],
-                    List[Union["GeoJsonFeatureCollection", dict]],
-                    List[Union[List["GeoJsonFeature"], List[dict]]],
                 ],
             ],
             UndefinedType,
@@ -35553,7 +35596,7 @@ class Projection(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         pointRadius: Union[
@@ -35578,8 +35621,8 @@ class Projection(VegaLiteSchema):
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
-                    Union["Vector2number", List[float]],
-                    Union["Vector3number", List[float]],
+                    Union["Vector2number", Sequence[float]],
+                    Union["Vector3number", Sequence[float]],
                 ],
             ],
             UndefinedType,
@@ -35590,7 +35633,7 @@ class Projection(VegaLiteSchema):
         size: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35603,7 +35646,7 @@ class Projection(VegaLiteSchema):
         translate: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35673,7 +35716,7 @@ class ProjectionConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    center : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    center : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         The projection's center, a two-element array of longitude and latitude in degrees.
 
         **Default value:** ``[0, 0]``
@@ -35681,7 +35724,7 @@ class ProjectionConfig(VegaLiteSchema):
         The projection's clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]]
+    clipExtent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]]
         The projection's viewport clip extent to the specified bounds in pixels. The extent
         bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
         left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
@@ -35697,9 +35740,9 @@ class ProjectionConfig(VegaLiteSchema):
         is also applied, then more conservative clipping may be necessary.
 
         **Default value:** ``2.0``
-    extent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]]
+    extent : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`, Sequence[float]]]]]
 
-    fit : Union[List[Union[:class:`Fit`, List[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Fit`, List[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]]
+    fit : Union[Sequence[Union[:class:`Fit`, Sequence[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Fit`, Sequence[Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]], Union[:class:`GeoJsonFeatureCollection`, Dict[required=[features, type]]], Union[:class:`GeoJsonFeature`, Dict[required=[geometry, properties, type]]]]]
 
     fraction : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The fraction parameter for the ``bottomley`` projection.
@@ -35713,7 +35756,7 @@ class ProjectionConfig(VegaLiteSchema):
         ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
         ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
         value varies based on the projection type.
-    parallels : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    parallels : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         For conic projections, the `two standard parallels
         <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
         The default depends on the specific conic projection used.
@@ -35741,7 +35784,7 @@ class ProjectionConfig(VegaLiteSchema):
         Sets whether or not the x-dimension is reflected (negated) in the output.
     reflectY : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], bool]
         Sets whether or not the y-dimension is reflected (negated) in the output.
-    rotate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[Union[:class:`Vector2number`, List[float]], Union[:class:`Vector3number`, List[float]]]]
+    rotate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[Union[:class:`Vector2number`, Sequence[float]], Union[:class:`Vector3number`, Sequence[float]]]]
         The projection's three-axis rotation to the specified angles, which must be a two-
         or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
         rotation angles in degrees about each spherical axis. (These correspond to yaw,
@@ -35753,7 +35796,7 @@ class ProjectionConfig(VegaLiteSchema):
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
-    size : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    size : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         Used in conjunction with fit, provides the width and height in pixels of the area to
         which the projection should be automatically fit.
     spacing : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
@@ -35764,7 +35807,7 @@ class ProjectionConfig(VegaLiteSchema):
         The tilt angle (in degrees) for the ``satellite`` projection.
 
         **Default value:** ``0``.
-    translate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, List[float]]]
+    translate : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Vector2number`, Sequence[float]]]
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`ProjectionType`, Literal['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular', 'gnomonic', 'identity', 'mercator', 'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator']]]
         The cartographic projection to use. This value is case-insensitive, for example
@@ -35782,7 +35825,7 @@ class ProjectionConfig(VegaLiteSchema):
         center: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35792,7 +35835,10 @@ class ProjectionConfig(VegaLiteSchema):
         clipExtent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+                Union[
+                    "Vector2Vector2number",
+                    Sequence[Union["Vector2number", Sequence[float]]],
+                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35805,24 +35851,29 @@ class ProjectionConfig(VegaLiteSchema):
         extent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
+                Union[
+                    "Vector2Vector2number",
+                    Sequence[Union["Vector2number", Sequence[float]]],
+                ],
             ],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             Union[
+                Sequence[
+                    Union[
+                        "Fit",
+                        Sequence[Union["GeoJsonFeature", dict]],
+                        Union["GeoJsonFeature", dict],
+                        Union["GeoJsonFeatureCollection", dict],
+                    ]
+                ],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
                     "Fit",
+                    Sequence[Union["GeoJsonFeature", dict]],
                     Union["GeoJsonFeature", dict],
                     Union["GeoJsonFeatureCollection", dict],
-                    Union[List["GeoJsonFeature"], List[dict]],
-                ],
-                Union[
-                    List["Fit"],
-                    List[Union["GeoJsonFeature", dict]],
-                    List[Union["GeoJsonFeatureCollection", dict]],
-                    List[Union[List["GeoJsonFeature"], List[dict]]],
                 ],
             ],
             UndefinedType,
@@ -35837,7 +35888,7 @@ class ProjectionConfig(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         pointRadius: Union[
@@ -35862,8 +35913,8 @@ class ProjectionConfig(VegaLiteSchema):
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
-                    Union["Vector2number", List[float]],
-                    Union["Vector3number", List[float]],
+                    Union["Vector2number", Sequence[float]],
+                    Union["Vector3number", Sequence[float]],
                 ],
             ],
             UndefinedType,
@@ -35874,7 +35925,7 @@ class ProjectionConfig(VegaLiteSchema):
         size: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35887,7 +35938,7 @@ class ProjectionConfig(VegaLiteSchema):
         translate: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Vector2number", List[float]],
+                Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35974,7 +36025,7 @@ class RadialGradient(Gradient):
 
     gradient : str
         The type of gradient. Use ``"radial"`` for a radial gradient.
-    stops : List[Union[:class:`GradientStop`, Dict[required=[offset, color]]]]
+    stops : Sequence[Union[:class:`GradientStop`, Dict[required=[offset, color]]]]
         An array of gradient stops defining the gradient color sequence.
     id : str
 
@@ -36015,9 +36066,7 @@ class RadialGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[
-            Union[List["GradientStop"], List[dict]], UndefinedType
-        ] = Undefined,
+        stops: Union[Sequence[Union["GradientStop", dict]], UndefinedType] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         r1: Union[float, UndefinedType] = Undefined,
         r2: Union[float, UndefinedType] = Undefined,
@@ -36049,22 +36098,22 @@ class RangeConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    category : Union[List[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool, float, str]]]]]
+    category : Union[Sequence[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`, Sequence[float]], bool, float, str]]]]]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for categorical
         data.
-    diverging : Union[List[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool, float, str]]]]]
+    diverging : Union[Sequence[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`, Sequence[float]], bool, float, str]]]]]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for diverging
         quantitative ramps.
-    heatmap : Union[List[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool, float, str]]]]]
+    heatmap : Union[Sequence[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`, Sequence[float]], bool, float, str]]]]]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
         quantitative heatmaps.
-    ordinal : Union[List[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool, float, str]]]]]
+    ordinal : Union[Sequence[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`, Sequence[float]], bool, float, str]]]]]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
         rank-ordered data.
-    ramp : Union[List[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool, float, str]]]]]
+    ramp : Union[Sequence[Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]], Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`, Sequence[float]], bool, float, str]]]]]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for sequential
         quantitative ramps.
-    symbol : List[Union[:class:`SymbolShape`, str]]
+    symbol : Sequence[Union[:class:`SymbolShape`, str]]
         Array of `symbol <https://vega.github.io/vega/docs/marks/symbol/>`__ names or paths
         for the default shape palette.
     """
@@ -36075,34 +36124,9 @@ class RangeConfig(VegaLiteSchema):
         self,
         category: Union[
             Union[
-                Union[
-                    "RangeScheme",
+                Sequence[
                     Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
-                    ],
-                    Union[
-                        "RangeRaw",
-                        List[None],
-                        List[Union["RangeRawArray", List[float]]],
-                        List[bool],
-                        List[float],
-                        List[str],
-                    ],
-                    dict,
-                ],
-                Union[
-                    List["Color"],
-                    List[
+                        "Color",
                         Union[
                             "ColorName",
                             Literal[
@@ -36255,44 +36279,48 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ]
+                        ],
+                        Union["HexColor", str],
+                        str,
+                    ]
+                ],
+                Union[
+                    "RangeScheme",
+                    Union[
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
                     ],
-                    List[Union["HexColor", str]],
-                    List[str],
+                    Union[
+                        "RangeRaw",
+                        Sequence[
+                            Union[
+                                None,
+                                Union["RangeRawArray", Sequence[float]],
+                                bool,
+                                float,
+                                str,
+                            ]
+                        ],
+                    ],
+                    dict,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         diverging: Union[
             Union[
-                Union[
-                    "RangeScheme",
+                Sequence[
                     Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
-                    ],
-                    Union[
-                        "RangeRaw",
-                        List[None],
-                        List[Union["RangeRawArray", List[float]]],
-                        List[bool],
-                        List[float],
-                        List[str],
-                    ],
-                    dict,
-                ],
-                Union[
-                    List["Color"],
-                    List[
+                        "Color",
                         Union[
                             "ColorName",
                             Literal[
@@ -36445,44 +36473,48 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ]
+                        ],
+                        Union["HexColor", str],
+                        str,
+                    ]
+                ],
+                Union[
+                    "RangeScheme",
+                    Union[
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
                     ],
-                    List[Union["HexColor", str]],
-                    List[str],
+                    Union[
+                        "RangeRaw",
+                        Sequence[
+                            Union[
+                                None,
+                                Union["RangeRawArray", Sequence[float]],
+                                bool,
+                                float,
+                                str,
+                            ]
+                        ],
+                    ],
+                    dict,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         heatmap: Union[
             Union[
-                Union[
-                    "RangeScheme",
+                Sequence[
                     Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
-                    ],
-                    Union[
-                        "RangeRaw",
-                        List[None],
-                        List[Union["RangeRawArray", List[float]]],
-                        List[bool],
-                        List[float],
-                        List[str],
-                    ],
-                    dict,
-                ],
-                Union[
-                    List["Color"],
-                    List[
+                        "Color",
                         Union[
                             "ColorName",
                             Literal[
@@ -36635,44 +36667,48 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ]
+                        ],
+                        Union["HexColor", str],
+                        str,
+                    ]
+                ],
+                Union[
+                    "RangeScheme",
+                    Union[
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
                     ],
-                    List[Union["HexColor", str]],
-                    List[str],
+                    Union[
+                        "RangeRaw",
+                        Sequence[
+                            Union[
+                                None,
+                                Union["RangeRawArray", Sequence[float]],
+                                bool,
+                                float,
+                                str,
+                            ]
+                        ],
+                    ],
+                    dict,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         ordinal: Union[
             Union[
-                Union[
-                    "RangeScheme",
+                Sequence[
                     Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
-                    ],
-                    Union[
-                        "RangeRaw",
-                        List[None],
-                        List[Union["RangeRawArray", List[float]]],
-                        List[bool],
-                        List[float],
-                        List[str],
-                    ],
-                    dict,
-                ],
-                Union[
-                    List["Color"],
-                    List[
+                        "Color",
                         Union[
                             "ColorName",
                             Literal[
@@ -36825,44 +36861,48 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ]
+                        ],
+                        Union["HexColor", str],
+                        str,
+                    ]
+                ],
+                Union[
+                    "RangeScheme",
+                    Union[
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
                     ],
-                    List[Union["HexColor", str]],
-                    List[str],
+                    Union[
+                        "RangeRaw",
+                        Sequence[
+                            Union[
+                                None,
+                                Union["RangeRawArray", Sequence[float]],
+                                bool,
+                                float,
+                                str,
+                            ]
+                        ],
+                    ],
+                    dict,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         ramp: Union[
             Union[
-                Union[
-                    "RangeScheme",
+                Sequence[
                     Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
-                    ],
-                    Union[
-                        "RangeRaw",
-                        List[None],
-                        List[Union["RangeRawArray", List[float]]],
-                        List[bool],
-                        List[float],
-                        List[str],
-                    ],
-                    dict,
-                ],
-                Union[
-                    List["Color"],
-                    List[
+                        "Color",
                         Union[
                             "ColorName",
                             Literal[
@@ -37015,15 +37055,44 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ]
+                        ],
+                        Union["HexColor", str],
+                        str,
+                    ]
+                ],
+                Union[
+                    "RangeScheme",
+                    Union[
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
                     ],
-                    List[Union["HexColor", str]],
-                    List[str],
+                    Union[
+                        "RangeRaw",
+                        Sequence[
+                            Union[
+                                None,
+                                Union["RangeRawArray", Sequence[float]],
+                                bool,
+                                float,
+                                str,
+                            ]
+                        ],
+                    ],
+                    dict,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
-        symbol: Union[Union[List["SymbolShape"], List[str]], UndefinedType] = Undefined,
+        symbol: Union[Sequence[Union["SymbolShape", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(RangeConfig, self).__init__(
@@ -37040,7 +37109,7 @@ class RangeConfig(VegaLiteSchema):
 class RangeRawArray(VegaLiteSchema):
     """RangeRawArray schema wrapper
 
-    Union[:class:`RangeRawArray`, List[float]]
+    Union[:class:`RangeRawArray`, Sequence[float]]
     """
 
     _schema = {"$ref": "#/definitions/RangeRawArray"}
@@ -37054,8 +37123,8 @@ class RangeScheme(VegaLiteSchema):
 
     Union[:class:`RangeScheme`, Dict[required=[scheme]], Union[:class:`RangeEnum`,
     Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging',
-    'heatmap']], Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`,
-    List[float]], bool, float, str]]]]
+    'heatmap']], Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`,
+    Sequence[float]], bool, float, str]]]]
     """
 
     _schema = {"$ref": "#/definitions/RangeScheme"}
@@ -37080,8 +37149,8 @@ class RangeEnum(RangeScheme):
 class RangeRaw(RangeScheme):
     """RangeRaw schema wrapper
 
-    Union[:class:`RangeRaw`, List[Union[None, Union[:class:`RangeRawArray`, List[float]], bool,
-    float, str]]]
+    Union[:class:`RangeRaw`, Sequence[Union[None, Union[:class:`RangeRawArray`,
+    Sequence[float]], bool, float, str]]]
     """
 
     _schema = {"$ref": "#/definitions/RangeRaw"}
@@ -37383,7 +37452,7 @@ class RectConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -37406,7 +37475,7 @@ class RectConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -38262,7 +38331,7 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -38293,7 +38362,7 @@ class RectConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -38446,9 +38515,9 @@ class RepeatMapping(VegaLiteSchema):
     Parameters
     ----------
 
-    column : List[str]
+    column : Sequence[str]
         An array of fields to be repeated horizontally.
-    row : List[str]
+    row : Sequence[str]
         An array of fields to be repeated vertically.
     """
 
@@ -38456,8 +38525,8 @@ class RepeatMapping(VegaLiteSchema):
 
     def __init__(
         self,
-        column: Union[List[str], UndefinedType] = Undefined,
-        row: Union[List[str], UndefinedType] = Undefined,
+        column: Union[Sequence[str], UndefinedType] = Undefined,
+        row: Union[Sequence[str], UndefinedType] = Undefined,
         **kwds
     ):
         super(RepeatMapping, self).__init__(column=column, row=row, **kwds)
@@ -38687,7 +38756,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -38729,7 +38798,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -38877,10 +38946,10 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -39038,7 +39107,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -39084,7 +39153,7 @@ class Scale(VegaLiteSchema):
         **Default value:** ``0.5``
     base : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The logarithm base of the ``log`` scale (default ``10`` ).
-    bins : Union[:class:`ScaleBins`, List[float], Union[:class:`ScaleBinParams`, Dict[required=[step]]]]
+    bins : Union[:class:`ScaleBins`, Sequence[float], Union[:class:`ScaleBinParams`, Dict[required=[step]]]]
         Bin boundaries can be provided to scales as either an explicit array of bin
         boundaries or as a bin specification object. The legal values are:
 
@@ -39111,7 +39180,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : Union[List[Union[None, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], bool, float, str]], Union[:class:`DomainUnionWith`, Dict[required=[unionWith]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`ParameterExtent`, Dict[required=[param]]], str]
+    domain : Union[Sequence[Union[None, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], bool, float, str]], Union[:class:`DomainUnionWith`, Dict[required=[unionWith]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`ParameterExtent`, Dict[required=[param]]], str]
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -39235,7 +39304,7 @@ class Scale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's ``bandPaddingOuter``
         for band scales and ``pointPadding`` for point scales. By default, Vega-Lite sets
         outer padding such that *width/height = number of unique values * step*.
-    range : Union[List[Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]], Union[:class:`FieldRange`, Dict[required=[field]]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']]]
+    range : Union[Sequence[Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]], Union[:class:`FieldRange`, Dict[required=[field]]], Union[:class:`RangeEnum`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap']]]
         The range of the scale. One of:
 
 
@@ -39341,7 +39410,7 @@ class Scale(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
-            Union["ScaleBins", List[float], Union["ScaleBinParams", dict]],
+            Union["ScaleBins", Sequence[float], Union["ScaleBinParams", dict]],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
@@ -39352,17 +39421,19 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         domain: Union[
             Union[
+                Sequence[
+                    Union[
+                        None,
+                        Union["DateTime", dict],
+                        Union["ExprRef", "_ParameterProtocol", dict],
+                        bool,
+                        float,
+                        str,
+                    ]
+                ],
                 Union["DomainUnionWith", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union["ParameterExtent", dict],
-                Union[
-                    List[None],
-                    List[Union["DateTime", dict]],
-                    List[Union["ExprRef", "_ParameterProtocol", dict]],
-                    List[bool],
-                    List[float],
-                    List[str],
-                ],
                 str,
             ],
             UndefinedType,
@@ -39445,6 +39516,14 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         range: Union[
             Union[
+                Sequence[
+                    Union[
+                        Sequence[float],
+                        Union["ExprRef", "_ParameterProtocol", dict],
+                        float,
+                        str,
+                    ]
+                ],
                 Union["FieldRange", dict],
                 Union[
                     "RangeEnum",
@@ -39458,12 +39537,6 @@ class Scale(VegaLiteSchema):
                         "diverging",
                         "heatmap",
                     ],
-                ],
-                Union[
-                    List[List[float]],
-                    List[Union["ExprRef", "_ParameterProtocol", dict]],
-                    List[float],
-                    List[str],
                 ],
             ],
             UndefinedType,
@@ -39904,7 +39977,7 @@ class Scale(VegaLiteSchema):
 class ScaleBins(VegaLiteSchema):
     """ScaleBins schema wrapper
 
-    Union[:class:`ScaleBins`, List[float], Union[:class:`ScaleBinParams`,
+    Union[:class:`ScaleBins`, Sequence[float], Union[:class:`ScaleBinParams`,
     Dict[required=[step]]]]
     """
 
@@ -40203,7 +40276,7 @@ class ScaleDatumDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -40310,7 +40383,7 @@ class ScaleDatumDef(OffsetDef):
         ] = Undefined,
         scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -40400,7 +40473,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -40448,7 +40521,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -40631,10 +40704,10 @@ class ScaleFieldDef(OffsetDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -40791,7 +40864,7 @@ class ScaleFieldDef(OffsetDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -41010,7 +41083,7 @@ class SchemeParams(VegaLiteSchema):
         The number of colors to use in the scheme. This can be useful for scale types such
         as ``"quantize"``, which use the length of the scale range to determine the number
         of discrete bins for the scale domain.
-    extent : List[float]
+    extent : Sequence[float]
         The extent of the color range to use. For example ``[0.2, 1]`` will rescale the
         color scheme such that color values in the range *[0, 0.2)* are excluded from the
         scheme.
@@ -41378,7 +41451,7 @@ class SchemeParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         count: Union[float, UndefinedType] = Undefined,
-        extent: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds
     ):
         super(SchemeParams, self).__init__(
@@ -41453,7 +41526,7 @@ class SecondaryFieldDef(Position2Def):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -41670,7 +41743,7 @@ class SecondaryFieldDef(Position2Def):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -41827,9 +41900,9 @@ class SelectionInitInterval(VegaLiteSchema):
     """SelectionInitInterval schema wrapper
 
     Union[:class:`SelectionInitInterval`, Union[:class:`Vector2DateTime`,
-    List[Union[:class:`DateTime`, Dict[required=[]]]]], Union[:class:`Vector2boolean`,
-    List[bool]], Union[:class:`Vector2number`, List[float]], Union[:class:`Vector2string`,
-    List[str]]]
+    Sequence[Union[:class:`DateTime`, Dict[required=[]]]]], Union[:class:`Vector2boolean`,
+    Sequence[bool]], Union[:class:`Vector2number`, Sequence[float]],
+    Union[:class:`Vector2string`, Sequence[str]]]
     """
 
     _schema = {"$ref": "#/definitions/SelectionInitInterval"}
@@ -41899,7 +41972,7 @@ class SelectionParameter(VegaLiteSchema):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : Union[List[Union[:class:`SelectionInitMapping`, Dict[required=[]]]], Union[:class:`SelectionInitIntervalMapping`, Dict[required=[]]], Union[:class:`SelectionInit`, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`PrimitiveValue`, None, bool, float, str]]]
+    value : Union[Sequence[Union[:class:`SelectionInitMapping`, Dict[required=[]]]], Union[:class:`SelectionInitIntervalMapping`, Dict[required=[]]], Union[:class:`SelectionInit`, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`PrimitiveValue`, None, bool, float, str]]]
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -41939,13 +42012,13 @@ class SelectionParameter(VegaLiteSchema):
         ] = Undefined,
         value: Union[
             Union[
+                Sequence[Union["SelectionInitMapping", dict]],
                 Union[
                     "SelectionInit",
                     Union["DateTime", dict],
                     Union["PrimitiveValue", None, bool, float, str],
                 ],
                 Union["SelectionInitIntervalMapping", dict],
-                Union[List["SelectionInitMapping"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -42133,7 +42206,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -42142,7 +42215,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -42242,15 +42315,17 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringnullExprRef",
+                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringnullExprRef"],
-                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -42265,7 +42340,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -42330,7 +42405,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -42374,7 +42449,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool], List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -42422,7 +42497,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -42559,15 +42634,17 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringnullExprRef",
+                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringnullExprRef"],
-                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -42623,10 +42700,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[bool],
-                    List[float],
-                    List[str],
-                    Union[List["DateTime"], List[dict]],
+                    Sequence[Union["DateTime", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -42783,7 +42860,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union["TypeForShape", Literal["nominal", "ordinal", "geojson"]],
@@ -42823,7 +42900,7 @@ class SharedEncoding(VegaLiteSchema):
 
     description : Dict[required=[]]
 
-    detail : Union[List[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
+    detail : Union[Sequence[Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]], Union[:class:`FieldDefWithoutScale`, Dict[required=[]]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
     fill : Dict[required=[]]
@@ -42844,7 +42921,7 @@ class SharedEncoding(VegaLiteSchema):
 
     opacity : Dict[required=[]]
 
-    order : Union[List[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
+    order : Union[Sequence[Union[:class:`OrderFieldDef`, Dict[required=[]]]], Union[:class:`OrderFieldDef`, Dict[required=[]]], Union[:class:`OrderOnlyDef`, Dict[required=[]]], Union[:class:`OrderValueDef`, Dict[required=[value]]]]
         Order of the marks.
 
 
@@ -42881,7 +42958,7 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : Dict[required=[]]
 
-    tooltip : Union[List[Union[:class:`StringFieldDef`, Dict[required=[]]]], None, Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
+    tooltip : Union[None, Sequence[Union[:class:`StringFieldDef`, Dict[required=[]]]], Union[:class:`StringFieldDefWithCondition`, Dict[required=[]]], Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -42921,8 +42998,8 @@ class SharedEncoding(VegaLiteSchema):
         description: Union[dict, UndefinedType] = Undefined,
         detail: Union[
             Union[
+                Sequence[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
-                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -42937,10 +43014,10 @@ class SharedEncoding(VegaLiteSchema):
         opacity: Union[dict, UndefinedType] = Undefined,
         order: Union[
             Union[
+                Sequence[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
-                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -42958,9 +43035,9 @@ class SharedEncoding(VegaLiteSchema):
         tooltip: Union[
             Union[
                 None,
+                Sequence[Union["StringFieldDef", dict]],
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
-                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43043,8 +43120,9 @@ class Sort(VegaLiteSchema):
     Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity',
     'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending',
     'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]],
-    Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool],
-    List[float], List[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]],
+    Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`,
+    Dict[required=[encoding]]]]
     """
 
     _schema = {"$ref": "#/definitions/Sort"}
@@ -43149,8 +43227,8 @@ class EncodingSortField(Sort):
 class SortArray(Sort):
     """SortArray schema wrapper
 
-    Union[:class:`SortArray`, List[Union[:class:`DateTime`, Dict[required=[]]]], List[bool],
-    List[float], List[str]]
+    Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]],
+    Sequence[bool], Sequence[float], Sequence[str]]
     """
 
     _schema = {"$ref": "#/definitions/SortArray"}
@@ -43305,7 +43383,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Parameters
     ----------
 
-    concat : List[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    concat : Sequence[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated.
     align : Union[Union[:class:`LayoutAlign`, Literal['all', 'each', 'none']], Union[:class:`RowColLayoutAlign`, Dict[required=[]]]]
         The alignment to apply to grid rows and columns. The supported string values are
@@ -43379,9 +43457,9 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -43390,21 +43468,21 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         concat: Union[
-            Union[
-                List["Spec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "Spec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -43448,31 +43526,33 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -43584,9 +43664,9 @@ class FacetSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -43642,31 +43722,33 @@ class FacetSpec(Spec, NonNormalizedSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -43771,7 +43853,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         documentation.
     name : str
         Name of the visualization for later reference.
-    params : List[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
+    params : Sequence[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : Union[:class:`Projection`, Dict[required=[]]]
@@ -43788,9 +43870,9 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     view : Union[:class:`ViewBackground`, Dict[required=[]]]
         An object defining the view background's fill and stroke.
@@ -43899,7 +43981,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            Union[List["SelectionParameter"], List[dict]], UndefinedType
+            Sequence[Union["SelectionParameter", dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
@@ -43907,31 +43989,33 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -43970,7 +44054,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Parameters
     ----------
 
-    hconcat : List[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    hconcat : Sequence[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated and put into a row.
     bounds : Literal['full', 'flush']
         The bounds calculation method to use for determining the extent of a sub-plot. One
@@ -44002,9 +44086,9 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -44013,21 +44097,21 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         hconcat: Union[
-            Union[
-                List["Spec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "Spec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44059,31 +44143,33 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44114,7 +44200,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     Parameters
     ----------
 
-    layer : List[Union[Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`UnitSpec`, Dict[required=[mark]]]]]
+    layer : Sequence[Union[Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`UnitSpec`, Dict[required=[mark]]]]]
         Layer or single view specifications to be layered.
 
         **Note** : Specifications inside ``layer`` cannot use ``row`` and ``column``
@@ -44156,9 +44242,9 @@ class LayerSpec(Spec, NonNormalizedSpec):
         layers.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     view : Union[:class:`ViewBackground`, Dict[required=[]]]
         An object defining the view background's fill and stroke.
@@ -44191,7 +44277,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         layer: Union[
-            Union[List[Union["LayerSpec", dict]], List[Union["UnitSpec", dict]]],
+            Sequence[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
             UndefinedType,
         ] = Undefined,
         data: Union[
@@ -44224,31 +44310,33 @@ class LayerSpec(Spec, NonNormalizedSpec):
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44376,9 +44464,9 @@ class LayerRepeatSpec(RepeatSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -44431,31 +44519,33 @@ class LayerRepeatSpec(RepeatSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44488,7 +44578,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     Parameters
     ----------
 
-    repeat : Union[List[str], Union[:class:`RepeatMapping`, Dict[required=[]]]]
+    repeat : Union[Sequence[str], Union[:class:`RepeatMapping`, Dict[required=[]]]]
         Definition for fields to be repeated. One of: 1) An array of fields to be repeated.
         If ``"repeat"`` is an array, the field can be referred to as ``{"repeat":
         "repeat"}``. The repeated views are laid out in a wrapped row. You can set the
@@ -44570,9 +44660,9 @@ class NonLayerRepeatSpec(RepeatSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -44581,7 +44671,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     def __init__(
         self,
         repeat: Union[
-            Union[List[str], Union["RepeatMapping", dict]], UndefinedType
+            Union[Sequence[str], Union["RepeatMapping", dict]], UndefinedType
         ] = Undefined,
         spec: Union[
             Union[
@@ -44640,31 +44730,33 @@ class NonLayerRepeatSpec(RepeatSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44794,13 +44886,13 @@ class DerivedStream(Stream):
 
     stream : Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]
 
-    between : List[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
+    between : Sequence[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
 
     consume : bool
 
     debounce : float
 
-    filter : Union[List[Union[:class:`Expr`, str]], Union[:class:`Expr`, str]]
+    filter : Union[Sequence[Union[:class:`Expr`, str]], Union[:class:`Expr`, str]]
 
     markname : str
 
@@ -44824,18 +44916,20 @@ class DerivedStream(Stream):
             UndefinedType,
         ] = Undefined,
         between: Union[
-            Union[
-                List["Stream"],
-                List[Union["DerivedStream", dict]],
-                List[Union["EventStream", dict]],
-                List[Union["MergedStream", dict]],
+            Sequence[
+                Union[
+                    "Stream",
+                    Union["DerivedStream", dict],
+                    Union["EventStream", dict],
+                    Union["MergedStream", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[Union["Expr", str], Union[List["Expr"], List[str]]], UndefinedType
+            Union[Sequence[Union["Expr", str]], Union["Expr", str]], UndefinedType
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
@@ -44894,15 +44988,15 @@ class MergedStream(Stream):
     Parameters
     ----------
 
-    merge : List[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
+    merge : Sequence[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
 
-    between : List[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
+    between : Sequence[Union[:class:`Stream`, Union[:class:`DerivedStream`, Dict[required=[stream]]], Union[:class:`EventStream`, Dict[required=[source, type]], Dict[required=[type]]], Union[:class:`MergedStream`, Dict[required=[merge]]]]]
 
     consume : bool
 
     debounce : float
 
-    filter : Union[List[Union[:class:`Expr`, str]], Union[:class:`Expr`, str]]
+    filter : Union[Sequence[Union[:class:`Expr`, str]], Union[:class:`Expr`, str]]
 
     markname : str
 
@@ -44917,27 +45011,31 @@ class MergedStream(Stream):
     def __init__(
         self,
         merge: Union[
-            Union[
-                List["Stream"],
-                List[Union["DerivedStream", dict]],
-                List[Union["EventStream", dict]],
-                List[Union["MergedStream", dict]],
+            Sequence[
+                Union[
+                    "Stream",
+                    Union["DerivedStream", dict],
+                    Union["EventStream", dict],
+                    Union["MergedStream", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         between: Union[
-            Union[
-                List["Stream"],
-                List[Union["DerivedStream", dict]],
-                List[Union["EventStream", dict]],
-                List[Union["MergedStream", dict]],
+            Sequence[
+                Union[
+                    "Stream",
+                    Union["DerivedStream", dict],
+                    Union["EventStream", dict],
+                    Union["MergedStream", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[Union["Expr", str], Union[List["Expr"], List[str]]], UndefinedType
+            Union[Sequence[Union["Expr", str]], Union["Expr", str]], UndefinedType
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
@@ -45075,7 +45173,7 @@ class StringFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -45365,7 +45463,7 @@ class StringFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -45431,7 +45529,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -45496,7 +45594,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -45631,15 +45729,17 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringExprRef",
+                        Union["ConditionalParameterValueDefstringExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefstringExprRef",
                     Union["ConditionalParameterValueDefstringExprRef", dict],
                     Union["ConditionalPredicateValueDefstringExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringExprRef"],
-                    List[Union["ConditionalParameterValueDefstringExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -45801,7 +45901,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -45835,7 +45935,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -45849,6 +45949,13 @@ class StringValueDefWithCondition(VegaLiteSchema):
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringnullExprRef",
+                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -45858,11 +45965,6 @@ class StringValueDefWithCondition(VegaLiteSchema):
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringnullExprRef"],
-                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -46006,7 +46108,7 @@ class SymbolShape(VegaLiteSchema):
 class Text(VegaLiteSchema):
     """Text schema wrapper
 
-    Union[:class:`Text`, List[str], str]
+    Union[:class:`Text`, Sequence[str], str]
     """
 
     _schema = {"$ref": "#/definitions/Text"}
@@ -46067,7 +46169,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -46110,7 +46212,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -46210,15 +46312,17 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefTextExprRef",
+                        Union["ConditionalParameterValueDefTextExprRef", dict],
+                        Union["ConditionalPredicateValueDefTextExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefTextExprRef",
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefTextExprRef"],
-                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -46235,7 +46339,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46299,7 +46403,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -46364,7 +46468,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -46501,15 +46605,17 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         ] = Undefined,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefTextExprRef",
+                        Union["ConditionalParameterValueDefTextExprRef", dict],
+                        Union["ConditionalPredicateValueDefTextExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalValueDefTextExprRef",
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefTextExprRef"],
-                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -46671,7 +46777,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -46993,7 +47099,7 @@ class TickConfig(AnyMarkConfig):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -47016,7 +47122,7 @@ class TickConfig(AnyMarkConfig):
     tension : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -47869,7 +47975,7 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -47900,7 +48006,7 @@ class TickConfig(AnyMarkConfig):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -48106,15 +48212,15 @@ class TimeLocale(VegaLiteSchema):
         The date (%x) format specifier (e.g., "%m/%d/%Y").
     dateTime : str
         The date and time (%c) format specifier (e.g., "%a %b %e %X %Y").
-    days : Union[:class:`Vector7string`, List[str]]
+    days : Union[:class:`Vector7string`, Sequence[str]]
         The full names of the weekdays, starting with Sunday.
-    months : Union[:class:`Vector12string`, List[str]]
+    months : Union[:class:`Vector12string`, Sequence[str]]
         The full names of the months (starting with January).
-    periods : Union[:class:`Vector2string`, List[str]]
+    periods : Union[:class:`Vector2string`, Sequence[str]]
         The A.M. and P.M. equivalents (e.g., ["AM", "PM"]).
-    shortDays : Union[:class:`Vector7string`, List[str]]
+    shortDays : Union[:class:`Vector7string`, Sequence[str]]
         The abbreviated names of the weekdays, starting with Sunday.
-    shortMonths : Union[:class:`Vector12string`, List[str]]
+    shortMonths : Union[:class:`Vector12string`, Sequence[str]]
         The abbreviated names of the months (starting with January).
     time : str
         The time (%X) format specifier (e.g., "%H:%M:%S").
@@ -48126,12 +48232,18 @@ class TimeLocale(VegaLiteSchema):
         self,
         date: Union[str, UndefinedType] = Undefined,
         dateTime: Union[str, UndefinedType] = Undefined,
-        days: Union[Union["Vector7string", List[str]], UndefinedType] = Undefined,
-        months: Union[Union["Vector12string", List[str]], UndefinedType] = Undefined,
-        periods: Union[Union["Vector2string", List[str]], UndefinedType] = Undefined,
-        shortDays: Union[Union["Vector7string", List[str]], UndefinedType] = Undefined,
+        days: Union[Union["Vector7string", Sequence[str]], UndefinedType] = Undefined,
+        months: Union[
+            Union["Vector12string", Sequence[str]], UndefinedType
+        ] = Undefined,
+        periods: Union[
+            Union["Vector2string", Sequence[str]], UndefinedType
+        ] = Undefined,
+        shortDays: Union[
+            Union["Vector7string", Sequence[str]], UndefinedType
+        ] = Undefined,
         shortMonths: Union[
-            Union["Vector12string", List[str]], UndefinedType
+            Union["Vector12string", Sequence[str]], UndefinedType
         ] = Undefined,
         time: Union[str, UndefinedType] = Undefined,
         **kwds
@@ -49185,7 +49297,7 @@ class TitleParams(VegaLiteSchema):
     Parameters
     ----------
 
-    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    text : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         The title text.
     align : Union[:class:`Align`, Literal['left', 'center', 'right']]
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
@@ -49250,12 +49362,12 @@ class TitleParams(VegaLiteSchema):
         position along the edge of the chart.
     orient : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`TitleOrient`, Literal['none', 'left', 'right', 'top', 'bottom']]]
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`__
         to apply to the title text mark.
 
         **Default value:** ``"group-title"``.
-    subtitle : Union[:class:`Text`, List[str], str]
+    subtitle : Union[:class:`Text`, Sequence[str], str]
         The subtitle Text.
     subtitleColor : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[None, Union[:class:`Color`, Union[:class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']], Union[:class:`HexColor`, str], str]]]
         Text color for subtitle text.
@@ -49287,7 +49399,7 @@ class TitleParams(VegaLiteSchema):
         text: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -49543,8 +49655,8 @@ class TitleParams(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
-        subtitle: Union[Union["Text", List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        subtitle: Union[Union["Text", Sequence[str], str], UndefinedType] = Undefined,
         subtitleColor: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
@@ -49862,14 +49974,14 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : Union[List[Union[:class:`SelectionInitMapping`, Dict[required=[]]]], Union[:class:`SelectionInitIntervalMapping`, Dict[required=[]]], Union[:class:`SelectionInit`, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`PrimitiveValue`, None, bool, float, str]]]
+    value : Union[Sequence[Union[:class:`SelectionInitMapping`, Dict[required=[]]]], Union[:class:`SelectionInitIntervalMapping`, Dict[required=[]]], Union[:class:`SelectionInit`, Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`PrimitiveValue`, None, bool, float, str]]]
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
 
         **See also:** `init <https://vega.github.io/vega-lite/docs/value.html>`__
         documentation.
-    views : List[str]
+    views : Sequence[str]
         By default, top-level selections are applied to every view in the visualization. If
         this property is specified, selections will only be applied to views with the given
         names.
@@ -49906,17 +50018,17 @@ class TopLevelSelectionParameter(TopLevelParameter):
         ] = Undefined,
         value: Union[
             Union[
+                Sequence[Union["SelectionInitMapping", dict]],
                 Union[
                     "SelectionInit",
                     Union["DateTime", dict],
                     Union["PrimitiveValue", None, bool, float, str],
                 ],
                 Union["SelectionInitIntervalMapping", dict],
-                Union[List["SelectionInitMapping"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
-        views: Union[List[str], UndefinedType] = Undefined,
+        views: Union[Sequence[str], UndefinedType] = Undefined,
         **kwds
     ):
         super(TopLevelSelectionParameter, self).__init__(
@@ -49952,7 +50064,7 @@ class TopLevelConcatSpec(TopLevelSpec):
     Parameters
     ----------
 
-    concat : List[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    concat : Sequence[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated.
     align : Union[Union[:class:`LayoutAlign`, Literal['all', 'each', 'none']], Union[:class:`RowColLayoutAlign`, Dict[required=[]]]]
         The alignment to apply to grid rows and columns. The supported string values are
@@ -50040,7 +50152,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
@@ -50052,9 +50164,9 @@ class TopLevelConcatSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -50072,21 +50184,21 @@ class TopLevelConcatSpec(TopLevelSpec):
     def __init__(
         self,
         concat: Union[
-            Union[
-                List["NonNormalizedSpec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "NonNormalizedSpec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -50306,10 +50418,12 @@ class TopLevelConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -50318,31 +50432,33 @@ class TopLevelConcatSpec(TopLevelSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -50475,7 +50591,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
@@ -50487,9 +50603,9 @@ class TopLevelFacetSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -50730,10 +50846,12 @@ class TopLevelFacetSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -50742,31 +50860,33 @@ class TopLevelFacetSpec(TopLevelSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -50806,7 +50926,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
     Parameters
     ----------
 
-    hconcat : List[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    hconcat : Sequence[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated and put into a row.
     autosize : Union[Union[:class:`AutoSizeParams`, Dict[required=[]]], Union[:class:`AutosizeType`, Literal['pad', 'none', 'fit', 'fit-x', 'fit-y']]]
         How the visualization size should be determined. If a string, should be one of
@@ -50856,7 +50976,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
@@ -50864,9 +50984,9 @@ class TopLevelHConcatSpec(TopLevelSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -50884,21 +51004,21 @@ class TopLevelHConcatSpec(TopLevelSpec):
     def __init__(
         self,
         hconcat: Union[
-            Union[
-                List["NonNormalizedSpec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "NonNormalizedSpec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -51108,41 +51228,45 @@ class TopLevelHConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -51179,7 +51303,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     Parameters
     ----------
 
-    layer : List[Union[Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`UnitSpec`, Dict[required=[mark]]]]]
+    layer : Sequence[Union[Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`UnitSpec`, Dict[required=[mark]]]]]
         Layer or single view specifications to be layered.
 
         **Note** : Specifications inside ``layer`` cannot use ``row`` and ``column``
@@ -51240,16 +51364,16 @@ class TopLevelLayerSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     projection : Union[:class:`Projection`, Dict[required=[]]]
         An object defining properties of the geographic projection shared by underlying
         layers.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -51291,7 +51415,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     def __init__(
         self,
         layer: Union[
-            Union[List[Union["LayerSpec", dict]], List[Union["UnitSpec", dict]]],
+            Sequence[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
@@ -51502,41 +51626,45 @@ class TopLevelLayerSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -51684,7 +51812,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : Union[:class:`Projection`, Dict[required=[]]]
@@ -51701,9 +51829,9 @@ class TopLevelUnitSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -52001,10 +52129,12 @@ class TopLevelUnitSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52014,31 +52144,33 @@ class TopLevelUnitSpec(TopLevelSpec):
             Union[Union["RowColnumber", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52083,7 +52215,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
     Parameters
     ----------
 
-    vconcat : List[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    vconcat : Sequence[Union[:class:`NonNormalizedSpec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated and put into a column.
     autosize : Union[Union[:class:`AutoSizeParams`, Dict[required=[]]], Union[:class:`AutosizeType`, Literal['pad', 'none', 'fit', 'fit-x', 'fit-y']]]
         How the visualization size should be determined. If a string, should be one of
@@ -52133,7 +52265,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         "bottom": 5}`` to specify padding for each side of the visualization.
 
         **Default value** : ``5``
-    params : List[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
+    params : Sequence[Union[:class:`TopLevelParameter`, Union[:class:`TopLevelSelectionParameter`, Dict[required=[name, select]]], Union[:class:`VariableParameter`, Dict[required=[name]]]]]
         Dynamic variables or selections that parameterize a visualization.
     resolve : Union[:class:`Resolve`, Dict[required=[]]]
         Scale, axis, and legend resolutions for view composition specifications.
@@ -52141,9 +52273,9 @@ class TopLevelVConcatSpec(TopLevelSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     usermeta : Union[:class:`Dict`, Dict[required=[]]]
         Optional metadata that will be passed to Vega. This object is completely ignored by
@@ -52161,21 +52293,21 @@ class TopLevelVConcatSpec(TopLevelSpec):
     def __init__(
         self,
         vconcat: Union[
-            Union[
-                List["NonNormalizedSpec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "NonNormalizedSpec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52385,41 +52517,45 @@ class TopLevelVConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Union[
-                List["TopLevelParameter"],
-                List[Union["TopLevelSelectionParameter", dict]],
-                List[Union["VariableParameter", dict]],
+            Sequence[
+                Union[
+                    "TopLevelParameter",
+                    Union["TopLevelSelectionParameter", dict],
+                    Union["VariableParameter", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52541,9 +52677,9 @@ class AggregateTransform(Transform):
     Parameters
     ----------
 
-    aggregate : List[Union[:class:`AggregatedFieldDef`, Dict[required=[op, as]]]]
+    aggregate : Sequence[Union[:class:`AggregatedFieldDef`, Dict[required=[op, as]]]]
         Array of objects that define fields to aggregate.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
     """
@@ -52553,9 +52689,9 @@ class AggregateTransform(Transform):
     def __init__(
         self,
         aggregate: Union[
-            Union[List["AggregatedFieldDef"], List[dict]], UndefinedType
+            Sequence[Union["AggregatedFieldDef", dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(AggregateTransform, self).__init__(
@@ -52576,7 +52712,7 @@ class BinTransform(Transform):
         parameters.
     field : Union[:class:`FieldName`, str]
         The data field to bin.
-    as : Union[List[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
+    as : Union[Sequence[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
         The output fields at which to write the start and end bin values. This can be either
         a string or an array of strings with two elements denoting the name for the fields
         for bin start and bin end respectively. If a single string (e.g., ``"val"`` ) is
@@ -52639,11 +52775,11 @@ class DensityTransform(Transform):
         density estimates (true).
 
         **Default value:** ``false``
-    extent : List[float]
+    extent : Sequence[float]
         A [min, max] domain from which to sample the distribution. If unspecified, the
         extent will be determined by the observed minimum and maximum values of the density
         value field.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
     maxsteps : float
@@ -52661,7 +52797,7 @@ class DensityTransform(Transform):
         density. If specified, overrides both minsteps and maxsteps to set an exact number
         of uniform samples. Potentially useful in conjunction with a fixed extent to ensure
         consistent sample points for stacked densities.
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output fields for the sample value and corresponding density estimate.
 
         **Default value:** ``["value", "density"]``
@@ -52675,8 +52811,8 @@ class DensityTransform(Transform):
         bandwidth: Union[float, UndefinedType] = Undefined,
         counts: Union[bool, UndefinedType] = Undefined,
         cumulative: Union[bool, UndefinedType] = Undefined,
-        extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        extent: Union[Sequence[float], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         maxsteps: Union[float, UndefinedType] = Undefined,
         minsteps: Union[float, UndefinedType] = Undefined,
         steps: Union[float, UndefinedType] = Undefined,
@@ -52798,12 +52934,12 @@ class FlattenTransform(Transform):
     Parameters
     ----------
 
-    flatten : List[Union[:class:`FieldName`, str]]
+    flatten : Sequence[Union[:class:`FieldName`, str]]
         An array of one or more data fields containing arrays to flatten. If multiple fields
         are specified, their array values should have a parallel structure, ideally with the
         same length. If the lengths of parallel arrays do not match, the longest array will
         be used with ``null`` values added for missing entries.
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output field names for extracted array values.
 
         **Default value:** The field name of the corresponding array field
@@ -52813,7 +52949,7 @@ class FlattenTransform(Transform):
 
     def __init__(
         self,
-        flatten: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        flatten: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
@@ -52827,9 +52963,9 @@ class FoldTransform(Transform):
     Parameters
     ----------
 
-    fold : List[Union[:class:`FieldName`, str]]
+    fold : Sequence[Union[:class:`FieldName`, str]]
         An array of data fields indicating the properties to fold.
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output field names for the key and value properties produced by the fold
         transform. **Default value:** ``["key", "value"]``
     """
@@ -52838,7 +52974,7 @@ class FoldTransform(Transform):
 
     def __init__(
         self,
-        fold: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        fold: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
@@ -52857,7 +52993,7 @@ class ImputeTransform(Transform):
     key : Union[:class:`FieldName`, str]
         A key field that uniquely identifies data objects within a group. Missing key values
         (those occurring in the data but not in the current group) will be imputed.
-    frame : List[Union[None, float]]
+    frame : Sequence[Union[None, float]]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -52867,10 +53003,10 @@ class ImputeTransform(Transform):
 
         **Default value:** :  ``[null, null]`` indicating that the window includes all
         objects.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         An optional array of fields by which to group the values. Imputation will then be
         performed on a per-group basis.
-    keyvals : Union[List[Any], Union[:class:`ImputeSequence`, Dict[required=[stop]]]]
+    keyvals : Union[Sequence[Any], Union[:class:`ImputeSequence`, Dict[required=[stop]]]]
         Defines the key values that should be considered for imputation. An array of key
         values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -52896,10 +53032,10 @@ class ImputeTransform(Transform):
         self,
         impute: Union[Union["FieldName", str], UndefinedType] = Undefined,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[List[Any], Union["ImputeSequence", dict]], UndefinedType
+            Union[Sequence[Any], Union["ImputeSequence", dict]], UndefinedType
         ] = Undefined,
         method: Union[
             Union["ImputeMethod", Literal["value", "median", "max", "min", "mean"]],
@@ -52928,9 +53064,9 @@ class JoinAggregateTransform(Transform):
     Parameters
     ----------
 
-    joinaggregate : List[Union[:class:`JoinAggregateFieldDef`, Dict[required=[op, as]]]]
+    joinaggregate : Sequence[Union[:class:`JoinAggregateFieldDef`, Dict[required=[op, as]]]]
         The definition of the fields in the join aggregate, and what calculations to use.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields for partitioning the data objects into separate groups. If
         unspecified, all data points will be in a single group.
     """
@@ -52940,9 +53076,9 @@ class JoinAggregateTransform(Transform):
     def __init__(
         self,
         joinaggregate: Union[
-            Union[List["JoinAggregateFieldDef"], List[dict]], UndefinedType
+            Sequence[Union["JoinAggregateFieldDef", dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(JoinAggregateTransform, self).__init__(
@@ -52967,10 +53103,10 @@ class LoessTransform(Transform):
         smoothing.
 
         **Default value:** ``0.3``
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output field names for the smoothed points generated by the loess transform.
 
         **Default value:** The field names of the input x and y values.
@@ -52983,7 +53119,7 @@ class LoessTransform(Transform):
         loess: Union[Union["FieldName", str], UndefinedType] = Undefined,
         on: Union[Union["FieldName", str], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LoessTransform, self).__init__(
@@ -53005,7 +53141,7 @@ class LookupTransform(Transform):
         The default value to use if lookup fails.
 
         **Default value:** ``null``
-    as : Union[List[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
+    as : Union[Sequence[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
         The output fields on which to store the looked up data values.
 
         For data lookups, this property may be left blank if ``from.fields`` has been
@@ -53044,7 +53180,7 @@ class PivotTransform(Transform):
     value : Union[:class:`FieldName`, str]
         The data field to populate pivoted fields. The aggregate values of this field become
         the values of the new pivoted fields.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The optional data fields to group by. If not specified, a single group containing
         all data objects will be used.
     limit : float
@@ -53062,7 +53198,7 @@ class PivotTransform(Transform):
         self,
         pivot: Union[Union["FieldName", str], UndefinedType] = Undefined,
         value: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         limit: Union[float, UndefinedType] = Undefined,
         op: Union[
             Union[
@@ -53112,17 +53248,17 @@ class QuantileTransform(Transform):
 
     quantile : Union[:class:`FieldName`, str]
         The data field for which to perform quantile estimation.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
-    probs : List[float]
+    probs : Sequence[float]
         An array of probabilities in the range (0, 1) for which to compute quantile values.
         If not specified, the *step* parameter will be used.
     step : float
         A probability step size (default 0.01) for sampling quantile values. All values from
         one-half the step size up to 1 (exclusive) will be sampled. This parameter is only
         used if the *probs* parameter is not provided.
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output field names for the probability and quantile values.
 
         **Default value:** ``["prob", "value"]``
@@ -53133,8 +53269,8 @@ class QuantileTransform(Transform):
     def __init__(
         self,
         quantile: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
-        probs: Union[List[float], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        probs: Union[Sequence[float], UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         **kwds
     ):
@@ -53155,10 +53291,10 @@ class RegressionTransform(Transform):
         The data field of the independent variable to use a predictor.
     regression : Union[:class:`FieldName`, str]
         The data field of the dependent variable to predict.
-    extent : List[float]
+    extent : Sequence[float]
         A [min, max] domain over the independent (x) field for the starting and ending
         points of the generated trend line.
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
     method : Literal['linear', 'log', 'exp', 'pow', 'quad', 'poly']
@@ -53178,7 +53314,7 @@ class RegressionTransform(Transform):
         value (indicating the total variance explained by the model).
 
         **Default value:** ``false``
-    as : List[Union[:class:`FieldName`, str]]
+    as : Sequence[Union[:class:`FieldName`, str]]
         The output field names for the smoothed points generated by the regression
         transform.
 
@@ -53191,8 +53327,8 @@ class RegressionTransform(Transform):
         self,
         on: Union[Union["FieldName", str], UndefinedType] = Undefined,
         regression: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        extent: Union[Sequence[float], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         method: Union[
             Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
         ] = Undefined,
@@ -53240,7 +53376,7 @@ class StackTransform(Transform):
     Parameters
     ----------
 
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields to group by.
     stack : Union[:class:`FieldName`, str]
         The field which is stacked.
@@ -53251,9 +53387,9 @@ class StackTransform(Transform):
         percentage values for each stack point, with output values in the range ``[0,1]``.
 
         **Default value:** ``"zero"``
-    sort : List[Union[:class:`SortField`, Dict[required=[field]]]]
+    sort : Sequence[Union[:class:`SortField`, Dict[required=[field]]]]
         Field that determines the order of leaves in the stacked charts.
-    as : Union[List[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
+    as : Union[Sequence[Union[:class:`FieldName`, str]], Union[:class:`FieldName`, str]]
         Output field names. This can be either a string or an array of strings with two
         elements denoting the name for the fields for stack start and stack end
         respectively. If a single string(e.g., ``"val"`` ) is provided, the end field will
@@ -53264,12 +53400,12 @@ class StackTransform(Transform):
 
     def __init__(
         self,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         stack: Union[Union["FieldName", str], UndefinedType] = Undefined,
         offset: Union[
             Literal["zero", "center", "normalize"], UndefinedType
         ] = Undefined,
-        sort: Union[Union[List["SortField"], List[dict]], UndefinedType] = Undefined,
+        sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
         **kwds
     ):
         super(StackTransform, self).__init__(
@@ -53509,7 +53645,7 @@ class TypedFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, List[str], str]]
+    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -53797,7 +53933,7 @@ class TypedFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", List[str], str]], UndefinedType
+            Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
@@ -53855,16 +53991,16 @@ class UnitSpec(VegaLiteSchema):
         A key-value mapping between encoding channels and definition of fields.
     name : str
         Name of the visualization for later reference.
-    params : List[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
+    params : Sequence[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : Union[:class:`Projection`, Dict[required=[]]]
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -53935,35 +54071,37 @@ class UnitSpec(VegaLiteSchema):
         encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            Union[List["SelectionParameter"], List[dict]], UndefinedType
+            Sequence[Union["SelectionParameter", dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -54025,16 +54163,16 @@ class UnitSpecWithFrame(VegaLiteSchema):
         documentation.
     name : str
         Name of the visualization for later reference.
-    params : List[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
+    params : Sequence[Union[:class:`SelectionParameter`, Dict[required=[name, select]]]]
         An array of parameters that may either be simple variables, or more complex
         selections that map user input to data queries.
     projection : Union[:class:`Projection`, Dict[required=[]]]
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     view : Union[:class:`ViewBackground`, Dict[required=[]]]
         An object defining the view background's fill and stroke.
@@ -54132,35 +54270,37 @@ class UnitSpecWithFrame(VegaLiteSchema):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            Union[List["SelectionParameter"], List[dict]], UndefinedType
+            Sequence[Union["SelectionParameter", dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -54266,7 +54406,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     Parameters
     ----------
 
-    vconcat : List[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
+    vconcat : Sequence[Union[:class:`Spec`, Union[:class:`ConcatSpecGenericSpec`, Dict[required=[concat]]], Union[:class:`FacetSpec`, Dict[required=[facet, spec]]], Union[:class:`FacetedUnitSpec`, Dict[required=[mark]]], Union[:class:`HConcatSpecGenericSpec`, Dict[required=[hconcat]]], Union[:class:`LayerSpec`, Dict[required=[layer]]], Union[:class:`RepeatSpec`, Union[:class:`LayerRepeatSpec`, Dict[required=[repeat, spec]]], Union[:class:`NonLayerRepeatSpec`, Dict[required=[repeat, spec]]]], Union[:class:`VConcatSpecGenericSpec`, Dict[required=[vconcat]]]]]
         A list of views to be concatenated and put into a column.
     bounds : Literal['full', 'flush']
         The bounds calculation method to use for determining the extent of a sub-plot. One
@@ -54298,9 +54438,9 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[Union[:class:`Text`, List[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
+    title : Union[Union[:class:`Text`, Sequence[str], str], Union[:class:`TitleParams`, Dict[required=[text]]]]
         Title for the plot.
-    transform : List[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
+    transform : Sequence[Union[:class:`Transform`, Union[:class:`AggregateTransform`, Dict[required=[aggregate]]], Union[:class:`BinTransform`, Dict[required=[bin, field, as]]], Union[:class:`CalculateTransform`, Dict[required=[calculate, as]]], Union[:class:`DensityTransform`, Dict[required=[density]]], Union[:class:`ExtentTransform`, Dict[required=[extent, param]]], Union[:class:`FilterTransform`, Dict[required=[filter]]], Union[:class:`FlattenTransform`, Dict[required=[flatten]]], Union[:class:`FoldTransform`, Dict[required=[fold]]], Union[:class:`ImputeTransform`, Dict[required=[impute, key]]], Union[:class:`JoinAggregateTransform`, Dict[required=[joinaggregate]]], Union[:class:`LoessTransform`, Dict[required=[loess, on]]], Union[:class:`LookupTransform`, Dict[required=[lookup, from]]], Union[:class:`PivotTransform`, Dict[required=[pivot, value]]], Union[:class:`QuantileTransform`, Dict[required=[quantile]]], Union[:class:`RegressionTransform`, Dict[required=[regression, on]]], Union[:class:`SampleTransform`, Dict[required=[sample]]], Union[:class:`StackTransform`, Dict[required=[stack, groupby, as]]], Union[:class:`TimeUnitTransform`, Dict[required=[timeUnit, field, as]]], Union[:class:`WindowTransform`, Dict[required=[window]]]]]
         An array of data transformations such as filter and new field calculation.
     """
 
@@ -54309,21 +54449,21 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         vconcat: Union[
-            Union[
-                List["Spec"],
-                List[Union["ConcatSpecGenericSpec", dict]],
-                List[Union["FacetSpec", dict]],
-                List[Union["FacetedUnitSpec", dict]],
-                List[Union["HConcatSpecGenericSpec", dict]],
-                List[Union["LayerSpec", dict]],
-                List[
+            Sequence[
+                Union[
+                    "Spec",
+                    Union["ConcatSpecGenericSpec", dict],
+                    Union["FacetSpec", dict],
+                    Union["FacetedUnitSpec", dict],
+                    Union["HConcatSpecGenericSpec", dict],
+                    Union["LayerSpec", dict],
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ]
-                ],
-                List[Union["VConcatSpecGenericSpec", dict]],
+                    ],
+                    Union["VConcatSpecGenericSpec", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -54355,31 +54495,33 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", List[str], str], Union["TitleParams", dict]],
+            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Union[
-                List["Transform"],
-                List[Union["AggregateTransform", dict]],
-                List[Union["BinTransform", dict]],
-                List[Union["CalculateTransform", dict]],
-                List[Union["DensityTransform", dict]],
-                List[Union["ExtentTransform", dict]],
-                List[Union["FilterTransform", dict]],
-                List[Union["FlattenTransform", dict]],
-                List[Union["FoldTransform", dict]],
-                List[Union["ImputeTransform", dict]],
-                List[Union["JoinAggregateTransform", dict]],
-                List[Union["LoessTransform", dict]],
-                List[Union["LookupTransform", dict]],
-                List[Union["PivotTransform", dict]],
-                List[Union["QuantileTransform", dict]],
-                List[Union["RegressionTransform", dict]],
-                List[Union["SampleTransform", dict]],
-                List[Union["StackTransform", dict]],
-                List[Union["TimeUnitTransform", dict]],
-                List[Union["WindowTransform", dict]],
+            Sequence[
+                Union[
+                    "Transform",
+                    Union["AggregateTransform", dict],
+                    Union["BinTransform", dict],
+                    Union["CalculateTransform", dict],
+                    Union["DensityTransform", dict],
+                    Union["ExtentTransform", dict],
+                    Union["FilterTransform", dict],
+                    Union["FlattenTransform", dict],
+                    Union["FoldTransform", dict],
+                    Union["ImputeTransform", dict],
+                    Union["JoinAggregateTransform", dict],
+                    Union["LoessTransform", dict],
+                    Union["LookupTransform", dict],
+                    Union["PivotTransform", dict],
+                    Union["QuantileTransform", dict],
+                    Union["RegressionTransform", dict],
+                    Union["SampleTransform", dict],
+                    Union["StackTransform", dict],
+                    Union["TimeUnitTransform", dict],
+                    Union["WindowTransform", dict],
+                ]
             ],
             UndefinedType,
         ] = Undefined,
@@ -54411,7 +54553,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -54427,6 +54569,19 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefGradientstringnullExprRef",
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54439,21 +54594,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
-                Union[
-                    List["ConditionalValueDefGradientstringnullExprRef"],
-                    List[
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
-                    ],
-                    List[
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ]
                     ],
                 ],
             ],
@@ -54490,7 +54630,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -54506,6 +54646,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringnullExprRef",
+                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDefTypeForShape",
                     Union[
@@ -54519,11 +54666,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringnullExprRef"],
-                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54549,7 +54691,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -54565,6 +54707,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberExprRef",
+                        Union["ConditionalParameterValueDefnumberExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54574,11 +54723,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefnumberExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54603,9 +54747,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    value : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -54619,6 +54763,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefnumberArrayExprRef",
+                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
+                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54629,16 +54780,11 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
                 ],
-                Union[
-                    List["ConditionalValueDefnumberArrayExprRef"],
-                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
-                ],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -54656,7 +54802,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -54672,6 +54818,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefstringnullExprRef",
+                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
+                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54681,11 +54834,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
-                Union[
-                    List["ConditionalValueDefstringnullExprRef"],
-                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54709,9 +54857,9 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
     Parameters
     ----------
 
-    condition : Union[List[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalStringFieldDef`, Union[:class:`ConditionalParameterStringFieldDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalStringFieldDef`, Union[:class:`ConditionalParameterStringFieldDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, List[str], str]]
+    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -54723,6 +54871,13 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         self,
         condition: Union[
             Union[
+                Sequence[
+                    Union[
+                        "ConditionalValueDefTextExprRef",
+                        Union["ConditionalParameterValueDefTextExprRef", dict],
+                        Union["ConditionalPredicateValueDefTextExprRef", dict],
+                    ]
+                ],
                 Union[
                     "ConditionalStringFieldDef",
                     Union["ConditionalParameterStringFieldDef", dict],
@@ -54733,18 +54888,13 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
                 ],
-                Union[
-                    List["ConditionalValueDefTextExprRef"],
-                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
-                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
-                ],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", List[str], str],
+                Union["Text", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54861,7 +55011,7 @@ class VariableParameter(TopLevelParameter):
 class Vector10string(VegaLiteSchema):
     """Vector10string schema wrapper
 
-    Union[:class:`Vector10string`, List[str]]
+    Union[:class:`Vector10string`, Sequence[str]]
     """
 
     _schema = {"$ref": "#/definitions/Vector10<string>"}
@@ -54873,7 +55023,7 @@ class Vector10string(VegaLiteSchema):
 class Vector12string(VegaLiteSchema):
     """Vector12string schema wrapper
 
-    Union[:class:`Vector12string`, List[str]]
+    Union[:class:`Vector12string`, Sequence[str]]
     """
 
     _schema = {"$ref": "#/definitions/Vector12<string>"}
@@ -54885,7 +55035,7 @@ class Vector12string(VegaLiteSchema):
 class Vector2DateTime(SelectionInitInterval):
     """Vector2DateTime schema wrapper
 
-    Union[:class:`Vector2DateTime`, List[Union[:class:`DateTime`, Dict[required=[]]]]]
+    Union[:class:`Vector2DateTime`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]]]
     """
 
     _schema = {"$ref": "#/definitions/Vector2<DateTime>"}
@@ -54897,7 +55047,8 @@ class Vector2DateTime(SelectionInitInterval):
 class Vector2Vector2number(VegaLiteSchema):
     """Vector2Vector2number schema wrapper
 
-    Union[:class:`Vector2Vector2number`, List[Union[:class:`Vector2number`, List[float]]]]
+    Union[:class:`Vector2Vector2number`, Sequence[Union[:class:`Vector2number`,
+    Sequence[float]]]]
     """
 
     _schema = {"$ref": "#/definitions/Vector2<Vector2<number>>"}
@@ -54909,7 +55060,7 @@ class Vector2Vector2number(VegaLiteSchema):
 class Vector2boolean(SelectionInitInterval):
     """Vector2boolean schema wrapper
 
-    Union[:class:`Vector2boolean`, List[bool]]
+    Union[:class:`Vector2boolean`, Sequence[bool]]
     """
 
     _schema = {"$ref": "#/definitions/Vector2<boolean>"}
@@ -54921,7 +55072,7 @@ class Vector2boolean(SelectionInitInterval):
 class Vector2number(SelectionInitInterval):
     """Vector2number schema wrapper
 
-    Union[:class:`Vector2number`, List[float]]
+    Union[:class:`Vector2number`, Sequence[float]]
     """
 
     _schema = {"$ref": "#/definitions/Vector2<number>"}
@@ -54933,7 +55084,7 @@ class Vector2number(SelectionInitInterval):
 class Vector2string(SelectionInitInterval):
     """Vector2string schema wrapper
 
-    Union[:class:`Vector2string`, List[str]]
+    Union[:class:`Vector2string`, Sequence[str]]
     """
 
     _schema = {"$ref": "#/definitions/Vector2<string>"}
@@ -54945,7 +55096,7 @@ class Vector2string(SelectionInitInterval):
 class Vector3number(VegaLiteSchema):
     """Vector3number schema wrapper
 
-    Union[:class:`Vector3number`, List[float]]
+    Union[:class:`Vector3number`, Sequence[float]]
     """
 
     _schema = {"$ref": "#/definitions/Vector3<number>"}
@@ -54957,7 +55108,7 @@ class Vector3number(VegaLiteSchema):
 class Vector7string(VegaLiteSchema):
     """Vector7string schema wrapper
 
-    Union[:class:`Vector7string`, List[str]]
+    Union[:class:`Vector7string`, Sequence[str]]
     """
 
     _schema = {"$ref": "#/definitions/Vector7<string>"}
@@ -55003,7 +55154,7 @@ class ViewBackground(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -55019,7 +55170,7 @@ class ViewBackground(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[Sequence[str], str]
         A string or array of strings indicating the name of custom styles to apply to the
         view background. A style is a named collection of mark property defaults defined
         within the `style configuration
@@ -55425,7 +55576,7 @@ class ViewBackground(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -55447,7 +55598,7 @@ class ViewBackground(VegaLiteSchema):
         strokeWidth: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         **kwds
     ):
         super(ViewBackground, self).__init__(
@@ -55532,7 +55683,7 @@ class ViewConfig(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    strokeDash : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
@@ -55951,7 +56102,7 @@ class ViewConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union["ExprRef", "_ParameterProtocol", dict]],
+            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -56135,9 +56286,9 @@ class WindowTransform(Transform):
     Parameters
     ----------
 
-    window : List[Union[:class:`WindowFieldDef`, Dict[required=[op, as]]]]
+    window : Sequence[Union[:class:`WindowFieldDef`, Dict[required=[op, as]]]]
         The definition of the fields in the window, and what calculations to use.
-    frame : List[Union[None, float]]
+    frame : Sequence[Union[None, float]]
         A frame specification as a two-element array indicating how the sliding window
         should proceed. The array entries should either be a number indicating the offset
         from the current data object, or null to indicate unbounded rows preceding or
@@ -56154,7 +56305,7 @@ class WindowTransform(Transform):
 
         **Default value:** :  ``[null, 0]`` (includes the current object and all preceding
         objects)
-    groupby : List[Union[:class:`FieldName`, str]]
+    groupby : Sequence[Union[:class:`FieldName`, str]]
         The data fields for partitioning the data objects into separate windows. If
         unspecified, all data points will be in a single window.
     ignorePeers : bool
@@ -56166,7 +56317,7 @@ class WindowTransform(Transform):
         last_value, and nth_value window operations.
 
         **Default value:** ``false``
-    sort : List[Union[:class:`SortField`, Dict[required=[field]]]]
+    sort : Sequence[Union[:class:`SortField`, Dict[required=[field]]]]
         A sort field definition for sorting data objects within a window. If two data
         objects are considered equal by the comparator, they are considered "peer" values of
         equal rank. If sort is not specified, the order is undefined: data objects are
@@ -56179,12 +56330,12 @@ class WindowTransform(Transform):
     def __init__(
         self,
         window: Union[
-            Union[List["WindowFieldDef"], List[dict]], UndefinedType
+            Sequence[Union["WindowFieldDef", dict]], UndefinedType
         ] = Undefined,
-        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
-        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
+        frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
-        sort: Union[Union[List["SortField"], List[dict]], UndefinedType] = Undefined,
+        sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
         **kwds
     ):
         super(WindowTransform, self).__init__(

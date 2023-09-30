@@ -412,7 +412,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     contents = [
         HEADER,
-        "from typing import Any, List, Literal, Union, Protocol",
+        "from typing import Any, Literal, Union, Protocol, Sequence, List",
         "from typing import Dict as TypingDict",
         "",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
@@ -449,7 +449,7 @@ def generate_vegalite_channel_wrappers(
             "import pandas as pd",
             "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
             "from altair.utils import parse_shorthand",
-            "from typing import Any, overload, List, Literal, Union",
+            "from typing import Any, overload, Sequence, List, Literal, Union",
         ]
     contents = [HEADER]
     contents.extend(imports)
@@ -525,7 +525,7 @@ def generate_vegalite_mark_mixin(
     class_name = "MarkMethodMixin"
 
     imports = [
-        "from typing import Any, List, Literal, Union",
+        "from typing import Any, Sequence, List, Literal, Union",
         "",
         "from altair.utils.schemapi import Undefined, UndefinedType",
         "from . import core",

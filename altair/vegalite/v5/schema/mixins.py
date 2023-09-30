@@ -7,7 +7,7 @@ import sys
 from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined, UndefinedType
-from typing import Any, List, Literal, Union
+from typing import Any, Sequence, List, Literal, Union
 
 
 if sys.version_info >= (3, 11):
@@ -862,7 +862,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -892,14 +892,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -1922,7 +1922,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -1952,14 +1952,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -2982,7 +2982,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -3012,14 +3012,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -4042,7 +4042,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -4072,14 +4072,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -5102,7 +5102,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -5132,14 +5132,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -6162,7 +6162,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -6192,14 +6192,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -7222,7 +7222,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -7252,14 +7252,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -8282,7 +8282,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -8312,14 +8312,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -9342,7 +9342,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -9372,14 +9372,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -10402,7 +10402,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -10432,14 +10432,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -11462,7 +11462,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -11492,14 +11492,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -12522,7 +12522,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -12552,14 +12552,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -13582,7 +13582,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -13612,14 +13612,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -14642,7 +14642,7 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
@@ -14672,14 +14672,14 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
-                Union[List[str], core.Text, str],
+                Union[Sequence[str], core.Text, str],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,

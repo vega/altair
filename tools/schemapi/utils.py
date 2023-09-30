@@ -292,24 +292,25 @@ class SchemaInfo:
                     list_content = type_reprs[0]
                 else:
                     list_content = f"Union[{', '.join(type_reprs)}]"
-                return f"List[{list_content}]"
+                return f"Sequence[{list_content}]"
 
-            if for_type_hints:
-                # A list is invariant in its type parameter. This means that e.g.
-                # List[str] is not a subtype of List[Union[core.FieldName, str]]
-                # and hence we would need to explicitly write out the combinations,
-                # so in this case:
-                # List[core.FieldName], List[str], List[core.FieldName, str]
-                # However, this can easily explode and so we revert to not allowing
-                # different types in the same list, hence the type hints for the
-                # above example would be Union[List[core.FieldName], List[str]]
-                # and does not contain List[core.FieldName, str] in the Union
-                for value_type in list_value_types:
-                    type_representations.append(_format_list([value_type]))
-            else:
-                # If it's for the docs, we don't care about invariance and prefer
-                # to keep the docstring somewhat shorter
-                type_representations.append(_format_list(list_value_types))
+            # A list is invariant in its type parameter. This means that e.g.
+            # List[str] is not a subtype of List[Union[core.FieldName, str]]
+            # and hence we would need to explicitly write out the combinations,
+            # so in this case:
+            # List[core.FieldName], List[str], List[core.FieldName, str]
+            # However, this can easily explode to too many combinations. 
+            # Furthermore, we would also need to add additional entries
+            # for e.g. int wherever a float is accepted which would lead to very
+            # long code.
+            # As suggested in the mypy docs,
+            # https://mypy.readthedocs.io/en/stable/common_issues.html#variance,
+            # we revert to using Sequence which works as well for lists and also
+            # includes tuples which are also supported by the SchemaBase.to_dict 
+            # method. However, it is not entirely accurate as some sequences
+            # such as e.g. a range are not supported by SchemaBase.to_dict but
+            # this tradeoff seems worth it.
+            type_representations.append(_format_list(list_value_types))
         elif self.type in jsonschema_to_python_types:
             type_representations.append(jsonschema_to_python_types[self.type])
         else:
