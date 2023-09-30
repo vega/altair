@@ -143,6 +143,7 @@ def test_parse_shorthand_with_data(object_dtype):
         {
             "x": [1, 2, 3, 4, 5],
             "y": ["A", "B", "C", "D", "E"],
+            "b": pd.Series([True, False, True, False, None], dtype="boolean"),
             "z": pd.date_range("2018-01-01", periods=5, freq="D"),
             "t": pd.date_range("2018-01-01", periods=5, freq="D").tz_localize("UTC"),
         }
@@ -153,6 +154,7 @@ def test_parse_shorthand_with_data(object_dtype):
 
     check("x", data, field="x", type="quantitative")
     check("y", data, field="y", type="nominal")
+    check("b", data, field="b", type="nominal")
     check("z", data, field="z", type="temporal")
     check("t", data, field="t", type="temporal")
     check("count(x)", data, field="x", aggregate="count", type="quantitative")
