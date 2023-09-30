@@ -47,9 +47,9 @@ class VegaLiteSchema(SchemaBase):
 class Root(VegaLiteSchema):
     """Root schema wrapper
 
-    Union[:class:`TopLevelConcatSpec`, :class:`TopLevelHConcatSpec`, :class:`TopLevelFacetSpec`,
-    :class:`TopLevelVConcatSpec`, :class:`TopLevelRepeatSpec`, :class:`TopLevelLayerSpec`,
-    :class:`TopLevelUnitSpec`]
+    Union[:class:`TopLevelVConcatSpec`, :class:`TopLevelConcatSpec`, :class:`TopLevelUnitSpec`,
+    :class:`TopLevelLayerSpec`, :class:`TopLevelRepeatSpec`, :class:`TopLevelFacetSpec`,
+    :class:`TopLevelHConcatSpec`]
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
@@ -63,7 +63,7 @@ class Root(VegaLiteSchema):
 class Aggregate(VegaLiteSchema):
     """Aggregate schema wrapper
 
-    Union[:class:`NonArgAggregateOp`, :class:`ArgmaxDef`, :class:`ArgminDef`]
+    Union[:class:`ArgminDef`, :class:`NonArgAggregateOp`, :class:`ArgmaxDef`]
     """
 
     _schema = {"$ref": "#/definitions/Aggregate"}
@@ -158,7 +158,7 @@ class Align(VegaLiteSchema):
 class AnyMark(VegaLiteSchema):
     """AnyMark schema wrapper
 
-    Union[:class:`MarkDef`, :class:`Mark`, :class:`CompositeMarkDef`, :class:`CompositeMark`]
+    Union[:class:`MarkDef`, :class:`CompositeMarkDef`, :class:`Mark`, :class:`CompositeMark`]
     """
 
     _schema = {"$ref": "#/definitions/AnyMark"}
@@ -170,8 +170,8 @@ class AnyMark(VegaLiteSchema):
 class AnyMarkConfig(VegaLiteSchema):
     """AnyMarkConfig schema wrapper
 
-    Union[:class:`MarkConfig`, :class:`RectConfig`, :class:`AreaConfig`, :class:`LineConfig`,
-    :class:`TickConfig`, :class:`BarConfig`]
+    Union[:class:`BarConfig`, :class:`RectConfig`, :class:`MarkConfig`, :class:`LineConfig`,
+    :class:`AreaConfig`, :class:`TickConfig`]
     """
 
     _schema = {"$ref": "#/definitions/AnyMarkConfig"}
@@ -188,14 +188,14 @@ class AreaConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -211,9 +211,9 @@ class AreaConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -224,13 +224,13 @@ class AreaConfig(AnyMarkConfig):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -263,7 +263,7 @@ class AreaConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -271,7 +271,7 @@ class AreaConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -290,7 +290,7 @@ class AreaConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -315,7 +315,7 @@ class AreaConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -409,7 +409,7 @@ class AreaConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : Union[:class:`ExprRef`, float]
         The angular padding applied to sides of the arc, in radians.
-    point : Union[bool, :class:`OverlayMarkDef`, str]
+    point : Union[str, bool, :class:`OverlayMarkDef`]
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -435,7 +435,7 @@ class AreaConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -467,7 +467,7 @@ class AreaConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -475,21 +475,21 @@ class AreaConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -508,7 +508,7 @@ class AreaConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -527,7 +527,7 @@ class AreaConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -581,25 +581,25 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -617,13 +617,13 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -632,13 +632,13 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -646,13 +646,13 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -667,7 +667,7 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
@@ -675,7 +675,7 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         line: Union[Union["OverlayMarkDef", bool], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -691,7 +691,7 @@ class AreaConfig(AnyMarkConfig):
         padAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        point: Union[Union["OverlayMarkDef", bool, str], UndefinedType] = Undefined,
+        point: Union[Union["OverlayMarkDef", str, bool], UndefinedType] = Undefined,
         radius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
@@ -699,33 +699,33 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -743,7 +743,7 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -755,13 +755,13 @@ class AreaConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -772,16 +772,16 @@ class AreaConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -964,7 +964,7 @@ class Axis(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -989,16 +989,16 @@ class Axis(VegaLiteSchema):
         part of the axis.
 
         **Default value:** ``true``
-    domainCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    domainCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for the domain line's ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    domainColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    domainColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
-    domainDash : Union[List[float], :class:`ExprRef`]
+    domainDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : Union[:class:`ExprRef`, float]
         The pixel offset at which to start drawing with the domain dash array.
@@ -1008,7 +1008,7 @@ class Axis(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -1048,41 +1048,41 @@ class Axis(VegaLiteSchema):
         **Default value:** ``true`` for `continuous scales
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
-    gridCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    gridCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for grid lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    gridColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    gridColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
-    gridDash : Union[List[float], :class:`ConditionalAxisNumberArray`, :class:`ExprRef`]
+    gridDash : Union[:class:`ExprRef`, :class:`ConditionalAxisNumberArray`, List[float]]
         An array of alternating [stroke, space] lengths for dashed grid lines.
-    gridDashOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridDashOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The pixel offset at which to start drawing with the grid dash array.
-    gridOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The stroke opacity of grid (value between [0,1])
 
         **Default value:** ``1``
-    gridWidth : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridWidth : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The grid width, in pixels.
 
         **Default value:** ``1``
-    labelAlign : Union[:class:`ConditionalAxisLabelAlign`, :class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`ConditionalAxisLabelAlign`, :class:`Align`]
         Horizontal text alignment of axis tick labels, overriding the default setting for
         the current axis orientation.
     labelAngle : Union[:class:`ExprRef`, float]
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`]
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
         and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
         are calculated relative to the *lineHeight* rather than *fontSize* alone.
-    labelBound : Union[Union[bool, float], :class:`ExprRef`]
+    labelBound : Union[:class:`ExprRef`, Union[float, bool]]
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
         (the default) no bounds overlap analysis is performed. If ``true``, labels will be
         hidden if they exceed the axis range by more than 1 pixel. If this property is a
@@ -1090,7 +1090,7 @@ class Axis(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    labelColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         The color of the tick label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -1098,7 +1098,7 @@ class Axis(VegaLiteSchema):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    labelFlush : Union[bool, float]
+    labelFlush : Union[float, bool]
         Indicates if the first and last axis labels should be aligned flush with the scale
         range. Flush alignment for a horizontal axis will left-align the first label and
         right-align the last label. For vertical axes, bottom and top text baselines are
@@ -1116,13 +1116,13 @@ class Axis(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : Union[:class:`ConditionalAxisString`, :class:`ExprRef`, str]
+    labelFont : Union[:class:`ExprRef`, str, :class:`ConditionalAxisString`]
         The font of the tick label.
-    labelFontSize : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelFontSize : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The font size of the label, in pixels.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ConditionalAxisLabelFontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`, :class:`FontStyle`]
         Font style of the title.
-    labelFontWeight : Union[:class:`ConditionalAxisLabelFontWeight`, :class:`FontWeight`, :class:`ExprRef`]
+    labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`]
         Font weight of axis tick labels.
     labelLimit : Union[:class:`ExprRef`, float]
         Maximum allowed pixel width of axis tick labels.
@@ -1131,11 +1131,11 @@ class Axis(VegaLiteSchema):
     labelLineHeight : Union[:class:`ExprRef`, float]
         Line height in pixels for multi-line label text or label text with ``"line-top"`` or
         ``"line-bottom"`` baseline.
-    labelOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         Position offset in pixels to apply to labels, in addition to tickOffset.
 
         **Default value:** ``0``
-    labelOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The opacity of the labels.
     labelOverlap : Union[:class:`LabelOverlap`, :class:`ExprRef`]
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
@@ -1147,7 +1147,7 @@ class Axis(VegaLiteSchema):
 
         **Default value:** ``true`` for non-nominal fields with non-log scales; ``"greedy"``
         for log scales; otherwise ``false``.
-    labelPadding : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelPadding : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The padding in pixels between labels and ticks.
 
         **Default value:** ``2``
@@ -1176,7 +1176,7 @@ class Axis(VegaLiteSchema):
         **Default value:** derived from the `axis config
         <https://vega.github.io/vega-lite/docs/config.html#facet-scale-config>`__ 's
         ``offset`` ( ``0`` by default)
-    orient : Union[:class:`AxisOrient`, :class:`ExprRef`]
+    orient : Union[:class:`ExprRef`, :class:`AxisOrient`]
         The orientation of the axis. One of ``"top"``, ``"bottom"``, ``"left"`` or
         ``"right"``. The orientation can be used to further specialize the axis type (e.g.,
         a y-axis oriented towards the right edge of the chart).
@@ -1188,7 +1188,7 @@ class Axis(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -1197,19 +1197,19 @@ class Axis(VegaLiteSchema):
         **Default value:** (none) **Note:** Any specified style will augment the default
         style. For example, an x-axis mark with ``"style": "foo"`` will use ``config.axisX``
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
-    tickBand : Union[Literal['center', 'extent'], :class:`ExprRef`]
+    tickBand : Union[:class:`ExprRef`, Literal['center', 'extent']]
         For band scales, indicates if ticks and grid lines should be placed at the
         ``"center"`` of a band (default) or at the band ``"extent"`` s to indicate intervals
-    tickCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    tickCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    tickColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    tickColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         The color of the axis's tick.
 
         **Default value:** ``"gray"``
-    tickCount : Union[:class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`, float]
+    tickCount : Union[:class:`ExprRef`, :class:`TimeIntervalStep`, float, :class:`TimeInterval`]
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
         within the underlying scale's range.
@@ -1223,9 +1223,9 @@ class Axis(VegaLiteSchema):
 
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
-    tickDash : Union[List[float], :class:`ConditionalAxisNumberArray`, :class:`ExprRef`]
+    tickDash : Union[:class:`ExprRef`, :class:`ConditionalAxisNumberArray`, List[float]]
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
-    tickDashOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickDashOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : bool
         Boolean flag indicating if an extra axis tick should be added for the initial
@@ -1239,18 +1239,18 @@ class Axis(VegaLiteSchema):
         necessary, to enforce the minimum step value.
     tickOffset : Union[:class:`ExprRef`, float]
         Position offset in pixels to apply to ticks, labels, and gridlines.
-    tickOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         Opacity of the ticks.
     tickRound : bool
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
         **Default value:** ``true``
-    tickSize : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickSize : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The size in pixels of axis ticks.
 
         **Default value:** ``5``
-    tickWidth : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickWidth : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The width, in pixels, of ticks.
 
         **Default value:** ``1``
@@ -1258,7 +1258,7 @@ class Axis(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -1278,25 +1278,25 @@ class Axis(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment of axis titles.
-    titleAnchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    titleAnchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         Text anchor position for placing axis titles.
     titleAngle : Union[:class:`ExprRef`, float]
         Angle in degrees of axis titles.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
         alone.
-    titleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    titleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Color of the title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : Union[:class:`ExprRef`, float]
         Font size of the title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style of the title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight of the title. This can be either a string (e.g ``"bold"``, ``"normal"``
@@ -1323,7 +1323,7 @@ class Axis(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : Union[List[str], :class:`ExprRef`, List[bool], List[:class:`DateTime`], List[float]]
+    values : Union[List[:class:`DateTime`], List[float], List[str], :class:`ExprRef`, List[bool]]
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -1338,23 +1338,23 @@ class Axis(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         domainColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -1365,45 +1365,45 @@ class Axis(VegaLiteSchema):
         domainWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         gridColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
                 "ExprRef",
                 "_ParameterProtocol",
+                List[float],
                 "ConditionalAxisNumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         gridWidth: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                "ConditionalAxisLabelAlign", "ExprRef", "_ParameterProtocol", "Align"
+                "ExprRef", "_ParameterProtocol", "ConditionalAxisLabelAlign", "Align"
             ],
             UndefinedType,
         ] = Undefined,
@@ -1412,53 +1412,53 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                "TextBaseline",
-                "ConditionalAxisLabelBaseline",
                 "ExprRef",
                 "_ParameterProtocol",
+                "TextBaseline",
+                "ConditionalAxisLabelBaseline",
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union[bool, float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", Union[float, bool]], UndefinedType
         ] = Undefined,
         labelColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
-        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlush: Union[Union[float, bool], UndefinedType] = Undefined,
         labelFlushOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFont: Union[
-            Union["ConditionalAxisString", "ExprRef", "_ParameterProtocol", str],
+            Union[str, "ExprRef", "_ParameterProtocol", "ConditionalAxisString"],
             UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                "ConditionalAxisLabelFontStyle",
-                "FontStyle",
                 "ExprRef",
                 "_ParameterProtocol",
+                "FontStyle",
+                "ConditionalAxisLabelFontStyle",
             ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
                 "FontWeight",
-                "ConditionalAxisLabelFontWeight",
                 "ExprRef",
                 "_ParameterProtocol",
+                "ConditionalAxisLabelFontWeight",
             ],
             UndefinedType,
         ] = Undefined,
@@ -1469,18 +1469,18 @@ class Axis(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LabelOverlap"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
@@ -1497,49 +1497,49 @@ class Axis(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         orient: Union[
-            Union["AxisOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "AxisOrient"], UndefinedType
         ] = Undefined,
         position: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Literal["center", "extent"]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         tickColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                "TimeIntervalStep",
-                "TimeInterval",
                 "ExprRef",
                 "_ParameterProtocol",
                 float,
+                "TimeIntervalStep",
+                "TimeInterval",
             ],
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
                 "ExprRef",
                 "_ParameterProtocol",
+                List[float],
                 "ConditionalAxisNumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
@@ -1550,43 +1550,43 @@ class Axis(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickWidth: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         titleAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         titleAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -1614,12 +1614,12 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[str],
-                List["DateTime"],
-                List[bool],
                 "ExprRef",
                 "_ParameterProtocol",
                 List[float],
+                List[str],
+                List["DateTime"],
+                List[bool],
             ],
             UndefinedType,
         ] = Undefined,
@@ -1717,7 +1717,7 @@ class AxisConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -1744,16 +1744,16 @@ class AxisConfig(VegaLiteSchema):
         part of the axis.
 
         **Default value:** ``true``
-    domainCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    domainCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for the domain line's ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    domainColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    domainColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
-    domainDash : Union[List[float], :class:`ExprRef`]
+    domainDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating [stroke, space] lengths for dashed domain lines.
     domainDashOffset : Union[:class:`ExprRef`, float]
         The pixel offset at which to start drawing with the domain dash array.
@@ -1763,7 +1763,7 @@ class AxisConfig(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -1803,41 +1803,41 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** ``true`` for `continuous scales
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
-    gridCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    gridCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for grid lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    gridColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    gridColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
-    gridDash : Union[List[float], :class:`ConditionalAxisNumberArray`, :class:`ExprRef`]
+    gridDash : Union[:class:`ExprRef`, :class:`ConditionalAxisNumberArray`, List[float]]
         An array of alternating [stroke, space] lengths for dashed grid lines.
-    gridDashOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridDashOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The pixel offset at which to start drawing with the grid dash array.
-    gridOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The stroke opacity of grid (value between [0,1])
 
         **Default value:** ``1``
-    gridWidth : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    gridWidth : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The grid width, in pixels.
 
         **Default value:** ``1``
-    labelAlign : Union[:class:`ConditionalAxisLabelAlign`, :class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`ConditionalAxisLabelAlign`, :class:`Align`]
         Horizontal text alignment of axis tick labels, overriding the default setting for
         the current axis orientation.
     labelAngle : Union[:class:`ExprRef`, float]
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`]
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
         and ``"line-bottom"`` values operate similarly to ``"top"`` and ``"bottom"``, but
         are calculated relative to the *lineHeight* rather than *fontSize* alone.
-    labelBound : Union[Union[bool, float], :class:`ExprRef`]
+    labelBound : Union[:class:`ExprRef`, Union[float, bool]]
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
         (the default) no bounds overlap analysis is performed. If ``true``, labels will be
         hidden if they exceed the axis range by more than 1 pixel. If this property is a
@@ -1845,7 +1845,7 @@ class AxisConfig(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    labelColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         The color of the tick label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -1853,7 +1853,7 @@ class AxisConfig(VegaLiteSchema):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    labelFlush : Union[bool, float]
+    labelFlush : Union[float, bool]
         Indicates if the first and last axis labels should be aligned flush with the scale
         range. Flush alignment for a horizontal axis will left-align the first label and
         right-align the last label. For vertical axes, bottom and top text baselines are
@@ -1871,13 +1871,13 @@ class AxisConfig(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : Union[:class:`ConditionalAxisString`, :class:`ExprRef`, str]
+    labelFont : Union[:class:`ExprRef`, str, :class:`ConditionalAxisString`]
         The font of the tick label.
-    labelFontSize : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelFontSize : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The font size of the label, in pixels.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ConditionalAxisLabelFontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`ConditionalAxisLabelFontStyle`, :class:`FontStyle`]
         Font style of the title.
-    labelFontWeight : Union[:class:`ConditionalAxisLabelFontWeight`, :class:`FontWeight`, :class:`ExprRef`]
+    labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`, :class:`ConditionalAxisLabelFontWeight`]
         Font weight of axis tick labels.
     labelLimit : Union[:class:`ExprRef`, float]
         Maximum allowed pixel width of axis tick labels.
@@ -1886,11 +1886,11 @@ class AxisConfig(VegaLiteSchema):
     labelLineHeight : Union[:class:`ExprRef`, float]
         Line height in pixels for multi-line label text or label text with ``"line-top"`` or
         ``"line-bottom"`` baseline.
-    labelOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         Position offset in pixels to apply to labels, in addition to tickOffset.
 
         **Default value:** ``0``
-    labelOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The opacity of the labels.
     labelOverlap : Union[:class:`LabelOverlap`, :class:`ExprRef`]
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
@@ -1902,7 +1902,7 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value:** ``true`` for non-nominal fields with non-log scales; ``"greedy"``
         for log scales; otherwise ``false``.
-    labelPadding : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    labelPadding : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The padding in pixels between labels and ticks.
 
         **Default value:** ``2``
@@ -1931,7 +1931,7 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** derived from the `axis config
         <https://vega.github.io/vega-lite/docs/config.html#facet-scale-config>`__ 's
         ``offset`` ( ``0`` by default)
-    orient : Union[:class:`AxisOrient`, :class:`ExprRef`]
+    orient : Union[:class:`ExprRef`, :class:`AxisOrient`]
         The orientation of the axis. One of ``"top"``, ``"bottom"``, ``"left"`` or
         ``"right"``. The orientation can be used to further specialize the axis type (e.g.,
         a y-axis oriented towards the right edge of the chart).
@@ -1943,7 +1943,7 @@ class AxisConfig(VegaLiteSchema):
         orientation, this sets the axis group y coordinate.
 
         **Default value** : ``0``
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A string or array of strings indicating the name of custom styles to apply to the
         axis. A style is a named collection of axis property defined within the `style
         configuration <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If
@@ -1952,19 +1952,19 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** (none) **Note:** Any specified style will augment the default
         style. For example, an x-axis mark with ``"style": "foo"`` will use ``config.axisX``
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
-    tickBand : Union[Literal['center', 'extent'], :class:`ExprRef`]
+    tickBand : Union[:class:`ExprRef`, Literal['center', 'extent']]
         For band scales, indicates if ticks and grid lines should be placed at the
         ``"center"`` of a band (default) or at the band ``"extent"`` s to indicate intervals
-    tickCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    tickCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    tickColor : Union[Union[None, :class:`Color`], :class:`ExprRef`, :class:`ConditionalAxisColor`]
+    tickColor : Union[:class:`ExprRef`, :class:`ConditionalAxisColor`, Union[:class:`Color`, None]]
         The color of the axis's tick.
 
         **Default value:** ``"gray"``
-    tickCount : Union[:class:`TimeInterval`, :class:`TimeIntervalStep`, :class:`ExprRef`, float]
+    tickCount : Union[:class:`ExprRef`, :class:`TimeIntervalStep`, float, :class:`TimeInterval`]
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
         within the underlying scale's range.
@@ -1978,9 +1978,9 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value** : Determine using a formula ``ceil(width/40)`` for x and
         ``ceil(height/40)`` for y.
-    tickDash : Union[List[float], :class:`ConditionalAxisNumberArray`, :class:`ExprRef`]
+    tickDash : Union[:class:`ExprRef`, :class:`ConditionalAxisNumberArray`, List[float]]
         An array of alternating [stroke, space] lengths for dashed tick mark lines.
-    tickDashOffset : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickDashOffset : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : bool
         Boolean flag indicating if an extra axis tick should be added for the initial
@@ -1994,18 +1994,18 @@ class AxisConfig(VegaLiteSchema):
         necessary, to enforce the minimum step value.
     tickOffset : Union[:class:`ExprRef`, float]
         Position offset in pixels to apply to ticks, labels, and gridlines.
-    tickOpacity : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickOpacity : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         Opacity of the ticks.
     tickRound : bool
         Boolean flag indicating if pixel position values should be rounded to the nearest
         integer.
 
         **Default value:** ``true``
-    tickSize : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickSize : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The size in pixels of axis ticks.
 
         **Default value:** ``5``
-    tickWidth : Union[:class:`ConditionalAxisNumber`, :class:`ExprRef`, float]
+    tickWidth : Union[:class:`ExprRef`, :class:`ConditionalAxisNumber`, float]
         The width, in pixels, of ticks.
 
         **Default value:** ``1``
@@ -2013,7 +2013,7 @@ class AxisConfig(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -2033,25 +2033,25 @@ class AxisConfig(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment of axis titles.
-    titleAnchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    titleAnchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         Text anchor position for placing axis titles.
     titleAngle : Union[:class:`ExprRef`, float]
         Angle in degrees of axis titles.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
         alone.
-    titleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    titleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Color of the title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         Font of the title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : Union[:class:`ExprRef`, float]
         Font size of the title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style of the title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight of the title. This can be either a string (e.g ``"bold"``, ``"normal"``
@@ -2078,7 +2078,7 @@ class AxisConfig(VegaLiteSchema):
         to zero).
 
         **Default value:** ``0.5``
-    values : Union[List[str], :class:`ExprRef`, List[bool], List[:class:`DateTime`], List[float]]
+    values : Union[List[:class:`DateTime`], List[float], List[str], :class:`ExprRef`, List[bool]]
         Explicitly set the visible axis tick values.
     zindex : float
         A non-negative integer indicating the z-index of the axis. If zindex is 0, axes
@@ -2093,24 +2093,24 @@ class AxisConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         domainColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         domainDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -2121,45 +2121,45 @@ class AxisConfig(VegaLiteSchema):
         domainWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         gridColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
             Union[
-                List[float],
                 "ExprRef",
                 "_ParameterProtocol",
+                List[float],
                 "ConditionalAxisNumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         gridWidth: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                "ConditionalAxisLabelAlign", "ExprRef", "_ParameterProtocol", "Align"
+                "ExprRef", "_ParameterProtocol", "ConditionalAxisLabelAlign", "Align"
             ],
             UndefinedType,
         ] = Undefined,
@@ -2168,53 +2168,53 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                "TextBaseline",
-                "ConditionalAxisLabelBaseline",
                 "ExprRef",
                 "_ParameterProtocol",
+                "TextBaseline",
+                "ConditionalAxisLabelBaseline",
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union[bool, float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", Union[float, bool]], UndefinedType
         ] = Undefined,
         labelColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
-        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlush: Union[Union[float, bool], UndefinedType] = Undefined,
         labelFlushOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFont: Union[
-            Union["ConditionalAxisString", "ExprRef", "_ParameterProtocol", str],
+            Union[str, "ExprRef", "_ParameterProtocol", "ConditionalAxisString"],
             UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                "ConditionalAxisLabelFontStyle",
-                "FontStyle",
                 "ExprRef",
                 "_ParameterProtocol",
+                "FontStyle",
+                "ConditionalAxisLabelFontStyle",
             ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
                 "FontWeight",
-                "ConditionalAxisLabelFontWeight",
                 "ExprRef",
                 "_ParameterProtocol",
+                "ConditionalAxisLabelFontWeight",
             ],
             UndefinedType,
         ] = Undefined,
@@ -2225,18 +2225,18 @@ class AxisConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LabelOverlap"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
@@ -2253,49 +2253,49 @@ class AxisConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         orient: Union[
-            Union["AxisOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "AxisOrient"], UndefinedType
         ] = Undefined,
         position: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Literal["center", "extent"]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         tickColor: Union[
             Union[
+                Union["Color", None],
                 "ExprRef",
                 "_ParameterProtocol",
                 "ConditionalAxisColor",
-                Union[None, "Color"],
             ],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                "TimeIntervalStep",
-                "TimeInterval",
                 "ExprRef",
                 "_ParameterProtocol",
                 float,
+                "TimeIntervalStep",
+                "TimeInterval",
             ],
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
             Union[
-                List[float],
                 "ExprRef",
                 "_ParameterProtocol",
+                List[float],
                 "ConditionalAxisNumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
@@ -2306,43 +2306,43 @@ class AxisConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         tickWidth: Union[
-            Union["ConditionalAxisNumber", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", "ConditionalAxisNumber", float],
             UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         titleAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         titleAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -2370,12 +2370,12 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[str],
-                List["DateTime"],
-                List[bool],
                 "ExprRef",
                 "_ParameterProtocol",
                 List[float],
+                List[str],
+                List["DateTime"],
+                List[bool],
             ],
             UndefinedType,
         ] = Undefined,
@@ -2524,14 +2524,14 @@ class BarConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -2547,9 +2547,9 @@ class BarConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -2565,13 +2565,13 @@ class BarConfig(AnyMarkConfig):
         (preferred by statisticians) or 1 (Vega-Lite default, D3 example style).
 
         **Default value:** ``1``
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -2612,7 +2612,7 @@ class BarConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -2620,7 +2620,7 @@ class BarConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -2642,7 +2642,7 @@ class BarConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -2667,7 +2667,7 @@ class BarConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -2763,7 +2763,7 @@ class BarConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -2795,7 +2795,7 @@ class BarConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -2803,21 +2803,21 @@ class BarConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -2836,7 +2836,7 @@ class BarConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -2855,7 +2855,7 @@ class BarConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -2909,26 +2909,26 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
@@ -2950,16 +2950,16 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[
-            Union["RelativeBandSize", float], UndefinedType
+            Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -2968,13 +2968,13 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -2982,13 +2982,13 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -3003,14 +3003,14 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -3036,33 +3036,33 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -3080,7 +3080,7 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -3092,13 +3092,13 @@ class BarConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -3109,16 +3109,16 @@ class BarConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -3212,13 +3212,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
     align : :class:`Align`
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
         ``"right"``.
-    anchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    anchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         The anchor position for placing the title and subtitle text. One of ``"start"``,
         ``"middle"``, or ``"end"``. For example, with an orientation of top these anchor
         positions map to a left-, center-, or right-aligned title.
     angle : Union[:class:`ExprRef`, float]
         Angle in degrees of title and subtitle text.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -3231,7 +3231,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    color : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for title text.
     dx : Union[:class:`ExprRef`, float]
         Delta offset for title and subtitle text x-coordinate.
@@ -3241,13 +3241,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         Font name for title text.
     fontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for title text.
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for title text.
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : Union[Union[:class:`TitleFrame`, str], :class:`ExprRef`]
+    frame : Union[:class:`ExprRef`, Union[:class:`TitleFrame`, str]]
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -3261,13 +3261,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         position along the edge of the chart.
     orient : Union[:class:`TitleOrient`, :class:`ExprRef`]
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
-    subtitleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    subtitleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for subtitle text.
     subtitleFont : Union[:class:`ExprRef`, str]
         Font name for subtitle text.
     subtitleFontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for subtitle text.
-    subtitleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    subtitleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for subtitle text.
     subtitleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
@@ -3290,17 +3290,17 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         self,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
         anchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         angle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
-        baseline: Union[Union["Baseline", str], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline"], UndefinedType] = Undefined,
         color: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -3309,19 +3309,19 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            Union[Union[str, "TitleFrame"], "ExprRef", "_ParameterProtocol"],
             UndefinedType,
         ] = Undefined,
         limit: Union[
@@ -3337,16 +3337,16 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -3488,8 +3488,8 @@ class BinParams(VegaLiteSchema):
 class Binding(VegaLiteSchema):
     """Binding schema wrapper
 
-    Union[:class:`BindInput`, :class:`BindCheckbox`, :class:`BindRange`, :class:`BindDirect`,
-    :class:`BindRadioSelect`]
+    Union[:class:`BindDirect`, :class:`BindRadioSelect`, :class:`BindCheckbox`,
+    :class:`BindInput`, :class:`BindRange`]
     """
 
     _schema = {"$ref": "#/definitions/Binding"}
@@ -3562,7 +3562,7 @@ class BindDirect(Binding):
 
     def __init__(
         self,
-        element: Union[Union[dict, "Element"], UndefinedType] = Undefined,
+        element: Union[Union["Element", dict], UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         event: Union[str, UndefinedType] = Undefined,
         **kwds
@@ -3777,7 +3777,7 @@ class BoxPlotConfig(VegaLiteSchema):
 
     box : Union[bool, :class:`AnyMarkConfig`]
 
-    extent : Union[float, str]
+    extent : Union[str, float]
         The extent of the whiskers. Available options include:
 
 
@@ -3805,13 +3805,13 @@ class BoxPlotConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        box: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        extent: Union[Union[float, str], UndefinedType] = Undefined,
-        median: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        outliers: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        box: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        extent: Union[Union[str, float], UndefinedType] = Undefined,
+        median: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        outliers: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        rule: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        ticks: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(BoxPlotConfig, self).__init__(
@@ -3905,9 +3905,9 @@ class BrushConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fill: Union[Union["HexColor", "ColorName", str], UndefinedType] = Undefined,
+        fill: Union[Union[str, "HexColor", "ColorName"], UndefinedType] = Undefined,
         fillOpacity: Union[float, UndefinedType] = Undefined,
-        stroke: Union[Union["HexColor", "ColorName", str], UndefinedType] = Undefined,
+        stroke: Union[Union[str, "HexColor", "ColorName"], UndefinedType] = Undefined,
         strokeDash: Union[List[float], UndefinedType] = Undefined,
         strokeDashOffset: Union[float, UndefinedType] = Undefined,
         strokeOpacity: Union[float, UndefinedType] = Undefined,
@@ -3930,7 +3930,7 @@ class BrushConfig(VegaLiteSchema):
 class Color(VegaLiteSchema):
     """Color schema wrapper
 
-    Union[:class:`ColorName`, :class:`HexColor`, str]
+    Union[str, :class:`ColorName`, :class:`HexColor`]
     """
 
     _schema = {"$ref": "#/definitions/Color"}
@@ -3942,8 +3942,8 @@ class Color(VegaLiteSchema):
 class ColorDef(VegaLiteSchema):
     """ColorDef schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`]
     """
 
@@ -3990,8 +3990,8 @@ class ColorName(Color):
 class ColorScheme(VegaLiteSchema):
     """ColorScheme schema wrapper
 
-    Union[:class:`Categorical`, :class:`SequentialMultiHue`, :class:`SequentialSingleHue`,
-    :class:`Cyclical`, :class:`Diverging`]
+    Union[:class:`SequentialMultiHue`, :class:`Diverging`, :class:`Categorical`,
+    :class:`Cyclical`, :class:`SequentialSingleHue`]
     """
 
     _schema = {"$ref": "#/definitions/ColorScheme"}
@@ -4016,7 +4016,7 @@ class Categorical(ColorScheme):
 class CompositeMark(AnyMark):
     """CompositeMark schema wrapper
 
-    Union[:class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlot`]
+    Union[:class:`BoxPlot`, :class:`ErrorBand`, :class:`ErrorBar`]
     """
 
     _schema = {"$ref": "#/definitions/CompositeMark"}
@@ -4040,7 +4040,7 @@ class BoxPlot(CompositeMark):
 class CompositeMarkDef(AnyMark):
     """CompositeMarkDef schema wrapper
 
-    Union[:class:`ErrorBarDef`, :class:`BoxPlotDef`, :class:`ErrorBandDef`]
+    Union[:class:`ErrorBandDef`, :class:`BoxPlotDef`, :class:`ErrorBarDef`]
     """
 
     _schema = {"$ref": "#/definitions/CompositeMarkDef"}
@@ -4066,7 +4066,7 @@ class BoxPlotDef(CompositeMarkDef):
 
     clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -4079,7 +4079,7 @@ class BoxPlotDef(CompositeMarkDef):
           <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
-    extent : Union[float, str]
+    extent : Union[str, float]
         The extent of the whiskers. Available options include:
 
 
@@ -4125,20 +4125,20 @@ class BoxPlotDef(CompositeMarkDef):
     def __init__(
         self,
         type: Union[str, UndefinedType] = Undefined,
-        box: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        box: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
-        extent: Union[Union[float, str], UndefinedType] = Undefined,
+        extent: Union[Union[str, float], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        median: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        median: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outliers: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        outliers: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        rule: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        ticks: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(BoxPlotDef, self).__init__(
@@ -4207,7 +4207,7 @@ class CompositionConfig(VegaLiteSchema):
 class ConditionalAxisColor(VegaLiteSchema):
     """ConditionalAxisColor schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisColor"}
@@ -4219,7 +4219,7 @@ class ConditionalAxisColor(VegaLiteSchema):
 class ConditionalAxisLabelAlign(VegaLiteSchema):
     """ConditionalAxisLabelAlign schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelAlign"}
@@ -4231,7 +4231,7 @@ class ConditionalAxisLabelAlign(VegaLiteSchema):
 class ConditionalAxisLabelBaseline(VegaLiteSchema):
     """ConditionalAxisLabelBaseline schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelBaseline"}
@@ -4243,7 +4243,7 @@ class ConditionalAxisLabelBaseline(VegaLiteSchema):
 class ConditionalAxisLabelFontStyle(VegaLiteSchema):
     """ConditionalAxisLabelFontStyle schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontStyle"}
@@ -4255,7 +4255,7 @@ class ConditionalAxisLabelFontStyle(VegaLiteSchema):
 class ConditionalAxisLabelFontWeight(VegaLiteSchema):
     """ConditionalAxisLabelFontWeight schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontWeight"}
@@ -4267,7 +4267,7 @@ class ConditionalAxisLabelFontWeight(VegaLiteSchema):
 class ConditionalAxisNumber(VegaLiteSchema):
     """ConditionalAxisNumber schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisNumber"}
@@ -4279,7 +4279,7 @@ class ConditionalAxisNumber(VegaLiteSchema):
 class ConditionalAxisNumberArray(VegaLiteSchema):
     """ConditionalAxisNumberArray schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisNumberArray"}
@@ -4291,7 +4291,7 @@ class ConditionalAxisNumberArray(VegaLiteSchema):
 class ConditionalAxisPropertyAlignnull(VegaLiteSchema):
     """ConditionalAxisPropertyAlignnull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Align|null)>"}
@@ -4303,7 +4303,7 @@ class ConditionalAxisPropertyAlignnull(VegaLiteSchema):
 class ConditionalAxisPropertyColornull(VegaLiteSchema):
     """ConditionalAxisPropertyColornull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Color|null)>"}
@@ -4315,7 +4315,7 @@ class ConditionalAxisPropertyColornull(VegaLiteSchema):
 class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
     """ConditionalAxisPropertyFontStylenull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontStyle|null)>"}
@@ -4327,7 +4327,7 @@ class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
 class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
     """ConditionalAxisPropertyFontWeightnull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontWeight|null)>"}
@@ -4339,7 +4339,7 @@ class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
 class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
     """ConditionalAxisPropertyTextBaselinenull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(TextBaseline|null)>"}
@@ -4351,7 +4351,7 @@ class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
 class ConditionalAxisPropertynumberArraynull(VegaLiteSchema):
     """ConditionalAxisPropertynumberArraynull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number[]|null)>"}
@@ -4363,7 +4363,7 @@ class ConditionalAxisPropertynumberArraynull(VegaLiteSchema):
 class ConditionalAxisPropertynumbernull(VegaLiteSchema):
     """ConditionalAxisPropertynumbernull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number|null)>"}
@@ -4375,7 +4375,7 @@ class ConditionalAxisPropertynumbernull(VegaLiteSchema):
 class ConditionalAxisPropertystringnull(VegaLiteSchema):
     """ConditionalAxisPropertystringnull schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(string|null)>"}
@@ -4387,7 +4387,7 @@ class ConditionalAxisPropertystringnull(VegaLiteSchema):
 class ConditionalAxisString(VegaLiteSchema):
     """ConditionalAxisString schema wrapper
 
-    Union[Dict[required=[condition, expr]], Dict[required=[condition, value]]]
+    Union[Dict[required=[condition, value]], Dict[required=[condition, expr]]]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalAxisString"}
@@ -4412,8 +4412,8 @@ class ConditionalMarkPropFieldOrDatumDef(VegaLiteSchema):
 class ConditionalMarkPropFieldOrDatumDefTypeForShape(VegaLiteSchema):
     """ConditionalMarkPropFieldOrDatumDefTypeForShape schema wrapper
 
-    Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`,
-    :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`]
+    Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`,
+    :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalMarkPropFieldOrDatumDef<TypeForShape>"}
@@ -4631,7 +4631,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4670,7 +4670,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -4704,7 +4704,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4713,7 +4713,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -4810,18 +4810,18 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         self,
         param: Union[str, UndefinedType] = Undefined,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -4865,7 +4865,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4901,7 +4901,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -4935,7 +4935,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4944,7 +4944,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -5041,25 +5041,25 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -5109,7 +5109,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : Union[None, :class:`Gradient`, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, :class:`Gradient`, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5126,7 +5126,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None, "Gradient"], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -5148,7 +5148,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : Union[None, :class:`Gradient`, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, :class:`Gradient`, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5162,15 +5162,15 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None, "Gradient"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -5182,8 +5182,8 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
 class ConditionalValueDefTextExprRef(VegaLiteSchema):
     """ConditionalValueDefTextExprRef schema wrapper
 
-    Union[:class:`ConditionalPredicateValueDefTextExprRef`,
-    :class:`ConditionalParameterValueDefTextExprRef`]
+    Union[:class:`ConditionalParameterValueDefTextExprRef`,
+    :class:`ConditionalPredicateValueDefTextExprRef`]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(Text|ExprRef)>"}
@@ -5202,7 +5202,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : Union[:class:`Text`, :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, :class:`Text`]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5217,7 +5217,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -5237,7 +5237,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : Union[:class:`Text`, :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, :class:`Text`]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5249,15 +5249,15 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -5269,8 +5269,8 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 class ConditionalValueDefnumber(VegaLiteSchema):
     """ConditionalValueDefnumber schema wrapper
 
-    Union[:class:`ConditionalParameterValueDefnumber`,
-    :class:`ConditionalPredicateValueDefnumber`]
+    Union[:class:`ConditionalPredicateValueDefnumber`,
+    :class:`ConditionalParameterValueDefnumber`]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<number>"}
@@ -5334,10 +5334,10 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
@@ -5374,7 +5374,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : Union[List[float], :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, List[float]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5391,7 +5391,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -5413,7 +5413,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : Union[List[float], :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, List[float]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5427,15 +5427,15 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -5514,10 +5514,10 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
@@ -5534,8 +5534,8 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 class ConditionalValueDefstringExprRef(VegaLiteSchema):
     """ConditionalValueDefstringExprRef schema wrapper
 
-    Union[:class:`ConditionalParameterValueDefstringExprRef`,
-    :class:`ConditionalPredicateValueDefstringExprRef`]
+    Union[:class:`ConditionalPredicateValueDefstringExprRef`,
+    :class:`ConditionalParameterValueDefstringExprRef`]
     """
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(string|ExprRef)>"}
@@ -5569,7 +5569,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -5601,15 +5601,15 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -5643,7 +5643,7 @@ class ConditionalParameterValueDefstringnullExprRef(
 
     param : :class:`ParameterName`
         Filter using a parameter name.
-    value : Union[None, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5660,7 +5660,7 @@ class ConditionalParameterValueDefstringnullExprRef(
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -5682,7 +5682,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
 
     test : :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : Union[None, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5696,15 +5696,15 @@ class ConditionalPredicateValueDefstringnullExprRef(
         self,
         test: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -5785,7 +5785,7 @@ class Config(VegaLiteSchema):
         Config for y-quantitative axes.
     axisYTemporal : :class:`AxisConfig`
         Config for y-temporal axes.
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -5914,7 +5914,7 @@ class Config(VegaLiteSchema):
         exposed as `format in Vega-Expression
         <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
         set ``customFormatTypes`` to ``true`` to use this feature.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -6024,7 +6024,7 @@ class Config(VegaLiteSchema):
         axisYQuantitative: Union[dict, UndefinedType] = Undefined,
         axisYTemporal: Union[dict, UndefinedType] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bar: Union[dict, UndefinedType] = Undefined,
         boxplot: Union[dict, UndefinedType] = Undefined,
@@ -6048,7 +6048,7 @@ class Config(VegaLiteSchema):
         legend: Union[dict, UndefinedType] = Undefined,
         line: Union[dict, UndefinedType] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         locale: Union[dict, UndefinedType] = Undefined,
         mark: Union[dict, UndefinedType] = Undefined,
@@ -6190,7 +6190,7 @@ class Cyclical(ColorScheme):
 class Data(VegaLiteSchema):
     """Data schema wrapper
 
-    Union[:class:`Generator`, :class:`DataSource`]
+    Union[:class:`DataSource`, :class:`Generator`]
     """
 
     _schema = {"$ref": "#/definitions/Data"}
@@ -6202,8 +6202,8 @@ class Data(VegaLiteSchema):
 class DataFormat(VegaLiteSchema):
     """DataFormat schema wrapper
 
-    Union[:class:`TopoDataFormat`, :class:`DsvDataFormat`, :class:`JsonDataFormat`,
-    :class:`CsvDataFormat`]
+    Union[:class:`TopoDataFormat`, :class:`CsvDataFormat`, :class:`DsvDataFormat`,
+    :class:`JsonDataFormat`]
     """
 
     _schema = {"$ref": "#/definitions/DataFormat"}
@@ -6220,7 +6220,7 @@ class CsvDataFormat(DataFormat):
     Parameters
     ----------
 
-    parse : Union[None, :class:`Parse`]
+    parse : Union[:class:`Parse`, None]
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -6257,7 +6257,7 @@ class CsvDataFormat(DataFormat):
 class DataSource(Data):
     """DataSource schema wrapper
 
-    Union[:class:`NamedData`, :class:`InlineData`, :class:`UrlData`]
+    Union[:class:`InlineData`, :class:`NamedData`, :class:`UrlData`]
     """
 
     _schema = {"$ref": "#/definitions/DataSource"}
@@ -6378,7 +6378,7 @@ class DomainUnionWith(VegaLiteSchema):
     Parameters
     ----------
 
-    unionWith : Union[List[float], List[:class:`DateTime`], List[bool], List[str]]
+    unionWith : Union[List[float], List[str], List[:class:`DateTime`], List[bool]]
         Customized domain values to be union with the field's values or explicitly defined
         domain. Should be an array of valid scale domain values.
     """
@@ -6388,7 +6388,7 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Union[
-            Union[List[float], List["DateTime"], List[bool], List[str]], UndefinedType
+            Union[List["DateTime"], List[float], List[str], List[bool]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -6407,7 +6407,7 @@ class DsvDataFormat(DataFormat):
         The delimiter between records. The delimiter must be a single character (i.e., a
         single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are
         not.
-    parse : Union[None, :class:`Parse`]
+    parse : Union[:class:`Parse`, None]
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -6524,7 +6524,7 @@ class Encoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : Union[:class:`OrderValueDef`, :class:`OrderFieldDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
+    order : Union[:class:`OrderFieldDef`, :class:`OrderValueDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
         Order of the marks.
 
 
@@ -6608,7 +6608,7 @@ class Encoding(VegaLiteSchema):
     theta2 : :class:`Position2Def`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : Union[:class:`StringValueDefWithCondition`, None, List[:class:`StringFieldDef`], :class:`StringFieldDefWithCondition`]
+    tooltip : Union[:class:`StringValueDefWithCondition`, :class:`StringFieldDefWithCondition`, List[:class:`StringFieldDef`], None]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -6661,16 +6661,16 @@ class Encoding(VegaLiteSchema):
         self,
         angle: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
@@ -6680,21 +6680,21 @@ class Encoding(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         detail: Union[
-            Union[List["FieldDefWithoutScale"], "FieldDefWithoutScale"], UndefinedType
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
@@ -6704,28 +6704,28 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         key: Union[dict, UndefinedType] = Undefined,
         latitude: Union[
-            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+            Union["DatumDef", "LatLongFieldDef"], UndefinedType
         ] = Undefined,
         latitude2: Union[
             Union["DatumDef", "PositionValueDef", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         longitude: Union[
-            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+            Union["DatumDef", "LatLongFieldDef"], UndefinedType
         ] = Undefined,
         longitude2: Union[
             Union["DatumDef", "PositionValueDef", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         opacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         order: Union[
             Union[
-                "OrderValueDef", "OrderOnlyDef", "OrderFieldDef", List["OrderFieldDef"]
+                "OrderOnlyDef", "OrderValueDef", "OrderFieldDef", List["OrderFieldDef"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -6738,24 +6738,24 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         shape: Union[
             Union[
-                "FieldOrDatumDefWithConditionDatumDefstringnull",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
+                "FieldOrDatumDefWithConditionDatumDefstringnull",
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         stroke: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
@@ -6763,32 +6763,32 @@ class Encoding(VegaLiteSchema):
         strokeDash: Union[
             Union[
                 "FieldOrDatumDefWithConditionDatumDefnumberArray",
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         strokeOpacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         strokeWidth: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
+                "FieldOrDatumDefWithConditionStringFieldDefText",
                 "FieldOrDatumDefWithConditionStringDatumDefText",
                 "ValueDefWithConditionStringFieldDefText",
-                "FieldOrDatumDefWithConditionStringFieldDefText",
             ],
             UndefinedType,
         ] = Undefined,
@@ -6801,10 +6801,10 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         tooltip: Union[
             Union[
+                List["StringFieldDef"],
+                None,
                 "StringValueDefWithCondition",
                 "StringFieldDefWithCondition",
-                None,
-                List["StringFieldDef"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -6826,7 +6826,7 @@ class Encoding(VegaLiteSchema):
             Union["ValueDefnumber", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union["ScaleFieldDef", "ValueDefnumber", "ScaleDatumDef"], UndefinedType
+            Union["ScaleDatumDef", "ValueDefnumber", "ScaleFieldDef"], UndefinedType
         ] = Undefined,
         y: Union[
             Union["PositionFieldDef", "PositionValueDef", "PositionDatumDef"],
@@ -6842,7 +6842,7 @@ class Encoding(VegaLiteSchema):
             Union["ValueDefnumber", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union["ScaleFieldDef", "ValueDefnumber", "ScaleDatumDef"], UndefinedType
+            Union["ScaleDatumDef", "ValueDefnumber", "ScaleFieldDef"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -6955,8 +6955,8 @@ class ErrorBandConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        band: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        borders: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        band: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        borders: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
         ] = Undefined,
@@ -7012,7 +7012,7 @@ class ErrorBandDef(CompositeMarkDef):
 
     clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -7074,11 +7074,11 @@ class ErrorBandDef(CompositeMarkDef):
     def __init__(
         self,
         type: Union[str, UndefinedType] = Undefined,
-        band: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
-        borders: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        band: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
+        borders: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
@@ -7172,10 +7172,10 @@ class ErrorBarConfig(VegaLiteSchema):
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
         ] = Undefined,
-        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        rule: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        ticks: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(ErrorBarConfig, self).__init__(
@@ -7203,7 +7203,7 @@ class ErrorBarDef(CompositeMarkDef):
         ``"errorband"``, ``"errorbar"`` ).
     clip : bool
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -7250,17 +7250,17 @@ class ErrorBarDef(CompositeMarkDef):
         type: Union[str, UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
         ] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        rule: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        rule: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
+        ticks: Union[Union["AnyMarkConfig", bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(ErrorBarDef, self).__init__(
@@ -7336,7 +7336,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -7357,7 +7357,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7390,7 +7390,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -7431,9 +7431,9 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, :class:`Header`]
+    header : Union[:class:`Header`, None]
         An object defining properties of a facet's header.
-    sort : Union[:class:`EncodingSortField`, :class:`SortOrder`, None, :class:`SortArray`]
+    sort : Union[:class:`SortOrder`, None, :class:`SortArray`, :class:`EncodingSortField`]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -7468,7 +7468,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7477,7 +7477,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -7573,7 +7573,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         align: Union[
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
@@ -7581,18 +7581,18 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         header: Union[Union["Header", None], UndefinedType] = Undefined,
         sort: Union[
-            Union["SortOrder", "EncodingSortField", "SortArray", None], UndefinedType
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
         ] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -7637,7 +7637,7 @@ class FacetFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7673,9 +7673,9 @@ class FacetFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, :class:`Header`]
+    header : Union[:class:`Header`, None]
         An object defining properties of a facet's header.
-    sort : Union[:class:`EncodingSortField`, :class:`SortOrder`, None, :class:`SortArray`]
+    sort : Union[:class:`SortOrder`, None, :class:`SortArray`, :class:`EncodingSortField`]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -7702,7 +7702,7 @@ class FacetFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7711,7 +7711,7 @@ class FacetFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -7807,19 +7807,19 @@ class FacetFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         header: Union[Union["Header", None], UndefinedType] = Undefined,
         sort: Union[
-            Union["SortOrder", "EncodingSortField", "SortArray", None], UndefinedType
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -7938,7 +7938,7 @@ class FacetedEncoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : Union[:class:`OrderValueDef`, :class:`OrderFieldDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
+    order : Union[:class:`OrderFieldDef`, :class:`OrderValueDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
         Order of the marks.
 
 
@@ -8024,7 +8024,7 @@ class FacetedEncoding(VegaLiteSchema):
     theta2 : :class:`Position2Def`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : Union[:class:`StringValueDefWithCondition`, None, List[:class:`StringFieldDef`], :class:`StringFieldDefWithCondition`]
+    tooltip : Union[:class:`StringValueDefWithCondition`, :class:`StringFieldDefWithCondition`, List[:class:`StringFieldDef`], None]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -8077,16 +8077,16 @@ class FacetedEncoding(VegaLiteSchema):
         self,
         angle: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
@@ -8097,22 +8097,22 @@ class FacetedEncoding(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         detail: Union[
-            Union[List["FieldDefWithoutScale"], "FieldDefWithoutScale"], UndefinedType
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
         ] = Undefined,
         facet: Union[dict, UndefinedType] = Undefined,
         fill: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
@@ -8122,28 +8122,28 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         key: Union[dict, UndefinedType] = Undefined,
         latitude: Union[
-            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+            Union["DatumDef", "LatLongFieldDef"], UndefinedType
         ] = Undefined,
         latitude2: Union[
             Union["DatumDef", "PositionValueDef", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         longitude: Union[
-            Union["LatLongFieldDef", "DatumDef"], UndefinedType
+            Union["DatumDef", "LatLongFieldDef"], UndefinedType
         ] = Undefined,
         longitude2: Union[
             Union["DatumDef", "PositionValueDef", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         opacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         order: Union[
             Union[
-                "OrderValueDef", "OrderOnlyDef", "OrderFieldDef", List["OrderFieldDef"]
+                "OrderOnlyDef", "OrderValueDef", "OrderFieldDef", List["OrderFieldDef"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -8157,24 +8157,24 @@ class FacetedEncoding(VegaLiteSchema):
         row: Union[dict, UndefinedType] = Undefined,
         shape: Union[
             Union[
-                "FieldOrDatumDefWithConditionDatumDefstringnull",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
+                "FieldOrDatumDefWithConditionDatumDefstringnull",
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         stroke: Union[
             Union[
-                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionDatumDefGradientstringnull",
+                "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
                 "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
             ],
             UndefinedType,
@@ -8182,32 +8182,32 @@ class FacetedEncoding(VegaLiteSchema):
         strokeDash: Union[
             Union[
                 "FieldOrDatumDefWithConditionDatumDefnumberArray",
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray",
             ],
             UndefinedType,
         ] = Undefined,
         strokeOpacity: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         strokeWidth: Union[
             Union[
-                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
                 "FieldOrDatumDefWithConditionDatumDefnumber",
                 "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
+                "FieldOrDatumDefWithConditionMarkPropFieldDefnumber",
             ],
             UndefinedType,
         ] = Undefined,
         text: Union[
             Union[
+                "FieldOrDatumDefWithConditionStringFieldDefText",
                 "FieldOrDatumDefWithConditionStringDatumDefText",
                 "ValueDefWithConditionStringFieldDefText",
-                "FieldOrDatumDefWithConditionStringFieldDefText",
             ],
             UndefinedType,
         ] = Undefined,
@@ -8220,10 +8220,10 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         tooltip: Union[
             Union[
+                List["StringFieldDef"],
+                None,
                 "StringValueDefWithCondition",
                 "StringFieldDefWithCondition",
-                None,
-                List["StringFieldDef"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -8245,7 +8245,7 @@ class FacetedEncoding(VegaLiteSchema):
             Union["ValueDefnumber", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union["ScaleFieldDef", "ValueDefnumber", "ScaleDatumDef"], UndefinedType
+            Union["ScaleDatumDef", "ValueDefnumber", "ScaleFieldDef"], UndefinedType
         ] = Undefined,
         y: Union[
             Union["PositionFieldDef", "PositionValueDef", "PositionDatumDef"],
@@ -8261,7 +8261,7 @@ class FacetedEncoding(VegaLiteSchema):
             Union["ValueDefnumber", "SecondaryFieldDef"], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union["ScaleFieldDef", "ValueDefnumber", "ScaleDatumDef"], UndefinedType
+            Union["ScaleDatumDef", "ValueDefnumber", "ScaleFieldDef"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -8329,7 +8329,7 @@ class Feature(VegaLiteSchema):
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : Union[float, str]
+    id : Union[str, float]
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -8342,18 +8342,18 @@ class Feature(VegaLiteSchema):
             Union[
                 "LineString",
                 "GeometryCollection",
-                "MultiPoint",
-                "MultiPolygon",
                 "MultiLineString",
-                "Polygon",
+                "MultiPolygon",
                 "Point",
+                "Polygon",
+                "MultiPoint",
             ],
             UndefinedType,
         ] = Undefined,
-        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        properties: Union[Union[None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union[List[float]], UndefinedType] = Undefined,
-        id: Union[Union[float, str], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
         **kwds
     ):
         super(Feature, self).__init__(
@@ -8417,7 +8417,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : Union[float, str]
+    id : Union[str, float]
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -8430,18 +8430,18 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
             Union[
                 "LineString",
                 "GeometryCollection",
-                "MultiPoint",
-                "MultiPolygon",
                 "MultiLineString",
-                "Polygon",
+                "MultiPolygon",
                 "Point",
+                "Polygon",
+                "MultiPoint",
             ],
             UndefinedType,
         ] = Undefined,
-        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        properties: Union[Union[None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union[List[float]], UndefinedType] = Undefined,
-        id: Union[Union[float, str], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
         **kwds
     ):
         super(FeatureGeometryGeoJsonProperties, self).__init__(
@@ -8457,7 +8457,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
 class Field(VegaLiteSchema):
     """Field schema wrapper
 
-    Union[:class:`FieldName`, :class:`RepeatRef`]
+    Union[:class:`RepeatRef`, :class:`FieldName`]
     """
 
     _schema = {"$ref": "#/definitions/Field"}
@@ -8487,7 +8487,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8523,7 +8523,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8532,7 +8532,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -8628,15 +8628,15 @@ class FieldDefWithoutScale(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -8686,7 +8686,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8707,7 +8707,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[:class:`ConditionalValueDefstringExprRef`, List[:class:`ConditionalValueDefstringExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefstringExprRef`], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -8729,7 +8729,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -8763,7 +8763,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8772,7 +8772,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -8870,24 +8870,24 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefstringExprRef",
                 List["ConditionalValueDefstringExprRef"],
+                "ConditionalValueDefstringExprRef",
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -8929,8 +8929,8 @@ class FieldRange(VegaLiteSchema):
 class Fit(VegaLiteSchema):
     """Fit schema wrapper
 
-    Union[List[:class:`GeoJsonFeature`], :class:`GeoJsonFeatureCollection`,
-    :class:`GeoJsonFeature`]
+    Union[List[:class:`GeoJsonFeature`], :class:`GeoJsonFeature`,
+    :class:`GeoJsonFeatureCollection`]
     """
 
     _schema = {"$ref": "#/definitions/Fit"}
@@ -9052,7 +9052,7 @@ class FormatConfig(VegaLiteSchema):
 class Generator(Data):
     """Generator schema wrapper
 
-    Union[:class:`GraticuleGenerator`, :class:`SequenceGenerator`, :class:`SphereGenerator`]
+    Union[:class:`SphereGenerator`, :class:`GraticuleGenerator`, :class:`SequenceGenerator`]
     """
 
     _schema = {"$ref": "#/definitions/Generator"}
@@ -9091,7 +9091,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -9102,37 +9102,37 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     def __init__(
         self,
         mark: Union[
-            Union["CompositeMarkDef", "MarkDef", "Mark", "CompositeMark"], UndefinedType
+            Union["Mark", "MarkDef", "CompositeMark", "CompositeMarkDef"], UndefinedType
         ] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[List[dict], UndefinedType] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -9172,7 +9172,7 @@ class GeoJsonFeature(Fit):
     bbox : :class:`BBox`
         Bounding box of the coordinate range of the object's Geometries, Features, or
         Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
-    id : Union[float, str]
+    id : Union[str, float]
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
     """
@@ -9185,18 +9185,18 @@ class GeoJsonFeature(Fit):
             Union[
                 "LineString",
                 "GeometryCollection",
-                "MultiPoint",
-                "MultiPolygon",
                 "MultiLineString",
-                "Polygon",
+                "MultiPolygon",
                 "Point",
+                "Polygon",
+                "MultiPoint",
             ],
             UndefinedType,
         ] = Undefined,
-        properties: Union[Union[dict, None], UndefinedType] = Undefined,
+        properties: Union[Union[None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union[List[float]], UndefinedType] = Undefined,
-        id: Union[Union[float, str], UndefinedType] = Undefined,
+        id: Union[Union[str, float], UndefinedType] = Undefined,
         **kwds
     ):
         super(GeoJsonFeature, self).__init__(
@@ -9244,7 +9244,7 @@ class GeoJsonFeatureCollection(Fit):
 class GeoJsonProperties(VegaLiteSchema):
     """GeoJsonProperties schema wrapper
 
-    Union[Dict[required=[]], None]
+    Union[None, Dict[required=[]]]
     """
 
     _schema = {"$ref": "#/definitions/GeoJsonProperties"}
@@ -9256,8 +9256,8 @@ class GeoJsonProperties(VegaLiteSchema):
 class Geometry(VegaLiteSchema):
     """Geometry schema wrapper
 
-    Union[:class:`MultiLineString`, :class:`MultiPoint`, :class:`Polygon`, :class:`Point`,
-    :class:`MultiPolygon`, :class:`GeometryCollection`, :class:`LineString`]
+    Union[:class:`Point`, :class:`LineString`, :class:`MultiPolygon`, :class:`Polygon`,
+    :class:`MultiPoint`, :class:`GeometryCollection`, :class:`MultiLineString`]
     Union of geometry objects. https://tools.ietf.org/html/rfc7946#section-3
     """
 
@@ -9294,11 +9294,11 @@ class GeometryCollection(Geometry):
                 Union[
                     "LineString",
                     "GeometryCollection",
-                    "MultiPoint",
-                    "MultiPolygon",
                     "MultiLineString",
-                    "Polygon",
+                    "MultiPolygon",
                     "Point",
+                    "Polygon",
+                    "MultiPoint",
                 ]
             ],
             UndefinedType,
@@ -9342,7 +9342,7 @@ class GradientStop(VegaLiteSchema):
 
     def __init__(
         self,
-        color: Union[Union["HexColor", "ColorName", str], UndefinedType] = Undefined,
+        color: Union[Union[str, "HexColor", "ColorName"], UndefinedType] = Undefined,
         offset: Union[float, UndefinedType] = Undefined,
         **kwds
     ):
@@ -9357,7 +9357,7 @@ class GraticuleGenerator(Generator):
     Parameters
     ----------
 
-    graticule : Union[bool, :class:`GraticuleParams`]
+    graticule : Union[:class:`GraticuleParams`, bool]
         Generate graticule GeoJSON data for geographic reference lines.
     name : str
         Provide a placeholder name and bind data at runtime.
@@ -9438,7 +9438,7 @@ class Header(VegaLiteSchema):
     Parameters
     ----------
 
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -9472,7 +9472,7 @@ class Header(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    labelAlign : Union[:class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment of header labels. One of ``"left"``, ``"center"``, or
         ``"right"``.
     labelAnchor : :class:`TitleAnchor`
@@ -9483,13 +9483,13 @@ class Header(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The vertical text baseline for the header labels. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the ``titleLineHeight`` rather than
         ``titleFontSize`` alone.
-    labelColor : Union[:class:`ExprRef`, :class:`Color`]
+    labelColor : Union[:class:`Color`, :class:`ExprRef`]
         The color of the header label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -9501,7 +9501,7 @@ class Header(VegaLiteSchema):
         The font of the header label.
     labelFontSize : Union[:class:`ExprRef`, float]
         The font size of the header label, in pixels.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the header label.
     labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of the header label.
@@ -9526,7 +9526,7 @@ class Header(VegaLiteSchema):
         **Default value:** ``true``.
     orient : :class:`Orient`
         Shortcut for setting both labelOrient and titleOrient.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -9546,7 +9546,7 @@ class Header(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment (to the anchor) of header titles.
     titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
@@ -9556,7 +9556,7 @@ class Header(VegaLiteSchema):
         The rotation angle of the header title.
 
         **Default value:** ``0``.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The vertical text baseline for the header title. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -9564,13 +9564,13 @@ class Header(VegaLiteSchema):
         ``titleFontSize`` alone.
 
         **Default value:** ``"middle"``
-    titleColor : Union[:class:`ExprRef`, :class:`Color`]
+    titleColor : Union[:class:`Color`, :class:`ExprRef`]
         Color of the header title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : Union[:class:`ExprRef`, float]
         Font size of the header title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the header title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight of the header title. This can be either a string (e.g ``"bold"``,
@@ -9597,7 +9597,7 @@ class Header(VegaLiteSchema):
 
     def __init__(
         self,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
@@ -9607,20 +9607,20 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -9641,7 +9641,7 @@ class Header(VegaLiteSchema):
         orient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         titleAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
@@ -9650,19 +9650,19 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -9726,7 +9726,7 @@ class HeaderConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -9760,7 +9760,7 @@ class HeaderConfig(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    labelAlign : Union[:class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment of header labels. One of ``"left"``, ``"center"``, or
         ``"right"``.
     labelAnchor : :class:`TitleAnchor`
@@ -9771,13 +9771,13 @@ class HeaderConfig(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The vertical text baseline for the header labels. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the ``titleLineHeight`` rather than
         ``titleFontSize`` alone.
-    labelColor : Union[:class:`ExprRef`, :class:`Color`]
+    labelColor : Union[:class:`Color`, :class:`ExprRef`]
         The color of the header label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -9789,7 +9789,7 @@ class HeaderConfig(VegaLiteSchema):
         The font of the header label.
     labelFontSize : Union[:class:`ExprRef`, float]
         The font size of the header label, in pixels.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the header label.
     labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of the header label.
@@ -9816,7 +9816,7 @@ class HeaderConfig(VegaLiteSchema):
         Shortcut for setting both labelOrient and titleOrient.
     title : None
         Set to null to disable title for the axis, legend, or header.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment (to the anchor) of header titles.
     titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
@@ -9826,7 +9826,7 @@ class HeaderConfig(VegaLiteSchema):
         The rotation angle of the header title.
 
         **Default value:** ``0``.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The vertical text baseline for the header title. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -9834,13 +9834,13 @@ class HeaderConfig(VegaLiteSchema):
         ``titleFontSize`` alone.
 
         **Default value:** ``"middle"``
-    titleColor : Union[:class:`ExprRef`, :class:`Color`]
+    titleColor : Union[:class:`Color`, :class:`ExprRef`]
         Color of the header title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : Union[:class:`ExprRef`, float]
         Font size of the header title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the header title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight of the header title. This can be either a string (e.g ``"bold"``,
@@ -9867,7 +9867,7 @@ class HeaderConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
@@ -9877,20 +9877,20 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -9920,19 +9920,19 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -10020,7 +10020,7 @@ class ImputeParams(VegaLiteSchema):
     Parameters
     ----------
 
-    frame : List[Union[None, float]]
+    frame : List[Union[float, None]]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -10030,7 +10030,7 @@ class ImputeParams(VegaLiteSchema):
 
         **Default value:** :  ``[null, null]`` indicating that the window includes all
         objects.
-    keyvals : Union[List[Any], :class:`ImputeSequence`]
+    keyvals : Union[:class:`ImputeSequence`, List[Any]]
         Defines the key values that should be considered for imputation. An array of key
         values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -10054,7 +10054,7 @@ class ImputeParams(VegaLiteSchema):
 
     def __init__(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[List[Union[float, None]], UndefinedType] = Undefined,
         keyvals: Union[Union[List[Any], "ImputeSequence"], UndefinedType] = Undefined,
         method: Union[
             Literal["value", "median", "max", "min", "mean"], UndefinedType
@@ -10119,11 +10119,11 @@ class InlineData(DataSource):
     def __init__(
         self,
         values: Union[
-            Union[List[str], List[bool], dict, List[float], List[dict], str],
+            Union[str, List[dict], List[float], List[str], dict, List[bool]],
             UndefinedType,
         ] = Undefined,
         format: Union[
-            Union["TopoDataFormat", "CsvDataFormat", "DsvDataFormat", "JsonDataFormat"],
+            Union["JsonDataFormat", "DsvDataFormat", "TopoDataFormat", "CsvDataFormat"],
             UndefinedType,
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -10137,7 +10137,7 @@ class InlineData(DataSource):
 class InlineDataset(VegaLiteSchema):
     """InlineDataset schema wrapper
 
-    Union[List[str], List[Dict[required=[]]], Dict[required=[]], List[bool], List[float], str]
+    Union[str, Dict[required=[]], List[float], List[str], List[Dict[required=[]]], List[bool]]
     """
 
     _schema = {"$ref": "#/definitions/InlineDataset"}
@@ -10176,7 +10176,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    clear : Union[:class:`Stream`, bool, str]
+    clear : Union[str, :class:`Stream`, bool]
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -10199,7 +10199,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
         **See also:** `mark examples
         <https://vega.github.io/vega-lite/docs/selection.html#mark>`__ in the documentation.
-    on : Union[:class:`Stream`, str]
+    on : Union[str, :class:`Stream`]
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -10227,7 +10227,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    translate : Union[bool, str]
+    translate : Union[str, bool]
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a `Vega event
         stream definition <https://vega.github.io/vega/docs/event-streams/>`__ which must
@@ -10241,7 +10241,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `translate examples
         <https://vega.github.io/vega-lite/docs/selection.html#translate>`__ in the
         documentation.
-    zoom : Union[bool, str]
+    zoom : Union[str, bool]
         When truthy, allows a user to interactively resize an interval selection. Can be
         ``true``, ``false`` (to disable zooming), or a `Vega event stream definition
         <https://vega.github.io/vega/docs/event-streams/>`__. Currently, only ``wheel``
@@ -10261,7 +10261,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
     def __init__(
         self,
         type: Union[str, UndefinedType] = Undefined,
-        clear: Union[Union[bool, "Stream", str], UndefinedType] = Undefined,
+        clear: Union[Union[str, bool, "Stream"], UndefinedType] = Undefined,
         encodings: Union[
             List[
                 Literal[
@@ -10300,12 +10300,12 @@ class IntervalSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         mark: Union[dict, UndefinedType] = Undefined,
-        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        on: Union[Union[str, "Stream"], UndefinedType] = Undefined,
         resolve: Union[
             Literal["global", "union", "intersect"], UndefinedType
         ] = Undefined,
-        translate: Union[Union[bool, str], UndefinedType] = Undefined,
-        zoom: Union[Union[bool, str], UndefinedType] = Undefined,
+        translate: Union[Union[str, bool], UndefinedType] = Undefined,
+        zoom: Union[Union[str, bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(IntervalSelectionConfig, self).__init__(
@@ -10329,7 +10329,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     Parameters
     ----------
 
-    clear : Union[:class:`Stream`, bool, str]
+    clear : Union[str, :class:`Stream`, bool]
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -10352,7 +10352,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 
         **See also:** `mark examples
         <https://vega.github.io/vega-lite/docs/selection.html#mark>`__ in the documentation.
-    on : Union[:class:`Stream`, str]
+    on : Union[str, :class:`Stream`]
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -10380,7 +10380,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    translate : Union[bool, str]
+    translate : Union[str, bool]
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a `Vega event
         stream definition <https://vega.github.io/vega/docs/event-streams/>`__ which must
@@ -10394,7 +10394,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `translate examples
         <https://vega.github.io/vega-lite/docs/selection.html#translate>`__ in the
         documentation.
-    zoom : Union[bool, str]
+    zoom : Union[str, bool]
         When truthy, allows a user to interactively resize an interval selection. Can be
         ``true``, ``false`` (to disable zooming), or a `Vega event stream definition
         <https://vega.github.io/vega/docs/event-streams/>`__. Currently, only ``wheel``
@@ -10413,7 +10413,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 
     def __init__(
         self,
-        clear: Union[Union[bool, "Stream", str], UndefinedType] = Undefined,
+        clear: Union[Union[str, bool, "Stream"], UndefinedType] = Undefined,
         encodings: Union[
             List[
                 Literal[
@@ -10452,12 +10452,12 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         mark: Union[dict, UndefinedType] = Undefined,
-        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        on: Union[Union[str, "Stream"], UndefinedType] = Undefined,
         resolve: Union[
             Literal["global", "union", "intersect"], UndefinedType
         ] = Undefined,
-        translate: Union[Union[bool, str], UndefinedType] = Undefined,
-        zoom: Union[Union[bool, str], UndefinedType] = Undefined,
+        translate: Union[Union[str, bool], UndefinedType] = Undefined,
+        zoom: Union[Union[str, bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(IntervalSelectionConfigWithoutType, self).__init__(
@@ -10537,7 +10537,7 @@ class JsonDataFormat(DataFormat):
     Parameters
     ----------
 
-    parse : Union[None, :class:`Parse`]
+    parse : Union[:class:`Parse`, None]
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -10582,7 +10582,7 @@ class JsonDataFormat(DataFormat):
 class LabelOverlap(VegaLiteSchema):
     """LabelOverlap schema wrapper
 
-    Union[bool, str]
+    Union[str, bool]
     """
 
     _schema = {"$ref": "#/definitions/LabelOverlap"}
@@ -10594,7 +10594,7 @@ class LabelOverlap(VegaLiteSchema):
 class LatLongDef(VegaLiteSchema):
     """LatLongDef schema wrapper
 
-    Union[:class:`LatLongFieldDef`, :class:`DatumDef`]
+    Union[:class:`DatumDef`, :class:`LatLongFieldDef`]
     """
 
     _schema = {"$ref": "#/definitions/LatLongDef"}
@@ -10659,7 +10659,7 @@ class LatLongFieldDef(LatLongDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10668,7 +10668,7 @@ class LatLongFieldDef(LatLongDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -10764,15 +10764,15 @@ class LatLongFieldDef(LatLongDef):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[None, UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds
     ):
@@ -10839,7 +10839,7 @@ class Legend(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -10874,9 +10874,9 @@ class Legend(VegaLiteSchema):
         * For left-/right- ``orient`` ed legends, ``"vertical"``
         * For top/bottom-left/right- ``orient`` ed legends, ``"horizontal"`` for gradient
           legends and ``"vertical"`` for symbol legends.
-    fillColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    fillColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Background fill color for the full legend.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -10917,7 +10917,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``200``.
     gradientOpacity : Union[:class:`ExprRef`, float]
         Opacity of the color gradient.
-    gradientStrokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    gradientStrokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the gradient stroke, can be in hex color code or regular color name.
 
         **Default value:** ``"lightGray"``.
@@ -10930,20 +10930,20 @@ class Legend(VegaLiteSchema):
         of a vertical gradient or the height of a horizontal gradient.
 
         **Default value:** ``16``.
-    gridAlign : Union[:class:`LayoutAlign`, :class:`ExprRef`]
+    gridAlign : Union[:class:`ExprRef`, :class:`LayoutAlign`]
         The alignment to apply to symbol legends rows and columns. The supported string
         values are ``"all"``, ``"each"`` (the default), and ``none``. For more information,
         see the `grid layout documentation <https://vega.github.io/vega/docs/layout>`__.
 
         **Default value:** ``"each"``.
-    labelAlign : Union[:class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`Align`]
         The alignment of the legend label, can be left, center, or right.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
         ``"bottom"``, or ``"alphabetic"``.
 
         **Default value:** ``"middle"``.
-    labelColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    labelColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -10957,7 +10957,7 @@ class Legend(VegaLiteSchema):
         The font size of legend label.
 
         **Default value:** ``10``.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of legend label.
     labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of legend label.
@@ -11008,13 +11008,13 @@ class Legend(VegaLiteSchema):
         The vertical padding in pixels between symbol legend entries.
 
         **Default value:** ``2``.
-    strokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    strokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Border stroke color for the full legend.
-    symbolDash : Union[List[float], :class:`ExprRef`]
+    symbolDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : Union[:class:`ExprRef`, float]
         The pixel offset at which to start drawing with the symbol stroke dash array.
-    symbolFillColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolFillColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend symbol,
     symbolLimit : Union[:class:`ExprRef`, float]
         The maximum number of allowed entries for a symbol legend. Additional entries will
@@ -11029,7 +11029,7 @@ class Legend(VegaLiteSchema):
         The size of the legend symbol, in pixels.
 
         **Default value:** ``100``.
-    symbolStrokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolStrokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Stroke color for legend symbols.
     symbolStrokeWidth : Union[:class:`ExprRef`, float]
         The width of the symbol's stroke.
@@ -11055,7 +11055,7 @@ class Legend(VegaLiteSchema):
         necessary, to enforce the minimum step value.
 
         **Default value** : ``undefined``
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -11075,13 +11075,13 @@ class Legend(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment for legend titles.
 
         **Default value:** ``"left"``.
-    titleAnchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    titleAnchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         Text anchor position for placing legend titles.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -11089,13 +11089,13 @@ class Legend(VegaLiteSchema):
         alone.
 
         **Default value:** ``"top"``.
-    titleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    titleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         The font of the legend title.
     titleFontSize : Union[:class:`ExprRef`, float]
         The font size of the legend title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the legend title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of the legend title. This can be either a string (e.g ``"bold"``,
@@ -11110,7 +11110,7 @@ class Legend(VegaLiteSchema):
         ``"line-bottom"`` baseline.
     titleOpacity : Union[:class:`ExprRef`, float]
         Opacity of the legend title.
-    titleOrient : Union[:class:`Orient`, :class:`ExprRef`]
+    titleOrient : Union[:class:`ExprRef`, :class:`Orient`]
         Orientation of the legend title.
     titlePadding : Union[:class:`ExprRef`, float]
         The padding, in pixels, between title and legend.
@@ -11122,7 +11122,7 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
-    values : Union[List[str], :class:`ExprRef`, List[bool], List[:class:`DateTime`], List[float]]
+    values : Union[List[:class:`DateTime`], List[float], List[str], :class:`ExprRef`, List[bool]]
         Explicitly set the visible legend values.
     zindex : float
         A non-negative integer indicating the z-index of the legend. If zindex is 0, legend
@@ -11134,7 +11134,7 @@ class Legend(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11149,13 +11149,13 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         fillColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11164,7 +11164,7 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         gradientStrokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11173,26 +11173,26 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
-            Union["LayoutAlign", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LayoutAlign"], UndefinedType
         ] = Undefined,
         labelAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -11207,7 +11207,7 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LabelOverlap"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11245,16 +11245,16 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11269,13 +11269,13 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolStrokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union["SymbolShape", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "SymbolShape"], UndefinedType
         ] = Undefined,
         tickCount: Union[
             Union["ExprRef", "_ParameterProtocol", "TickCount"], UndefinedType
@@ -11283,27 +11283,27 @@ class Legend(VegaLiteSchema):
         tickMinStep: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         titleAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -11318,7 +11318,7 @@ class Legend(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
-            Union["Orient", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Orient"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11326,12 +11326,12 @@ class Legend(VegaLiteSchema):
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[str],
-                List["DateTime"],
-                List[bool],
                 "ExprRef",
                 "_ParameterProtocol",
                 List[float],
+                List[str],
+                List["DateTime"],
+                List[bool],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11412,7 +11412,7 @@ class Legend(VegaLiteSchema):
 class LegendBinding(VegaLiteSchema):
     """LegendBinding schema wrapper
 
-    Union[:class:`LegendStreamBinding`, str]
+    Union[str, :class:`LegendStreamBinding`]
     """
 
     _schema = {"$ref": "#/definitions/LegendBinding"}
@@ -11429,7 +11429,7 @@ class LegendConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -11466,7 +11466,7 @@ class LegendConfig(VegaLiteSchema):
           legends and ``"vertical"`` for symbol legends.
     disable : bool
         Disable legend by default
-    fillColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    fillColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Background fill color for the full legend.
     gradientDirection : Union[:class:`ExprRef`, :class:`Orientation`]
         The default direction ( ``"horizontal"`` or ``"vertical"`` ) for gradient legends.
@@ -11495,7 +11495,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``200``.
     gradientOpacity : Union[:class:`ExprRef`, float]
         Opacity of the color gradient.
-    gradientStrokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    gradientStrokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the gradient stroke, can be in hex color code or regular color name.
 
         **Default value:** ``"lightGray"``.
@@ -11518,20 +11518,20 @@ class LegendConfig(VegaLiteSchema):
         undefined.
 
         **Default value:** ``100``
-    gridAlign : Union[:class:`LayoutAlign`, :class:`ExprRef`]
+    gridAlign : Union[:class:`ExprRef`, :class:`LayoutAlign`]
         The alignment to apply to symbol legends rows and columns. The supported string
         values are ``"all"``, ``"each"`` (the default), and ``none``. For more information,
         see the `grid layout documentation <https://vega.github.io/vega/docs/layout>`__.
 
         **Default value:** ``"each"``.
-    labelAlign : Union[:class:`Align`, :class:`ExprRef`]
+    labelAlign : Union[:class:`ExprRef`, :class:`Align`]
         The alignment of the legend label, can be left, center, or right.
-    labelBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    labelBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
         ``"bottom"``, or ``"alphabetic"``.
 
         **Default value:** ``"middle"``.
-    labelColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    labelColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend label, can be in hex color code or regular color name.
     labelFont : Union[:class:`ExprRef`, str]
         The font of the legend label.
@@ -11539,7 +11539,7 @@ class LegendConfig(VegaLiteSchema):
         The font size of legend label.
 
         **Default value:** ``10``.
-    labelFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    labelFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of legend label.
     labelFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of legend label.
@@ -11592,23 +11592,23 @@ class LegendConfig(VegaLiteSchema):
         The vertical padding in pixels between symbol legend entries.
 
         **Default value:** ``2``.
-    strokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    strokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Border stroke color for the full legend.
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         Border stroke dash pattern for the full legend.
     strokeWidth : Union[:class:`ExprRef`, float]
         Border stroke width for the full legend.
-    symbolBaseFillColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolBaseFillColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Default fill color for legend symbols. Only applied if there is no ``"fill"`` scale
         color encoding for the legend.
 
         **Default value:** ``"transparent"``.
-    symbolBaseStrokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolBaseStrokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Default stroke color for legend symbols. Only applied if there is no ``"fill"``
         scale color encoding for the legend.
 
         **Default value:** ``"gray"``.
-    symbolDash : Union[List[float], :class:`ExprRef`]
+    symbolDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : Union[:class:`ExprRef`, float]
         The pixel offset at which to start drawing with the symbol stroke dash array.
@@ -11616,7 +11616,7 @@ class LegendConfig(VegaLiteSchema):
         The default direction ( ``"horizontal"`` or ``"vertical"`` ) for symbol legends.
 
         **Default value:** ``"vertical"``.
-    symbolFillColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolFillColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend symbol,
     symbolLimit : Union[:class:`ExprRef`, float]
         The maximum number of allowed entries for a symbol legend. Additional entries will
@@ -11631,7 +11631,7 @@ class LegendConfig(VegaLiteSchema):
         The size of the legend symbol, in pixels.
 
         **Default value:** ``100``.
-    symbolStrokeColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    symbolStrokeColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Stroke color for legend symbols.
     symbolStrokeWidth : Union[:class:`ExprRef`, float]
         The width of the symbol's stroke.
@@ -11652,13 +11652,13 @@ class LegendConfig(VegaLiteSchema):
         The desired number of tick values for quantitative legends.
     title : None
         Set to null to disable title for the axis, legend, or header.
-    titleAlign : Union[:class:`Align`, :class:`ExprRef`]
+    titleAlign : Union[:class:`ExprRef`, :class:`Align`]
         Horizontal text alignment for legend titles.
 
         **Default value:** ``"left"``.
-    titleAnchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    titleAnchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         Text anchor position for placing legend titles.
-    titleBaseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    titleBaseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -11666,13 +11666,13 @@ class LegendConfig(VegaLiteSchema):
         alone.
 
         **Default value:** ``"top"``.
-    titleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    titleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         The color of the legend title, can be in hex color code or regular color name.
     titleFont : Union[:class:`ExprRef`, str]
         The font of the legend title.
     titleFontSize : Union[:class:`ExprRef`, float]
         The font size of the legend title.
-    titleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    titleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style of the legend title.
     titleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight of the legend title. This can be either a string (e.g ``"bold"``,
@@ -11687,7 +11687,7 @@ class LegendConfig(VegaLiteSchema):
         ``"line-bottom"`` baseline.
     titleOpacity : Union[:class:`ExprRef`, float]
         Opacity of the legend title.
-    titleOrient : Union[:class:`Orient`, :class:`ExprRef`]
+    titleOrient : Union[:class:`ExprRef`, :class:`Orient`]
         Orientation of the legend title.
     titlePadding : Union[:class:`ExprRef`, float]
         The padding, in pixels, between title and legend.
@@ -11707,7 +11707,7 @@ class LegendConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11722,15 +11722,15 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         fillColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         gradientDirection: Union[
-            Union["Orientation", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Orientation"], UndefinedType
         ] = Undefined,
         gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
@@ -11747,7 +11747,7 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         gradientStrokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11758,25 +11758,25 @@ class LegendConfig(VegaLiteSchema):
         gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
         gridAlign: Union[
-            Union["LayoutAlign", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LayoutAlign"], UndefinedType
         ] = Undefined,
         labelAlign: Union[
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -11791,7 +11791,7 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "LabelOverlap"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11830,31 +11830,31 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolBaseFillColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolBaseStrokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolDirection: Union[
-            Union["Orientation", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Orientation"], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -11869,13 +11869,13 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolStrokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union["SymbolShape", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "SymbolShape"], UndefinedType
         ] = Undefined,
         tickCount: Union[
             Union["ExprRef", "_ParameterProtocol", "TickCount"], UndefinedType
@@ -11885,22 +11885,22 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", "Align"], UndefinedType
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -11915,7 +11915,7 @@ class LegendConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
-            Union["Orient", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Orient"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12094,14 +12094,14 @@ class LegendStreamBinding(LegendBinding):
     Parameters
     ----------
 
-    legend : Union[:class:`Stream`, str]
+    legend : Union[str, :class:`Stream`]
 
     """
 
     _schema = {"$ref": "#/definitions/LegendStreamBinding"}
 
     def __init__(
-        self, legend: Union[Union["Stream", str], UndefinedType] = Undefined, **kwds
+        self, legend: Union[Union[str, "Stream"], UndefinedType] = Undefined, **kwds
     ):
         super(LegendStreamBinding, self).__init__(legend=legend, **kwds)
 
@@ -12114,14 +12114,14 @@ class LineConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -12137,9 +12137,9 @@ class LineConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -12150,13 +12150,13 @@ class LineConfig(AnyMarkConfig):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -12189,7 +12189,7 @@ class LineConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -12197,7 +12197,7 @@ class LineConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -12216,7 +12216,7 @@ class LineConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -12241,7 +12241,7 @@ class LineConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -12324,7 +12324,7 @@ class LineConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : Union[:class:`ExprRef`, float]
         The angular padding applied to sides of the arc, in radians.
-    point : Union[bool, :class:`OverlayMarkDef`, str]
+    point : Union[str, bool, :class:`OverlayMarkDef`]
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -12350,7 +12350,7 @@ class LineConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -12382,7 +12382,7 @@ class LineConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -12390,21 +12390,21 @@ class LineConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -12423,7 +12423,7 @@ class LineConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -12442,7 +12442,7 @@ class LineConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -12496,25 +12496,25 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12532,13 +12532,13 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12547,13 +12547,13 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -12561,13 +12561,13 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -12582,14 +12582,14 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12605,7 +12605,7 @@ class LineConfig(AnyMarkConfig):
         padAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        point: Union[Union["OverlayMarkDef", bool, str], UndefinedType] = Undefined,
+        point: Union[Union["OverlayMarkDef", str, bool], UndefinedType] = Undefined,
         radius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
@@ -12613,33 +12613,33 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12657,7 +12657,7 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -12669,13 +12669,13 @@ class LineConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -12686,16 +12686,16 @@ class LineConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -12902,7 +12902,7 @@ class LookupData(VegaLiteSchema):
 
     def __init__(
         self,
-        data: Union[Union["Generator", "DataSource"], UndefinedType] = Undefined,
+        data: Union[Union["DataSource", "Generator"], UndefinedType] = Undefined,
         key: Union[str, UndefinedType] = Undefined,
         fields: Union[List[str], UndefinedType] = Undefined,
         **kwds
@@ -12963,14 +12963,14 @@ class MarkConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -12986,9 +12986,9 @@ class MarkConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -12999,13 +12999,13 @@ class MarkConfig(AnyMarkConfig):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -13038,7 +13038,7 @@ class MarkConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -13046,7 +13046,7 @@ class MarkConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -13065,7 +13065,7 @@ class MarkConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -13090,7 +13090,7 @@ class MarkConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -13184,7 +13184,7 @@ class MarkConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -13216,7 +13216,7 @@ class MarkConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -13224,21 +13224,21 @@ class MarkConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -13257,7 +13257,7 @@ class MarkConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -13276,7 +13276,7 @@ class MarkConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -13330,25 +13330,25 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -13366,13 +13366,13 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -13381,13 +13381,13 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -13395,13 +13395,13 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -13416,14 +13416,14 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -13446,33 +13446,33 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -13490,7 +13490,7 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -13502,13 +13502,13 @@ class MarkConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -13519,16 +13519,16 @@ class MarkConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -13619,14 +13619,14 @@ class MarkDef(AnyMark):
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -13642,14 +13642,14 @@ class MarkDef(AnyMark):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
 
         **Default value:**  3/4 of step (width step for horizontal ticks and height step for
         vertical ticks).
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -13665,7 +13665,7 @@ class MarkDef(AnyMark):
         (preferred by statisticians) or 1 (Vega-Lite default, D3 example style).
 
         **Default value:** ``1``
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
@@ -13673,7 +13673,7 @@ class MarkDef(AnyMark):
         __Default value:__ ``"source-over"``
     clip : bool
         Whether a mark be clipped to the enclosing group’s width and height.
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -13714,7 +13714,7 @@ class MarkDef(AnyMark):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -13722,7 +13722,7 @@ class MarkDef(AnyMark):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -13741,7 +13741,7 @@ class MarkDef(AnyMark):
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -13766,13 +13766,13 @@ class MarkDef(AnyMark):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
         number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
         ``"bold"`` = ``700`` ).
-    height : Union[:class:`RelativeBandSize`, :class:`ExprRef`, float]
+    height : Union[:class:`ExprRef`, :class:`RelativeBandSize`, float]
         Height of the marks.  One of:
 
 
@@ -13868,7 +13868,7 @@ class MarkDef(AnyMark):
         **Default value:** ``0``
     padAngle : Union[:class:`ExprRef`, float]
         The angular padding applied to sides of the arc, in radians.
-    point : Union[bool, :class:`OverlayMarkDef`, str]
+    point : Union[str, bool, :class:`OverlayMarkDef`]
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -13898,7 +13898,7 @@ class MarkDef(AnyMark):
         Offset for radius2.
     radiusOffset : Union[:class:`ExprRef`, float]
         Offset for radius.
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -13930,26 +13930,26 @@ class MarkDef(AnyMark):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
         browsers due to lack of standardization.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -13965,7 +13965,7 @@ class MarkDef(AnyMark):
         **Default value:** ``1``
     strokeWidth : Union[:class:`ExprRef`, float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -13982,7 +13982,7 @@ class MarkDef(AnyMark):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -14009,7 +14009,7 @@ class MarkDef(AnyMark):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -14026,7 +14026,7 @@ class MarkDef(AnyMark):
         **Default value:** ``null``
     url : Union[:class:`URI`, :class:`ExprRef`]
         The URL of the image file for image marks.
-    width : Union[:class:`RelativeBandSize`, :class:`ExprRef`, float]
+    width : Union[:class:`ExprRef`, :class:`RelativeBandSize`, float]
         Width of the marks.  One of:
 
 
@@ -14096,20 +14096,20 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
@@ -14117,7 +14117,7 @@ class MarkDef(AnyMark):
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
@@ -14139,16 +14139,16 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[
-            Union["RelativeBandSize", float], UndefinedType
+            Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14157,10 +14157,10 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -14168,19 +14168,19 @@ class MarkDef(AnyMark):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         height: Union[
-            Union["RelativeBandSize", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", float, "RelativeBandSize"],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -14190,7 +14190,7 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
@@ -14198,7 +14198,7 @@ class MarkDef(AnyMark):
         ] = Undefined,
         line: Union[Union["OverlayMarkDef", bool], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14217,7 +14217,7 @@ class MarkDef(AnyMark):
         padAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        point: Union[Union["OverlayMarkDef", bool, str], UndefinedType] = Undefined,
+        point: Union[Union["OverlayMarkDef", str, bool], UndefinedType] = Undefined,
         radius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
@@ -14231,30 +14231,30 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14268,12 +14268,12 @@ class MarkDef(AnyMark):
         strokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14292,13 +14292,13 @@ class MarkDef(AnyMark):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -14306,14 +14306,14 @@ class MarkDef(AnyMark):
             Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         width: Union[
-            Union["RelativeBandSize", "ExprRef", "_ParameterProtocol", float],
+            Union["ExprRef", "_ParameterProtocol", float, "RelativeBandSize"],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14322,10 +14322,10 @@ class MarkDef(AnyMark):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -14430,8 +14430,8 @@ class MarkDef(AnyMark):
 class MarkPropDefGradientstringnull(VegaLiteSchema):
     """MarkPropDefGradientstringnull schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`]
     """
 
@@ -14455,16 +14455,16 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[:class:`ConditionalValueDefGradientstringnullExprRef`], :class:`ConditionalValueDefGradientstringnullExprRef`]
+    condition : Union[:class:`ConditionalValueDefGradientstringnullExprRef`, List[:class:`ConditionalValueDefGradientstringnullExprRef`]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -14564,22 +14564,22 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List["ConditionalValueDefGradientstringnullExprRef"],
                 "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -14618,7 +14618,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14639,7 +14639,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[:class:`ConditionalValueDefGradientstringnullExprRef`], :class:`ConditionalValueDefGradientstringnullExprRef`]
+    condition : Union[:class:`ConditionalValueDefGradientstringnullExprRef`, List[:class:`ConditionalValueDefGradientstringnullExprRef`]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -14661,7 +14661,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, :class:`Legend`]
+    legend : Union[:class:`Legend`, None]
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -14722,7 +14722,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14731,7 +14731,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -14829,34 +14829,34 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List["ConditionalValueDefGradientstringnullExprRef"],
                 "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        legend: Union[Union[None, "Legend"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -14883,9 +14883,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 class MarkPropDefnumber(VegaLiteSchema):
     """MarkPropDefnumber schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`,
+    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
-    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`]
     """
 
     _schema = {"$ref": "#/definitions/MarkPropDef<number>"}
@@ -14897,9 +14897,9 @@ class MarkPropDefnumber(VegaLiteSchema):
 class MarkPropDefnumberArray(VegaLiteSchema):
     """MarkPropDefnumberArray schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
-    :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
-    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`]
+    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
+    :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`]
     """
 
     _schema = {"$ref": "#/definitions/MarkPropDef<number[]>"}
@@ -14912,8 +14912,8 @@ class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
     """MarkPropDefstringnullTypeForShape schema wrapper
 
     Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`FieldOrDatumDefWithConditionDatumDefstringnull`]
+    :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`]
     """
 
     _schema = {"$ref": "#/definitions/MarkPropDef<(string|null),TypeForShape>"}
@@ -15068,7 +15068,7 @@ class NamedData(DataSource):
         self,
         name: Union[str, UndefinedType] = Undefined,
         format: Union[
-            Union["TopoDataFormat", "CsvDataFormat", "DsvDataFormat", "JsonDataFormat"],
+            Union["JsonDataFormat", "DsvDataFormat", "TopoDataFormat", "CsvDataFormat"],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -15093,9 +15093,9 @@ class NonArgAggregateOp(Aggregate):
 class NonNormalizedSpec(VegaLiteSchema):
     """NonNormalizedSpec schema wrapper
 
-    Union[:class:`FacetSpec`, :class:`VConcatSpecGenericSpec`, :class:`LayerSpec`,
-    :class:`HConcatSpecGenericSpec`, :class:`FacetedUnitSpec`, :class:`ConcatSpecGenericSpec`,
-    :class:`RepeatSpec`]
+    Union[:class:`FacetedUnitSpec`, :class:`RepeatSpec`, :class:`FacetSpec`,
+    :class:`ConcatSpecGenericSpec`, :class:`VConcatSpecGenericSpec`,
+    :class:`HConcatSpecGenericSpec`, :class:`LayerSpec`]
     Any specification in Vega-Lite.
     """
 
@@ -15162,9 +15162,9 @@ class NumberLocale(VegaLiteSchema):
 class NumericArrayMarkPropDef(VegaLiteSchema):
     """NumericArrayMarkPropDef schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
-    :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`,
-    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`]
+    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
+    :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`]
     """
 
     _schema = {"$ref": "#/definitions/NumericArrayMarkPropDef"}
@@ -15194,9 +15194,9 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -15301,15 +15301,15 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         ] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -15348,7 +15348,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15391,7 +15391,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, :class:`Legend`]
+    legend : Union[:class:`Legend`, None]
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -15452,7 +15452,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15461,7 +15461,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -15559,7 +15559,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
@@ -15570,23 +15570,23 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        legend: Union[Union[None, "Legend"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -15611,9 +15611,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 class NumericMarkPropDef(VegaLiteSchema):
     """NumericMarkPropDef schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`,
+    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`,
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`,
-    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`]
     """
 
     _schema = {"$ref": "#/definitions/NumericMarkPropDef"}
@@ -15634,16 +15634,16 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[:class:`ConditionalValueDefnumberExprRef`, List[:class:`ConditionalValueDefnumberExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefnumberExprRef`], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -15741,22 +15741,22 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefnumberExprRef",
                 List["ConditionalValueDefnumberExprRef"],
+                "ConditionalValueDefnumberExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -15795,7 +15795,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15816,7 +15816,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[:class:`ConditionalValueDefnumberExprRef`, List[:class:`ConditionalValueDefnumberExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefnumberExprRef`], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -15838,7 +15838,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, :class:`Legend`]
+    legend : Union[:class:`Legend`, None]
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -15899,7 +15899,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15908,7 +15908,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -16006,34 +16006,34 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefnumberExprRef",
                 List["ConditionalValueDefnumberExprRef"],
+                "ConditionalValueDefnumberExprRef",
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        legend: Union[Union[None, "Legend"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -16058,7 +16058,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 class OffsetDef(VegaLiteSchema):
     """OffsetDef schema wrapper
 
-    Union[:class:`ScaleDatumDef`, :class:`ScaleFieldDef`, :class:`ValueDefnumber`]
+    Union[:class:`ValueDefnumber`, :class:`ScaleFieldDef`, :class:`ScaleDatumDef`]
     """
 
     _schema = {"$ref": "#/definitions/OffsetDef"}
@@ -16087,7 +16087,7 @@ class OrderFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -16125,7 +16125,7 @@ class OrderFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16134,7 +16134,7 @@ class OrderFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -16230,16 +16230,16 @@ class OrderFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         sort: Union[Literal["ascending", "descending"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -16349,14 +16349,14 @@ class OverlayMarkDef(VegaLiteSchema):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -16372,9 +16372,9 @@ class OverlayMarkDef(VegaLiteSchema):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -16385,7 +16385,7 @@ class OverlayMarkDef(VegaLiteSchema):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
@@ -16393,7 +16393,7 @@ class OverlayMarkDef(VegaLiteSchema):
         __Default value:__ ``"source-over"``
     clip : bool
         Whether a mark be clipped to the enclosing group’s width and height.
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -16426,7 +16426,7 @@ class OverlayMarkDef(VegaLiteSchema):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -16434,7 +16434,7 @@ class OverlayMarkDef(VegaLiteSchema):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -16453,7 +16453,7 @@ class OverlayMarkDef(VegaLiteSchema):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -16478,7 +16478,7 @@ class OverlayMarkDef(VegaLiteSchema):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -16576,7 +16576,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for radius2.
     radiusOffset : Union[:class:`ExprRef`, float]
         Offset for radius.
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -16608,7 +16608,7 @@ class OverlayMarkDef(VegaLiteSchema):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -16616,21 +16616,21 @@ class OverlayMarkDef(VegaLiteSchema):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -16646,7 +16646,7 @@ class OverlayMarkDef(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : Union[:class:`ExprRef`, float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
         `style configuration
@@ -16663,7 +16663,7 @@ class OverlayMarkDef(VegaLiteSchema):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -16686,7 +16686,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -16748,26 +16748,26 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16785,13 +16785,13 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16800,13 +16800,13 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -16814,13 +16814,13 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -16835,14 +16835,14 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16871,33 +16871,33 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16911,12 +16911,12 @@ class OverlayMarkDef(VegaLiteSchema):
         strokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16934,13 +16934,13 @@ class OverlayMarkDef(VegaLiteSchema):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -16951,10 +16951,10 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -16963,10 +16963,10 @@ class OverlayMarkDef(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -17063,7 +17063,7 @@ class OverlayMarkDef(VegaLiteSchema):
 class Padding(VegaLiteSchema):
     """Padding schema wrapper
 
-    Union[Dict[required=[]], float]
+    Union[float, Dict[required=[]]]
     """
 
     _schema = {"$ref": "#/definitions/Padding"}
@@ -17111,7 +17111,7 @@ class Parse(VegaLiteSchema):
 class ParseValue(VegaLiteSchema):
     """ParseValue schema wrapper
 
-    Union[None, str]
+    Union[str, None]
     """
 
     _schema = {"$ref": "#/definitions/ParseValue"}
@@ -17172,7 +17172,7 @@ class PointSelectionConfig(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    clear : Union[:class:`Stream`, bool, str]
+    clear : Union[str, :class:`Stream`, bool]
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -17205,7 +17205,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
         **See also:** `nearest examples
         <https://vega.github.io/vega-lite/docs/selection.html#nearest>`__ documentation.
-    on : Union[:class:`Stream`, str]
+    on : Union[str, :class:`Stream`]
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -17233,7 +17233,7 @@ class PointSelectionConfig(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    toggle : Union[bool, str]
+    toggle : Union[str, bool]
         Controls whether data values should be toggled (inserted or removed from a point
         selection) or only ever inserted into point selections.
 
@@ -17264,7 +17264,7 @@ class PointSelectionConfig(VegaLiteSchema):
     def __init__(
         self,
         type: Union[str, UndefinedType] = Undefined,
-        clear: Union[Union[bool, "Stream", str], UndefinedType] = Undefined,
+        clear: Union[Union[str, bool, "Stream"], UndefinedType] = Undefined,
         encodings: Union[
             List[
                 Literal[
@@ -17304,11 +17304,11 @@ class PointSelectionConfig(VegaLiteSchema):
         ] = Undefined,
         fields: Union[List[str], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
-        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        on: Union[Union[str, "Stream"], UndefinedType] = Undefined,
         resolve: Union[
             Literal["global", "union", "intersect"], UndefinedType
         ] = Undefined,
-        toggle: Union[Union[bool, str], UndefinedType] = Undefined,
+        toggle: Union[Union[str, bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(PointSelectionConfig, self).__init__(
@@ -17332,7 +17332,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
     Parameters
     ----------
 
-    clear : Union[:class:`Stream`, bool, str]
+    clear : Union[str, :class:`Stream`, bool]
         Clears the selection, emptying it of all values. This property can be a `Event
         Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to disable
         clear.
@@ -17365,7 +17365,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
         **See also:** `nearest examples
         <https://vega.github.io/vega-lite/docs/selection.html#nearest>`__ documentation.
-    on : Union[:class:`Stream`, str]
+    on : Union[str, :class:`Stream`]
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection. For interval selections, the event stream
         must specify a `start and end
@@ -17393,7 +17393,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `resolve examples
         <https://vega.github.io/vega-lite/docs/selection.html#resolve>`__ in the
         documentation.
-    toggle : Union[bool, str]
+    toggle : Union[str, bool]
         Controls whether data values should be toggled (inserted or removed from a point
         selection) or only ever inserted into point selections.
 
@@ -17423,7 +17423,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
     def __init__(
         self,
-        clear: Union[Union[bool, "Stream", str], UndefinedType] = Undefined,
+        clear: Union[Union[str, bool, "Stream"], UndefinedType] = Undefined,
         encodings: Union[
             List[
                 Literal[
@@ -17463,11 +17463,11 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         ] = Undefined,
         fields: Union[List[str], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
-        on: Union[Union["Stream", str], UndefinedType] = Undefined,
+        on: Union[Union[str, "Stream"], UndefinedType] = Undefined,
         resolve: Union[
             Literal["global", "union", "intersect"], UndefinedType
         ] = Undefined,
-        toggle: Union[Union[bool, str], UndefinedType] = Undefined,
+        toggle: Union[Union[str, bool], UndefinedType] = Undefined,
         **kwds
     ):
         super(PointSelectionConfigWithoutType, self).__init__(
@@ -17546,7 +17546,7 @@ class Position(VegaLiteSchema):
 class Position2Def(VegaLiteSchema):
     """Position2Def schema wrapper
 
-    Union[:class:`SecondaryFieldDef`, :class:`PositionValueDef`, :class:`DatumDef`]
+    Union[:class:`DatumDef`, :class:`SecondaryFieldDef`, :class:`PositionValueDef`]
     """
 
     _schema = {"$ref": "#/definitions/Position2Def"}
@@ -17567,9 +17567,9 @@ class DatumDef(LatLongDef, Position2Def):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -17667,15 +17667,15 @@ class DatumDef(LatLongDef, Position2Def):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -17699,7 +17699,7 @@ class PositionDatumDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
     scale : Union[:class:`Scale`, None]
         An object defining properties of the channel's scale, which is the function that
@@ -17745,7 +17745,7 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -17843,17 +17843,17 @@ class PositionDatumDefBase(PolarDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
-        stack: Union[Union[bool, None, "StackOffset"], UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", bool, None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -17874,7 +17874,7 @@ class PositionDatumDefBase(PolarDef):
 class PositionDef(VegaLiteSchema):
     """PositionDef schema wrapper
 
-    Union[:class:`PositionFieldDef`, :class:`PositionDatumDef`, :class:`PositionValueDef`]
+    Union[:class:`PositionDatumDef`, :class:`PositionFieldDef`, :class:`PositionValueDef`]
     """
 
     _schema = {"$ref": "#/definitions/PositionDef"}
@@ -17891,7 +17891,7 @@ class PositionDatumDef(PositionDef):
     Parameters
     ----------
 
-    axis : Union[None, :class:`Axis`]
+    axis : Union[:class:`Axis`, None]
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -17904,9 +17904,9 @@ class PositionDatumDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    impute : Union[None, :class:`ImputeParams`]
+    impute : Union[:class:`ImputeParams`, None]
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -17958,7 +17958,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18057,18 +18057,18 @@ class PositionDatumDef(PositionDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
         impute: Union[Union["ImputeParams", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
-        stack: Union[Union[bool, None, "StackOffset"], UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", bool, None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -18104,7 +18104,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : Union[None, :class:`Axis`]
+    axis : Union[:class:`Axis`, None]
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -18117,7 +18117,7 @@ class PositionFieldDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18153,7 +18153,7 @@ class PositionFieldDef(PositionDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : Union[None, :class:`ImputeParams`]
+    impute : Union[:class:`ImputeParams`, None]
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -18244,7 +18244,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18253,7 +18253,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18349,29 +18349,29 @@ class PositionFieldDef(PositionDef):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         axis: Union[Union["Axis", None], UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         impute: Union[Union["ImputeParams", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
-        stack: Union[Union[bool, None, "StackOffset"], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", bool, None], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -18414,7 +18414,7 @@ class PositionFieldDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18533,7 +18533,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18542,7 +18542,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18638,27 +18638,27 @@ class PositionFieldDefBase(PolarDef):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
-        stack: Union[Union[bool, None, "StackOffset"], UndefinedType] = Undefined,
+        stack: Union[Union["StackOffset", bool, None], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -18700,7 +18700,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     def __init__(
         self,
         value: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18710,8 +18710,8 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 class PredicateComposition(VegaLiteSchema):
     """PredicateComposition schema wrapper
 
-    Union[:class:`LogicalOrPredicate`, :class:`Predicate`, :class:`LogicalAndPredicate`,
-    :class:`LogicalNotPredicate`]
+    Union[:class:`LogicalAndPredicate`, :class:`Predicate`, :class:`LogicalNotPredicate`,
+    :class:`LogicalOrPredicate`]
     """
 
     _schema = {"$ref": "#/definitions/PredicateComposition"}
@@ -18777,9 +18777,10 @@ class LogicalOrPredicate(PredicateComposition):
 class Predicate(PredicateComposition):
     """Predicate schema wrapper
 
-    Union[:class:`FieldLTPredicate`, :class:`FieldGTEPredicate`, :class:`FieldEqualPredicate`,
-    :class:`FieldValidPredicate`, :class:`FieldGTPredicate`, :class:`FieldOneOfPredicate`,
-    :class:`FieldRangePredicate`, :class:`FieldLTEPredicate`, :class:`ParameterPredicate`, str]
+    Union[:class:`FieldGTEPredicate`, str, :class:`FieldValidPredicate`,
+    :class:`FieldOneOfPredicate`, :class:`FieldGTPredicate`, :class:`FieldEqualPredicate`,
+    :class:`FieldRangePredicate`, :class:`FieldLTPredicate`, :class:`ParameterPredicate`,
+    :class:`FieldLTEPredicate`]
     """
 
     _schema = {"$ref": "#/definitions/Predicate"}
@@ -18796,11 +18797,11 @@ class FieldEqualPredicate(Predicate):
     Parameters
     ----------
 
-    equal : Union[:class:`ExprRef`, :class:`DateTime`, float, bool, str]
+    equal : Union[str, :class:`DateTime`, float, :class:`ExprRef`, bool]
         The value that the field should be equal to.
     field : :class:`FieldName`
         Field to be tested.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18809,12 +18810,12 @@ class FieldEqualPredicate(Predicate):
     def __init__(
         self,
         equal: Union[
-            Union["DateTime", "ExprRef", "_ParameterProtocol", float, bool, str],
+            Union[str, "ExprRef", "_ParameterProtocol", float, "DateTime", bool],
             UndefinedType,
         ] = Undefined,
         field: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18833,9 +18834,9 @@ class FieldGTEPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    gte : Union[float, :class:`DateTime`, :class:`ExprRef`, str]
+    gte : Union[:class:`ExprRef`, str, :class:`DateTime`, float]
         The value that the field should be greater than or equals to.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18845,11 +18846,11 @@ class FieldGTEPredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         gte: Union[
-            Union["DateTime", float, "ExprRef", "_ParameterProtocol", str],
+            Union["DateTime", str, "ExprRef", "_ParameterProtocol", float],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18868,9 +18869,9 @@ class FieldGTPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    gt : Union[float, :class:`DateTime`, :class:`ExprRef`, str]
+    gt : Union[:class:`ExprRef`, str, :class:`DateTime`, float]
         The value that the field should be greater than.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18880,11 +18881,11 @@ class FieldGTPredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         gt: Union[
-            Union["DateTime", float, "ExprRef", "_ParameterProtocol", str],
+            Union["DateTime", str, "ExprRef", "_ParameterProtocol", float],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18903,9 +18904,9 @@ class FieldLTEPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    lte : Union[float, :class:`DateTime`, :class:`ExprRef`, str]
+    lte : Union[:class:`ExprRef`, str, :class:`DateTime`, float]
         The value that the field should be less than or equals to.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18915,11 +18916,11 @@ class FieldLTEPredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         lte: Union[
-            Union["DateTime", float, "ExprRef", "_ParameterProtocol", str],
+            Union["DateTime", str, "ExprRef", "_ParameterProtocol", float],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18938,9 +18939,9 @@ class FieldLTPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    lt : Union[float, :class:`DateTime`, :class:`ExprRef`, str]
+    lt : Union[:class:`ExprRef`, str, :class:`DateTime`, float]
         The value that the field should be less than.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18950,11 +18951,11 @@ class FieldLTPredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         lt: Union[
-            Union["DateTime", float, "ExprRef", "_ParameterProtocol", str],
+            Union["DateTime", str, "ExprRef", "_ParameterProtocol", float],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -18973,10 +18974,10 @@ class FieldOneOfPredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    oneOf : Union[List[str], List[float], List[bool], List[:class:`DateTime`]]
+    oneOf : Union[List[float], List[str], List[:class:`DateTime`], List[bool]]
         A set of values that the ``field`` 's value should be a member of, for a data item
         included in the filtered data.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -18986,10 +18987,10 @@ class FieldOneOfPredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         oneOf: Union[
-            Union[List[str], List["DateTime"], List[float], List[bool]], UndefinedType
+            Union[List[float], List[str], List["DateTime"], List[bool]], UndefinedType
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -19008,10 +19009,10 @@ class FieldRangePredicate(Predicate):
 
     field : :class:`FieldName`
         Field to be tested.
-    range : Union[List[Union[None, :class:`DateTime`, :class:`ExprRef`, float]], :class:`ExprRef`]
+    range : Union[:class:`ExprRef`, List[Union[:class:`ExprRef`, :class:`DateTime`, float, None]]]
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -19024,12 +19025,12 @@ class FieldRangePredicate(Predicate):
             Union[
                 "ExprRef",
                 "_ParameterProtocol",
-                List[Union["DateTime", None, "ExprRef", "_ParameterProtocol", float]],
+                List[Union["DateTime", "ExprRef", "_ParameterProtocol", float, None]],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -19052,7 +19053,7 @@ class FieldValidPredicate(Predicate):
         If set to true the field's value has to be valid, meaning both not ``null`` and not
         `NaN
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN>`__.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit for the field to be tested.
     """
 
@@ -19063,7 +19064,7 @@ class FieldValidPredicate(Predicate):
         field: Union[str, UndefinedType] = Undefined,
         valid: Union[bool, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -19106,7 +19107,7 @@ class Projection(VegaLiteSchema):
     Parameters
     ----------
 
-    center : Union[:class:`Vector2number`, :class:`ExprRef`]
+    center : Union[:class:`ExprRef`, :class:`Vector2number`]
         The projection's center, a two-element array of longitude and latitude in degrees.
 
         **Default value:** ``[0, 0]``
@@ -19114,7 +19115,7 @@ class Projection(VegaLiteSchema):
         The projection's clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : Union[:class:`Vector2Vector2number`, :class:`ExprRef`]
+    clipExtent : Union[:class:`ExprRef`, :class:`Vector2Vector2number`]
         The projection's viewport clip extent to the specified bounds in pixels. The extent
         bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
         left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
@@ -19130,9 +19131,9 @@ class Projection(VegaLiteSchema):
         is also applied, then more conservative clipping may be necessary.
 
         **Default value:** ``2.0``
-    extent : Union[:class:`Vector2Vector2number`, :class:`ExprRef`]
+    extent : Union[:class:`ExprRef`, :class:`Vector2Vector2number`]
 
-    fit : Union[:class:`Fit`, List[:class:`Fit`], :class:`ExprRef`]
+    fit : Union[:class:`ExprRef`, List[:class:`Fit`], :class:`Fit`]
 
     fraction : Union[:class:`ExprRef`, float]
         The fraction parameter for the ``bottomley`` projection.
@@ -19146,7 +19147,7 @@ class Projection(VegaLiteSchema):
         ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
         ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
         value varies based on the projection type.
-    parallels : Union[List[float], :class:`ExprRef`]
+    parallels : Union[:class:`ExprRef`, List[float]]
         For conic projections, the `two standard parallels
         <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
         The default depends on the specific conic projection used.
@@ -19170,11 +19171,11 @@ class Projection(VegaLiteSchema):
     ratio : Union[:class:`ExprRef`, float]
         The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
         default value varies based on the projection type.
-    reflectX : Union[bool, :class:`ExprRef`]
+    reflectX : Union[:class:`ExprRef`, bool]
         Sets whether or not the x-dimension is reflected (negated) in the output.
-    reflectY : Union[bool, :class:`ExprRef`]
+    reflectY : Union[:class:`ExprRef`, bool]
         Sets whether or not the y-dimension is reflected (negated) in the output.
-    rotate : Union[Union[:class:`Vector3number`, :class:`Vector2number`], :class:`ExprRef`]
+    rotate : Union[:class:`ExprRef`, Union[:class:`Vector3number`, :class:`Vector2number`]]
         The projection's three-axis rotation to the specified angles, which must be a two-
         or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
         rotation angles in degrees about each spherical axis. (These correspond to yaw,
@@ -19186,7 +19187,7 @@ class Projection(VegaLiteSchema):
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
-    size : Union[:class:`Vector2number`, :class:`ExprRef`]
+    size : Union[:class:`ExprRef`, :class:`Vector2number`]
         Used in conjunction with fit, provides the width and height in pixels of the area to
         which the projection should be automatically fit.
     spacing : Union[:class:`ExprRef`, float]
@@ -19197,7 +19198,7 @@ class Projection(VegaLiteSchema):
         The tilt angle (in degrees) for the ``satellite`` projection.
 
         **Default value:** ``0``.
-    translate : Union[:class:`Vector2number`, :class:`ExprRef`]
+    translate : Union[:class:`ExprRef`, :class:`Vector2number`]
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : Union[:class:`ExprRef`, :class:`ProjectionType`]
         The cartographic projection to use. This value is case-insensitive, for example
@@ -19233,7 +19234,7 @@ class Projection(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fit: Union[
-            Union["Fit", List["Fit"], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union[List["Fit"], "ExprRef", "_ParameterProtocol", "Fit"], UndefinedType
         ] = Undefined,
         fraction: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -19245,7 +19246,7 @@ class Projection(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         pointRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -19260,14 +19261,14 @@ class Projection(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["Vector3number", "Vector2number"], "ExprRef", "_ParameterProtocol"
+                "ExprRef", "_ParameterProtocol", Union["Vector2number", "Vector3number"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -19328,7 +19329,7 @@ class ProjectionConfig(VegaLiteSchema):
     Parameters
     ----------
 
-    center : Union[:class:`Vector2number`, :class:`ExprRef`]
+    center : Union[:class:`ExprRef`, :class:`Vector2number`]
         The projection's center, a two-element array of longitude and latitude in degrees.
 
         **Default value:** ``[0, 0]``
@@ -19336,7 +19337,7 @@ class ProjectionConfig(VegaLiteSchema):
         The projection's clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : Union[:class:`Vector2Vector2number`, :class:`ExprRef`]
+    clipExtent : Union[:class:`ExprRef`, :class:`Vector2Vector2number`]
         The projection's viewport clip extent to the specified bounds in pixels. The extent
         bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
         left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
@@ -19352,9 +19353,9 @@ class ProjectionConfig(VegaLiteSchema):
         is also applied, then more conservative clipping may be necessary.
 
         **Default value:** ``2.0``
-    extent : Union[:class:`Vector2Vector2number`, :class:`ExprRef`]
+    extent : Union[:class:`ExprRef`, :class:`Vector2Vector2number`]
 
-    fit : Union[:class:`Fit`, List[:class:`Fit`], :class:`ExprRef`]
+    fit : Union[:class:`ExprRef`, List[:class:`Fit`], :class:`Fit`]
 
     fraction : Union[:class:`ExprRef`, float]
         The fraction parameter for the ``bottomley`` projection.
@@ -19368,7 +19369,7 @@ class ProjectionConfig(VegaLiteSchema):
         ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
         ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
         value varies based on the projection type.
-    parallels : Union[List[float], :class:`ExprRef`]
+    parallels : Union[:class:`ExprRef`, List[float]]
         For conic projections, the `two standard parallels
         <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
         The default depends on the specific conic projection used.
@@ -19392,11 +19393,11 @@ class ProjectionConfig(VegaLiteSchema):
     ratio : Union[:class:`ExprRef`, float]
         The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
         default value varies based on the projection type.
-    reflectX : Union[bool, :class:`ExprRef`]
+    reflectX : Union[:class:`ExprRef`, bool]
         Sets whether or not the x-dimension is reflected (negated) in the output.
-    reflectY : Union[bool, :class:`ExprRef`]
+    reflectY : Union[:class:`ExprRef`, bool]
         Sets whether or not the y-dimension is reflected (negated) in the output.
-    rotate : Union[Union[:class:`Vector3number`, :class:`Vector2number`], :class:`ExprRef`]
+    rotate : Union[:class:`ExprRef`, Union[:class:`Vector3number`, :class:`Vector2number`]]
         The projection's three-axis rotation to the specified angles, which must be a two-
         or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
         rotation angles in degrees about each spherical axis. (These correspond to yaw,
@@ -19408,7 +19409,7 @@ class ProjectionConfig(VegaLiteSchema):
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
-    size : Union[:class:`Vector2number`, :class:`ExprRef`]
+    size : Union[:class:`ExprRef`, :class:`Vector2number`]
         Used in conjunction with fit, provides the width and height in pixels of the area to
         which the projection should be automatically fit.
     spacing : Union[:class:`ExprRef`, float]
@@ -19419,7 +19420,7 @@ class ProjectionConfig(VegaLiteSchema):
         The tilt angle (in degrees) for the ``satellite`` projection.
 
         **Default value:** ``0``.
-    translate : Union[:class:`Vector2number`, :class:`ExprRef`]
+    translate : Union[:class:`ExprRef`, :class:`Vector2number`]
         The projection’s translation offset as a two-element array ``[tx, ty]``.
     type : Union[:class:`ExprRef`, :class:`ProjectionType`]
         The cartographic projection to use. This value is case-insensitive, for example
@@ -19455,7 +19456,7 @@ class ProjectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fit: Union[
-            Union["Fit", List["Fit"], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union[List["Fit"], "ExprRef", "_ParameterProtocol", "Fit"], UndefinedType
         ] = Undefined,
         fraction: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -19467,7 +19468,7 @@ class ProjectionConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         pointRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -19482,14 +19483,14 @@ class ProjectionConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["Vector3number", "Vector2number"], "ExprRef", "_ParameterProtocol"
+                "ExprRef", "_ParameterProtocol", Union["Vector2number", "Vector3number"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -19664,13 +19665,13 @@ class RangeConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        category: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        category: Union[Union[List["Color"], "RangeScheme"], UndefinedType] = Undefined,
         diverging: Union[
-            Union["RangeScheme", List["Color"]], UndefinedType
+            Union[List["Color"], "RangeScheme"], UndefinedType
         ] = Undefined,
-        heatmap: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
-        ordinal: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
-        ramp: Union[Union["RangeScheme", List["Color"]], UndefinedType] = Undefined,
+        heatmap: Union[Union[List["Color"], "RangeScheme"], UndefinedType] = Undefined,
+        ordinal: Union[Union[List["Color"], "RangeScheme"], UndefinedType] = Undefined,
+        ramp: Union[Union[List["Color"], "RangeScheme"], UndefinedType] = Undefined,
         symbol: Union[List[str], UndefinedType] = Undefined,
         **kwds
     ):
@@ -19700,7 +19701,7 @@ class RangeRawArray(VegaLiteSchema):
 class RangeScheme(VegaLiteSchema):
     """RangeScheme schema wrapper
 
-    Union[:class:`RangeEnum`, Dict[required=[scheme]], :class:`RangeRaw`]
+    Union[:class:`RangeRaw`, Dict[required=[scheme]], :class:`RangeEnum`]
     """
 
     _schema = {"$ref": "#/definitions/RangeScheme"}
@@ -19724,7 +19725,7 @@ class RangeEnum(RangeScheme):
 class RangeRaw(RangeScheme):
     """RangeRaw schema wrapper
 
-    List[Union[None, str, float, bool, :class:`RangeRawArray`]]
+    List[Union[str, :class:`RangeRawArray`, float, None, bool]]
     """
 
     _schema = {"$ref": "#/definitions/RangeRaw"}
@@ -19741,14 +19742,14 @@ class RectConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -19764,9 +19765,9 @@ class RectConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -19782,13 +19783,13 @@ class RectConfig(AnyMarkConfig):
         (preferred by statisticians) or 1 (Vega-Lite default, D3 example style).
 
         **Default value:** ``1``
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -19825,7 +19826,7 @@ class RectConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -19833,7 +19834,7 @@ class RectConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -19855,7 +19856,7 @@ class RectConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -19880,7 +19881,7 @@ class RectConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -19976,7 +19977,7 @@ class RectConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -20008,7 +20009,7 @@ class RectConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -20016,21 +20017,21 @@ class RectConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -20049,7 +20050,7 @@ class RectConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -20068,7 +20069,7 @@ class RectConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -20122,26 +20123,26 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
@@ -20160,16 +20161,16 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[
-            Union["RelativeBandSize", float], UndefinedType
+            Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -20178,13 +20179,13 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -20192,13 +20193,13 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -20213,14 +20214,14 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -20246,33 +20247,33 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -20290,7 +20291,7 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -20302,13 +20303,13 @@ class RectConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -20319,16 +20320,16 @@ class RectConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -20631,7 +20632,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -20672,9 +20673,9 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, :class:`Header`]
+    header : Union[:class:`Header`, None]
         An object defining properties of a facet's header.
-    sort : Union[:class:`EncodingSortField`, :class:`SortOrder`, None, :class:`SortArray`]
+    sort : Union[:class:`SortOrder`, None, :class:`SortArray`, :class:`EncodingSortField`]
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -20707,7 +20708,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -20716,7 +20717,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -20812,22 +20813,22 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         align: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         header: Union[Union["Header", None], UndefinedType] = Undefined,
         sort: Union[
-            Union["SortOrder", "EncodingSortField", "SortArray", None], UndefinedType
+            Union["SortArray", "SortOrder", "EncodingSortField", None], UndefinedType
         ] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -20883,7 +20884,7 @@ class Scale(VegaLiteSchema):
           *step* size, and optionally the *start* and *stop* boundaries.
         * An array of bin boundaries over the scale domain. If provided, axes and legends
           will use the bin boundaries to inform the choice of tick marks and text labels.
-    clamp : Union[bool, :class:`ExprRef`]
+    clamp : Union[:class:`ExprRef`, bool]
         If ``true``, values that exceed the data domain are clamped to either the minimum or
         maximum range value
 
@@ -20895,7 +20896,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : Union[:class:`ExprRef`, :class:`ParameterExtent`, :class:`DomainUnionWith`, List[Union[None, :class:`ExprRef`, :class:`DateTime`, float, bool, str]], str]
+    domain : Union[str, :class:`ParameterExtent`, List[Union[str, :class:`DateTime`, float, None, :class:`ExprRef`, bool]], :class:`DomainUnionWith`, :class:`ExprRef`]
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -20927,7 +20928,7 @@ class Scale(VegaLiteSchema):
         `interactively determines
         <https://vega.github.io/vega-lite/docs/selection.html#scale-domains>`__ the scale
         domain.
-    domainMax : Union[:class:`DateTime`, :class:`ExprRef`, float]
+    domainMax : Union[:class:`ExprRef`, :class:`DateTime`, float]
         Sets the maximum value in the scale domain, overriding the ``domain`` property. This
         property is only intended for use with scales having continuous domains.
     domainMid : Union[:class:`ExprRef`, float]
@@ -20937,7 +20938,7 @@ class Scale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#piecewise>`__. The domainMid
         property is only intended for use with scales supporting continuous, piecewise
         domains.
-    domainMin : Union[:class:`DateTime`, :class:`ExprRef`, float]
+    domainMin : Union[:class:`ExprRef`, :class:`DateTime`, float]
         Sets the minimum value in the scale domain, overriding the domain property. This
         property is only intended for use with scales having continuous domains.
     domainRaw : :class:`ExprRef`
@@ -20947,7 +20948,7 @@ class Scale(VegaLiteSchema):
         then modified in response to user input by setting the rawDomain value.
     exponent : Union[:class:`ExprRef`, float]
         The exponent of the ``pow`` scale.
-    interpolate : Union[:class:`ScaleInterpolateParams`, :class:`ScaleInterpolateEnum`, :class:`ExprRef`]
+    interpolate : Union[:class:`ExprRef`, :class:`ScaleInterpolateParams`, :class:`ScaleInterpolateEnum`]
         The interpolation method for range values. By default, a general interpolator for
         numbers, dates, strings and colors (in HCL space) is used. For color ranges, this
         property allows interpolation in alternative color spaces. Legal values include
@@ -20960,7 +20961,7 @@ class Scale(VegaLiteSchema):
 
 
         * **Default value:** ``hcl``
-    nice : Union[:class:`ExprRef`, :class:`TimeIntervalStep`, :class:`TimeInterval`, float, bool]
+    nice : Union[float, :class:`TimeInterval`, :class:`ExprRef`, :class:`TimeIntervalStep`, bool]
         Extending the domain so that it starts and ends on nice round values. This method
         typically modifies the scale’s domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
@@ -21019,7 +21020,7 @@ class Scale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's ``bandPaddingOuter``
         for band scales and ``pointPadding`` for point scales. By default, Vega-Lite sets
         outer padding such that *width/height = number of unique values * step*.
-    range : Union[List[Union[List[float], :class:`ExprRef`, str, float]], :class:`RangeEnum`, :class:`FieldRange`]
+    range : Union[List[Union[:class:`ExprRef`, str, List[float], float]], :class:`FieldRange`, :class:`RangeEnum`]
         The range of the scale. One of:
 
 
@@ -21055,14 +21056,14 @@ class Scale(VegaLiteSchema):
         Sets the minimum value in the scale range, overriding the ``range`` property or the
         default range. This property is only intended for use with scales having continuous
         ranges.
-    reverse : Union[bool, :class:`ExprRef`]
+    reverse : Union[:class:`ExprRef`, bool]
         If true, reverses the order of the scale range. **Default value:** ``false``.
-    round : Union[bool, :class:`ExprRef`]
+    round : Union[:class:`ExprRef`, bool]
         If ``true``, rounds numeric output values to integers. This can be helpful for
         snapping to the pixel grid.
 
         **Default value:** ``false``.
-    scheme : Union[:class:`SchemeParams`, :class:`ExprRef`, :class:`ColorScheme`]
+    scheme : Union[:class:`ExprRef`, :class:`SchemeParams`, :class:`ColorScheme`]
         A string indicating a color `scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__ name (e.g.,
         ``"category10"`` or ``"blues"`` ) or a `scheme parameter object
@@ -21105,7 +21106,7 @@ class Scale(VegaLiteSchema):
 
         **Default value:** please see the `scale type table
         <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
-    zero : Union[bool, :class:`ExprRef`]
+    zero : Union[:class:`ExprRef`, bool]
         If ``true``, ensures that a zero baseline value is included in the scale domain.
 
         **Default value:** ``true`` for x and y channels if the quantitative field is not
@@ -21124,31 +21125,31 @@ class Scale(VegaLiteSchema):
         base: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        bins: Union[Union[List[float], "ScaleBinParams"], UndefinedType] = Undefined,
+        bins: Union[Union["ScaleBinParams", List[float]], UndefinedType] = Undefined,
         clamp: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         constant: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
-                "ParameterExtent",
+                str,
+                "ExprRef",
+                "_ParameterProtocol",
                 List[
                     Union[
-                        None,
-                        "DateTime",
+                        str,
                         "ExprRef",
                         "_ParameterProtocol",
                         float,
+                        None,
+                        "DateTime",
                         bool,
-                        str,
                     ]
                 ],
+                "ParameterExtent",
                 "DomainUnionWith",
-                "ExprRef",
-                "_ParameterProtocol",
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -21167,21 +21168,21 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         interpolate: Union[
             Union[
-                "ScaleInterpolateParams",
                 "ExprRef",
                 "_ParameterProtocol",
+                "ScaleInterpolateParams",
                 "ScaleInterpolateEnum",
             ],
             UndefinedType,
         ] = Undefined,
         nice: Union[
             Union[
-                "TimeInterval",
-                "TimeIntervalStep",
                 "ExprRef",
                 "_ParameterProtocol",
                 float,
+                "TimeInterval",
                 bool,
+                "TimeIntervalStep",
             ],
             UndefinedType,
         ] = Undefined,
@@ -21196,26 +21197,26 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         range: Union[
             Union[
-                "FieldRange",
-                List[Union[List[float], "ExprRef", "_ParameterProtocol", str, float]],
+                List[Union["ExprRef", "_ParameterProtocol", str, List[float], float]],
                 "RangeEnum",
+                "FieldRange",
             ],
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         scheme: Union[
-            Union["ColorScheme", "ExprRef", "_ParameterProtocol", "SchemeParams"],
+            Union["SchemeParams", "ExprRef", "_ParameterProtocol", "ColorScheme"],
             UndefinedType,
         ] = Undefined,
         type: Union[
@@ -21240,7 +21241,7 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -21276,7 +21277,7 @@ class Scale(VegaLiteSchema):
 class ScaleBins(VegaLiteSchema):
     """ScaleBins schema wrapper
 
-    Union[List[float], :class:`ScaleBinParams`]
+    Union[:class:`ScaleBinParams`, List[float]]
     """
 
     _schema = {"$ref": "#/definitions/ScaleBins"}
@@ -21353,7 +21354,7 @@ class ScaleConfig(VegaLiteSchema):
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"bar"`` marks.
 
         **Default value:** ``0.1``
-    clamp : Union[bool, :class:`ExprRef`]
+    clamp : Union[:class:`ExprRef`, bool]
         If true, values that exceed the data domain are clamped to either the minimum or
         maximum range value
     continuousPadding : Union[:class:`ExprRef`, float]
@@ -21430,7 +21431,7 @@ class ScaleConfig(VegaLiteSchema):
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"rect"`` marks.
 
         **Default value:** ``0``
-    round : Union[bool, :class:`ExprRef`]
+    round : Union[:class:`ExprRef`, bool]
         If true, rounds numeric output values to integers. This can be helpful for snapping
         to the pixel grid. (Only available for ``x``, ``y``, and ``size`` scales.)
     useUnaggregatedDomain : bool
@@ -21446,7 +21447,7 @@ class ScaleConfig(VegaLiteSchema):
         raw data domain (e.g. ``"count"``, ``"sum"`` ), this property is ignored.
 
         **Default value:** ``false``
-    xReverse : Union[bool, :class:`ExprRef`]
+    xReverse : Union[:class:`ExprRef`, bool]
         Reverse x-scale by default (useful for right-to-left charts).
     zero : bool
         Default ``scale.zero`` for `continuous
@@ -21476,7 +21477,7 @@ class ScaleConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         clamp: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         continuousPadding: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -21506,11 +21507,11 @@ class ScaleConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
         xReverse: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -21559,7 +21560,7 @@ class ScaleDatumDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
     scale : Union[:class:`Scale`, None]
         An object defining properties of the channel's scale, which is the function that
@@ -21574,7 +21575,7 @@ class ScaleDatumDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -21672,16 +21673,16 @@ class ScaleDatumDef(OffsetDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -21718,7 +21719,7 @@ class ScaleFieldDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -21806,7 +21807,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -21815,7 +21816,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -21911,26 +21912,26 @@ class ScaleFieldDef(OffsetDef):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -22122,11 +22123,11 @@ class SchemeParams(VegaLiteSchema):
         self,
         name: Union[
             Union[
-                "Cyclical",
-                "SequentialMultiHue",
+                "Diverging",
                 "Categorical",
                 "SequentialSingleHue",
-                "Diverging",
+                "SequentialMultiHue",
+                "Cyclical",
             ],
             UndefinedType,
         ] = Undefined,
@@ -22197,7 +22198,7 @@ class SecondaryFieldDef(Position2Def):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22206,7 +22207,7 @@ class SecondaryFieldDef(Position2Def):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -22233,15 +22234,15 @@ class SecondaryFieldDef(Position2Def):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[None, UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         **kwds
     ):
         super(SecondaryFieldDef, self).__init__(
@@ -22295,7 +22296,7 @@ class SelectionConfig(VegaLiteSchema):
 class SelectionInit(VegaLiteSchema):
     """SelectionInit schema wrapper
 
-    Union[:class:`PrimitiveValue`, :class:`DateTime`]
+    Union[:class:`DateTime`, :class:`PrimitiveValue`]
     """
 
     _schema = {"$ref": "#/definitions/SelectionInit"}
@@ -22317,7 +22318,7 @@ class DateTime(SelectionInit):
 
     date : float
         Integer value representing the date (day of the month) from 1-31.
-    day : Union[:class:`Day`, str]
+    day : Union[str, :class:`Day`]
         Value representing the day of a week. This can be one of: (1) integer value -- ``1``
         represents Monday; (2) case-insensitive day name (e.g., ``"Monday"`` ); (3)
         case-insensitive, 3-character short day name (e.g., ``"Mon"`` ).
@@ -22330,7 +22331,7 @@ class DateTime(SelectionInit):
         Integer value representing the millisecond segment of time.
     minutes : float
         Integer value representing the minute segment of time from 0-59.
-    month : Union[:class:`Month`, str]
+    month : Union[str, :class:`Month`]
         One of: (1) integer value representing the month from ``1`` - ``12``. ``1``
         represents January; (2) case-insensitive month name (e.g., ``"January"`` ); (3)
         case-insensitive, 3-character short month name (e.g., ``"Jan"`` ).
@@ -22354,7 +22355,7 @@ class DateTime(SelectionInit):
         hours: Union[float, UndefinedType] = Undefined,
         milliseconds: Union[float, UndefinedType] = Undefined,
         minutes: Union[float, UndefinedType] = Undefined,
-        month: Union[Union["Month", str], UndefinedType] = Undefined,
+        month: Union[Union[str, "Month"], UndefinedType] = Undefined,
         quarter: Union[float, UndefinedType] = Undefined,
         seconds: Union[float, UndefinedType] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
@@ -22379,7 +22380,7 @@ class DateTime(SelectionInit):
 class PrimitiveValue(SelectionInit):
     """PrimitiveValue schema wrapper
 
-    Union[bool, None, str, float]
+    Union[str, None, float, bool]
     """
 
     _schema = {"$ref": "#/definitions/PrimitiveValue"}
@@ -22391,8 +22392,8 @@ class PrimitiveValue(SelectionInit):
 class SelectionInitInterval(VegaLiteSchema):
     """SelectionInitInterval schema wrapper
 
-    Union[:class:`Vector2DateTime`, :class:`Vector2boolean`, :class:`Vector2number`,
-    :class:`Vector2string`]
+    Union[:class:`Vector2string`, :class:`Vector2boolean`, :class:`Vector2DateTime`,
+    :class:`Vector2number`]
     """
 
     _schema = {"$ref": "#/definitions/SelectionInitInterval"}
@@ -22438,7 +22439,7 @@ class SelectionParameter(VegaLiteSchema):
         JavaScript identifiers: they should contain only alphanumeric characters (or "$", or
         "_") and may not start with a digit. Reserved keywords that may not be used as
         parameter names are "datum", "event", "item", and "parent".
-    select : Union[:class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`, :class:`SelectionType`]
+    select : Union[:class:`IntervalSelectionConfig`, :class:`PointSelectionConfig`, :class:`SelectionType`]
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -22446,7 +22447,7 @@ class SelectionParameter(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : Union[Dict[required=[]], :class:`Binding`, :class:`LegendBinding`, str]
+    bind : Union[:class:`LegendBinding`, str, Dict[required=[]], :class:`Binding`]
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -22462,7 +22463,7 @@ class SelectionParameter(VegaLiteSchema):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : Union[:class:`SelectionInitIntervalMapping`, :class:`SelectionInit`, List[:class:`SelectionInitMapping`]]
+    value : Union[:class:`SelectionInitIntervalMapping`, List[:class:`SelectionInitMapping`], :class:`SelectionInit`]
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -22477,17 +22478,17 @@ class SelectionParameter(VegaLiteSchema):
         self,
         name: Union[str, UndefinedType] = Undefined,
         select: Union[
-            Union["SelectionType", "PointSelectionConfig", "IntervalSelectionConfig"],
+            Union["IntervalSelectionConfig", "PointSelectionConfig", "SelectionType"],
             UndefinedType,
         ] = Undefined,
         bind: Union[
-            Union[dict, "Binding", "LegendBinding", str], UndefinedType
+            Union[str, "Binding", "LegendBinding", dict], UndefinedType
         ] = Undefined,
         value: Union[
             Union[
+                List["SelectionInitMapping"],
                 "SelectionInit",
                 "SelectionInitIntervalMapping",
-                List["SelectionInitMapping"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -22648,8 +22649,8 @@ class ShapeDef(VegaLiteSchema):
     """ShapeDef schema wrapper
 
     Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`FieldOrDatumDefWithConditionDatumDefstringnull`]
+    :class:`FieldOrDatumDefWithConditionDatumDefstringnull`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`]
     """
 
     _schema = {"$ref": "#/definitions/ShapeDef"}
@@ -22672,16 +22673,16 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[:class:`ConditionalValueDefstringnullExprRef`, List[:class:`ConditionalValueDefstringnullExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalValueDefstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -22781,22 +22782,22 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefstringnullExprRef",
                 List["ConditionalValueDefstringnullExprRef"],
+                "ConditionalValueDefstringnullExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -22835,7 +22836,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None]
+    bin : Union[:class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22856,7 +22857,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[:class:`ConditionalValueDefstringnullExprRef`, List[:class:`ConditionalValueDefstringnullExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalValueDefstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -22878,7 +22879,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, :class:`Legend`]
+    legend : Union[:class:`Legend`, None]
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -22939,7 +22940,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22948,7 +22949,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -23046,34 +23047,34 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[Union[bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefstringnullExprRef",
                 List["ConditionalValueDefstringnullExprRef"],
+                "ConditionalValueDefstringnullExprRef",
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        legend: Union[Union[None, "Legend"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        legend: Union[Union["Legend", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                None,
-                "SortByEncoding",
                 "SortArray",
-                "AllSortString",
                 "EncodingSortField",
+                None,
+                "AllSortString",
+                "SortByEncoding",
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["nominal", "ordinal", "geojson"], UndefinedType
         ] = Undefined,
@@ -23132,7 +23133,7 @@ class SharedEncoding(VegaLiteSchema):
 
     opacity : Dict[required=[]]
 
-    order : Union[:class:`OrderValueDef`, :class:`OrderFieldDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
+    order : Union[:class:`OrderFieldDef`, :class:`OrderValueDef`, List[:class:`OrderFieldDef`], :class:`OrderOnlyDef`]
         Order of the marks.
 
 
@@ -23169,7 +23170,7 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : Dict[required=[]]
 
-    tooltip : Union[:class:`StringValueDefWithCondition`, None, List[:class:`StringFieldDef`], :class:`StringFieldDefWithCondition`]
+    tooltip : Union[:class:`StringValueDefWithCondition`, :class:`StringFieldDefWithCondition`, List[:class:`StringFieldDef`], None]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -23208,7 +23209,7 @@ class SharedEncoding(VegaLiteSchema):
         color: Union[dict, UndefinedType] = Undefined,
         description: Union[dict, UndefinedType] = Undefined,
         detail: Union[
-            Union[List["FieldDefWithoutScale"], "FieldDefWithoutScale"], UndefinedType
+            Union["FieldDefWithoutScale", List["FieldDefWithoutScale"]], UndefinedType
         ] = Undefined,
         fill: Union[dict, UndefinedType] = Undefined,
         fillOpacity: Union[dict, UndefinedType] = Undefined,
@@ -23221,7 +23222,7 @@ class SharedEncoding(VegaLiteSchema):
         opacity: Union[dict, UndefinedType] = Undefined,
         order: Union[
             Union[
-                "OrderValueDef", "OrderOnlyDef", "OrderFieldDef", List["OrderFieldDef"]
+                "OrderOnlyDef", "OrderValueDef", "OrderFieldDef", List["OrderFieldDef"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -23238,10 +23239,10 @@ class SharedEncoding(VegaLiteSchema):
         theta2: Union[dict, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
+                List["StringFieldDef"],
+                None,
                 "StringValueDefWithCondition",
                 "StringFieldDefWithCondition",
-                None,
-                List["StringFieldDef"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -23318,8 +23319,8 @@ class SingleDefUnitChannel(VegaLiteSchema):
 class Sort(VegaLiteSchema):
     """Sort schema wrapper
 
-    Union[None, :class:`SortArray`, :class:`SortByEncoding`, :class:`AllSortString`,
-    :class:`EncodingSortField`]
+    Union[:class:`SortByEncoding`, :class:`EncodingSortField`, None, :class:`AllSortString`,
+    :class:`SortArray`]
     """
 
     _schema = {"$ref": "#/definitions/Sort"}
@@ -23331,7 +23332,7 @@ class Sort(VegaLiteSchema):
 class AllSortString(Sort):
     """AllSortString schema wrapper
 
-    Union[:class:`SortOrder`, :class:`SortByChannelDesc`, :class:`SortByChannel`]
+    Union[:class:`SortByChannelDesc`, :class:`SortByChannel`, :class:`SortOrder`]
     """
 
     _schema = {"$ref": "#/definitions/AllSortString"}
@@ -23366,7 +23367,7 @@ class EncodingSortField(Sort):
         <https://vega.github.io/vega-lite/docs/aggregate.html#ops>`__.
 
         **Default value:** ``"sum"`` for stacked plots. Otherwise, ``"min"``.
-    order : Union[:class:`SortOrder`, None]
+    order : Union[None, :class:`SortOrder`]
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
@@ -23375,7 +23376,7 @@ class EncodingSortField(Sort):
 
     def __init__(
         self,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         op: Union[
             Literal[
                 "average",
@@ -23411,7 +23412,7 @@ class EncodingSortField(Sort):
 class SortArray(Sort):
     """SortArray schema wrapper
 
-    Union[List[float], List[:class:`DateTime`], List[bool], List[str]]
+    Union[List[float], List[str], List[:class:`DateTime`], List[bool]]
     """
 
     _schema = {"$ref": "#/definitions/SortArray"}
@@ -23458,7 +23459,7 @@ class SortByEncoding(Sort):
         The `encoding channel
         <https://vega.github.io/vega-lite/docs/encoding.html#channels>`__ to sort by (e.g.,
         ``"x"``, ``"y"`` )
-    order : Union[:class:`SortOrder`, None]
+    order : Union[None, :class:`SortOrder`]
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
@@ -23501,7 +23502,7 @@ class SortField(VegaLiteSchema):
 
     field : :class:`FieldName`
         The name of the field to sort.
-    order : Union[:class:`SortOrder`, None]
+    order : Union[None, :class:`SortOrder`]
         Whether to sort the field in ascending or descending order. One of ``"ascending"``
         (default), ``"descending"``, or ``null`` (no not sort).
     """
@@ -23532,9 +23533,9 @@ class SortOrder(AllSortString):
 class Spec(VegaLiteSchema):
     """Spec schema wrapper
 
-    Union[:class:`FacetSpec`, :class:`VConcatSpecGenericSpec`, :class:`LayerSpec`,
-    :class:`HConcatSpecGenericSpec`, :class:`FacetedUnitSpec`, :class:`ConcatSpecGenericSpec`,
-    :class:`RepeatSpec`]
+    Union[:class:`FacetedUnitSpec`, :class:`RepeatSpec`, :class:`FacetSpec`,
+    :class:`ConcatSpecGenericSpec`, :class:`VConcatSpecGenericSpec`,
+    :class:`HConcatSpecGenericSpec`, :class:`LayerSpec`]
     Any specification in Vega-Lite.
     """
 
@@ -23555,7 +23556,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
 
     concat : List[:class:`Spec`]
         A list of views to be concatenated.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -23584,7 +23585,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -23627,7 +23628,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -23641,12 +23642,12 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
@@ -23655,36 +23656,36 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -23717,7 +23718,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
     Parameters
     ----------
 
-    facet : Union[:class:`FacetFieldDef`, :class:`FacetMapping`]
+    facet : Union[:class:`FacetMapping`, :class:`FacetFieldDef`]
         Definition for how to facet the data. One of: 1) `a field definition for faceting
         the plot by one field
         <https://vega.github.io/vega-lite/docs/facet.html#field-def>`__ 2) `An object that
@@ -23725,7 +23726,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
         <https://vega.github.io/vega-lite/docs/facet.html#mapping>`__
     spec : Union[:class:`FacetedUnitSpec`, :class:`LayerSpec`]
         A specification of the view that gets faceted.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -23754,7 +23755,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -23797,7 +23798,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -23813,36 +23814,36 @@ class FacetSpec(Spec, NonNormalizedSpec):
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -23882,7 +23883,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"`` ) or a `mark definition object
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -23911,7 +23912,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -23926,7 +23927,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         Description of this mark for commenting purpose.
     encoding : :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : Union[:class:`Step`, str, float]
+    height : Union[str, :class:`Step`, float]
         The height of a visualization.
 
 
@@ -23965,7 +23966,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -23973,7 +23974,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : Union[:class:`Step`, str, float]
+    width : Union[str, :class:`Step`, float]
         The width of a visualization.
 
 
@@ -24000,51 +24001,51 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         mark: Union[
-            Union["CompositeMarkDef", "MarkDef", "Mark", "CompositeMark"], UndefinedType
+            Union["Mark", "MarkDef", "CompositeMark", "CompositeMarkDef"], UndefinedType
         ] = Undefined,
         align: Union[
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
-        height: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        height: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[List[dict], UndefinedType] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         view: Union[dict, UndefinedType] = Undefined,
-        width: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        width: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         **kwds
     ):
         super(FacetedUnitSpec, self).__init__(
@@ -24110,7 +24111,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -24124,46 +24125,46 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -24210,7 +24211,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     encoding : :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : Union[:class:`Step`, str, float]
+    height : Union[str, :class:`Step`, float]
         The height of a visualization.
 
 
@@ -24237,7 +24238,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         layers.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -24245,7 +24246,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : Union[:class:`Step`, str, float]
+    width : Union[str, :class:`Step`, float]
         The width of a visualization.
 
 
@@ -24271,43 +24272,43 @@ class LayerSpec(Spec, NonNormalizedSpec):
 
     def __init__(
         self,
-        layer: Union[List[Union["LayerSpec", "UnitSpec"]], UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        layer: Union[List[Union["UnitSpec", "LayerSpec"]], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
-        height: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        height: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         view: Union[dict, UndefinedType] = Undefined,
-        width: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        width: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         **kwds
     ):
         super(LayerSpec, self).__init__(
@@ -24355,9 +24356,9 @@ class LayerRepeatSpec(RepeatSpec):
         ``"column"`` to the listed fields to be repeated along the particular orientations.
         The objects ``{"repeat": "row"}`` and ``{"repeat": "column"}`` can be used to refer
         to the repeated field respectively.
-    spec : Union[:class:`UnitSpecWithFrame`, :class:`LayerSpec`]
+    spec : Union[:class:`LayerSpec`, :class:`UnitSpecWithFrame`]
         A specification of the view that gets repeated.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -24386,7 +24387,7 @@ class LayerRepeatSpec(RepeatSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -24429,7 +24430,7 @@ class LayerRepeatSpec(RepeatSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -24440,41 +24441,41 @@ class LayerRepeatSpec(RepeatSpec):
     def __init__(
         self,
         repeat: Union[dict, UndefinedType] = Undefined,
-        spec: Union[Union["LayerSpec", "UnitSpecWithFrame"], UndefinedType] = Undefined,
+        spec: Union[Union["UnitSpecWithFrame", "LayerSpec"], UndefinedType] = Undefined,
         align: Union[
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -24508,7 +24509,7 @@ class NonLayerRepeatSpec(RepeatSpec):
     Parameters
     ----------
 
-    repeat : Union[List[str], :class:`RepeatMapping`]
+    repeat : Union[:class:`RepeatMapping`, List[str]]
         Definition for fields to be repeated. One of: 1) An array of fields to be repeated.
         If ``"repeat"`` is an array, the field can be referred to as ``{"repeat":
         "repeat"}``. The repeated views are laid out in a wrapped row. You can set the
@@ -24518,7 +24519,7 @@ class NonLayerRepeatSpec(RepeatSpec):
         to the repeated field respectively.
     spec : :class:`NonNormalizedSpec`
         A specification of the view that gets repeated.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -24547,7 +24548,7 @@ class NonLayerRepeatSpec(RepeatSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -24590,7 +24591,7 @@ class NonLayerRepeatSpec(RepeatSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -24604,12 +24605,12 @@ class NonLayerRepeatSpec(RepeatSpec):
         spec: Union[
             Union[
                 "RepeatSpec",
-                "LayerSpec",
-                "HConcatSpecGenericSpec",
-                "FacetSpec",
-                "FacetedUnitSpec",
                 "ConcatSpecGenericSpec",
+                "LayerSpec",
+                "FacetedUnitSpec",
+                "HConcatSpecGenericSpec",
                 "VConcatSpecGenericSpec",
+                "FacetSpec",
             ],
             UndefinedType,
         ] = Undefined,
@@ -24617,36 +24618,36 @@ class NonLayerRepeatSpec(RepeatSpec):
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -24679,7 +24680,7 @@ class SphereGenerator(Generator):
     Parameters
     ----------
 
-    sphere : Union[Dict[required=[]], bool]
+    sphere : Union[bool, Dict[required=[]]]
         Generate sphere GeoJSON data for the full globe.
     name : str
         Provide a placeholder name and bind data at runtime.
@@ -24756,7 +24757,7 @@ class StepFor(VegaLiteSchema):
 class Stream(VegaLiteSchema):
     """Stream schema wrapper
 
-    Union[:class:`MergedStream`, :class:`EventStream`, :class:`DerivedStream`]
+    Union[:class:`DerivedStream`, :class:`EventStream`, :class:`MergedStream`]
     """
 
     _schema = {"$ref": "#/definitions/Stream"}
@@ -24781,7 +24782,7 @@ class DerivedStream(Stream):
 
     debounce : float
 
-    filter : Union[List[:class:`Expr`], :class:`Expr`]
+    filter : Union[:class:`Expr`, List[:class:`Expr`]]
 
     markname : str
 
@@ -24866,7 +24867,7 @@ class MergedStream(Stream):
 
     debounce : float
 
-    filter : Union[List[:class:`Expr`], :class:`Expr`]
+    filter : Union[:class:`Expr`, List[:class:`Expr`]]
 
     markname : str
 
@@ -24943,7 +24944,7 @@ class StringFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -24979,7 +24980,7 @@ class StringFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -25013,7 +25014,7 @@ class StringFieldDef(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -25022,7 +25023,7 @@ class StringFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25118,17 +25119,17 @@ class StringFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -25168,7 +25169,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -25189,7 +25190,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[:class:`ConditionalValueDefstringExprRef`, List[:class:`ConditionalValueDefstringExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefstringExprRef`], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -25211,7 +25212,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -25245,7 +25246,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -25254,7 +25255,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25350,24 +25351,24 @@ class StringFieldDefWithCondition(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                "ConditionalValueDefstringExprRef",
                 List["ConditionalValueDefstringExprRef"],
+                "ConditionalValueDefstringExprRef",
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -25396,9 +25397,9 @@ class StringValueDefWithCondition(VegaLiteSchema):
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalValueDefstringnullExprRef`]
+    condition : Union[List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -25410,14 +25411,14 @@ class StringValueDefWithCondition(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                "ConditionalValueDefstringnullExprRef",
-                "ConditionalMarkPropFieldOrDatumDef",
                 List["ConditionalValueDefstringnullExprRef"],
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefstringnullExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -25554,7 +25555,7 @@ class SymbolShape(VegaLiteSchema):
 class Text(VegaLiteSchema):
     """Text schema wrapper
 
-    Union[List[str], str]
+    Union[str, List[str]]
     """
 
     _schema = {"$ref": "#/definitions/Text"}
@@ -25566,7 +25567,7 @@ class Text(VegaLiteSchema):
 class TextBaseline(VegaLiteSchema):
     """TextBaseline schema wrapper
 
-    Union[:class:`Baseline`, str]
+    Union[str, :class:`Baseline`]
     """
 
     _schema = {"$ref": "#/definitions/TextBaseline"}
@@ -25613,16 +25614,16 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[List[:class:`ConditionalValueDefTextExprRef`], :class:`ConditionalValueDefTextExprRef`]
+    condition : Union[:class:`ConditionalValueDefTextExprRef`, List[:class:`ConditionalValueDefTextExprRef`]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[:class:`RepeatRef`, :class:`PrimitiveValue`, :class:`DateTime`, :class:`ExprRef`]
+    datum : Union[:class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`]
         A constant value in data domain.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -25656,7 +25657,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25756,23 +25757,23 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List["ConditionalValueDefTextExprRef"], "ConditionalValueDefTextExprRef"
+                "ConditionalValueDefTextExprRef", List["ConditionalValueDefTextExprRef"]
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                "DateTime",
                 "PrimitiveValue",
-                "RepeatRef",
                 "ExprRef",
                 "_ParameterProtocol",
+                "RepeatRef",
+                "DateTime",
             ],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             UndefinedType,
@@ -25811,7 +25812,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -25832,7 +25833,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[List[:class:`ConditionalValueDefTextExprRef`], :class:`ConditionalValueDefTextExprRef`]
+    condition : Union[:class:`ConditionalValueDefTextExprRef`, List[:class:`ConditionalValueDefTextExprRef`]]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -25854,7 +25855,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[:class:`Dict`, str]
+    format : Union[str, :class:`Dict`]
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -25888,7 +25889,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -25897,7 +25898,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25995,23 +25996,23 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List["ConditionalValueDefTextExprRef"], "ConditionalValueDefTextExprRef"
+                "ConditionalValueDefTextExprRef", List["ConditionalValueDefTextExprRef"]
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
-        format: Union[Union["Dict", str], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
+        format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -26052,14 +26053,14 @@ class TickConfig(AnyMarkConfig):
     Parameters
     ----------
 
-    align : Union[:class:`Align`, :class:`ExprRef`]
+    align : Union[:class:`ExprRef`, :class:`Align`]
         The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
         One of ``"left"``, ``"right"``, ``"center"``.
 
         **Note:** Expression reference is *not* supported for range marks.
     angle : Union[:class:`ExprRef`, float]
         The rotation angle of the text, in degrees.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -26075,14 +26076,14 @@ class TickConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the "aria-roledescription" attribute.
         Warning: this property is experimental and may be changed in the future.
-    aspect : Union[bool, :class:`ExprRef`]
+    aspect : Union[:class:`ExprRef`, bool]
         Whether to keep aspect ratio of image marks.
     bandSize : float
         The width of the ticks.
 
         **Default value:**  3/4 of step (width step for horizontal ticks and height step for
         vertical ticks).
-    baseline : Union[:class:`TextBaseline`, :class:`ExprRef`]
+    baseline : Union[:class:`ExprRef`, :class:`TextBaseline`]
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -26093,13 +26094,13 @@ class TickConfig(AnyMarkConfig):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
-    blend : Union[:class:`Blend`, :class:`ExprRef`]
+    blend : Union[:class:`ExprRef`, :class:`Blend`]
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
         __Default value:__ ``"source-over"``
-    color : Union[:class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    color : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`]
         Default color.
 
         **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
@@ -26132,7 +26133,7 @@ class TickConfig(AnyMarkConfig):
         The radius in pixels of rounded rectangles' top left corner.
 
         **Default value:** ``0``
-    cursor : Union[:class:`Cursor`, :class:`ExprRef`]
+    cursor : Union[:class:`ExprRef`, :class:`Cursor`]
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
     description : Union[:class:`ExprRef`, str]
@@ -26140,7 +26141,7 @@ class TickConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : Union[:class:`TextDirection`, :class:`ExprRef`]
+    dir : Union[:class:`ExprRef`, :class:`TextDirection`]
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -26159,7 +26160,7 @@ class TickConfig(AnyMarkConfig):
     endAngle : Union[:class:`ExprRef`, float]
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -26184,7 +26185,7 @@ class TickConfig(AnyMarkConfig):
         The font size, in pixels.
 
         **Default value:** ``11``
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         The font style (e.g., ``"italic"`` ).
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
@@ -26278,7 +26279,7 @@ class TickConfig(AnyMarkConfig):
         The secondary (inner) radius in pixels of arc marks.
 
         **Default value:** ``0``
-    shape : Union[Union[:class:`SymbolShape`, str], :class:`ExprRef`]
+    shape : Union[:class:`ExprRef`, Union[:class:`SymbolShape`, str]]
         Shape of the point marks. Supported values include:
 
 
@@ -26310,7 +26311,7 @@ class TickConfig(AnyMarkConfig):
         * ``2`` for bar marks with discrete dimensions;
         * ``5`` for bar marks with continuous dimensions;
         * ``11`` for text marks.
-    smooth : Union[bool, :class:`ExprRef`]
+    smooth : Union[:class:`ExprRef`, bool]
         A boolean flag (default true) indicating if the image should be smoothed when
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
@@ -26318,21 +26319,21 @@ class TickConfig(AnyMarkConfig):
     startAngle : Union[:class:`ExprRef`, float]
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : Union[None, :class:`Gradient`, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, :class:`Gradient`, None]
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
         **Default value:** (None)
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -26351,7 +26352,7 @@ class TickConfig(AnyMarkConfig):
     tension : Union[:class:`ExprRef`, float]
         Depending on the interpolation type, sets the tension parameter (for line and area
         marks).
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         Placeholder text if the ``text`` channel is not specified
     theta : Union[:class:`ExprRef`, float]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
@@ -26374,7 +26375,7 @@ class TickConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : Union[None, :class:`ExprRef`, :class:`TooltipContent`, float, bool, str]
+    tooltip : Union[:class:`TooltipContent`, str, float, None, :class:`ExprRef`, bool]
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -26428,26 +26429,26 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextBaseline"], UndefinedType
         ] = Undefined,
         blend: Union[
             Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["Gradient", "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", "Gradient"], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -26465,13 +26466,13 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Cursor"], UndefinedType
         ] = Undefined,
         description: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TextDirection"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -26480,13 +26481,13 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         endAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
@@ -26494,13 +26495,13 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -26515,14 +26516,14 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Interpolate"], UndefinedType
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -26545,33 +26546,33 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            Union["ExprRef", "_ParameterProtocol", Union[str, "SymbolShape"]],
             UndefinedType,
         ] = Undefined,
         size: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", "Color"],
+            Union["Color", "ExprRef", "_ParameterProtocol", None, "Gradient"],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -26589,7 +26590,7 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         theta: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -26602,13 +26603,13 @@ class TickConfig(AnyMarkConfig):
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
-                "TooltipContent",
+                str,
                 "ExprRef",
                 "_ParameterProtocol",
+                "TooltipContent",
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -26619,16 +26620,16 @@ class TickConfig(AnyMarkConfig):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -26711,7 +26712,7 @@ class TickConfig(AnyMarkConfig):
 class TickCount(VegaLiteSchema):
     """TickCount schema wrapper
 
-    Union[:class:`TimeInterval`, :class:`TimeIntervalStep`, float]
+    Union[:class:`TimeIntervalStep`, float, :class:`TimeInterval`]
     """
 
     _schema = {"$ref": "#/definitions/TickCount"}
@@ -26869,7 +26870,7 @@ class LocalMultiTimeUnit(MultiTimeUnit):
 class SingleTimeUnit(TimeUnit):
     """SingleTimeUnit schema wrapper
 
-    Union[:class:`LocalSingleTimeUnit`, :class:`UtcSingleTimeUnit`]
+    Union[:class:`UtcSingleTimeUnit`, :class:`LocalSingleTimeUnit`]
     """
 
     _schema = {"$ref": "#/definitions/SingleTimeUnit"}
@@ -26991,13 +26992,13 @@ class TitleConfig(VegaLiteSchema):
     align : :class:`Align`
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
         ``"right"``.
-    anchor : Union[:class:`ExprRef`, :class:`TitleAnchor`]
+    anchor : Union[:class:`TitleAnchor`, :class:`ExprRef`]
         The anchor position for placing the title and subtitle text. One of ``"start"``,
         ``"middle"``, or ``"end"``. For example, with an orientation of top these anchor
         positions map to a left-, center-, or right-aligned title.
     angle : Union[:class:`ExprRef`, float]
         Angle in degrees of title and subtitle text.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -27010,7 +27011,7 @@ class TitleConfig(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    color : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for title text.
     dx : Union[:class:`ExprRef`, float]
         Delta offset for title and subtitle text x-coordinate.
@@ -27020,13 +27021,13 @@ class TitleConfig(VegaLiteSchema):
         Font name for title text.
     fontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for title text.
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for title text.
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : Union[Union[:class:`TitleFrame`, str], :class:`ExprRef`]
+    frame : Union[:class:`ExprRef`, Union[:class:`TitleFrame`, str]]
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -27040,13 +27041,13 @@ class TitleConfig(VegaLiteSchema):
         position along the edge of the chart.
     orient : Union[:class:`TitleOrient`, :class:`ExprRef`]
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
-    subtitleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    subtitleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for subtitle text.
     subtitleFont : Union[:class:`ExprRef`, str]
         Font name for subtitle text.
     subtitleFontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for subtitle text.
-    subtitleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    subtitleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for subtitle text.
     subtitleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
@@ -27069,17 +27070,17 @@ class TitleConfig(VegaLiteSchema):
         self,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
         anchor: Union[
-            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "TitleAnchor"], UndefinedType
         ] = Undefined,
         angle: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
-        baseline: Union[Union["Baseline", str], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline"], UndefinedType] = Undefined,
         color: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -27088,19 +27089,19 @@ class TitleConfig(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            Union[Union[str, "TitleFrame"], "ExprRef", "_ParameterProtocol"],
             UndefinedType,
         ] = Undefined,
         limit: Union[
@@ -27116,16 +27117,16 @@ class TitleConfig(VegaLiteSchema):
             Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -27203,7 +27204,7 @@ class TitleParams(VegaLiteSchema):
     Parameters
     ----------
 
-    text : Union[:class:`Text`, :class:`ExprRef`]
+    text : Union[:class:`ExprRef`, :class:`Text`]
         The title text.
     align : :class:`Align`
         Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
@@ -27225,7 +27226,7 @@ class TitleParams(VegaLiteSchema):
         views, ``anchor`` is always ``"start"``.
     angle : Union[:class:`ExprRef`, float]
         Angle in degrees of title and subtitle text.
-    aria : Union[bool, :class:`ExprRef`]
+    aria : Union[:class:`ExprRef`, bool]
         A boolean flag indicating if `ARIA attributes
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
         included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
@@ -27238,7 +27239,7 @@ class TitleParams(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    color : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for title text.
     dx : Union[:class:`ExprRef`, float]
         Delta offset for title and subtitle text x-coordinate.
@@ -27248,13 +27249,13 @@ class TitleParams(VegaLiteSchema):
         Font name for title text.
     fontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for title text.
-    fontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    fontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for title text.
     fontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for title text. This can be either a string (e.g ``"bold"``,
         ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
         ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
-    frame : Union[Union[:class:`TitleFrame`, str], :class:`ExprRef`]
+    frame : Union[:class:`ExprRef`, Union[:class:`TitleFrame`, str]]
         The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
         to the full bounding box) or ``"group"`` (to anchor relative to the group width or
         height).
@@ -27268,20 +27269,20 @@ class TitleParams(VegaLiteSchema):
         position along the edge of the chart.
     orient : Union[:class:`TitleOrient`, :class:`ExprRef`]
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`__
         to apply to the title text mark.
 
         **Default value:** ``"group-title"``.
     subtitle : :class:`Text`
         The subtitle Text.
-    subtitleColor : Union[Union[None, :class:`Color`], :class:`ExprRef`]
+    subtitleColor : Union[:class:`ExprRef`, Union[:class:`Color`, None]]
         Text color for subtitle text.
     subtitleFont : Union[:class:`ExprRef`, str]
         Font name for subtitle text.
     subtitleFontSize : Union[:class:`ExprRef`, float]
         Font size in pixels for subtitle text.
-    subtitleFontStyle : Union[:class:`FontStyle`, :class:`ExprRef`]
+    subtitleFontStyle : Union[:class:`ExprRef`, :class:`FontStyle`]
         Font style for subtitle text.
     subtitleFontWeight : Union[:class:`FontWeight`, :class:`ExprRef`]
         Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
@@ -27303,7 +27304,7 @@ class TitleParams(VegaLiteSchema):
     def __init__(
         self,
         text: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
         anchor: Union[
@@ -27313,11 +27314,11 @@ class TitleParams(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", bool], UndefinedType
         ] = Undefined,
-        baseline: Union[Union["Baseline", str], UndefinedType] = Undefined,
+        baseline: Union[Union[str, "Baseline"], UndefinedType] = Undefined,
         color: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         dx: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -27326,19 +27327,19 @@ class TitleParams(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            Union[Union[str, "TitleFrame"], "ExprRef", "_ParameterProtocol"],
             UndefinedType,
         ] = Undefined,
         limit: Union[
@@ -27353,19 +27354,19 @@ class TitleParams(VegaLiteSchema):
         orient: Union[
             Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
-        subtitle: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        subtitle: Union[Union[str, List[str]], UndefinedType] = Undefined,
         subtitleColor: Union[
-            Union["ExprRef", "_ParameterProtocol", Union[None, "Color"]], UndefinedType
+            Union[Union["Color", None], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFont: Union[
-            Union["ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "FontStyle"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
@@ -27459,7 +27460,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         JavaScript identifiers: they should contain only alphanumeric characters (or "$", or
         "_") and may not start with a digit. Reserved keywords that may not be used as
         parameter names are "datum", "event", "item", and "parent".
-    select : Union[:class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`, :class:`SelectionType`]
+    select : Union[:class:`IntervalSelectionConfig`, :class:`PointSelectionConfig`, :class:`SelectionType`]
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -27467,7 +27468,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : Union[Dict[required=[]], :class:`Binding`, :class:`LegendBinding`, str]
+    bind : Union[:class:`LegendBinding`, str, Dict[required=[]], :class:`Binding`]
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -27483,7 +27484,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : Union[:class:`SelectionInitIntervalMapping`, :class:`SelectionInit`, List[:class:`SelectionInitMapping`]]
+    value : Union[:class:`SelectionInitIntervalMapping`, List[:class:`SelectionInitMapping`], :class:`SelectionInit`]
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -27502,17 +27503,17 @@ class TopLevelSelectionParameter(TopLevelParameter):
         self,
         name: Union[str, UndefinedType] = Undefined,
         select: Union[
-            Union["SelectionType", "PointSelectionConfig", "IntervalSelectionConfig"],
+            Union["IntervalSelectionConfig", "PointSelectionConfig", "SelectionType"],
             UndefinedType,
         ] = Undefined,
         bind: Union[
-            Union[dict, "Binding", "LegendBinding", str], UndefinedType
+            Union[str, "Binding", "LegendBinding", dict], UndefinedType
         ] = Undefined,
         value: Union[
             Union[
+                List["SelectionInitMapping"],
                 "SelectionInit",
                 "SelectionInitIntervalMapping",
-                List["SelectionInitMapping"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -27527,9 +27528,9 @@ class TopLevelSelectionParameter(TopLevelParameter):
 class TopLevelSpec(VegaLiteSchema):
     """TopLevelSpec schema wrapper
 
-    Union[:class:`TopLevelConcatSpec`, :class:`TopLevelHConcatSpec`, :class:`TopLevelFacetSpec`,
-    :class:`TopLevelVConcatSpec`, :class:`TopLevelRepeatSpec`, :class:`TopLevelLayerSpec`,
-    :class:`TopLevelUnitSpec`]
+    Union[:class:`TopLevelVConcatSpec`, :class:`TopLevelConcatSpec`, :class:`TopLevelUnitSpec`,
+    :class:`TopLevelLayerSpec`, :class:`TopLevelRepeatSpec`, :class:`TopLevelFacetSpec`,
+    :class:`TopLevelHConcatSpec`]
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
@@ -27550,7 +27551,7 @@ class TopLevelConcatSpec(TopLevelSpec):
 
     concat : List[:class:`NonNormalizedSpec`]
         A list of views to be concatenated.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -27573,7 +27574,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -27589,7 +27590,7 @@ class TopLevelConcatSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -27629,7 +27630,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -27648,7 +27649,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -27671,12 +27672,12 @@ class TopLevelConcatSpec(TopLevelSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
@@ -27688,13 +27689,13 @@ class TopLevelConcatSpec(TopLevelSpec):
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -27706,30 +27707,30 @@ class TopLevelConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -27772,15 +27773,15 @@ class TopLevelFacetSpec(TopLevelSpec):
     data : Union[None, :class:`Data`]
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    facet : Union[:class:`FacetFieldDef`, :class:`FacetMapping`]
+    facet : Union[:class:`FacetMapping`, :class:`FacetFieldDef`]
         Definition for how to facet the data. One of: 1) `a field definition for faceting
         the plot by one field
         <https://vega.github.io/vega-lite/docs/facet.html#field-def>`__ 2) `An object that
         maps row and column channels to their field definitions
         <https://vega.github.io/vega-lite/docs/facet.html#mapping>`__
-    spec : Union[:class:`UnitSpecWithFrame`, :class:`LayerSpec`]
+    spec : Union[:class:`LayerSpec`, :class:`UnitSpecWithFrame`]
         A specification of the view that gets faceted.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -27803,7 +27804,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -27819,7 +27820,7 @@ class TopLevelFacetSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -27856,7 +27857,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -27875,7 +27876,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -27894,9 +27895,9 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         facet: Union[Union["FacetFieldDef", "FacetMapping"], UndefinedType] = Undefined,
-        spec: Union[Union["LayerSpec", "UnitSpecWithFrame"], UndefinedType] = Undefined,
+        spec: Union[Union["UnitSpecWithFrame", "LayerSpec"], UndefinedType] = Undefined,
         align: Union[
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
         ] = Undefined,
@@ -27904,10 +27905,10 @@ class TopLevelFacetSpec(TopLevelSpec):
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
@@ -27921,30 +27922,30 @@ class TopLevelFacetSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -27993,7 +27994,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -28028,7 +28029,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -28043,7 +28044,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -28066,12 +28067,12 @@ class TopLevelHConcatSpec(TopLevelSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
@@ -28080,12 +28081,12 @@ class TopLevelHConcatSpec(TopLevelSpec):
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -28098,29 +28099,29 @@ class TopLevelHConcatSpec(TopLevelSpec):
         ] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -28171,7 +28172,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -28190,7 +28191,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     encoding : :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : Union[:class:`Step`, str, float]
+    height : Union[str, :class:`Step`, float]
         The height of a visualization.
 
 
@@ -28212,7 +28213,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         documentation.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -28226,7 +28227,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         layers.
     resolve : :class:`Resolve`
         Scale, axis, and legend resolutions for view composition specifications.
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -28237,7 +28238,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : Union[:class:`Step`, str, float]
+    width : Union[str, :class:`Step`, float]
         The width of a visualization.
 
 
@@ -28269,19 +28270,19 @@ class TopLevelLayerSpec(TopLevelSpec):
 
     def __init__(
         self,
-        layer: Union[List[Union["LayerSpec", "UnitSpec"]], UndefinedType] = Undefined,
+        layer: Union[List[Union["UnitSpec", "LayerSpec"]], UndefinedType] = Undefined,
         autosize: Union[
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
-        height: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        height: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
             Union["ExprRef", "_ParameterProtocol", "Padding"], UndefinedType
@@ -28292,36 +28293,36 @@ class TopLevelLayerSpec(TopLevelSpec):
         ] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         usermeta: Union[dict, UndefinedType] = Undefined,
         view: Union[dict, UndefinedType] = Undefined,
-        width: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        width: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         **kwds
     ):
         super(TopLevelLayerSpec, self).__init__(
@@ -28376,7 +28377,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"`` ) or a `mark definition object
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    align : Union[:class:`RowColLayoutAlign`, :class:`LayoutAlign`]
+    align : Union[:class:`LayoutAlign`, :class:`RowColLayoutAlign`]
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -28399,7 +28400,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -28415,7 +28416,7 @@ class TopLevelUnitSpec(TopLevelSpec):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[bool, :class:`RowColboolean`]
+    center : Union[:class:`RowColboolean`, bool]
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -28434,7 +28435,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     encoding : :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : Union[:class:`Step`, str, float]
+    height : Union[str, :class:`Step`, float]
         The height of a visualization.
 
 
@@ -28456,7 +28457,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         documentation.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -28480,7 +28481,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -28491,7 +28492,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : Union[:class:`Step`, str, float]
+    width : Union[str, :class:`Step`, float]
         The width of a visualization.
 
 
@@ -28523,9 +28524,9 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         mark: Union[
-            Union["CompositeMarkDef", "MarkDef", "Mark", "CompositeMark"], UndefinedType
+            Union["Mark", "MarkDef", "CompositeMark", "CompositeMarkDef"], UndefinedType
         ] = Undefined,
         align: Union[
             Union["LayoutAlign", "RowColLayoutAlign"], UndefinedType
@@ -28534,15 +28535,15 @@ class TopLevelUnitSpec(TopLevelSpec):
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
-        center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
+        center: Union[Union["RowColboolean", bool], UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
-        height: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        height: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
             Union["ExprRef", "_ParameterProtocol", "Padding"], UndefinedType
@@ -28553,37 +28554,37 @@ class TopLevelUnitSpec(TopLevelSpec):
         ] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
-        spacing: Union[Union["RowColnumber", float], UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        spacing: Union[Union[float, "RowColnumber"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         usermeta: Union[dict, UndefinedType] = Undefined,
         view: Union[dict, UndefinedType] = Undefined,
-        width: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        width: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         **kwds
     ):
         super(TopLevelUnitSpec, self).__init__(
@@ -28630,7 +28631,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         parameters for content sizing and automatic resizing.
 
         **Default value** : ``pad``
-    background : Union[:class:`ExprRef`, :class:`Color`]
+    background : Union[:class:`Color`, :class:`ExprRef`]
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
@@ -28665,7 +28666,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     name : str
         Name of the visualization for later reference.
-    padding : Union[:class:`Padding`, :class:`ExprRef`]
+    padding : Union[:class:`ExprRef`, :class:`Padding`]
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
         object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
@@ -28680,7 +28681,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -28703,12 +28704,12 @@ class TopLevelVConcatSpec(TopLevelSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
@@ -28717,12 +28718,12 @@ class TopLevelVConcatSpec(TopLevelSpec):
             Union["AutoSizeParams", "AutosizeType"], UndefinedType
         ] = Undefined,
         background: Union[
-            Union["ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -28735,29 +28736,29 @@ class TopLevelVConcatSpec(TopLevelSpec):
         ] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -28807,7 +28808,7 @@ class TopoDataFormat(DataFormat):
         not as individual GeoJSON features. Extracting a mesh is useful for more efficiently
         drawing borders or other geographic elements that you do not need to associate with
         specific regions such as individual countries, states or counties.
-    parse : Union[None, :class:`Parse`]
+    parse : Union[:class:`Parse`, None]
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -28848,13 +28849,13 @@ class TopoDataFormat(DataFormat):
 class Transform(VegaLiteSchema):
     """Transform schema wrapper
 
-    Union[:class:`CalculateTransform`, :class:`LookupTransform`, :class:`QuantileTransform`,
-    :class:`FilterTransform`, :class:`SampleTransform`, :class:`TimeUnitTransform`,
-    :class:`WindowTransform`, :class:`JoinAggregateTransform`, :class:`ExtentTransform`,
-    :class:`FlattenTransform`, :class:`PivotTransform`, :class:`BinTransform`,
-    :class:`AggregateTransform`, :class:`RegressionTransform`, :class:`LoessTransform`,
-    :class:`DensityTransform`, :class:`StackTransform`, :class:`ImputeTransform`,
-    :class:`FoldTransform`]
+    Union[:class:`PivotTransform`, :class:`FlattenTransform`, :class:`AggregateTransform`,
+    :class:`LookupTransform`, :class:`SampleTransform`, :class:`FoldTransform`,
+    :class:`WindowTransform`, :class:`ExtentTransform`, :class:`LoessTransform`,
+    :class:`QuantileTransform`, :class:`TimeUnitTransform`, :class:`RegressionTransform`,
+    :class:`ImputeTransform`, :class:`DensityTransform`, :class:`BinTransform`,
+    :class:`CalculateTransform`, :class:`StackTransform`, :class:`JoinAggregateTransform`,
+    :class:`FilterTransform`]
     """
 
     _schema = {"$ref": "#/definitions/Transform"}
@@ -28899,12 +28900,12 @@ class BinTransform(Transform):
     Parameters
     ----------
 
-    bin : Union[bool, :class:`BinParams`]
+    bin : Union[:class:`BinParams`, bool]
         An object indicating bin properties, or simply ``true`` for using default bin
         parameters.
     field : :class:`FieldName`
         The data field to bin.
-    as : Union[:class:`FieldName`, List[:class:`FieldName`]]
+    as : Union[List[:class:`FieldName`], :class:`FieldName`]
         The output fields at which to write the start and end bin values. This can be either
         a string or an array of strings with two elements denoting the name for the fields
         for bin start and bin end respectively. If a single string (e.g., ``"val"`` ) is
@@ -29093,10 +29094,10 @@ class FilterTransform(Transform):
         self,
         filter: Union[
             Union[
-                "Predicate",
-                "LogicalOrPredicate",
                 "LogicalNotPredicate",
+                "Predicate",
                 "LogicalAndPredicate",
+                "LogicalOrPredicate",
             ],
             UndefinedType,
         ] = Undefined,
@@ -29164,7 +29165,7 @@ class ImputeTransform(Transform):
     key : :class:`FieldName`
         A key field that uniquely identifies data objects within a group. Missing key values
         (those occurring in the data but not in the current group) will be imputed.
-    frame : List[Union[None, float]]
+    frame : List[Union[float, None]]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -29177,7 +29178,7 @@ class ImputeTransform(Transform):
     groupby : List[:class:`FieldName`]
         An optional array of fields by which to group the values. Imputation will then be
         performed on a per-group basis.
-    keyvals : Union[List[Any], :class:`ImputeSequence`]
+    keyvals : Union[:class:`ImputeSequence`, List[Any]]
         Defines the key values that should be considered for imputation. An array of key
         values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -29203,7 +29204,7 @@ class ImputeTransform(Transform):
         self,
         impute: Union[str, UndefinedType] = Undefined,
         key: Union[str, UndefinedType] = Undefined,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[List[Union[float, None]], UndefinedType] = Undefined,
         groupby: Union[List[str], UndefinedType] = Undefined,
         keyvals: Union[Union[List[Any], "ImputeSequence"], UndefinedType] = Undefined,
         method: Union[
@@ -29307,7 +29308,7 @@ class LookupTransform(Transform):
         The default value to use if lookup fails.
 
         **Default value:** ``null``
-    as : Union[:class:`FieldName`, List[:class:`FieldName`]]
+    as : Union[List[:class:`FieldName`], :class:`FieldName`]
         The output fields on which to store the looked up data values.
 
         For data lookups, this property may be left blank if ``from.fields`` has been
@@ -29552,7 +29553,7 @@ class StackTransform(Transform):
         **Default value:** ``"zero"``
     sort : List[:class:`SortField`]
         Field that determines the order of leaves in the stacked charts.
-    as : Union[:class:`FieldName`, List[:class:`FieldName`]]
+    as : Union[List[:class:`FieldName`], :class:`FieldName`]
         Output field names. This can be either a string or an array of strings with two
         elements denoting the name for the fields for stack start and stack end
         respectively. If a single string(e.g., ``"val"`` ) is provided, the end field will
@@ -29586,7 +29587,7 @@ class TimeUnitTransform(Transform):
 
     field : :class:`FieldName`
         The data field to apply time unit.
-    timeUnit : Union[:class:`TimeUnit`, :class:`TimeUnitTransformParams`]
+    timeUnit : Union[:class:`TimeUnitTransformParams`, :class:`TimeUnit`]
         The timeUnit.
     as : :class:`FieldName`
         The output field to write the timeUnit value.
@@ -29651,7 +29652,7 @@ class TypedFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[bool, :class:`BinParams`, None, str]
+    bin : Union[str, :class:`BinParams`, bool, None]
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -29687,7 +29688,7 @@ class TypedFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[:class:`TimeUnit`, :class:`BinnedTimeUnit`, :class:`TimeUnitParams`]
+    timeUnit : Union[:class:`TimeUnitParams`, :class:`TimeUnit`, :class:`BinnedTimeUnit`]
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -29696,7 +29697,7 @@ class TypedFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[:class:`Text`, None]
+    title : Union[None, :class:`Text`]
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -29792,15 +29793,15 @@ class TypedFieldDef(VegaLiteSchema):
     def __init__(
         self,
         aggregate: Union[
-            Union["ArgmaxDef", "ArgminDef", "NonArgAggregateOp"], UndefinedType
+            Union["NonArgAggregateOp", "ArgmaxDef", "ArgminDef"], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
-        bin: Union[Union[bool, None, "BinParams", str], UndefinedType] = Undefined,
-        field: Union[Union["RepeatRef", "FieldName"], UndefinedType] = Undefined,
+        bin: Union[Union[str, bool, None, "BinParams"], UndefinedType] = Undefined,
+        field: Union[Union["FieldName", "RepeatRef"], UndefinedType] = Undefined,
         timeUnit: Union[
-            Union["TimeUnit", "TimeUnitParams", "BinnedTimeUnit"], UndefinedType
+            Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
-        title: Union[Union["Text", None], UndefinedType] = Undefined,
+        title: Union[Union[None, "Text"], UndefinedType] = Undefined,
         type: Union[
             Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
         ] = Undefined,
@@ -29860,7 +29861,7 @@ class UnitSpec(VegaLiteSchema):
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -29871,37 +29872,37 @@ class UnitSpec(VegaLiteSchema):
     def __init__(
         self,
         mark: Union[
-            Union["CompositeMarkDef", "MarkDef", "Mark", "CompositeMark"], UndefinedType
+            Union["Mark", "MarkDef", "CompositeMark", "CompositeMarkDef"], UndefinedType
         ] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[List[dict], UndefinedType] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -29942,7 +29943,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : Union[:class:`Step`, str, float]
+    height : Union[str, :class:`Step`, float]
         The height of a visualization.
 
 
@@ -29971,7 +29972,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
         channels for other marks.
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -29979,7 +29980,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : Union[:class:`Step`, str, float]
+    width : Union[str, :class:`Step`, float]
         The width of a visualization.
 
 
@@ -30006,44 +30007,44 @@ class UnitSpecWithFrame(VegaLiteSchema):
     def __init__(
         self,
         mark: Union[
-            Union["CompositeMarkDef", "MarkDef", "Mark", "CompositeMark"], UndefinedType
+            Union["Mark", "MarkDef", "CompositeMark", "CompositeMarkDef"], UndefinedType
         ] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         encoding: Union[dict, UndefinedType] = Undefined,
-        height: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        height: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[List[dict], UndefinedType] = Undefined,
         projection: Union[dict, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         view: Union[dict, UndefinedType] = Undefined,
-        width: Union[Union["Step", str, float], UndefinedType] = Undefined,
+        width: Union[Union[str, float, "Step"], UndefinedType] = Undefined,
         **kwds
     ):
         super(UnitSpecWithFrame, self).__init__(
@@ -30086,7 +30087,7 @@ class UrlData(DataSource):
         self,
         url: Union[str, UndefinedType] = Undefined,
         format: Union[
-            Union["TopoDataFormat", "CsvDataFormat", "DsvDataFormat", "JsonDataFormat"],
+            Union["JsonDataFormat", "DsvDataFormat", "TopoDataFormat", "CsvDataFormat"],
             UndefinedType,
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -30169,7 +30170,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         The spacing in pixels between sub-views of the concat operator.
 
         **Default value** : ``10``
-    title : Union[:class:`Text`, :class:`TitleParams`]
+    title : Union[:class:`TitleParams`, :class:`Text`]
         Title for the plot.
     transform : List[:class:`Transform`]
         An array of data transformations such as filter and new field calculation.
@@ -30183,46 +30184,46 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             List[
                 Union[
                     "RepeatSpec",
-                    "LayerSpec",
-                    "HConcatSpecGenericSpec",
-                    "FacetSpec",
-                    "FacetedUnitSpec",
                     "ConcatSpecGenericSpec",
+                    "LayerSpec",
+                    "FacetedUnitSpec",
+                    "HConcatSpecGenericSpec",
                     "VConcatSpecGenericSpec",
+                    "FacetSpec",
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
-        data: Union[Union[None, "Data"], UndefinedType] = Undefined,
+        data: Union[Union["Data", None], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         resolve: Union[dict, UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
-        title: Union[Union["Text", "TitleParams"], UndefinedType] = Undefined,
+        title: Union[Union["TitleParams", "Text"], UndefinedType] = Undefined,
         transform: Union[
             List[
                 Union[
-                    "FlattenTransform",
-                    "ExtentTransform",
-                    "TimeUnitTransform",
-                    "DensityTransform",
-                    "LookupTransform",
-                    "FilterTransform",
-                    "ImputeTransform",
-                    "BinTransform",
-                    "WindowTransform",
-                    "QuantileTransform",
-                    "RegressionTransform",
-                    "JoinAggregateTransform",
-                    "CalculateTransform",
                     "FoldTransform",
                     "PivotTransform",
-                    "LoessTransform",
                     "StackTransform",
-                    "AggregateTransform",
+                    "QuantileTransform",
+                    "DensityTransform",
+                    "LookupTransform",
+                    "ExtentTransform",
+                    "CalculateTransform",
+                    "LoessTransform",
+                    "TimeUnitTransform",
+                    "JoinAggregateTransform",
+                    "FilterTransform",
+                    "ImputeTransform",
                     "SampleTransform",
+                    "RegressionTransform",
+                    "AggregateTransform",
+                    "BinTransform",
+                    "WindowTransform",
+                    "FlattenTransform",
                 ]
             ],
             UndefinedType,
@@ -30254,9 +30255,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
     Parameters
     ----------
 
-    condition : Union[List[:class:`ConditionalValueDefGradientstringnullExprRef`], :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`]
+    condition : Union[:class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefGradientstringnullExprRef`]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, :class:`Gradient`, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, :class:`Gradient`, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -30270,14 +30271,14 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         self,
         condition: Union[
             Union[
-                "ConditionalMarkPropFieldOrDatumDef",
-                List["ConditionalValueDefGradientstringnullExprRef"],
                 "ConditionalValueDefGradientstringnullExprRef",
+                List["ConditionalValueDefGradientstringnullExprRef"],
+                "ConditionalMarkPropFieldOrDatumDef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Gradient", None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None, "Gradient"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30296,9 +30297,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, List[:class:`ConditionalValueDefstringnullExprRef`]]
+    condition : Union[List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -30312,14 +30313,14 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
         self,
         condition: Union[
             Union[
-                "ConditionalValueDefstringnullExprRef",
                 List["ConditionalValueDefstringnullExprRef"],
                 "ConditionalMarkPropFieldOrDatumDefTypeForShape",
+                "ConditionalValueDefstringnullExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30338,7 +30339,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefnumberExprRef`]]
+    condition : Union[:class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefnumberExprRef`], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : Union[:class:`ExprRef`, float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -30354,9 +30355,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         self,
         condition: Union[
             Union[
+                List["ConditionalValueDefnumberExprRef"],
                 "ConditionalMarkPropFieldOrDatumDef",
                 "ConditionalValueDefnumberExprRef",
-                List["ConditionalValueDefnumberExprRef"],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30380,9 +30381,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalValueDefnumberArrayExprRef`, List[:class:`ConditionalValueDefnumberArrayExprRef`], :class:`ConditionalMarkPropFieldOrDatumDef`]
+    condition : Union[:class:`ConditionalValueDefnumberArrayExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefnumberArrayExprRef`]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[List[float], :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, List[float]]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -30397,13 +30398,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
         condition: Union[
             Union[
                 List["ConditionalValueDefnumberArrayExprRef"],
-                "ConditionalMarkPropFieldOrDatumDef",
                 "ConditionalValueDefnumberArrayExprRef",
+                "ConditionalMarkPropFieldOrDatumDef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30420,9 +30421,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalMarkPropFieldOrDatumDef`, List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalValueDefstringnullExprRef`]
+    condition : Union[List[:class:`ConditionalValueDefstringnullExprRef`], :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, :class:`ExprRef`, str]
+    value : Union[:class:`ExprRef`, str, None]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -30436,14 +30437,14 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                "ConditionalValueDefstringnullExprRef",
-                "ConditionalMarkPropFieldOrDatumDef",
                 List["ConditionalValueDefstringnullExprRef"],
+                "ConditionalMarkPropFieldOrDatumDef",
+                "ConditionalValueDefstringnullExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", str], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30460,9 +30461,9 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
     Parameters
     ----------
 
-    condition : Union[:class:`ConditionalStringFieldDef`, List[:class:`ConditionalValueDefTextExprRef`], :class:`ConditionalValueDefTextExprRef`]
+    condition : Union[:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, List[:class:`ConditionalValueDefTextExprRef`]]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[:class:`Text`, :class:`ExprRef`]
+    value : Union[:class:`ExprRef`, :class:`Text`]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -30474,14 +30475,14 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         self,
         condition: Union[
             Union[
+                "ConditionalValueDefTextExprRef",
                 "ConditionalStringFieldDef",
                 List["ConditionalValueDefTextExprRef"],
-                "ConditionalValueDefTextExprRef",
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "Text"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30533,7 +30534,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            Union["ExprRef", "_ParameterProtocol", str, float], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -30714,7 +30715,7 @@ class ViewBackground(VegaLiteSchema):
     cursor : :class:`Cursor`
         The mouse cursor used over the view. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    fill : Union[None, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, None]
         The fill color.
 
         **Default value:** ``undefined``
@@ -30727,20 +30728,20 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : Union[None, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, None]
         The stroke color.
 
         **Default value:** ``"#ddd"``
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -30752,7 +30753,7 @@ class ViewBackground(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : Union[:class:`ExprRef`, float]
         The stroke width, in pixels.
-    style : Union[List[str], str]
+    style : Union[str, List[str]]
         A string or array of strings indicating the name of custom styles to apply to the
         view background. A style is a named collection of mark property defaults defined
         within the `style configuration
@@ -30812,7 +30813,7 @@ class ViewBackground(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fill: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -30821,19 +30822,19 @@ class ViewBackground(VegaLiteSchema):
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -30844,7 +30845,7 @@ class ViewBackground(VegaLiteSchema):
         strokeWidth: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(ViewBackground, self).__init__(
@@ -30905,7 +30906,7 @@ class ViewConfig(VegaLiteSchema):
         in the form of ``{step: number}`` defining the width per discrete step.
 
         **Default value:** a step size based on ``config.view.step``.
-    fill : Union[None, :class:`ExprRef`, :class:`Color`]
+    fill : Union[:class:`Color`, :class:`ExprRef`, None]
         The fill color.
 
         **Default value:** ``undefined``
@@ -30920,20 +30921,20 @@ class ViewConfig(VegaLiteSchema):
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     step : float
         Default step size for x-/y- discrete fields.
-    stroke : Union[None, :class:`ExprRef`, :class:`Color`]
+    stroke : Union[:class:`Color`, :class:`ExprRef`, None]
         The stroke color.
 
         **Default value:** ``"#ddd"``
-    strokeCap : Union[:class:`StrokeCap`, :class:`ExprRef`]
+    strokeCap : Union[:class:`ExprRef`, :class:`StrokeCap`]
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
         **Default value:** ``"butt"``
-    strokeDash : Union[List[float], :class:`ExprRef`]
+    strokeDash : Union[:class:`ExprRef`, List[float]]
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : Union[:class:`ExprRef`, float]
         The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : Union[:class:`StrokeJoin`, :class:`ExprRef`]
+    strokeJoin : Union[:class:`ExprRef`, :class:`StrokeJoin`]
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
 
         **Default value:** ``"miter"``
@@ -30998,10 +30999,10 @@ class ViewConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        discreteHeight: Union[Union[dict, float], UndefinedType] = Undefined,
-        discreteWidth: Union[Union[dict, float], UndefinedType] = Undefined,
+        discreteHeight: Union[Union[float, dict], UndefinedType] = Undefined,
+        discreteWidth: Union[Union[float, dict], UndefinedType] = Undefined,
         fill: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -31011,19 +31012,19 @@ class ViewConfig(VegaLiteSchema):
         ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         stroke: Union[
-            Union[None, "ExprRef", "_ParameterProtocol", "Color"], UndefinedType
+            Union["Color", "ExprRef", "_ParameterProtocol", None], UndefinedType
         ] = Undefined,
         strokeCap: Union[
-            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeCap"], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
-            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+            Union["ExprRef", "_ParameterProtocol", "StrokeJoin"], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
             Union["ExprRef", "_ParameterProtocol", float], UndefinedType
@@ -31116,7 +31117,7 @@ class WindowFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
-        op: Union[Union["AggregateOp", "WindowOnlyOp"], UndefinedType] = Undefined,
+        op: Union[Union["WindowOnlyOp", "AggregateOp"], UndefinedType] = Undefined,
         field: Union[str, UndefinedType] = Undefined,
         param: Union[float, UndefinedType] = Undefined,
         **kwds
@@ -31147,7 +31148,7 @@ class WindowTransform(Transform):
 
     window : List[:class:`WindowFieldDef`]
         The definition of the fields in the window, and what calculations to use.
-    frame : List[Union[None, float]]
+    frame : List[Union[float, None]]
         A frame specification as a two-element array indicating how the sliding window
         should proceed. The array entries should either be a number indicating the offset
         from the current data object, or null to indicate unbounded rows preceding or
@@ -31189,7 +31190,7 @@ class WindowTransform(Transform):
     def __init__(
         self,
         window: Union[List[dict], UndefinedType] = Undefined,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[List[Union[float, None]], UndefinedType] = Undefined,
         groupby: Union[List[str], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
         sort: Union[List[dict], UndefinedType] = Undefined,

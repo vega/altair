@@ -22,7 +22,7 @@ class MarkMethodMixin:
     def mark_arc(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -31,10 +31,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -46,11 +46,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -76,14 +76,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -92,11 +92,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -105,7 +105,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -114,10 +114,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -127,7 +127,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -136,7 +136,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -155,7 +155,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -180,7 +180,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -188,7 +188,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -208,7 +208,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -232,13 +232,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -246,14 +246,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -262,10 +262,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -375,7 +375,7 @@ class MarkMethodMixin:
     def mark_area(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -384,10 +384,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -399,11 +399,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -429,14 +429,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -445,11 +445,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -458,7 +458,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -467,10 +467,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -480,7 +480,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -489,7 +489,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -508,7 +508,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -533,7 +533,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -541,7 +541,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -561,7 +561,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -585,13 +585,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -599,14 +599,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -615,10 +615,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -728,7 +728,7 @@ class MarkMethodMixin:
     def mark_bar(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -737,10 +737,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -752,11 +752,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -782,14 +782,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -798,11 +798,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -811,7 +811,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -820,10 +820,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -833,7 +833,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -842,7 +842,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -861,7 +861,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -886,7 +886,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -894,7 +894,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -914,7 +914,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -938,13 +938,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -952,14 +952,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -968,10 +968,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1081,7 +1081,7 @@ class MarkMethodMixin:
     def mark_image(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1090,10 +1090,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -1105,11 +1105,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -1135,14 +1135,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1151,11 +1151,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1164,7 +1164,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1173,10 +1173,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -1186,7 +1186,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -1195,7 +1195,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1214,7 +1214,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1239,7 +1239,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1247,7 +1247,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1267,7 +1267,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1291,13 +1291,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -1305,14 +1305,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1321,10 +1321,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1434,7 +1434,7 @@ class MarkMethodMixin:
     def mark_line(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1443,10 +1443,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -1458,11 +1458,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -1488,14 +1488,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1504,11 +1504,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1517,7 +1517,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1526,10 +1526,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -1539,7 +1539,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -1548,7 +1548,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1567,7 +1567,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1592,7 +1592,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1600,7 +1600,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1620,7 +1620,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1644,13 +1644,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -1658,14 +1658,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1674,10 +1674,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1787,7 +1787,7 @@ class MarkMethodMixin:
     def mark_point(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1796,10 +1796,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -1811,11 +1811,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -1841,14 +1841,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1857,11 +1857,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1870,7 +1870,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1879,10 +1879,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -1892,7 +1892,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -1901,7 +1901,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1920,7 +1920,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1945,7 +1945,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -1953,7 +1953,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -1973,7 +1973,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -1997,13 +1997,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -2011,14 +2011,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2027,10 +2027,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2140,7 +2140,7 @@ class MarkMethodMixin:
     def mark_rect(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2149,10 +2149,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -2164,11 +2164,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -2194,14 +2194,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2210,11 +2210,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -2223,7 +2223,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2232,10 +2232,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -2245,7 +2245,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -2254,7 +2254,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2273,7 +2273,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -2298,7 +2298,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -2306,7 +2306,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2326,7 +2326,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -2350,13 +2350,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -2364,14 +2364,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2380,10 +2380,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2493,7 +2493,7 @@ class MarkMethodMixin:
     def mark_rule(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2502,10 +2502,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -2517,11 +2517,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -2547,14 +2547,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2563,11 +2563,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -2576,7 +2576,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2585,10 +2585,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -2598,7 +2598,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -2607,7 +2607,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2626,7 +2626,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -2651,7 +2651,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -2659,7 +2659,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2679,7 +2679,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -2703,13 +2703,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -2717,14 +2717,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2733,10 +2733,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2846,7 +2846,7 @@ class MarkMethodMixin:
     def mark_text(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2855,10 +2855,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -2870,11 +2870,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -2900,14 +2900,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2916,11 +2916,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -2929,7 +2929,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2938,10 +2938,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -2951,7 +2951,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -2960,7 +2960,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -2979,7 +2979,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3004,7 +3004,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3012,7 +3012,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3032,7 +3032,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3056,13 +3056,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -3070,14 +3070,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3086,10 +3086,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3199,7 +3199,7 @@ class MarkMethodMixin:
     def mark_tick(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3208,10 +3208,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -3223,11 +3223,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -3253,14 +3253,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3269,11 +3269,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3282,7 +3282,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3291,10 +3291,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -3304,7 +3304,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -3313,7 +3313,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3332,7 +3332,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3357,7 +3357,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3365,7 +3365,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3385,7 +3385,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3409,13 +3409,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -3423,14 +3423,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3439,10 +3439,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3552,7 +3552,7 @@ class MarkMethodMixin:
     def mark_trail(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3561,10 +3561,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -3576,11 +3576,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -3606,14 +3606,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3622,11 +3622,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3635,7 +3635,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3644,10 +3644,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -3657,7 +3657,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -3666,7 +3666,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3685,7 +3685,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3710,7 +3710,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3718,7 +3718,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3738,7 +3738,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -3762,13 +3762,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -3776,14 +3776,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3792,10 +3792,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3905,7 +3905,7 @@ class MarkMethodMixin:
     def mark_circle(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3914,10 +3914,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -3929,11 +3929,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -3959,14 +3959,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3975,11 +3975,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -3988,7 +3988,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -3997,10 +3997,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -4010,7 +4010,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -4019,7 +4019,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4038,7 +4038,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4063,7 +4063,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -4071,7 +4071,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4091,7 +4091,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4115,13 +4115,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -4129,14 +4129,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4145,10 +4145,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4258,7 +4258,7 @@ class MarkMethodMixin:
     def mark_square(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4267,10 +4267,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -4282,11 +4282,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -4312,14 +4312,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4328,11 +4328,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -4341,7 +4341,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4350,10 +4350,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -4363,7 +4363,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -4372,7 +4372,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4391,7 +4391,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4416,7 +4416,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -4424,7 +4424,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4444,7 +4444,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4468,13 +4468,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -4482,14 +4482,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4498,10 +4498,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4611,7 +4611,7 @@ class MarkMethodMixin:
     def mark_geoshape(
         self,
         align: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
+            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         angle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4620,10 +4620,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         aspect: Union[
             Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
@@ -4635,11 +4635,11 @@ class MarkMethodMixin:
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
+            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
@@ -4665,14 +4665,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[core.RelativeBandSize, float], UndefinedType
+            Union[float, core.RelativeBandSize], UndefinedType
         ] = Undefined,
         dx: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4681,11 +4681,11 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -4694,7 +4694,7 @@ class MarkMethodMixin:
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         fontSize: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4703,10 +4703,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
-            Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontWeight], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         href: Union[
@@ -4716,7 +4716,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
+            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
@@ -4725,7 +4725,7 @@ class MarkMethodMixin:
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
+            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         lineHeight: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4744,7 +4744,7 @@ class MarkMethodMixin:
         padAngle: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
+        point: Union[Union[str, bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         radius: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4769,7 +4769,7 @@ class MarkMethodMixin:
         ] = Undefined,
         stroke: Union[
             Union[
-                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
+                core.ExprRef, core._ParameterProtocol, None, core.Gradient, core.Color
             ],
             UndefinedType,
         ] = Undefined,
@@ -4777,7 +4777,7 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, List[float]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4797,7 +4797,7 @@ class MarkMethodMixin:
         strokeWidth: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[List[str], str], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tension: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
@@ -4821,13 +4821,13 @@ class MarkMethodMixin:
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                None,
+                str,
+                core.TooltipContent,
                 core.ExprRef,
                 core._ParameterProtocol,
-                core.TooltipContent,
                 float,
+                None,
                 bool,
-                str,
             ],
             UndefinedType,
         ] = Undefined,
@@ -4835,14 +4835,14 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
+            Union[core.ExprRef, core._ParameterProtocol, float, core.RelativeBandSize],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         x2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4851,10 +4851,10 @@ class MarkMethodMixin:
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
+            Union[str, float, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         y2Offset: Union[
             Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
@@ -4966,10 +4966,10 @@ class MarkMethodMixin:
         box: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
-        extent: Union[Union[float, str], UndefinedType] = Undefined,
+        extent: Union[Union[str, float], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         median: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
@@ -5007,7 +5007,7 @@ class MarkMethodMixin:
         self,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         extent: Union[
@@ -5047,7 +5047,7 @@ class MarkMethodMixin:
         borders: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
+            Union[core.ExprRef, core._ParameterProtocol, core.Gradient, core.Color],
             UndefinedType,
         ] = Undefined,
         extent: Union[

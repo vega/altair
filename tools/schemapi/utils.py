@@ -181,16 +181,16 @@ class SchemaInfo:
 
     def get_python_type_representation(
         self,
-        strictly_valid: bool = False,
+        for_type_hints: bool = False,
         use_title: bool = False,
         altair_classes_prefix: Optional[str] = None,
     ) -> str:
         if self.title and use_title:
-            if strictly_valid:
-                prefix = (
-                    "" if not altair_classes_prefix else altair_classes_prefix + "."
-                )
-                class_names = [f"{prefix}{self.title}"]
+            if for_type_hints:
+                class_names = [self.title]
+                # If we want strictly valid types, we want them also to be
+                # exhaustive. Hence, we add all possible classes below which
+                # could be used instead of the one we are currently inspecting.
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
                     # We use the _ParameterProtocol to indicate this although this
@@ -201,18 +201,26 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append(f"{prefix}_ParameterProtocol")
+                    class_names.append("_ParameterProtocol")
 
+                prefix = (
+                    "" if not altair_classes_prefix else altair_classes_prefix + "."
+                )
                 # If there is no prefix, it might be that the class is defined
                 # in the same script and potentially after this line -> We use
                 # deferred type annotations using quotation marks.
                 if not prefix:
                     class_names = [f'"{n}"' for n in class_names]
-                return ", ".join(class_names)
+                else:
+                    class_names = [f"{prefix}{n}" for n in class_names]
+                type_hints = class_names
+
+                # Sort to get a deterministic order
+                return ", ".join(sorted(type_hints))
             else:
                 # use RST syntax for generated sphinx docs
                 return ":class:`{}`".format(self.title)
-        if self.is_empty():
+        elif self.is_empty():
             return "Any"
         elif self.is_enum():
             return "Literal[{}]".format(", ".join(map(repr, self.enum)))
@@ -222,7 +230,7 @@ class SchemaInfo:
                     {
                         s.get_python_type_representation(
                             # We always use title if possible for nested objects
-                            strictly_valid=strictly_valid,
+                            for_type_hints=for_type_hints,
                             use_title=True,
                             altair_classes_prefix=altair_classes_prefix,
                         )
@@ -238,21 +246,21 @@ class SchemaInfo:
                 options.append(
                     subschema.get_python_type_representation(
                         # We always use title if possible for nested objects
-                        strictly_valid=strictly_valid,
+                        for_type_hints=for_type_hints,
                         use_title=True,
                         altair_classes_prefix=altair_classes_prefix,
                     )
                 )
             return "Union[{}]".format(", ".join(set(options)))
         elif self.is_object():
-            if strictly_valid:
+            if for_type_hints:
                 return "dict"
             else:
                 return "Dict[required=[{}]]".format(", ".join(self.required))
         elif self.is_array():
             return "List[{}]".format(
                 self.child(self.items).get_python_type_representation(
-                    strictly_valid=strictly_valid,
+                    for_type_hints=for_type_hints,
                     use_title=use_title,
                     altair_classes_prefix=altair_classes_prefix,
                 )
