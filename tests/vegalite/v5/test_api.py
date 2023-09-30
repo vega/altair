@@ -380,6 +380,30 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
 
 
+def test_to_url(basic_chart):
+    share_url = basic_chart.to_url()
+    expected_vegalite_encoding = (
+        "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAd"
+        "TgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaMACY5LTAA4AnACM55ugFY6ARgBspgOz"
+        "2zh03Wfs5bCwsIDIganIATgDWyoQAngAOmsgg1hEh3JhQkHQkSKggAB7K8JgANnRaStzxSVpQEGokcmUZIHElWBVa"
+        "liA1ickgAI6kckRwisRomtLcACSUYIyY4VpihAmUyAD029MIcgB0CBOMpJaHcBDbi8vhe5gHumUTmHt2h44ALJ+HA"
+        "FaUaB9bQKOSUTCESjKHRyfRGEwWay2BwudyeUzeXz+QLBZAAbVAShSAEFgb1kAZTDJCVoAEJklB2OzUkBEkAAYQZy"
+        "C+LBZbIAIlzzI4+VoAKJc0wizg0lIAMS5dl5MtZWgA4lzHOZRSlBJK3DqQABJRUGSQAXWkQA"
+    )
+
+    assert (
+        share_url
+        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}"
+    )
+
+    # Check fullscreen
+    fullscreen_share_url = basic_chart.to_url(fullscreen=True)
+    assert (
+        fullscreen_share_url
+        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}/view"
+    )
+
+
 def test_facet_basic():
     # wrapped facet
     chart1 = (
