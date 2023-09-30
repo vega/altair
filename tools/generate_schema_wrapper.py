@@ -487,7 +487,10 @@ def generate_vegalite_channel_wrappers(
                 # For Encoding field definitions, we patch the schema by adding the
                 # shorthand property.
                 defschema["properties"]["shorthand"] = {
-                    "type": "string",
+                    "anyOf": [
+                        {"type": "string"},
+                        {"type": "array", "items": {"type": "string"}},
+                    ],
                     "description": "shorthand for field, aggregate, and type",
                 }
                 defschema["required"] = ["shorthand"]
