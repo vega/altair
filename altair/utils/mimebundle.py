@@ -145,6 +145,20 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             return {"image/png": png}, {
                 "image/png": {"width": w / factor, "height": h / factor}
             }
+        elif format == "pdf":
+            scale = kwargs.get("scale_factor", 1)
+            if mode == "vega":
+                pdf = vlc.vega_to_pdf(
+                    spec,
+                    scale=scale,
+                )
+            else:
+                pdf = vlc.vegalite_to_pdf(
+                    spec,
+                    vl_version=vl_version,
+                    scale=scale,
+                )
+            return {"application/pdf": pdf}
         else:
             # This should be validated above
             # but raise exception for the sake of future development
@@ -192,18 +206,13 @@ def _validate_normalize_engine(engine, format):
             raise ValueError(
                 "The 'vl-convert' conversion engine requires the vl-convert-python package"
             )
-        if format == "pdf":
-            raise ValueError(
-                "The 'vl-convert' conversion engine does not support the {fmt!r} format.\n"
-                "Use the 'altair_saver' engine instead".format(fmt=format)
-            )
     elif normalized_engine == "altairsaver":
         if altair_saver is None:
             raise ValueError(
                 "The 'altair_saver' conversion engine requires the altair_saver package"
             )
     elif normalized_engine is None:
-        if vlc is not None and format != "pdf":
+        if vlc is not None:
             normalized_engine = "vlconvert"
         elif altair_saver is not None:
             normalized_engine = "altairsaver"
