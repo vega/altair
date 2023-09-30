@@ -168,7 +168,7 @@ def mark_{mark}({def_arglist}) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
     """
     kwds = dict({dict_arglist})
-    copy = self.copy(deep=False)
+    copy = self.copy(deep=False)  # type: ignore[attr-defined]
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
     else:
@@ -179,7 +179,7 @@ def mark_{mark}({def_arglist}) -> Self:
 CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=False)
+    copy = self.copy(deep=False)  # type: ignore[attr-defined]
     copy.config = core.{classname}(*args, **kwargs)
     return copy
 """
@@ -187,7 +187,7 @@ def {method}(self, *args, **kwargs) -> Self:
 CONFIG_PROP_METHOD: Final = """
 @use_signature(core.{classname})
 def configure_{prop}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=['config'])
+    copy = self.copy(deep=['config'])  # type: ignore[attr-defined]
     if copy.config is Undefined:
         copy.config = core.Config()
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
