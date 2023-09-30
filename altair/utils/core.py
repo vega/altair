@@ -588,8 +588,10 @@ def parse_shorthand(
                     column = dfi.get_column_by_name(unescaped_field)
                     try:
                         attrs["type"] = infer_vegalite_type_for_dfi_column(column)
-                    except NotImplementedError:
-                        # Fall back to pandas-based inference
+                    except (NotImplementedError, AttributeError, ValueError):
+                        # Fall back to pandas-based inference.
+                        # Note: The AttributeError catch is a workaround for
+                        # https://github.com/pandas-dev/pandas/issues/55332
                         if isinstance(data, pd.DataFrame):
                             attrs["type"] = infer_vegalite_type(data[unescaped_field])
                         else:
