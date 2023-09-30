@@ -1977,10 +1977,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -2019,15 +2019,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -2119,13 +2117,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -3044,12 +3040,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -3069,10 +3063,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -3496,12 +3490,10 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -3606,10 +3598,10 @@ class AngleValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -3946,10 +3938,10 @@ class AngleValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -4248,12 +4240,10 @@ class AngleValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -6170,10 +6160,10 @@ class Color(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -6212,15 +6202,13 @@ class Color(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -6312,13 +6300,11 @@ class Color(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -7237,18 +7223,20 @@ class Color(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -7272,10 +7260,10 @@ class Color(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -7719,18 +7707,20 @@ class ColorDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -7841,10 +7831,10 @@ class ColorValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -8181,10 +8171,10 @@ class ColorValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -8501,18 +8491,20 @@ class ColorValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -9784,10 +9776,10 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[Literal["ascending", "descending"], core.SortOrder],
@@ -10685,12 +10677,10 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
-                        core.ConditionalValueDefstringExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
+                    List[core.ConditionalValueDefstringExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -10955,10 +10945,10 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -11295,10 +11285,10 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -11597,12 +11587,14 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -13737,10 +13729,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[Literal["ascending", "descending"], core.SortOrder],
@@ -15830,10 +15822,10 @@ class Fill(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -15872,15 +15864,13 @@ class Fill(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -15972,13 +15962,11 @@ class Fill(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -16897,18 +16885,20 @@ class Fill(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -16932,10 +16922,10 @@ class Fill(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -17379,18 +17369,20 @@ class FillDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -17501,10 +17493,10 @@ class FillValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -17841,10 +17833,10 @@ class FillValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -18161,18 +18153,20 @@ class FillValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -20074,10 +20068,10 @@ class FillOpacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -20116,15 +20110,13 @@ class FillOpacity(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -20216,13 +20208,11 @@ class FillOpacity(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -21141,12 +21131,10 @@ class FillOpacity(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -21166,10 +21154,10 @@ class FillOpacity(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -21595,12 +21583,10 @@ class FillOpacityDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -21705,10 +21691,10 @@ class FillOpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -22045,10 +22031,10 @@ class FillOpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -22347,12 +22333,10 @@ class FillOpacityValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -23081,12 +23065,10 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
-                        core.ConditionalValueDefstringExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
+                    List[core.ConditionalValueDefstringExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -23351,10 +23333,10 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -23691,10 +23673,10 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -23993,12 +23975,14 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -30168,10 +30152,10 @@ class Opacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -30210,15 +30194,13 @@ class Opacity(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -30310,13 +30292,11 @@ class Opacity(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -31235,12 +31215,10 @@ class Opacity(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -31260,10 +31238,10 @@ class Opacity(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -31687,12 +31665,10 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -31797,10 +31773,10 @@ class OpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -32137,10 +32113,10 @@ class OpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -32439,12 +32415,10 @@ class OpacityValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -33331,12 +33305,10 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumber, dict],
-                        Union[core.ConditionalPredicateValueDefnumber, dict],
-                        core.ConditionalValueDefnumber,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumber, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumber, dict]],
+                    List[core.ConditionalValueDefnumber],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumber, dict],
@@ -33717,15 +33689,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -33817,13 +33787,11 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -34761,10 +34729,10 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -35179,15 +35147,13 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -35279,13 +35245,11 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -37905,10 +37869,10 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[Literal["ascending", "descending"], core.SortOrder],
@@ -39976,10 +39940,10 @@ class Shape(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -40018,15 +39982,13 @@ class Shape(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -40118,13 +40080,11 @@ class Shape(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -41041,12 +41001,14 @@ class Shape(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
@@ -41066,10 +41028,10 @@ class Shape(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -41492,12 +41454,14 @@ class ShapeDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
@@ -41604,10 +41568,10 @@ class ShapeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -41941,10 +41905,10 @@ class ShapeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -42240,12 +42204,14 @@ class ShapeValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -44147,10 +44113,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -44189,15 +44155,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -44289,13 +44253,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -45214,12 +45176,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -45239,10 +45199,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -45666,12 +45626,10 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -45776,10 +45734,10 @@ class SizeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -46116,10 +46074,10 @@ class SizeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -46418,12 +46376,10 @@ class SizeValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -48340,10 +48296,10 @@ class Stroke(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -48382,15 +48338,13 @@ class Stroke(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -48482,13 +48436,11 @@ class Stroke(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -49407,18 +49359,20 @@ class Stroke(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -49442,10 +49396,10 @@ class Stroke(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -49889,18 +49843,20 @@ class StrokeDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[
@@ -50011,10 +49967,10 @@ class StrokeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -50351,10 +50307,10 @@ class StrokeValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -50671,18 +50627,20 @@ class StrokeValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
+                Union[
+                    List[
                         Union[
                             core.ConditionalParameterValueDefGradientstringnullExprRef,
                             dict,
-                        ],
+                        ]
+                    ],
+                    List[
                         Union[
                             core.ConditionalPredicateValueDefGradientstringnullExprRef,
                             dict,
-                        ],
-                        core.ConditionalValueDefGradientstringnullExprRef,
-                    ]
+                        ]
+                    ],
+                    List[core.ConditionalValueDefGradientstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -52584,10 +52542,10 @@ class StrokeDash(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -52626,15 +52584,13 @@ class StrokeDash(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -52726,13 +52682,11 @@ class StrokeDash(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -53651,16 +53605,14 @@ class StrokeDash(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[
-                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
-                        ],
-                        Union[
-                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
-                        ],
-                        core.ConditionalValueDefnumberArrayExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefnumberArrayExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict],
@@ -53680,10 +53632,10 @@ class StrokeDash(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -54109,16 +54061,14 @@ class StrokeDashDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[
-                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
-                        ],
-                        Union[
-                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
-                        ],
-                        core.ConditionalValueDefnumberArrayExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefnumberArrayExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict],
@@ -54223,10 +54173,10 @@ class StrokeDashValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -54563,10 +54513,10 @@ class StrokeDashValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -54865,16 +54815,14 @@ class StrokeDashValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[
-                            core.ConditionalParameterValueDefnumberArrayExprRef, dict
-                        ],
-                        Union[
-                            core.ConditionalPredicateValueDefnumberArrayExprRef, dict
-                        ],
-                        core.ConditionalValueDefnumberArrayExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefnumberArrayExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefnumberArrayExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -56772,10 +56720,10 @@ class StrokeOpacity(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -56814,15 +56762,13 @@ class StrokeOpacity(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -56914,13 +56860,11 @@ class StrokeOpacity(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -57839,12 +57783,10 @@ class StrokeOpacity(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -57864,10 +57806,10 @@ class StrokeOpacity(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -58293,12 +58235,10 @@ class StrokeOpacityDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -58403,10 +58343,10 @@ class StrokeOpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -58743,10 +58683,10 @@ class StrokeOpacityValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -59045,12 +58985,10 @@ class StrokeOpacityValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -60950,10 +60888,10 @@ class StrokeWidth(
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -60992,15 +60930,13 @@ class StrokeWidth(
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -61092,13 +61028,11 @@ class StrokeWidth(
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -62017,12 +61951,10 @@ class StrokeWidth(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -62042,10 +61974,10 @@ class StrokeWidth(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -62471,12 +62403,10 @@ class StrokeWidthDatum(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefnumberExprRef, dict],
@@ -62581,10 +62511,10 @@ class StrokeWidthValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -62921,10 +62851,10 @@ class StrokeWidthValue(
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -63223,12 +63153,10 @@ class StrokeWidthValue(
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefnumberExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefnumberExprRef, dict],
-                        core.ConditionalValueDefnumberExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefnumberExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefnumberExprRef, dict]],
+                    List[core.ConditionalValueDefnumberExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -63961,12 +63889,10 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
-                        core.ConditionalValueDefTextExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
+                    List[core.ConditionalValueDefTextExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefTextExprRef, dict],
@@ -64410,12 +64336,10 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
-                        core.ConditionalValueDefTextExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
+                    List[core.ConditionalValueDefTextExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefTextExprRef, dict],
@@ -64980,12 +64904,10 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefTextExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefTextExprRef, dict],
-                        core.ConditionalValueDefTextExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefTextExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefTextExprRef, dict]],
+                    List[core.ConditionalValueDefTextExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterStringFieldDef, dict],
@@ -65371,15 +65293,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -65471,13 +65391,11 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -66415,10 +66333,10 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -66833,15 +66751,13 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -66933,13 +66849,11 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -69020,12 +68934,10 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
-                        core.ConditionalValueDefstringExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
+                    List[core.ConditionalValueDefstringExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -69290,10 +69202,10 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -69630,10 +69542,10 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -69932,12 +69844,14 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -70666,12 +70580,10 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringExprRef, dict],
-                        core.ConditionalValueDefstringExprRef,
-                    ]
+                Union[
+                    List[Union[core.ConditionalParameterValueDefstringExprRef, dict]],
+                    List[Union[core.ConditionalPredicateValueDefstringExprRef, dict]],
+                    List[core.ConditionalValueDefstringExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterValueDefstringExprRef, dict],
@@ -70936,10 +70848,10 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -71276,10 +71188,10 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -71578,12 +71490,14 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict],
-                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict],
-                        core.ConditionalValueDefstringnullExprRef,
-                    ]
+                Union[
+                    List[
+                        Union[core.ConditionalParameterValueDefstringnullExprRef, dict]
+                    ],
+                    List[
+                        Union[core.ConditionalPredicateValueDefstringnullExprRef, dict]
+                    ],
+                    List[core.ConditionalValueDefstringnullExprRef],
                 ],
                 Union[
                     Union[core.ConditionalParameterMarkPropFieldOrDatumDef, dict],
@@ -73170,10 +73084,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -73240,7 +73154,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
@@ -73282,15 +73196,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -73382,13 +73294,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -74330,10 +74240,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -75997,10 +75907,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -76021,7 +75931,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
@@ -76063,15 +75973,13 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -76163,13 +76071,11 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -79266,15 +79172,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -79366,13 +79270,11 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -80298,10 +80200,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -80676,15 +80578,13 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -80776,13 +80676,11 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -82852,10 +82750,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -82922,7 +82820,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
@@ -82964,15 +82862,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -83064,13 +82960,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -84012,10 +83906,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -85679,10 +85573,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union[core.DateTime, dict]],
                 List[bool],
                 List[float],
                 List[str],
+                Union[List[core.DateTime], List[dict]],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
             ],
             UndefinedType,
@@ -85703,7 +85597,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union[core.ImputeSequence, dict]], UndefinedType
         ] = Undefined,
@@ -85745,15 +85639,13 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -85845,13 +85737,11 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -88948,15 +88838,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -89048,13 +88936,11 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[
@@ -89980,10 +89866,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[
                 None,
                 Union[
-                    List[Union[core.DateTime, dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List[core.DateTime], List[dict]],
                     core.SortArray,
                 ],
                 Union[
@@ -90358,15 +90244,13 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        bool,
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[None],
+                    List[Union[core.DateTime, dict]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
                 ],
                 Union[core.DomainUnionWith, dict],
                 Union[core.ExprRef, core._ParameterProtocol, dict],
@@ -90458,13 +90342,11 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
-                        float,
-                        str,
-                    ]
+                Union[
+                    List[List[float]],
+                    List[Union[core.ExprRef, core._ParameterProtocol, dict]],
+                    List[float],
+                    List[str],
                 ],
                 Union[
                     Literal[

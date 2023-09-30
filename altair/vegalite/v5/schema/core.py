@@ -3243,11 +3243,11 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union["DateTime", dict]],
                 List[bool],
                 List[float],
                 List[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
+                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -4947,11 +4947,11 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         values: Union[
             Union[
-                List[Union["DateTime", dict]],
                 List[bool],
                 List[float],
                 List[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
+                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11143,12 +11143,10 @@ class Config(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11486,7 +11484,9 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Union[
-            Union[List[Union["DateTime", dict]], List[bool], List[float], List[str]],
+            Union[
+                List[bool], List[float], List[str], Union[List["DateTime"], List[dict]]
+            ],
             UndefinedType,
         ] = Undefined,
         **kwds
@@ -11791,8 +11791,8 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         detail: Union[
             Union[
-                List[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
+                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11869,10 +11869,10 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         order: Union[
             Union[
-                List[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
+                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11989,10 +11989,10 @@ class Encoding(VegaLiteSchema):
         ] = Undefined,
         tooltip: Union[
             Union[
-                List[Union["StringFieldDef", dict]],
                 None,
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
+                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -13320,10 +13320,10 @@ class FacetEncodingFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -13751,10 +13751,10 @@ class FacetFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -14208,8 +14208,8 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         detail: Union[
             Union[
-                List[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
+                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14287,10 +14287,10 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         order: Union[
             Union[
-                List[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
+                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14408,10 +14408,10 @@ class FacetedEncoding(VegaLiteSchema):
         ] = Undefined,
         tooltip: Union[
             Union[
-                List[Union["StringFieldDef", dict]],
                 None,
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
+                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14621,7 +14621,7 @@ class FeatureCollection(VegaLiteSchema):
     def __init__(
         self,
         features: Union[
-            List[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
+            Union[List["FeatureGeometryGeoJsonProperties"], List[dict]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -15337,17 +15337,15 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringExprRef",
-                        Union["ConditionalParameterValueDefstringExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefstringExprRef",
                     Union["ConditionalParameterValueDefstringExprRef", dict],
                     Union["ConditionalPredicateValueDefstringExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringExprRef"],
+                    List[Union["ConditionalParameterValueDefstringExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -15795,7 +15793,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            List[Union["SelectionParameter", dict]], UndefinedType
+            Union[List["SelectionParameter"], List[dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
@@ -15803,29 +15801,27 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -15927,7 +15923,7 @@ class GeoJsonFeatureCollection(Fit):
     def __init__(
         self,
         features: Union[
-            List[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
+            Union[List["FeatureGeometryGeoJsonProperties"], List[dict]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -15991,17 +15987,15 @@ class GeometryCollection(Geometry):
     def __init__(
         self,
         geometries: Union[
-            List[
-                Union[
-                    "Geometry",
-                    Union["GeometryCollection", dict],
-                    Union["LineString", dict],
-                    Union["MultiLineString", dict],
-                    Union["MultiPoint", dict],
-                    Union["MultiPolygon", dict],
-                    Union["Point", dict],
-                    Union["Polygon", dict],
-                ]
+            Union[
+                List["Geometry"],
+                List[Union["GeometryCollection", dict]],
+                List[Union["LineString", dict]],
+                List[Union["MultiLineString", dict]],
+                List[Union["MultiPoint", dict]],
+                List[Union["MultiPolygon", dict]],
+                List[Union["Point", dict]],
+                List[Union["Polygon", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -16274,15 +16268,15 @@ class GraticuleParams(VegaLiteSchema):
     def __init__(
         self,
         extent: Union[
-            Union["Vector2Vector2number", List[Union["Vector2number", List[float]]]],
+            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             UndefinedType,
         ] = Undefined,
         extentMajor: Union[
-            Union["Vector2Vector2number", List[Union["Vector2number", List[float]]]],
+            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             UndefinedType,
         ] = Undefined,
         extentMinor: Union[
-            Union["Vector2Vector2number", List[Union["Vector2number", List[float]]]],
+            Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             UndefinedType,
         ] = Undefined,
         precision: Union[float, UndefinedType] = Undefined,
@@ -17722,7 +17716,7 @@ class ImputeParams(VegaLiteSchema):
 
     def __init__(
         self,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union["ImputeSequence", dict]], UndefinedType
         ] = Undefined,
@@ -17961,9 +17955,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            List[
-                Union[
-                    "SingleDefUnitChannel",
+            Union[
+                List["SingleDefUnitChannel"],
+                List[
                     Literal[
                         "x",
                         "y",
@@ -17995,8 +17989,8 @@ class IntervalSelectionConfig(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ],
-                ]
+                    ]
+                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -18140,9 +18134,9 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            List[
-                Union[
-                    "SingleDefUnitChannel",
+            Union[
+                List["SingleDefUnitChannel"],
+                List[
                     Literal[
                         "x",
                         "y",
@@ -18174,8 +18168,8 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ],
-                ]
+                    ]
+                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20521,11 +20515,11 @@ class Legend(VegaLiteSchema):
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                List[Union["DateTime", dict]],
                 List[bool],
                 List[float],
                 List[str],
                 Union["ExprRef", "_ParameterProtocol", dict],
+                Union[List["DateTime"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -24284,7 +24278,7 @@ class LineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            List[Union["Position", List[float]]], UndefinedType
+            Union[List["Position"], List[List[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -24332,7 +24326,9 @@ class LinearGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[List[Union["GradientStop", dict]], UndefinedType] = Undefined,
+        stops: Union[
+            Union[List["GradientStop"], List[dict]], UndefinedType
+        ] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         x1: Union[float, UndefinedType] = Undefined,
         x2: Union[float, UndefinedType] = Undefined,
@@ -24410,7 +24406,7 @@ class LookupData(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        fields: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
@@ -24439,7 +24435,7 @@ class LookupSelection(VegaLiteSchema):
         self,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
-        fields: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LookupSelection, self).__init__(
@@ -27392,19 +27388,6 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefGradientstringnullExprRef",
                     Union[
@@ -27412,6 +27395,21 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
+                    ],
+                ],
+                Union[
+                    List["ConditionalValueDefGradientstringnullExprRef"],
+                    List[
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
+                    ],
+                    List[
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
                     ],
                 ],
             ],
@@ -27721,19 +27719,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefGradientstringnullExprRef",
                     Union[
@@ -27741,6 +27726,21 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
+                    ],
+                ],
+                Union[
+                    List["ConditionalValueDefGradientstringnullExprRef"],
+                    List[
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
+                    ],
+                    List[
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
                     ],
                 ],
             ],
@@ -27797,10 +27797,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -28081,7 +28081,7 @@ class MultiLineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            List[List[Union["Position", List[float]]]], UndefinedType
+            Union[List[List["Position"]], List[List[List[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -28115,7 +28115,7 @@ class MultiPoint(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            List[Union["Position", List[float]]], UndefinedType
+            Union[List["Position"], List[List[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -28149,7 +28149,8 @@ class MultiPolygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            List[List[List[Union["Position", List[float]]]]], UndefinedType
+            Union[List[List[List["Position"]]], List[List[List[List[float]]]]],
+            UndefinedType,
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -28422,17 +28423,15 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefnumberArrayExprRef",
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberArrayExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -28740,17 +28739,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefnumberArrayExprRef",
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberArrayExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -28806,10 +28803,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -29127,17 +29124,15 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -29445,17 +29440,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -29511,10 +29504,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -30148,17 +30141,15 @@ class OrderValueDef(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumber",
-                        Union["ConditionalParameterValueDefnumber", dict],
-                        Union["ConditionalPredicateValueDefnumber", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefnumber",
                     Union["ConditionalParameterValueDefnumber", dict],
                     Union["ConditionalPredicateValueDefnumber", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumber"],
+                    List[Union["ConditionalParameterValueDefnumber", dict]],
+                    List[Union["ConditionalPredicateValueDefnumber", dict]],
                 ],
             ],
             UndefinedType,
@@ -31781,9 +31772,9 @@ class PointSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            List[
-                Union[
-                    "SingleDefUnitChannel",
+            Union[
+                List["SingleDefUnitChannel"],
+                List[
                     Literal[
                         "x",
                         "y",
@@ -31815,12 +31806,12 @@ class PointSelectionConfig(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ],
-                ]
+                    ]
+                ],
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -31967,9 +31958,9 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         encodings: Union[
-            List[
-                Union[
-                    "SingleDefUnitChannel",
+            Union[
+                List["SingleDefUnitChannel"],
+                List[
                     Literal[
                         "x",
                         "y",
@@ -32001,12 +31992,12 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
                         "href",
                         "url",
                         "description",
-                    ],
-                ]
+                    ]
+                ],
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -32076,7 +32067,7 @@ class Polygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            List[List[Union["Position", List[float]]]], UndefinedType
+            Union[List[List["Position"]], List[List[List[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", List[float]], UndefinedType] = Undefined,
@@ -33028,10 +33019,10 @@ class PositionFieldDef(PositionDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -33553,10 +33544,10 @@ class PositionFieldDefBase(PolarDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -34830,7 +34821,9 @@ class FieldOneOfPredicate(Predicate):
         self,
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
         oneOf: Union[
-            Union[List[Union["DateTime", dict]], List[bool], List[float], List[str]],
+            Union[
+                List[bool], List[float], List[str], Union[List["DateTime"], List[dict]]
+            ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
@@ -35014,15 +35007,13 @@ class FieldRangePredicate(Predicate):
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union["DateTime", dict],
-                        Union["ExprRef", "_ParameterProtocol", dict],
-                        float,
-                    ]
-                ],
                 Union["ExprRef", "_ParameterProtocol", dict],
+                Union[
+                    List[None],
+                    List[Union["DateTime", dict]],
+                    List[Union["ExprRef", "_ParameterProtocol", dict]],
+                    List[float],
+                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35517,9 +35508,7 @@ class Projection(VegaLiteSchema):
         clipExtent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[
-                    "Vector2Vector2number", List[Union["Vector2number", List[float]]]
-                ],
+                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35532,28 +35521,24 @@ class Projection(VegaLiteSchema):
         extent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[
-                    "Vector2Vector2number", List[Union["Vector2number", List[float]]]
-                ],
+                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             ],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             Union[
-                List[
-                    Union[
-                        "Fit",
-                        List[Union["GeoJsonFeature", dict]],
-                        Union["GeoJsonFeature", dict],
-                        Union["GeoJsonFeatureCollection", dict],
-                    ]
-                ],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
                     "Fit",
-                    List[Union["GeoJsonFeature", dict]],
                     Union["GeoJsonFeature", dict],
                     Union["GeoJsonFeatureCollection", dict],
+                    Union[List["GeoJsonFeature"], List[dict]],
+                ],
+                Union[
+                    List["Fit"],
+                    List[Union["GeoJsonFeature", dict]],
+                    List[Union["GeoJsonFeatureCollection", dict]],
+                    List[Union[List["GeoJsonFeature"], List[dict]]],
                 ],
             ],
             UndefinedType,
@@ -35807,9 +35792,7 @@ class ProjectionConfig(VegaLiteSchema):
         clipExtent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[
-                    "Vector2Vector2number", List[Union["Vector2number", List[float]]]
-                ],
+                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35822,28 +35805,24 @@ class ProjectionConfig(VegaLiteSchema):
         extent: Union[
             Union[
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union[
-                    "Vector2Vector2number", List[Union["Vector2number", List[float]]]
-                ],
+                Union["Vector2Vector2number", List["Vector2number"], List[List[float]]],
             ],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             Union[
-                List[
-                    Union[
-                        "Fit",
-                        List[Union["GeoJsonFeature", dict]],
-                        Union["GeoJsonFeature", dict],
-                        Union["GeoJsonFeatureCollection", dict],
-                    ]
-                ],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union[
                     "Fit",
-                    List[Union["GeoJsonFeature", dict]],
                     Union["GeoJsonFeature", dict],
                     Union["GeoJsonFeatureCollection", dict],
+                    Union[List["GeoJsonFeature"], List[dict]],
+                ],
+                Union[
+                    List["Fit"],
+                    List[Union["GeoJsonFeature", dict]],
+                    List[Union["GeoJsonFeatureCollection", dict]],
+                    List[Union[List["GeoJsonFeature"], List[dict]]],
                 ],
             ],
             UndefinedType,
@@ -36036,7 +36015,9 @@ class RadialGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[List[Union["GradientStop", dict]], UndefinedType] = Undefined,
+        stops: Union[
+            Union[List["GradientStop"], List[dict]], UndefinedType
+        ] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         r1: Union[float, UndefinedType] = Undefined,
         r2: Union[float, UndefinedType] = Undefined,
@@ -36094,9 +36075,34 @@ class RangeConfig(VegaLiteSchema):
         self,
         category: Union[
             Union[
-                List[
+                Union[
+                    "RangeScheme",
                     Union[
-                        "Color",
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
+                    ],
+                    Union[
+                        "RangeRaw",
+                        List[None],
+                        List[Union["RangeRawArray", List[float]]],
+                        List[bool],
+                        List[float],
+                        List[str],
+                    ],
+                    dict,
+                ],
+                Union[
+                    List["Color"],
+                    List[
                         Union[
                             "ColorName",
                             Literal[
@@ -36249,48 +36255,44 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ],
-                        Union["HexColor", str],
-                        str,
-                    ]
-                ],
-                Union[
-                    "RangeScheme",
-                    Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
+                        ]
                     ],
-                    Union[
-                        "RangeRaw",
-                        List[
-                            Union[
-                                None,
-                                Union["RangeRawArray", List[float]],
-                                bool,
-                                float,
-                                str,
-                            ]
-                        ],
-                    ],
-                    dict,
+                    List[Union["HexColor", str]],
+                    List[str],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         diverging: Union[
             Union[
-                List[
+                Union[
+                    "RangeScheme",
                     Union[
-                        "Color",
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
+                    ],
+                    Union[
+                        "RangeRaw",
+                        List[None],
+                        List[Union["RangeRawArray", List[float]]],
+                        List[bool],
+                        List[float],
+                        List[str],
+                    ],
+                    dict,
+                ],
+                Union[
+                    List["Color"],
+                    List[
                         Union[
                             "ColorName",
                             Literal[
@@ -36443,48 +36445,44 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ],
-                        Union["HexColor", str],
-                        str,
-                    ]
-                ],
-                Union[
-                    "RangeScheme",
-                    Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
+                        ]
                     ],
-                    Union[
-                        "RangeRaw",
-                        List[
-                            Union[
-                                None,
-                                Union["RangeRawArray", List[float]],
-                                bool,
-                                float,
-                                str,
-                            ]
-                        ],
-                    ],
-                    dict,
+                    List[Union["HexColor", str]],
+                    List[str],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         heatmap: Union[
             Union[
-                List[
+                Union[
+                    "RangeScheme",
                     Union[
-                        "Color",
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
+                    ],
+                    Union[
+                        "RangeRaw",
+                        List[None],
+                        List[Union["RangeRawArray", List[float]]],
+                        List[bool],
+                        List[float],
+                        List[str],
+                    ],
+                    dict,
+                ],
+                Union[
+                    List["Color"],
+                    List[
                         Union[
                             "ColorName",
                             Literal[
@@ -36637,48 +36635,44 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ],
-                        Union["HexColor", str],
-                        str,
-                    ]
-                ],
-                Union[
-                    "RangeScheme",
-                    Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
+                        ]
                     ],
-                    Union[
-                        "RangeRaw",
-                        List[
-                            Union[
-                                None,
-                                Union["RangeRawArray", List[float]],
-                                bool,
-                                float,
-                                str,
-                            ]
-                        ],
-                    ],
-                    dict,
+                    List[Union["HexColor", str]],
+                    List[str],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         ordinal: Union[
             Union[
-                List[
+                Union[
+                    "RangeScheme",
                     Union[
-                        "Color",
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
+                    ],
+                    Union[
+                        "RangeRaw",
+                        List[None],
+                        List[Union["RangeRawArray", List[float]]],
+                        List[bool],
+                        List[float],
+                        List[str],
+                    ],
+                    dict,
+                ],
+                Union[
+                    List["Color"],
+                    List[
                         Union[
                             "ColorName",
                             Literal[
@@ -36831,48 +36825,44 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ],
-                        Union["HexColor", str],
-                        str,
-                    ]
-                ],
-                Union[
-                    "RangeScheme",
-                    Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
+                        ]
                     ],
-                    Union[
-                        "RangeRaw",
-                        List[
-                            Union[
-                                None,
-                                Union["RangeRawArray", List[float]],
-                                bool,
-                                float,
-                                str,
-                            ]
-                        ],
-                    ],
-                    dict,
+                    List[Union["HexColor", str]],
+                    List[str],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         ramp: Union[
             Union[
-                List[
+                Union[
+                    "RangeScheme",
                     Union[
-                        "Color",
+                        "RangeEnum",
+                        Literal[
+                            "width",
+                            "height",
+                            "symbol",
+                            "category",
+                            "ordinal",
+                            "ramp",
+                            "diverging",
+                            "heatmap",
+                        ],
+                    ],
+                    Union[
+                        "RangeRaw",
+                        List[None],
+                        List[Union["RangeRawArray", List[float]]],
+                        List[bool],
+                        List[float],
+                        List[str],
+                    ],
+                    dict,
+                ],
+                Union[
+                    List["Color"],
+                    List[
                         Union[
                             "ColorName",
                             Literal[
@@ -37025,44 +37015,15 @@ class RangeConfig(VegaLiteSchema):
                                 "yellowgreen",
                                 "rebeccapurple",
                             ],
-                        ],
-                        Union["HexColor", str],
-                        str,
-                    ]
-                ],
-                Union[
-                    "RangeScheme",
-                    Union[
-                        "RangeEnum",
-                        Literal[
-                            "width",
-                            "height",
-                            "symbol",
-                            "category",
-                            "ordinal",
-                            "ramp",
-                            "diverging",
-                            "heatmap",
-                        ],
+                        ]
                     ],
-                    Union[
-                        "RangeRaw",
-                        List[
-                            Union[
-                                None,
-                                Union["RangeRawArray", List[float]],
-                                bool,
-                                float,
-                                str,
-                            ]
-                        ],
-                    ],
-                    dict,
+                    List[Union["HexColor", str]],
+                    List[str],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
-        symbol: Union[List[Union["SymbolShape", str]], UndefinedType] = Undefined,
+        symbol: Union[Union[List["SymbolShape"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(RangeConfig, self).__init__(
@@ -38916,10 +38877,10 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortOrder", Literal["ascending", "descending"]],
             ],
@@ -39391,19 +39352,17 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         domain: Union[
             Union[
-                List[
-                    Union[
-                        None,
-                        Union["DateTime", dict],
-                        Union["ExprRef", "_ParameterProtocol", dict],
-                        bool,
-                        float,
-                        str,
-                    ]
-                ],
                 Union["DomainUnionWith", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
                 Union["ParameterExtent", dict],
+                Union[
+                    List[None],
+                    List[Union["DateTime", dict]],
+                    List[Union["ExprRef", "_ParameterProtocol", dict]],
+                    List[bool],
+                    List[float],
+                    List[str],
+                ],
                 str,
             ],
             UndefinedType,
@@ -39486,14 +39445,6 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         range: Union[
             Union[
-                List[
-                    Union[
-                        List[float],
-                        Union["ExprRef", "_ParameterProtocol", dict],
-                        float,
-                        str,
-                    ]
-                ],
                 Union["FieldRange", dict],
                 Union[
                     "RangeEnum",
@@ -39507,6 +39458,12 @@ class Scale(VegaLiteSchema):
                         "diverging",
                         "heatmap",
                     ],
+                ],
+                Union[
+                    List[List[float]],
+                    List[Union["ExprRef", "_ParameterProtocol", dict]],
+                    List[float],
+                    List[str],
                 ],
             ],
             UndefinedType,
@@ -40674,10 +40631,10 @@ class ScaleFieldDef(OffsetDef):
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -41982,13 +41939,13 @@ class SelectionParameter(VegaLiteSchema):
         ] = Undefined,
         value: Union[
             Union[
-                List[Union["SelectionInitMapping", dict]],
                 Union[
                     "SelectionInit",
                     Union["DateTime", dict],
                     Union["PrimitiveValue", None, bool, float, str],
                 ],
                 Union["SelectionInitIntervalMapping", dict],
+                Union[List["SelectionInitMapping"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -42285,17 +42242,15 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringnullExprRef"],
+                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -42604,17 +42559,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringnullExprRef"],
+                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -42670,10 +42623,10 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                 Union["EncodingSortField", dict],
                 Union[
                     "SortArray",
-                    List[Union["DateTime", dict]],
                     List[bool],
                     List[float],
                     List[str],
+                    Union[List["DateTime"], List[dict]],
                 ],
                 Union["SortByEncoding", dict],
             ],
@@ -42968,8 +42921,8 @@ class SharedEncoding(VegaLiteSchema):
         description: Union[dict, UndefinedType] = Undefined,
         detail: Union[
             Union[
-                List[Union["FieldDefWithoutScale", dict]],
                 Union["FieldDefWithoutScale", dict],
+                Union[List["FieldDefWithoutScale"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -42984,10 +42937,10 @@ class SharedEncoding(VegaLiteSchema):
         opacity: Union[dict, UndefinedType] = Undefined,
         order: Union[
             Union[
-                List[Union["OrderFieldDef", dict]],
                 Union["OrderFieldDef", dict],
                 Union["OrderOnlyDef", dict],
                 Union["OrderValueDef", dict],
+                Union[List["OrderFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43004,10 +42957,10 @@ class SharedEncoding(VegaLiteSchema):
         theta2: Union[dict, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                List[Union["StringFieldDef", dict]],
                 None,
                 Union["StringFieldDefWithCondition", dict],
                 Union["StringValueDefWithCondition", dict],
+                Union[List["StringFieldDef"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43437,21 +43390,21 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         concat: Union[
-            List[
-                Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["Spec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43499,29 +43452,27 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43695,29 +43646,27 @@ class FacetSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43950,7 +43899,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            List[Union["SelectionParameter", dict]], UndefinedType
+            Union[List["SelectionParameter"], List[dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
@@ -43962,29 +43911,27 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44066,21 +44013,21 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         hconcat: Union[
-            List[
-                Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["Spec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44116,29 +44063,27 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44246,7 +44191,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         layer: Union[
-            List[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
+            Union[List[Union["LayerSpec", dict]], List[Union["UnitSpec", dict]]],
             UndefinedType,
         ] = Undefined,
         data: Union[
@@ -44283,29 +44228,27 @@ class LayerSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44492,29 +44435,27 @@ class LayerRepeatSpec(RepeatSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44703,29 +44644,27 @@ class NonLayerRepeatSpec(RepeatSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44885,20 +44824,18 @@ class DerivedStream(Stream):
             UndefinedType,
         ] = Undefined,
         between: Union[
-            List[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
+            Union[
+                List["Stream"],
+                List[Union["DerivedStream", dict]],
+                List[Union["EventStream", dict]],
+                List[Union["MergedStream", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[List[Union["Expr", str]], Union["Expr", str]], UndefinedType
+            Union[Union["Expr", str], Union[List["Expr"], List[str]]], UndefinedType
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
@@ -44980,31 +44917,27 @@ class MergedStream(Stream):
     def __init__(
         self,
         merge: Union[
-            List[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
+            Union[
+                List["Stream"],
+                List[Union["DerivedStream", dict]],
+                List[Union["EventStream", dict]],
+                List[Union["MergedStream", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         between: Union[
-            List[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
+            Union[
+                List["Stream"],
+                List[Union["DerivedStream", dict]],
+                List[Union["EventStream", dict]],
+                List[Union["MergedStream", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[List[Union["Expr", str]], Union["Expr", str]], UndefinedType
+            Union[Union["Expr", str], Union[List["Expr"], List[str]]], UndefinedType
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
@@ -45698,17 +45631,15 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringExprRef",
-                        Union["ConditionalParameterValueDefstringExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefstringExprRef",
                     Union["ConditionalParameterValueDefstringExprRef", dict],
                     Union["ConditionalPredicateValueDefstringExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringExprRef"],
+                    List[Union["ConditionalParameterValueDefstringExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -45918,13 +45849,6 @@ class StringValueDefWithCondition(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -45934,6 +45858,11 @@ class StringValueDefWithCondition(VegaLiteSchema):
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringnullExprRef"],
+                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -46281,17 +46210,15 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefTextExprRef",
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefTextExprRef"],
+                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -46574,17 +46501,15 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         ] = Undefined,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalValueDefTextExprRef",
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefTextExprRef"],
+                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -49981,13 +49906,13 @@ class TopLevelSelectionParameter(TopLevelParameter):
         ] = Undefined,
         value: Union[
             Union[
-                List[Union["SelectionInitMapping", dict]],
                 Union[
                     "SelectionInit",
                     Union["DateTime", dict],
                     Union["PrimitiveValue", None, bool, float, str],
                 ],
                 Union["SelectionInitIntervalMapping", dict],
+                Union[List["SelectionInitMapping"], List[dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50147,21 +50072,21 @@ class TopLevelConcatSpec(TopLevelSpec):
     def __init__(
         self,
         concat: Union[
-            List[
-                Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["NonNormalizedSpec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50381,12 +50306,10 @@ class TopLevelConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50399,29 +50322,27 @@ class TopLevelConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50809,12 +50730,10 @@ class TopLevelFacetSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50827,29 +50746,27 @@ class TopLevelFacetSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50967,21 +50884,21 @@ class TopLevelHConcatSpec(TopLevelSpec):
     def __init__(
         self,
         hconcat: Union[
-            List[
-                Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["NonNormalizedSpec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51191,12 +51108,10 @@ class TopLevelHConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51207,29 +51122,27 @@ class TopLevelHConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51378,7 +51291,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     def __init__(
         self,
         layer: Union[
-            List[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
+            Union[List[Union["LayerSpec", dict]], List[Union["UnitSpec", dict]]],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
@@ -51589,12 +51502,10 @@ class TopLevelLayerSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51605,29 +51516,27 @@ class TopLevelLayerSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52092,12 +52001,10 @@ class TopLevelUnitSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52111,29 +52018,27 @@ class TopLevelUnitSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52256,21 +52161,21 @@ class TopLevelVConcatSpec(TopLevelSpec):
     def __init__(
         self,
         vconcat: Union[
-            List[
-                Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["NonNormalizedSpec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52480,12 +52385,10 @@ class TopLevelVConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         params: Union[
-            List[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                List["TopLevelParameter"],
+                List[Union["TopLevelSelectionParameter", dict]],
+                List[Union["VariableParameter", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52496,29 +52399,27 @@ class TopLevelVConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52652,9 +52553,9 @@ class AggregateTransform(Transform):
     def __init__(
         self,
         aggregate: Union[
-            List[Union["AggregatedFieldDef", dict]], UndefinedType
+            Union[List["AggregatedFieldDef"], List[dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(AggregateTransform, self).__init__(
@@ -52775,7 +52676,7 @@ class DensityTransform(Transform):
         counts: Union[bool, UndefinedType] = Undefined,
         cumulative: Union[bool, UndefinedType] = Undefined,
         extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         maxsteps: Union[float, UndefinedType] = Undefined,
         minsteps: Union[float, UndefinedType] = Undefined,
         steps: Union[float, UndefinedType] = Undefined,
@@ -52912,7 +52813,7 @@ class FlattenTransform(Transform):
 
     def __init__(
         self,
-        flatten: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        flatten: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
@@ -52937,7 +52838,7 @@ class FoldTransform(Transform):
 
     def __init__(
         self,
-        fold: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        fold: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
@@ -52995,8 +52896,8 @@ class ImputeTransform(Transform):
         self,
         impute: Union[Union["FieldName", str], UndefinedType] = Undefined,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         keyvals: Union[
             Union[List[Any], Union["ImputeSequence", dict]], UndefinedType
         ] = Undefined,
@@ -53039,9 +52940,9 @@ class JoinAggregateTransform(Transform):
     def __init__(
         self,
         joinaggregate: Union[
-            List[Union["JoinAggregateFieldDef", dict]], UndefinedType
+            Union[List["JoinAggregateFieldDef"], List[dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(JoinAggregateTransform, self).__init__(
@@ -53082,7 +52983,7 @@ class LoessTransform(Transform):
         loess: Union[Union["FieldName", str], UndefinedType] = Undefined,
         on: Union[Union["FieldName", str], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         **kwds
     ):
         super(LoessTransform, self).__init__(
@@ -53161,7 +53062,7 @@ class PivotTransform(Transform):
         self,
         pivot: Union[Union["FieldName", str], UndefinedType] = Undefined,
         value: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         limit: Union[float, UndefinedType] = Undefined,
         op: Union[
             Union[
@@ -53232,7 +53133,7 @@ class QuantileTransform(Transform):
     def __init__(
         self,
         quantile: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         probs: Union[List[float], UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         **kwds
@@ -53291,7 +53192,7 @@ class RegressionTransform(Transform):
         on: Union[Union["FieldName", str], UndefinedType] = Undefined,
         regression: Union[Union["FieldName", str], UndefinedType] = Undefined,
         extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         method: Union[
             Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
         ] = Undefined,
@@ -53363,12 +53264,12 @@ class StackTransform(Transform):
 
     def __init__(
         self,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         stack: Union[Union["FieldName", str], UndefinedType] = Undefined,
         offset: Union[
             Literal["zero", "center", "normalize"], UndefinedType
         ] = Undefined,
-        sort: Union[List[Union["SortField", dict]], UndefinedType] = Undefined,
+        sort: Union[Union[List["SortField"], List[dict]], UndefinedType] = Undefined,
         **kwds
     ):
         super(StackTransform, self).__init__(
@@ -54034,7 +53935,7 @@ class UnitSpec(VegaLiteSchema):
         encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            List[Union["SelectionParameter", dict]], UndefinedType
+            Union[List["SelectionParameter"], List[dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
@@ -54042,29 +53943,27 @@ class UnitSpec(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54233,7 +54132,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         params: Union[
-            List[Union["SelectionParameter", dict]], UndefinedType
+            Union[List["SelectionParameter"], List[dict]], UndefinedType
         ] = Undefined,
         projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
         title: Union[
@@ -54241,29 +54140,27 @@ class UnitSpecWithFrame(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54412,21 +54309,21 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         vconcat: Union[
-            List[
-                Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
+            Union[
+                List["Spec"],
+                List[Union["ConcatSpecGenericSpec", dict]],
+                List[Union["FacetSpec", dict]],
+                List[Union["FacetedUnitSpec", dict]],
+                List[Union["HConcatSpecGenericSpec", dict]],
+                List[Union["LayerSpec", dict]],
+                List[
                     Union[
                         "RepeatSpec",
                         Union["LayerRepeatSpec", dict],
                         Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
-                ]
+                    ]
+                ],
+                List[Union["VConcatSpecGenericSpec", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54462,29 +54359,27 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            List[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
+            Union[
+                List["Transform"],
+                List[Union["AggregateTransform", dict]],
+                List[Union["BinTransform", dict]],
+                List[Union["CalculateTransform", dict]],
+                List[Union["DensityTransform", dict]],
+                List[Union["ExtentTransform", dict]],
+                List[Union["FilterTransform", dict]],
+                List[Union["FlattenTransform", dict]],
+                List[Union["FoldTransform", dict]],
+                List[Union["ImputeTransform", dict]],
+                List[Union["JoinAggregateTransform", dict]],
+                List[Union["LoessTransform", dict]],
+                List[Union["LookupTransform", dict]],
+                List[Union["PivotTransform", dict]],
+                List[Union["QuantileTransform", dict]],
+                List[Union["RegressionTransform", dict]],
+                List[Union["SampleTransform", dict]],
+                List[Union["StackTransform", dict]],
+                List[Union["TimeUnitTransform", dict]],
+                List[Union["WindowTransform", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54532,19 +54427,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54557,6 +54439,21 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
                     ],
                     Union[
                         "ConditionalPredicateValueDefGradientstringnullExprRef", dict
+                    ],
+                ],
+                Union[
+                    List["ConditionalValueDefGradientstringnullExprRef"],
+                    List[
+                        Union[
+                            "ConditionalParameterValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
+                    ],
+                    List[
+                        Union[
+                            "ConditionalPredicateValueDefGradientstringnullExprRef",
+                            dict,
+                        ]
                     ],
                 ],
             ],
@@ -54609,13 +54506,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDefTypeForShape",
                     Union[
@@ -54629,6 +54519,11 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringnullExprRef"],
+                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54670,13 +54565,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54686,6 +54574,11 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
                     "ConditionalValueDefnumberExprRef",
                     Union["ConditionalParameterValueDefnumberExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54726,13 +54619,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54742,6 +54628,11 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
                     "ConditionalValueDefnumberArrayExprRef",
                     Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
                     Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefnumberArrayExprRef"],
+                    List[Union["ConditionalParameterValueDefnumberArrayExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefnumberArrayExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54781,13 +54672,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalMarkPropFieldOrDatumDef",
                     Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
@@ -54797,6 +54681,11 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
                     "ConditionalValueDefstringnullExprRef",
                     Union["ConditionalParameterValueDefstringnullExprRef", dict],
                     Union["ConditionalPredicateValueDefstringnullExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefstringnullExprRef"],
+                    List[Union["ConditionalParameterValueDefstringnullExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefstringnullExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -54834,13 +54723,6 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         self,
         condition: Union[
             Union[
-                List[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
                 Union[
                     "ConditionalStringFieldDef",
                     Union["ConditionalParameterStringFieldDef", dict],
@@ -54850,6 +54732,11 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
                     "ConditionalValueDefTextExprRef",
                     Union["ConditionalParameterValueDefTextExprRef", dict],
                     Union["ConditionalPredicateValueDefTextExprRef", dict],
+                ],
+                Union[
+                    List["ConditionalValueDefTextExprRef"],
+                    List[Union["ConditionalParameterValueDefTextExprRef", dict]],
+                    List[Union["ConditionalPredicateValueDefTextExprRef", dict]],
                 ],
             ],
             UndefinedType,
@@ -56291,11 +56178,13 @@ class WindowTransform(Transform):
 
     def __init__(
         self,
-        window: Union[List[Union["WindowFieldDef", dict]], UndefinedType] = Undefined,
-        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
-        groupby: Union[List[Union["FieldName", str]], UndefinedType] = Undefined,
+        window: Union[
+            Union[List["WindowFieldDef"], List[dict]], UndefinedType
+        ] = Undefined,
+        frame: Union[Union[List[None], List[float]], UndefinedType] = Undefined,
+        groupby: Union[Union[List["FieldName"], List[str]], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
-        sort: Union[List[Union["SortField", dict]], UndefinedType] = Undefined,
+        sort: Union[Union[List["SortField"], List[dict]], UndefinedType] = Undefined,
         **kwds
     ):
         super(WindowTransform, self).__init__(

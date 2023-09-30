@@ -4,7 +4,7 @@ import keyword
 import re
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Any, Iterable
+from typing import Final, Optional, List, Dict, Any, Iterable, Literal, overload
 
 from .schemapi import _resolve_references as resolve_references
 
@@ -179,10 +179,32 @@ class SchemaInfo:
         else:
             return ""
 
+    @overload
+    def get_python_type_representation(
+        self,
+        for_type_hints: bool = ...,
+        altair_classes_prefix: Optional[str] = ...,
+        *,
+        return_str: Literal[True] = ...,
+    ) -> str:
+        ...
+
+    @overload
+    def get_python_type_representation(
+        self,
+        for_type_hints: bool = ...,
+        altair_classes_prefix: Optional[str] = ...,
+        *,
+        return_str: Literal[False],
+    ) -> List[str]:
+        ...
+
     def get_python_type_representation(
         self,
         for_type_hints: bool = False,
         altair_classes_prefix: Optional[str] = None,
+        *,
+        return_str: bool = True,
     ) -> str:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
@@ -255,24 +277,52 @@ class SchemaInfo:
                     "Dict[required=[{}]]".format(", ".join(self.required))
                 )
         elif self.is_array():
-            type_representations.append(
-                "List[{}]".format(
+            list_value_types = sorted(
+                set(
                     self.child(self.items).get_python_type_representation(
                         for_type_hints=for_type_hints,
                         altair_classes_prefix=altair_classes_prefix,
+                        return_str=False,
                     )
                 )
             )
+
+            def _format_list(type_reprs: List[str]) -> str:
+                if len(type_reprs) == 1:
+                    list_content = type_reprs[0]
+                else:
+                    list_content = f"Union[{', '.join(type_reprs)}]"
+                return f"List[{list_content}]"
+
+            if for_type_hints:
+                # A list is invariant in its type parameter. This means that e.g.
+                # List[str] is not a subtype of List[Union[core.FieldName, str]]
+                # and hence we would need to explicitly write out the combinations,
+                # so in this case:
+                # List[core.FieldName], List[str], List[core.FieldName, str]
+                # However, this can easily explode and so we revert to not allowing
+                # different types in the same list, hence the type hints for the
+                # above example would be Union[List[core.FieldName], List[str]]
+                # and does not contain List[core.FieldName, str] in the Union
+                for value_type in list_value_types:
+                    type_representations.append(_format_list([value_type]))
+            else:
+                # If it's for the docs, we don't care about invariance and prefer
+                # to keep the docstring somewhat shorter
+                type_representations.append(_format_list(list_value_types))
         elif self.type in jsonschema_to_python_types:
             type_representations.append(jsonschema_to_python_types[self.type])
         else:
             raise ValueError("No Python type representation available for this schema")
 
         type_representations = sorted(set(flatten(type_representations)))
-        type_representations_str = ", ".join(type_representations)
-        if len(type_representations) > 1:
-            type_representations_str = f"Union[{type_representations_str}]"
-        return type_representations_str
+        if return_str:
+            type_representations_str = ", ".join(type_representations)
+            if len(type_representations) > 1:
+                type_representations_str = f"Union[{type_representations_str}]"
+            return type_representations_str
+        else:
+            return type_representations
 
     @property
     def properties(self) -> SchemaProperties:
