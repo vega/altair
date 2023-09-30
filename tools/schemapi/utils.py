@@ -4,7 +4,7 @@ import keyword
 import re
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Any
+from typing import Final, Optional, List, Dict, Any, Iterable
 
 from .schemapi import _resolve_references as resolve_references
 
@@ -182,15 +182,15 @@ class SchemaInfo:
     def get_python_type_representation(
         self,
         for_type_hints: bool = False,
-        use_title: bool = False,
         altair_classes_prefix: Optional[str] = None,
     ) -> str:
-        if self.title and use_title:
+        # This is a list of all types which can be used for the current SchemaInfo.
+        # This includes Altair classes, standard Python types, etc.
+        type_representations: List[str] = []
+        if self.title:
+            # Add the name of the current Altair class
             if for_type_hints:
                 class_names = [self.title]
-                # If we want strictly valid types, we want them also to be
-                # exhaustive. Hence, we add all possible classes below which
-                # could be used instead of the one we are currently inspecting.
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
                     # We use the _ParameterProtocol to indicate this although this
@@ -213,30 +213,26 @@ class SchemaInfo:
                     class_names = [f'"{n}"' for n in class_names]
                 else:
                     class_names = [f"{prefix}{n}" for n in class_names]
-                type_hints = class_names
-
-                # Sort to get a deterministic order
-                return ", ".join(sorted(type_hints))
+                type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs
-                return ":class:`{}`".format(self.title)
-        elif self.is_empty():
-            return "Any"
+                type_representations.append(":class:`{}`".format(self.title))
+
+        if self.is_empty():
+            type_representations.append("Any")
         elif self.is_enum():
-            return "Literal[{}]".format(", ".join(map(repr, self.enum)))
+            type_representations.append(
+                "Literal[{}]".format(", ".join(map(repr, self.enum)))
+            )
         elif self.is_anyOf():
-            return "Union[{}]".format(
-                ", ".join(
-                    {
-                        s.get_python_type_representation(
-                            # We always use title if possible for nested objects
-                            for_type_hints=for_type_hints,
-                            use_title=True,
-                            altair_classes_prefix=altair_classes_prefix,
-                        )
-                        for s in self.anyOf
-                    }
-                )
+            type_representations.extend(
+                [
+                    s.get_python_type_representation(
+                        for_type_hints=for_type_hints,
+                        altair_classes_prefix=altair_classes_prefix,
+                    )
+                    for s in self.anyOf
+                ]
             )
         elif isinstance(self.type, list):
             options = []
@@ -247,28 +243,36 @@ class SchemaInfo:
                     subschema.get_python_type_representation(
                         # We always use title if possible for nested objects
                         for_type_hints=for_type_hints,
-                        use_title=True,
                         altair_classes_prefix=altair_classes_prefix,
                     )
                 )
-            return "Union[{}]".format(", ".join(set(options)))
+            type_representations.extend(options)
         elif self.is_object():
             if for_type_hints:
-                return "dict"
+                type_representations.append("dict")
             else:
-                return "Dict[required=[{}]]".format(", ".join(self.required))
+                type_representations.append(
+                    "Dict[required=[{}]]".format(", ".join(self.required))
+                )
         elif self.is_array():
-            return "List[{}]".format(
-                self.child(self.items).get_python_type_representation(
-                    for_type_hints=for_type_hints,
-                    use_title=use_title,
-                    altair_classes_prefix=altair_classes_prefix,
+            type_representations.append(
+                "List[{}]".format(
+                    self.child(self.items).get_python_type_representation(
+                        for_type_hints=for_type_hints,
+                        altair_classes_prefix=altair_classes_prefix,
+                    )
                 )
             )
         elif self.type in jsonschema_to_python_types:
-            return jsonschema_to_python_types[self.type]
+            type_representations.append(jsonschema_to_python_types[self.type])
         else:
-            raise ValueError("No python type representation available for this schema")
+            raise ValueError("No Python type representation available for this schema")
+
+        type_representations = sorted(set(flatten(type_representations)))
+        type_representations_str = ", ".join(type_representations)
+        if len(type_representations) > 1:
+            type_representations_str = f"Union[{type_representations_str}]"
+        return type_representations_str
 
     @property
     def properties(self) -> SchemaProperties:
@@ -489,3 +493,16 @@ def fix_docstring_issues(docstring: str) -> str:
         "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
     )
     return docstring
+
+
+def flatten(container: Iterable) -> Iterable:
+    """Flatten arbitrarily flattened list
+
+    From https://stackoverflow.com/a/10824420
+    """
+    for i in container:
+        if isinstance(i, (list, tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i

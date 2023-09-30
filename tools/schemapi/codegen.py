@@ -1,7 +1,7 @@
 """Code generation utilities"""
 import re
 import textwrap
-from typing import Set, Final, Optional, List, Iterable, Union, Dict
+from typing import Set, Final, Optional, List, Union, Dict
 from dataclasses import dataclass
 
 from .utils import (
@@ -10,6 +10,7 @@ from .utils import (
     indent_docstring,
     SchemaProperties,
     jsonschema_to_python_types,
+    flatten
 )
 
 
@@ -224,7 +225,6 @@ class SchemaGenerator:
                     "{} : {}".format(
                         prop,
                         propinfo.get_python_type_representation(
-                            use_title=True,
                             altair_classes_prefix=self.altair_classes_prefix,
                         ),
                     ),
@@ -371,16 +371,3 @@ class SchemaGenerator:
         type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
 
         return ("\n" + indent * " ").join(type_hints)
-
-
-def flatten(container: Iterable) -> Iterable:
-    """Flatten arbitrarily flattened list
-
-    From https://stackoverflow.com/a/10824420
-    """
-    for i in container:
-        if isinstance(i, (list, tuple)):
-            for j in flatten(i):
-                yield j
-        else:
-            yield i
