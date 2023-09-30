@@ -28,7 +28,7 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
         .legend(title="Year"),
     alt.Row('site:N')
         .title("")
-        .sort(alt.EncodingSortField(field='yield', op='sum', order='descending'))
+        .sort(field='yield', op='sum', order='descending')
 ).properties(
     height=alt.Step(20)
 ).configure_view(stroke="transparent")

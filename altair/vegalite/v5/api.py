@@ -2291,7 +2291,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                window.append(core.WindowFieldDef(**kwds))
+                window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
 
         return self._add_transform(
             core.WindowTransform(
