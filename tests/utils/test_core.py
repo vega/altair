@@ -1,4 +1,6 @@
 import types
+from packaging.version import Version
+from importlib.metadata import version as importlib_version
 
 import numpy as np
 import pandas as pd
@@ -15,6 +17,8 @@ try:
     import pyarrow as pa
 except ImportError:
     pa = None
+
+PANDAS_VERSION = Version(importlib_version("pandas"))
 
 
 FAKE_CHANNELS_MODULE = f'''
@@ -143,7 +147,6 @@ def test_parse_shorthand_with_data(object_dtype):
         {
             "x": [1, 2, 3, 4, 5],
             "y": ["A", "B", "C", "D", "E"],
-            "b": pd.Series([True, False, True, False, None], dtype="boolean"),
             "z": pd.date_range("2018-01-01", periods=5, freq="D"),
             "t": pd.date_range("2018-01-01", periods=5, freq="D").tz_localize("UTC"),
         }
@@ -154,13 +157,16 @@ def test_parse_shorthand_with_data(object_dtype):
 
     check("x", data, field="x", type="quantitative")
     check("y", data, field="y", type="nominal")
-    check("b", data, field="b", type="nominal")
     check("z", data, field="z", type="temporal")
     check("t", data, field="t", type="temporal")
     check("count(x)", data, field="x", aggregate="count", type="quantitative")
     check("count()", data, aggregate="count", type="quantitative")
     check("month(z)", data, timeUnit="month", field="z", type="temporal")
     check("month(t)", data, timeUnit="month", field="t", type="temporal")
+
+    if PANDAS_VERSION >= Version("1.0.0"):
+        data["b"] = pd.Series([True, False, True, False, None], dtype="boolean")
+        check("b", data, field="b", type="nominal")
 
 
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
