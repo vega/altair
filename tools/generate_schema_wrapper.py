@@ -503,6 +503,8 @@ def generate_vegalite_mark_mixin(
     class_name = "MarkMethodMixin"
 
     imports = [
+        "from typing import Any, List, Literal, Union",
+        "",
         "from altair.utils.schemapi import Undefined, UndefinedType",
         "from . import core",
     ]
@@ -525,7 +527,11 @@ def generate_vegalite_mark_mixin(
         arg_info.kwds -= {"type"}
 
         def_args = ["self"] + [
-            "{}=Undefined".format(p)
+            f"{p}: Union["
+            + info.properties[p].get_python_type_representation(
+                strictly_valid=True, altair_classes_prefix="core"
+            )
+            + ", UndefinedType] = Undefined"
             for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
         dict_args = [
