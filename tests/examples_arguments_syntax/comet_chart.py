@@ -22,7 +22,7 @@ import vega_datasets
         y=alt.Y('variety:N', title='Variety'),
         size=alt.Size('yield:Q', scale=alt.Scale(range=[0, 12]), legend=alt.Legend(values=[20, 60], title='Barley Yield (bushels/acre)')),
         color=alt.Color('delta:Q', scale=alt.Scale(domainMid=0), legend=alt.Legend(title='Yield Delta (%)')),
-        tooltip=alt.Tooltip(['year:O', 'yield:Q']),
+        tooltip=[alt.Tooltip('year:O'), alt.Tooltip('yield:Q')],
         column=alt.Column('site:N', title='Site')
 
     )
